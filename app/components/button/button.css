@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+button{
+    color: #fff;
+    padding: 8px 22px;
+    border-radius: 6px;
+    background: #17376E;
+}
+
+button:hover{
+    color: black;
+    background-color: white;
+}
