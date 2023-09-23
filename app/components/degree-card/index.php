@@ -4,10 +4,11 @@
 
     <style>
     .body {
+
         border-radius: 8px;
         border: 3px solid rgba(0, 0, 0, 0.05);
         background: var(--colour-primary, #FFF);
-        width: 442px;
+        width: 440px;
         height: 187px;
         flex-shrink: 0;
         box-shadow: 4px 7px 9px 0px rgba(0, 0, 0, 0.08);
@@ -17,6 +18,7 @@
         width: 123px;
         height: 133px;
         flex-shrink: 0;
+        margin-top: 10px;
     }
 
     .card {
