@@ -10,7 +10,7 @@
 :root{
     --body-color: #E2E2E2;
     --sidebar-color: #17376E;
-    --primary-color: #9AD6FF;
+    --primary-color: #ffffff;
     --text-color: #ffffff;
 
     --tran-02: all 0.2s ease;
@@ -33,8 +33,9 @@ body{
     top: 0;
     left: 0;
     height: 100%;
-    width: 250px;
+    width: 300px;
     padding: 10px 14px;
+    border-radius: 0px 12px 12px 0px;
     background: var(--sidebar-color);
     transition: var(--tran-05);
     z-index: 300;
@@ -61,7 +62,7 @@ body{
 
 .sidebar .text{
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 400;
     color: var(--text-color);
     transition: var(--tran-03);
     white-space: nowrap;
@@ -145,7 +146,7 @@ header .image-text .headder-text{
     right: -25px;
     transform: translateY(-50%) rotate(180deg);
     height: 30px;
-    width: 20px;
+    width: 25px;
     background: var(--text-color);
     display: flex;
     align-items: center;
@@ -155,9 +156,10 @@ header .image-text .headder-text{
     font-size: 22px;
     font-weight: 600;
     transition: var(--tran-03);
-    outline-color: var(--sidebar-color);
+    background: var(--primary-color, #FFF);
+    border: 1px solid #E2E2E2;
     outline-width: 0.5px;
-    outline-style: groove;
+   
 }
 
 .sidebar.close header .toggle{
@@ -174,7 +176,7 @@ header .image-text .headder-text{
     display: flex;
     align-items: center;
     text-decoration: none;
-    border-radius: 6px;
+    border-radius: 8px;
     transition: var(--tran-04);
 }
 
