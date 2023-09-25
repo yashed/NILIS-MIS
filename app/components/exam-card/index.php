@@ -17,6 +17,7 @@
     height: 187px;
     flex-shrink: 0;
     box-shadow: 4px 7px 9px 0px rgba(0, 0, 0, 0.08);
+    margin-left: 10px;
 }
 
 .img {
@@ -41,8 +42,8 @@
 
 
     font-family:"Poppins",sans-serif;
-    margin-right: 20px;
-    margin-left: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .degree-name {
