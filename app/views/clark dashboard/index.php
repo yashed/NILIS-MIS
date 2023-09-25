@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
-    
-    </head>
+
+</head>
 
 <body>
     <header>
@@ -44,13 +44,16 @@
 
         <div class="white-container4">
             <div class="heading-calender">Academic Calendar</div>
-            <?php include '../../components/calender/index.php' ?>
+            <div class="calender">
+                <?php include '../../components/calender/index.php' ?>
+            </div>
+
             <script src="../../components/calender/script.js"></script>
             <link rel="stylesheet" type="text/css" href="../../components/calender/style.css">
         </div>
     </div>
     <script>
-        
+
     </script>
 </body>
 

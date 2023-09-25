@@ -8,8 +8,9 @@
     <link href="css/style.css" rel="stylesheet">
 </head>
 <style>
-
 .body {
+    display: flex;
+    flex-direction: column;
     border-radius: 8px;
     border: 3px solid rgba(0, 0, 0, 0.05);
     background: var(--colour-primary, #FFF);
@@ -17,39 +18,39 @@
     height: 187px;
     flex-shrink: 0;
     box-shadow: 4px 7px 9px 0px rgba(0, 0, 0, 0.08);
+    margin: 10px;
 }
 
 .img {
     width: 87px;
     height: 95px;
     flex-shrink: 0;
+    margin-top: 20px;
+    margin-right: 5px;
 }
 
 .card {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    margin: 10px;
+    justify-content: space-around;
+
 }
 
 .content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-content: space-around;
+    justify-content: flex-start;
+    align-content: center;
     flex-wrap: wrap;
-
-
-    font-family:"Poppins",sans-serif;
-    margin-right: 20px;
-    margin-left: 20px;
+    font-family: "Poppins", sans-serif;
+    margin: 10px;
 }
 
 .degree-name {
     font-size: 55px;
     font-weight: 700;
     color: #17376E;
-    text-align: left;
+    /* text-align: left; */
 
 }
 
@@ -71,10 +72,9 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-    gap: 20px;
     justify-content: center;
-    font-family:"Poppins",sans-serif;
-    /* margin-top: px; */
+    font-family: "Poppins", sans-serif;
+
 
 }
 </style>
@@ -88,14 +88,10 @@
                 </div>
             </div>
             <img src="../../../public/assets/exam-card/icon.png" alt="icon.png" class="img">
-
         </div>
         <div class="info">
             <div class="year">1st Semester Examination</div>
         </div>
-
-
-
     </div>
 </body>
 
