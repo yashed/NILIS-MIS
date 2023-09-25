@@ -11,12 +11,13 @@
     <link rel="stylesheet" href="style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Google Font Link for Icons -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" 
+         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" /> 
+    <script src="script.js" defer></script> 
 </head>
 
 <body>
+    <div class="body2">
     <div class="wrapper">
         <header>
             <p class="current-date"></p>
@@ -37,6 +38,7 @@
             </ul>
             <ul class="days"></ul>
         </div>
+    </div>
     </div>
 </body>
 

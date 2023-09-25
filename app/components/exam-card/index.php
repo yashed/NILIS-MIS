@@ -8,6 +8,7 @@
     <link href="css/style.css" rel="stylesheet">
 </head>
 <style>
+
 .body {
     border-radius: 8px;
     border: 3px solid rgba(0, 0, 0, 0.05);
@@ -39,14 +40,14 @@
     flex-wrap: wrap;
 
 
-    font-family: "Poppins";
+    font-family:"Poppins",sans-serif;
     margin-right: 20px;
     margin-left: 20px;
 }
 
 .degree-name {
     font-size: 55px;
-    font-weight: 1000;
+    font-weight: 700;
     color: #17376E;
     text-align: left;
 
@@ -68,10 +69,11 @@
     font-family: Poppins;
     font-size: 14px;
     font-style: normal;
-    font-weight: 800;
+    font-weight: 700;
     line-height: normal;
     gap: 20px;
     justify-content: center;
+    font-family:"Poppins",sans-serif;
     /* margin-top: px; */
 
 }
