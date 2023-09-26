@@ -1,6 +1,9 @@
 <?php
 
-echo "<h1> Home Page </h1>";
+session_start();
 
+require "../app/core/init.php";
+
+$app = new App();
 
 ?>
