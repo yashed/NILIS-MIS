@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
-
-</head>
+    
+    </head>
 
 <body>
+    <?php include '../../components/sidebar-degree/index.php' ?>
+    <link rel="stylesheet" type="text/css" href="../../components/sidebar-degree/style.css">
     <header>
-        <nav class="navbar">
+        <nav class="navbar close">
             <div class="navbar-container">
                 <div class="navbar-icons">
                     <a href="page1.html"><img src="icon01.png" alt="Icon 1"></a>
@@ -20,18 +22,18 @@
         </nav>
     </header>
 
-    <div class="white-container1">
+    <div class="white-container1 close">
         Dashboard
     </div>
 
-    <div class="white-container2">
+    <div class="white-container2 close">
         <p class="left-top-text">Ongoing Degree Programs</p>
         <div class="blue-box1"></div>
         <div class="blue-box2"></div>
     </div>
 
     <div class="flex-container">
-        <div class="white-container3">
+        <div class="white-container3 close">
             <div class="text1">Recently Published Examination <br>Results</div>
             <div class="exam-card1">
                 <?php include '../../components/exam-card/index.php' ?>
@@ -52,8 +54,9 @@
             <link rel="stylesheet" type="text/css" href="../../components/calender/style.css">
         </div>
     </div>
+    
     <script>
-
+        
     </script>
 </body>
 
