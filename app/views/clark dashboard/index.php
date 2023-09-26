@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
-    
-    </head>
+</head>
 
 <body>
     <?php include '../../components/sidebar-degree/index.php' ?>
@@ -46,17 +45,34 @@
 
         <div class="white-container4">
             <div class="heading-calender">Academic Calendar</div>
-            <div class="calender">
-                <?php include '../../components/calender/index.php' ?>
-            </div>
-
+            <?php include '../../components/calender/index.php' ?>
             <script src="../../components/calender/script.js"></script>
             <link rel="stylesheet" type="text/css" href="../../components/calender/style.css">
         </div>
     </div>
-    
+
     <script>
-        
+    const body = document.querySelector("body"),
+        sidebar = body.querySelector(".sidebar"),
+        toggle = body.querySelector(".toggle");
+    navbar = body.querySelector(".navbar");
+    whitecontainer1 = body.querySelector(".white-container1");
+    whitecontainer2 = body.querySelector(".white-container2");
+    whitecontainer3 = body.querySelector(".white-container3");
+
+    toggle.addEventListener("click", () => {
+        sidebar.classList.toggle("close");
+        navbar.classList.toggle("close");
+        whitecontainer1.classList.toggle("close");
+        whitecontainer2.classList.toggle("close");
+        whitecontainer3.classList.toggle("close");
+    });
+
+    let subMenu = document.getElementById("subMenu");
+
+    function toggleMenu() {
+        subMenu.classList.toggle("open-menu");
+    }
     </script>
 </body>
 
