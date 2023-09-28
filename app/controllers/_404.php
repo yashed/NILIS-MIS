@@ -1,11 +1,10 @@
 <?php
 
-class Home{
+class _404{
 
     function __construct(){
-        echo "home page";
+        echo "Page not found";
     }
 }
-
 
 ?>
