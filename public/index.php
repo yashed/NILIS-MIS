@@ -28,3 +28,5 @@ class app{
 }
 
 $app =new App();
+
+?>
