@@ -7,6 +7,7 @@
  define('APP_NAME','NILIS_MIS');
  define('APP_DESC', 'Examination Managment System');
 
+
 /**
  * app info
  */
@@ -18,6 +19,10 @@ if($_SERVER['SERVER_NAME'] == 'localhost'){
     define('DBUSER','root');
     define('DBPASS','');
     define('DBDRIVER','mysql');
+
+    //root path (localhost)
+    //root path 
+    define('ROOT', 'http://localhost/NILIS-MIS/public/');
 }
 else{
    //database config for live server
@@ -26,5 +31,8 @@ else{
     define('DBUSER','root');
     define('DBPASS','');
     define('DBDRIVER','mysql');
+
+    //root path 
+    define('ROOT', 'http://');
 }
 ?>
