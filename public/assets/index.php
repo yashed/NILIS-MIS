@@ -3,4 +3,3 @@
 echo "Access Denied!"
 
 ?>
-w
