@@ -32,8 +32,8 @@
 .card {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-
+    justify-content: space-between;
+    margin: 10px;
 }
 
 .content {
@@ -51,9 +51,9 @@
 
 .degree-name {
     font-size: 55px;
-    font-weight: 700;
+    font-weight: 1000;
     color: #17376E;
-    /* text-align: left; */
+    text-align: left;
 
 }
 

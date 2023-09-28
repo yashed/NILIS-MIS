@@ -6,7 +6,7 @@ class Home extends Controller{
         
         $db = new Database();
         $db->create_tables();
-       $this->view('login/login');
+       $this->view('login');
     }
     public function edit(){
         echo "Home eddit ";
