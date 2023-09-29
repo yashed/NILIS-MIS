@@ -153,13 +153,13 @@
   <body>
     <div class="flex-container">
       <div class="body_01">
-        <img class="img1" src="../../../public/assets/login/NILISLogo.png" alt="Logo"
+        <img class="img1" src="<?=ROOT?>assets/login/NILISLogo.png" alt="Logo"
         />
         <h1 class="title">
           <div class="examination">Examination</div>
           Management<br />Information<br />System
         </h1>
-        <img class="img2" src="../../../public/assets/login/Loginpng.png" alt="Logo" />
+        <img class="img2" src="<?=ROOT?>assets/login/Loginpng.png" alt="Logo" />
       </div>
       <div class="body_02">
         <div class="body_02_1">

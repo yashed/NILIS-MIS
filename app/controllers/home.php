@@ -3,14 +3,14 @@
 class Home extends Controller{
 
     public function index(){
-        $this->view('DR-Interfaces/DR-Dashboard');
+        // $this->view('dr-interfaces/dr-dashboard');
         
         $db = new Database();
         $db->create_tables();
-        $this->view('login');
+        $this->view('login/login');
     }
     public function edit(){
-        echo "Home eddit ";
+        echo "Home edit ";
     }
     public function delete(){
         echo "Home delete ";

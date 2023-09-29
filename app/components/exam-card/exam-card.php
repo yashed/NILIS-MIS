@@ -71,7 +71,7 @@
             <div class="card">
                 <div class="content">
                     <div class="degree-name"> DLIM </div>
-                    <div class="sub-name">Diploma in Library and<br>Information Management</div>
+                    <div class="sub-name">Diploma in Library and<br>Information Management </div>
                 </div>
                 <img src="../../../public/assets/exam-card/icon.png" alt="icon.png" class="img">
             </div>
