@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link
-      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet"/>
     <style>
-      /* Apply styles to the body and HTML to ensure full height */
 
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,700;1,800;1,900&display=swap");
       @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,200;0,300;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,700;1,800;1,900&display=swap");
+      
       body {
         height: 100%;
         margin: 0;
@@ -156,20 +153,13 @@
   <body>
     <div class="flex-container">
       <div class="body_01">
-        <img
-          class="img1"
-          src="../../../public/assets/NILISLogo.png"
-          alt="Logo"
+        <img class="img1" src="../../../public/assets/login/NILISLogo.png" alt="Logo"
         />
         <h1 class="title">
           <div class="examination">Examination</div>
           Management<br />Information<br />System
         </h1>
-        <img
-          class="img2"
-          src="../../../public/assets/Loginpng.png"
-          alt="Logo"
-        />
+        <img class="img2" src="../../../public/assets/login/Loginpng.png" alt="Logo" />
       </div>
       <div class="body_02">
         <div class="body_02_1">

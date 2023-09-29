@@ -7,7 +7,6 @@
  define('APP_NAME','NILIS_MIS');
  define('APP_DESC', 'Examination Managment System');
 
-
 /**
  * app info
  */
