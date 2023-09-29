@@ -1,9 +1,0 @@
-.body-01{
-    display: flex;
-   justify-content: flex-start;
-  
-}
-
-.body-01 > div{
-    color: #17376E;
-}

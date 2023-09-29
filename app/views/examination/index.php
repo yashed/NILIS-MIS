@@ -4,188 +4,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="style.css">
-
     <style>
-    body {
-        background-color: #E2E2E2;
-        margin: 0;
-        padding: 0;
-    }
+        body {
+            background-color: #E2E2E2;
+            margin: 0;
+            padding: 0;
+        }
 
-    .navbar {
-        background-color: white;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 70px;
-        padding: 10px 20px;
-        margin-left: 328px;
-        box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
-        margin-bottom: 10px;
-        border-radius: 10px;
-    }
+        .navbar {
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+            padding: 10px 20px;
+            margin-left: 328px;
+            box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
 
-    .navbar-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-    }
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
 
-    .navbar-icons {
-        display: flex;
-        gap: 30px;
-    }
+        .navbar-icons {
+            display: flex;
+            gap: 30px;
+        }
 
-    .navbar-icons a {
-        text-decoration: none;
-        color: #333;
-    }
+        .navbar-icons a {
+            text-decoration: none;
+            color: #333;
+        }
 
-    .navbar-icons {
-        margin-left: auto;
-    }
+        .navbar-icons {
+            margin-left: auto;
+        }
 
-    .white-container1 {
-        background-color: white;
-        padding: 20px;
-        margin-left: 328px;
-        color: #17376E;
-        font-size: 36px;
-        font-family: "Poppins", sans-serif;
-        font-weight: 500;
-        margin-bottom: 10px;
-        border-radius: 10px;
-    }
+        .white-container1 {
+            background-color: white;
+            padding: 20px;
+            margin-left: 328px;
+            color: #17376E;
+            font-size: 36px;
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
 
-    .left-top-text {
-        text-align: left;
-        margin: 0;
-        padding: 0;
-        margin-bottom: 20px;
-        color: #17376E;
-    }
+        .left-top-text {
+            text-align: left;
+            margin: 0;
+            padding: 0;
+            margin-bottom: 20px;
+            color: #17376E;
+        }
 
-    .white-container2 {
-        margin-left: 328px;
-        background-color: white;
-        padding: 20px;
-        height: 100%;
-        font-family: "Poppins", sans-serif;
-        font-size: 24px;
-        align-items: center;
-        justify-content: center;
-        border-radius: 10px;
-    }
+        .white-container2 {
+            margin-left: 328px;
+            background-color: white;
+            padding: 20px;
+            height: 100%;
+            font-family: "Poppins", sans-serif;
+            font-size: 24px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
 
-    .flex-container {
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-    }
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
 
-    .blue-box1 {
-        width: 300px;
-        height: 200px;
-        background-color: #17376E;
-        display: inline-block;
-        margin-top: 50px;
-        margin-left: 100px;
-    }
+        .blue-box1 {
+            width: 300px;
+            height: 200px;
+            background-color: #17376E;
+            display: inline-block;
+            margin-top: 50px;
+            margin-left: 100px;
+        }
 
-    .blue-box2 {
-        width: 300px;
-        height: 200px;
-        background-color: #17376E;
-        display: inline-block;
-        margin-top: 50px;
-        margin-left: 100px;
-    }
-
-
-    .white-container3 {
-        flex: 1;
-        margin-left: 328px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        background-color: white;
-        padding: 20px;
-        height: 100%;
-        width: 320px;
-        /* font-family: "Poppins", sans-serif; */
-        font-size: 24px;
-        border-radius: 10px;
-    }
-
-    .text1 {
-        font-family: "Poppins", sans-serif;
-        text-align: left;
-        margin-bottom: 20px;
-        padding: 0;
-        color: #17376E;
-    }
-
-    .exam-card1 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
+        .blue-box2 {
+            width: 300px;
+            height: 200px;
+            background-color: #17376E;
+            display: inline-block;
+            margin-top: 50px;
+            margin-left: 100px;
+        }
 
 
+        .white-container3 {
+            flex: 1;
+            margin-left: 328px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background-color: white;
+            padding: 20px;
+            height: 100%;
+            width: 320px;
+            /* font-family: "Poppins", sans-serif; */
+            font-size: 24px;
+            border-radius: 10px;
+        }
 
-    .ex-card {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-    }
+        .text1 {
+            font-family: "Poppins", sans-serif;
+            text-align: left;
+            margin-bottom: 20px;
+            padding: 0;
+            color: #17376E;
+        }
 
-    .exam-card2 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        .exam-card1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
 
 
-    /*calender css*/
-    .heading-calender {
-        font-family: "Poppins", sans-serif;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 24px;
-        line-height: 20px;
-        /* identical to box height, or 71% */
-        letter-spacing: -0.02em;
-        margin-left: 80px;
-        margin-top: 10px;
-        color: #17376E;
-    }
 
-    button {
-        color: #fff;
-        width: 20%;
-        height: 5vh;
-        padding: 8px 22px;
-        border-radius: 12px;
-        background: #17376e;
-        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
-        border: 0px;
-        margin: 18px;
-        margin-top: 25px;
-    }
+        .ex-card {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    .bt-name {
-        font-size: 16px;
-        font-weight: 500px;
-    }
+        .exam-card2 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    button:hover {
-        color: #17376e;
-        background-color: white;
-        border: 1px solid var(--colour-secondary-1, #17376e);
-    }
+
+        /*calender css*/
+        .heading-calender {
+            font-family: "Poppins", sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 20px;
+            /* identical to box height, or 71% */
+            letter-spacing: -0.02em;
+            margin-left: 80px;
+            margin-top: 10px;
+            color: #17376E;
+        }
+
+        button {
+            color: #fff;
+            width: 20%;
+            height: 5vh;
+            padding: 8px 22px;
+            border-radius: 12px;
+            background: #17376e;
+            box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+            border: 0px;
+            margin: 18px;
+            margin-top: 25px;
+        }
+
+        .bt-name {
+            font-size: 16px;
+            font-weight: 500px;
+        }
+
+        button:hover {
+            color: #17376e;
+            background-color: white;
+            border: 1px solid var(--colour-secondary-1, #17376e);
+        }
     </style>
 </head>
 
