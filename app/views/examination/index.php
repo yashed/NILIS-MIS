@@ -118,6 +118,14 @@
         border-radius: 10px;
     }
 
+    .title {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+    }
+
     .text1 {
         font-family: "Poppins", sans-serif;
         text-align: left;
@@ -163,17 +171,22 @@
         color: #17376E;
     }
 
+    .dropdown {
+        width: 200px;
+    }
+
     button {
+        width: 100%;
         color: #fff;
-        width: 20%;
         height: 5vh;
         padding: 8px 22px;
         border-radius: 12px;
         background: #17376e;
         box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
         border: 0px;
-        margin: 18px;
-        margin-top: 25px;
+        margin-bottom: 10px;
+        /* margin-top: 25px; */
+        flex-wrap: wrap;
     }
 
     .bt-name {
@@ -185,6 +198,39 @@
         color: #17376e;
         background-color: white;
         border: 1px solid var(--colour-secondary-1, #17376e);
+    }
+
+    .dropdown-content {
+
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid rgba(23, 55, 110, 0.46);
+        box-shadow: 0px 8px 11px 0px rgba(0, 0, 0, 0.15);
+        border-radius: 12px;
+        min-width: 200px;
+        z-index: 1;
+
+    }
+
+    .dropdown-content a {
+
+        font-size: 14px;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        font-weight: 300;
+        text-align: center;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #E0E0E0;
+        border-radius: 12px;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
     }
     </style>
 </head>
@@ -217,14 +263,25 @@
     </div>
 
     <div class="white-container2">
-        <p class="left-top-text">Upcoming Examinations</p>
+        <div class="title">
+            <p class="left-top-text">Upcoming Examinations</p>
+            <div class="dropdown">
+                <button class="dropbtn">
+                    <div class="bt-name">Create Examination</div>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#">Normal Examination</a>
+
+                    <a href="#">Special Examination</a>
+                </div>
+            </div>
+        </div>
+
         <div class="ex-card">
             <div class="exam-card1">
                 <?php include '../../components/exam-card/index.php' ?>
             </div>
-            <button>
-                <div class="bt-name">Create Examination</div>
-            </button>
+
         </div>
     </div>
 
