@@ -2,6 +2,7 @@
 
 class Home extends Controller{
 
+
     public function index(){
         
         $db = new Database();

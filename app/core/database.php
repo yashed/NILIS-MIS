@@ -49,7 +49,11 @@ class Database {
         $query = "
         CREATE TABLE IF NOT EXISTS users (
             id int(11) NOT NULL AUTO_INCREMENT,
+            fname varchar(50) NOT NULL,
+            lname varchar(50) NOT NULL,
             email varchar(100) NOT NULL,
+            phoneNo varchar(12) NOT NULL,
+            role varchar(10) NOT NULL,
             password varchar(255) NOT NULL,
             date date DEFAULT NULL,
             PRIMARY KEY (id),
