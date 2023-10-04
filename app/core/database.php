@@ -51,6 +51,7 @@ class Database {
             id int(11) NOT NULL AUTO_INCREMENT,
             fname varchar(50) NOT NULL,
             lname varchar(50) NOT NULL,
+            username varchar(20) NOT NULL,
             email varchar(100) NOT NULL,
             phoneNo varchar(12) NOT NULL,
             role varchar(20) NOT NULL,

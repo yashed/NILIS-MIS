@@ -13,6 +13,7 @@
         'fname',
         'lname',
         'email',
+        'username',
         'phoneNo',
         'role',
         'password',
@@ -36,6 +37,21 @@
         }
         if(empty($data['phoneNo'])){
              $this->errors['phoneNo'] = 'Phone number is required';
+
+        }
+        
+        //check username
+        if(empty($data['username'])){
+             $this->errors['username'] = 'Username is required';
+
+        }
+        else 
+        {
+            if($this->where(['username'=>$data['username']]))
+            {
+                $this->errors['username'] = 'This Username is already exists';
+   
+           }
 
         }
 
