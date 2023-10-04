@@ -3,16 +3,18 @@
  * main model class
  */
 
- class Model extends Database
+ class Model extends Database 
  {
 
     protected $table = "";
     public function insert($data){
       
-        //remove unwanted column
+        //remove unwanted column 
+        //this is not a serious error , the code is working with this
+        echo "No error";
         if(!empty($this->allowedColumns))
         {
-           
+          
          foreach($data as $key => $value);
          {
            if(!in_array($key,$this->allowedColumns))
@@ -35,6 +37,31 @@
         $this->query($query,$data);
         
        //  echo "query = " . $query;
+   
+       }
+
+       public function where($data){
+
+        $keys = array_keys($data);
+        
+        $query = "select * from " .$this->table. " where ";
+        
+        foreach($keys as $key){
+
+            $query .= $key . "=:" . $key . " && ";
+        }
+
+        //trim lasf && and space if there exists
+        $query = trim($query,'&& '); 
+        //define query to add user data
+        $res = $this->query($query,$data);
+        
+       if(is_array($res))
+       {
+        return $res;
+       }
+
+       return false;
    
        }
 

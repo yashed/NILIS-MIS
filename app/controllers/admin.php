@@ -32,7 +32,7 @@ class Admin extends Controller{
       show($user->errors);
       $data['title'] = 'Signup';
 
-      $this->view('signup',$data);
+      $this->view('adduser',$data);
     }
 }
 

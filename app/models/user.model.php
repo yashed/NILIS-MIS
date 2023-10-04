@@ -34,20 +34,20 @@
              $this->errors['lname'] = 'A last name is required';
 
         }
-        if(empty($data['phone'])){
-             $this->errors['phone'] = 'Phone number is required';
+        if(empty($data['phoneNo'])){
+             $this->errors['phoneNo'] = 'Phone number is required';
 
         }
 
         //check email
-        $query = "select * from users where email = :email limit 1";
+      
         if(!filter_var($data['email'],FILTER_VALIDATE_EMAIL))
         {
              $this->errors['email'] = 'Email is not valid';
 
         }else
         {
-            if($this->query($query,['email'=>$data['email']]))
+            if($this->where(['email'=>$data['email']]))
             {
                 $this->errors['email'] = 'This email is already exists';
    
