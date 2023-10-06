@@ -10,7 +10,7 @@
 :root{
     --body-color: #E2E2E2;
     --sidebar-color: #17376E;
-    --primary-color: #ffffff;
+    --primary-color: #9AD6FF;
     --text-color: #ffffff;
 
     --tran-02: all 0.2s ease;
@@ -33,9 +33,8 @@ body{
     top: 0;
     left: 0;
     height: 100%;
-    width: 300px;
+    width: 250px;
     padding: 10px 14px;
-    border-radius: 0px 12px 12px 0px;
     background: var(--sidebar-color);
     transition: var(--tran-05);
     z-index: 300;
@@ -156,10 +155,10 @@ header .image-text .headder-text{
     font-size: 22px;
     font-weight: 600;
     transition: var(--tran-03);
-    background: var(--primary-color, #FFF);
-    border: 1px solid #E2E2E2;
+    background: var(--text-color);
+    border: 1px solid var(--sidebar-color);
     outline-width: 0.5px;
-   
+    z-index: 600;
 }
 
 .sidebar.close header .toggle{
@@ -176,12 +175,12 @@ header .image-text .headder-text{
     display: flex;
     align-items: center;
     text-decoration: none;
-    border-radius: 8px;
+    border-radius: 6px;
     transition: var(--tran-04);
 }
 
 .sidebar li a:hover{
-    background: var(--primary-color);
+    background: var(--text-color);
 }
 
 .sidebar li a:hover .text,
@@ -204,39 +203,18 @@ header .image-text .headder-text{
     margin-top: 10px;
 }
 
-/*side bar end*/
-
-/* .home{
-    left: 250px;
-    position: relative;
-    width: calc(100% - 250px);
-    transition: var(--tran-05);
-    background: var(--body-color);
-    background-color: aqua;
-} */
-
-/* .home .text{
-    font-size: 30px;
-    font-weight: 500;
-    color: var(--sidebar-color);
-    padding: 8px 40px;
-
-} */
-
-
 .hero{
     left: 250px;
     position: relative;
     width: calc(100% - 250px);
     transition: var(--tran-05);
     background: var(--body-color);
-    background-color: rgb(255, 255, 255);
+    background-color: var(--text-color);
     border-radius: 6px;
-    margin: 2px 0.5px 2px 2px;
-    
+    margin: -2px 0.5px 2px 2px;
     min-height: 6vh;
-    /* background: #eceaff; */
     color: #E2E2E2;
+    z-index: 100;
 }
 
 .sidebar.close ~ .hero{
@@ -275,13 +253,14 @@ header .image-text .headder-text{
 } 
 
 .sub-menu-wrap{
-    position: absolute;
+    position: fixed;
     top: 100%;
     right: 10%;
     width: 300px;
     max-height: 0px;
     overflow: hidden;
     transition: max-height 0.5s;
+    margin-left: 10px;
 }
 
 .sub-menu-wrap.open-menu{
@@ -289,10 +268,12 @@ header .image-text .headder-text{
 }
 
 .sub-menu{
-    background: #ffffff;
+    position: fixed;
+    background: #9f6b6b;
     padding: 20px;
-    margin: 10px;
+    margin: 12px;
     border-radius: 6px;
+    z-index: 1000;
 }
 
 .user-info{
