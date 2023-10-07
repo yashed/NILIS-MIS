@@ -13,7 +13,7 @@
 
     include_once '../../components/navside-bar/header.php';
     include_once '../../components/navside-bar/sidebar.php';
-    include_once '../../components/navside-bar/footer.php';
+    // include_once '../../components/navside-bar/footer.php';
 ?>
     <header>
     </header>
