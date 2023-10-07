@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <style>
-    .body {
+    .body2 {
         display: flex;
         flex-direction: column;
         border-radius: 8px;
@@ -67,7 +67,7 @@
     }
     </style>
     <body>
-        <div class="body">
+        <div class="body2">
             <div class="card">
                 <div class="content">
                     <div class="degree-name"> DLIM </div>

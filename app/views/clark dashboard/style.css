@@ -25,6 +25,7 @@ body {
     margin: 0; 
     padding: 0; 
     color: #17376E;
+    margin-bottom: 30px;
 }
 
 .white-container2 {
@@ -50,17 +51,17 @@ body {
     gap:10px;
 }
 
-.exam-card-left {
+.degree-card-left {
     width: 300px;
     height: 200px; 
     background-color: #ffffff;
     display: inline-block;
-    margin-left: 100px;
+    margin-left: 50px;
     margin-bottom: 20px;
     margin-top: 10px;
 }
 
-.exam-card-right {
+.degree-card-right {
     width: 300px;
     height: 200px; 
     background-color: #ffffff;
@@ -124,7 +125,7 @@ body {
     margin-top:10px;
     margin-bottom: 10px;
     background-color: white;
-    padding: 20px;
+    padding-left: 100px;
     height: 600px;
     width:300px;
     font-family: "Poppins", sans-serif;
@@ -141,8 +142,9 @@ body {
     line-height: 20px;
     /* identical to box height, or 71% */
     letter-spacing: -0.02em;
-    margin-left: 80px;
-    margin-top: 10px;
+    margin-left: 50px; 
+    margin-top: 20px;
+    margin-bottom: 50px;
     color: #17376E;
 }
 

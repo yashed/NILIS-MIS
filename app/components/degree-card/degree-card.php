@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Degree Card</title>
-    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+    <!-- <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" /> -->
     <style>
-        .body {
+        .body3 {
             border-radius: 8px;
             border: 3px solid rgba(0, 0, 0, 0.05);
             background: var(--colour-primary, #FFF);
@@ -68,7 +68,7 @@
     </style>
 </head>
 <body>
-    <div class="body">
+    <div class="body3">
         <div class="card">
             <img src="../../../public/assets/degree-card/icon.png" alt="icon.png" class="img">
             <div class="content">
