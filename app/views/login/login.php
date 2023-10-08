@@ -98,8 +98,9 @@
     }
 
     .input {
-        width: 80%;
+        width: 105%;
         height: 50px;
+        margin-top: 20px;
         font-family: "Poppins";
         font-size: 16px;
         font-weight: 350;
@@ -125,13 +126,29 @@
         color: #9ad6ff;
     }
 
+    .error_block {
+        /* margin: 10px; */
+        margin: 10px 0px 30px 10px;
+    }
+
+    .error {
+        font-family: "Poppins";
+        font-size: 12px;
+        color: #FF0000;
+        font-weight: 300;
+        text-align: left;
+
+        /* margin-top: 20px; */
+        /* margin-bottom: 20px; */
+    }
+
     root {
         ----colour-secondar-1: #17376e;
     }
 
     button {
         color: #fff;
-        width: 85%;
+        width: 110%;
         height: 6vh;
         padding: 8px 22px;
         border-radius: 12px;
@@ -183,11 +200,21 @@
                     Sign in to <br />
                     your account
                 </h1>
-                <input class="input" type="text" placeholder="Username" />
-                <input class="input" type="password" placeholder="Password" />
-                <button>
-                    <div class="bt-name">Button</div>
-                </button>
+                <form method="post">
+                    <input class="input" type="text" placeholder="Username" name="username" required />
+                    <input class="input" type="password" placeholder="Password" name="password" required />
+                    <div class="error_block">
+                        <?php if(message()):?>
+                        <div class="error"><?=message('',true)?></div>
+                        <?php endif;?>
+                        <?php if(!empty($errors['username'])):?>
+                        <div class="error"><?=$errors['username']?></div>
+                        <?php endif;?>
+                    </div>
+                    <button type="submit">
+                        <div class="bt-name">Button</div>
+                    </button>
+                </form>
                 <a href="#"> <label class="forgot">Forgot Password</label></a>
             </div>
         </div>

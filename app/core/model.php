@@ -65,6 +65,35 @@
    
        }
 
+       //get first data in the request
+       public function first($data){
+
+        $keys = array_keys($data);
+        
+        $query = "select * from " .$this->table. " where ";
+        
+        foreach($keys as $key){
+
+            $query .= $key . "=:" . $key . " && ";
+        }
+
+        //trim lasf && and space if there exists
+        $query = trim($query,'&& '); 
+
+        $query.= " order by id desc limit 1 ";
+        //define query to add user data
+        $res = $this->query($query,$data);
+        
+        
+       if(is_array($res))
+       {
+        return $res[0];
+       }
+
+       return false;
+   
+       }
+
 
  }
 

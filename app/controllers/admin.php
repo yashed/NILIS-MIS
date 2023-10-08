@@ -21,7 +21,7 @@ class Admin extends Controller{
           if($user->validate($_POST)){
              
               //set default passsword
-              $password = $_POST['role'].'@123';
+              $password = $_POST['role'].'123';
               //add date to the POST data
               $_POST['date'] = date("Y-m-d H:i:s");  
     
