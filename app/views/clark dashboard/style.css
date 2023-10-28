@@ -31,7 +31,8 @@ body {
 .white-container2 {
     margin-left: 250px;
     background-color: white;
-    padding: 20px;
+    padding-left: 50px;
+    padding-top: 20px;
     height: 300px;
     /* font-family:"Poppins",sans-serif; */
     font-size: 24px;
@@ -43,6 +44,8 @@ body {
 
 .white-container2.close{
     margin-left: 88px;
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
 .flex-container {
@@ -56,19 +59,13 @@ body {
     height: 200px; 
     background-color: #ffffff;
     display: inline-block;
-    margin-left: 50px;
-    margin-bottom: 20px;
-    margin-top: 10px;
 }
-
 .degree-card-right {
     width: 300px;
     height: 200px; 
     background-color: #ffffff;
     display: inline-block;
-    margin-left: 200px;
-    margin-bottom: 20px;
-    margin-top:10px;
+    margin-left: 180px;
 }
 
 
