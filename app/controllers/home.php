@@ -2,6 +2,7 @@
 
 class Home extends Controller{
 
+
     public function index(){
         
         $db = new Database();
@@ -13,7 +14,7 @@ class Home extends Controller{
     //    $users = new User();
     //    $users->insert($data);
 
-       $this->view('login');
+       $this->view('login/login');
     }
     public function edit(){
         echo "Home eddit ";
