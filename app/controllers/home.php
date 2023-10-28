@@ -14,7 +14,7 @@ class Home extends Controller{
     //    $users = new User();
     //    $users->insert($data);
 
-       $this->view('dr-interfaces/dr-dashboard.php');
+       $this->view('login/login');
     }
     public function edit(){
         echo "Home eddit ";
