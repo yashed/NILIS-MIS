@@ -71,13 +71,15 @@
             <div class="card">
                 <div class="content">
                     <div class="degree-name"> DLIM </div>
-                    <div class="sub-name">Diploma in Library and<br>Information Management </div>
+                    <div class="sub-name">Diploma in Library and<br>Information Management</div>
                 </div>
-                <img src="../../../public/assets/exam-card/icon.png" alt="icon.png" class="img">
             </div>
-            <div class="info">
-                <div class="year">1st Semester Examination</div>
-            </div>
+            <img src="../../../public/assets/exam-card/icon.png" alt="icon.png" class="exam-img">
         </div>
-    </body>
+        <div class="exam-info">
+            <div class="exam-year">1st Semester Examination</div>
+        </div>
+    </div>
+</body>
+
 </html>
