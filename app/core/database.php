@@ -10,9 +10,6 @@ class Database {
     {
         $str = DBDRIVER.":hostname=".DBHOST.";dbname=nilis_db";
        return new PDO($str,DBUSER,DBPASS);
-
-       
-       
         
     }
     public function query($query,$data = [],$type = 'object'){

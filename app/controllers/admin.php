@@ -44,7 +44,7 @@ class Admin extends Controller{
       $data['error'] = $user->errors;
       $data['title'] = 'Signup';
 
-      $this->view('adduser',$data);
+      $this->view('admin-users',$data);
     }
 }
 
