@@ -201,18 +201,17 @@
                     your account
                 </h1>
                 <form method="post">
-                    <input class="input" type="text" placeholder="Username" name="username" required />
-                    <input class="input" type="password" placeholder="Password" name="password" required />
+                    <input value="<?=set_value('username')?>" class="input" type="text" placeholder="Username" name="username" required />
+
+                    <input value="<?=set_value('password')?>" class="input" type="password" placeholder="Password" name="password" required />
+
                     <div class="error_block">
-                        <?php if(message()):?>
-                        <div class="error"><?=message('',true)?></div>
-                        <?php endif;?>
                         <?php if(!empty($errors['username'])):?>
                         <div class="error"><?=$errors['username']?></div>
                         <?php endif;?>
                     </div>
                     <button type="submit">
-                        <div class="bt-name">Button</div>
+                        <div class="bt-name">Login</div>
                     </button>
                 </form>
                 <a href="#"> <label class="forgot">Forgot Password</label></a>

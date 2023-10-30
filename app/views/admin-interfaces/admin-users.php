@@ -36,6 +36,21 @@
     --tran-05: all 0.5s ease;
 }
 
+.profile-message {
+    color: #10344D;
+    font-family: Poppins;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 600;
+    margin: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #f8d7da;
+}
+
 .admin-home {
     height: 100vh;
     left: 250px;
@@ -259,8 +274,15 @@ h2 {
 }
 
 .popup .form .form-element {
+    display: flex;
     margin: 15px 0px;
+    align-content: flex-end;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
+
 
 .popup .form .form-element label {
     font-size: 14px;
@@ -285,7 +307,7 @@ h2 {
 .popup .form .form-element button {
     padding: 10px;
     height: 5vh;
-    width: 50%;
+    width: 30%;
     border: none;
     outline: none;
     background: #17376e;
@@ -364,6 +386,14 @@ h2 {
     align-items: center;
     flex-wrap: wrap;
 }
+
+.user-error {
+    color: red;
+    font-size: 10px;
+    font-weight: 400;
+    margin-top: 5px;
+    margin-left: 5px;
+}
 </style>
 
 <!-- button CSS -->
@@ -405,6 +435,12 @@ button:hover {
                     <button class="center">
                         <div class="bt-name" id="show-login">Add User</div>
                     </button>
+                </div>
+                <div class="profile-message">
+
+                    <?php if(message()):?>
+                    <div class="error"><?=message('',true)?></div>
+                    <?php endif;?>
                 </div>
                 <div class="container">
                     <ul class="responsive-table">
@@ -533,54 +569,90 @@ button:hover {
             <div class="close-btn" id="close-create-popup">
                 &times;
             </div>
-            <div class="popup-card">
-                <div class="form">
-                    <h2>Create New User</h2>
-                    <div class="user-data">
-                        <div class="coloum-01">
-                            <div class="form-element">
-                                <label for="fname">First Name</label>
-                                <input type="text" placeholder="Enter" id="fname">
+            <form method="post">
+                <div class="popup-card">
+                    <div class="form">
+                        <h2>Create New User</h2>
+                        <div class="user-data">
+                            <div class="coloum-01">
+                                <div class="form-element">
+                                    <label for="fname">First Name</label>
+                                    <input value="<?=set_value('fname')?>" name="fname" type="text" placeholder="Enter"
+                                        id="fname"
+                                        style="border: <?= !empty($errors['fname']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                    <?php if(!empty($errors['fname'])):?>
+                                    <div class="user-error" for="fname"><?=$errors['fname']?></div>
+                                    <?php endif;?>
+                                </div>
+                                <div class="form-element">
+                                    <label for="email">Email</label>
+                                    <input value="<?=set_value('email')?>" name="email" type="text" placeholder="Enter"
+                                        id="email"
+                                        style="border: <?= !empty($errors['email']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                    <?php if(!empty($errors['email'])):?>
+                                    <div class="user-error" for="email"><?=$errors['email']?></div>
+                                    <?php endif;?>
+                                </div>
+                                <div class="form-element">
+                                    <label for="role">Role</label>
+                                    <!-- <input type="password" placeholder="Enter" id="role"> -->
+                                    <select name="role" id="form-element-dropdown-create">
+                                        <option value="admin" class="form-element-dropdown-op"
+                                            <?= (set_value('role') === 'admin') ? 'selected' : '' ?>>Admin</option>
+                                        <option value="clark" <?= (set_value('role') === 'clark') ? 'selected' : '' ?>>
+                                            Clark</option>
+                                        <option value="director"
+                                            <?= (set_value('role') === 'director') ? 'selected' : '' ?>>Director
+                                        </option>
+                                        <option value="dr" <?= (set_value('role') === 'dr') ? 'selected' : '' ?>>Deputy
+                                            Registrar</option>
+                                        <option value="sar" <?= (set_value('role') === 'sar') ? 'selected' : '' ?>>SAR
+                                        </option>
+                                        <option value="asar" <?= (set_value('role') === 'asar') ? 'selected' : '' ?>>
+                                            Asst SAR</option>
+                                    </select>
+
+                                </div>
                             </div>
-                            <div class="form-element">
-                                <label for="email">Email</label>
-                                <input type="text" placeholder="Enter" id="email">
-                            </div>
-                            <div class="form-element">
-                                <label for="role">Role</label>
-                                <!-- <input type="password" placeholder="Enter" id="role"> -->
-                                <select name="role" id="form-element-dropdown-create">
-                                    <option value="admin" class="form-element-dropdown-op">Admin</option>
-                                    <option value="Clark">Clark</option>
-                                    <option value="Clark">Director</option>
-                                    <option value="DR">Deputy Registar</option>
-                                    <option value="SAR">SAR</option>
-                                    <option value="ASAR">Asst SAR</option>
-                                </select>
+                            <div class="coloum-02">
+                                <div class="form-element">
+                                    <label for="lname">Last Name</label>
+                                    <input value="<?=set_value('lname')?>" name="lname" type="text" placeholder="Enter"
+                                        id="lname"
+                                        style="border: <?= !empty($errors['lname']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                    <?php if(!empty($errors['lname'])):?>
+                                    <div class="user-error" for="lname"><?=$errors['lname']?></div>
+                                    <?php endif;?>
+                                </div>
+                                <div class="form-element">
+                                    <label for="phoneNo">Phone Number</label>
+                                    <input value="<?=set_value('phoneNo')?>" name="phoneNo" type="text"
+                                        placeholder="Enter" id="phoneNo"
+                                        style="border: <?= !empty($errors['phoneNo']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                    <?php if(!empty($errors['phoneNo'])):?>
+                                    <div class="user-error" for="phoneNo"><?=$errors['phoneNo']?></div>
+                                    <?php endif;?>
+
+                                </div>
+                                <div class="form-element">
+                                    <label for="username">Username</label>
+                                    <input value="<?=set_value('username')?>" name="username" type="text"
+                                        placeholder="Enter" id="username"
+                                        style="border: <?= !empty($errors['username']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                    <?php if(!empty($errors['username'])):?>
+                                    <div class="user-error" for="username"><?=$errors['username']?></div>
+                                    <?php endif;?>
+                                </div>
                             </div>
                         </div>
-                        <div class="coloum-02">
-                            <div class="form-element">
-                                <label for="lname">Last Name</label>
-                                <input type="text" placeholder="Enter" id="fname">
-                            </div>
-                            <div class="form-element">
-                                <label for="uname">Username</label>
-                                <input type="text" placeholder="Enter" id="email">
-                            </div>
-                            <div class="form-element">
-                                <label for="role">Phone Number</label>
-                                <input type="password" placeholder="Enter" id="role">
-                            </div>
+
+                        <div class="form-element">
+                            <button type="submit">Add User</button>
                         </div>
-                    </div>
 
-                    <div class="form-element">
-                        <button>Add User</button>
                     </div>
-
                 </div>
-            </div>
+            </form>
         </div>
         <script>
         document.querySelector("#show-login").addEventListener("click", function() {
@@ -599,55 +671,51 @@ button:hover {
         <div class="close-btn" id="close-update-popup">
             &times;
         </div>
-        <div class="popup-card">
-            <div class="form">
-                <h2>Update User Details</h2>
-                <div class="user-data">
-                    <div class="coloum-01">
-                        <div class="form-element">
-                            <label for="fname">First Name</label>
-                            <input type="text" placeholder="Enter" id="fname">
+        <form>
+            <div class="popup-card">
+                <div class="form">
+                    <h2>Update User Details</h2>
+                    <div class="user-data">
+
+                        <div class="coloum-01">
+                            <div class="form-element">
+                                <label for="fname">First Name</label>
+                                <input type="text" placeholder="Enter" id="fname">
+                            </div>
+                            <div class="form-element">
+                                <label for="email">Email</label>
+                                <input type="text" placeholder="Enter" id="email">
+                            </div>
+                            <div class="form-element">
+                                <label for="newpassword">New Password</label>
+                                <input type="password" placeholder="Enter" id="newpassword">
+                            </div>
                         </div>
-                        <div class="form-element">
-                            <label for="email">Email</label>
-                            <input type="text" placeholder="Enter" id="email">
+
+                        <div class="coloum-02">
+                            <div class="form-element">
+                                <label for="lname">Last Name</label>
+                                <input type="text" placeholder="Enter" id="fname">
+                            </div>
+                            <div class="form-element">
+                                <label for="phoneNo">Phone Number</label>
+                                <input type="text" placeholder="Enter" id="phoneNo">
+                            </div>
+                            <div class="form-element">
+                                <label for="password">Confirm Password</label>
+                                <input type="password" placeholder="Enter" id="role">
+                            </div>
                         </div>
-                        <div class="form-element">
-                            <label for="role">Role</label>
-                            <!-- <input type="password" placeholder="Enter" id="role"> -->
-                            <select name="role" id="form-element-dropdown-update">
-                                <option value="admin" class="form-element-dropdown-op">Admin</option>
-                                <option value="Clark">Clark</option>
-                                <option value="Clark">Director</option>
-                                <option value="DR">Deputy Registar</option>
-                                <option value="SAR">SAR</option>
-                                <option value="ASAR">Asst SAR</option>
-                            </select>
-                        </div>
+
                     </div>
-                    <div class="coloum-02">
-                        <div class="form-element">
-                            <label for="lname">Last Name</label>
-                            <input type="text" placeholder="Enter" id="fname">
-                        </div>
-                        <div class="form-element">
-                            <label for="uname">Username</label>
-                            <input type="text" placeholder="Enter" id="email">
-                        </div>
-                        <div class="form-element">
-                            <label for="role">Phone Number</label>
-                            <input type="password" placeholder="Enter" id="role">
-                        </div>
+                    <div class="form-element">
+                        <button>Update</button>
                     </div>
+
 
                 </div>
-                <div class="form-element">
-                    <button>Update</button>
-                </div>
-
-
             </div>
-        </div>
+        </form>
     </div>
     <script>
     document.querySelector("#show-update").addEventListener("click", function() {
@@ -691,22 +759,7 @@ button:hover {
         </div>
     </div>
     <script>
-    // document.querySelector("#show-login").addEventListener("click", function() {
-    //     document.querySelector("#create-popup").classList.add("active");
-    // });
-
-    // document.querySelector(".close-btn").addEventListener("click", function() {
-    //     document.querySelector(".popup").classList.remove("active");
-    // });
-
-    // document.querySelector("#show-update").addEventListener("click", function() {
-    //     document.querySelector("#update-popup").classList.add("active");
-    // });
-
-    // document.querySelector("#close-update-popup").addEventListener("click", function() {
-    //     document.querySelector("#update-popup").classList.remove("active");
-    // });
-
+    
     document.querySelector("#delete-user").addEventListener("click", function() {
         document.querySelector("#delete-popup").classList.add("active");
     });
@@ -717,7 +770,9 @@ button:hover {
     </script>
     <div class="admin-footer">
         <?php
-                include "../../components/footer/index.php";
+                include $ROOT.'components/footer/index.php';
+
+               
         ?>
     </div>
     </div>

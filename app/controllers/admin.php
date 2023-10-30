@@ -32,7 +32,9 @@ class Admin extends Controller{
               $user->insert($_POST);
 
               message("User profile was successfully created");
-              redirect('login');
+              // header('Location: adduser');
+              // redirect('adduser');
+              
             
           }
       }
@@ -41,10 +43,10 @@ class Admin extends Controller{
       
       //show errors (data validate errors)
       show($user->errors);
-      $data['error'] = $user->errors;
+      $data['errors'] = $user->errors;
       $data['title'] = 'Signup';
 
-      $this->view('admin-users',$data);
+      $this->view('admin-interfaces/admin-users',$data);
     }
 }
 

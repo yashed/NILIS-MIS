@@ -15,18 +15,19 @@ class Login extends Controller{
             $row = $user->first([
                 'username'=>$_POST['username']
             ]);
-            
+            // show($row); die;
             if($row){
                 
                 $status = $row->password === $_POST['password'];
                 
-                echo $status;
+                // echo $status;
                 if($row->password === $_POST['password'])
                 {
                     //authentication
                     $_SESSION['USER_DATA'] = $row;
-                    
-                    redirect('home');
+            
+                    // redirect('home');
+                    header('Location: admin/adduser');
                 }
             }
             
