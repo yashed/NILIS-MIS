@@ -26,14 +26,15 @@ body {
     padding: 0; 
     color: #17376E;
     margin-bottom: 30px;
+    font-family:"Poppins",sans-serif;
 }
 
 .white-container2 {
     margin-left: 250px;
     background-color: white;
-    padding-left: 20px;
-    height: 300px;
-    /* font-family:"Poppins",sans-serif; */
+    padding: 20px;
+    height: 350px;
+    font-family:"Poppins",sans-serif; 
     font-size: 24px;
     align-items: center;
     justify-content: center;
@@ -57,18 +58,15 @@ body {
     gap:10px;
 }
 
-
-
-
 .white-container3 {
     flex: 1;
-    margin-left: 250px;
+    margin-left: 250px; 
     margin-top: 10px;
     margin-bottom: 10px;
     background-color: white;
-    padding: 20px;
     height: 600px;
     width:320px;
+    padding-left: 40px;
     /* font-family: "Poppins", sans-serif; */
     font-size: 24px;
     border-radius: 10px;
@@ -81,22 +79,6 @@ body {
     padding-left: 8%;
 }
 
-.text1{
-    font-family:"Poppins",sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 32px;
-    /* or 114% */
-    display: flex;
-    align-items: center;
-    text-align: center;
-    letter-spacing: -0.02em;
-
-    color: #17376E;
-    margin-left:40px;
-    margin-bottom: 20px;
-}
 
 
 
@@ -105,7 +87,6 @@ body {
     margin-top:10px;
     margin-bottom: 10px;
     background-color: white;
-    padding-left: 100px;
     height: 600px;
     width:300px;
     font-family: "Poppins", sans-serif;
@@ -115,28 +96,148 @@ body {
 
 .row {
     display: flex;
+    font-family:"Poppins",sans-serif;
+    margin-left: 50px;
   }
   
-  .column {
+  .column1 {
     flex: 33.33%;
-    background-color:hsl(0, 30%, 39%);
-
+    background-color:#17376E;
     padding: 10px;
-    height: 200px; 
-  }
-
-  .column1{
-    flex: 33.33%;
-    background-color:hsl(273, 70%, 20%);
-    padding: 10px;
-    height: 200px; 
+    height: 150px; 
   }
 
   .column2{
     flex: 33.33%;
-    background-color:#aaa;
+    background-color:#ffffff;
     padding: 10px;
-    height: 200px; 
+    height: 150px; 
   }
+
+  .column3{
+    flex: 33.33%;
+    background-color:#ffffff;
+    padding: 10px;
+    height: 150px; 
+  }
+
+  .data1{
+    font-family:"Poppins",sans-serif;
+    font-size: 20px;
+    padding-left: 50px;
+    color: #17376E;
+  }
+
+  .data2{
+    font-family:"Poppins",sans-serif;
+    font-size: 20px;
+    padding-left: 50px;
+    color: #17376E;
+  }
+
+  .data3{
+    font-family:"Poppins",sans-serif;
+    font-size: 20px;
+    padding-left: 50px;
+    color: #17376E;
+  }
+
+  .data4{
+    font-family:"Poppins",sans-serif;
+    font-size: 20px;
+    padding-left: 50px;
+    color: #17376E;
+  }
+
+.email{
+    font-size: 15px;
+    color: #000000;
+    
+}
+
+.regNum{
+    font-size: 15px;
+    color: #000000;
+}
+
+.country{
+    font-size: 15px;
+    color: #000000;
+}
+
+.indexNum{
+    font-size: 15px;
+    color: #000000;
+}
+
+.name{
+    font-size: 20px;
+    
+}
+
+.left-top-text2 {
+    text-align: left;
+    margin: 0; 
+    padding: 20px; 
+    color: #17376E;
+    margin-bottom: 30px;
+    font-family:"Poppins",sans-serif;
+}
+
+.row2 {
+    display: flex;
+    font-family:"Poppins",sans-serif;
+    margin-left: 50px;
+  }
+
+  .button1{
+    margin-top: 40px;
+    margin-left: 900px;
+  }
+
+  .button2{
+    margin-top: 40px;
+    margin-right: 250px;
+  }
+
+  .button3{
+    margin-top: 20px;
+    margin-left: 300px;
+  }
+
+  .buttons {
+    display: flex; /* Use flexbox to arrange the buttons horizontally */
+    justify-content: space-between; /* Adjust horizontal spacing between buttons */
+}
+
+.left-top-text3 {
+    text-align: left;
+    margin: 0; 
+    padding-top: 10px;
+    color: #17376E;
+    margin-bottom: 30px;
+    font-family:"Poppins",sans-serif;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 300px;
+  }
+  
+  td {
+    font-size: 14px; /* Data font size */
+    width: 300px;
+    padding: 5px; /* Data cell padding */
+    border: 1px solid #ffffff; /* Data cell border */
+    text-align: center;
+}
+
+th {
+    background-color: #ffffff; /* Header background color */
+    font-size: 20px; /* Header font size */
+    font-weight: bold; /* Header font weight */
+    padding: 20px; /* Header cell padding */
+    
+}
 
 

@@ -65,6 +65,22 @@ class Database {
     
         $this->query($query);
     }
+
+    function create_student_table(){
+        //user table 
+        $query = "
+        CREATE TABLE IF NOT EXISTS students(
+            id int(11) NOT NULL AUTO_INCREMENT,
+            Email varchar(100) NOT NULL,
+            regNo varchar(100) NOT NULL,
+            country varchar(100) NOT NULL,
+            indexNo varchar(100) NOT NULL,
+            PRIMARY KEY (id)
+        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
+        ";
+    
+        $this->query($query);
+    }
 }
 
 ?>

@@ -186,36 +186,6 @@
 
 <body>
     <div class="flex-container">
-<<<<<<< HEAD:app/views/login/login.view.php
-      <div class="body_01">
-        <img class="img1" src="<?=ROOT?>assets/login/NILISLogo.png" alt="Logo"
-        />
-        <h1 class="title">
-          <div class="examination">Examination</div>
-          Management<br />Information<br />System
-        </h1>
-        <img class="img2" src="<?=ROOT?>assets/login/Loginpng.png" alt="Logo" />
-      </div>
-      <div class="body_02">
-        <div class="body_02_1">
-          <h1 class="login">
-            Sign in to <br />
-            your account
-          </h1>
-
-          <input class="input" 
-                 type="text" 
-                 name="username"
-                 placeholder="Username" />
-
-          <input class="input" 
-                 type="password" 
-                 name="password"
-                 placeholder="Password" />
-
-          <button class="bt-name">LOGIN</button>
-          <a href="#"> <label class="forgot">Forgot Password</label></a>
-=======
         <div class="body_01">
             <img class="img1" src="<?=ROOT?>assets/login/NILISLogo.png" alt="Logo" />
             <h1 class="title">
@@ -247,7 +217,6 @@
                 </form>
                 <a href="#"> <label class="forgot">Forgot Password</label></a>
             </div>
->>>>>>> 6f50d88fd9b05fd28ba295ea85838a97160440a3:app/views/login/login.php
         </div>
     </div>
 </body>
