@@ -6,19 +6,18 @@
                         <ul class="menu-links">
                             <h6 class="topic1">MAIN</h6>
                             <li class="nav-link">
-                                <a href="#">
-                                    <i class="bx bx-home icon" ></i>
-                                    <span class="text nav-text">Dashboard</span>
-                                </a>
+                                <a href="http://localhost/NILIS-MIS/app/views/dr-interfaces/dr-dashboard.php" >
+                                <i class="bx bx-home icon" ></i>
+                                <span class="text nav-text">Dashboard</span></a>
                             </li>
                             <li class="nav-link">
-                                <a href="#">
+                                <a href="http://localhost/NILIS-MIS/app/views/dr-interfaces/dr-notification.php"  >
                                     <i class="bx bx-bell icon" ></i>
                                     <span class="text nav-text">Notification</span>
                                 </a>
                             </li>
                             <li class="nav-link">
-                                <a href="#">
+                                <a href="http://localhost/NILIS-MIS/app/views/dr-interfaces/dr-degreeprograms.php"  >
                                     <i class="bx bx-home icon" ></i>
                                     <span class="text nav-text">Degree Programs</span>
                                 </a>
@@ -26,7 +25,7 @@
                             <hr class="horizontal-line">
                             <h6 class="topic2">SETTINGS</h6>
                             <li class="nav-link">
-                                <a href="#">
+                                <a href="http://localhost/NILIS-MIS/app/views/dr-interfaces/dr-settings.php"  >
                                     <i class="bx bx-cog icon"></i>
                                     <span class="text nav-text">Settings</span>
                                 </a"

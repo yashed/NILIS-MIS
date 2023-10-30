@@ -181,6 +181,7 @@ header .image-text .headder-text{
 
 .sidebar li a:hover{
     background: var(--text-color);
+    color: var(--sidebar-color);
 }
 
 .sidebar li a:hover .text,

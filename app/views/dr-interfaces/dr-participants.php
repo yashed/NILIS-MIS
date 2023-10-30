@@ -260,7 +260,7 @@
             display: inline-block;
             width: 2rem;
             height: 2rem;
-            background: #fff6 url(../../../public/assets/export.png) center / 80% no-repeat;
+            background: #fff6 url(../../../public/assets/dr-participant-table/export.png) center / 80% no-repeat;
             border-radius: 50%;
             transition: .2s ease-in-out;
         }
