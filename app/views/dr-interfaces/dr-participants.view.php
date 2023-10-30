@@ -1,8 +1,9 @@
 <?php
+
     $role = "DR";
 
     include_once '../../components/navside-bar/header.php';
-    include_once '../../components/navside-bar/sidebar.php';
+    include_once '<?=ROOT?>/components/navside-bar/sidebar.php';
     include_once '../../components/navside-bar/footer.php';
 ?>
 
@@ -345,7 +346,7 @@
                 </div>
             </section>
             <section class="table__body">
-                <table>
+                <table id="table_p">
                     <thead>
                         <tr>
                             <th> Name </th>
@@ -356,34 +357,17 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <?php foreach($students as $student):?>
                         <tr>
-                            <td class="table__body-td-name"><img src="../../../public/assets/MyOriginalPhoto.jpg" alt=""> Bimsara Anjana </td>
+                            <td class="table__body-td-name"><img src="../../../public/assets/MyOriginalPhoto.jpg" alt=""> <?=$student->name?> </td>
                             <td> Students </td>
-                            <td> 21000859 </td>
-                            <td> 2020cs085  </td>
-                            <td> bimsarajayadewa@gmail.com </td>
+                            <td> <a href="<?=ROOT?>/Student/<?=$student->indexNo?>"><?=$student->indexNo?></a></td>
+                            <td>  <?=$student->regNo?>  </td>
+                            <td> <?=$student->Email?> </td>
                         </tr>
-                        <tr>
-                            <td class="table__body-td-name"><img src="./Jeet Saru.jpg" alt=""> Bimsara Anjana </td>
-                            <td> Students </td>
-                            <td> 21000859 </td>
-                            <td> 2020cs085  </td>
-                            <td> bimsarajayadewa@gmail.com </td>
-                        </tr>
-                        <tr>
-                            <td class="table__body-td-name"><img src="./Jeet Saru.jpg" alt=""> Bimsara Anjana </td>
-                            <td> Students </td>
-                            <td> 21000859 </td>
-                            <td> 2020cs085  </td>
-                            <td> bimsarajayadewa@gmail.com </td>
-                        </tr>
-                        <tr>
-                            <td class="table__body-td-name"><img src="./Jeet Saru.jpg" alt=""> Bimsara Anjana </td>
-                            <td> Students </td>
-                            <td> 21000859 </td>
-                            <td> 2020cs085  </td>
-                            <td> bimsarajayadewa@gmail.com </td>
-                        </tr>
+                        <?php endforeach;?>
+                       
+                        
                     </tbody>
                 </table>
             </section>
@@ -594,4 +578,29 @@
         a.remove();
     }
 </script>
+<script>function getValueFromSelectedRow(table, rowIndex, columnIndex) {
+    var rows = table.rows;
+  
+    if (rowIndex >= 0 && rowIndex < rows.length) {
+      var selectedRow = rows[rowIndex];
+      var cellValue = selectedRow.cells[columnIndex].textContent;
+      return cellValue;
+    } else {
+      return "Invalid row index";
+    }
+  }
+  
+  // Get the table
+var myTable = document.getElementById('table_p');
+
+// Example: Get the name (second column, index 1) from the first row (index 0)
+var rowIndex = 1; // Change this index to select a different row
+var columnIndex = 2; // Change this index to select a different column
+document.getElementById('tr1').onclick = function(){
+    var value = getValueFromSelectedRow(myTable, rowIndex, columnIndex);
+    console.log("Value from selected row:", value);
+    
+
+}
+ </script>
 </html>
