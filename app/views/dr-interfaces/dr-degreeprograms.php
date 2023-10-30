@@ -247,15 +247,17 @@
                 <div class="input-fields">
 
                     <label for="Degree" class="drop-down" >Degree Type:</label><br>
-                    <select name="degree type" id="degree type" style="width: 360px;">
-                        <option value="volvo">One Year Degree</option>
-                        <option value="saab">Two Year Degree</option>
+                    <select name="degree type" id="degree type" style="width: 360px;" >
+                        <option value="" default hidden>Select</option>
+                        <option value="">One Year Degree</option>
+                        <option value="">Two Year Degree</option>
                     </select><br><br><br>
 
                     <label for="Degree"  class="drop-down" >Select Degree Program:</label><br>
                     <select name="select degree type" id="select degree type" style="width: 360px;">
-                        <option value="volvo">DLMS</option>
-                        <option value="saab">ENCM</option>
+                        <option value="" default hidden>Select</option>
+                        <option value="">DLMS</option>
+                        <option value="">ENCM</option>
                     </select><br><br><br>
                 </div>
 

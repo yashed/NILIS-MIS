@@ -64,6 +64,27 @@ class Database {
         ";
     
         $this->query($query);
+        //Degree Table
+        $query = "
+        CREATE TABLE `degree` (
+            `DegreeID` varchar(100) NOT NULL,
+            `DegreeType` varchar(255) DEFAULT NULL,
+            `DegreeName` text NOT NULL,
+            `Duration` varchar(100) DEFAULT NULL,
+            `AcademicYear` int(11) NOT NULL,
+            `SubjectID` varchar(100) DEFAULT NULL,
+            `GradeID` int(10) DEFAULT NULL,
+            PRIMARY KEY (`DegreeID`(50)),
+            UNIQUE KEY `SubjectID` (`SubjectID`),
+            UNIQUE KEY `GradeID` (`GradeID`)
+           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+        ";
+    
+        $this->query($query);
+        //Subject Table
+
+
+        //Grading VAlues Table
     }
 }
 
