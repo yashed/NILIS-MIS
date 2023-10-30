@@ -37,7 +37,7 @@
         $this->query($query,$data);
         
        //  echo "query = " . $query;
-   
+        return true;
        }
 
        //get all data 
@@ -56,6 +56,43 @@
        return false;
    
        }
+
+
+      public function update($id,$data)
+	{
+
+		//remove unwanted columns
+		if(!empty($this->allowedColumns))
+		{
+			foreach ($data as $key => $value) {
+				if(!in_array($key, $this->allowedColumns))
+				{
+					unset($data[$key]);
+				}
+			}
+		}
+
+		$keys = array_keys($data);
+		$query = "update ".$this->table." set ";
+
+		foreach ($keys as $key) {
+			$query .= $key ."=:" . $key . ","; 
+
+		}
+
+		$query = trim($query,",");
+		$query .= " where id = :id ";
+		
+		$data['id'] = $id;
+
+        show($query);
+        show($data);
+        
+		$this->query($query,$data);
+
+
+	}
+
 
        public function where($data){
 
@@ -110,6 +147,23 @@
        return false;
    
        }
+
+       public function delete($data)
+    {
+        $keys = array_keys($data);
+
+        $query = "delete from " . $this->table . " where ";
+
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . " && ";
+        }
+
+        $query = trim($query, "&& ");
+
+        $this->db->query($query, $data);
+
+        return true;
+    }
 
 
  }

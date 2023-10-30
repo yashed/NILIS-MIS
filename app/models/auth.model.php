@@ -45,7 +45,7 @@ class Auth
   public static function __callStatics($funcname, $args)
   {
     $key = str_replace("get", "" , strtolower($funcname));
-    if(!empty($_SESSION['USER_DATA']->$key)
+    if(!empty($_SESSION['USER_DATA']->$key))
     {
     
             return $_SESSION['USER_DATA']->$key;
@@ -53,7 +53,7 @@ class Auth
     }
     return '';
   }
-}
 
+}
 
 ?>

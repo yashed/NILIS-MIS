@@ -53,6 +53,8 @@ class Database {
             phoneNo varchar(12) NOT NULL,
             role varchar(20) NOT NULL,
             password varchar(255) NOT NULL,
+            cpassword varchar(255) NOT NULL,
+            newpassword varchar(255) NOT NULL,
             date date DEFAULT NULL,
             PRIMARY KEY (id),
             KEY email (email),
