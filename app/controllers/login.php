@@ -17,14 +17,10 @@ class Login extends Controller{
             ]);
             // show($row); die;
             if($row){
-                
-                $status = $row->password === $_POST['password'];
-                
-                // echo $status;
-                if($row->password === $_POST['password'])
+                if(password_verify($_POST['password'],$row->password))
                 {
                     //authentication
-                    $_SESSION['USER_DATA'] = $row;
+                    Auth :: authenticate($row);
             
                     // redirect('home');
                     header('Location: admin/adduser');

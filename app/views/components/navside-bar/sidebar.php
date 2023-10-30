@@ -40,13 +40,13 @@
                 <nav>
                     <ul class="hero-ul">
                         <li class="hero-ul-li"><i class="bx bxs-bell icon"></i></li>
-                        <li class="hero-ul-li"><img src="../../components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                        <li class="hero-ul-li"><img src="<?=ROOT?>/components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
                     </ul>
 
                     <div class="sub-menu-wrap" id="subMenu">
                         <div class="sub-menu">
                             <div class="user-info">
-                                <img src="../../components/navside-bar/MyOriginalPhoto.jpg">
+                                <img src="<?=ROOT?>/components/navside-bar/MyOriginalPhoto.jpg">
                                 <h3>Bimsara Anjana</h3>
                             </div>
                             <hr>
@@ -101,13 +101,13 @@
                 <nav>
                     <ul class="hero-ul">
                         <li class="hero-ul-li"><i class="bx bxs-bell icon"></i></li>
-                        <li class="hero-ul-li"><img src="../../components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                        <li class="hero-ul-li"><img src="<?=ROOT?>/components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
                     </ul>
 
                     <div class="sub-menu-wrap" id="subMenu">
                         <div class="sub-menu">
                             <div class="user-info">
-                                <img src="../../components/navside-bar/MyOriginalPhoto.jpg">
+                                <img src="<?=ROOT?>/components/navside-bar/MyOriginalPhoto.jpg">
                                 <h3>Bimsara Anjana</h3>
                             </div>
                             <hr>
@@ -162,13 +162,13 @@
                 <nav>
                     <ul class="hero-ul">
                         <li class="hero-ul-li"><i class="bx bxs-bell icon"></i></li>
-                        <li class="hero-ul-li"><img src="../../components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                        <li class="hero-ul-li"><img src="<?=ROOT?>/components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
                     </ul>
 
                     <div class="sub-menu-wrap" id="subMenu">
                         <div class="sub-menu">
                             <div class="user-info">
-                                <img src="../../components/navside-bar/MyOriginalPhoto.jpg">
+                                <img src="<?=ROOT?>/components/navside-bar/MyOriginalPhoto.jpg">
                                 <h3>Bimsara Anjana</h3>
                             </div>
                             <hr>
@@ -223,13 +223,13 @@
                 <nav>
                     <ul class="hero-ul">
                         <li class="hero-ul-li"><i class="bx bxs-bell icon"></i></li>
-                        <li class="hero-ul-li"><img src="../../components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                        <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
                     </ul>
 
                     <div class="sub-menu-wrap" id="subMenu">
                         <div class="sub-menu">
                             <div class="user-info">
-                                <img src="../../components/navside-bar/MyOriginalPhoto.jpg">
+                                <img src="http://localhost/NILIS-MIS/public/assets/MyOriginalPhoto.jpg">
                                 <h3>Bimsara Anjana</h3>
                             </div>
                             <hr>
@@ -284,13 +284,13 @@
                 <nav>
                     <ul class="hero-ul">
                         <li class="hero-ul-li"><i class="bx bxs-bell icon"></i></li>
-                        <li class="hero-ul-li"><img src="../../components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                        <li class="hero-ul-li"><img src="<?=ROOT?>/components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
                     </ul>
 
                     <div class="sub-menu-wrap" id="subMenu">
                         <div class="sub-menu">
                             <div class="user-info">
-                                <img src="../../components/navside-bar/MyOriginalPhoto.jpg">
+                                <img src="<?=ROOT?>/components/navside-bar/MyOriginalPhoto.jpg">
                                 <h3>Bimsara Anjana</h3>
                             </div>
                             <hr>
@@ -345,13 +345,13 @@
                 <nav>
                     <ul class="hero-ul">
                         <li class="hero-ul-li"><i class="bx bxs-bell icon"></i></li>
-                        <li class="hero-ul-li"><img src="../../components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                        <li class="hero-ul-li"><img src="<?=ROOT?>/components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
                     </ul>
 
                     <div class="sub-menu-wrap" id="subMenu">
                         <div class="sub-menu">
                             <div class="user-info">
-                                <img src="../../components/navside-bar/MyOriginalPhoto.jpg">
+                                <img src="<?=ROOT?>/components/navside-bar/MyOriginalPhoto.jpg">
                                 <h3>Bimsara Anjana</h3>
                             </div>
                             <hr>

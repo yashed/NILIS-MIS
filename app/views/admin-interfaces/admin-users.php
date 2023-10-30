@@ -1,10 +1,17 @@
 <?php
     $role = "Admin";
+    $data['role'] = $role;
 
-    include_once '../../components/navside-bar/header.php';
-    include_once '../../components/navside-bar/sidebar.php';
-    include_once '../../components/navside-bar/footer.php';
+    // include_once '../../components/navside-bar/header.php';
+    // include_once '../../components/navside-bar/sidebar.php';
+    // include_once '../../components/navside-bar/footer.php';
 ?>
+
+<?php $this->view('components/navside-bar/header',$data) ?>
+<?php $this->view('components/navside-bar/sidebar',$data) ?>
+<?php $this->view('components/navside-bar/footer',$data) ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -394,6 +401,12 @@ h2 {
     margin-top: 5px;
     margin-left: 5px;
 }
+
+.admin-footer{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
 </style>
 
 <!-- button CSS -->
@@ -448,16 +461,17 @@ button:hover {
                             <div class="col col-1">User</div>
                             <div class="col col-2">Role</div>
                             <div class="col col-3">Username</div>
-                            <div class="col col-4">Password</div>
+                            <div class="col col-4">Phone No</div>
                             <div class="col col-5">Email</div>
                             <div class="col col-6"></div>
                         </li>
+                        <?php foreach($users as $user):?>
                         <li class="table-row">
-                            <div class="col col-1" data-label="User">S.D. Saman Perera</div>
-                            <div class="col col-2" data-label="Role">DR</div>
-                            <div class="col col-3" data-label="User Name">DR001</div>
-                            <div class="col col-4" data-label="Pasword">********</div>
-                            <div class="col col-5" data-label="Email">saman12@gamil.com</div>
+                            <div class="col col-1" data-label="User"> <?=$user->fname?> <?=$user->lname?></div>
+                            <div class="col col-2" data-label="Role"><?=$user->role?></div>
+                            <div class="col col-3" data-label="User Name"><?=$user->username?></div>
+                            <div class="col col-4" data-label="phoneNo"><?=$user->phoneNo?></div>
+                            <div class="col col-5" data-label="Email"><?=$user->email?></div>
                             <div class="col col-6">
                                 <div class="user-delete" id="delete-user">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20"
@@ -486,7 +500,9 @@ button:hover {
                                 </div>
                             </div>
                         </li>
-                        <li class="table-row">
+                        <?php endforeach;?>
+
+                        <!-- <li class="table-row">
                             <div class="col col-1" data-label="User">S.D. Saman Perera</div>
                             <div class="col col-2" data-label="Role">DR</div>
                             <div class="col col-3" data-label="User Name">DR001</div>
@@ -554,7 +570,7 @@ button:hover {
                                     </svg>
                                 </div>
                             </div>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -759,7 +775,7 @@ button:hover {
         </div>
     </div>
     <script>
-    
+ 
     document.querySelector("#delete-user").addEventListener("click", function() {
         document.querySelector("#delete-popup").classList.add("active");
     });
@@ -769,11 +785,10 @@ button:hover {
     });
     </script>
     <div class="admin-footer">
-        <?php
-                include $ROOT.'components/footer/index.php';
-
-               
-        ?>
+        
+                <?php $this->view('components/footer/index',$data) ?>
+              
+       
     </div>
     </div>
 </body>

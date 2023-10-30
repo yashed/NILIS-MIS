@@ -5,10 +5,16 @@
  */
 class Admin extends Controller{
    
-   public function addUser(){
+  public function index(){
+
+    $data['title'] = 'Dashboard';
+    $this->view('admin-interfaces/admin-dashboard',$data);
+
+  }
+   public function users($action = null,$id = null){
 
     
-      show($_POST);
+      // show($_POST);
 
 
       $data['errors'] = [];
@@ -26,27 +32,43 @@ class Admin extends Controller{
               $_POST['date'] = date("Y-m-d H:i:s");  
     
               //add password to the POST data
-              $_POST['password'] = $password;
+              $_POST['password'] = password_hash($password, PASSWORD_DEFAULT);
     
               //call insert function in user.model.php to add data
               $user->insert($_POST);
 
               message("User profile was successfully created");
-              // header('Location: adduser');
-              // redirect('adduser');
+              // header('Location: users');
+              // redirect('users');
               
             
           }
       }
-       
-
+        
+      //get all data from database
+      $data['users'] = $user->findAll();
       
       //show errors (data validate errors)
-      show($user->errors);
+      // show($data['users']);
+      // show($user->errors);
       $data['errors'] = $user->errors;
       $data['title'] = 'Signup';
-
+      
       $this->view('admin-interfaces/admin-users',$data);
+    }
+
+    public function notification()
+    {
+
+    }
+
+    public function settings()
+    {
+       
+    }
+    public function degree(){
+        
+       
     }
 }
 

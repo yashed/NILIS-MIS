@@ -21,7 +21,7 @@ if($_SERVER['SERVER_NAME'] == 'localhost'){
 
     //root path (localhost)
     //root path 
-    define('ROOT', 'http://localhost/NILIS-MIS/public/');
+    define('ROOT', 'http://localhost/NILIS-MIS/public');
 }
 else{
    //database config for live server
