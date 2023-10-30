@@ -49,7 +49,7 @@
                                 <h3>Bimsara Anjana</h3>
                             </div>
                             <hr>
-                            <a href="#" class="sub-menu-link">
+                            <a href="../../views/login/login.view.php" class="sub-menu-link">
                                 <i class="bx bx-log-out icon" ></i>
                                 <p>Logout</p>
                                 <span>></span>

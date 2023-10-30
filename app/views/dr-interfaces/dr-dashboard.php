@@ -48,12 +48,10 @@
     border-radius: 6px;
     margin: 7px 4px 7px 4px;
 }
-
 .sidebar.close~.dr-home {
     left: 88px;
     width: calc(100% - 88px);
 }
-
 .dr-subsection-0 {
     display: flex;
     flex-direction: row;
@@ -187,7 +185,7 @@
 
     </style>
     <body>
-    <div class="dr-home">
+        <div class="dr-home">
             <div class="dr-title">Dashboard</div>
             <div class="dr-subsection-1">
                 <div class="dr-sub-title">
@@ -226,8 +224,6 @@
                         ?>
                     </div>
                     </div>
-                    
-                   
                </div> 
                <div class="dr-subsection-22">
                <div class="dr-sub-title">
@@ -245,7 +241,7 @@
             <?php
                 include "../../components/footer/index.php";
             ?>
-        </div>
+            </div>
         </div>
        
     </body>

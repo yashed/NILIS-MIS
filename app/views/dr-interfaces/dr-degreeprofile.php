@@ -27,11 +27,11 @@
             --tran-04: all 0.4s ease;
             --tran-05: all 0.5s ease;
         }
+        .sidebar.close ~ .large_box{
+            left: 88px;
+            width: calc(100% - 88px);
+        }
         .large_box{
-            /* width: 100%; */
-            /* height: 100%;
-            background-color:rgb(204, 194, 194); */
-            
             height: 100vh;
             left: 250px;
             position: relative;
@@ -42,10 +42,6 @@
             display: grid;  
             grid-template-columns: 50% 50% ;
             grid-template-rows: 10% 40% 50% ;
-        }
-        .sidebar.close~.large_box{
-            left: 88px;
-            width: calc(100% - 88px);
         }
         .box_1{
             border-radius: 5px;
@@ -163,7 +159,6 @@
             border: 1px solid gainsboro;
             color: gray; 
         }
-
         #save,#update{
             background-color: rgb(184, 163, 163);
             border-radius: 7px;
@@ -288,6 +283,11 @@
                     </tr>
                 </table>
                 </div>
+            </div>
+            <div class="dr-footer">
+                <?php
+                    include "../../components/footer/index.php";
+                ?>
             </div>
         </div>
     </body>

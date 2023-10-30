@@ -194,6 +194,12 @@
     top:10%;
     left: 35%;
 }
+.danger{
+    border-color: red;
+    border-width: 5px;
+    border-style: groove;
+    border-radius: 5px;
+}
     </style>
     <body>
     <div class="dr-home">
@@ -282,8 +288,16 @@
                             <th>Credits</th>
                         </tr>
                         <tr>
-                            <td width="80%"><input type="text" name="subject_1" class="subject" placeholder="Subject 1"></td>
-                            <td><input type="text" name="cedits_1" class="credits" placeholder="2"></td>
+                            <td width="80%"><input type="text" name="subject_1" class="subject" placeholder="Subject 1">
+                                    <?php if(!empty($errors['SubjectName'])):?>
+                                        <small class="danger"><?=$errors['SubjectName']?></small>
+                                    <?php endif;?>
+                            </td>
+                            <td><input type="text" name="cedits_1" class="credits" placeholder="2">
+                                    <?php if(!empty($errors['NoCredit'])):?>
+                                        <small class="danger"><?=$errors['NoCredit']?></small>
+                                    <?php endif;?>
+                            </td>
                         </tr>
                         <tr>
                             <td><input type="text" name="subject_2" class="subject" placeholder="Subject 2"></td>
