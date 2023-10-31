@@ -279,7 +279,7 @@
 
         <div class="ex-card">
             <div class="exam-card1">
-                <?php include '../../components/exam-card/index.php' ?>
+                <?php include '../../components/exam-card/exam-card.php' ?>
             </div>
 
         </div>
@@ -289,7 +289,7 @@
         <div class="white-container3">
             <div class="text1">Ongoing Examinations</div>
             <div class="exam-card2">
-                <?php include '../../components/exam-card/index.php' ?>
+                <?php include '../../components/exam-card/exam-card.php' ?>
             </div>
 
         </div>

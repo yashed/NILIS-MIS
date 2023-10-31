@@ -4,6 +4,7 @@ class App{
   
     protected $controller = '_404_';
      protected $method = 'index';
+     public static $page = '_404_';
     
     function __construct(){
 
@@ -13,6 +14,7 @@ class App{
          if(file_exists($filename)){
             require $filename;
             $this->controller = $arr[0];
+            self::$page = $arr[0];
 
             //remove $arr[0]
             unset($arr[0]);
