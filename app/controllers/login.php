@@ -15,7 +15,7 @@ class Login extends Controller{
             $row = $user->first([
                 'username'=>$_POST['username']
             ]);
-            // show($row); die;
+            show($row); die;
             if($row){
                 if(password_verify($_POST['password'],$row->password))
                 {

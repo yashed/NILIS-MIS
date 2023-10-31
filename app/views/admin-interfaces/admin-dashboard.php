@@ -1,10 +1,12 @@
 <?php
     $role = "Admin";
-
-    include_once '../../components/navside-bar/header.php';
-    include_once '../../components/navside-bar/sidebar.php';
-    include_once '../../components/navside-bar/footer.php';
+    $data['role'] = $role;
 ?>
+
+<?php $this->view('components/navside-bar/header',$data) ?>
+<?php $this->view('components/navside-bar/sidebar',$data) ?>
+<?php $this->view('components/navside-bar/footer',$data) ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -203,7 +205,7 @@
         <div class="admin-subsection-0">
             <div class="admin-subsection-01">
                 <div class="admin-subcard-img1">
-                    <img src="../../../public/assets/admin/degree.png" alt="degree.icon" />
+                    <img src="<?=ROOT?>assets/admin/degree.png" alt="degree.icon" />
                 </div>
                 <div class="admin-subcard-data">
                     <div class="admin-subcard-data-title">Ongoing Degree</div>
@@ -213,7 +215,7 @@
 
             <div class="admin-subsection-01">
                 <div class="admin-subcard-img1">
-                    <img src="../../../public/assets/admin/examination.png" alt="exam.icon" />
+                    <img src="<?=ROOT?>assets/admin/examination.png" alt="exam.icon" />
                 </div>
                 <div class="admin-subcard-data">
                     <div class="admin-subcard-data-title">Ongoing Examination</div>
@@ -247,14 +249,16 @@
             </div>
             <div class="admin-degree-bar">
                 <div class="admin-card1">
-                    <?php
-                  include "../../components/degree-card/degree-card.php";
-                ?>
+                   
+                    <?php $this->view('components/degree-card/degree-card',$data) ?>
+              
+              
                 </div>
                 <div class="admin-card2">
-                    <?php
-                  include "../../components/degree-card/degree-card.php";
-                ?>
+                 
+                    <?php $this->view('components/degree-card/degree-card',$data) ?>
+          
+              
                 </div>
 
 
@@ -268,14 +272,14 @@
                 </div>
                 <div class="admin-exam-bar">
                     <div class="admin-exam-card1">
-                        <?php
-                            include "../../components/exam-card/exam-card.php";
-                        ?>
+                     
+                        <?php $this->view('components/exam-card/exam-card',$data) ?>
+                           
                     </div>
                     <div class="admin-exam-card2">
-                        <?php
-                            include "../../components/exam-card/exam-card.php";
-                        ?>
+                        
+                    <?php $this->view('components/exam-card/exam-card',$data) ?>
+                        
                     </div>
                 </div>
 
@@ -286,17 +290,14 @@
                     Academic Calender
                 </div>
                 <div class="admin-calender">
-
-                    <?php
-                    include "../../components/calender/calender.php";
-                  ?>
+                <?php $this->view('components/calender/calender',$data) ?>
+                    
                 </div>
             </div>
         </div>
         <div class="admin-footer">
-            <?php
-                include "../../components/footer/index.php";
-            ?>
+        <?php $this->view('components/footer/index',$data) ?>
+           
         </div>
     </div>
 

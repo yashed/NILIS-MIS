@@ -189,9 +189,15 @@
                         <ul class="menu-links">
                             <h6 class="topic1">MAIN</h6>
                             <li class="nav-link">
-                                <a href="#">
+                                <a href="admin">
                                     <i class="bx bx-home icon" ></i>
                                     <span class="text nav-text">Dashboard</span>
+                                </a>
+                            </li>
+                            <li class="nav-link">
+                                <a href="users">
+                                    <i class="bx bx-user icon" ></i>
+                                    <span class="text nav-text">Users</span>
                                 </a>
                             </li>
                             <li class="nav-link">
