@@ -3,10 +3,8 @@
 /**
  * main model class
  */
-
 class Model extends Database
 {
-
     protected $table = "";
     protected $allowedColumns = [];
 
@@ -70,6 +68,40 @@ class Model extends Database
                 }
             }
         }
+    }
+    /* public function insert($data)
+	{
+		//remove unwanted columns
+		if(!empty($this->allowedColumns))
+		{
+			foreach ($data as $key => $value) {
+				if(!in_array($key, $this->allowedColumns))
+				{
+					unset($data[$key]);
+				}
+			}
+		}
+
+		$keys = array_keys($data);
+
+		$query = "insert into " . $this->table;
+		$query .= " (".implode(",", $keys) .") values (:".implode(",:", $keys) .")";
+
+		$this->query($query,$data);
+
+	} */
+
+    public function update($id, $data)
+    {
+
+        //remove unwanted columns
+        if (!empty($this->allowedColumns)) {
+            foreach ($data as $key => $value) {
+                if (!in_array($key, $this->allowedColumns)) {
+                    unset($data[$key]);
+                }
+            }
+        }
 
         $keys = array_keys($data);
         $query = "update " . $this->table . " set ";
@@ -82,6 +114,93 @@ class Model extends Database
         $query .= " where id = :id ";
 
         $data['id'] = $id;
+        $this->query($query, $data);
+    }
+
+    /* public function findAll($order = 'desc')
+	{
+
+		$query = "select * from ".$this->table;
+ 
+		$res = $this->query($query);
+
+		if(is_array($res))
+		{
+			return $res;
+		}
+
+		return false;
+
+	} */
+
+    /* public function where($data)
+	{
+
+		$keys = array_keys($data);
+
+		$query = "select * from ".$this->table." where ";
+
+		foreach ($keys as $key) {
+			$query .= $key . "=:" . $key . " && ";
+		}
+ 
+ 		$query = trim($query,"&& ");
+		$res = $this->query($query,$data);
+
+		if(is_array($res))
+		{
+			return $res;
+		}
+
+		return false;
+
+	} */
+
+    public function first($data, $order = 'desc')
+    {
+
+        $keys = array_keys($data);
+
+        $query = "select * from " . $this->table . " where ";
+
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . " && ";
+        }
+
+        $query = trim($query, "&& ");
+        $query .= " order by id $order limit 1";
+
+        $res = $this->query($query, $data);
+
+        if (is_array($res)) {
+            return $res[0];
+        }
+
+        return false;
+    }
+
+    // public function delete($data, $order = 'desc')
+    // {
+    //     // var_dump($_POST);
+    //     if($this->coachModel->deleteCoach($_POST["submit"]) && $this->coachUserModel->deleteUser($_POST["submit"])) {
+    //         die("User Deleted Successfully");
+    //         // redirect("Users/register");
+    //     }else{
+    //         die("Something Went Wrong");
+    //     }
+    // }
+
+    public function delete($data)
+    {
+        $keys = array_keys($data);
+        $query = "update " . $this->table . " set ";
+
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . ",";
+        }
+
+        $query = trim($query, ",");
+        $query .= " where id = :id ";
 
         //show($query);
         //show($data);
@@ -99,23 +218,26 @@ class Model extends Database
 
         foreach ($keys as $key) {
 
-            $query .= $key . "=:" . $key . " && ";
+            $query = "delete from " . $this->table . " where ";
+
+            foreach ($keys as $key) {
+                $query .= $key . "=:" . $key . " && ";
+            }
+
+            //trim lasf && and space if there exists
+            $query = trim($query, '&& ');
+            //define query to add user data
+            $res = $this->query($query, $data);
+
+            if (is_array($res)) {
+                return $res;
+            }
+
+            return false;
         }
 
-        //trim lasf && and space if there exists
-        $query = trim($query, '&& ');
-        //define query to add user data
-        $res = $this->query($query, $data);
-
-        if (is_array($res)) {
-            return $res;
-        }
-
-        return false;
-    }
-
-    //get first data in the request
-    public function first($data)
+        //get first data in the request
+        /* public function first($data)
     {
 
         $keys = array_keys($data);
@@ -140,6 +262,7 @@ class Model extends Database
         }
 
         return false;
+    } */
     }
 
     public function delete2($data)

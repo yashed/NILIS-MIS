@@ -179,6 +179,7 @@ header .image-text .headder-text {
 
 .sidebar li a:hover {
     background: var(--text-color);
+    color: var(--sidebar-color);
 }
 
 .sidebar li a:hover .text,
@@ -254,12 +255,16 @@ header .image-text .headder-text {
 .sub-menu-wrap {
     position: fixed;
     top: 100%;
-    right: 10%;
+    right: 30%;
     width: 300px;
     max-height: 0px;
     overflow: hidden;
     transition: max-height 0.5s;
-    margin-left: 10px;
+    /* margin-left: 50%; */
+    border-radius: 8px;
+    border-color: var(--sidebar-color);
+    border-width: 50px;
+    border-style: groove;
 }
 
 .sub-menu-wrap.open-menu {
@@ -268,7 +273,7 @@ header .image-text .headder-text {
 
 .sub-menu {
     position: fixed;
-    background: #9f6b6b;
+    background: var(--text-color);
     padding: 20px;
     margin: 12px;
     border-radius: 6px;

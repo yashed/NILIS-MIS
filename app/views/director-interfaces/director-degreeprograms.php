@@ -1,5 +1,5 @@
 <?php
-    $role = "DR";
+    $role = "Director";
     $data['role'] = $role;
 ?>
 
@@ -207,26 +207,17 @@
     <div class="dr-home">
         <div class="dr-title">Degree Program</div>
         <div class="dr-subsection-1">
-            
-            <div class="button-btn">
-                <button onclick="myFunction()" type="button" class="bt-name" style="text-decoration: none; float: right; margin-right: 20px;">Create Degree Program</button>
-            </div>
-
+        
             <div class="dr-sub-title">Ongoing Degree Programs</div>
             <div class="dr-degree-bar">
                 
                 <div class="dr-card1">
-                <a href="<?=ROOT?>dr/degreeprofile" style="text-decoration: none;">
                 <?php foreach($degrees as $degree):?>
                     <div>
                     <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
                     </div>
                 <?php endforeach;?>
-                </a>
                 </div>
-                                                    <!-- <div class="dr-card2">
-                                                    <?php $this->view('components/degree-card/degree-card',$data) ?>  
-                                                    </div>  -->
             </div>
         </div>
         <div class="dr-subsection-1">
@@ -235,11 +226,7 @@
                                                     <!-- <div class="dr-degree-bar">
                                                         <div class="dr-card1">
                                                         <?php $this->view('components/degree-card/degree-card',$data) ?>
-                                                        </div>
-                                                        <div class="dr-card2">
-                                                        <?php $this->view('components/degree-card/degree-card',$data) ?>
-                                                        </div>  
-                                                    </div>  -->
+                                                        </div> -->
         </div>
         <div class="dr-footer">
         <?php $this->view('components/footer/index',$data) ?>
