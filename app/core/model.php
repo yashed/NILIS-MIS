@@ -1,11 +1,11 @@
 <?php
+
 /**
  * main model class
  */
 
- class Model extends Database 
- {
-
+class Model extends Database
+{
     protected $table = "";
     protected $primaryKey = "";
     protected $allowedColumns = [];
@@ -15,116 +15,244 @@
         
         //remove unwanted column 
         //this is not a serious error , the code is working with this
-        echo "No error";
-        if(!empty($this->allowedColumns))
-        {
-          
-         foreach($data as $key => $value);
-         {
-           if(!in_array($key,$this->allowedColumns))
-           {
-               unset($data[$key]);
-           }
-         }
+        //secho "No error";
+
+        if (!empty($this->allowedColumns)) {
+
+            foreach ($data as $key => $value) {
+                if (!in_array($key, $this->allowedColumns)) {
+                    unset($data[$key]);
+                }
+            }
         }
-       
+
         //get array keys from data
-        $keys=array_keys($data);
-         
+        $keys = array_keys($data);
+
         //define query to add user data
-        $query = "insert into " .$this->table;
-        
+        $query = "insert into " . $this->table;
+
         //add column names and values to the query (impolad function devide data by given character in array)
-        $query .= "(".implode(",",$keys) .") values (:".implode(",:", $keys) .")";
-   
+        $query .= "(" . implode(",", $keys) . ") values (:" . implode(",:", $keys) . ")";
+
         // $db = new Database();
-        $this->query($query,$data);
-        
-       //  echo "query = " . $query;
-   
-       }
+        $this->query($query, $data);
 
-       //get all data 
-       public function findAll(){
-
-       
-        
-        $query = "select * from " .$this->table;
-        
-        //define query to add user data
-        $res = $this->query($query);
-        
-       if(is_array($res))
-       {
-        return $res;
-       }
-
-       return false;
-   
-       }
-
-       public function where($data){
-
-        $keys = array_keys($data);
-        
-        $query = "select * from " .$this->table. " where ";
-        
-        foreach($keys as $key){
-
-            $query .= $key . "=:" . $key . " && ";
-        }
-
-        //trim lasf && and space if there exists
-        $query = trim($query,'&& '); 
-        //define query to add user data
-        $res = $this->query($query,$data);
-        
-       if(is_array($res))
-       {
-        return $res;
-       }
-
-       return false;
-   
-       }
-
-       //get first data in the request
-       public function first($data){
-
-        $keys = array_keys($data);
-        
-        $query = "select * from " .$this->table. " where ";
-        
-        foreach($keys as $key){
-
-            $query .= $key . "=:" . $key . " && ";
-        }
-
-        //trim lasf && and space if there exists
-        $query = trim($query,'&& '); 
-
-        $query.= " order by id desc limit 1 ";
-        //define query to add user data
-        $res = $this->query($query,$data);
-        
-        
-       if(is_array($res))
-       {
-        return $res[0];
-       }
-
-       return false;
-   
-       }
-
-    //delete form database
-    public function delete($id):bool{
-        $query="DELETE FROM ".$this->table." WHERE ".$this->primaryKey."=:id limit 1";
-        $this->query($query,['id'=>$id]);
+        //  echo "query = " . $query;
         return true;
     }
 
-       public function update($id,$data)
+    //get all data 
+    public function findAll()
+    {
+
+        $query = "select * from " . $this->table;
+
+        //define query to add user data
+        $res = $this->query($query);
+
+        if (is_array($res)) {
+            return $res;
+        }
+
+        return false;
+    }
+
+
+    public function update2($id, $data)
+    {
+
+        //remove unwanted columns
+        if (!empty($this->allowedColumns)) {
+            foreach ($data as $key => $value) {
+                if (!in_array($key, $this->allowedColumns)) {
+                    unset($data[$key]);
+                }
+            }
+        }
+    }
+    /* public function insert($data)
+	{
+		//remove unwanted columns
+		if(!empty($this->allowedColumns))
+		{
+			foreach ($data as $key => $value) {
+				if(!in_array($key, $this->allowedColumns))
+				{
+					unset($data[$key]);
+				}
+			}
+		}
+
+		$keys = array_keys($data);
+
+		$query = "insert into " . $this->table;
+		$query .= " (".implode(",", $keys) .") values (:".implode(",:", $keys) .")";
+
+		$this->query($query,$data);
+
+	} */
+
+    public function update($id, $data)
+    {
+
+        //remove unwanted columns
+        if (!empty($this->allowedColumns)) {
+            foreach ($data as $key => $value) {
+                if (!in_array($key, $this->allowedColumns)) {
+                    unset($data[$key]);
+                }
+            }
+        }
+
+        $keys = array_keys($data);
+        $query = "update " . $this->table . " set ";
+
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . ",";
+        }
+
+        $query = trim($query, ",");
+        $query .= " where id = :id ";
+
+        $data['id'] = $id;
+        $this->query($query, $data);
+    }
+
+    /* public function findAll($order = 'desc')
+	{
+
+		$query = "select * from ".$this->table;
+ 
+		$res = $this->query($query);
+
+		if(is_array($res))
+		{
+			return $res;
+		}
+
+		return false;
+
+	} */
+
+    /* public function where($data)
+	{
+
+		$keys = array_keys($data);
+
+		$query = "select * from ".$this->table." where ";
+
+		foreach ($keys as $key) {
+			$query .= $key . "=:" . $key . " && ";
+		}
+ 
+ 		$query = trim($query,"&& ");
+		$res = $this->query($query,$data);
+
+		if(is_array($res))
+		{
+			return $res;
+		}
+
+		return false;
+
+	} */
+
+    public function first($data, $order = 'desc')
+    {
+
+        $keys = array_keys($data);
+
+        $query = "select * from " . $this->table . " where ";
+
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . " && ";
+        }
+
+        $query = trim($query, "&& ");
+        $query .= " order by id $order limit 1";
+
+        $res = $this->query($query, $data);
+
+        if (is_array($res)) {
+            return $res[0];
+        }
+
+        return false;
+    }
+
+    // public function delete($data, $order = 'desc')
+    // {
+    //     // var_dump($_POST);
+    //     if($this->coachModel->deleteCoach($_POST["submit"]) && $this->coachUserModel->deleteUser($_POST["submit"])) {
+    //         die("User Deleted Successfully");
+    //         // redirect("Users/register");
+    //     }else{
+    //         die("Something Went Wrong");
+    //     }
+    // }
+
+    public function delete($data)
+    {
+        $keys = array_keys($data);
+
+        $query = "delete from " . $this->table . " where ";
+
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . " && ";
+        }
+
+        $query = trim($query, "&& ");
+        $this->query($query, $data);
+
+        return true;
+    }
+
+
+    public function where($data)
+    {
+
+        $keys = array_keys($data);
+        
+        $query = "select * from " .$this->table. " where ";
+        
+        foreach($keys as $key){
+
+            $query .= $key . "=:" . $key . " && ";
+        }
+
+        //trim lasf && and space if there exists
+        $query = trim($query,'&& '); 
+       
+        //define query to add user data
+        $res = $this->query($query,$data);
+        
+       if(is_array($res))
+       {
+        return $res;
+       }
+
+       return false;
+    }
+
+    public function delete2($data)
+    {
+        if ($data['submit']) unset($data['submit']);
+        $keys = array_keys($data);
+
+        $query = "delete from " . $this->table . " where ";
+
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . " && ";
+        }
+
+        $query = trim($query, "&& ");
+        $this->query($query, $data);
+
+        return true;
+    }
+
+    /*    public function update($id,$data)
 	{
 
         //remove unwanted fields
@@ -166,11 +294,8 @@
      $this->query($query,$data);
      // show($query);
      // show($data);
- }
+ } */
 
 
 
  }
-
-
-?>

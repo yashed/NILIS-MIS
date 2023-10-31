@@ -156,7 +156,7 @@ header .current-date {
             </div>
         </div>
     </div>
-    <script src="../../../public/js/calender-component.js" defer></script>
+    <script src="<?=ROOT?>js/calender-component.js" defer></script>
 </body>
 
 </html>

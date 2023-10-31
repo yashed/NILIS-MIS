@@ -79,10 +79,9 @@
     <title></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="css/style.css" rel="stylesheet">
 </head>
 <style>
-.exam-body {
+.body {
     display: flex;
     flex-direction: column;
     border-radius: 8px;
@@ -94,53 +93,41 @@
     box-shadow: 4px 7px 9px 0px rgba(0, 0, 0, 0.08);
     margin-left: 10px;
 }
-
+.container{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 8%;
+}
 .exam-img {
-    width: 87px;
-    height: 95px;
+    width: 95px;
+    height: 115px;  
     flex-shrink: 0;
-    margin-top: 20px;
-    margin-right: 5px;
+    margin: 15% 0% 3% 1%; 
 }
-
-.exam-card {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 3px;
-    margin-bottom: 14px;
-}
-
-.exam-content {
+.card {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-content: center;
-    flex-wrap: wrap;
-
-
-    font-family: "Poppins", sans-serif;
-    margin-right: 20px;
-    margin-left: 20px;
+    align-items: flex-start;
+    margin: 1% 2% 0% 1%;
 }
-
-.exam-degree-name {
+.content {
+    font-family: "Poppins", sans-serif;
+    margin-right: 0%;
+    margin-left: 5%;
+}
+.degree-name {
     font-size: 55px;
     font-weight: 1000;
     color: #17376E;
     text-align: left;
-
 }
-
-
-.exam-sub-name {
+.sub-name {
     color: #9AD6FF;
     font-size: 17px;
     font-weight: 600;
     text-align: left;
+    margin-top: -3%;
 }
-
-
 .exam-info {
     display: flex;
     flex-direction: row;
@@ -152,21 +139,19 @@
     line-height: normal;
     justify-content: center;
     font-family: "Poppins", sans-serif;
-
-
+    margin-top: 2.3%;
 }
 </style>
-
 <body>
-    <div class="exam-body">
-        <div class="exam-card">
-            <div class="exam-content">
-                <div class="exam-degree-name"> DLIM </div>
-                <div class="exam-sub-name">Diploma in Library and<br>Information Management
->>>>>>> 6f50d88fd9b05fd28ba295ea85838a97160440a3
+    <div class="body">
+        <div class="container">
+            <div class="card">
+                <div class="content">
+                    <div class="degree-name"> DLIM </div>
+                    <div class="sub-name">Diploma in Library and<br>Information Management</div>
                 </div>
             </div>
-            <img src="../../../public/assets/exam-card/icon.png" alt="icon.png" class="exam-img">
+            <img src="<?=ROOT?>/assets/exam-card/icon.png" alt="icon.png" class="exam-img">
         </div>
         <div class="exam-info">
             <div class="exam-year">1st Semester Examination</div>

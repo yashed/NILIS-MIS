@@ -22,6 +22,7 @@
     color: #10344D;
     font-family: Poppins;
     font-size: 22px;
+    border-radius: 10px;
     font-style: normal;
     font-weight: 600;
     margin: 40px;
@@ -144,6 +145,7 @@ h2 {
 }
 
 .admin-subsection-1 {
+
     background-color: var(--text-color);
     padding: 10px 10px 20% 35px;
     border-radius: 6px;
@@ -182,7 +184,11 @@ h2 {
 }
 
 .center {
-    /* position: absolute; */
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    height: 6vh;
+    flex-direction: column;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -385,8 +391,24 @@ button {
     padding: 10px 10px 10px 10px;
 }
 
+.delete-bt{
+    width:50%;
+    height: 5vh;
+    border-radius: 12px;
+    background: #17376e;
+    
+}
+
 button:hover {
     color: #17376e;
     background-color: white;
     border: 1px solid var(--colour-secondary-1, #17376e);
+}
+
+.button-fx{
+    display:flex;
+    width:50%;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
