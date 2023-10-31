@@ -2,7 +2,7 @@
     <html lang="en">
 
     <head>
-        <link rel="stylesheet" type="text/css" href="../../../public/css/sidebar-component.css">
+        <link rel="stylesheet" type="text/css" href="<?= ROOT ?>css/sidebar-component.css">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <title>Navsidebar</title>
     </head>
