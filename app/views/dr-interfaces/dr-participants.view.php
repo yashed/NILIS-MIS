@@ -1,11 +1,16 @@
 <?php
-
     $role = "DR";
+    $data['role']=$role;
 
-    include_once '../../components/navside-bar/header.php';
-    include_once '<?=ROOT?>/components/navside-bar/sidebar.php';
-    include_once '../../components/navside-bar/footer.php';
+    // include_once '../../components/navside-bar/header.php';
+    // include_once '../../components/navside-bar/sidebar.php';
+    // include_once '../../components/navside-bar/footer.php';
 ?>
+
+<?php $this->view('components/navside-bar/header',$data) ?>
+<?php $this->view('components/navside-bar/sidebar',$data) ?>
+<?php $this->view('components/navside-bar/footer',$data) ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

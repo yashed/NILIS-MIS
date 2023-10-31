@@ -6,11 +6,7 @@
     <title>Degree Card</title>
     <!-- <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" /> -->
     <style>
-<<<<<<< HEAD
-        .body3 {
-=======
         .degree-body {
->>>>>>> 6f50d88fd9b05fd28ba295ea85838a97160440a3
             border-radius: 8px;
             border: 3px solid rgba(0, 0, 0, 0.05);
             background: var(--colour-primary, #FFF);
@@ -72,17 +68,10 @@
     </style>
 </head>
 <body>
-<<<<<<< HEAD
-    <div class="body3">
-        <div class="card">
-            <img src="../../../public/assets/degree-card/icon.png" alt="icon.png" class="img">
-            <div class="content">
-=======
     <div class="degree-body">
         <div class="degree-card">
             <img src="../../../public/assets/degree-card/icon.png" alt="icon.png" class="degree-img">
             <div class="degree-content">
->>>>>>> 6f50d88fd9b05fd28ba295ea85838a97160440a3
                 <div class="degree-name"> DLIM </div>
                 <div class="degree-sub-name">Diploma in Library and Information Management</div>
             </div>
