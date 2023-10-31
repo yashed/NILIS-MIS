@@ -1,15 +1,76 @@
-<?php 
+<?php
 
 /**
  * main model class
  */
+
 class Model extends Database
 {
-	
-	protected $table = "";
-    // public allowedColumns = [""];
+    protected $table = "";
+    protected $allowedColumns = [];
 
-	public function insert($data)
+    public function insert($data)
+    {
+
+        //remove unwanted column 
+        //this is not a serious error , the code is working with this
+        //secho "No error";
+
+        if (!empty($this->allowedColumns)) {
+
+            foreach ($data as $key => $value) {
+                if (!in_array($key, $this->allowedColumns)) {
+                    unset($data[$key]);
+                }
+            }
+        }
+
+        //get array keys from data
+        $keys = array_keys($data);
+
+        //define query to add user data
+        $query = "insert into " . $this->table;
+
+        //add column names and values to the query (impolad function devide data by given character in array)
+        $query .= "(" . implode(",", $keys) . ") values (:" . implode(",:", $keys) . ")";
+
+        // $db = new Database();
+        $this->query($query, $data);
+
+        //  echo "query = " . $query;
+        return true;
+    }
+
+    //get all data 
+    public function findAll()
+    {
+
+        $query = "select * from " . $this->table;
+
+        //define query to add user data
+        $res = $this->query($query);
+
+        if (is_array($res)) {
+            return $res;
+        }
+
+        return false;
+    }
+
+
+    public function update2($id, $data)
+    {
+
+        //remove unwanted columns
+        if (!empty($this->allowedColumns)) {
+            foreach ($data as $key => $value) {
+                if (!in_array($key, $this->allowedColumns)) {
+                    unset($data[$key]);
+                }
+            }
+        }
+    }
+    /* public function insert($data)
 	{
 		//remove unwanted columns
 		if(!empty($this->allowedColumns))
@@ -29,39 +90,35 @@ class Model extends Database
 
 		$this->query($query,$data);
 
-	}
+	} */
 
-	public function update($id,$data)
-	{
+    public function update($id, $data)
+    {
 
-		//remove unwanted columns
-		if(!empty($this->allowedColumns))
-		{
-			foreach ($data as $key => $value) {
-				if(!in_array($key, $this->allowedColumns))
-				{
-					unset($data[$key]);
-				}
-			}
-		}
+        //remove unwanted columns
+        if (!empty($this->allowedColumns)) {
+            foreach ($data as $key => $value) {
+                if (!in_array($key, $this->allowedColumns)) {
+                    unset($data[$key]);
+                }
+            }
+        }
 
-		$keys = array_keys($data);
-		$query = "update ".$this->table." set ";
+        $keys = array_keys($data);
+        $query = "update " . $this->table . " set ";
 
-		foreach ($keys as $key) {
-			$query .= $key ."=:" . $key . ","; 
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . ",";
+        }
 
-		}
+        $query = trim($query, ",");
+        $query .= " where id = :id ";
 
-		$query = trim($query,",");
-		$query .= " where id = :id ";
-		
-		$data['id'] = $id;
-		$this->query($query,$data);
+        $data['id'] = $id;
+        $this->query($query, $data);
+    }
 
-	}
-
-	public function findAll($order = 'desc')
+    /* public function findAll($order = 'desc')
 	{
 
 		$query = "select * from ".$this->table;
@@ -75,9 +132,9 @@ class Model extends Database
 
 		return false;
 
-	}
+	} */
 
-	public function where($data)
+    /* public function where($data)
 	{
 
 		$keys = array_keys($data);
@@ -98,36 +155,34 @@ class Model extends Database
 
 		return false;
 
-	}
+	} */
 
-	public function first($data, $order = 'desc')
-	{
+    public function first($data, $order = 'desc')
+    {
 
-		$keys = array_keys($data);
+        $keys = array_keys($data);
 
-		$query = "select * from ".$this->table." where ";
+        $query = "select * from " . $this->table . " where ";
 
-		foreach ($keys as $key) {
-			$query .= $key . "=:" . $key . " && ";
-		}
- 
- 		$query = trim($query,"&& ");
- 		$query .= " order by id $order limit 1";
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . " && ";
+        }
 
-		$res = $this->query($query,$data);
+        $query = trim($query, "&& ");
+        $query .= " order by id $order limit 1";
 
-		if(is_array($res))
-		{
-			return $res[0];
-		}
+        $res = $this->query($query, $data);
 
-		return false;
+        if (is_array($res)) {
+            return $res[0];
+        }
 
-	}
+        return false;
+    }
 
     // public function delete($data, $order = 'desc')
-	// {
-	//     // var_dump($_POST);
+    // {
+    //     // var_dump($_POST);
     //     if($this->coachModel->deleteCoach($_POST["submit"]) && $this->coachUserModel->deleteUser($_POST["submit"])) {
     //         die("User Deleted Successfully");
     //         // redirect("Users/register");
@@ -139,6 +194,82 @@ class Model extends Database
     public function delete($data)
     {
         $keys = array_keys($data);
+        $query = "update " . $this->table . " set ";
+
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . ",";
+        }
+
+        $query = trim($query, ",");
+        $query .= " where id = :id ";
+
+        //show($query);
+        //show($data);
+
+        $this->query($query, $data);
+    }
+
+
+    public function where($data)
+    {
+
+        $keys = array_keys($data);
+
+        $query = "select * from " . $this->table . " where ";
+
+        foreach ($keys as $key) {
+
+            $query = "delete from " . $this->table . " where ";
+
+            foreach ($keys as $key) {
+                $query .= $key . "=:" . $key . " && ";
+            }
+
+            //trim lasf && and space if there exists
+            $query = trim($query, '&& ');
+            //define query to add user data
+            $res = $this->query($query, $data);
+
+            if (is_array($res)) {
+                return $res;
+            }
+
+            return false;
+        }
+
+        //get first data in the request
+        /* public function first($data)
+    {
+
+        $keys = array_keys($data);
+
+        $query = "select * from " . $this->table . " where ";
+
+        foreach ($keys as $key) {
+
+            $query .= $key . "=:" . $key . " && ";
+        }
+
+        //trim lasf && and space if there exists
+        $query = trim($query, '&& ');
+
+        $query .= " order by id desc limit 1 ";
+        //define query to add user data
+        $res = $this->query($query, $data);
+
+
+        if (is_array($res)) {
+            return $res[0];
+        }
+
+        return false;
+    } */
+    }
+
+    public function delete2($data)
+    {
+        if ($data['submit']) unset($data['submit']);
+        $keys = array_keys($data);
 
         $query = "delete from " . $this->table . " where ";
 
@@ -147,16 +278,8 @@ class Model extends Database
         }
 
         $query = trim($query, "&& ");
-
-        $this->db->query($query, $data);
+        $this->query($query, $data);
 
         return true;
     }
-
-	// public function delete($id):bool{
-    //     $query="DELETE FROM ".$this->table." WHERE ".$this->primaryKey."=:id limit 1";
-    //     $this->query($query,['id'=>$id]);
-    //     return true;
-    // }
-
 }

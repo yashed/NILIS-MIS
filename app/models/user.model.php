@@ -18,6 +18,8 @@
         'role',
         'password',
         'date',
+        'cpassword',
+        'newpassword',
 
     ];
     
@@ -37,6 +39,20 @@
         }
         if(empty($data['phoneNo'])){
              $this->errors['phoneNo'] = 'Phone number is required';
+
+        }
+        //check confirm password
+        if(empty($data['cpassword']) && !empty($data['newpassword'])){
+             $this->errors['cpassword'] = 'Confirm Password is required';
+
+        }
+        else 
+        {
+            if($data['cpassword'] != $data['newpassword'])
+            {
+                $this->errors['password'] = 'Password do not match';
+   
+           }
 
         }
         
