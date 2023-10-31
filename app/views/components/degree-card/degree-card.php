@@ -70,15 +70,15 @@
 <body>
     <div class="degree-body">
         <div class="degree-card">
-            <img src="../../../public/assets/degree-card/icon.png" alt="icon.png" class="degree-img">
+            <img src="<?=ROOT?>/assets/degree-card/icon.png" alt="icon.png" class="degree-img">
             <div class="degree-content">
-                <div class="degree-name"> DLIM </div>
-                <div class="degree-sub-name">Diploma in Library and Information Management</div>
+                <div class="degree-name"><?=$degree->DegreeName?></div>
+                <div class="degree-sub-name">Diploma in Library Management</div>
             </div>
         </div>
         <div class="degree-info">
-            <div class="degree-year">Academic Year - 2021</div>
-            <div class="degree-type">1 Year Degree Program</div>
+            <div class="degree-year">Academic Year - <?=$degree->AcademicYear?></div>
+            <div class="degree-type"><?=$degree->DegreeType?> Program</div>
         </div>
     </div>
 </body>
