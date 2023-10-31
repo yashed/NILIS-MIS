@@ -19,8 +19,8 @@ function set_value($key){
 }
 
 function redirect($link){
-    header("Location : ".ROOT. "/".$link);
-    // show($_POST);
+    header("location : ".ROOT."/".$link);
+    show($_POST);
     die;
 }
 

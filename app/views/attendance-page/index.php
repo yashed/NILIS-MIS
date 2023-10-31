@@ -8,17 +8,11 @@
     </head>
 
 <body>
-<?php
-    $role = "Clerk";
 
-    include_once '../../components/navside-bar/header.php';
-    include_once '../../components/navside-bar/sidebar.php';
-    // include_once '../../components/navside-bar/footer.php';
-?>
     <header>
     </header>
 
-    <div class="white-container1 close">
+    <div class="white-container1-1 close">
         Attendance
     </div>
 
@@ -41,13 +35,13 @@
         const body = document.querySelector("body"),
             sidebar = body.querySelector(".sidebar"),
             toggle = body.querySelector(".toggle");
-            whitecontainer1 = body.querySelector(".white-container1");
+            whitecontainer11 = body.querySelector(".white-container1-1");
             whitecontainer2 = body.querySelector(".white-container2");
             whitecontainer3 = body.querySelector(".white-container3");
 
         toggle.addEventListener("click", () => {
             sidebar.classList.toggle("close");
-            whitecontainer1.classList.toggle("close");
+            whitecontainer11.classList.toggle("close");
             whitecontainer2.classList.toggle("close");
             whitecontainer3.classList.toggle("close");
         });

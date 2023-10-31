@@ -42,7 +42,7 @@
             width: calc(100% - 250px);
             min-width: 70%;
             transition: var(--tran-05);
-            background: var(--body-color);
+            background: var(--text-color);
         }
         .dr-degree-programs-title{
             font-size: 30px;
@@ -142,7 +142,7 @@
         }
         .table__body::-webkit-scrollbar-thumb{
             border-radius: .5rem;
-            background-color: #0004;
+            background-color: var(--body-color);
             visibility: hidden;
         }
         .table__body:hover::-webkit-scrollbar-thumb{ 
@@ -171,12 +171,15 @@
             position: sticky;
             top: 0;
             left: 0;
-            background-color: #d5d1defe;
+            background-color: #ffffff;
             cursor: pointer;
             text-transform: capitalize;
         }
         tbody tr:nth-child(even) {
-            background-color: #0000000b;
+            background-color: #ffffff;
+        }
+        tbody tr:nth-child(odd) {
+            background-color: #ffffff;
         }
         tbody tr {
             --delay: .1s;

@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="<?= ROOT ?>/css/student/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        /* Add CSS to style the overlay and pop-up */
+
         #overlay {
             display: none;
             position: fixed;
@@ -20,12 +20,15 @@
             transition: background-color 0.5s;
         }
         .button-container {
+            margin-top: 30px;
             display: flex;
             flex-direction: row;
         }
         .yesorno{
+            margin-left: 100px;
             display: flex;
             flex-direction: row;
+            column-gap: 20px;
         }
 
         .pop-up {
@@ -80,17 +83,18 @@
     <header>
     </header>
 
-    <div class="white-container1 close">
-        Diploma in Library and Information Management<br>
-        <h5>Participant</h5>
+    <div class="white-container1-1 close">
+        Diploma in Library and Information Management
     </div>
 
-    <div class="white-container2 close">
-        <p class="left-top-text">User Details</p>
+    <div class="white-container2-1 close ">
+    <p class="left-top-text2">User Details</p>
         <div class="row">
             <div class="column1">
                 <div class=name>
-                    <p><?= $student->name ?></p>
+                <img src="<?=ROOT?>assets/dr/imgano.png">
+                    <p><h2><?= $student->name ?></h2></p>
+                
                 </div>
             </div>
 
@@ -150,32 +154,38 @@
                 }
             </script>
         </div>
-    </div>
+
 
 
     <div class="pop-up1">
         
 
-        <div class="popupForm">
+        <div class="popupForm1">
             <form method="post">
                 <p>
-                <h2>Change Degree Program</h2>
+                <h1>Change Degree Program</h1>
                 </p>
+                <br>
+                <div class="cur-deg">
                 <input type="hidden" name="id" value="<?=$student->id?>">
-                <label for="degree">Current Degree Program : <?=$student->Degree?></label>
+                <label for="degree"><h3>Current Degree Program : </h3><?=$student->Degree?></label>
+                </div>
             </br>
+            <div class="change-deg">
                 <label for="Degrees">Change Degree Program</label>
                 <select id="Degree" name="Degree">
                     <option value="Degree1">Degree1</option>
                     <option value="Degree2">Degree2</option>
                     <option value="Degree3">Degree3</option>
                 </select>
-
-        <input type="submit" value="Submit">
+                <br>
+            </div>
+        <input type="submit" id="update-deg" value="Submit">
+        <button class="close-button">Close</button>
             </form>
         </div>
 
-        <button class="close-button">Close</button>
+        
     </div>
 
     <div id="overlay"></div>
@@ -187,7 +197,7 @@
                 <p>
                 <h2>Do you want to delete this student data?</h2>
                 </p>
-               
+               <br>
         <div class="yesorno">
         <a href="<?=ROOT?>/Student/<?=$student->indexNo?>/delete/<?=$student->id?>"><button class="close-button">Yes,Sure</button></a>
         <button class="close-button">No,Close</button>
@@ -201,9 +211,9 @@
     </div>
 
     <div class="flex-container">
-        <div class="white-container3 close">
-            <p class="left-top-text3">Examination Results</p>
-            <p class="left-top-text4">Semester 1</p>
+        <div class="white-container3-1 close">
+            <p class="left-top-text2">Examination Results</p>
+            <p class="left-top-text3">Semester 1</p>
             <table>
                 <tr>
                     <th>Subject</th>
@@ -226,7 +236,8 @@
                     <td>A</td>
                 </tr>
             </table>
-            <p class="left-top-text4">Semester 2</p>
+            <br>
+            <p class="left-top-text3">Semester 2</p>
             <table>
                 <tr>
                     <th>Subject</th>
@@ -252,8 +263,8 @@
         </div>
 
 
-        <div class="white-container4">
-            <p class="left-top-text2">User Details</p>
+        <div class="white-container4-1">
+            <p class="left-top-text2">Other Information</p>
 
             <div class="row2">
                 <div class="column2-1">
@@ -302,7 +313,7 @@
 
     <div class="pop-up">
 
-        <div class="popupForm">
+        <div class="popupForm2">
             <form method="post">
                 <p>
                 <h2>Change Student Details</h2>
@@ -312,8 +323,6 @@
                 <input type="text" id="fname"placeholder="Full Name" name="name">
                 <label for="mail">Email</label>
                 <input type="text" id="mail" placeholder="Email Address" name="Email">
-                <label for="regno">Registration Number</label>
-                <input type="text" id="regno" placeholder="Registration Number" name="regNo">
                 <label for="country">Country</label>
                 <input type="text" id="country" placeholder="Currently living country" name="country">
                 <label for="nicno">N.I.C</label>
@@ -327,7 +336,7 @@
                 <label for="phoneno">Pnone Number</label>
                 <input type="text" id="phoneno" placeholder="Fax" name="phoneNo">
 
-                <input type="submit" value="Submit">
+                <input type="submit" id="submitbutton" value="Submit">
                 <button class="close-button">Close</button>
             </form>
         </div>
@@ -337,25 +346,27 @@
 
     <div id="overlay"></div>
 
+
     <script>
-        const body = document.querySelector("body"),
+        (()=> {
+            const body = document.querySelector("body"),
             sidebar = body.querySelector(".sidebar"),
-            toggle = body.querySelector(".toggle");
-        whitecontainer1 = body.querySelector(".white-container1");
-        whitecontainer2 = body.querySelector(".white-container2");
-        whitecontainer3 = body.querySelector(".white-container3");
-
+            toggle = body.querySelector(".toggle")  
+        whitecontainer11 = body.querySelector(".white-container1-1");
+        whitecontainer21= body.querySelector(".white-container2-1");
+        whitecontainer31 = body.querySelector(".white-container3-1");
+                   
         toggle.addEventListener("click", () => {
-            sidebar.classList.toggle("close");
-            whitecontainer1.classList.toggle("close");
-            whitecontainer2.classList.toggle("close");
-            whitecontainer3.classList.toggle("close");
+            //sidebar.classList.toggle("close");
+            whitecontainer11.classList.toggle("close");
+            whitecontainer21.classList.toggle("close");
+            whitecontainer31.classList.toggle("close");
+         
         });
-
-        let subMenu = document.getElementById("subMenu");
+        })()
 
         function toggleMenu() {
-            subMenu.classList.toggle("open-menu");
+            document.getElementById("subMenu").classList.toggle("open-menu");
         }
     </script>
 </body>

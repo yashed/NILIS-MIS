@@ -7,6 +7,9 @@
  {
 
     protected $table = "";
+    protected $primaryKey = "";
+    protected $allowedColumns = [];
+
     public function insert($data){
       
         
