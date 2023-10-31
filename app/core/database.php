@@ -130,6 +130,27 @@ class Database {
         ";
         $this->query($query);
     }
+
+    /* function create_student_table(){
+        //user table 
+        $query = "
+        CREATE TABLE IF NOT EXISTS student(
+            id int(11) NOT NULL AUTO_INCREMENT,
+            Email varchar(40) NOT NULL,
+            regNo varchar(40) NOT NULL,
+            country varchar(40) NOT NULL,
+            indexNo varchar(40) NOT NULL,
+            name text NOT NULL,
+            nicNo varchar(40) NOT NULL,
+            birthdate varchar(40) NOT NULL,
+            fax varchar(40) NOT NULL,
+            address varchar(100) NOT NULL,
+            phoneNo int(20) NOT NULL,
+            PRIMARY KEY (id)
+        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
+        ";
+        $this->query($query);
+    } */
 }
 
 ?>

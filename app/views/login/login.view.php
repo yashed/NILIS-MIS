@@ -152,36 +152,37 @@
   </head>
   <body>
     <div class="flex-container">
-      <div class="body_01">
-        <img class="img1" src="../../../public/assets/login/NILISLogo.png" alt="Logo"
-        />
-        <h1 class="title">
-          <div class="examination">Examination</div>
-          Management<br />Information<br />System
-        </h1>
-        <img class="img2" src="../../../public/assets/login/Loginpng.png" alt="Logo" />
-      </div>
-      <div class="body_02">
-        <div class="body_02_1">
-          <h1 class="login">
-            Sign in to <br />
-            your account
-          </h1>
-
-          <input class="input" 
-                 type="text" 
-                 name="username"
-                 placeholder="Username" />
-
-          <input class="input" 
-                 type="password" 
-                 name="password"
-                 placeholder="Password" />
-
-          <button class="bt-name">LOGIN</button>
-          <a href="#"> <label class="forgot">Forgot Password</label></a>
+        <div class="body_01">
+            <img class="img1" src="<?=ROOT?>/assets/login/NILISLogo.png" alt="Logo" />
+            <h1 class="title">
+                <div class="examination">Examination</div>
+                Management<br />Information<br />System
+            </h1>
+            <img class="img2" src="<?=ROOT?>/assets/login/Loginpng.png" alt="Logo" />
         </div>
-      </div>
+        <div class="body_02">
+            <div class="body_02_1">
+                <h1 class="login">
+                    Sign in to <br />
+                    your account
+                </h1>
+                <form method="post">
+                    <input value="<?=set_value('username')?>" class="input" type="text" placeholder="Username" name="username" required />
+
+                    <input value="<?=set_value('password')?>" class="input" type="password" placeholder="Password" name="password" required />
+
+                    <div class="error_block">
+                        <?php if(!empty($errors['username'])):?>
+                        <div class="error"><?=$errors['username']?></div>
+                        <?php endif;?>
+                    </div>
+                    <button type="submit">
+                        <div class="bt-name">Login</div>
+                    </button>
+                </form>
+                <a href="#"> <label class="forgot">Forgot Password</label></a>
+            </div>
+        </div>
     </div>
   </body>
 </html>

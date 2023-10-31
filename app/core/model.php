@@ -7,11 +7,12 @@
 class Model extends Database
 {
     protected $table = "";
+    protected $primaryKey = "";
     protected $allowedColumns = [];
 
-    public function insert($data)
-    {
-
+    public function insert($data){
+      
+        
         //remove unwanted column 
         //this is not a serious error , the code is working with this
         //secho "No error";
@@ -194,19 +195,17 @@ class Model extends Database
     public function delete($data)
     {
         $keys = array_keys($data);
-        $query = "update " . $this->table . " set ";
+
+        $query = "delete from " . $this->table . " where ";
 
         foreach ($keys as $key) {
-            $query .= $key . "=:" . $key . ",";
+            $query .= $key . "=:" . $key . " && ";
         }
 
-        $query = trim($query, ",");
-        $query .= " where id = :id ";
-
-        //show($query);
-        //show($data);
-
+        $query = trim($query, "&& ");
         $this->query($query, $data);
+
+        return true;
     }
 
 
@@ -214,56 +213,26 @@ class Model extends Database
     {
 
         $keys = array_keys($data);
-
-        $query = "select * from " . $this->table . " where ";
-
-        foreach ($keys as $key) {
-
-            $query = "delete from " . $this->table . " where ";
-
-            foreach ($keys as $key) {
-                $query .= $key . "=:" . $key . " && ";
-            }
-
-            //trim lasf && and space if there exists
-            $query = trim($query, '&& ');
-            //define query to add user data
-            $res = $this->query($query, $data);
-
-            if (is_array($res)) {
-                return $res;
-            }
-
-            return false;
-        }
-
-        //get first data in the request
-        /* public function first($data)
-    {
-
-        $keys = array_keys($data);
-
-        $query = "select * from " . $this->table . " where ";
-
-        foreach ($keys as $key) {
+        
+        $query = "select * from " .$this->table. " where ";
+        
+        foreach($keys as $key){
 
             $query .= $key . "=:" . $key . " && ";
         }
 
         //trim lasf && and space if there exists
-        $query = trim($query, '&& ');
-
-        $query .= " order by id desc limit 1 ";
+        $query = trim($query,'&& '); 
+       
         //define query to add user data
-        $res = $this->query($query, $data);
+        $res = $this->query($query,$data);
+        
+       if(is_array($res))
+       {
+        return $res;
+       }
 
-
-        if (is_array($res)) {
-            return $res[0];
-        }
-
-        return false;
-    } */
+       return false;
     }
 
     public function delete2($data)
@@ -282,4 +251,51 @@ class Model extends Database
 
         return true;
     }
-}
+
+    /*    public function update($id,$data)
+	{
+
+        //remove unwanted fields
+        if(!empty($this->allowedColumns)){
+
+         foreach($data as $key => $value){
+             if(!in_array($key,$this->allowedColumns)){
+                 unset($data[$key]);
+             }
+         }
+
+     }
+
+     $keys=array_keys($data);
+      
+     $query="update ".$this->table." set ";
+
+     foreach($keys as $key){
+         $query.=$key."=:".$key.",";
+     }
+     $query=trim($query,",");
+     $query.=" WHERE ".$this->primaryKey."=:id";
+    //  unset($data['id']);
+
+    //  print_r($data);
+    //  print_r($id);
+
+    //  die;
+
+     //adding id into the array before executing 
+    //  show($query);
+    // //  $data['id']=$id;
+    //  print_r($id);
+    //  die;
+     // show($data);
+     // die;
+     //we can call query qithout creating new database instance since we inherit 
+     // this class from database class
+     $this->query($query,$data);
+     // show($query);
+     // show($data);
+ } */
+
+
+
+ }
