@@ -4,63 +4,41 @@ body {
     padding: 0; 
 }
 
-.navbar {
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 70px;
-    padding: 10px 20px;
-    margin-left: 328px;
-    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 10px;
-    border-radius: 10px;
-}
-
-.navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.navbar-icons {
-    display: flex; 
-    gap: 30px; 
-}
-
-.navbar-icons a {
-    text-decoration: none;
-    color: #333;
-}
-
-.navbar-icons {
-    margin-left: auto;
-}
-
 .white-container1 {
     background-color: white;
     padding: 20px;
-    margin-left: 328px;
-    color: #17376E;
+    margin-top: 10px;
+    margin-left: 250px;
+    color: #000000;
     font-size: 36px;
     font-family:"Poppins",sans-serif;
     margin-bottom: 10px;
     border-radius: 10px;
+    transition: all 0.5s ease;
+}
+
+.white-container1.close{
+    margin-left: 88px;
 }
 
 .white-container2 {
-    margin-left: 328px;
+    margin-left: 250px;
     background-color: white;
-    padding: 20px;
-    height: 500px;
+    padding: 40px;
+    height: 700px;
     font-family:"Poppins",sans-serif;
     font-size: 24px;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
+    transition: all 0.5s ease;
 }
 
+.white-container2.close{
+    margin-left: 88px;
+    padding-left: 10%;
+    padding-right: 10% ;
+}
 .left-top-text {
     text-align: left;
     margin: 0; 
@@ -70,10 +48,10 @@ body {
 .dashed-container {
     border: 2px dashed #333; 
     padding: 10px; 
-    width: 500px; 
+    width: 700px; 
     height: 300px; 
     margin-top: 100px;
-    margin-left: 250px;
+    margin-left: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -109,18 +87,18 @@ input[type="file"] {
 
 button {
 
-    background-color: #A8A8A8; /* Green background color */
-    color: #000000; /* White text color */
-    padding: 10px 20px; /* Padding for the button */
-    border: none; /* Remove the button border */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    margin-left: 700px;
-    margin-top: 70px;
+    background-color: #A8A8A8; 
+    color: #000000; 
+    padding: 10px 20px; 
+    border: none;
+    cursor: pointer; 
+    margin-left: 400px; 
+    margin-top: 70px; 
     border-radius: 8px;
 }
 
-/* Define a hover effect */
+
 button:hover {
-    background-color:#E2E2E2; /* Darker green on hover */
+    background-color:#E2E2E2;
 }
 

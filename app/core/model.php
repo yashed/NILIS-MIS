@@ -9,6 +9,7 @@
     protected $table = "";
     public function insert($data){
       
+        
         //remove unwanted column 
         //this is not a serious error , the code is working with this
         echo "No error";

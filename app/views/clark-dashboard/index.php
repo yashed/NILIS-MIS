@@ -4,17 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="http://localhost/NILIS-MIS/public/css/clerk/clerk-dashboard.css">
     </head>
 
 <body>
 <?php
     $role = "Clerk";
+    $data['role']=$role;
 
-    include_once '../../components/navside-bar/header.php';
-    include_once '../../components/navside-bar/sidebar.php';
+    // include_once '../../components/navside-bar/header.php';
+    // include_once '../../components/navside-bar/sidebar.php';
     // include_once '../../components/navside-bar/footer.php';
 ?>
+
+<?php $this->view('components/navside-bar/header',$data) ?>
+<?php $this->view('components/navside-bar/sidebar',$data) ?>
+<?php $this->view('components/navside-bar/footer',$data) ?>
+
+
     <header>
     </header>
 
@@ -25,7 +32,8 @@
     <div class="white-container2 close">
         <p class="left-top-text">Ongoing Degree Programs</p>
         <div class="degree-card-left">
-        <?php include '../../components/degree-card/degree-card.php' ?>
+      
+        <?php $this->view('components/degree-card/degree-card',$data) ?>
         </div>
         <div class="degree-card-right">
         <?php include '../../components/degree-card/degree-card.php' ?>

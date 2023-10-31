@@ -32,6 +32,7 @@ class Student extends Controller{
         // print_r($data);
         // die;
             $this->view('dr-interfaces/dr-participants.view',$data);
+
         }
         public function delete($id=null){
             if(!empty($id)){
