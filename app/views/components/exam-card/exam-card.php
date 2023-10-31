@@ -76,7 +76,7 @@
                     <div class="sub-name">Diploma in Library and<br>Information Management</div>
                 </div>
             </div>
-            <img src="../../../public/assets/exam-card/icon.png" alt="icon.png" class="exam-img">
+            <img src="<?=ROOT?>/assets/exam-card/icon.png" alt="icon.png" class="exam-img">
         </div>
         <div class="exam-info">
             <div class="exam-year">1st Semester Examination</div>

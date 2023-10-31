@@ -1,16 +1,18 @@
 <?php
     $role = "DR";
+    $data['role'] = $role;
 
-    include_once '../../components/navside-bar/header.php';
-    include_once '../../components/navside-bar/sidebar.php';
-    include_once '../../components/navside-bar/footer.php';
 ?>
+
+<?php $this->view('components/navside-bar/header',$data) ?>
+<?php $this->view('components/navside-bar/sidebar',$data) ?>
+<?php $this->view('components/navside-bar/footer',$data) ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- <link rel="stylesheet" href="./admin-dashboard.css"> -->
         <title>DR Dashboard</title>
     </head>
     <style>
@@ -182,7 +184,6 @@
     flex-direction: column;
 }
 
-
     </style>
     <body>
         <div class="dr-home">
@@ -191,21 +192,22 @@
                 <div class="dr-sub-title">
                    Ongoing Degree Programs
                 </div>
-              <div class="dr-degree-bar">
-               <div class="dr-card1">
-                <?php
-                  include "../../components/degree-card/degree-card.php";
-                ?>
-               </div>
-               <div class="dr-card2">
-               <?php
-                  include "../../components/degree-card/degree-card.php";
-                  ?>
-               </div>
-              
-              
-              </div>
-             
+                <div class="dr-degree-bar">
+<!-- <div class="dr-card1">
+<a href="<?=ROOT?>dr/degreeprofile" style="text-decoration: none;">
+    <?php $this->view('components/degree-card/degree-card',$data) ?>
+</a>
+</div> -->
+                <div class="dr-card1">
+                <a href="<?=ROOT?>dr/degreeprofile" style="text-decoration: none;">
+                <?php foreach($degrees as $degree):?>
+                    <div>
+                    <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                    </div>
+                <?php endforeach;?>
+                </a>
+                </div>
+                </div> 
             </div>
             <div class="dr-subsection-2">
                <div class="dr-subsection-21">
@@ -214,14 +216,10 @@
                     </div>
                     <div class="dr-exam-bar">
                     <div class="dr-exam-card1">
-                        <?php
-                            include "../../components/exam-card/exam-card.php";
-                        ?>
+                        <?php $this->view('components/exam-card/exam-card',$data) ?>
                     </div>
                     <div class="dr-exam-card2">
-                        <?php
-                            include "../../components/exam-card/exam-card.php";
-                        ?>
+                        <?php $this->view('components/exam-card/exam-card',$data) ?>
                     </div>
                     </div>
                </div> 
@@ -230,17 +228,12 @@
                     Academic Calender
                 </div>
                 <div class="dr-calender">
-                   
-                  <?php
-                    include "../../components/calender/calender.php";
-                  ?>
+                    <?php $this->view('components/calender/calender',$data) ?>
                </div>
                 </div>
             </div>  
             <div class="dr-footer">
-            <?php
-                include "../../components/footer/index.php";
-            ?>
+                <?php $this->view('components/footer/index',$data) ?>
             </div>
         </div>
        

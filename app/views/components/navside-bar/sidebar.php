@@ -1,4 +1,5 @@
 <?php
+    $role = "Director";
     if($role == "DR"){
         echo '<div class="menu-bar">
                     <hr>
@@ -6,18 +7,18 @@
                         <ul class="menu-links">
                             <h6 class="topic1">MAIN</h6>
                             <li class="nav-link">
-                                <a href="http://localhost/NILIS-MIS/app/views/dr-interfaces/dr-dashboard.php" >
+                                <a href="dr/index">
                                 <i class="bx bx-home icon" ></i>
                                 <span class="text nav-text">Dashboard</span></a>
                             </li>
                             <li class="nav-link">
-                                <a href="http://localhost/NILIS-MIS/app/views/dr-interfaces/dr-notification.php"  >
+                                <a href="notification">
                                     <i class="bx bx-bell icon" ></i>
                                     <span class="text nav-text">Notification</span>
                                 </a>
                             </li>
                             <li class="nav-link">
-                                <a href="http://localhost/NILIS-MIS/app/views/dr-interfaces/dr-degreeprograms.php"  >
+                                <a href="degreeprograms">
                                     <i class="bx bx-home icon" ></i>
                                     <span class="text nav-text">Degree Programs</span>
                                 </a>
@@ -25,7 +26,7 @@
                             <hr class="horizontal-line">
                             <h6 class="topic2">SETTINGS</h6>
                             <li class="nav-link">
-                                <a href="http://localhost/NILIS-MIS/app/views/dr-interfaces/dr-settings.php"  >
+                                <a href="settings"  >
                                     <i class="bx bx-cog icon"></i>
                                     <span class="text nav-text">Settings</span>
                                 </a"
@@ -39,17 +40,17 @@
                 <nav>
                     <ul class="hero-ul">
                         <li class="hero-ul-li"><i class="bx bxs-bell icon"></i></li>
-                        <li class="hero-ul-li"><img src="../../components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                        <li class="hero-ul-li"><img src="components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
                     </ul>
 
                     <div class="sub-menu-wrap" id="subMenu">
                         <div class="sub-menu">
                             <div class="user-info">
-                                <img src="../../components/navside-bar/MyOriginalPhoto.jpg">
+                                <img src="http://localhost/NILIS-MIS/public/components/navside-bar/MyOriginalPhoto.jpg">
                                 <h3>Bimsara Anjana</h3>
                             </div>
                             <hr>
-                            <a href="../../views/login/login.view.php" class="sub-menu-link">
+                            <a href="dr/login" class="sub-menu-link">
                                 <i class="bx bx-log-out icon" ></i>
                                 <p>Logout</p>
                                 <span>></span>
@@ -249,19 +250,19 @@
                         <ul class="menu-links">
                             <h6 class="topic1">MAIN</h6>
                             <li class="nav-link">
-                                <a href="#">
+                                <a href="director/index">
                                     <i class="bx bx-home icon" ></i>
                                     <span class="text nav-text">Dashboard</span>
                                 </a>
                             </li>
                             <li class="nav-link">
-                                <a href="#">
+                                <a href="notification">
                                     <i class="bx bx-bell icon" ></i>
                                     <span class="text nav-text">Notification</span>
                                 </a>
                             </li>
                             <li class="nav-link">
-                                <a href="#">
+                                <a href="degreeprograms">
                                     <i class="bx bx-home icon" ></i>
                                     <span class="text nav-text">Degree Programs</span>
                                 </a>
@@ -269,7 +270,7 @@
                             <hr class="horizontal-line">
                             <h6 class="topic2">SETTINGS</h6>
                             <li class="nav-link">
-                                <a href="#">
+                                <a href="settings">
                                     <i class="bx bx-cog icon"></i>
                                     <span class="text nav-text">Settings</span>
                                 </a"
@@ -283,13 +284,13 @@
                 <nav>
                     <ul class="hero-ul">
                         <li class="hero-ul-li"><i class="bx bxs-bell icon"></i></li>
-                        <li class="hero-ul-li"><img src="../../components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                        <li class="hero-ul-li"><img src="components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
                     </ul>
 
                     <div class="sub-menu-wrap" id="subMenu">
                         <div class="sub-menu">
                             <div class="user-info">
-                                <img src="../../components/navside-bar/MyOriginalPhoto.jpg">
+                                <img src="components/navside-bar/MyOriginalPhoto.jpg">
                                 <h3>Bimsara Anjana</h3>
                             </div>
                             <hr>

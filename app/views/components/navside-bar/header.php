@@ -1,7 +1,7 @@
     <!DOCTYPE html>
     <html lang="en">
         <head>
-            <link rel="stylesheet" type="text/css" href="../../../public/css/sidebar-component.css">
+            <link rel="stylesheet" type="text/css" href="<?=ROOT?>css/sidebar-component.css">
             <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
             <title>Navsidebar</title>
         </head>
@@ -10,7 +10,7 @@
                 <header>
                     <div class="image-text">
                         <span class="image">
-                            <img src="../../../public/assets/NILIS-logo.png" alt="logo">
+                            <img src="<?=ROOT?>assets/NILIS-logo.png" alt="logo">
                         </span>
                         <div class="text header-text">
                             <h4 class="name1">National Institute of</h4>

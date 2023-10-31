@@ -1,5 +1,5 @@
 <?php
-    $role = "DR";
+    $role = "Director";
     $data['role'] = $role;
 ?>
 
@@ -12,7 +12,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>DR Notifications</title>
+        <title>Settings</title>
     </head>
     <style>
         *{
@@ -56,7 +56,7 @@
     </style>
     <body>
     <div class="dr-home">
-            <div class="dr-title">Notifications</div> 
+            <div class="dr-title">Settings</div> 
         </div>
     </body>
 </html>

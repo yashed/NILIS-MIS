@@ -1,10 +1,16 @@
 <?php
-    $role = "DR";
+    $role = "Director";
+    $data['role']=$role;
 
-    include_once '../../components/navside-bar/header.php';
-    include_once '../../components/navside-bar/sidebar.php';
-    include_once '../../components/navside-bar/footer.php';
+    // include_once '../../components/navside-bar/header.php';
+    // include_once '../../components/navside-bar/sidebar.php';
+    // include_once '../../components/navside-bar/footer.php';
 ?>
+
+<?php $this->view('components/navside-bar/header',$data) ?>
+<?php $this->view('components/navside-bar/sidebar',$data) ?>
+<?php $this->view('components/navside-bar/footer',$data) ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +42,7 @@
             width: calc(100% - 250px);
             min-width: 70%;
             transition: var(--tran-05);
-            background: var(--body-color);
+            background: var(--text-color);
         }
         .dr-degree-programs-title{
             font-size: 30px;
@@ -136,7 +142,7 @@
         }
         .table__body::-webkit-scrollbar-thumb{
             border-radius: .5rem;
-            background-color: #0004;
+            background-color: var(--body-color);
             visibility: hidden;
         }
         .table__body:hover::-webkit-scrollbar-thumb{ 
@@ -165,12 +171,15 @@
             position: sticky;
             top: 0;
             left: 0;
-            background-color: #d5d1defe;
+            background-color: #ffffff;
             cursor: pointer;
             text-transform: capitalize;
         }
         tbody tr:nth-child(even) {
-            background-color: #0000000b;
+            background-color: #ffffff;
+        }
+        tbody tr:nth-child(odd) {
+            background-color: #ffffff;
         }
         tbody tr {
             --delay: .1s;
@@ -256,15 +265,15 @@
             margin: 0px 10px 2px 5px;
             float: right;
         }
-        .export__file .export__file-btn {
+        .export_file .export_file-btn {
             display: inline-block;
             width: 2rem;
             height: 2rem;
-            background: #fff6 url(http://localhost/NILIS-MIS/public/public/assets/dr-participant-table/export.png) center / 80% no-repeat;
+            background: #fff6 url(http://localhost/NILIS-MIS/public/assets/dr-participant-table/export.png) center / 80% no-repeat;
             border-radius: 50%;
             transition: .2s ease-in-out;
         }
-        .export__file .export__file-btn:hover { 
+        .export_file .export_file-btn:hover { 
             background-color: #fff;
             transform: scale(1.15);
             cursor: pointer;
@@ -272,7 +281,7 @@
         .export__file input {
             display: none;
         }
-        .export__file .export__file-options {
+        .export_file .export_file-options {
             position: absolute;
             right: 0;
             width: 12rem;
@@ -285,12 +294,12 @@
             box-shadow: 0 .2rem .5rem var(--sidebar-color);
             transition: .2s;
         }
-        .export__file input:checked + .export__file-options {
+        .export_file input:checked + .export_file-options {
             opacity: 1;
             transform: scale(1);
             z-index: 100;
         }
-        .export__file .export__file-options label{
+        .export_file .export_file-options label{
             display: block;
             width: 100%;
             padding: .6rem 0;
@@ -302,18 +311,18 @@
             transition: .2s ease-in-out;
         }
 
-        .export__file .export__file-options label:first-of-type{
+        .export_file .export_file-options label:first-of-type{
             padding: 1rem 0;
             background-color: var(--primary-color) !important;
         }
 
-        .export__file .export__file-options label:hover{
+        .export_file .export_file-options label:hover{
             transform: scale(1.05);
             background-color: #fff;
             cursor: pointer;
         }
 
-        .export__file .export__file-options img{
+        .export_file .export_file-options img{
             width: 2rem;
             height: auto;
         }
@@ -345,7 +354,7 @@
                 </div>
             </section>
             <section class="table__body">
-                <table>
+                <table id="table_p">
                     <thead>
                         <tr>
                             <th> Name </th>
@@ -356,17 +365,24 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <?php foreach($students as $student):?>
                         <tr>
-                            <td class="table__body-td-name"><img src="../../../public/assets/MyOriginalPhoto.jpg" alt=""> Bimsara Anjana </td>
+                            <td class="table__body-td-name"><img src="../../../public/assets/MyOriginalPhoto.jpg" alt=""> <?=$student->name?> </td>
                             <td> Students </td>
-                            <td> 21000859 </td>
-                            <td> 2020cs085  </td>
-                            <td> bimsarajayadewa@gmail.com </td>
+                            <td> <a href="<?=ROOT?>/Student/<?=$student->indexNo?>"><?=$student->indexNo?></a></td>
+                            <td>  <?=$student->regNo?>  </td>
+                            <td> <?=$student->Email?> </td>
                         </tr>
+                        <?php endforeach;?>
+                       
+                        
                     </tbody>
                 </table>
             </section>
         </main>
+        <div class="dr-footer">
+            <?php $this->view('components/footer/index',$data) ?>
+        </div>
     </div>
 </body>
 <script>
@@ -573,4 +589,30 @@
         a.remove();
     }
 </script>
+<script>function getValueFromSelectedRow(table, rowIndex, columnIndex) {
+    var rows = table.rows;
+  
+    if (rowIndex >= 0 && rowIndex < rows.length) {
+      var selectedRow = rows[rowIndex];
+      var cellValue = selectedRow.cells[columnIndex].textContent;
+      return cellValue;
+    } else {
+      return "Invalid row index";
+    }
+  }
+  
+  // Get the table
+var myTable = document.getElementById('table_p');
+
+// Example: Get the name (second column, index 1) from the first row (index 0)
+var rowIndex = 1; // Change this index to select a different row
+var columnIndex = 2; // Change this index to select a different column
+document.getElementById('tr1').onclick = function(){
+    var value = getValueFromSelectedRow(myTable, rowIndex, columnIndex);
+    console.log("Value from selected row:", value);
+    
+
+}
+
+ </script>
 </html>

@@ -1,10 +1,12 @@
 <?php
     $role = "DR";
-
-    include_once '../../components/navside-bar/header.php';
-    include_once '../../components/navside-bar/sidebar.php';
-    include_once '../../components/navside-bar/footer.php';
+    $data['role'] = $role;
 ?>
+
+<?php $this->view('components/navside-bar/header',$data) ?>
+<?php $this->view('components/navside-bar/sidebar',$data) ?>
+<?php $this->view('components/navside-bar/footer',$data) ?>
+
 <DOCTYPE html!>
 <html>
     <head>
@@ -27,7 +29,7 @@
             --tran-04: all 0.4s ease;
             --tran-05: all 0.5s ease;
         }
-        .sidebar.close ~ .large_box{
+        .sidebar.close~.large_box{
             left: 88px;
             width: calc(100% - 88px);
         }
@@ -187,7 +189,7 @@
                         <tr>
                             <td>
                                 <b>Type</b><br>
-                                <input type="text" name="type" id="type">
+                                <input type="text" name="type" id="type" value="<?=$degree->DegreeType?>">
                             </td>
                             <td>
                                 <b>Acodemic Year</b>
@@ -285,9 +287,7 @@
                 </div>
             </div>
             <div class="dr-footer">
-                <?php
-                    include "../../components/footer/index.php";
-                ?>
+                <?php $this->view('components/footer/index',$data) ?>
             </div>
         </div>
     </body>
