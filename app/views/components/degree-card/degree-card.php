@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Degree Card</title>
-    <!-- <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" /> -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
     <style>
         .degree-body {
             border-radius: 8px;

@@ -203,13 +203,13 @@ $data['role'] = $role;
     <!--Delete User-->
 
     <?php $this->view('admin-interfaces/admin-user-delete') ?>
-
+<!-- 
     <div class="admin-footer">
 
         <?php $this->view('components/footer/index', $data) ?>
 
 
-    </div>
+    </div> -->
     </div>
     <script src="<?= ROOT ?>js/form.js"></script>
 </body>

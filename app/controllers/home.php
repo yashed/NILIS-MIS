@@ -16,8 +16,9 @@ class Home extends Controller{
 
        $this->view('login/login.view');
     }
-    public function edit(){
-        echo "Home eddit ";
+    public function edit($id=null,$name=null){
+        echo "Home eddit ".$id;
+        echo "Home eddit ".$name;
     }
     public function delete(){
         echo "Home delete ";

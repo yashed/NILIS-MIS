@@ -249,17 +249,30 @@
             </div>
             <div class="admin-degree-bar">
                 <div class="admin-card1">
+                <div class="admin-sub-title">No On Going Degree Program Created Yet</div>
                    
-                    <?php $this->view('components/degree-card/degree-card',$data) ?>
+                    <a href="<?=ROOT?>dr/degreeprofile" style="text-decoration: none;">
+                    <!-- <?php foreach($degrees as $degree):?> -->
+                        <div>
+                      x
+
+                        <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                        </div>
+
+                      
+                    <!-- <?php endforeach;?> -->
+                    </a>
+
+                    <!-- <?php $this->view('components/degree-card/degree-card',$data) ?> -->
               
               
                 </div>
-                <div class="admin-card2">
+                <!-- <div class="admin-card2">
                  
                     <?php $this->view('components/degree-card/degree-card',$data) ?>
           
               
-                </div>
+                </div> -->
 
 
             </div>

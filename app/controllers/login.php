@@ -15,15 +15,33 @@ class Login extends Controller{
             $row = $user->first([
                 'username'=>$_POST['username']
             ]);
-            show($row); die;
+           
             if($row){
                 if(password_verify($_POST['password'],$row->password))
                 {
                     //authentication
                     Auth :: authenticate($row);
+
+
+                    if ($_SESSION['USER_DATA']->role == 'admin') {
+                        header('Location: admin');
+                    } else if ($_SESSION['USER_DATA']->role == 'dr') {
+                        header('Location: dr');
+                    } else if ($_SESSION['USER_DATA']->role == 'sar') {
+                        header('Location: sar');
+                    } else if ($_SESSION['USER_DATA']->role == 'director') {
+                        header('Location: director');
+                    } else if ($_SESSION['USER_DATA']->role == 'asar') {
+                        header('Location: asar');
+                    } else if ($_SESSION['USER_DATA']->role == 'clerk') {
+                        header('Location: clerk');
+                    } else {
+                        header('Location: login');
+                    }
+
             
                     // redirect('home');
-                    header('Location: admin/adduser');
+                    // header('Location: admin/adduser');
                 }
             }
             
@@ -31,7 +49,7 @@ class Login extends Controller{
         }
         
         
-        $this->view('login/login',$data);
+        $this->view('common/login/login',$data);
         
 }
 }

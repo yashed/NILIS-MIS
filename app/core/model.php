@@ -61,8 +61,8 @@ class Model extends Database
 
     public function update2($id, $data)
     {
-
-        //remove unwanted columns
+        show($id);
+        //remove unwanted colmns
         if (!empty($this->allowedColumns)) {
             foreach ($data as $key => $value) {
                 if (!in_array($key, $this->allowedColumns)) {
@@ -135,7 +135,7 @@ class Model extends Database
 
 	} */
 
-    /* public function where($data)
+     public function where2($data)
 	{
 
 		$keys = array_keys($data);
@@ -156,7 +156,7 @@ class Model extends Database
 
 		return false;
 
-	} */
+	} 
 
     public function first($data, $order = 'desc')
     {

@@ -63,7 +63,7 @@
         }
         else 
         {
-            if($this->where(['username'=>$data['username']]))
+            if($this->where2(['username'=>$data['username']]))
             {
                 $this->errors['username'] = 'This Username is already exists';
    
@@ -79,7 +79,7 @@
 
         }else
         {
-            if($this->where(['email'=>$data['email']]))
+            if($this->where2(['email'=>$data['email']]))
             {
                 $this->errors['email'] = 'This email is already exists';
    

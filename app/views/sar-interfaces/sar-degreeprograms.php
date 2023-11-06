@@ -1,5 +1,5 @@
 <?php
-    $role = "DR";
+    $role = "SAR";
     $data['role'] = $role;
 ?>
 
@@ -51,24 +51,107 @@
     border-radius: 6px;
     margin: 7px 4px 7px 4px;
 }
+
 .sidebar.close~.dr-home {
     left: 88px;
     width: calc(100% - 88px);
 }
+
+.dr-subsection-0 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    /* background-color: var(--text-color); */
+    padding: 15px 10px 15px 35px;
+    border-radius: 6px;
+    margin: 7px 4px 7px 4px;
+    flex-wrap: wrap;
+    
+}
+
+.dr-subsection-01{
+    display: flex;
+    padding: 15px 30px 14px 30px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background-color: var(--text-color);
+    box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.12);
+    width:25%;
+    height: 150px;
+    flex-direction: row;
+    gap:60px;
+}
+.dr-subcard-data{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.dr-subcard-data-value{
+    font-size: 38px;
+    font-weight: 600;
+    color: #17376E;
+}
+.dr-subcard-data-title{
+    font-size: 18px;
+    font-weight: 600;
+    color: #17376E;
+}
+
 .dr-subsection-1 {
     background-color: var(--text-color);
     padding: 10px 10px 30px 35px;
     border-radius: 6px;
     margin: 7px 4px 7px 4px;
 }
+
 .dr-sub-title {
+    
     color: #17376E;
     font-family: Poppins;
     font-size: 22px;
     font-style: normal;
     font-weight: 600;
     margin : 40px;
+    
 }
+.dr-subsection-2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    /* padding: 10px 10px 30px 35px; */
+    /* border-radius: 6px; */
+    /* margin: 7px 4px 7px 4px; */
+}
+.dr-subsection-21 {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--text-color);
+    padding: 10px 10px 30px 35px;
+    border-radius: 6px;
+    margin: 3px 4px 7px 4px;
+    width: 50%;
+}
+
+.dr-subsection-22 {
+    background-color: var(--text-color);
+    padding: 10px 10px 31px 35px;
+    border-radius: 6px;
+    margin: 3px 4px 7px 4px;
+    width: 50%;
+}
+
+.dr-calender{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
 .dr-degree-bar {
     display: flex;
     flex-direction: row;
@@ -76,9 +159,17 @@
     flex-wrap: wrap;
     margin-bottom: 20px;
 }
+
 .dr-card1 {
-    margin-bottom: 4px;
+    display: flex;
+    flex-direction: column;
 }
+
+.dr-card2 {
+    display: flex;
+    flex-direction: column;
+}
+
 .dr-exam-bar {
     display: flex;
     flex-direction: column;
@@ -88,7 +179,16 @@
     gap:30px;
 }
 .dr-exam-card1{
-    margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+}
+.dr-exam-card2{
+    display: flex;
+    flex-direction: column;
+}
+.dr-button{
+    float: right;
+    margin-right: 10vh;
 }
 .model-box{
     display: none;
@@ -107,27 +207,26 @@
     <div class="dr-home">
         <div class="dr-title">Degree Program</div>
         <div class="dr-subsection-1">
-            
-            <div class="button-btn">
-                <button onclick="myFunction()" type="button" class="bt-name" style="text-decoration: none; float: right; margin-right: 20px;">Create Degree Program</button>
-            </div>
-
+        
             <div class="dr-sub-title">Ongoing Degree Programs</div>
             <div class="dr-degree-bar">
-                <?php $count = 0; ?>
-                <?php foreach($degrees as $degree): ?>
-                    <div class="dr-card1">
-                        <a href="<?=ROOT?>dr/degreeprofile" style="text-decoration: none;">
-                            <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
-                        </a>
+                
+                <div class="dr-card1">
+                <?php foreach($degrees as $degree):?>
+                    <div>
+                    <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
                     </div>
-                    <?php $count++; ?>
-                <?php endforeach; ?>
+                <?php endforeach;?>
+                </div>
             </div>
         </div>
         <div class="dr-subsection-1">
             <div class="dr-sub-title">Completed Degree Programs</div>
                     <p>Completed Degree Programs are not yet.</p>
+                                                    <!-- <div class="dr-degree-bar">
+                                                        <div class="dr-card1">
+                                                        <?php $this->view('components/degree-card/degree-card',$data) ?>
+                                                        </div> -->
         </div>
         <div class="dr-footer">
         <?php $this->view('components/footer/index',$data) ?>
@@ -271,7 +370,7 @@
                     <div class="button-btn">
                         <a type="button" class="bt-name" style="text-decoration: none; margin-right: 25px; background-color: #fff; color: #222d76;" id="Back2">Back</a>
 
-                        <a type="Submit" class="bt-name" href="<?=ROOT?>dr/newDegree" style="text-decoration: none; margin-right: 25px; background-color: #fff; color: #222d76;">Create</a>
+                        <button type="Submit" class="bt-name" style="text-decoration: none; margin-right: -53px;" >Create</button>
                     </div>
                 </div>
             </form>

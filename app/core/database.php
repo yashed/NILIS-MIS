@@ -65,7 +65,7 @@ class Database {
         $this->query($query);
         //Degree Table
         $query = "
-        CREATE TABLE `degree` (
+        CREATE TABLE IF NOT EXISTS `degree` (
             `DegreeID` varchar(20) NOT NULL,
             `DegreeType` varchar(50) NOT NULL,
             `DegreeName` text NOT NULL,
@@ -81,7 +81,7 @@ class Database {
         $this->query($query);
         //Subject Table
         $query = "
-        CREATE TABLE `subject` (
+        CREATE TABLE IF NOT EXISTS `subject` (
             `SubjectID` varchar(50) NOT NULL,
             `SubjectCode` varchar(50) DEFAULT NULL,
             `SubjectName` text NOT NULL,
@@ -93,9 +93,9 @@ class Database {
     
         $this->query($query);
 
-        //Grading VAlues Table
+        //Grading Values Table
         $query = "
-        CREATE TABLE `grading values` (
+        CREATE TABLE IF NOT EXISTS `grading values` (
             `GradeID` int(10) NOT NULL,
             `Grade` varchar(5) NOT NULL,
             `Max Marks` int(10) NOT NULL,
@@ -107,50 +107,47 @@ class Database {
         ";
     
         $this->query($query);
-
+        
+        //student Table
+        $query = "
+        CREATE TABLE IF NOT EXISTS student(
+            id int(11) NOT NULL AUTO_INCREMENT,
+            Email varchar(40) NOT NULL,
+            regNo varchar(40) NOT NULL,
+            country varchar(40) NOT NULL,
+            indexNo varchar(40) NOT NULL,
+            name text NOT NULL,
+            nicNo varchar(40) NOT NULL,
+            birthdate varchar(40) NOT NULL,
+            fax varchar(40) NOT NULL,
+            address varchar(100) NOT NULL,
+            phoneNo int(20) NOT NULL,
+            PRIMARY KEY (id)
+        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
+        ";
+        $this->query($query);
         
     }
-    function create_student_table(){
-        //student table 
-        $query = "
-        CREATE TABLE IF NOT EXISTS student(
-            id int(11) NOT NULL AUTO_INCREMENT,
-            Email varchar(40) NOT NULL,
-            regNo varchar(40) NOT NULL,
-            country varchar(40) NOT NULL,
-            indexNo varchar(40) NOT NULL,
-            name text NOT NULL,
-            nicNo varchar(40) NOT NULL,
-            birthdate varchar(40) NOT NULL,
-            fax varchar(40) NOT NULL,
-            address varchar(100) NOT NULL,
-            phoneNo int(20) NOT NULL,
-            PRIMARY KEY (id)
-        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
-        ";
-        $this->query($query);
-    }
-
-    /* function create_student_table(){
-        //user table 
-        $query = "
-        CREATE TABLE IF NOT EXISTS student(
-            id int(11) NOT NULL AUTO_INCREMENT,
-            Email varchar(40) NOT NULL,
-            regNo varchar(40) NOT NULL,
-            country varchar(40) NOT NULL,
-            indexNo varchar(40) NOT NULL,
-            name text NOT NULL,
-            nicNo varchar(40) NOT NULL,
-            birthdate varchar(40) NOT NULL,
-            fax varchar(40) NOT NULL,
-            address varchar(100) NOT NULL,
-            phoneNo int(20) NOT NULL,
-            PRIMARY KEY (id)
-        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
-        ";
-        $this->query($query);
-    } */
+    // function create_student_table(){
+    //     //student table 
+    //     $query = "
+    //     CREATE TABLE IF NOT EXISTS student(
+    //         id int(11) NOT NULL AUTO_INCREMENT,
+    //         Email varchar(40) NOT NULL,
+    //         regNo varchar(40) NOT NULL,
+    //         country varchar(40) NOT NULL,
+    //         indexNo varchar(40) NOT NULL,
+    //         name text NOT NULL,
+    //         nicNo varchar(40) NOT NULL,
+    //         birthdate varchar(40) NOT NULL,
+    //         fax varchar(40) NOT NULL,
+    //         address varchar(100) NOT NULL,
+    //         phoneNo int(20) NOT NULL,
+    //         PRIMARY KEY (id)
+    //     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
+    //     ";
+    //     $this->query($query);
+    // }
 }
 
 ?>

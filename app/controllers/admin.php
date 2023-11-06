@@ -28,9 +28,10 @@ class Admin extends Controller
 
       // header('Location: users');
       if ($_POST['submit'] == "update") {
-        $user->update2($_POST['id'], $_POST);
+        $user->update($_POST['id'], $_POST);
         message("User profile was successfully updated");
-      } else if ($_POST['submit'] == "add") {
+      }
+       else if ($_POST['submit'] == "add") {
         if ($user->validate($_POST)) {
           try {
             //set default passsword
@@ -50,6 +51,7 @@ class Admin extends Controller
       } else if ($_POST['submit'] == "delete") {
 
         $user->delete2($_POST);
+        message("User profile was successfully Deleted");
       }
     }
     //get all data from database

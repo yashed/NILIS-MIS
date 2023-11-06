@@ -40,6 +40,7 @@ class App
       }
 
       $arr = array_values($arr);
+     
       call_user_func_array([$mycontroller, $this->method], $arr);
    }
 
