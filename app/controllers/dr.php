@@ -97,7 +97,28 @@ class DR extends Controller{
     public function login(){
         $this->view('login/login');
     }
+    public function attendance(){
+        $degree = new Degree();
 
+        // $degree->insert($_POST);
+        // show($_POST);
+
+        $data['degrees'] = $degree->findAll();
+        //show($data['degrees']);
+
+        $this->view('dr-interfaces/dr-attendance',$data);
+    }
+    public function reports(){
+        $degree = new Degree();
+
+        // $degree->insert($_POST);
+        // show($_POST);
+
+        $data['degrees'] = $degree->findAll();
+        //show($data['degrees']);
+
+        $this->view('dr-interfaces/dr-reports',$data);
+    }
 }
 
 ?>

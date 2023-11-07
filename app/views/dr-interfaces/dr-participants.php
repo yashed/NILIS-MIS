@@ -335,7 +335,7 @@
                     </thead>
                     <tbody>
                     <?php foreach($students as $student):?>
-                        <tr>
+                        <tr data-id="<?= $student->id ?>">
                             <td class="table__body-td-name"><?=$student->name?> </td>
                             <td> <?=$student->indexNo?> </td>
                             <td>  <?=$student->regNo?> </td>
@@ -555,30 +555,64 @@
         a.click();
         a.remove();
     }
-</script>
-<script>function getValueFromSelectedRow(table, rowIndex, columnIndex) {
-    var rows = table.rows;
-  
-    if (rowIndex >= 0 && rowIndex < rows.length) {
-      var selectedRow = rows[rowIndex];
-      var cellValue = selectedRow.cells[columnIndex].textContent;
-      return cellValue;
-    } else {
-      return "Invalid row index";
-    }
-  }
-  
-  // Get the table
-var myTable = document.getElementById('table_p');
-
-// Example: Get the name (second column, index 1) from the first row (index 0)
-var rowIndex = 1; // Change this index to select a different row
-var columnIndex = 2; // Change this index to select a different column
-document.getElementById('tr1').onclick = function(){
-    var value = getValueFromSelectedRow(myTable, rowIndex, columnIndex);
-    console.log("Value from selected row:", value);
+    function getValueFromSelectedRow(table, rowIndex, columnIndex) {
+        var rows = table.rows;
     
+        if (rowIndex >= 0 && rowIndex < rows.length) {
+        var selectedRow = rows[rowIndex];
+        var cellValue = selectedRow.cells[columnIndex].textContent;
+        return cellValue;
+        } else {
+        return "Invalid row index";
+        }
+    }
+    
+    // Get the table
+    var myTable = document.getElementById('table_p');
 
-}
- </script>
+    // Example: Get the name (second column, index 1) from the first row (index 0)
+    var rowIndex = 1; // Change this index to select a different row
+    var columnIndex = 2; // Change this index to select a different column
+    document.getElementById('tr1').onclick = function(){
+        var value = getValueFromSelectedRow(myTable, rowIndex, columnIndex);
+        console.log("Value from selected row:", value);
+        
+
+    }
+    //
+    //
+    // for pass the data
+    document.addEventListener('DOMContentLoaded', function () {
+        const table = document.getElementById('table_p');
+        const rows = table.querySelectorAll('tbody tr');
+
+        rows.forEach((row) => {
+            row.addEventListener('click', function () {
+                // Get the unique identifier from the data-id attribute
+                const studentId = row.getAttribute('data-id');
+
+                // Navigate to the target page with the data as a query parameter
+                window.location.href = '<?=ROOT?>dr/userprofile' + studentId;
+            });
+        });
+    });
+
+
+     // for make row clickable
+    document.addEventListener('DOMContentLoaded', function () {
+        const table = document.getElementById('table_p');
+        const rows = table.querySelectorAll('tbody tr');
+
+        rows.forEach((row) => {
+            row.addEventListener('click', function () {
+                // Get the unique identifier from the data-id attribute
+                const studentId = row.getAttribute('data-id');
+
+                // Navigate to the target page with the data as a query parameter
+                window.location.href = '<?= ROOT ?>dr/userprofile' + studentId;
+            });
+        });
+    });
+
+</script>
 </html>
