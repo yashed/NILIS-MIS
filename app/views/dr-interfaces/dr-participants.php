@@ -1,13 +1,14 @@
 <?php
-    $role = "DR";
-    $data['role']=$role;
+$role = "DR";
+$data['role'] = $role;
 ?>
-<?php $this->view('components/navside-bar/header',$data) ?>
-<?php $this->view('components/navside-bar/sidebar',$data) ?>
-<?php $this->view('components/navside-bar/footer',$data) ?>
+<?php $this->view('components/navside-bar/header', $data) ?>
+<?php $this->view('components/navside-bar/sidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>DR Student Participants</title>
     <style>
@@ -17,18 +18,18 @@
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
         }
-        :root{
+        :root {
             --body-color: #E2E2E2;
             --sidebar-color: #17376E;
             --primary-color: #9AD6FF;
             --text-color: #ffffff;
 
             --tran-02: all 0.2s ease;
-            --tran-03: all 0.3s ease; 
+            --tran-03: all 0.3s ease;
             --tran-04: all 0.4s ease;
             --tran-05: all 0.5s ease;
         }
-        .dr-degree-programs-home{
+        .dr-degree-programs-home {
             left: 250px;
             position: relative;
             width: calc(100% - 250px);
@@ -36,7 +37,7 @@
             transition: var(--tran-05);
             background: var(--text-color);
         }
-        .dr-degree-programs-title{
+        .dr-degree-programs-title {
             font-size: 30px;
             font-weight: 500;
             color: black;
@@ -45,7 +46,7 @@
             border-radius: 6px;
             margin: 7px 4px 7px 4px;
         }
-        .sidebar.close ~ .dr-degree-programs-home{
+        .sidebar.close~.dr-degree-programs-home {
             left: 88px;
             width: calc(100% - 88px);
         }
@@ -61,7 +62,7 @@
             overflow: hidden;
             margin: 10px 8px 10px 8px;
         }
-        .table__header p{
+        .table__header p {
             width: 100%;
             height: 10%;
             color: var(--sidebar-color);
@@ -73,7 +74,7 @@
             font-size: 30px;
             font-weight: 500;
         }
-        .table__header .input-main-group{
+        .table__header .input-main-group {
             display: flex;
         }
         .table__header .input-group {
@@ -86,7 +87,7 @@
             display: flex;
             transition: .2s;
         }
-        .table__header .dr-degree-programs-button{
+        .table__header .dr-degree-programs-button {
             height: 100%;
             margin: 13px 5px 10px 0px;
             padding: 8px 7px 8px 7px;
@@ -95,7 +96,7 @@
             background-color: var(--sidebar-color);
             color: var(--text-color);
         }
-        .table__header .dr-degree-programs-button:hover{
+        .table__header .dr-degree-programs-button:hover {
             background-color: var(--text-color);
             color: var(--sidebar-color);
         }
@@ -105,13 +106,13 @@
             box-shadow: 0 .1rem .4rem #0002;
             font-weight: 500;
         } */
-        .table__header .input-group .icon{
+        .table__header .input-group .icon {
             font-size: 25px;
             padding: 5px 4px 0px 4px;
         }
         .table__header .input-group input {
             width: 100%;
-            padding:  7px 7px 7px 20px;
+            padding: 7px 7px 7px 20px;
             background-color: transparent;
             border: none;
             outline: none;
@@ -127,23 +128,23 @@
             outline-width: 2px;
             /* outline-color: #17376E; */
         }
-        .table__body::-webkit-scrollbar{
+        .table__body::-webkit-scrollbar {
             width: 0.5rem;
             height: 0.5rem;
         }
-        .table__body::-webkit-scrollbar-thumb{
+        .table__body::-webkit-scrollbar-thumb {
             border-radius: .5rem;
             background-color: var(--body-color);
             visibility: hidden;
         }
-        .table__body:hover::-webkit-scrollbar-thumb{ 
+        .table__body:hover::-webkit-scrollbar-thumb {
             visibility: visible;
         }
         table {
             width: 100%;
             margin: 5px 5px 5px 20px;
         }
-        .table__body-td-name{
+        .table__body-td-name {
             display: flex;
         }
         td img {
@@ -153,7 +154,9 @@
             border-radius: 50%;
             vertical-align: middle;
         }
-        table, th, td {
+        table,
+        th,
+        td {
             border-collapse: collapse;
             padding: 1rem;
             text-align: left;
@@ -212,27 +215,28 @@
             height: 1.3rem;
             border-radius: 50%;
             border: 1.4px solid transparent;
-            
+
             text-align: center;
             font-size: 1rem;
-            
+
             margin-left: .5rem;
             transition: .2s ease-in-out;
         }
-        thead th:hover span.icon-arrow{
+        thead th:hover span.icon-arrow {
             border: 1.4px solid #6c00bd;
         }
         thead th:hover {
             color: #6c00bd;
         }
-        thead th.active span.icon-arrow{
+        thead th.active span.icon-arrow {
             background-color: #6c00bd;
             color: #fff;
         }
-        thead th.asc span.icon-arrow{
+        thead th.asc span.icon-arrow {
             transform: rotate(180deg);
         }
-        thead th.active,tbody td.active {
+        thead th.active,
+        tbody td.active {
             color: #6c00bd;
         }
         .export__file {
@@ -245,9 +249,9 @@
             height: 2rem;
             border-radius: 50%;
             transition: .2s ease-in-out;
-            background: #fff6 url(<?=ROOT?>assets/dr-participant-table/export.png) center / 80% no-repeat;
+            background: #fff6 url("<?= ROOT ?>assets/dr-participant-table/export.png") center / 80% no-repeat;
         }
-        .export__file .export__file-btn:hover { 
+        .export__file .export__file-btn:hover {
             background-color: #fff;
             transform: scale(1.15);
             cursor: pointer;
@@ -269,12 +273,12 @@
             transition: .2s;
             background-color: #fff;
         }
-        .export__file input:checked + .export__file-options {
+        .export__file input:checked+.export__file-options {
             opacity: 1;
             transform: scale(1);
             z-index: 100;
         }
-        .export__file .export__file-options label{
+        .export__file .export__file-options label {
             display: block;
             width: 100%;
             padding: .6rem 0;
@@ -283,21 +287,29 @@
             align-items: center;
             transition: .2s ease-in-out;
         }
-        .export__file .export__file-options label:first-of-type{
+        .export__file .export__file-options label:first-of-type {
             padding: 1rem 0;
             background-color: var(--primary-color) !important;
         }
-        .export__file .export__file-options label:hover{
+        .export__file .export__file-options label:hover {
             transform: scale(1.05);
             background-color: #fff;
             cursor: pointer;
         }
-        .export__file .export__file-options img{
+        .export__file .export__file-options img {
             width: 2rem;
             height: auto;
         }
+        .clickable-row {
+            cursor: pointer;
+            background-color: transparent;
+        }
+        .clickable-row:hover {
+            background-color: #0000000b;
+        }
     </style>
 </head>
+
 <body>
     <div class="dr-degree-programs-home">
         <div class="dr-degree-programs-title">Diploma in Library and Information Management</div>
@@ -316,10 +328,10 @@
                     <input type="checkbox" id="export-file">
                     <div class="export__file-options">
                         <label>Export As</label>
-                        <label for="export-file" id="toPDF">PDF <img src="<?=ROOT?>assets/dr-participant-table/pdf.png" alt=""></label>
-                        <label for="export-file" id="toJSON">JSON <img src="<?=ROOT?>assets/dr-participant-table/json.png" alt=""></label>
-                        <label for="export-file" id="toCSV">CSV <img src="<?=ROOT?>assets/dr-participant-table/csv.png" alt=""></label>
-                        <label for="export-file" id="toEXCEL">EXCEL <img src="<?=ROOT?>assets/dr-participant-table/excel.png" alt=""></label>
+                        <label for="export-file" id="toPDF">PDF <img src="<?= ROOT ?>assets/dr-participant-table/pdf.png" alt=""></label>
+                        <label for="export-file" id="toJSON">JSON <img src="<?= ROOT ?>assets/dr-participant-table/json.png" alt=""></label>
+                        <label for="export-file" id="toCSV">CSV <img src="<?= ROOT ?>assets/dr-participant-table/csv.png" alt=""></label>
+                        <label for="export-file" id="toEXCEL">EXCEL <img src="<?= ROOT ?>assets/dr-participant-table/excel.png" alt=""></label>
                     </div>
                 </div>
             </section>
@@ -334,28 +346,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <?php foreach($students as $student):?>
-                        <tr data-id="<?= $student->id ?>">
-                            <td class="table__body-td-name"><?=$student->name?> </td>
-                            <td> <?=$student->indexNo?> </td>
-                            <td>  <?=$student->regNo?> </td>
-                            <td> <?=$student->Email?> </td>
-                        </tr>
-                    <?php endforeach;?>
-                        
+                        <?php foreach ($students as $student) : ?>
+                            <tr data-id="<?= $student->id ?>" class="clickable-row">
+                                <td class="table__body-td-name"><?= $student->name ?> </td>
+                                <td> <?= $student->indexNo ?> </td>
+                                <td> <?= $student->regNo ?> </td>
+                                <td> <?= $student->Email ?> </td>
+                            </tr>
+                        <?php endforeach; ?>
+
                     </tbody>
                 </table>
             </section>
         </main>
         <div class="dr-footer">
-            <?php $this->view('components/footer/index',$data) ?>
+            <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>
 </body>
 <script>
     const search = document.querySelector('.input-group input'),
-    table_rows = document.querySelectorAll('tbody tr'),
-    table_headings = document.querySelectorAll('thead th');
+        table_rows = document.querySelectorAll('tbody tr'),
+        table_headings = document.querySelectorAll('thead th');
 
     // 1. Searching for specific data of HTML table
     search.addEventListener('input', searchTable);
@@ -397,11 +409,11 @@
 
     function sortTable(column, sort_asc) {
         [...table_rows].sort((a, b) => {
-            let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
-                second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
+                let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
+                    second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
 
-            return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
-        })
+                return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
+            })
             .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
     }
 
@@ -410,7 +422,7 @@
     const pdf_btn = document.querySelector('#toPDF');
     const customers_table = document.querySelector('#customers_table');
 
-    const toPDF = function (customers_table) {
+    const toPDF = function(customers_table) {
         const html_code = `
         <link rel="stylesheet" href="style.css">
         <main class="table" >${customers_table.innerHTML}</main>
@@ -433,7 +445,7 @@
 
     const json_btn = document.querySelector('#toJSON');
 
-    const toJSON = function (table) {
+    const toJSON = function(table) {
         let table_data = [],
             t_head = [],
 
@@ -472,7 +484,7 @@
 
     const csv_btn = document.querySelector('#toCSV');
 
-    const toCSV = function (table) {
+    const toCSV = function(table) {
         // Code For SIMPLE TABLE
         // const t_rows = table.querySelectorAll('tr');
         // return [...t_rows].map(row => {
@@ -508,7 +520,7 @@
 
     const excel_btn = document.querySelector('#toEXCEL');
 
-    const toExcel = function (table) {
+    const toExcel = function(table) {
         // Code For SIMPLE TABLE
         // const t_rows = table.querySelectorAll('tr');
         // return [...t_rows].map(row => {
@@ -540,7 +552,7 @@
         downloadFile(excel, 'excel');
     }
 
-    const downloadFile = function (data, fileType, fileName = '') {
+    const downloadFile = function(data, fileType, fileName = '') {
         const a = document.createElement('a');
         a.download = fileName;
         const mime_types = {
@@ -555,56 +567,40 @@
         a.click();
         a.remove();
     }
+
     function getValueFromSelectedRow(table, rowIndex, columnIndex) {
         var rows = table.rows;
-    
+
         if (rowIndex >= 0 && rowIndex < rows.length) {
-        var selectedRow = rows[rowIndex];
-        var cellValue = selectedRow.cells[columnIndex].textContent;
-        return cellValue;
+            var selectedRow = rows[rowIndex];
+            var cellValue = selectedRow.cells[columnIndex].textContent;
+            return cellValue;
         } else {
-        return "Invalid row index";
+            return "Invalid row index";
         }
     }
-    
+
     // Get the table
     var myTable = document.getElementById('table_p');
 
     // Example: Get the name (second column, index 1) from the first row (index 0)
     var rowIndex = 1; // Change this index to select a different row
     var columnIndex = 2; // Change this index to select a different column
-    document.getElementById('tr1').onclick = function(){
+    document.getElementById('tr1').onclick = function() {
         var value = getValueFromSelectedRow(myTable, rowIndex, columnIndex);
         console.log("Value from selected row:", value);
-        
+
 
     }
     //
     //
     // for pass the data
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const table = document.getElementById('table_p');
         const rows = table.querySelectorAll('tbody tr');
 
         rows.forEach((row) => {
-            row.addEventListener('click', function () {
-                // Get the unique identifier from the data-id attribute
-                const studentId = row.getAttribute('data-id');
-
-                // Navigate to the target page with the data as a query parameter
-                window.location.href = '<?=ROOT?>dr/userprofile' + studentId;
-            });
-        });
-    });
-
-
-     // for make row clickable
-    document.addEventListener('DOMContentLoaded', function () {
-        const table = document.getElementById('table_p');
-        const rows = table.querySelectorAll('tbody tr');
-
-        rows.forEach((row) => {
-            row.addEventListener('click', function () {
+            row.addEventListener('click', function() {
                 // Get the unique identifier from the data-id attribute
                 const studentId = row.getAttribute('data-id');
 
@@ -614,5 +610,21 @@
         });
     });
 
+
+    // for make row clickable
+    document.addEventListener('DOMContentLoaded', function() {
+        const table = document.getElementById('table_p');
+        const rows = table.querySelectorAll('tbody tr');
+
+        rows.forEach((row) => {
+            row.addEventListener('click', function() {
+                // Get the unique identifier from the data-id attribute
+                const studentId = row.getAttribute('data-id');
+
+                // Navigate to the target page with the data as a query parameter
+                window.location.href = 'http://localhost/NILIS-MIS/app/views/dr-interfaces/dr-userprofile?studentId=' + studentId;
+            });
+        });
+    });
 </script>
 </html>

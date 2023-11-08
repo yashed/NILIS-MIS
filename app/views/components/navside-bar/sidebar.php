@@ -329,13 +329,13 @@
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="<?=ROOT?>clerk/notification">">
+                        <a href="<?=ROOT?>clerk/">">
                             <i class="bx bx-bell icon"></i>
                             <span class="text nav-text">Notification</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="<?=ROOT?>clerk/degreeprofile">">
+                        <a href="<?=ROOT?>clerk/degreeprograms">">
                             <i class="bx bx-home icon"></i>
                             <span class="text nav-text">Degree Programs</span>
                         </a>
