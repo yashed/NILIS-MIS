@@ -85,7 +85,6 @@ body {
     display: flex;
     align-items: center;
 }
-
 .sidebar li .icon {
     min-width: 60px;
     font-size: 22px;
@@ -93,50 +92,41 @@ body {
     display: flex;
     align-items: center;
 }
-
 .sidebar li .icon,
 .sidebar li .text {
     color: var(--text-color);
     transition: var(--tran-03);
 }
-
 .sidebar header {
     position: relative;
 }
-
 .sidebar .image-text img {
     width: 38px;
     border-radius: 6px;
 }
-
 .sidebar header .image-text {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
     margin-top: 10px;
 }
-
 header .image-text .headder-text {
     display: flex;
     flex-direction: column;
 }
-
 .header-text .name1 {
     font-weight: 600;
     font-size: 9px;
     margin-top: 5px;
 }
-
 .header-text .name2 {
     font-weight: 600;
     font-size: 8.5px;
 }
-
 .header-text .profession {
     margin-top: -2px;
     font-size: 13.5px;
 }
-
 .sidebar header .toggle {
     position: absolute;
     top: 17%;
@@ -158,15 +148,12 @@ header .image-text .headder-text {
     outline-width: 0.5px;
     z-index: 600;
 }
-
 .sidebar.close header .toggle {
     transform: translateY(-50%);
 }
-
 .sidebar .menu {
     margin-top: 35px;
 }
-
 .sidebar li a {
     height: 100%;
     width: 100%;
@@ -176,33 +163,23 @@ header .image-text .headder-text {
     border-radius: 6px;
     transition: var(--tran-04);
 }
-
 .sidebar li a:hover {
     background: var(--text-color);
     color: var(--sidebar-color);
 }
-
 .sidebar li a:hover .text,
 .sidebar li a:hover .icon {
     color: var(--sidebar-color);
 }
-
 .sidebar .menu-bar {
     height: calc (100% - 50px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-
-
-/* .menu-bar .bottom-content{
-    margin-top: 200px;
-} */
-
 .horizontal-line {
     margin-top: 10px;
 }
-
 .hero {
     left: 250px;
     position: relative;
@@ -216,23 +193,16 @@ header .image-text .headder-text {
     color: #E2E2E2;
     z-index: 100;
 }
-
 .sidebar.close~.hero {
     left: 88px;
     width: calc(100% - 90.5px);
 }
-
 .hero-ul-li .icon {
     float: right;
     font-size: 25px;
     margin-top: 10px;
-    /* outline-color: var(--sidebar-color);
-    outline-width: 0.5px;
-    outline-style: groove;
-    border-radius: 50%; */
     color: var(--sidebar-color);
 }
-
 .user-pic {
     width: 27px;
     height: 27px;
@@ -241,62 +211,50 @@ header .image-text .headder-text {
     margin: 8px 10px -0.5px 10px;
     float: right;
 }
-
 .hero-ul {
     width: 100%;
     text-align: right;
 }
-
 .hero-ul-li {
     display: inline-block;
     list-style: none;
 }
-
 .sub-menu-wrap {
     position: fixed;
-    top: 100%;
-    right: 30%;
-    width: 300px;
-    max-height: 0px;
-    overflow: hidden;
-    transition: max-height 0.5s;
-    /* margin-left: 50%; */
-    border-radius: 8px;
-    border-color: var(--sidebar-color);
-    border-width: 50px;
-    border-style: groove;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
 }
-
 .sub-menu-wrap.open-menu {
     max-height: 400px;
 }
-
 .sub-menu {
     position: fixed;
     background: var(--text-color);
     padding: 20px;
     margin: 12px;
     border-radius: 6px;
-    z-index: 1000;
+    /* z-index: 1000; */
+    top: 40px;
+    left: 35%;
 }
-
 .user-info {
     display: flex;
     align-items: center;
     color: var(--sidebar-color);
 }
-
 .user-info h3 {
     font-weight: 500;
 }
-
 .user-info img {
-    width: 60px;
-    height: 60px;
+    width: 100px;
+    height: auto;
     border-radius: 50%;
     margin-right: 15px;
 }
-
 .sub-menu hr {
     border: 0;
     height: 1px;
@@ -304,7 +262,6 @@ header .image-text .headder-text {
     background: var(--sidebar-color);
     margin: 15px 0 10px;
 }
-
 .sub-menu-link {
     display: flex;
     align-items: center;
@@ -313,32 +270,26 @@ header .image-text .headder-text {
     margin: 10px 0px 5px 0px;
     font-weight: 500;
 }
-
 .sub-menu-link p {
     width: 100%;
 }
-
 .sub-menu-link .icon {
     font-size: 25px;
     color: var(--sidebar-color);
     padding: 8px;
     margin-right: 15px;
 }
-
 .sub-menu-link span {
     font-size: 22px;
     margin-right: 13px;
     transition: var(--tran-05);
 }
-
 .sub-menu-link:hover span {
     transform: translateX(5px);
 }
-
 .sub-menu-link:hover p {
     font-weight: 600;
 }
-
 .sub-menu-link:hover .icon {
     font-weight: 600;
 }

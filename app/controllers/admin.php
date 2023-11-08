@@ -14,8 +14,6 @@ class Admin extends Controller
   }
   public function users()
   {
-
-
     $data['errors'] = [];
     $user = new User();
 
@@ -30,8 +28,7 @@ class Admin extends Controller
       if ($_POST['submit'] == "update") {
         $user->update($_POST['id'], $_POST);
         message("User profile was successfully updated");
-      }
-       else if ($_POST['submit'] == "add") {
+      } else if ($_POST['submit'] == "add") {
         if ($user->validate($_POST)) {
           try {
             //set default passsword
@@ -89,11 +86,23 @@ class Admin extends Controller
 
   public function notification()
   {
+    $this->view('admin-interfaces/admin-notification');
   }
-
-  public function settings()
+  public function degreeprograms()
   {
+    $degree = new Degree();
+
+    // $degree->insert($_POST);
+    // show($_POST);
+
+    $data['degrees'] = $degree->findAll();
+    //show($data['degrees']);
+
+    $this->view('admin-interfaces/admin-degreeprograms', $data);
   }
+  public function settings(){
+    $this->view('admin-interfaces/admin-settings');
+}
   public function degree()
   {
   }
