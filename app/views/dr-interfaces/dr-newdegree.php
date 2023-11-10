@@ -207,14 +207,18 @@ $data['role'] = $role;
     <div class="white-container1">
         <div class="white-container2">
             <p class="left-top-text">Add Student Details</p>
-            <a href="your_file_path_here.pdf" class="download-button" download>Download File</a><br><br>
-            <div class="dashed-container">
-                <label for="fileInput" class="file-input-icon"></label>
-                <input type="file" id="fileInput" name="fileInput">
-                <p class="text1">Drag and drop or <label for="fileInput" class="browse-label">browse</label>
-                    <input type="file" id="fileInput" name="fileInput">your files.
-                </p>
-            </div>
+            <a href="<?= ROOT ?>assets/csv/output/student-data-input.csv"" class=" download-button" download>Download
+                File</a><br><br>
+            <form method="post" enctype="multipart/form-data">
+                <div class="dashed-container">
+                    <label for="student-data" class="file-input-icon"></label>
+                    <input type="file" id="student-data" name="student-data">
+                    <p class="text1">Drag and drop or <label for="student-data" class="browse-label">browse</label>
+
+                    </p>
+                    <button type="submit" class="download-button" name="student-data" value="upload-csv">Upload</button>
+                </div>
+            </form>
         </div>
         <div class="white-container3">
             <p class="left-top-text">Define Degree Time Table</p>
