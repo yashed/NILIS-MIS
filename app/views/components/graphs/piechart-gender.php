@@ -23,6 +23,16 @@ const ctx = document.getElementById('myChart');
 
 new Chart(ctx, {
     type: 'doughnut',
+    options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Student Gender'
+                },
+                legend: {
+                    position: 'bottom',
+                },
+            }},
     data: {
         labels: [
             'Male',
@@ -31,7 +41,7 @@ new Chart(ctx, {
         ],
         datasets: [{
             label: 'Degree Participants',
-            data: [60, 10],
+            data: [40, 80],
             backgroundColor: [
                 'rgb(23, 55, 110)',
                 'rgb(154, 214, 255)',

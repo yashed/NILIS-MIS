@@ -11,7 +11,7 @@ class SAR extends Controller{
         $data['degrees'] = $degree->findAll();
         //show($data['degrees']);
 
-        $this->view('sar-interfaces/sar-dashboard',$data);
+        $this->view('sar-interfaces/sar-dashboard2',$data);
     }
     public function notification(){
         $this->view('sar-interfaces/sar-notification');

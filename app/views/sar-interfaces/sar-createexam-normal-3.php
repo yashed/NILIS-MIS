@@ -422,13 +422,13 @@ table.table tbody tr.selected {
                             </div>
                             <div class="exam-dates" id="exam-dates">
                                 <lable class="exam-header">Date</lable>
-                                <input type="date" placeholder="Date" name="sub1-date" id="input-date"
+                                <input type="date" placeholder="Subject Code" name="sub1-date" id="input-date"
                                     class=exam-date-input>
-                                <input type="date" placeholder="Date" name="sub2-date" id="input-date"
+                                <input type="date" placeholder="Subject Code" name="sub2-date" id="input-date"
                                     class=exam-date-input>
-                                <input type="date" placeholder="Date" name="sub1-date" id="input-date"
+                                <input type="date" placeholder="Subject Code" name="sub1-date" id="input-date"
                                     class=exam-date-input>
-                                <input type="date" placeholder="Date" name="sub4-date" id="input-date"
+                                <input type="date" placeholder="Subject Code" name="sub4-date" id="input-date"
                                     class=exam-date-input>
                             </div>
                             <div class="exam-times" id="exam-times">
@@ -447,7 +447,8 @@ table.table tbody tr.selected {
                         <button class="btn-secondary" type="submit" onClick="location.href='2'">Back</button>
                     </div>
                     <div class="next-button">
-                        <button class="btn-primary" type="submit" onClick="location.href='<?=ROOT?>/sar/examination'">Submit</button>
+                        <button class="btn-primary" type="submit"
+                            onClick="location.href='<?=ROOT?>/sar/examination'">Submit</button>
                     </div>
                 </div>
             </div>
