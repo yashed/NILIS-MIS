@@ -11,6 +11,7 @@ class Database {
         $str = DBDRIVER.":hostname=".DBHOST.";dbname=nilis_db";
        return new PDO($str,DBUSER,DBPASS);
         
+        
     }
     public function query($query,$data = [],$type = 'object'){
         $con = $this->connect();
@@ -49,10 +50,14 @@ class Database {
             fname varchar(50) NOT NULL,
             lname varchar(50) NOT NULL,
             username varchar(20) NOT NULL,
+            username varchar(20) NOT NULL,
             email varchar(100) NOT NULL,
             phoneNo varchar(12) NOT NULL,
             role varchar(20) NOT NULL,
+            role varchar(20) NOT NULL,
             password varchar(255) NOT NULL,
+            cpassword varchar(255) NOT NULL,
+            newpassword varchar(255) NOT NULL,
             cpassword varchar(255) NOT NULL,
             newpassword varchar(255) NOT NULL,
             date date DEFAULT NULL,
@@ -93,7 +98,7 @@ class Database {
     
         $this->query($query);
 
-        //Grading VAlues Table
+        //Grading Values Table
         $query = "
         CREATE TABLE IF NOT EXISTS `grading values` (
             `GradeID` int(10) NOT NULL,
@@ -108,7 +113,7 @@ class Database {
     
         $this->query($query);
         
-
+        //student Table
         $query = "
         CREATE TABLE IF NOT EXISTS student(
             id int(11) NOT NULL AUTO_INCREMENT,
@@ -148,27 +153,6 @@ class Database {
     //     ";
     //     $this->query($query);
     // }
-
-    /* function create_student_table(){
-        //user table 
-        $query = "
-        CREATE TABLE IF NOT EXISTS student(
-            id int(11) NOT NULL AUTO_INCREMENT,
-            Email varchar(40) NOT NULL,
-            regNo varchar(40) NOT NULL,
-            country varchar(40) NOT NULL,
-            indexNo varchar(40) NOT NULL,
-            name text NOT NULL,
-            nicNo varchar(40) NOT NULL,
-            birthdate varchar(40) NOT NULL,
-            fax varchar(40) NOT NULL,
-            address varchar(100) NOT NULL,
-            phoneNo int(20) NOT NULL,
-            PRIMARY KEY (id)
-        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
-        ";
-        $this->query($query);
-    } */
 }
 
 ?>

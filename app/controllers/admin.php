@@ -89,11 +89,23 @@ class Admin extends Controller
 
   public function notification()
   {
+    $this->view('admin-interfaces/admin-notification');
   }
-
-  public function settings()
+  public function degreeprograms()
   {
+    $degree = new Degree();
+
+    // $degree->insert($_POST);
+    // show($_POST);
+
+    $data['degrees'] = $degree->findAll();
+    //show($data['degrees']);
+
+    $this->view('admin-interfaces/admin-degreeprograms', $data);
   }
+  public function settings(){
+    $this->view('admin-interfaces/admin-settings');
+}
   public function degree()
   {
   }

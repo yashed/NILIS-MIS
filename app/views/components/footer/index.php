@@ -27,7 +27,7 @@
     }
     .footer-nilis {
         font-family: Poppins;
-        font-size: 16px;
+        font-size: 12px;
         font-weight: 400;
         color: #FFFFFF;
         text-align: center;
@@ -37,7 +37,7 @@
     .footer-address{
         color: #FFF;
         font-family: Poppins;
-        font-size: 14px;
+        font-size: 11px;
         font-style: normal;
         font-weight: 300;
         line-height: 15px; 

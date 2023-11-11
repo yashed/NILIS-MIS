@@ -7,7 +7,7 @@
 <?php $this->view('components/navside-bar/sidebar',$data) ?>
 <?php $this->view('components/navside-bar/footer',$data) ?>
 
-<DOCTYPE html!>
+<!DOCTYPE html>
 <html>
     <head>
         <title>Degree Profile</title>
@@ -29,21 +29,22 @@
             --tran-04: all 0.4s ease;
             --tran-05: all 0.5s ease;
         }
-        .sidebar.close~.large_box{
-            left: 88px;
-            width: calc(100% - 88px);
+        .large-box{
+            display: grid;  
+            grid-template-columns: 50% 50% ;
+            grid-template-rows: 10% 40% 50% ;
         }
-        .large_box{
+        .dr-large-box{
             height: 100vh;
             left: 250px;
             position: relative;
             width: calc(100% - 250px);
             transition: var(--tran-05);
             background: var(--body-color);
-
-            display: grid;  
-            grid-template-columns: 50% 50% ;
-            grid-template-rows: 10% 40% 50% ;
+        }
+        .sidebar.close~.dr-large-box{
+            left: 88px;
+            width: calc(100% - 88px);
         }
         .box_1{
             border-radius: 5px;
@@ -81,7 +82,6 @@
             margin: 3%;
             border-spacing: 10px;
         }
-
         .Overview_table input{
             width:80%;
             height: 20px;
@@ -90,7 +90,6 @@
             border-radius: 5px;
             border: 1px solid gainsboro;
         }
-
         #delete_degree{
             color: red;
             border-radius: 7px;
@@ -103,7 +102,6 @@
             border-spacing: 5px;
             text-align: left;
         }
-
         .Subject_table input{
             width:80%;
             height: 30px;
@@ -112,7 +110,6 @@
             border-radius: 5px;
             border: 1px solid gainsboro;
         }
-
         .credits{
             text-align: center;
         }
@@ -124,13 +121,11 @@
             margin: 2% 5% 3% 5%;
             border-spacing: 5px;
         }
-
         .create_time_table_raw{
             margin: 1% 5% 3% 5%;
             border-spacing: 5px;
             align-items: center;
         }
-
         .box_4 input{
             width: 100%;
             height: 30px;
@@ -139,11 +134,9 @@
             border-radius: 5px;
             border: 1px solid gainsboro;
         }
-
         .box_4 .event{
             width: 80%;
         }
-
         .time_table .duration{
             text-align: center;
         }
@@ -151,7 +144,6 @@
             overflow-y: auto;
             max-height: 50%;
         }
-
         #add_new_event{
             width: 100%;
             height: 30px;
@@ -181,7 +173,8 @@
         }
     </style>
     <body>
-        <div class="large_box">
+        <div class="dr-large-box">
+        <div class="large-box">
             <div class="box_1"><p>Degree Name</p></div>
             <div class="box_2">
                     <p>Overview</p>
@@ -189,29 +182,23 @@
                         <tr>
                             <td>
                                 <b>Type</b><br>
-                                <?php foreach($degrees as $degree):?>
-                                <input type="text" name="type" id="type" value="<?=$degree->DegreeType?>">
-                                <?php endforeach;?>
+                                <input type="text" name="type" id="type">
                             </td>
                             <td>
                                 <b>Acodemic Year</b>
-                                <?php foreach($degrees as $degree):?>
-                                <input type="text" name="year" id="year" value="<?=$degree->DegreeType?>">
-                                <?php endforeach;?>
+                                <input type="text" name="year" id="year">
                             </td>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <b>Participants</b>
-                                <?php foreach($degrees as $degree):?>
-                                <input type="text" name="participants" id="participants_1" value="<?=$degree->DegreeType?>">
-                                <?php endforeach;?>
+                                <input type="text" name="participants" id="participants_1">
                             </td>
                             </td>
                             <td>
                                 <b>Participants</b>
-                                <input type="text" name="participants" id="participants_2" value="1">
+                                <input type="text" name="participants" id="participants_2">
                             </td>
                         </tr>
                         <td colspan="2"><center><button class="pin" id="delete_degree">Delete Degree</button></center></td>
@@ -292,6 +279,7 @@
                 </table>
                 </div>
             </div>
+        </div>
             <div class="dr-footer">
                 <?php $this->view('components/footer/index',$data) ?>
             </div>

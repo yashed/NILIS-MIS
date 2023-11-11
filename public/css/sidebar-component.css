@@ -1,15 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 * {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 :root {
-    --body-color: #E2E2E2;
-    --sidebar-color: #17376E;
-    --primary-color: #9AD6FF;
+    --body-color: #e2e2e2;
+    --sidebar-color: #17376e;
+    --primary-color: #9ad6ff;
     --text-color: #ffffff;
     --tran-02: all 0.2s ease;
     --tran-03: all 0.3s ease;
@@ -194,11 +194,6 @@ header .image-text .headder-text {
     justify-content: space-between;
 }
 
-
-/* .menu-bar .bottom-content{
-    margin-top: 200px;
-} */
-
 .horizontal-line {
     margin-top: 10px;
 }
@@ -213,7 +208,7 @@ header .image-text .headder-text {
     border-radius: 6px;
     margin: -2px 0.5px 2px 2px;
     min-height: 6vh;
-    color: #E2E2E2;
+    color: #e2e2e2;
     z-index: 100;
 }
 
@@ -226,10 +221,6 @@ header .image-text .headder-text {
     float: right;
     font-size: 25px;
     margin-top: 10px;
-    /* outline-color: var(--sidebar-color);
-    outline-width: 0.5px;
-    outline-style: groove;
-    border-radius: 50%; */
     color: var(--sidebar-color);
 }
 
@@ -254,17 +245,12 @@ header .image-text .headder-text {
 
 .sub-menu-wrap {
     position: fixed;
-    top: 100%;
-    right: 30%;
-    width: 300px;
-    max-height: 0px;
-    overflow: hidden;
-    transition: max-height 0.5s;
-    /* margin-left: 50%; */
-    border-radius: 8px;
-    border-color: var(--sidebar-color);
-    border-width: 50px;
-    border-style: groove;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
 }
 
 .sub-menu-wrap.open-menu {
@@ -277,7 +263,9 @@ header .image-text .headder-text {
     padding: 20px;
     margin: 12px;
     border-radius: 6px;
-    z-index: 1000;
+    /* z-index: 1000; */
+    top: 40px;
+    left: 35%;
 }
 
 .user-info {
@@ -291,8 +279,8 @@ header .image-text .headder-text {
 }
 
 .user-info img {
-    width: 60px;
-    height: 60px;
+    width: 100px;
+    height: auto;
     border-radius: 50%;
     margin-right: 15px;
 }
@@ -341,4 +329,74 @@ header .image-text .headder-text {
 
 .sub-menu-link:hover .icon {
     font-weight: 600;
+}
+
+
+/*
+
+
+
+ drop down side bar 
+ 
+ 
+ 
+ */
+
+.sidebar.close .menu-links li i.arrow {
+    display: none;
+}
+
+.sidebar .menu-links li.show i.arrow {
+    transform: rotate(-180deg);
+}
+
+.sidebar .menu-links li .sub-menu-drop {
+    padding: 6px 6px 14px 80px;
+    margin-top: -10px;
+    background: var(--sidebar-color);
+    display: none;
+    transition: all 0.3s ease;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.sidebar .menu-links li.show .sub-menu-drop {
+    display: block;
+}
+
+.sidebar.close .menu-links li .sub-menu-drop {
+    position: absolute;
+    left: 100%;
+    top: -10px;
+    margin: 201px 0 0 5px;
+    /* can adjust up and down */
+    padding: 10px 20px;
+    border-radius: 0 6px 6px 0;
+    opacity: 0;
+    display: block;
+    pointer-events: none;
+    transition: 0s;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.sidebar.close .menu-links li:hover .sub-menu-drop {
+    top: 0;
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.4s ease;
+}
+
+.sidebar .menu-links li .sub-menu-drop a {
+    color: var(--text-color);
+    font-size: 15px;
+    padding: 5px 0;
+    white-space: nowrap;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.sub-menu-drop .text:hover .nav-text:hover {
+    background-color: var(--text-color);
+    color: var(--sidebar-color);
 }

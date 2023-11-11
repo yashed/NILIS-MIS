@@ -1,7 +1,4 @@
 <?php
-
-
-
     $role = "SAR";
     $data['role'] = $role;
 
