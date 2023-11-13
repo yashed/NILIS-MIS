@@ -1,27 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>piechart</title>
-</head>
 <style>
-.bar-chart {
-    width: 20%;
-    height: 500px;
+.pie-chart-gender {
+  width: 60%; 
+    /* height: 500px; */
+    
 }
 </style>
-<div class="bar-chart">
-    <canvas id="myChart"></canvas>
+<div class="pie-chart-gender">
+    <canvas id="gender-pie-chart"></canvas>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-const ctx = document.getElementById('myChart');
+const ctx3= document.getElementById('gender-pie-chart');
 
-new Chart(ctx, {
+new Chart(ctx3, {
     type: 'doughnut',
     options: {
             plugins: {

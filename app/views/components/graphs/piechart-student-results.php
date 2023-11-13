@@ -8,8 +8,8 @@
 </head>
 <style>
 .student-results {
-    width: 15%;
-    height: 500px;
+    width: 60%;
+    /* height: 500px; */
 }
 </style>
 <div class="student-results">
@@ -19,9 +19,9 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-const ctx = document.getElementById('student-result-chart');
+const ctx4 = document.getElementById('student-result-chart');
 
-new Chart(ctx, {
+new Chart(ctx4, {
     type: 'doughnut',
     options: {
             plugins: {
