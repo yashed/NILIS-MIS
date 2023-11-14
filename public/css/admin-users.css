@@ -145,7 +145,6 @@ h2 {
 }
 
 .admin-subsection-1 {
-
     background-color: var(--text-color);
     padding: 10px 10px 20% 35px;
     border-radius: 6px;
@@ -184,7 +183,7 @@ h2 {
 }
 
 .center {
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     height: 6vh;
@@ -391,12 +390,11 @@ button {
     padding: 10px 10px 10px 10px;
 }
 
-.delete-bt{
-    width:50%;
+.delete-bt {
+    width: 50%;
     height: 5vh;
     border-radius: 12px;
     background: #17376e;
-    
 }
 
 button:hover {
@@ -405,9 +403,9 @@ button:hover {
     border: 1px solid var(--colour-secondary-1, #17376e);
 }
 
-.button-fx{
-    display:flex;
-    width:50%;
+.button-fx {
+    display: flex;
+    width: 50%;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;

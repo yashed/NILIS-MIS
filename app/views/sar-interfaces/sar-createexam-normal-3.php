@@ -444,11 +444,12 @@ table.table tbody tr.selected {
                 <div class="exam-buttons">
 
                     <div class="cancel-button">
-                        <button class="btn-secondary" type="submit" onClick="location.href='2'">Back</button>
+                        <button class="btn-secondary" type="submit"
+                            onClick="location.href='<?=ROOT?>sar/examination/create/2'">Back</button>
                     </div>
                     <div class="next-button">
                         <button class="btn-primary" type="submit"
-                            onClick="location.href='<?=ROOT?>/sar/examination'">Submit</button>
+                            onClick="location.href='<?=ROOT?>sar/examination'">Submit</button>
                     </div>
                 </div>
             </div>

@@ -278,6 +278,7 @@
     height: 120px;
     flex-direction: row;
     gap: 60px;
+    cursor: pointer;
 }
 
 .sar-dash-card-subcard-data {

@@ -301,7 +301,8 @@ table.table tbody tr.selected {
     background-color: white;
     border: 1px solid
 }
-.btn-secondary{
+
+.btn-secondary {
     min-width: 10vh;
     color: #17376e;
     background: white;
@@ -312,7 +313,8 @@ table.table tbody tr.selected {
     border: 1px solid;
     margin-bottom: 10px;
 }
-.btn-secondary:hover{
+
+.btn-secondary:hover {
     color: black;
     background-color: #F9D2D2;
     border: 1px solid red;
@@ -422,11 +424,13 @@ table.table tbody tr.selected {
                     </div>
                     <div class="exam-buttons">
 
-                        <div class="cancel-button" >
-                            <button class="btn-secondary" type="submit" onClick="location.href='<?=ROOT?>/sar/examination'" >Cancel</button>
+                        <div class="cancel-button">
+                            <button class="btn-secondary" type="submit"
+                                onClick="location.href='<?=ROOT?>sar/examination'">Cancel</button>
                         </div>
                         <div class="next-button">
-                            <button class="btn-primary" type="submit" onClick="location.href='<?=ROOT?>/sar/examination/create/2'" >Next</button>
+                            <button class="btn-primary" type="submit"
+                                onClick="location.href='<?=ROOT?>sar/examination/create/2'">Next</button>
                         </div>
                     </div>
                 </div>
