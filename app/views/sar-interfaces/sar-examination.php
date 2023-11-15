@@ -1,7 +1,4 @@
 <?php
-
-
-
     $role = "SAR";
     $data['role'] = $role;
 
@@ -264,7 +261,8 @@ button:hover {
     background-color: white;
     border: 1px solid var(--colour-secondary-1, #17376e);
 }
-.exam-subsection-1-titlebar{
+
+.exam-subsection-1-titlebar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -285,7 +283,7 @@ button:hover {
                         <div class="bt-name">Create Examination</div>
                     </button>
                     <div class="dropdown-content">
-                        <a href="<?=ROOT?>/sar/examination/create/1">Normal Examination</a>
+                        <a href="<?=ROOT?>sar/examination/create/1">Normal Examination</a>
 
                         <a href="#">Special Examination</a>
                     </div>

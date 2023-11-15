@@ -301,7 +301,8 @@ table.table tbody tr.selected {
     background-color: white;
     border: 1px solid
 }
-.btn-secondary{
+
+.btn-secondary {
     min-width: 10vh;
     color: #17376e;
     background: white;
@@ -312,7 +313,8 @@ table.table tbody tr.selected {
     border: 1px solid;
     margin-bottom: 10px;
 }
-.btn-secondary:hover{
+
+.btn-secondary:hover {
     color: black;
     background-color: #F9D2D2;
     border: 1px solid red;
@@ -348,6 +350,7 @@ table.table tbody tr.selected {
                                     </th>
                                     <th>Name</th>
                                     <th>Attempt</th>
+                                    <th>Subject Code</th>
                                     <th>Index Number</th>
                                     <th>Registration Number</th>
                                     <th>Mail</th>
@@ -358,6 +361,7 @@ table.table tbody tr.selected {
                                     <td><input type="checkbox" name="item[]" value="1"></td>
                                     <td>H.A.Yashed Thisra</td>
                                     <td>01</td>
+                                    <td>SCS001</td>
                                     <td>DSL001</td>
                                     <td>2021/DSL/001</td>
                                     <td>yash@gmail.com</td>
@@ -366,6 +370,7 @@ table.table tbody tr.selected {
                                     <td><input type="checkbox" name="item[]" value="1"></td>
                                     <td>H.A.Yashed Thisra</td>
                                     <td>01</td>
+                                    <td>SCS001</td>
                                     <td>DSL001</td>
                                     <td>2021/DSL/001</td>
                                     <td>yash@gmail.com</td>
@@ -374,6 +379,7 @@ table.table tbody tr.selected {
                                     <td><input type="checkbox" name="item[]" value="1"></td>
                                     <td>H.A.Yashed Thisra</td>
                                     <td>01</td>
+                                    <td>SCS001</td>
                                     <td>DSL001</td>
                                     <td>2021/DSL/001</td>
                                     <td>yash@gmail.com</td>
@@ -382,6 +388,7 @@ table.table tbody tr.selected {
                                     <td><input type="checkbox" name="item[]" value="1"></td>
                                     <td>H.A.Yashed Thisra</td>
                                     <td>01</td>
+                                    <td>SCS001</td>
                                     <td>DSL001</td>
                                     <td>2021/DSL/001</td>
                                     <td>yash@gmail.com</td>
@@ -390,6 +397,7 @@ table.table tbody tr.selected {
                                     <td><input type="checkbox" name="item[]" value="1"></td>
                                     <td>H.A.Yashed Thisra</td>
                                     <td>01</td>
+                                    <td>SCS001</td>
                                     <td>DSL001</td>
                                     <td>2021/DSL/001</td>
                                     <td>yash@gmail.com</td>
@@ -398,6 +406,7 @@ table.table tbody tr.selected {
                                     <td><input type="checkbox" name="item[]" value="1"></td>
                                     <td>H.A.Yashed Thisra</td>
                                     <td>01</td>
+                                    <td>SCS001</td>
                                     <td>DSL001</td>
                                     <td>2021/DSL/001</td>
                                     <td>yash@gmail.com</td>
@@ -406,6 +415,7 @@ table.table tbody tr.selected {
                                     <td><input type="checkbox" name="item[]" value="1"></td>
                                     <td>H.A.Yashed Thisra</td>
                                     <td>01</td>
+                                    <td>SCS001</td>
                                     <td>DSL001</td>
                                     <td>2021/DSL/001</td>
                                     <td>yash@gmail.com</td>
@@ -414,6 +424,7 @@ table.table tbody tr.selected {
                                     <td><input type="checkbox" name="item[]" value="1"></td>
                                     <td>H.A.Yashed Thisra</td>
                                     <td>01</td>
+                                    <td>SCS001</td>
                                     <td>DSL001</td>
                                     <td>2021/DSL/001</td>
                                     <td>yash@gmail.com</td>
@@ -425,11 +436,13 @@ table.table tbody tr.selected {
                     </div>
                     <div class="exam-buttons">
 
-                        <div class="cancel-button" >
-                            <button class="btn-secondary" type="submit" onClick="location.href='<?=ROOT?>/sar/examination'">Cancel</button>
+                        <div class="cancel-button">
+                            <button class="btn-secondary" type="submit"
+                                onClick="location.href='<?=ROOT?>sar/examination/create/1'">Cancel</button>
                         </div>
                         <div class="next-button">
-                            <button class="btn-primary" type="submit" onClick="location.href='<?=ROOT?>/sar/examination/create/3'">Next</button>
+                            <button class="btn-primary" type="submit"
+                                onClick="location.href='<?=ROOT?>sar/examination/create/3'">Next</button>
                         </div>
                     </div>
                 </div>

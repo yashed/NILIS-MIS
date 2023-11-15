@@ -1,13 +1,17 @@
+<?php
+    $role = "Director";
+    $data['role']=$role;
+?>
+<?php $this->view('components/navside-bar/header',$data) ?>
+<?php $this->view('components/navside-bar/sidebar',$data) ?>
+<?php $this->view('components/navside-bar/footer',$data) ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="<?= ROOT ?>/css/student/style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?=ROOT?>css/student/style.css">
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <style>
-
         #overlay {
             display: none;
             position: fixed;
@@ -67,147 +71,78 @@
 </head>
 
 <body>
-<?php
-    $role = "Director";
-    $data['role']=$role;
-?>
-
-<?php $this->view('components/navside-bar/header',$data) ?>
-<?php $this->view('components/navside-bar/sidebar',$data) ?>
-<?php $this->view('components/navside-bar/footer',$data) ?>
-
-    <header>
-    </header>
-
-    <div class="white-container1-1 close">
-        Diploma in Library and Information Management
-    </div>
-
-    <div class="white-container2-1 close ">
-    <p class="left-top-text2">User Details</p>
+<div class="dr-userprofile">
+    <div class="white-container1-1">Diploma in Library and Information Management</div>
+    <div class="white-container2-1">
+        <p class="left-top-text2">User Details</p>
         <div class="row">
             <div class="column1">
                 <div class=name>
-                <img src="<?=ROOT?>assets/dr/imgano.png">
-                    <p><h2><?= $student->name ?></h2></p>
-                
+                    <img src="<?=ROOT?>assets/dr/imgano.png">
+                    <p><?= $student->name ?></p>
                 </div>
             </div>
-
-
             <div class="column2">
                 <div class="data1"><b>Email:</b><br>
                     <div class="email"><?= $student->Email ?></div>
-                </div>
-                <br>
+                </div><br>
                 <div class="data2"><b>Registration number:</b><br>
                     <div class="regNum"> <?= $student->regNo ?></div>
                 </div>
             </div>
-
             <div class="column3">
                 <div class="data3"><b>Country:</b><br>
                     <div class="country"> Sri Lanka</div>
-                </div>
-                <br>
+                </div><br>
                 <div class="data4"><b>Index number:</b><br>
-                    <div class="indexNum"> DLIM/005</div>
+                    <div class="indexNum"> <?= $student->indexNo ?></div>
                 </div>
             </div>
         </div>
-<div class="button-container">
- <div class="buttony">
-            <input type="button" id="changedegreebutton" class="button" value="Change Degree Program" onclick="updateData()">
- </div>
- <div class="buttony">
-            <input type="button" id="deletebutton" class="button" value="Delete User Details" onclick="updateData2()">
- </div>
-</div>
-            <script>
-                function updateData() {
-                    // Show the overlay and pop-up
-                    $('#overlay').css('display', 'block');
-                    $('.pop-up1').css('display', 'block');
-
-                    $('.close-button').click(function(e) {
-                        // Hide the pop-up and overlay when the close button is clicked
-                        $('.pop-up1').css('display', 'none');
-                        $('#overlay').css('display', 'none');
-                        e.stopPropagation();
-                    });
-                }
-                function updateData2() {
-                    // Show the overlay and pop-up
-                    $('#overlay').css('display', 'block');
-                    $('.pop-up2').css('display', 'block');
-
-                    $('.close-button').click(function(e) {
-                        // Hide the pop-up and overlay when the close button is clicked
-                        $('.pop-up2').css('display', 'none');
-                        $('#overlay').css('display', 'none');
-                        e.stopPropagation();
-                    });
-                }
-            </script>
+        <div class="button-container">
+            <div class="buttony">
+                <input type="button" id="changedegreebutton" class="button" value="Change Degree Program" onclick="updateData()">
+            </div>
+            <div class="buttony">
+                <input type="button" id="deletebutton" class="button" value="Delete" onclick="updateData2()">
+            </div>
         </div>
-
-
+    </div>
 
     <div class="pop-up1">
-        
-
         <div class="popupForm1">
             <form method="post">
-                <p>
-                <h1>Change Degree Program</h1>
-                </p>
-                <br>
+                <h1>Change Degree Program</h1><br>
                 <div class="cur-deg">
-                <input type="hidden" name="id" value="<?=$student->id?>">
-                <label for="degree"><h3>Current Degree Program : </h3><?=$student->Degree?></label>
+                    <input type="hidden" name="id" value="<?=$student->id?>">
+                    <label for="degree"><h3>Current Degree Program : </h3><?=$student->Degree?></label>
+                </div></br>
+                <div class="change-deg">
+                    <label for="Degrees">Change Degree Program</label>
+                    <select id="Degree" name="Degree">
+                        <option value="Degree1">Degree1</option>
+                        <option value="Degree2">Degree2</option>
+                        <option value="Degree3">Degree3</option>
+                    </select><br>
                 </div>
-            </br>
-            <div class="change-deg">
-                <label for="Degrees">Change Degree Program</label>
-                <select id="Degree" name="Degree">
-                    <option value="Degree1">Degree1</option>
-                    <option value="Degree2">Degree2</option>
-                    <option value="Degree3">Degree3</option>
-                </select>
-                <br>
-            </div>
-        <input type="submit" id="update-deg" value="Submit">
-        <button class="close-button">Close</button>
+                <input type="submit" id="update-deg" value="Submit">
+                <button class="close-button">Close</button>
             </form>
         </div>
-
-        
     </div>
-
     <div id="overlay"></div>
-
     <div class="pop-up2">
-        
-
         <div class="popupForm">
-                <p>
-                <h2>Do you want to delete this student data?</h2>
-                </p>
-               <br>
-        <div class="yesorno">
-        <a href="<?=ROOT?>/Student/<?=$student->indexNo?>/delete/<?=$student->id?>"><button class="close-button">Yes,Sure</button></a>
-        <button class="close-button">No,Close</button>
+            <h2>Do you want to delete this student data?</h2><br>
+            <div class="yesorno">
+                <a href="<?=ROOT?>Student/<?=$student->indexNo?>/delete/<?=$student->id?>"><button class="close-button">Yes,I'm Sure</button></a>
+                <button class="close-button">No,Close</button>
+            </div>
         </div>
+        <div id="overlay"></div>    
     </div>
-
-    <div id="overlay"></div>
-
-
-            
-    </div>
-
     <div class="flex-container">
-        <div class="white-container3-1 close">
+        <div class="white-container3-1">
             <p class="left-top-text2">Examination Results</p>
             <p class="left-top-text3">Semester 1</p>
             <table>
@@ -231,8 +166,7 @@
                     <td>Subject4</td>
                     <td>A</td>
                 </tr>
-            </table>
-            <br>
+            </table><br>
             <p class="left-top-text3">Semester 2</p>
             <table>
                 <tr>
@@ -257,17 +191,13 @@
                 </tr>
             </table>
         </div>
-
-
         <div class="white-container4-1">
             <p class="left-top-text2">Other Information</p>
-
             <div class="row2">
                 <div class="column2-1">
                     <div class="data1"><b>Date Of Birth:</b><br>
                         <div class="bday"><?= $student->birthdate ?></div>
-                    </div>
-                    <br>
+                    </div><br>
                     <div class="data2"><b>N.I.C. No:</b><br>
                         <div class="nic"> <?= $student->nicNo ?></div>
                     </div><br>
@@ -275,12 +205,10 @@
                         <div class="phoneNum"> <?= $student->phoneNo ?></div>
                     </div>
                 </div>
-
                 <div class="column2-2">
                     <div class="data1"><b>Fax:</b><br>
                         <div class="Fax"><?= $student->fax ?></div>
-                    </div>
-                    <br>
+                    </div><br>
                     <div class="data2"><b>Address:</b><br>
                         <div class="adr"> <?= $student->address ?></div>
                     </div>
@@ -288,7 +216,6 @@
             </div>
             <div class="buttonx">
                 <input type="button" id="updateButton" class="button" value="Update" onclick="updateData1()">
-
                 <script>
                     function updateData1() {
                         // Show the overlay and pop-up
@@ -306,14 +233,10 @@
             </div>
         </div>
     </div>
-
     <div class="pop-up">
-
         <div class="popupForm2">
             <form method="post">
-                <p>
                 <h2>Change Student Details</h2>
-                </p>
                 <input type="hidden" id="id"  name="id" value="<?=$student->id?>">
                 <label for="fname">Name</label>
                 <input type="text" id="fname"placeholder="Full Name" name="name">
@@ -336,37 +259,69 @@
                 <button class="close-button">Close</button>
             </form>
         </div>
-        
     </div>
-    
     <div id="overlay"></div>
-    <div class="dr-footer">
-            <?php $this->view('components/footer/index',$data) ?>
-    </div>                    
-
-
+    <div class="director-footer">
+        <?php $this->view('components/footer/index',$data) ?>
+    </div>
+</div>                    
     <script>
+        //Change Degree and Delete button
+        function updateData() {
+            // Show the overlay and pop-up
+            $('#overlay').css('display', 'block');
+            $('.pop-up1').css('display', 'block');
+
+            $('.close-button').click(function(e) {
+                // Hide the pop-up and overlay when the close button is clicked
+                $('.pop-up1').css('display', 'none');
+                $('#overlay').css('display', 'none');
+                e.stopPropagation();
+            });
+        }
+        function updateData2() {
+            // Show the overlay and pop-up
+            $('#overlay').css('display', 'block');
+            $('.pop-up2').css('display', 'block');
+
+            $('.close-button').click(function(e) {
+                // Hide the pop-up and overlay when the close button is clicked
+                $('.pop-up2').css('display', 'none');
+                $('#overlay').css('display', 'none');
+                e.stopPropagation();
+            });
+        }
+
         (()=> {
             const body = document.querySelector("body"),
             sidebar = body.querySelector(".sidebar"),
             toggle = body.querySelector(".toggle")  
-        whitecontainer11 = body.querySelector(".white-container1-1");
-        whitecontainer21= body.querySelector(".white-container2-1");
-        whitecontainer31 = body.querySelector(".white-container3-1");
-                   
-        toggle.addEventListener("click", () => {
-            //sidebar.classList.toggle("close");
-            whitecontainer11.classList.toggle("close");
-            whitecontainer21.classList.toggle("close");
-            whitecontainer31.classList.toggle("close");
-         
-        });
+            whitecontainer11 = body.querySelector(".white-container1-1");
+            whitecontainer21= body.querySelector(".white-container2-1");
+            whitecontainer31 = body.querySelector(".white-container3-1");
+                    
+            toggle.addEventListener("click", () => {
+                //sidebar.classList.toggle("close");
+                whitecontainer11.classList.toggle("close");
+                whitecontainer21.classList.toggle("close");
+                whitecontainer31.classList.toggle("close");
+            
+            });
         })()
 
         function toggleMenu() {
             document.getElementById("subMenu").classList.toggle("open-menu");
         }
+
+
+        // Add this code to target_page.php
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const studentId = urlParams.get('studentId');
+
+            // Now you can use the `studentId` to fetch and display the corresponding student's data.
+        });
+
     </script>
 </body>
-
 </html>

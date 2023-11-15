@@ -215,6 +215,11 @@ body {
     font-weight: 400;
     line-height: normal;
 }
+
+.nilis-logo-login {
+    width: 55px;
+    height: 76.389px;
+}
 </style>
 
 <body>
@@ -224,7 +229,7 @@ body {
 
                 <div class="card-header">
                     <div class="nillis-logo">
-                        <img src="https://img.icons8.com/ios/50/000000/lock-2.png" />
+                        <img src="<?=ROOT?>assets/NILIS-logo-2.png" alt="NILIS-logo" class="nilis-logo-login">
                     </div>
 
                 </div>

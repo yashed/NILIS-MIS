@@ -14,7 +14,7 @@ class Home extends Controller{
     //    $users = new User();
     //    $users->insert($data);
 
-       $this->view('login/login.view');
+       $this->view('login/login');
     }
     public function edit($id=null,$name=null){
         echo "Home eddit ".$id;

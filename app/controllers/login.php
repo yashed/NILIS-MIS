@@ -10,7 +10,6 @@ class Login extends Controller{
         $user = new User();
         
         if($_SERVER['REQUEST_METHOD'] == "POST"){
-            
             //validate
             $row = $user->first([
                 'username'=>$_POST['username']
