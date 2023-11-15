@@ -273,10 +273,6 @@ h2 {
     border-radius: 5px;
 }
 
-.popup .form .form-element input[type="checkbox"] {
-    margin-right: 5px;
-}
-
 .popup .form .form-element button {
     padding: 10px;
     height: 5vh;
@@ -299,12 +295,19 @@ h2 {
     font-weight: 600;
 }
 
-.user-data {
+
+/* .user-data {
     display: flex;
     gap: 30px;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
-    justify-content: center
+    justify-content: center;
+    align-items: center;
+} */
+
+.data-input-fields {
+    display: flex;
+    flex-direction: row;
 }
 
 .column-01 {
