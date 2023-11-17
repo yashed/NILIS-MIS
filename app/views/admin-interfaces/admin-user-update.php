@@ -63,6 +63,7 @@
     }); */
 document.querySelector("#close-update-popup").addEventListener("click", function() {
     document.querySelector("#update-popup").classList.remove("active");
+    document.querySelector("#body").classList.remove("active");
 });
 </script>
 

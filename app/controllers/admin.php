@@ -28,8 +28,17 @@ class Admin extends Controller
 
       // header('Location: users');
       if ($_POST['submit'] == "update") {
-        $user->update($_POST['id'], $_POST);
-        message("User profile was successfully updated");
+        
+        if($user->validateUpdate($_POST)){
+          
+         
+          $user->update($_POST['id'], $_POST);
+          message("User profile was successfully updated");
+
+        }
+        else{
+          message("User profile was not updated Corectly" , 'error');
+        }
       }
        else if ($_POST['submit'] == "add") {
         if ($user->validate($_POST)) {
@@ -48,6 +57,10 @@ class Admin extends Controller
             var_dump($th);
           }
         }
+        else{
+          message("User profile was not created Corectly" , 'error');
+        }
+        
       } else if ($_POST['submit'] == "delete") {
 
         $user->delete2($_POST);
@@ -58,7 +71,7 @@ class Admin extends Controller
     $data['users'] = $user->findAll();
     $data['errors'] = $user->errors;
     $data['title'] = 'Users';
-    // show($_POST);
+
     $this->view('admin-interfaces/admin-users', $data);
   }
   // public function update(){
@@ -75,7 +88,7 @@ class Admin extends Controller
   //     $id = $id ?? Auth::getId();
   //     $data['title'] = 'Update';
   //     $data['row'] = $row = $user->first(['id'=>$id]);
-  //     show($data['row']);
+  //   
   //     if($_SERVER['REQUEST_METHOD'] == "POST" && $row)
   //     {
   //       $user->update($id,$_POST);
@@ -96,10 +109,10 @@ class Admin extends Controller
     $degree = new Degree();
 
     // $degree->insert($_POST);
-    // show($_POST);
+ 
 
     $data['degrees'] = $degree->findAll();
-    //show($data['degrees']);
+   
 
     $this->view('admin-interfaces/admin-degreeprograms', $data);
   }

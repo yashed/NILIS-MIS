@@ -25,9 +25,10 @@ function redirect($link){
 }
 
 //using this function we can pass msg to frontend using SESSION
-function message($msg = '' ,$erase = false){
+function message($msg = '',$type = 'success',$erase = false ){
     if(!empty($msg)){
         $_SESSION['message'] = $msg;
+        $_SESSION['message_type'] = $type;
     }
     else{
         if(!empty($_SESSION['message'])){
