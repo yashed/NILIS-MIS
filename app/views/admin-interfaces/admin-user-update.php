@@ -58,9 +58,6 @@
     </form>
 </div>
 <script>
-/* document.querySelector("#show-update").addEventListener("click", function() {
-        document.querySelector("#update-popup").classList.add("active");
-    }); */
 document.querySelector("#close-update-popup").addEventListener("click", function() {
     document.querySelector("#update-popup").classList.remove("active");
     document.querySelector("#body").classList.remove("active");

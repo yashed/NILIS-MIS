@@ -70,18 +70,19 @@ class Database {
         $this->query($query);
         //Degree Table
         $query = "
-        CREATE TABLE IF NOT EXISTS `degree` (
-            `DegreeID` varchar(20) NOT NULL,
-            `DegreeType` varchar(50) NOT NULL,
-            `DegreeName` text NOT NULL,
-            `Duration` int(20) DEFAULT NULL,
-            `AcademicYear` int(20) NOT NULL,
-            `SubjectID` int(20) NOT NULL,
-            `GradeID` int(20) NOT NULL,
-            PRIMARY KEY (`DegreeID`),
-            UNIQUE KEY `SubjectID` (`SubjectID`,`GradeID`)
-           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
-        ";
+    CREATE TABLE IF NOT EXISTS `degree` (
+        `DegreeID` varchar(20) NOT NULL,
+        `DegreeType` varchar(50) NOT NULL,
+        `DegreeName` text NOT NULL,
+        `Duration` int(20) DEFAULT NULL,
+        `AcademicYear` int(20) NOT NULL,
+        `SubjectID` int(20) NOT NULL,
+        `GradeID` int(20) NOT NULL,
+        PRIMARY KEY (`DegreeID`),
+        UNIQUE KEY `SubjectID` (`SubjectID`,`GradeID`),
+        UNIQUE KEY `DegreeID` (`DegreeID`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+    ";
     
         $this->query($query);
         //Subject Table
@@ -127,11 +128,30 @@ class Database {
             fax varchar(40) NOT NULL,
             address varchar(100) NOT NULL,
             phoneNo int(20) NOT NULL,
-            PRIMARY KEY (id)
+            PRIMARY KEY (id),
+            UNIQUE KEY `indexNo` (`indexNo`)
         ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
         ";
         $this->query($query);
-        
+
+
+        //exam participation table
+       $query = "
+    CREATE TABLE IF NOT EXISTS examParticipants(
+        degreeID varchar(20) NOT NULL,
+        semester int(10) NOT NULL,
+        indexNo varchar(40) NOT NULL,
+        regNo varchar(40) NOT NULL,
+        attempt int(10) NOT NULL,
+        degreeName varchar(40) NOT NULL,
+        studentType varchar(40) NOT NULL,
+        FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
+        FOREIGN KEY (indexNo) REFERENCES student(indexNo),
+        PRIMARY KEY (degreeID, semester, indexNo)
+    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
+    ";
+
+        $this->query($query);
     }
     // function create_student_table(){
     //     //student table 
