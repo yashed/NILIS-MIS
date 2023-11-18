@@ -115,7 +115,7 @@ class Database {
         $this->query($query);
 //Degree Time table table
         $query = "
-      CREATE TABLE IF NOT EXISTS `degree timetable` (
+      CREATE TABLE IF NOT EXISTS `degree_timetable` (
     `EventID` INT NOT NULL AUTO_INCREMENT,
     `DegreeID` VARCHAR(20) NOT NULL,
     `EventName` VARCHAR(50) NOT NULL,
@@ -149,10 +149,10 @@ class Database {
         ";
         $this->query($query);
 
-
+//Exam Tables
         //exam participation table
        $query = "
-    CREATE TABLE IF NOT EXISTS examParticipants(
+    CREATE TABLE IF NOT EXISTS exa_participants(
         degreeID varchar(20) NOT NULL,
         semester int(10) NOT NULL,
         indexNo varchar(40) NOT NULL,
@@ -167,8 +167,59 @@ class Database {
     ";
 
         $this->query($query);
-    }
-   
+
+
+        $query = "
+        CREATE TABLE IF NOT EXISTS medical_students(
+            degreeID varchar(20) NOT NULL,
+            semester int(10) NOT NULL,
+            indexNo varchar(40) NOT NULL,
+            subjectCode varchar(50) NOT NULL,
+            attempt int(10) NOT NULL,
+            status boolean NOT NULL DEFAULT 0,
+            FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
+            FOREIGN KEY (indexNo) REFERENCES student(indexNo),
+            FOREIGN KEY (subjectCode) REFERENCES subject(SubjectID),
+            primary key (degreeID, semester, indexNo, subjectCode)
+
+        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
+    
+   ";
+
+     $this->query($query);
+     
+     $query = "
+     CREATE TABLE IF NOT EXISTS repeat_students(
+        degreeID varchar(20) NOT NULL,
+        semester int(10) NOT NULL,
+        indexNo varchar(40) NOT NULL,
+        subjectCode varchar(50) NOT NULL,
+        attempt int(10) NOT NULL,
+        paymentStatus boolean NOT NULL DEFAULT 0,
+        FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
+        FOREIGN KEY (indexNo) REFERENCES student(indexNo),
+        FOREIGN KEY (subjectCode) REFERENCES subject(SubjectID),
+        primary key (degreeID, semester, indexNo, subjectCode)
+     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
+     ";
+ $this->query($query);
+
+
+ $query = "
+ CREATE TABLE IF NOT EXISTS exam_timetable(
+    subjectCode varchar(50) NOT NULL,
+    subjectName varchar(50) NOT NULL,
+    date date NOT NULL,
+    time time NOT NULL,
+    degreeID varchar(20) NOT NULL,
+    semester int(10) NOT NULL,
+    FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
+    FOREIGN KEY (subjectCode) REFERENCES subject(SubjectID),
+    primary key (subjectCode, degreeID, semester)
+ ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
+ ";
+ $this->query($query);
+}
 }
 
 ?>
