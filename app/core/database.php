@@ -113,7 +113,22 @@ class Database {
         ";
     
         $this->query($query);
-        
+//Degree Time table table
+        $query = "
+      CREATE TABLE IF NOT EXISTS `degree timetable` (
+    `EventID` INT NOT NULL AUTO_INCREMENT,
+    `DegreeID` VARCHAR(20) NOT NULL,
+    `EventName` VARCHAR(50) NOT NULL,
+    `EventType` VARCHAR(50) NOT NULL,
+    `StartingDate` DATE NOT NULL,
+    `EndingDate` DATE NOT NULL,
+    PRIMARY KEY (`EventID`,`DegreeID`),
+    KEY `DegreeID` (`DegreeID`),
+    CONSTRAINT `degree_timetable_ibfk_1` FOREIGN KEY (`DegreeID`) REFERENCES `degree` (`DegreeID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+        ";
+         $this->query($query);
         //student Table
         $query = "
         CREATE TABLE IF NOT EXISTS student(
@@ -153,26 +168,7 @@ class Database {
 
         $this->query($query);
     }
-    // function create_student_table(){
-    //     //student table 
-    //     $query = "
-    //     CREATE TABLE IF NOT EXISTS student(
-    //         id int(11) NOT NULL AUTO_INCREMENT,
-    //         Email varchar(40) NOT NULL,
-    //         regNo varchar(40) NOT NULL,
-    //         country varchar(40) NOT NULL,
-    //         indexNo varchar(40) NOT NULL,
-    //         name text NOT NULL,
-    //         nicNo varchar(40) NOT NULL,
-    //         birthdate varchar(40) NOT NULL,
-    //         fax varchar(40) NOT NULL,
-    //         address varchar(100) NOT NULL,
-    //         phoneNo int(20) NOT NULL,
-    //         PRIMARY KEY (id)
-    //     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
-    //     ";
-    //     $this->query($query);
-    // }
+   
 }
 
 ?>
