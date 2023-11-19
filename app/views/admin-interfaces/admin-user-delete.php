@@ -29,11 +29,8 @@
 </div>
 
 <script>
-document.querySelector("#delete-user").addEventListener("click", function() {
-    document.querySelector("#delete-popup").classList.add("active");
-});
-
 document.querySelector("#close-delete-popup").addEventListener("click", function() {
     document.querySelector("#delete-popup").classList.remove("active");
+    document.querySelector("#body").classList.remove("active");
 });
 </script>

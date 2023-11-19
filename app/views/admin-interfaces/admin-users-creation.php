@@ -138,21 +138,21 @@
         display: flex;
         flex-direction: column;
     }
-  
-    #form-element-dropdown{
+
+    #form-element-dropdown {
         width: 100%;
         padding: 10px;
         outline: none;
         border: 1px solid #aaa;
         border-radius: 5px;
     }
-    #form-element-dropdown option{
+
+    #form-element-dropdown option {
         padding: 10px;
         outline: none;
         border: 1px solid #aaa;
         border-radius: 10px;
     }
-   
     </style>
 </head>
 
@@ -179,7 +179,7 @@
                     <div class="form-element">
                         <label for="role">Role</label>
                         <!-- <input type="password" placeholder="Enter" id="role"> -->
-                        <select name="role" id="form-element-dropdown" >
+                        <select name="role" id="form-element-dropdown">
                             <option value="admin" class="form-element-dropdown-op">Admin</option>
                             <option value="Clark">Clark</option>
                             <option value="Clark">Director</option>

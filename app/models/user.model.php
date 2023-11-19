@@ -26,7 +26,7 @@
 
     //validate input data
     public function validate($data){
-      
+
         $this->errors =[];
  
         if(empty($data['fname'])){
@@ -85,6 +85,8 @@
    
            }
         }
+
+        
         if(empty($this->errors)){
          
             return true;
@@ -92,7 +94,51 @@
         return false;
     }
 
-   
- }
+    public function validateUpdate($data){
 
+      $this->errors =[];
+
+      if(empty($data['fname'])){
+             $this->errors['fname'] = 'A first name is required';
+
+        }
+        if(empty($data['lname'])){
+             $this->errors['lname'] = 'A last name is required';
+
+        }
+        if(empty($data['phoneNo'])){
+             $this->errors['phoneNo'] = 'Phone number is required';
+
+        }
+ 
+   //check confirm password
+        if(empty($data['cpassword']) && !empty($data['newpassword'])){
+             $this->errors['cpassword'] = 'Confirm Password is required';
+
+        }
+        else 
+        {
+            if($data['cpassword'] != $data['newpassword'])
+            {
+                $this->errors['password'] = 'Password do not match';
+   
+           }
+
+        }
+
+         if(!filter_var($data['email'],FILTER_VALIDATE_EMAIL))
+        {
+             $this->errors['email'] = 'Email is not valid';
+
+        }
+
+  
+        if(empty($this->errors)){
+         
+            return true;
+        }
+        return false;
+
+ }
+ }
 ?>
