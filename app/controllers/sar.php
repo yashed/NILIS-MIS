@@ -1,8 +1,10 @@
 <?php
 
-class SAR extends Controller{
+class SAR extends Controller
+{
 
-    public function index(){
+    public function index()
+    {
         $degree = new Degree();
 
         // $degree->insert($_POST);
@@ -11,12 +13,14 @@ class SAR extends Controller{
         $data['degrees'] = $degree->findAll();
         //show($data['degrees']);
 
-        $this->view('sar-interfaces/sar-dashboard',$data);
+        $this->view('sar-interfaces/sar-dashboard', $data);
     }
-    public function notification(){
+    public function notification()
+    {
         $this->view('sar-interfaces/sar-notification');
     }
-    public function degreeprograms(){
+    public function degreeprograms()
+    {
         $degree = new Degree();
 
         // $degree->insert($_POST);
@@ -25,9 +29,10 @@ class SAR extends Controller{
         $data['degrees'] = $degree->findAll();
         //show($data['degrees']);
 
-        $this->view('sar-interfaces/sar-degreeprograms',$data);
+        $this->view('sar-interfaces/sar-degreeprograms', $data);
     }
-    public function degreeprofile(){
+    public function degreeprofile()
+    {
         $degree = new Degree();
 
         // $degree->insert($_POST);
@@ -36,38 +41,54 @@ class SAR extends Controller{
         $data['degrees'] = $degree->findAll();
         //show($data['degrees']);
 
-        $this->view('sar-interfaces/sar-degreeprofile',$data);
+        $this->view('sar-interfaces/sar-degreeprofile', $data);
     }
-    public function examination($method=null,$id=null){
+    public function examination($method = null, $id = null)
+    {
         $degree = new Degree();
         $data['degrees'] = $degree->findAll();
 
         // $degree->insert($_POST);
         // show($_POST);
-        if($method=="create" && $id==1){
+        if ($method == "create" && $id == 1) {
             $this->view('sar-interfaces/sar-createexam-normal-1');
-        }
-        else if($method=="create" && $id==2){
+        } else if ($method == "create" && $id == 2) {
             $this->view('sar-interfaces/sar-createexam-normal-2');
-        }
-        else if($method=="create" && $id==3){
+        } else if ($method == "create" && $id == 3) {
             $this->view('sar-interfaces/sar-createexam-normal-3');
-        }
-        else{
-         $this->view('sar-interfaces/sar-examination',$data);
+        } else {
+            $this->view('sar-interfaces/sar-examination', $data);
         }
     }
-    
-    public function participants(){
+
+    public function participants()
+    {
         $this->view('sar-interfaces/sar-participants');
     }
-    public function settings(){
+    public function settings()
+    {
         $this->view('sar-interfaces/sar-settings');
     }
-    public function login(){
+    public function login()
+    {
         $this->view('common/login/login.view');
     }
+    public function resultupload()
+    {
+        $this->view('sar-interfaces/sar-examresultupload');
+    }
+    public function results()
+    {
+        $this->view('sar-interfaces/sar-examresults');
+    }
+    public function examparticipants()
+    {
+        $this->view('sar-interfaces/sar-examparticipants');
+    }
+    public function showresults()
+    {
+        $this->view('sar-interfaces/sar-examresultshow');
+    }
 
+    
 }
-
-?>
