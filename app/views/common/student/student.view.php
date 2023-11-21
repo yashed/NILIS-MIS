@@ -1,3 +1,12 @@
+<?php
+    $role = "DR";
+    $data['role']=$role;
+?>
+
+<?php $this->view('components/navside-bar/header',$data) ?>
+<?php $this->view('components/navside-bar/sidebar',$data) ?>
+<?php $this->view('components/navside-bar/footer',$data) ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,8 +14,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="<?= ROOT ?>/css/student/style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <style>
+
+.sidebar.close~.home {
+    left: 88px;
+    width: calc(100% - 88px);
+}
+
+.home {
+    height: 100vh;
+    left: 250px;
+    position: relative;
+    width: calc(100% - 250px);
+    transition: var(--tran-05);
+    /* background: var(--body-color); */
+}
 
         #overlay {
             display: none;
@@ -20,7 +43,9 @@
             transition: background-color 0.5s;
         }
         .button-container {
-            margin-top: 30px;
+            margin-left: 5%;
+            margin-top: 150px;
+            gap:10%;
             display: flex;
             flex-direction: row;
         }
@@ -37,7 +62,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: #fff;
+            background-color: aqua;
             padding: 20px;
             z-index: 2;
         }
@@ -63,33 +88,53 @@
             padding: 20px;
             z-index: 2;
         }
+
+        .popupForm2{
+            background-color: aquamarine;
+            height: 40vw;
+        }
+
+        #fname,
+#lname,
+#mail,
+#regno,
+#country,
+#indexno,
+#nicno,
+#bday,
+#fax,
+#addr,
+#phoneno {
+  width: 100%;
+  height: 0.1vw;
+  /* margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; */
+ 
+} 
+   
+
     </style>
 </head>
 
 <body>
-<?php
-    $role = "DR";
-    $data['role']=$role;
-?>
 
-<?php $this->view('components/navside-bar/header',$data) ?>
-<?php $this->view('components/navside-bar/sidebar',$data) ?>
-<?php $this->view('components/navside-bar/footer',$data) ?>
+   <div class="home">
 
-    <header>
-    </header>
-
-    <div class="white-container1-1 close">
-        Diploma in Library and Information Management
+    <div class="white-container1-1">
+       <h1> Diploma in Library and Information Management</h1>
     </div>
 
-    <div class="white-container2-1 close ">
-    <p class="left-top-text2">User Details</p>
+    <div class="white-container2-1">
+    <p class="left-top-text1">User Details</p>
         <div class="row">
             <div class="column1">
                 <div class=name>
                 <img src="<?=ROOT?>assets/dr/imgano.png">
-                    <p><h2><?= $student->name ?></h2></p>
+                    <!-- <p><h2><?= $student->name ?></h2></p> -->
+                    <p><h2>Senudi Muthugala</h2></p>
                 
                 </div>
             </div>
@@ -97,11 +142,13 @@
 
             <div class="column2">
                 <div class="data1"><b>Email:</b><br>
-                    <div class="email"><?= $student->Email ?></div>
+                    <!-- <div class="email"><?= $student->Email ?></div> -->
+                    <div class="email">email1@gmail.com</div>
                 </div>
                 <br>
                 <div class="data2"><b>Registration number:</b><br>
-                    <div class="regNum"> <?= $student->regNo ?></div>
+                    <!-- <div class="regNum"> <?= $student->regNo ?></div> -->
+                    <div class="regNum">DLIM/01/01</div>
                 </div>
             </div>
 
@@ -163,8 +210,11 @@
                 </p>
                 <br>
                 <div class="cur-deg">
-                <input type="hidden" name="id" value="<?=$student->id?>">
-                <label for="degree"><h3>Current Degree Program : </h3><?=$student->Degree?></label>
+                <!-- <input type="hidden" name="id" value="<?=$student->id?>"> -->
+                <label for="degree"><h3>Current Degree Program : </h3>
+                <!-- <?=$student->Degree?> -->
+                DLIM
+            </label>
                 </div>
             </br>
             <div class="change-deg">
@@ -195,7 +245,8 @@
                 </p>
                <br>
         <div class="yesorno">
-        <a href="<?=ROOT?>/Student/<?=$student->indexNo?>/delete/<?=$student->id?>"><button class="close-button">Yes,Sure</button></a>
+        <!-- <a href="<?=ROOT?>/Student/<?=$student->indexNo?>/delete/<?=$student->id?>"> -->
+        <button class="close-button">Yes,Sure</button></a>
         <button class="close-button">No,Close</button>
         </div>
     </div>
@@ -207,7 +258,7 @@
     </div>
 
     <div class="flex-container">
-        <div class="white-container3-1 close">
+        <div class="white-container3-1">
             <p class="left-top-text2">Examination Results</p>
             <p class="left-top-text3">Semester 1</p>
             <table>
@@ -265,24 +316,29 @@
             <div class="row2">
                 <div class="column2-1">
                     <div class="data1"><b>Date Of Birth:</b><br>
-                        <div class="bday"><?= $student->birthdate ?></div>
+                        <!-- <div class="bday"><?= $student->birthdate ?></div> -->
+                        <div class="bday">2001.11.24</div>
                     </div>
                     <br>
                     <div class="data2"><b>N.I.C. No:</b><br>
-                        <div class="nic"> <?= $student->nicNo ?></div>
+                        <!-- <div class="nic"> <?= $student->nicNo ?></div> -->
+                        <div class="nic">20018223456</div>
                     </div><br>
                     <div class="data2"><b>Phone Number:</b><br>
-                        <div class="phoneNum"> <?= $student->phoneNo ?></div>
+                        <!-- <div class="phoneNum"> <?= $student->phoneNo ?></div> -->
+                        <div class="phoneNum">0702637466</div>
                     </div>
                 </div>
 
                 <div class="column2-2">
                     <div class="data1"><b>Fax:</b><br>
-                        <div class="Fax"><?= $student->fax ?></div>
+                        <!-- <div class="Fax"><?= $student->fax ?></div> -->
+                        <div class="Fax">+2134-2345678</div>
                     </div>
                     <br>
                     <div class="data2"><b>Address:</b><br>
-                        <div class="adr"> <?= $student->address ?></div>
+                        <!-- <div class="adr"> <?= $student->address ?></div> -->
+                        <div class="adr">No 34,Gamunu Mawatha,Panadura</div>
                     </div>
                 </div>
             </div>
@@ -314,7 +370,7 @@
                 <p>
                 <h2>Change Student Details</h2>
                 </p>
-                <input type="hidden" id="id"  name="id" value="<?=$student->id?>">
+                <!-- <input type="hidden" id="id"  name="id" value="<?=$student->id?>"> -->
                 <label for="fname">Name</label>
                 <input type="text" id="fname"placeholder="Full Name" name="name">
                 <label for="mail">Email</label>
@@ -329,8 +385,10 @@
                 <input type="text" id="fax" placeholder="Fax" name="fax">
                 <label for="addr">Address</label>
                 <input type="text" id="addr" placeholder="Adress" name="address">
-                <label for="phoneno">Pnone Number</label>
+                <label for="phoneno">Phone Number</label>
                 <input type="text" id="phoneno" placeholder="Fax" name="phoneNo">
+                <label for="fax">Fax</label>
+                <input type="text" id="fax" placeholder="Fax" name="fax">
 
                 <input type="submit" id="submitbutton" value="Submit">
                 <button class="close-button">Close</button>
@@ -341,30 +399,7 @@
     </div>
 
     <div id="overlay"></div>
-
-
-    <script>
-        (()=> {
-            const body = document.querySelector("body"),
-            sidebar = body.querySelector(".sidebar"),
-            toggle = body.querySelector(".toggle")  
-        whitecontainer11 = body.querySelector(".white-container1-1");
-        whitecontainer21= body.querySelector(".white-container2-1");
-        whitecontainer31 = body.querySelector(".white-container3-1");
-                   
-        toggle.addEventListener("click", () => {
-            //sidebar.classList.toggle("close");
-            whitecontainer11.classList.toggle("close");
-            whitecontainer21.classList.toggle("close");
-            whitecontainer31.classList.toggle("close");
-         
-        });
-        })()
-
-        function toggleMenu() {
-            document.getElementById("subMenu").classList.toggle("open-menu");
-        }
-    </script>
+   </div>
 </body>
 
 </html>
