@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+ <!DOCTYPE html>
     <html lang="en">
         <head>
             <link rel="stylesheet" type="text/css" href="<?=ROOT?>css/sidebar-component.css">
@@ -20,4 +20,3 @@
                     </div>
                     <i class='bx bx-chevron-right toggle'></i>
                 </header>
-

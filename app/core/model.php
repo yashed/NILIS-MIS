@@ -59,18 +59,7 @@ class Model extends Database
     }
 
 
-    public function update2($id, $data)
-    {
-        show($id);
-        //remove unwanted colmns
-        if (!empty($this->allowedColumns)) {
-            foreach ($data as $key => $value) {
-                if (!in_array($key, $this->allowedColumns)) {
-                    unset($data[$key]);
-                }
-            }
-        }
-    }
+
     /* public function insert($data)
 	{
 		//remove unwanted columns
@@ -117,6 +106,19 @@ class Model extends Database
 
         $data['id'] = $id;
         $this->query($query, $data);
+    }
+
+    public function update2($id, $data)
+    {
+        show($id);
+        //remove unwanted colmns
+        if (!empty($this->allowedColumns)) {
+            foreach ($data as $key => $value) {
+                if (!in_array($key, $this->allowedColumns)) {
+                    unset($data[$key]);
+                }
+            }
+        }
     }
 
     /* public function findAll($order = 'desc')

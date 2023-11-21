@@ -1,23 +1,15 @@
 <?php
     $role = "Director";
     $data['role']=$role;
-
-    // include_once '../../components/navside-bar/header.php';
-    // include_once '../../components/navside-bar/sidebar.php';
-    // include_once '../../components/navside-bar/footer.php';
 ?>
-
 <?php $this->view('components/navside-bar/header',$data) ?>
 <?php $this->view('components/navside-bar/sidebar',$data) ?>
 <?php $this->view('components/navside-bar/footer',$data) ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DR Student Participants</title>
+    <title>director Student Participants</title>
     <style>
         * {
             margin: 0;
@@ -36,7 +28,7 @@
             --tran-04: all 0.4s ease;
             --tran-05: all 0.5s ease;
         }
-        .dr-degree-programs-home{
+        .director-degree-programs-home{
             left: 250px;
             position: relative;
             width: calc(100% - 250px);
@@ -44,7 +36,7 @@
             transition: var(--tran-05);
             background: var(--text-color);
         }
-        .dr-degree-programs-title{
+        .director-degree-programs-title{
             font-size: 30px;
             font-weight: 500;
             color: black;
@@ -53,7 +45,7 @@
             border-radius: 6px;
             margin: 7px 4px 7px 4px;
         }
-        .sidebar.close ~ .dr-degree-programs-home{
+        .sidebar.close ~ .director-degree-programs-home{
             left: 88px;
             width: calc(100% - 88px);
         }
@@ -94,25 +86,25 @@
             display: flex;
             transition: .2s;
         }
-        .table__header .dr-degree-programs-button{
+        .table__header .director-degree-programs-button{
             height: 100%;
-            margin: 13px 5px 10px 100px;
+            margin: 13px 5px 10px 0px;
             padding: 8px 7px 8px 7px;
             border-radius: 7px;
             float: right;
             background-color: var(--sidebar-color);
             color: var(--text-color);
         }
-        .table__header .dr-degree-programs-button:hover{
+        .table__header .director-degree-programs-button:hover{
             background-color: var(--text-color);
             color: var(--sidebar-color);
         }
-        .table__header .input-group:hover {
+        /* .table__header .input-group:hover {
             width: 45%;
             background-color: #afabab;
             box-shadow: 0 .1rem .4rem #0002;
             font-weight: 500;
-        }
+        } */
         .table__header .input-group .icon{
             font-size: 25px;
             padding: 5px 4px 0px 4px;
@@ -127,14 +119,13 @@
         .table__body {
             width: 95%;
             max-height: calc(89% - 1.6rem);
-            background-color: var(--body-color);
-            margin: 5px 5px 5px 20px;
+            margin: 5px 20px 50px 20px;
             border-radius: .6rem;
             overflow: auto;
             overflow: overlay;
             outline-style: groove;
             outline-width: 2px;
-            outline-color: #17376E;
+            /* outline-color: #17376E; */
         }
         .table__body::-webkit-scrollbar{
             width: 0.5rem;
@@ -189,9 +180,6 @@
             opacity: 0;
             transform: translateX(100%);
         }
-        tbody tr:hover {
-            background-color: #afabab !important;
-        }
         tbody tr td,
         tbody tr td p,
         tbody tr td img {
@@ -212,20 +200,6 @@
             padding: .4rem 0;
             border-radius: 2rem;
             text-align: center;
-        }
-        .status.delivered {
-            background-color: #86e49d;
-            color: #006b21;
-        }
-        .status.cancelled {
-            background-color: #d893a3;
-            color: #b30021;
-        }
-        .status.pending {
-            background-color: #ebc474;
-        }
-        .status.shipped {
-            background-color: #6fcaea;
         }
         @media (max-width: 1000px) {
             td:not(:first-of-type) {
@@ -265,15 +239,15 @@
             margin: 0px 10px 2px 5px;
             float: right;
         }
-        .export_file .export_file-btn {
+        .export__file .export__file-btn {
             display: inline-block;
             width: 2rem;
             height: 2rem;
-            background: #fff6 url(http://localhost/NILIS-MIS/public/assets/dr-participant-table/export.png) center / 80% no-repeat;
             border-radius: 50%;
             transition: .2s ease-in-out;
+            background: #fff6 url(<?=ROOT?>assets/director-participant-table/export.png) center / 80% no-repeat;
         }
-        .export_file .export_file-btn:hover { 
+        .export__file .export__file-btn:hover { 
             background-color: #fff;
             transform: scale(1.15);
             cursor: pointer;
@@ -281,9 +255,9 @@
         .export__file input {
             display: none;
         }
-        .export_file .export_file-options {
+        .export__file .export__file-options {
             position: absolute;
-            right: 0;
+            right: 20px;
             width: 12rem;
             border-radius: .5rem;
             overflow: hidden;
@@ -293,44 +267,40 @@
             transform-origin: top right;
             box-shadow: 0 .2rem .5rem var(--sidebar-color);
             transition: .2s;
+            background-color: #fff;
         }
-        .export_file input:checked + .export_file-options {
+        .export__file input:checked + .export__file-options {
             opacity: 1;
             transform: scale(1);
             z-index: 100;
         }
-        .export_file .export_file-options label{
+        .export__file .export__file-options label{
             display: block;
             width: 100%;
             padding: .6rem 0;
-            background-color: var(--body-color);
             display: flex;
             justify-content: space-around;
             align-items: center;
-
             transition: .2s ease-in-out;
         }
-
-        .export_file .export_file-options label:first-of-type{
+        .export__file .export__file-options label:first-of-type{
             padding: 1rem 0;
             background-color: var(--primary-color) !important;
         }
-
-        .export_file .export_file-options label:hover{
+        .export__file .export__file-options label:hover{
             transform: scale(1.05);
             background-color: #fff;
             cursor: pointer;
         }
-
-        .export_file .export_file-options img{
+        .export__file .export__file-options img{
             width: 2rem;
             height: auto;
         }
     </style>
 </head>
 <body>
-    <div class="dr-degree-programs-home">
-        <div class="dr-degree-programs-title">Diploma in Library and Information Management</div>
+    <div class="director-degree-programs-home">
+        <div class="director-degree-programs-title">Diploma in Library and Information Management</div>
         <main class="table">
             <section class="table__header">
                 <p>Participants</p>
@@ -339,17 +309,17 @@
                         <i class='bx bx-search icon'></i>
                         <input type="search" placeholder="Search Data...">
                     </div>
-                    <button class="dr-degree-programs-button">Search</button>
+                    <button class="director-degree-programs-button">Search</button>
                 </div>
                 <div class="export__file">
-                    <label for="export-file" class="export__file-btn" title="Export File"></label>
+                    <label for="export-file" class="export__file-btn" title="Export File"></label><br><br>
                     <input type="checkbox" id="export-file">
                     <div class="export__file-options">
-                        <label>Export As &nbsp; &#10140;</label>
-                        <label for="export-file" id="toPDF">PDF <img src="./pdf.png" alt=""></label>
-                        <label for="export-file" id="toJSON">JSON <img src="./json.png" alt=""></label>
-                        <label for="export-file" id="toCSV">CSV <img src="./csv.png" alt=""></label>
-                        <label for="export-file" id="toEXCEL">EXCEL <img src="./excel.png" alt=""></label>
+                        <label>Export As</label>
+                        <label for="export-file" id="toPDF">PDF <img src="<?=ROOT?>assets/director-participant-table/pdf.png" alt=""></label>
+                        <label for="export-file" id="toJSON">JSON <img src="<?=ROOT?>assets/director-participant-table/json.png" alt=""></label>
+                        <label for="export-file" id="toCSV">CSV <img src="<?=ROOT?>assets/director-participant-table/csv.png" alt=""></label>
+                        <label for="export-file" id="toEXCEL">EXCEL <img src="<?=ROOT?>assets/director-participant-table/excel.png" alt=""></label>
                     </div>
                 </div>
             </section>
@@ -358,7 +328,6 @@
                     <thead>
                         <tr>
                             <th> Name </th>
-                            <th> Roles </th>
                             <th> Index Number </th>
                             <th> Registration Number </th>
                             <th> Mail </th>
@@ -366,21 +335,19 @@
                     </thead>
                     <tbody>
                     <?php foreach($students as $student):?>
-                        <tr>
-                            <td class="table__body-td-name"><img src="../../../public/assets/MyOriginalPhoto.jpg" alt=""> <?=$student->name?> </td>
-                            <td> Students </td>
-                            <td> <a href="<?=ROOT?>/Student/<?=$student->indexNo?>"><?=$student->indexNo?></a></td>
-                            <td>  <?=$student->regNo?>  </td>
+                        <tr data-id="<?= $student->id ?>">
+                            <td class="table__body-td-name"><?=$student->name?> </td>
+                            <td> <?=$student->indexNo?> </td>
+                            <td>  <?=$student->regNo?> </td>
                             <td> <?=$student->Email?> </td>
                         </tr>
-                        <?php endforeach;?>
-                       
+                    <?php endforeach;?>
                         
                     </tbody>
                 </table>
             </section>
         </main>
-        <div class="dr-footer">
+        <div class="director-footer">
             <?php $this->view('components/footer/index',$data) ?>
         </div>
     </div>
@@ -588,31 +555,64 @@
         a.click();
         a.remove();
     }
-</script>
-<script>function getValueFromSelectedRow(table, rowIndex, columnIndex) {
-    var rows = table.rows;
-  
-    if (rowIndex >= 0 && rowIndex < rows.length) {
-      var selectedRow = rows[rowIndex];
-      var cellValue = selectedRow.cells[columnIndex].textContent;
-      return cellValue;
-    } else {
-      return "Invalid row index";
-    }
-  }
-  
-  // Get the table
-var myTable = document.getElementById('table_p');
-
-// Example: Get the name (second column, index 1) from the first row (index 0)
-var rowIndex = 1; // Change this index to select a different row
-var columnIndex = 2; // Change this index to select a different column
-document.getElementById('tr1').onclick = function(){
-    var value = getValueFromSelectedRow(myTable, rowIndex, columnIndex);
-    console.log("Value from selected row:", value);
+    function getValueFromSelectedirectorow(table, rowIndex, columnIndex) {
+        var rows = table.rows;
     
+        if (rowIndex >= 0 && rowIndex < rows.length) {
+        var selectedirectorow = rows[rowIndex];
+        var cellValue = selectedirectorow.cells[columnIndex].textContent;
+        return cellValue;
+        } else {
+        return "Invalid row index";
+        }
+    }
+    
+    // Get the table
+    var myTable = document.getElementById('table_p');
 
-}
+    // Example: Get the name (second column, index 1) from the first row (index 0)
+    var rowIndex = 1; // Change this index to select a different row
+    var columnIndex = 2; // Change this index to select a different column
+    document.getElementById('tr1').onclick = function(){
+        var value = getValueFromSelectedirectorow(myTable, rowIndex, columnIndex);
+        console.log("Value from selected row:", value);
+        
 
- </script>
+    }
+    //
+    //
+    // for pass the data
+    document.addEventListener('DOMContentLoaded', function () {
+        const table = document.getElementById('table_p');
+        const rows = table.querySelectorAll('tbody tr');
+
+        rows.forEach((row) => {
+            row.addEventListener('click', function () {
+                // Get the unique identifier from the data-id attribute
+                const studentId = row.getAttribute('data-id');
+
+                // Navigate to the target page with the data as a query parameter
+                window.location.href = '<?=ROOT?>director/userprofile' + studentId;
+            });
+        });
+    });
+
+
+     // for make row clickable
+    document.addEventListener('DOMContentLoaded', function () {
+        const table = document.getElementById('table_p');
+        const rows = table.querySelectorAll('tbody tr');
+
+        rows.forEach((row) => {
+            row.addEventListener('click', function () {
+                // Get the unique identifier from the data-id attribute
+                const studentId = row.getAttribute('data-id');
+
+                // Navigate to the target page with the data as a query parameter
+                window.location.href = '<?= ROOT ?>director/userprofile' + studentId;
+            });
+        });
+    });
+
+</script>
 </html>

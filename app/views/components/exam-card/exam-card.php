@@ -41,14 +41,14 @@
     margin-left: 5%;
 }
 .degree-name {
-    font-size: 55px;
+    font-size: 45px;
     font-weight: 1000;
     color: #17376E;
     text-align: left;
 }
 .sub-name {
     color: #9AD6FF;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 600;
     text-align: left;
     margin-top: -3%;
@@ -76,7 +76,7 @@
                     <div class="sub-name">Diploma in Library and<br>Information Management</div>
                 </div>
             </div>
-            <img src="<?=ROOT?>/assets/exam-card/icon.png" alt="icon.png" class="exam-img">
+            <img src="<?=ROOT?>assets/exam-card/icon.png" alt="icon.png" class="exam-img">
         </div>
         <div class="exam-info">
             <div class="exam-year">1st Semester Examination</div>

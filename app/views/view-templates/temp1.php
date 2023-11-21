@@ -1,7 +1,4 @@
 <?php
-
-
-
     $role = "DR";
     $data['role'] = $role;
 
@@ -74,7 +71,6 @@
     border-radius: 6px;
     margin: 7px 4px 7px 4px;
     flex-wrap: wrap;
-
 }
 
 .temp1-subsection-01 {
