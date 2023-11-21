@@ -134,7 +134,7 @@
             overflow: overlay;
             outline-style: groove;
             outline-width: 2px;
-            outline-color: #17376E;
+            outline-color: #ffffff;
         }
         .table__body::-webkit-scrollbar{
             width: 0.5rem;

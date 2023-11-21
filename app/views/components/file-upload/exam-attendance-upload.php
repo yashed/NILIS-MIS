@@ -10,7 +10,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -24,8 +24,8 @@
     display: flex;
     justify-content: center;
     background-color: #fcfcfc;
-}
-
+} */
+/* 
 .card {
     border-radius: 10px;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
@@ -33,12 +33,12 @@
     height: 260px;
     background-color: #ffffff;
     padding: 10px 30px 40px;
-}
+} */
 
 .card h3 {
     font-size: 22px;
     font-weight: 600;
-
+    
 }
 
 .drop_box {
