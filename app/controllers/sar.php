@@ -5,13 +5,15 @@ class SAR extends Controller
 
     public function index()
     {
+        //uncoment this to add autherization to sar
+        // if (!Auth::is_sar()) {
+        //     message('You are not authorized to view this page', 'error');
+        //     header('Location: login');
+        // }
+
         $degree = new Degree();
 
-        // $degree->insert($_POST);
-        // show($_POST);
-
         $data['degrees'] = $degree->findAll();
-        //show($data['degrees']);
 
         $this->view('sar-interfaces/sar-dashboard', $data);
     }
@@ -23,11 +25,9 @@ class SAR extends Controller
     {
         $degree = new Degree();
 
-        // $degree->insert($_POST);
-        // show($_POST);
 
         $data['degrees'] = $degree->findAll();
-        //show($data['degrees']);
+
 
         $this->view('sar-interfaces/sar-degreeprograms', $data);
     }
@@ -35,11 +35,9 @@ class SAR extends Controller
     {
         $degree = new Degree();
 
-        // $degree->insert($_POST);
-        // show($_POST);
 
         $data['degrees'] = $degree->findAll();
-        //show($data['degrees']);
+
 
         $this->view('sar-interfaces/sar-degreeprofile', $data);
     }
@@ -48,8 +46,6 @@ class SAR extends Controller
         $degree = new Degree();
         $data['degrees'] = $degree->findAll();
 
-        // $degree->insert($_POST);
-        // show($_POST);
         if ($method == "create" && $id == 1) {
             $this->view('sar-interfaces/sar-createexam-normal-1');
         } else if ($method == "create" && $id == 2) {
@@ -89,6 +85,4 @@ class SAR extends Controller
     {
         $this->view('sar-interfaces/sar-examresultshow');
     }
-
-    
 }

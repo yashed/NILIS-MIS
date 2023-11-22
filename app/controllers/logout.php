@@ -8,9 +8,7 @@ class Logout extends Controller
 {
     public function index()
     {
-       Auth::logout();
+        Auth::logout();
         header('Location: login');
     }
 }
-
-?>
