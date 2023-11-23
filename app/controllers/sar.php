@@ -46,9 +46,18 @@ class SAR extends Controller
         $degree = new Degree();
         $data['degrees'] = $degree->findAll();
 
+
+
         if ($method == "create" && $id == 1) {
+
+            if ($_POST['submit'] == "next1") {
+
+                show($_POST);
+                // header('Location: 2');
+            }
             $this->view('sar-interfaces/sar-createexam-normal-1');
         } else if ($method == "create" && $id == 2) {
+
             $this->view('sar-interfaces/sar-createexam-normal-2');
         } else if ($method == "create" && $id == 3) {
             $this->view('sar-interfaces/sar-createexam-normal-3');

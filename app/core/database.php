@@ -4,45 +4,42 @@
  * database calss
  */
 
-class Database {
+class Database
+{
 
     private function connect()
     {
-        $str = DBDRIVER.":hostname=".DBHOST.";dbname=nilis_db";
-       return new PDO($str,DBUSER,DBPASS);
-        
-        
+        $str = DBDRIVER . ":hostname=" . DBHOST . ";dbname=nilis_db";
+        return new PDO($str, DBUSER, DBPASS);
     }
-    public function query($query,$data = [],$type = 'object'){
+    public function query($query, $data = [], $type = 'object')
+    {
         $con = $this->connect();
-       
+
         $stm = $con->prepare($query);
-        if($stm){
+        if ($stm) {
 
-          $check= $stm->execute($data);
+            $check = $stm->execute($data);
 
-          if($check){
-            
-              if($type == 'object'){
-                  $type = PDO::FETCH_OBJ;
+            if ($check) {
+
+                if ($type == 'object') {
+                    $type = PDO::FETCH_OBJ;
+                } else {
+                    $type = PDO::FETCH_ASSOC;
+                }
+                $result = $stm->fetchAll($type);
+
+                if (is_array($result) && count($result) > 0) {
+                    return $result;
+                }
             }
-            else{
-                $type = PDO::FETCH_ASSOC;
-
-            }
-            $result = $stm->fetchAll($type);
-
-            if(is_array($result) && count($result) > 0)
-            {
-                return $result;
-            }
-          }
         }
         return false;
-      
     }
 
-    function create_tables(){
+    function create_tables()
+    {
         //user table 
         $query = "
         CREATE TABLE IF NOT EXISTS users (
@@ -66,7 +63,7 @@ class Database {
             KEY date (date)
         ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
         ";
-    
+
         $this->query($query);
         //Degree Table
         $query = "
@@ -83,7 +80,7 @@ class Database {
         UNIQUE KEY `DegreeID` (`DegreeID`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
     ";
-    
+
         $this->query($query);
         //Subject Table
         $query = "
@@ -96,7 +93,7 @@ class Database {
             UNIQUE KEY `SubjectCode` (`SubjectCode`,`SubjectName`) USING HASH
            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
         ";
-    
+
         $this->query($query);
 
         //Grading Values Table
@@ -111,9 +108,9 @@ class Database {
             UNIQUE KEY `Grade` (`Grade`)
            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
         ";
-    
+
         $this->query($query);
-//Degree Time table table
+        //Degree Time table table
         $query = "
       CREATE TABLE IF NOT EXISTS `degree_timetable` (
     `EventID` INT NOT NULL AUTO_INCREMENT,
@@ -128,7 +125,7 @@ class Database {
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
         ";
-         $this->query($query);
+        $this->query($query);
         //student Table
         $query = "
         CREATE TABLE IF NOT EXISTS student(
@@ -149,10 +146,10 @@ class Database {
         ";
         $this->query($query);
 
-//Exam Tables
+        //Exam Tables
         //exam participation table
-       $query = "
-    CREATE TABLE IF NOT EXISTS exa_participants(
+        $query = "
+    CREATE TABLE IF NOT EXISTS exam_participants(
         degreeID varchar(20) NOT NULL,
         semester int(10) NOT NULL,
         indexNo varchar(40) NOT NULL,
@@ -186,9 +183,9 @@ class Database {
     
    ";
 
-     $this->query($query);
-     
-     $query = "
+        $this->query($query);
+
+        $query = "
      CREATE TABLE IF NOT EXISTS repeat_students(
         degreeID varchar(20) NOT NULL,
         semester int(10) NOT NULL,
@@ -202,10 +199,10 @@ class Database {
         primary key (degreeID, semester, indexNo, subjectCode)
      ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
      ";
- $this->query($query);
+        $this->query($query);
 
 
- $query = "
+        $query = "
  CREATE TABLE IF NOT EXISTS exam_timetable(
     subjectCode varchar(50) NOT NULL,
     subjectName varchar(50) NOT NULL,
@@ -218,8 +215,6 @@ class Database {
     primary key (subjectCode, degreeID, semester)
  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
  ";
- $this->query($query);
+        $this->query($query);
+    }
 }
-}
-
-?>
