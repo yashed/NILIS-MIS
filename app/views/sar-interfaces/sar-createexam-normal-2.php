@@ -348,12 +348,12 @@ $data['role'] = $role;
                                     <th>
                                         <input type="checkbox" class="checkAll" name="checkAll" />
                                     </th>
-                                    <td><input type="checkbox" name="item[]" value="1"></td>
-                                    <td><input type="text" name="name[]" value="H.A.Yashed Thisara"></td>
-                                    <td><input type="text" name="attempt[]" value="01" readonly></td>
-                                    <td><input type="text" name="index_number[]" value="DILIM01" readonly></td>
-                                    <td><input type="text" name="registration_number[]" value="2023/DILIM/01" readonly></td>
-                                    <td><input type="text" name="mail[]" value="yash@gmail.com" readonly></td>
+                                    <th>Name</th>
+                                    <th>Attempt</th>
+                                    <th>Index Number</th>
+                                    <th>Registration Number</th>
+                                    <th>Mail</th>
+                                </tr>
                                 </tr>
                             </thead>
                             <tbody>

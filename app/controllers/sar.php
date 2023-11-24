@@ -53,7 +53,7 @@ class SAR extends Controller
             if ($_POST['submit'] == "next1") {
 
                 show($_POST);
-                // header('Location: 2');
+                header('Location: 2');
             }
             $this->view('sar-interfaces/sar-createexam-normal-1');
         } else if ($method == "create" && $id == 2) {
