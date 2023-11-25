@@ -6,6 +6,7 @@ class Login extends Controller
 
     public function index()
     {
+
         $data['errors'] = [];
         $data['title'] = 'Login';
         $user = new User();

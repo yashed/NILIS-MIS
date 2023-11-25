@@ -14,13 +14,11 @@ class Database
     }
     public function query($query, $data = [], $type = 'object')
     {
-        $con = $this->connect();
 
+        $con = $this->connect();
         $stm = $con->prepare($query);
         if ($stm) {
-
             $check = $stm->execute($data);
-
             if ($check) {
 
                 if ($type == 'object') {
@@ -40,6 +38,7 @@ class Database
 
     function create_tables()
     {
+
         //user table 
         $query = "
         CREATE TABLE IF NOT EXISTS users (
@@ -49,7 +48,6 @@ class Database
             username varchar(20) NOT NULL,
             email varchar(100) NOT NULL,
             phoneNo varchar(12) NOT NULL,
-            role varchar(20) NOT NULL,
             role varchar(20) NOT NULL,
             password varchar(255) NOT NULL,
             cpassword varchar(255) NOT NULL,
