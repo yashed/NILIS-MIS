@@ -60,6 +60,13 @@ class SAR extends Controller
 
             $this->view('sar-interfaces/sar-createexam-normal-2');
         } else if ($method == "create" && $id == 3) {
+
+            if ($_POST['submit'] == "timetable") {
+                // show($_POST);
+                // header("location : http://localhost/NILIS-MIS/public/sar/examination");
+                // header('Location: sar/examination');
+            }
+
             $this->view('sar-interfaces/sar-createexam-normal-3');
         } else {
             $this->view('sar-interfaces/sar-examination', $data);

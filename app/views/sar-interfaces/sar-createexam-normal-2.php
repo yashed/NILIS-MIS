@@ -213,7 +213,10 @@ $data['role'] = $role;
     }
 
     .progress {
-        margin: 30px 0px 20px 0px;
+        margin: 30px 0px 10px 0px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
 
     .progress-bar {
@@ -316,8 +319,8 @@ $data['role'] = $role;
 
     .btn-secondary:hover {
         color: black;
-        background-color: #F9D2D2;
-        border: 1px solid red;
+        background-color: #E0E0E0;
+        border: 1px solid #17376e;
     }
 </style>
 
@@ -334,6 +337,7 @@ $data['role'] = $role;
                             and <span style="color:#17376E; font-weight:600">Medical Approved </span> Students add to
                             the
                             examination</lable>
+                        <lable class="form-subname">Step 2 of 3</lable>
 
                     </div>
                     <div class="progress-bar">
@@ -437,10 +441,12 @@ $data['role'] = $role;
                     <div class="exam-buttons">
 
                         <div class="cancel-button">
-                            <button class="btn-secondary" type="submit" onClick="location.href='<?= ROOT ?>sar/examination/create/1'">Cancel</button>
+                            <button class="btn-secondary" type="submit"
+                                onClick="location.href='<?= ROOT ?>sar/examination/create/1'">Back</button>
                         </div>
                         <div class="next-button">
-                            <button class="btn-primary" type="submit" onClick="location.href='<?= ROOT ?>sar/examination/create/3'">Next</button>
+                            <button class="btn-primary" type="submit"
+                                onClick="location.href='<?= ROOT ?>sar/examination/create/3'">Next</button>
                         </div>
                     </div>
                 </div>
@@ -454,8 +460,8 @@ $data['role'] = $role;
             <?php $this->view('components/footer/index', $data) ?>
         </div>
         <script>
-            $(document).ready(function() {
-                $(".checkAll").on("click", function() {
+            $(document).ready(function () {
+                $(".checkAll").on("click", function () {
                     $(this)
                         .closest("table")
                         .find("tbody :checkbox")
@@ -464,7 +470,7 @@ $data['role'] = $role;
                         .toggleClass("selected", this.checked);
                 });
 
-                $("tbody :checkbox").on("click", function() {
+                $("tbody :checkbox").on("click", function () {
                     // toggle selected class to the checkbox in a row
                     $(this)
                         .closest("tr")
@@ -475,11 +481,11 @@ $data['role'] = $role;
                         .find(".checkAll")
                         .prop("checked",
                             $(this)
-                            .closest("table")
-                            .find("tbody :checkbox:checked").length ==
+                                .closest("table")
+                                .find("tbody :checkbox:checked").length ==
                             $(this)
-                            .closest("table")
-                            .find("tbody :checkbox").length
+                                .closest("table")
+                                .find("tbody :checkbox").length
                         );
                 });
             });

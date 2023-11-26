@@ -213,7 +213,10 @@ $data['role'] = $role;
     }
 
     .progress {
-        margin: 30px 0px 20px 0px;
+        margin: 30px 0px 10px 0px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
 
     .progress-bar {
@@ -345,7 +348,7 @@ $data['role'] = $role;
                 <div class="exam-create-steps">
                     <div class="progress">
                         <lable class="form-subname">Select Students add to the examination</lable>
-
+                        <lable class="form-subname">Step 1 of 2</lable>
                     </div>
                     <div class="progress-bar">
                         <div class="progress-bar-active"></div>
@@ -369,66 +372,80 @@ $data['role'] = $role;
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="checkbox" name="item[]" value="1" class="itemCheckbox" onclick="updateCheckboxValues()"></td>
+                                        <td><input type="checkbox" name="item[]" value="1" class="itemCheckbox"
+                                                onclick="updateCheckboxValues()"></td>
                                         <input type="hidden" name="hiddenitem[]" value="0" class="hiddenItem">
                                         <td><input type="text" name="name[]" value="H.A.Yashed Thisara"></td>
                                         <td><input type="text" name="attempt[]" value="01" readonly></td>
                                         <td><input type="text" name="index_number[]" value="DILIM01" readonly></td>
-                                        <td><input type="text" name="registration_number[]" value="2023/DILIM/01" readonly></td>
+                                        <td><input type="text" name="registration_number[]" value="2023/DILIM/01"
+                                                readonly></td>
                                         <td><input type="text" name="mail[]" value="yash@gmail.com" readonly></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" name="item[]" value="1" class="itemCheckbox" onclick="updateCheckboxValues()"></td>
+                                        <td><input type="checkbox" name="item[]" value="1" class="itemCheckbox"
+                                                onclick="updateCheckboxValues()"></td>
                                         <input type="hidden" name="hiddenitem[]" value="0" class="hiddenItem">
                                         <td><input type="text" name="name[]" value="H.A.Yashed Thisara" readonly></td>
                                         <td><input type="text" name="attempt[]" value="01" readonly></td>
                                         <td><input type="text" name="index_number[]" value="DILIM01" readonly></td>
-                                        <td><input type="text" name="registration_number[]" value="2023/DILIM/01" readonly></td>
+                                        <td><input type="text" name="registration_number[]" value="2023/DILIM/01"
+                                                readonly></td>
                                         <td><input type="text" name="mail[]" value="yash@gmail.com" readonly></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" name="item[]" value="1" class="itemCheckbox" onclick="updateCheckboxValues()"></td>
+                                        <td><input type="checkbox" name="item[]" value="1" class="itemCheckbox"
+                                                onclick="updateCheckboxValues()"></td>
                                         <input type="hidden" name="hiddenitem[]" value="0" class="hiddenItem">
                                         <td><input type="text" name="name[]" value="H.A.Yashed Thisara" readonly></td>
                                         <td><input type="text" name="attempt[]" value="01" readonly></td>
                                         <td><input type="text" name="index_number[]" value="DILIM01" readonly></td>
-                                        <td><input type="text" name="registration_number[]" value="2023/DILIM/01" readonly></td>
+                                        <td><input type="text" name="registration_number[]" value="2023/DILIM/01"
+                                                readonly></td>
                                         <td><input type="text" name="mail[]" value="yash@gmail.com" readonly></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" name="item[]" value="1" class="itemCheckbox" onclick="updateCheckboxValues()"></td>
+                                        <td><input type="checkbox" name="item[]" value="1" class="itemCheckbox"
+                                                onclick="updateCheckboxValues()"></td>
                                         <input type="hidden" name="hiddenitem[]" value="0" class="hiddenItem">
                                         <td><input type="text" name="name[]" value="H.A.Yashed Thisara" readonly></td>
                                         <td><input type="text" name="attempt[]" value="01" readonly></td>
                                         <td><input type="text" name="index_number[]" value="DILIM01" readonly></td>
-                                        <td><input type="text" name="registration_number[]" value="2023/DILIM/01" readonly></td>
+                                        <td><input type="text" name="registration_number[]" value="2023/DILIM/01"
+                                                readonly></td>
                                         <td><input type="text" name="mail[]" value="yash@gmail.com" readonly></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" name="item[]" value="1" class="itemCheckbox" onclick="updateCheckboxValues()"></td>
+                                        <td><input type="checkbox" name="item[]" value="1" class="itemCheckbox"
+                                                onclick="updateCheckboxValues()"></td>
                                         <input type="hidden" name="hiddenitem[]" value="0" class="hiddenItem">
                                         <td><input type="text" name="name[]" value="H.A.Yashed Thisara" readonly></td>
                                         <td><input type="text" name="attempt[]" value="01" readonly></td>
                                         <td><input type="text" name="index_number[]" value="DILIM01" readonly></td>
-                                        <td><input type="text" name="registration_number[]" value="2023/DILIM/01" readonly></td>
+                                        <td><input type="text" name="registration_number[]" value="2023/DILIM/01"
+                                                readonly></td>
                                         <td><input type="text" name="mail[]" value="yash@gmail.com" readonly></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" name="item[]" value="1" class="itemCheckbox" onclick="updateCheckboxValues()"></td>
+                                        <td><input type="checkbox" name="item[]" value="1" class="itemCheckbox"
+                                                onclick="updateCheckboxValues()"></td>
                                         <input type="hidden" name="hiddenitem[]" value="0" class="hiddenItem">
                                         <td><input type="text" name="name[]" value="H.A.Yashed Thisara" readonly></td>
                                         <td><input type="text" name="attempt[]" value="01" readonly></td>
                                         <td><input type="text" name="index_number[]" value="DILIM01" readonly></td>
-                                        <td><input type="text" name="registration_number[]" value="2023/DILIM/01" readonly></td>
+                                        <td><input type="text" name="registration_number[]" value="2023/DILIM/01"
+                                                readonly></td>
                                         <td><input type="text" name="mail[]" value="yash@gmail.com" readonly></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" name="item[]" value="1" class="itemCheckbox" onclick="updateCheckboxValues()"></td>
+                                        <td><input type="checkbox" name="item[]" value="1" class="itemCheckbox"
+                                                onclick="updateCheckboxValues()"></td>
                                         <input type="hidden" name="hiddenitem[]" value="0" class="hiddenItem">
                                         <td><input type="text" name="name[]" value="H.A.Yashed Thisara" readonly></td>
                                         <td><input type="text" name="attempt[]" value="01" readonly></td>
                                         <td><input type="text" name="index_number[]" value="DILIM01" readonly></td>
-                                        <td><input type="text" name="registration_number[]" value="2023/DILIM/01" readonly></td>
+                                        <td><input type="text" name="registration_number[]" value="2023/DILIM/01"
+                                                readonly></td>
                                         <td><input type="text" name="mail[]" value="yash@gmail.com" readonly></td>
 
                                     </tr>
@@ -441,10 +458,12 @@ $data['role'] = $role;
                         <div class="exam-buttons">
 
                             <div class="cancel-button">
-                                <button class="btn-secondary" onClick="location.href='<?= ROOT ?>sar/examination'">Cancel</button>
+                                <button class="btn-secondary"
+                                    onClick="location.href='<?= ROOT ?>sar/examination'">Cancel</button>
                             </div>
                             <div class="next-button">
-                                <button class="btn-primary" type="submit" name="submit" value='next1' id='submit'>Next</button>
+                                <button class="btn-primary" type="submit" name="submit" value='next1'
+                                    id='submit'>Next</button>
                             </div>
                         </div>
                     </form>
@@ -459,8 +478,8 @@ $data['role'] = $role;
             <?php $this->view('components/footer/index', $data) ?>
         </div>
         <script>
-            $(document).ready(function() {
-                $(".checkAll").on("click", function() {
+            $(document).ready(function () {
+                $(".checkAll").on("click", function () {
                     $(this)
                         .closest("table")
                         .find("tbody .itemCheckbox")
@@ -470,7 +489,7 @@ $data['role'] = $role;
                     updateHiddenInputs(this);
                 });
 
-                $("tbody .itemCheckbox").on("click", function() {
+                $("tbody .itemCheckbox").on("click", function () {
                     // toggle selected class to the checkbox in a row
                     $(this)
                         .closest("tr")
@@ -481,11 +500,11 @@ $data['role'] = $role;
                         .find(".checkAll")
                         .prop("checked",
                             $(this)
-                            .closest("table")
-                            .find("tbody .itemCheckbox:checked").length ==
+                                .closest("table")
+                                .find("tbody .itemCheckbox:checked").length ==
                             $(this)
-                            .closest("table")
-                            .find("tbody .itemCheckbox").length
+                                .closest("table")
+                                .find("tbody .itemCheckbox").length
                         );
 
                     updateHiddenInputs(this);
@@ -512,15 +531,15 @@ $data['role'] = $role;
                 var checkboxes = document.querySelectorAll('.commonCheckbox');
 
 
-                checkboxes.forEach(function(cb, index) {
+                checkboxes.forEach(function (cb, index) {
                     formData.append('item[]', cb.checked ? 1 : 0);
                     console.log('form=', formData)
                 });
 
                 fetch('sar.php', {
-                        method: 'POST',
-                        body: formData
-                    })
+                    method: 'POST',
+                    body: formData
+                })
                     .then(response => response.json())
                     .then(data => console.log(data))
                     .catch(error => console.error('Error:', error));

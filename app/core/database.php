@@ -84,6 +84,8 @@ class Database
             `SubjectCode` varchar(50) DEFAULT NULL,
             `SubjectName` text NOT NULL,
             `NoCredits` int(10) NOT NULL,
+            `DegreeID` varchar(20) NOT NULL,
+            FOREIGN KEY (DegreeID) REFERENCES degree(DegreeID),
             PRIMARY KEY (`SubjectID`),
             UNIQUE KEY `SubjectCode` (`SubjectCode`,`SubjectName`) USING HASH
            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
