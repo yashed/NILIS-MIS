@@ -44,30 +44,47 @@ class SAR extends Controller
     public function examination($method = null, $id = null)
     {
         $degree = new Degree();
+        $data['errors'] = [];
+
+        $examtimetable = new ExamTimeTable();
         $data['degrees'] = $degree->findAll();
 
-
-
         if ($method == "create" && $id == 1) {
+            if (isset($_POST['submit'])) {
+                if ($_POST['submit'] == "next1") {
 
-            if ($_POST['submit'] == "next1") {
-
-                show($_POST);
-                header('Location: 2');
+                    show($_POST);
+                    redirect('sar/examination/create/2');
+                }
             }
             $this->view('sar-interfaces/sar-createexam-normal-1');
         } else if ($method == "create" && $id == 2) {
 
             $this->view('sar-interfaces/sar-createexam-normal-2');
         } else if ($method == "create" && $id == 3) {
+            if (isset($_POST['submit'])) {
+                if ($_POST['submit'] == "timetable") {
 
-            if ($_POST['submit'] == "timetable") {
-                // show($_POST);
-                // header("location : http://localhost/NILIS-MIS/public/sar/examination");
-                // header('Location: sar/examination');
+                    $subCount = count($_POST['subName']);
+
+                    for ($x = 0; $x < $subCount; $x++) {
+                        $timeTableRow['subjectCode'] = strval($x + 1);
+                        $timeTableRow['subjectName'] = $_POST['subName'][$x];
+                        $timeTableRow['date'] = $_POST['examDate'][$x];
+                        $timeTableRow['time'] = $_POST['examTime'][$x];
+                        $timeTableRow['degreeID'] = '01';
+                        $timeTableRow['semester'] = 01;
+
+                        if ($examtimetable->examTimetableValidate($timeTableRow)) {
+                            $examtimetable->insert($timeTableRow);
+                            redirect('sar/examination');
+                        } else {
+                        }
+                    }
+                }
             }
-
-            $this->view('sar-interfaces/sar-createexam-normal-3');
+            $data['errors'] = $examtimetable->errors;
+            $this->view('sar-interfaces/sar-createexam-normal-3', $data);
         } else {
             $this->view('sar-interfaces/sar-examination', $data);
         }

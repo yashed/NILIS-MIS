@@ -18,12 +18,13 @@ function set_value($key)
     return '';
 }
 
-function re($link)
+function redirect($link)
 {
-    header("location : " . ROOT . $link);
+    header("Location: " . ROOT . "" . $link);
     show($_POST);
     die;
 }
+
 
 //using this function we can pass msg to frontend using SESSION
 function message($msg = '', $type = 'success', $erase = false)

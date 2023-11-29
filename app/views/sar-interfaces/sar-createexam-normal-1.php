@@ -19,6 +19,8 @@ $data['role'] = $role;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>exam-create</title>
 </head>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
@@ -334,7 +336,7 @@ $data['role'] = $role;
         cursor: pointer;
         color: #17376E;
         font-weight: 500;
-        background-color: none;
+        background: none;
     }
 </style>
 
@@ -348,7 +350,7 @@ $data['role'] = $role;
                 <div class="exam-create-steps">
                     <div class="progress">
                         <lable class="form-subname">Select Students add to the examination</lable>
-                        <lable class="form-subname">Step 1 of 2</lable>
+                        <lable class="form-subname">Step 1 of 3</lable>
                     </div>
                     <div class="progress-bar">
                         <div class="progress-bar-active"></div>
@@ -462,8 +464,10 @@ $data['role'] = $role;
                                     onClick="location.href='<?= ROOT ?>sar/examination'">Cancel</button>
                             </div>
                             <div class="next-button">
-                                <button class="btn-primary" type="submit" name="submit" value='next1'
-                                    id='submit'>Next</button>
+                                <div class="next-button">
+                                    <button class="btn-primary" type="button" onclick="sendSelectedRows()">Next</button>
+                                </div>
+
                             </div>
                         </div>
                     </form>
@@ -521,7 +525,46 @@ $data['role'] = $role;
                 event.preventDefault();
                 location.href = '<?= ROOT ?>sar/examination/create/2';
             }
+
+
+            var endpointUrl = '<?= ROOT ?>sar/examination/create/1';
+            function sendSelectedRows() {
+                var selectedRows = [];
+
+                // Iterate through each checkbox in the table
+                $('input[name="item[]"]:checked').each(function () {
+                    var row = $(this).closest('tr'); // Get the parent row
+                    var rowData = {
+                        name: row.find('td:nth-child(2)').text(),
+                        attempt: row.find('td:nth-child(3)').text(),
+                        indexNumber: row.find('td:nth-child(4)').text(),
+                        registrationNumber: row.find('td:nth-child(5)').text(),
+                        mail: row.find('td:nth-child(6)').text()
+                        // Add more properties as needed
+                    };
+                    console.log(rowData);
+                    selectedRows.push(rowData);
+                });
+
+                // Send the selected rows to the backend using an AJAX POST request
+                $.ajax({
+                    type: 'POST',
+                    url: endpointUrl, // Replace with your actual backend endpoint
+                    data: JSON.stringify(selectedRows),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        // Handle success response from the backend
+                        console.log(response);
+                        // Optionally, you can redirect or perform other actions here
+                    },
+                    error: function (error) {
+                        // Handle error response from the backend
+                        console.error(error);
+                    }
+                });
+            }
         </script>
+
 
         <script>
             function updateCheckboxValues() {

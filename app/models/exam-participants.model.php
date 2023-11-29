@@ -13,5 +13,13 @@ class Degree extends Model
 
     public function exam_validation()
     {
+        $this->errors = [];
+
+        $now = new DateTime();
+
+        if (empty($data['fname'])) {
+            $this->errors['fname'] = 'A first name is required';
+
+        }
     }
 }

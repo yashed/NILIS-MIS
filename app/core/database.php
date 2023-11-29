@@ -59,19 +59,18 @@ class Database
         ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
         ";
 
+        //remove SubjectID and GradeID
         $this->query($query);
         //Degree Table
         $query = "
     CREATE TABLE IF NOT EXISTS `degree` (
-        `DegreeID` varchar(20) NOT NULL,
+        `DegreeID` int(11) NOT NULL AUTO_INCREMENT,
         `DegreeType` varchar(50) NOT NULL,
+        `DegreeShortName` varchar(50) NOT NULL,
         `DegreeName` text NOT NULL,
-        `Duration` int(20) DEFAULT NULL,
+        `Duration` int(20) NULL,
         `AcademicYear` int(20) NOT NULL,
-        `SubjectID` int(20) NOT NULL,
-        `GradeID` int(20) NOT NULL,
         PRIMARY KEY (`DegreeID`),
-        UNIQUE KEY `SubjectID` (`SubjectID`,`GradeID`),
         UNIQUE KEY `DegreeID` (`DegreeID`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
     ";
@@ -80,14 +79,14 @@ class Database
         //Subject Table
         $query = "
         CREATE TABLE IF NOT EXISTS `subject` (
-            `SubjectID` varchar(50) NOT NULL,
-            `SubjectCode` varchar(50) DEFAULT NULL,
+            `SubjectID` int(11) NOT NULL AUTO_INCREMENT,
+            `SubjectCode` varchar(50) NOT NULL,
             `SubjectName` text NOT NULL,
             `NoCredits` int(10) NOT NULL,
-            `DegreeID` varchar(20) NOT NULL,
+            `DegreeID` int(11) NOT NULL,
             FOREIGN KEY (DegreeID) REFERENCES degree(DegreeID),
             PRIMARY KEY (`SubjectID`),
-            UNIQUE KEY `SubjectCode` (`SubjectCode`,`SubjectName`) USING HASH
+            UNIQUE KEY `SubjectCode` (`SubjectCode`) 
            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
         ";
 
@@ -96,7 +95,7 @@ class Database
         //Grading Values Table
         $query = "
         CREATE TABLE IF NOT EXISTS `grading values` (
-            `GradeID` int(10) NOT NULL,
+            `GradeID` int(11) NOT NULL AUTO_INCREMENT,
             `Grade` varchar(5) NOT NULL,
             `Max Marks` int(10) NOT NULL,
             `Min Marks` int(10) NOT NULL,
@@ -111,7 +110,7 @@ class Database
         $query = "
       CREATE TABLE IF NOT EXISTS `degree_timetable` (
     `EventID` INT NOT NULL AUTO_INCREMENT,
-    `DegreeID` VARCHAR(20) NOT NULL,
+    `DegreeID` int(11) NOT NULL,
     `EventName` VARCHAR(50) NOT NULL,
     `EventType` VARCHAR(50) NOT NULL,
     `StartingDate` DATE NOT NULL,
@@ -147,7 +146,7 @@ class Database
         //exam participation table
         $query = "
     CREATE TABLE IF NOT EXISTS exam_participants(
-        degreeID varchar(20) NOT NULL,
+        degreeID int(11) NOT NULL,
         semester int(10) NOT NULL,
         indexNo varchar(40) NOT NULL,
         regNo varchar(40) NOT NULL,
@@ -164,19 +163,18 @@ class Database
 
 
         $query = "
-        CREATE TABLE IF NOT EXISTS medical_students(
-            degreeID varchar(20) NOT NULL,
+        CREATE TABLE IF NOT EXISTS medical_students (
+            degreeID int(11) NOT NULL,
             semester int(10) NOT NULL,
             indexNo varchar(40) NOT NULL,
             subjectCode varchar(50) NOT NULL,
             attempt int(10) NOT NULL,
             status boolean NOT NULL DEFAULT 0,
             FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
-            FOREIGN KEY (indexNo) REFERENCES student(indexNo),
-            FOREIGN KEY (subjectCode) REFERENCES subject(SubjectID),
-            primary key (degreeID, semester, indexNo, subjectCode)
-
-        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
+    FOREIGN KEY (indexNo) REFERENCES student(indexNo),
+    FOREIGN KEY (subjectCode) REFERENCES subject(SubjectCode),
+    PRIMARY KEY (degreeID, semester, indexNo, subjectCode)
+        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
     
    ";
 
@@ -184,7 +182,7 @@ class Database
 
         $query = "
      CREATE TABLE IF NOT EXISTS repeat_students(
-        degreeID varchar(20) NOT NULL,
+        degreeID int(11) NOT NULL,
         semester int(10) NOT NULL,
         indexNo varchar(40) NOT NULL,
         subjectCode varchar(50) NOT NULL,
@@ -192,7 +190,7 @@ class Database
         paymentStatus boolean NOT NULL DEFAULT 0,
         FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
         FOREIGN KEY (indexNo) REFERENCES student(indexNo),
-        FOREIGN KEY (subjectCode) REFERENCES subject(SubjectID),
+        FOREIGN KEY (subjectCode) REFERENCES subject(SubjectCode),
         primary key (degreeID, semester, indexNo, subjectCode)
      ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
      ";
@@ -205,10 +203,10 @@ class Database
     subjectName varchar(50) NOT NULL,
     date date NOT NULL,
     time time NOT NULL,
-    degreeID varchar(20) NOT NULL,
+    degreeID int(11) NOT NULL,
     semester int(10) NOT NULL,
     FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
-    FOREIGN KEY (subjectCode) REFERENCES subject(SubjectID),
+    FOREIGN KEY (subjectCode) REFERENCES subject(SubjectCode),
     primary key (subjectCode, degreeID, semester)
  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
  ";

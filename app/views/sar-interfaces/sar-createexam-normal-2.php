@@ -441,7 +441,7 @@ $data['role'] = $role;
                     <div class="exam-buttons">
 
                         <div class="cancel-button">
-                            <button class="btn-secondary" type="submit"
+                            <button class="btn-secondary" type="button"
                                 onClick="location.href='<?= ROOT ?>sar/examination/create/1'">Back</button>
                         </div>
                         <div class="next-button">
@@ -450,10 +450,7 @@ $data['role'] = $role;
                         </div>
                     </div>
                 </div>
-
-
             </div>
-
         </div>
 
         <div class="exam-create-footer">

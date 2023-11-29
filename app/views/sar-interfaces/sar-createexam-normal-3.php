@@ -388,6 +388,14 @@ $data['role'] = $role;
         text-align: center;
 
     }
+
+    .error {
+        font-family: "Poppins";
+        font-size: 14px;
+        color: #FF0000;
+        font-weight: 300;
+        text-align: left;
+    }
 </style>
 
 <body>
@@ -478,14 +486,28 @@ $data['role'] = $role;
                                     </td>
                                 </tr>
                             </table>
+                            <div>
+                                <?php if (!empty($errors['date'])): ?>
+                                    <div class="error">
+                                        <?= $errors['date'] ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <div>
+                                <?php if (!empty($errors['subjectName'])): ?>
+                                    <div class="error">
+                                        <?= $errors['subjectName'] ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="exam-buttons">
-
                     <div class="cancel-button">
-                        <button class="btn-secondary" type="submit"
-                            onClick="location.href='<?= ROOT ?>sar/examination'">Cancel</button>
+                        <button class="btn-secondary" type="button"
+                            onclick="window.location.href='<?= ROOT ?>sar/examination/create/2'">Back</button>
+
                     </div>
                     <div class="next-button">
                         <button class="btn-primary" type="submit" value='timetable' name='submit'>Submit</button>
