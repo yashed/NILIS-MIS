@@ -43,21 +43,60 @@ class SAR extends Controller
     }
     public function examination($method = null, $id = null)
     {
+
         $degree = new Degree();
+        $student = new StudentModel();
+        $examParticipants = new ExamParticipants();
         $data['errors'] = [];
+        $selectedStudents = [];
 
         $examtimetable = new ExamTimeTable();
         $data['degrees'] = $degree->findAll();
 
         if ($method == "create" && $id == 1) {
+            $data['students'] = $student->findAll();
             if (isset($_POST['submit'])) {
                 if ($_POST['submit'] == "next1") {
 
-                    show($_POST);
-                    redirect('sar/examination/create/2');
+                    //remove session data about checked students
+                    unset($_SESSION['checked_students']);
+
+                    $selectedIds = $_POST['item'];
+                    $selectedStudents = [];
+
+                    //reset the selected student array if it is not empty
+                    if (!empty($selectedStudents)) {
+                        reset($selectedStudents);
+                    }
+                    //Select only selected student's data
+                    foreach ($data['students'] as $student) {
+                        if (in_array($student->id, $selectedIds)) {
+                            $selectedStudents[] = $student;
+
+                            //add checked students id to session
+                            $_SESSION['checked_students'][$student->id] = true;
+                        }
+                    }
+                    show($selectedStudents);
+
+
+                    foreach ($selectedStudents as $student) {
+                        $student->degreeID = 1;
+                        $student->semester = 1;
+                        $student->attempt = 1;
+                        $student->studentType = 'initial';
+
+                        //add data to exam participants table
+                        if ($examParticipants->examParticipantValidation($student)) {
+                            // $examParticipants->insert($student);
+                        } else {
+                            $data['errors'] = $examParticipants->errors;
+                        }
+
+                    }
                 }
             }
-            $this->view('sar-interfaces/sar-createexam-normal-1');
+            $this->view('sar-interfaces/sar-createexam-normal-1', $data);
         } else if ($method == "create" && $id == 2) {
 
             $this->view('sar-interfaces/sar-createexam-normal-2');
@@ -89,6 +128,7 @@ class SAR extends Controller
             $this->view('sar-interfaces/sar-examination', $data);
         }
     }
+
 
     public function participants()
     {

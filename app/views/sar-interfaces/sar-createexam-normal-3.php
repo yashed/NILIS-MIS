@@ -427,7 +427,6 @@ $data['role'] = $role;
                                     <th>
                                         Time
                                     </th>
-
                                 </tr>
                                 <tr>
                                     <td>

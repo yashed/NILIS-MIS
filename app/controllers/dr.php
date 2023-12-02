@@ -51,7 +51,6 @@ class DR extends Controller
 
     public function newDegree()
     {
-
         //Create CSV file to getstudent data
         $degree = new Degree();
         $rowData = ['Full-Name', 'Email', 'Country', 'NIC-No', 'Date-Of-Birth', 'Fax', 'Address', 'Phone-No'];

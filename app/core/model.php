@@ -13,7 +13,12 @@ class Model extends Database
     public function insert($data)
     {
 
+        // Convert object to array if $data is an object
+        if (is_object($data)) {
+            $data = (array) $data;
+        }
 
+        show($data);
         //remove unwanted column 
         //this is not a serious error , the code is working with this
         //secho "No error";

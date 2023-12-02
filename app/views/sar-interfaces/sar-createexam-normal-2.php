@@ -227,7 +227,7 @@ $data['role'] = $role;
     }
 
     .progress-bar-active {
-        width: 33%;
+        width: 0.6%;
         height: 10px;
         background-color: #17376E;
         border-radius: 10px;
@@ -253,6 +253,12 @@ $data['role'] = $role;
         font-family: Poppins, sans-serif;
         border: 1px solid #ddd;
         padding: 8px;
+        font-size: 14px;
+        font-weight: 600px;
+    }
+
+    .table td {
+        font-weight: 500px;
     }
 
     table.table tbody tr.selected {
@@ -319,8 +325,16 @@ $data['role'] = $role;
 
     .btn-secondary:hover {
         color: black;
-        background-color: #E0E0E0;
-        border: 1px solid #17376e;
+        background-color: #F9D2D2;
+        border: 1px solid red;
+    }
+
+    input {
+        border: none;
+        cursor: pointer;
+        color: #17376E;
+        font-weight: 500;
+        background: none;
     }
 </style>
 
@@ -439,7 +453,6 @@ $data['role'] = $role;
 
                     </div>
                     <div class="exam-buttons">
-
                         <div class="cancel-button">
                             <button class="btn-secondary" type="button"
                                 onClick="location.href='<?= ROOT ?>sar/examination/create/1'">Back</button>
@@ -485,7 +498,7 @@ $data['role'] = $role;
                                 .find("tbody :checkbox").length
                         );
                 });
-            });
+    });
         </script>
 </body>
 
