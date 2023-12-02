@@ -135,10 +135,11 @@ class SAR extends Controller
 
                         if ($examtimetable->examTimetableValidate($timeTableRow)) {
                             $examtimetable->insert($timeTableRow);
-                            redirect('sar/examination');
+
                         } else {
                         }
                     }
+                    redirect('sar/examination');
                 }
             }
             $data['errors'] = $examtimetable->errors;

@@ -25,7 +25,7 @@ class ExamTimeTable extends Model
         $now = new DateTime();
 
         if ($data['date'] < $now) {
-            if (empty($errors['date'])) {
+            if (empty($this->errors['date'])) {
                 $this->errors['date'] = '* Invalid Date ';
             }
         }
