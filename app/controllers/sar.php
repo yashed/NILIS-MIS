@@ -64,6 +64,7 @@ class SAR extends Controller
 
         if ($method == "create" && $id == 1) {
             if (isset($_POST['submit'])) {
+                // show($_POST);
                 if ($_POST['submit'] == "next1") {
 
                     //remove session data about checked students
@@ -76,18 +77,24 @@ class SAR extends Controller
                     if (!empty($selectedStudents)) {
                         reset($selectedStudents);
                     }
+
+
                     //Select only selected student's data
-                    foreach ($data['students'] as $student) {
-                        if (in_array($student->id, $selectedIds)) {
-                            $selectedStudents[] = $student;
+                    if (empty($selectedIds)) {
+                        redirect('sar/examination/create/2');
+                    } else {
+                        foreach ($data['students'] as $student) {
+                            if (in_array($student->id, $selectedIds)) {
+                                $selectedStudents[] = $student;
 
-                            //add checked students id to session
-                            $_SESSION['checked_students'][$student->id] = true;
+                                //add checked students id to session
+                                $_SESSION['checked_students'][$student->id] = true;
+
+                            }
                         }
+                        show($selectedStudents);
+
                     }
-                    show($selectedStudents);
-
-
                     foreach ($selectedStudents as $student) {
                         $student->degreeID = 1;
                         $student->semester = 1;
@@ -97,6 +104,7 @@ class SAR extends Controller
                         //add data to exam participants table
                         if ($examParticipants->examParticipantValidation($student)) {
                             // $examParticipants->insert($student);
+                            redirect('sar/examination/create/2');
                         } else {
                             $data['errors'] = $examParticipants->errors;
                         }
@@ -114,7 +122,7 @@ class SAR extends Controller
             // show($data['repeatStudents']);
             if (isset($_POST['submit'])) {
                 if ($_POST['submit'] == 'next2') {
-                    show($_POST);
+                    // show($_POST);
                 }
             }
 
