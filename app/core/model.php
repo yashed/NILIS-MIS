@@ -10,9 +10,15 @@ class Model extends Database
     protected $primaryKey = "";
     protected $allowedColumns = [];
 
-    public function insert($data){
-      
-        
+    public function insert($data)
+    {
+
+        // Convert object to array if $data is an object
+        if (is_object($data)) {
+            $data = (array) $data;
+        }
+
+        show($data);
         //remove unwanted column 
         //this is not a serious error , the code is working with this
         //secho "No error";
@@ -34,11 +40,11 @@ class Model extends Database
 
         //add column names and values to the query (impolad function devide data by given character in array)
         $query .= "(" . implode(",", $keys) . ") values (:" . implode(",:", $keys) . ")";
+        show($query);
 
-        // $db = new Database();
+        //call query function to execute the query
         $this->query($query, $data);
 
-        //  echo "query = " . $query;
         return true;
     }
 
@@ -58,29 +64,35 @@ class Model extends Database
         return false;
     }
 
+    public function setid($id)
+    {
 
+        $query = 'set @id =' . $id . ';' . 'UPDATE ' . $this->table . ' SET id = (@id := @id + 1);';
+        $this->query($query);
+
+    }
 
     /* public function insert($data)
-	{
-		//remove unwanted columns
-		if(!empty($this->allowedColumns))
-		{
-			foreach ($data as $key => $value) {
-				if(!in_array($key, $this->allowedColumns))
-				{
-					unset($data[$key]);
-				}
-			}
-		}
+    {
+        //remove unwanted columns
+        if(!empty($this->allowedColumns))
+        {
+            foreach ($data as $key => $value) {
+                if(!in_array($key, $this->allowedColumns))
+                {
+                    unset($data[$key]);
+                }
+            }
+        }
 
-		$keys = array_keys($data);
+        $keys = array_keys($data);
 
-		$query = "insert into " . $this->table;
-		$query .= " (".implode(",", $keys) .") values (:".implode(",:", $keys) .")";
+        $query = "insert into " . $this->table;
+        $query .= " (".implode(",", $keys) .") values (:".implode(",:", $keys) .")";
 
-		$this->query($query,$data);
+        $this->query($query,$data);
 
-	} */
+    } */
 
     public function update($id, $data)
     {
@@ -122,43 +134,42 @@ class Model extends Database
     }
 
     /* public function findAll($order = 'desc')
-	{
+    {
 
-		$query = "select * from ".$this->table;
+        $query = "select * from ".$this->table;
  
-		$res = $this->query($query);
+        $res = $this->query($query);
 
-		if(is_array($res))
-		{
-			return $res;
-		}
+        if(is_array($res))
+        {
+            return $res;
+        }
 
-		return false;
+        return false;
 
-	} */
+    } */
 
-     public function where2($data)
-	{
+    public function where2($data)
+    {
 
-		$keys = array_keys($data);
+        $keys = array_keys($data);
 
-		$query = "select * from ".$this->table." where ";
+        $query = "select * from " . $this->table . " where ";
 
-		foreach ($keys as $key) {
-			$query .= $key . "=:" . $key . " && ";
-		}
- 
- 		$query = trim($query,"&& ");
-		$res = $this->query($query,$data);
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . " && ";
+        }
 
-		if(is_array($res))
-		{
-			return $res;
-		}
+        $query = trim($query, "&& ");
+        $res = $this->query($query, $data);
 
-		return false;
+        if (is_array($res)) {
+            return $res;
+        }
 
-	} 
+        return false;
+
+    }
 
     public function first($data, $order = 'desc')
     {
@@ -215,31 +226,31 @@ class Model extends Database
     {
 
         $keys = array_keys($data);
-        
-        $query = "select * from " .$this->table. " where ";
-        
-        foreach($keys as $key){
+
+        $query = "select * from " . $this->table . " where ";
+
+        foreach ($keys as $key) {
 
             $query .= $key . "=:" . $key . " && ";
         }
 
         //trim lasf && and space if there exists
-        $query = trim($query,'&& '); 
-       
-        //define query to add user data
-        $res = $this->query($query,$data);
-        
-       if(is_array($res))
-       {
-        return $res;
-       }
+        $query = trim($query, '&& ');
 
-       return false;
+        //define query to add user data
+        $res = $this->query($query, $data);
+
+        if (is_array($res)) {
+            return $res;
+        }
+
+        return false;
     }
 
     public function delete2($data)
     {
-        if ($data['submit']) unset($data['submit']);
+        if ($data['submit'])
+            unset($data['submit']);
         $keys = array_keys($data);
 
         $query = "delete from " . $this->table . " where ";
@@ -255,7 +266,7 @@ class Model extends Database
     }
 
     /*    public function update($id,$data)
-	{
+    {
 
         //remove unwanted fields
         if(!empty($this->allowedColumns)){
@@ -300,4 +311,4 @@ class Model extends Database
 
 
 
- }
+}

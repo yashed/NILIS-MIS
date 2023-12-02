@@ -179,7 +179,7 @@ $data['role'] = $role;
 
     .sar-dash-subsection-1-1-1-5 {
         background-color: var(--text-color);
-        padding: 10px 10px 30px 35px;
+        padding: 10px 10px 10px 10px;
         border-radius: 6px;
         margin: 4px 4px 4px 4px;
         width: 50%
@@ -421,7 +421,7 @@ $data['role'] = $role;
     }
 
     .upcomming-exam-card {
-        width: 50vh;
+        width: 40vh;
         height: 15vh;
         border-radius: 10px;
         border: 2px solid rgba(23, 55, 110, 0.10);

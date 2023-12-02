@@ -246,7 +246,8 @@
                 </div>
 
                 <div class="login-btn">
-                    <button class="btn-primary" type="submit" onClick="location.href='#'">Login</button>
+                    <button class="btn-primary" type="submit"
+                        onClick="location.href='<?= ROOT ?>admission/card'">Login</button>
                 </div>
             </article>
         </div>
