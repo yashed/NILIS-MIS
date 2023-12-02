@@ -162,6 +162,7 @@ class Database
 
         $query = "
         CREATE TABLE IF NOT EXISTS medical_students (
+            id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
             degreeID int(11) NOT NULL,
             semester int(10) NOT NULL,
             indexNo varchar(40) NOT NULL,
@@ -169,9 +170,8 @@ class Database
             attempt int(10) NOT NULL,
             status boolean NOT NULL DEFAULT 0,
             FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
-    FOREIGN KEY (indexNo) REFERENCES student(indexNo),
-    FOREIGN KEY (subjectCode) REFERENCES subject(SubjectCode),
-    PRIMARY KEY (degreeID, semester, indexNo, subjectCode)
+           FOREIGN KEY (indexNo) REFERENCES student(indexNo),
+           FOREIGN KEY (subjectCode) REFERENCES subject(SubjectCode),
         ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
     
    ";
@@ -180,6 +180,7 @@ class Database
 
         $query = "
      CREATE TABLE IF NOT EXISTS repeat_students(
+        id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
         degreeID int(11) NOT NULL,
         semester int(10) NOT NULL,
         indexNo varchar(40) NOT NULL,
@@ -189,7 +190,6 @@ class Database
         FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
         FOREIGN KEY (indexNo) REFERENCES student(indexNo),
         FOREIGN KEY (subjectCode) REFERENCES subject(SubjectCode),
-        primary key (degreeID, semester, indexNo, subjectCode)
      ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
      ";
         $this->query($query);

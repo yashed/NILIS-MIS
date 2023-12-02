@@ -64,7 +64,13 @@ class Model extends Database
         return false;
     }
 
+    public function setid($id)
+    {
 
+        $query = 'set @id =' . $id . ';' . 'UPDATE ' . $this->table . ' SET id = (@id := @id + 1);';
+        $this->query($query);
+
+    }
 
     /* public function insert($data)
     {

@@ -227,7 +227,7 @@ $data['role'] = $role;
     }
 
     .progress-bar-active {
-        width: 0.6%;
+        width: 33%;
         height: 10px;
         background-color: #17376E;
         border-radius: 10px;
@@ -335,6 +335,13 @@ $data['role'] = $role;
         color: #17376E;
         font-weight: 500;
         background: none;
+        width: 100%;
+        border: none;
+    }
+
+    input:focus {
+        background-color: none;
+        border: none;
     }
 </style>
 
@@ -357,7 +364,7 @@ $data['role'] = $role;
                     <div class="progress-bar">
                         <div class="progress-bar-active"></div>
                     </div>
-
+                    <form method="post" id='repeat-medical-studnet-select'>
                     <div class="degree-student-table">
 
                         <table class="table">
@@ -367,101 +374,66 @@ $data['role'] = $role;
                                         <input type="checkbox" class="checkAll" name="checkAll" />
                                     </th>
                                     <th>Name</th>
-                                    <th>Attempt</th>
                                     <th>Index Number</th>
                                     <th>Registration Number</th>
-                                    <th>Mail</th>
+                                    <th>Attempt</th>
+                                    <th>Subject Code</th>
+                                    <th>Student Type</th>
+                                    <th>Status</th>
                                 </tr>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><input type="checkbox" name="item[]" value="1"></td>
-                                    <td>H.A.Yashed Thisra</td>
-                                    <td>01</td>
-                                    <td>SCS001</td>
-                                    <td>DSL001</td>
-                                    <td>2021/DSL/001</td>
-                                    <td>yash@gmail.com</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name="item[]" value="1"></td>
-                                    <td>H.A.Yashed Thisra</td>
-                                    <td>01</td>
-                                    <td>SCS001</td>
-                                    <td>DSL001</td>
-                                    <td>2021/DSL/001</td>
-                                    <td>yash@gmail.com</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name="item[]" value="1"></td>
-                                    <td>H.A.Yashed Thisra</td>
-                                    <td>01</td>
-                                    <td>SCS001</td>
-                                    <td>DSL001</td>
-                                    <td>2021/DSL/001</td>
-                                    <td>yash@gmail.com</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name="item[]" value="1"></td>
-                                    <td>H.A.Yashed Thisra</td>
-                                    <td>01</td>
-                                    <td>SCS001</td>
-                                    <td>DSL001</td>
-                                    <td>2021/DSL/001</td>
-                                    <td>yash@gmail.com</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name="item[]" value="1"></td>
-                                    <td>H.A.Yashed Thisra</td>
-                                    <td>01</td>
-                                    <td>SCS001</td>
-                                    <td>DSL001</td>
-                                    <td>2021/DSL/001</td>
-                                    <td>yash@gmail.com</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name="item[]" value="1"></td>
-                                    <td>H.A.Yashed Thisra</td>
-                                    <td>01</td>
-                                    <td>SCS001</td>
-                                    <td>DSL001</td>
-                                    <td>2021/DSL/001</td>
-                                    <td>yash@gmail.com</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name="item[]" value="1"></td>
-                                    <td>H.A.Yashed Thisra</td>
-                                    <td>01</td>
-                                    <td>SCS001</td>
-                                    <td>DSL001</td>
-                                    <td>2021/DSL/001</td>
-                                    <td>yash@gmail.com</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name="item[]" value="1"></td>
-                                    <td>H.A.Yashed Thisra</td>
-                                    <td>01</td>
-                                    <td>SCS001</td>
-                                    <td>DSL001</td>
-                                    <td>2021/DSL/001</td>
-                                    <td>yash@gmail.com</td>
-                                </tr>
+                                <?php foreach ($repeatStudents as $rStudent): ?>
+                                    <?php $json = json_encode($rStudent); ?>
+                                    <tr>
+                                        <td><input type="checkbox" name="item[]" value="<?= $rStudent->id ?>"></td>
+                                        <td><input type="text" name="name[]" value=" H.A.Yashed Thisra" readonly></td>
+                                        <td><input type="text" name="indexNo[]" value=" <?= $rStudent->indexNo ?>" readonly>
+                                        </td>
+                                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
+                                        <td><input type="text" name="attempt[]" value="  <?= $rStudent->attempt ?>"
+                                                readonly>
+                                        </td>
+                                        <td><input type="text" name="subjectCode[]" value=" <?= $rStudent->subjectCode ?>"
+                                                readonly>
+                                            </td>
+                                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
+                                        <td><input type="text" name="status[]" value="Approved" readonly></td>
+                                    </tr>
+                                <?php endforeach; ?>
 
+
+                                <?php foreach ($medicalStudents as $mStudent): ?>
+                                    <?php $json = json_encode($mStudent); ?>
+                                    <tr>
+                                        <td><input type="checkbox" name="item[]" value="<?= $mStudent->id ?>"></td>
+                                        <td><input type="text" name="name[]" value=" H.A.Yashed Thisra" readonly></td>
+                                        <td><input type="text" name="indexNo[]" value=" <?= $mStudent->indexNo ?>" readonly>
+                                        </td>
+                                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
+                                        <td><input type="text" name="attempt[]" value="  <?= $mStudent->attempt ?>"
+                                                readonly>
+                                        </td>
+                                        <td><input type="text" name="subjectCode[]" value=" <?= $mStudent->subjectCode ?>"
+                                                readonly></td>
+                                        <td><input type="text" name="studentType[]" value="Medical" readonly></td>
+                                        <td><input type="text" name="status[]" value="Approved" readonly></td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
-
                     </div>
-                    <div class="exam-buttons">
+                    <div class=" exam-buttons">
                         <div class="cancel-button">
                             <button class="btn-secondary" type="button"
                                 onClick="location.href='<?= ROOT ?>sar/examination/create/1'">Back</button>
                         </div>
                         <div class="next-button">
-                            <button class="btn-primary" type="submit"
-                                onClick="location.href='<?= ROOT ?>sar/examination/create/3'">Next</button>
+                            <button class="btn-primary" type="submit" name='submit' value='next2'>Next</button>
                         </div>
                     </div>
+                </form>
                 </div>
             </div>
         </div>
@@ -498,7 +470,7 @@ $data['role'] = $role;
                                 .find("tbody :checkbox").length
                         );
                 });
-    });
+            });
         </script>
 </body>
 

@@ -47,14 +47,22 @@ class SAR extends Controller
         $degree = new Degree();
         $student = new StudentModel();
         $examParticipants = new ExamParticipants();
+        $medicalStudents = new MedicalStudents();
+        $repeatStudents = new RepeatStudents();
+        $examtimetable = new ExamTimeTable();
+
         $data['errors'] = [];
         $selectedStudents = [];
 
-        $examtimetable = new ExamTimeTable();
         $data['degrees'] = $degree->findAll();
+        $data['students'] = $student->findAll();
+
+        //need complete filtering part of repeat and medical students data
+        $data['medicalStudents'] = $medicalStudents->findAll();
+        $repeatStudents->setid(10000);
+        $data['repeatStudents'] = $repeatStudents->findAll();
 
         if ($method == "create" && $id == 1) {
-            $data['students'] = $student->findAll();
             if (isset($_POST['submit'])) {
                 if ($_POST['submit'] == "next1") {
 
@@ -99,7 +107,18 @@ class SAR extends Controller
             $this->view('sar-interfaces/sar-createexam-normal-1', $data);
         } else if ($method == "create" && $id == 2) {
 
-            $this->view('sar-interfaces/sar-createexam-normal-2');
+            //need complete filtering part of repeat and medical students data
+
+
+            // show($data['medicalStudents']);
+            // show($data['repeatStudents']);
+            if (isset($_POST['submit'])) {
+                if ($_POST['submit'] == 'next2') {
+                    show($_POST);
+                }
+            }
+
+            $this->view('sar-interfaces/sar-createexam-normal-2', $data);
         } else if ($method == "create" && $id == 3) {
             if (isset($_POST['submit'])) {
                 if ($_POST['submit'] == "timetable") {
