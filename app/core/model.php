@@ -171,6 +171,33 @@ class Model extends Database
 
     }
 
+
+    public function join($tables, $columns, $conditions, $order = null, $limit = null)
+    {
+        // Build the query
+        $query = "SELECT " . implode(", ", $columns) . " FROM " . $this->table;
+
+        foreach ($tables as $table) {
+            $query .= " JOIN $table";
+        }
+
+        // Add conditions
+        if (!empty($conditions)) {
+            $query .= " ON " . implode(" AND ", $conditions);
+        }
+
+        // Add order and limit clauses if provided
+        if ($order) {
+            $query .= " ORDER BY $order";
+        }
+
+        if ($limit) {
+            $query .= " LIMIT $limit";
+        }
+        // Execute the query
+        return $this->query($query);
+    }
+
     public function first($data, $order = 'desc')
     {
 
@@ -228,7 +255,6 @@ class Model extends Database
         $keys = array_keys($data);
 
         $query = "select * from " . $this->table . " where ";
-
         foreach ($keys as $key) {
 
             $query .= $key . "=:" . $key . " && ";
@@ -239,7 +265,6 @@ class Model extends Database
 
         //define query to add user data
         $res = $this->query($query, $data);
-
         if (is_array($res)) {
             return $res;
         }

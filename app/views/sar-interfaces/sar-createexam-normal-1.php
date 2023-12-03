@@ -379,7 +379,7 @@ $data['role'] = $role;
                                         <tr>
                                             <td><input type="checkbox" name="item[]" value=" <?= $student->id ?>"
                                                     class="itemCheckbox" onclick="updateCheckboxValues()"
-                                                    <?= isset($_SESSION['checked_students'][$student->id]) ? 'checked' : '' ?>></td>
+                                                    <?= isset($_SESSION['checked_normal_students'][$student->id]) ? 'checked' : '' ?>></td>
                                             <td><input type="text" name="name[]" value=" <?= $student->name ?>" readonly>
                                             </td>
                                             <td><input type="text" name="attempt[]" value="01" readonly></td>
