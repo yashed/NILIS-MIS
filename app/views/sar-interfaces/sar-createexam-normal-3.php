@@ -402,7 +402,7 @@ $data['role'] = $role;
     <div class="exam-create-home">
         <div class="exam-create-title">Create Examination</div>
         <div class="exam-create-subsection-1">
-            <form method="post" id="exam-timetable" name='exam-timetable'>
+            <form method="post" id="exam-timetable" name='exam-timetable' onsubmit="return validateForm();">
                 <div class="exam-create-sub-title">
                     Add Participant
 
@@ -428,7 +428,26 @@ $data['role'] = $role;
                                         Time
                                     </th>
                                 </tr>
-                                <tr>
+                                <?php foreach ($subjects as $subject): ?>
+                                    <?php $json = json_encode($subject); ?>
+
+                                    <tr>
+                                        <td>
+                                            <input type="text" name="subName[]" value="<?= $subject->SubjectName ?>"
+                                                id="input-subject" class="exam-sub-input">
+                                            <input type="text" name="subCode[]" value="<?= $subject->SubjectCode ?>"
+                                                id="input-subject" class="exam-sub-input" hidden>
+                                        </td>
+                                        <td>
+                                            <input type="date" name="examDate[]" id="input-date" class=exam-date-input>
+                                        </td>
+                                        <td>
+                                            <input type="time" name="examTime[]" class="exam-input-time">
+                                        </td>
+                                    </tr>
+
+                                <?php endforeach; ?>
+                                <!-- <tr>
                                     <td>
                                         <input type="text" name="subName[]" placeholder="Subject 01" id="input-subject"
                                             class="exam-sub-input">
@@ -469,21 +488,7 @@ $data['role'] = $role;
                                     <td>
                                         <input type="time" name="examTime[]" class="exam-input-time">
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="text" name="subName[]" placeholder="Subject 01" id="input-subject"
-                                            class="exam-sub-input">
-                                        <input type="text" name="subCode[]" value='Sub1' placeholder="Subject 01"
-                                            id="input-subject" class="exam-sub-input" hidden>
-                                    </td>
-                                    <td>
-                                        <input type="date" name="examDate[]" id="input-date" class=exam-date-input>
-                                    </td>
-                                    <td>
-                                        <input type="time" name="examTime[]" class="exam-input-time">
-                                    </td>
-                                </tr>
+                                </tr> -->
                             </table>
                             <div>
                                 <?php if (!empty($errors['date'])): ?>
@@ -519,6 +524,34 @@ $data['role'] = $role;
         </div>
     </div>
 </body>
+<script>
+    function validateForm() {
+        var subjects = document.getElementsByName("subName[]");
+        var dates = document.getElementsByName("examDate[]");
+        var times = document.getElementsByName("examTime[]");
+
+        for (var i = 0; i < subjects.length; i++) {
+            var subject = subjects[i].value.trim();
+            var date = dates[i].value.trim();
+            var time = times[i].value.trim();
+
+            if (subject === '' || date === '' || time === '') {
+                alert("All fields are required. Please fill in all fields.");
+                return false;
+            }
+
+            var currentDate = new Date();
+            var inputDate = new Date(date + ' ' + time);
+
+            if (inputDate <= currentDate) {
+                alert("Please enter a future date and time.");
+                return false;
+            }
+        }
+
+        return true;
+    }
+</script>
 
 
 </html>

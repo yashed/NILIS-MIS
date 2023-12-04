@@ -14,7 +14,6 @@ class ExamParticipants extends Model
         'degreeID',
         'semester',
         'indexNo',
-        'Duration',
         'attempt',
         'studentType',
 
