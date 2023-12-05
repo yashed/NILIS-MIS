@@ -84,6 +84,7 @@ class Database
             `SubjectName` text NOT NULL,
             `NoCredits` int(10) NOT NULL,
             `DegreeID` int(11) NOT NULL,
+            `semester` int(10) NOT NULL,
             FOREIGN KEY (DegreeID) REFERENCES degree(DegreeID),
             PRIMARY KEY (`SubjectID`),
             UNIQUE KEY `SubjectCode` (`SubjectCode`) 

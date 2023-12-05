@@ -399,10 +399,11 @@ $data['role'] = $role;
                         <div class="exam-buttons">
 
                             <div class="cancel-button">
-                                <button class="btn-secondary"
-                                    onClick="location.href='<?= ROOT ?>sar/examination'">Cancel</button>
+                                <button class="btn-secondary" type="button" onClick="
+                                    location.href='<?= ROOT ?>sar/examination'" value='cancel'>Cancel</button>
+
                             </div>
-                            <div class="next-button">
+                            <div class=" next-button">
                                 <div class="next-button">
                                     <button class="btn-primary" type="submit" name='submit' value='next1'>Next</button>
                                 </div>
@@ -511,6 +512,8 @@ $data['role'] = $role;
                     .then(data => console.log(data))
                     .catch(error => console.error('Error:', error));
             }
+
+
         </script>
 
 

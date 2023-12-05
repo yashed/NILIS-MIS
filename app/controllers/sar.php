@@ -81,7 +81,11 @@ class SAR extends Controller
 
         if ($method == "create" && $id == 1) {
             if (isset($_POST['submit'])) {
-                // show($_POST);
+                // // show($_POST);
+                // if ($_POST['submit'] == 'cancel') {
+                //     show($_POST);
+                //     redirect('sar/examination');
+                // }
                 if ($_POST['submit'] == "next1") {
 
                     //remove session data about checked students
@@ -121,6 +125,7 @@ class SAR extends Controller
                                 $_SESSION['checked_normal_students'][$student->id] = true;
                             }
                         }
+                        $_SESSION['Selected_Normal_Students'] = $selectedNormalStudents;
                         // show($selectedNormalStudents);
                         redirect('sar/examination/create/2');
 
@@ -242,6 +247,7 @@ class SAR extends Controller
                         }
 
                         // show($selectedRMStudents);
+                        $_SESSION['Selected_RM_Students'] = $selectedRMStudents;
                         redirect('sar/examination/create/3');
 
                     }
@@ -283,11 +289,17 @@ class SAR extends Controller
                     }
 
                     if (empty($data['errors'])) {
-
+                        $selectedRMStudents = $_SESSION['Selected_RM_Students'];
+                        $selectedNormalStudents = $_SESSION['Selected_Normal_Students'];
+                        echo ("Repeat Students");
                         show($selectedRMStudents);
+                        echo ("Students");
                         show($selectedNormalStudents);
+                        echo ("Time table");
                         show($timeTableData);
 
+
+                        //need to add actucal data to add data to tables
                         foreach ($timeTableData as $timeTableRow) {
                             // $examtimetable->insert($timeTableRow);
                         }
