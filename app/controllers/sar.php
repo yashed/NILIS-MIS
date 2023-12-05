@@ -46,6 +46,7 @@ class SAR extends Controller
         //need to get these values form the session
         $degreeID = 1;
         $semester = 1;
+        // $examID = 1;
 
         $model = new Model();
         $degree = new Degree();
@@ -55,6 +56,7 @@ class SAR extends Controller
         $repeatStudents = new RepeatStudents();
         $examtimetable = new ExamTimeTable();
         $subjects = new Subjects();
+        $exam = new Exam();
 
 
         $data['errors'] = [];
@@ -75,6 +77,7 @@ class SAR extends Controller
         $processedStudentID = [];
         $processedStudentID2 = [];
         $timeTableData = [];
+        $ExamData = [];
 
         //Get currect Degree short name
         $degreeShortName = [$degree->where(['DegreeID' => $degreeID])[0]->DegreeShortName];
@@ -130,22 +133,7 @@ class SAR extends Controller
                         redirect('sar/examination/create/2');
 
                     }
-                    // foreach ($selectedStudents as $student) {
-                    //     $student->degreeID = 1;
-                    //     $student->semester = 1;
-                    //     $student->attempt = 1;
-                    //     $student->studentType = 'initial';
 
-                    //     //add data to exam participants table
-                    //     if ($examParticipants->examParticipantValidation($student)) {
-                    //         //need to handel insertion part after press final submit button
-                    //         $selectedNormalStudents = $student;
-                    //     } else {
-                    //         $data['errors'] = $examParticipants->errors;
-                    //     }
-
-                    //     redirect('sar/examination/create/2');
-                    // }
                 }
             }
             $this->view('sar-interfaces/sar-createexam-normal-1', $data);
@@ -270,6 +258,21 @@ class SAR extends Controller
             if (isset($_POST['submit'])) {
                 if ($_POST['submit'] == "timetable") {
 
+                    //exam creation
+                    $ExamData['examType'] = 'Normal';
+                    $ExamData['degreeID'] = $degreeID;
+                    $ExamData['semester'] = $semester;
+                    $ExamData['status'] = 1;
+
+                    //insert data to exam table
+                    if ($exam->examValidate($ExamData)) {
+                        $exam->insert($ExamData);
+                        $examID = $exam->lastID('examID');
+
+                    } else {
+                        $data['errors'] = $exam->errors;
+                    }
+
                     $subCount = count($_POST['subName']);
 
                     for ($x = 0; $x < $subCount; $x++) {
@@ -279,6 +282,7 @@ class SAR extends Controller
                         $timeTableRow['time'] = $_POST['examTime'][$x];
                         $timeTableRow['degreeID'] = '01';
                         $timeTableRow['semester'] = 01;
+                        $timeTableRow['examID'] = $examID;
 
                         if ($examtimetable->examTimetableValidate($timeTableRow)) {
 
@@ -301,7 +305,7 @@ class SAR extends Controller
 
                         //need to add actucal data to add data to tables
                         foreach ($timeTableData as $timeTableRow) {
-                            // $examtimetable->insert($timeTableRow);
+                            $examtimetable->insert($timeTableRow);
                         }
                         foreach ($selectedNormalStudents as $student) {
                             // $examParticipants->insert($student);

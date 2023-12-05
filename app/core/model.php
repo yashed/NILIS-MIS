@@ -221,6 +221,25 @@ class Model extends Database
         return false;
     }
 
+    //get newly added column id 
+    public function lastID($primaryKey = 'id')
+    {
+        $query = "SELECT MAX($primaryKey) AS lastID FROM " . $this->table;
+        show($query);
+        $result = $this->query($query);
+        show($result);
+        if ($result !== false) {
+            // Check if the result is an array or object
+            show($result);
+            if (is_array($result)) {
+                return $result[0]->lastID;
+            }
+        }
+
+        return null;
+    }
+
+
     // public function delete($data, $order = 'desc')
     // {
     //     // var_dump($_POST);

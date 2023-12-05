@@ -16,6 +16,7 @@ class ExamTimeTable extends Model
         'time',
         'degreeID',
         'semester',
+        'examID'
     ];
 
     public function examTimetableValidate($data)
