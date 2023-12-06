@@ -79,6 +79,10 @@ class SAR extends Controller
         $timeTableData = [];
         $ExamData = [];
 
+
+
+
+
         //Get currect Degree short name
         $degreeShortName = [$degree->where(['DegreeID' => $degreeID])[0]->DegreeShortName];
 
@@ -324,7 +328,19 @@ class SAR extends Controller
             $data['errors'] = $examtimetable->errors;
             $this->view('sar-interfaces/sar-createexam-normal-3', $data);
         } else {
-            $this->view('sar-interfaces/sar-examination', $data);
+            if ($method == 'participants') {
+
+                $participants[] = $examParticipants->where(['degreeID' => $degreeID, 'semester' => $semester]);
+                $data['participants'] = $participants;
+                $this->view('sar-interfaces/sar-examparticipants', $data);
+
+            } else if ($method == 'resultupload') {
+                $this->view('sar-interfaces/sar-examresultupload', $data);
+            } else if ($method == 'results') {
+                $this->view('sar-interfaces/sar-examresults', $data);
+            } else {
+                $this->view('sar-interfaces/sar-examination', $data);
+            }
         }
     }
 
