@@ -38,7 +38,6 @@ class Database
 
     function create_tables()
     {
-
         //user table 
         $query = "
         CREATE TABLE IF NOT EXISTS users (
@@ -153,7 +152,7 @@ class Database
             examType varchar(20) NOT NULL ,
             degreeID  INT(11) NOT NULL,
             semester INT(10) NOT NULL,
-            status boolean NOT NULL DEFAULT 1,
+            status varchar(30) NOT NULL,
             FOREIGN KEY (degreeID) references degree(DegreeID),
             PRIMARY KEY (examID)
             ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4

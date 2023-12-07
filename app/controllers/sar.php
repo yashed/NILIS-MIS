@@ -43,6 +43,14 @@ class SAR extends Controller
     }
     public function examination($method = null, $id = null)
     {
+
+        //get the degree id from the url
+        $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
+        $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
+
+        // show($degreeID);
+        // show($degreeID);
+
         //need to get these values form the session
         $degreeID = 1;
         $semester = 1;
@@ -259,6 +267,7 @@ class SAR extends Controller
         } else if ($method == "create" && $id == 3) {
 
 
+
             if (isset($_POST['submit'])) {
                 if ($_POST['submit'] == "timetable") {
 
@@ -266,7 +275,7 @@ class SAR extends Controller
                     $ExamData['examType'] = 'Normal';
                     $ExamData['degreeID'] = $degreeID;
                     $ExamData['semester'] = $semester;
-                    $ExamData['status'] = 1;
+                    $ExamData['status'] = 'ongoing';
 
                     //insert data to exam table
                     if ($exam->examValidate($ExamData)) {
@@ -328,9 +337,11 @@ class SAR extends Controller
             $data['errors'] = $examtimetable->errors;
             $this->view('sar-interfaces/sar-createexam-normal-3', $data);
         } else {
-            if ($method == 'participants') {
 
-                $participants[] = $examParticipants->where(['degreeID' => $degreeID, 'semester' => $semester]);
+            //examid must pass through the session
+            $examID = 1;
+            if ($method == 'participants') {
+                $participants[] = $examParticipants->where(['degreeID' => $degreeID, 'semester' => $semester, 'examID' => $examID]);
                 $data['participants'] = $participants;
                 $this->view('sar-interfaces/sar-examparticipants', $data);
 
