@@ -12,7 +12,6 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="<?=ROOT?>css/button.css">
         <link rel="stylesheet" href="<?=ROOT?>css/create-degree.css">
         <title>DR Dashboard</title>
     </head>
@@ -102,6 +101,34 @@
     border-style: groove;
     border-radius: 5px;
 }
+.bt-name{
+    color: #fff;
+    padding: 8px 22px;
+    border-radius: 6px;
+    background: #17376E;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.20);
+    border: 0px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.bt-name:hover{
+    background: #fff;
+    color: #17376E;
+}
+.bt-name-white{
+    background: #fff;
+    padding: 8px 22px;
+    border-radius: 6px;
+    color: #17376E;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.20);
+    border: 0px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.bt-name-white:hover{
+    color: #fff;
+    background: #17376E;
+}
     </style>
     <body>
     <div class="dr-home">
@@ -109,7 +136,7 @@
         <div class="dr-subsection-1">
             
             <div class="button-btn">
-                <button onclick="myFunction()" type="button" class="bt-name" style="text-decoration: none; float: right; margin-right: 20px;">Create Degree Program</button>
+                <button onclick="myFunction()" type="button" class="bt-name" style="float: right; margin-right: 40px;">Create Degree Program</button>
             </div>
 
             <div class="dr-sub-title">Ongoing Degree Programs</div>
@@ -138,7 +165,7 @@
         <div class="container">          
             <h3>Create New Degree Program</h3>
             <form id="Form1" method="post">
-                <div class="input-fields">
+                <div class="input-fields" style="margin: 20px 0px 10px 0px;">
 
                     <label for="Degree" class="drop-down" >Degree Type:</label><br>
                     <select name="degree type" id="degree type" style="width: 360px;" >
@@ -158,9 +185,8 @@
                 <div class="btn-box">
                     <div class="button-btn">
 
-                        <button onclick="myFunction2()" type="button" class="bt-name" style="text-decoration: none; margin-right: 25px; background-color: #fff; color: #222d76;" id="Cancel1">Cancel</button>
-
-                        <a type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next1">Continue</a>
+                        <button onclick="myFunction2()" type="button" class="bt-name-white" id="Cancel1">Cancel</button>
+                        <button  type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next1">Continue</button>
                     </div>
                 </div>
             </form>
@@ -209,9 +235,8 @@
                 </div>
                 <div class="btn-box">
                     <div class="button-btn">
-                        <a type="button" class="bt-name" style="text-decoration: none; margin-right: 25px; background-color: #fff; color: #222d76;" id="Back1">Back</a>
-
-                        <a type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next2">Continue</a>
+                        <button  type="button" class="bt-name-white" id="Back1">Back</button>
+                        <button  type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next2">Continue</button>
                     </div>
                 </div>
             </form>
@@ -269,9 +294,9 @@
 
                 <div class="btn-box">
                     <div class="button-btn">
-                        <a type="button" class="bt-name" style="text-decoration: none; margin-right: 25px; background-color: #fff; color: #222d76;" id="Back2">Back</a>
+                        <button type="button" class="bt-name-white" id="Back2">Back</button>
+                        <button type="Submit" class="bt-name" style="text-decoration: none; margin-right: -53px;" href="<?=ROOT?>dr/newDegree" >Create</button>
 
-                        <a type="Submit" class="bt-name" href="<?=ROOT?>dr/newDegree" style="text-decoration: none; margin-right: 25px; background-color: #fff; color: #222d76;">Create</a>
                     </div>
                 </div>
             </form>

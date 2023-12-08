@@ -72,8 +72,8 @@
         <div class="degree-card">
             <img src="<?=ROOT?>/assets/degree-card/icon.png" alt="icon.png" class="degree-img">
             <div class="degree-content">
-                <div class="degree-name"><?=$degree->DegreeName?></div>
-                <div class="degree-sub-name">Diploma in Library Management</div>
+                <div class="degree-name"><?=$degree->DegreeShortName?></div>
+                <div class="degree-sub-name"><?=$degree->DegreeName?></div>
             </div>
         </div>
         <div class="degree-info">
