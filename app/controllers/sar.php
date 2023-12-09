@@ -52,9 +52,9 @@ class SAR extends Controller
         // show($degreeID);
 
         //need to get these values form the session
-        $degreeID = 1;
+        $degreeID = 2;
         $semester = 1;
-        // $examID = 1;
+        $examID = 1;
 
         $model = new Model();
         $degree = new Degree();
@@ -259,7 +259,6 @@ class SAR extends Controller
                     } else {
                         $data['errors'] = $examParticipants->errors;
                     }
-
                 }
             }
 
@@ -345,7 +344,74 @@ class SAR extends Controller
                 $data['participants'] = $participants;
                 $this->view('sar-interfaces/sar-examparticipants', $data);
 
-            } else if ($method == 'resultupload') {
+            } else if ($method == 'resultsupload') {
+
+                //get subjects in the exam
+                $ExamSubjects = $subjects->where(['degreeID' => $degreeID, 'semester' => $semester]);
+
+                //need to modify this code to generate seperate CSV files for each subject
+
+                //generate marksheet as csv file 
+                $rowHeadings = ['Index No', 'Registration No', 'Examiner 01 Mark', 'Examiner 02 Marks', 'Assignment Marks'];
+                $markSheet = 'assets/csv/output/markSheet01.csv';
+                $f = fopen($markSheet, 'w');
+
+                //get students data from exam participants table
+                $tables = ['student'];
+                $columns = ['*'];
+                $conditions1 = ['student.degreeID = exam_participants.DegreeID', 'student.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID];
+                $Participants = $examParticipants->join($tables, $columns, $conditions1);
+
+
+                $NormalParticipants = [];
+
+                //need to get subjects that repeat and medical students have
+
+                $RepeatParticipants = [];
+                $MedicalParticipants = [];
+
+
+                //Catogaries participants and store these data in array
+                foreach ($Participants as $participant) {
+                    if ($participant->studentType == 'initial') {
+                        $NormalParticipants[] = $participant;
+                    } else if ($participant->studentType == 'repeate') {
+                        $RepeatParticipants[] = $participant;
+                    } else if ($participant->studentType == 'medical') {
+                        $MedicalParticipants[] = $participant;
+                    }
+                }
+
+                //show data
+                show($NormalParticipants);
+                show($RepeatParticipants);
+                show($MedicalParticipants);
+
+
+                if ($NormalParticipants !== false) {
+                    // $listOfIndexNo = array_column($NormalParticipants, 'indexNo');
+
+                } else {
+                    //need to handel this error massage as display massage
+                    echo "No participants found.";
+                }
+                if ($f == false) {
+                    echo 'file is not open successfully';
+                } else {
+
+
+                    // Write the header row to the CSV file
+                    fputcsv($f, $rowHeadings);
+
+                    //add indexNo to marksheet
+                    foreach ($NormalParticipants as $participant) {
+                        $rowData = [$participant->indexNo, $participant->regNo];
+                        fputcsv($f, $rowData);
+                    }
+                    fclose($f);
+                }
+
+
                 $this->view('sar-interfaces/sar-examresultupload', $data);
             } else if ($method == 'results') {
                 $this->view('sar-interfaces/sar-examresults', $data);
@@ -356,10 +422,10 @@ class SAR extends Controller
     }
 
 
-    public function participants()
-    {
-        $this->view('sar-interfaces/sar-participants');
-    }
+    // public function participants()
+    // {
+    //     $this->view('sar-interfaces/sar-participants');
+    // }
     public function settings()
     {
         $this->view('sar-interfaces/sar-settings');
@@ -368,10 +434,10 @@ class SAR extends Controller
     {
         $this->view('common/login/login.view');
     }
-    public function resultupload()
-    {
-        $this->view('sar-interfaces/sar-examresultupload');
-    }
+    // public function resultupload()
+    // {
+    //     $this->view('sar-interfaces/sar-examresultupload');
+    // }
     public function results()
     {
         $this->view('sar-interfaces/sar-examresults');

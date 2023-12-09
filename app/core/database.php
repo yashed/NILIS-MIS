@@ -14,7 +14,6 @@ class Database
     }
     public function query($query, $data = [], $type = 'object')
     {
-
         $con = $this->connect();
         $stm = $con->prepare($query);
         if ($stm) {
@@ -138,8 +137,10 @@ class Database
             fax varchar(40) NOT NULL,
             address varchar(100) NOT NULL,
             phoneNo int(20) NOT NULL,
+            degreeID INT(11) NOT NULL,
             PRIMARY KEY (id),
-            UNIQUE KEY `indexNo` (`indexNo`)
+            UNIQUE KEY `indexNo` (`indexNo`),
+            FOREIGN KEY (degreeID) references degree(DegreeID)
         ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
         ";
         $this->query($query);
@@ -177,9 +178,7 @@ class Database
         ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4; 
         ";
 
-
         $this->query($query);
-
 
         $query = "
         CREATE TABLE IF NOT EXISTS medical_students (
