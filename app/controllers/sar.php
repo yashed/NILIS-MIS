@@ -224,6 +224,8 @@ class SAR extends Controller
                         foreach ($data['repeatStudents'] as $repeatStudent) {
                             if (in_array($repeatStudent->id, $selectedIds)) {
                                 if (!in_array($repeatStudent->id, $processedStudentID2)) {
+
+                                    //need to slove this issue
                                     $repeatStudent->degreeID = $degreeID;
                                     $repeatStudent->semester = $semester;
                                     $repeatStudent->attempt = intval($repeatStudent->attempt) + 1;
@@ -346,16 +348,6 @@ class SAR extends Controller
 
             } else if ($method == 'resultsupload') {
 
-                //get subjects in the exam
-                $ExamSubjects = $subjects->where(['degreeID' => $degreeID, 'semester' => $semester]);
-
-                //need to modify this code to generate seperate CSV files for each subject
-
-                //generate marksheet as csv file 
-                $rowHeadings = ['Index No', 'Registration No', 'Examiner 01 Mark', 'Examiner 02 Marks', 'Assignment Marks'];
-                $markSheet = 'assets/csv/output/markSheet01.csv';
-                $f = fopen($markSheet, 'w');
-
                 //get students data from exam participants table
                 $tables = ['student'];
                 $columns = ['*'];
@@ -370,6 +362,8 @@ class SAR extends Controller
                 $RepeatParticipants = [];
                 $MedicalParticipants = [];
 
+
+                //repeat students subject code == subject code in loop
 
                 //Catogaries participants and store these data in array
                 foreach ($Participants as $participant) {
@@ -395,22 +389,38 @@ class SAR extends Controller
                     //need to handel this error massage as display massage
                     echo "No participants found.";
                 }
-                if ($f == false) {
-                    echo 'file is not open successfully';
-                } else {
+                //get subjects in the exam
+                $ExamSubjects = $subjects->where(['degreeID' => $degreeID, 'semester' => $semester]);
+
+                //generate seperate CSV files for each subject
+                foreach ($ExamSubjects as $subject) {
+                    //generate marksheet as csv file 
+                    $head = 'Name of  Programme  : ' . $degreeID;
+                    $title = 'Subject  : ' . $subject->SubjectName;
+
+                    $rowHeadings = ['Index No', 'Registration No', 'Examiner 01 Mark', 'Examiner 02 Marks', 'Assignment Marks'];
+                    $markSheet = 'assets/csv/output/markSheet_' . $subject->SubjectCode . '.csv';
+                    $f = fopen($markSheet, 'w');
 
 
-                    // Write the header row to the CSV file
-                    fputcsv($f, $rowHeadings);
+                    if ($f == false) {
+                        echo 'file is not open successfully';
+                    } else {
 
-                    //add indexNo to marksheet
-                    foreach ($NormalParticipants as $participant) {
-                        $rowData = [$participant->indexNo, $participant->regNo];
-                        fputcsv($f, $rowData);
+
+                        // Write the header row to the CSV file
+                        fputcsv($f, [$head]);
+                        fputcsv($f, [$title]);
+                        fputcsv($f, $rowHeadings);
+
+                        //add indexNo and regNo to marksheet
+                        foreach ($NormalParticipants as $participant) {
+                            $rowData = [$participant->indexNo, $participant->regNo];
+                            fputcsv($f, $rowData);
+                        }
+                        fclose($f);
                     }
-                    fclose($f);
                 }
-
 
                 $this->view('sar-interfaces/sar-examresultupload', $data);
             } else if ($method == 'results') {
