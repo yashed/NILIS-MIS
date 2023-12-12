@@ -355,12 +355,21 @@ class SAR extends Controller
                 $Participants = $examParticipants->join($tables, $columns, $conditions1);
 
 
+                //get repeat student details
+                $tables = ['repeat_students', 'student'];
+                $columns = ['*'];
+                $condition2 = ['repeat_students.degreeID = exam_participants.DegreeID', 'repeat_students.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID, 'exam_participants.studentType = "repeate"', 'student.indexNo = repeat_students.indexNo'];
+                $RepeatStudents = $examParticipants->join($tables, $columns, $condition2);
+
+
+                //get medical student details
+                $tables = ['medical_students', 'student'];
+                $columns = ['*'];
+                $condition3 = ['medical_students.degreeID = exam_participants.DegreeID', 'medical_students.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID, 'exam_participants.studentType = "medical"', 'student.indexNo = medical_students.indexNo'];
+                $MedicalStudents = $examParticipants->join($tables, $columns, $condition3);
+                show($MedicalStudents);
+
                 $NormalParticipants = [];
-
-                //need to get subjects that repeat and medical students have
-
-                $RepeatParticipants = [];
-                $MedicalParticipants = [];
 
 
                 //repeat students subject code == subject code in loop
@@ -369,17 +378,13 @@ class SAR extends Controller
                 foreach ($Participants as $participant) {
                     if ($participant->studentType == 'initial') {
                         $NormalParticipants[] = $participant;
-                    } else if ($participant->studentType == 'repeate') {
-                        $RepeatParticipants[] = $participant;
-                    } else if ($participant->studentType == 'medical') {
-                        $MedicalParticipants[] = $participant;
                     }
                 }
 
                 //show data
-                show($NormalParticipants);
-                show($RepeatParticipants);
-                show($MedicalParticipants);
+                // show($NormalParticipants);
+                // show($RepeatParticipants);
+                // show($MedicalParticipants);
 
 
                 if ($NormalParticipants !== false) {
@@ -394,6 +399,7 @@ class SAR extends Controller
 
                 //generate seperate CSV files for each subject
                 foreach ($ExamSubjects as $subject) {
+
                     //generate marksheet as csv file 
                     $head = 'Name of  Programme  : ' . $degreeID;
                     $title = 'Subject  : ' . $subject->SubjectName;
@@ -411,12 +417,33 @@ class SAR extends Controller
                         // Write the header row to the CSV file
                         fputcsv($f, [$head]);
                         fputcsv($f, [$title]);
+                        fputcsv($f, array());
                         fputcsv($f, $rowHeadings);
 
                         //add indexNo and regNo to marksheet
                         foreach ($NormalParticipants as $participant) {
                             $rowData = [$participant->indexNo, $participant->regNo];
                             fputcsv($f, $rowData);
+                        }
+                        //add repeate students details to marksheet
+                        foreach ($RepeatStudents as $Rparticipant) {
+
+
+                            if ($Rparticipant->subjectCode == $subject->SubjectCode) {
+                                // echo $Rparticipant->subjectCode . " " . $subject->SubjectCode;
+                                // show($Rparticipant);
+                                $rowData = [$Rparticipant->indexNo, $Rparticipant->regNo];
+                                fputcsv($f, $rowData);
+                            }
+                        }
+                        //add medical students details to mark sheets
+                        foreach ($MedicalStudents as $Mparticipant) {
+                            if ($Mparticipant->subjectCode == $subject->SubjectCode) {
+                                // echo $Rparticipant->subjectCode . " " . $subject->SubjectCode;
+                                // show($Rparticipant);
+                                $rowData = [$Mparticipant->indexNo, $Mparticipant->regNo];
+                                fputcsv($f, $rowData);
+                            }
                         }
                         fclose($f);
                     }
