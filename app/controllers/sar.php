@@ -367,7 +367,7 @@ class SAR extends Controller
                 $columns = ['*'];
                 $condition3 = ['medical_students.degreeID = exam_participants.DegreeID', 'medical_students.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID, 'exam_participants.studentType = "medical"', 'student.indexNo = medical_students.indexNo'];
                 $MedicalStudents = $examParticipants->join($tables, $columns, $condition3);
-                show($MedicalStudents);
+
 
                 $NormalParticipants = [];
 
@@ -396,7 +396,7 @@ class SAR extends Controller
                 }
                 //get subjects in the exam
                 $ExamSubjects = $subjects->where(['degreeID' => $degreeID, 'semester' => $semester]);
-
+                $data['examSubjects'] = $ExamSubjects;
                 //generate seperate CSV files for each subject
                 foreach ($ExamSubjects as $subject) {
 
@@ -405,7 +405,7 @@ class SAR extends Controller
                     $title = 'Subject  : ' . $subject->SubjectName;
 
                     $rowHeadings = ['Index No', 'Registration No', 'Examiner 01 Mark', 'Examiner 02 Marks', 'Assignment Marks'];
-                    $markSheet = 'assets/csv/output/markSheet_' . $subject->SubjectCode . '.csv';
+                    $markSheet = 'assets/csv/output/MarkSheet_' . $subject->SubjectCode . '.csv';
                     $f = fopen($markSheet, 'w');
 
 

@@ -146,7 +146,7 @@ $data['role'] = $role;
         border-radius: 8px;
         padding: 10px;
         width: 18%;
-        height: 300px;
+        height: 270px;
         margin-top: 3%;
 
         display: flex;
@@ -161,7 +161,7 @@ $data['role'] = $role;
         border-radius: 8px;
         padding: 10px;
         width: 18%;
-        height: 300px;
+        height: 270px;
         margin-top: 3%;
 
         display: flex;
@@ -176,7 +176,7 @@ $data['role'] = $role;
         border-radius: 8px;
         padding: 10px;
         width: 18%;
-        height: 300px;
+        height: 270px;
         margin-top: 3%;
 
         display: flex;
@@ -191,7 +191,7 @@ $data['role'] = $role;
         border-radius: 8px;
         padding: 10px;
         width: 18%;
-        height: 300px;
+        height: 270px;
         margin-top: 3%;
 
         display: flex;
@@ -230,14 +230,16 @@ $data['role'] = $role;
     }
 
     .flex-container {
-        gap: 10%;
+        gap: 5%;
         display: flex;
         flex-direction: row;
+        ustify-content: space-between;
     }
 
     .flex-container-top {
-        gap: 75%;
+
         display: flex;
+        justify-content: space-between;
         flex-direction: row;
     }
 
@@ -389,6 +391,71 @@ $data['role'] = $role;
         background-color: var(--text-color);
         color: var(--sidebar-color);
     }
+
+    .btn-primary {
+        min-width: 25vh;
+        color: #fff;
+        height: 5vh;
+        padding: 5px 5px 5px 5px;
+        border-radius: 12px;
+        background: #17376e;
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        border: 0px;
+        margin-bottom: 10px;
+        /* margin-top: 25px; */
+    }
+
+    .bt-name {
+        font-size: 16px;
+        font-weight: 500px;
+    }
+
+    .btn-primary:hover {
+        color: #17376e;
+        background-color: white;
+        border: 1px solid
+    }
+
+    .btn-secondary {
+        min-width: 50%;
+        color: #17376e;
+        background: white;
+        height: 4vh;
+        padding: 5px 5px 5px 5px;
+        border-radius: 12px;
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        border: 1px solid;
+        margin-bottom: 10px;
+    }
+
+    .btn-secondary:hover {
+        color: black;
+        background-color: #E0E0E0;
+        border: 1px solid #17376e;
+    }
+
+    .file-info-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .uploaded-file-name {
+        text-align: center;
+
+    }
+
+    .file-uploded-icon {
+        width: 60px;
+        height: 60px;
+        background-image: url('<?= ROOT ?>/assets/result-upload/csv-upload.svg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        cursor: pointer;
+    }
 </style>
 
 <body>
@@ -400,9 +467,6 @@ $data['role'] = $role;
             </div>
 
             <div class="row">
-
-
-
                 <div class="column1">
                     <div class="data1">Course Name<br>
                         <!-- <div class="email"><?= $student->Email ?></div> -->
@@ -432,96 +496,75 @@ $data['role'] = $role;
                 <div class="temp2-sub-title2">
                     Results Submission </br>
                 </div>
-                <div class="subject">
-                    <div class="flex-container-top">
-                        <div class="sub-name"><b>Subject1</b></div>
-                        <a href="your_file_path_here.pdf" class="download-button" download>Download Marksheet</a>
-                    </div>
-                    <div class="flex-container">
+                <?php foreach ($examSubjects as $subject): ?>
+                    <?php $json = json_encode($subject); ?>
 
-                        <div class="dashed-container1">
-                            <label for="fileInput" class="file-input-icon"></label>
-                            <br>
-                            <input type="file" id="fileInput" name="fileInput">
-                            <p class="text1">Drag and drop or <label for="fileInput" class="browse-label">browse</label>
-                                <input type="file" id="fileInput" name="fileInput"><br>assignment results.
-                            </p>
+                    <div class="subject">
+                        <div class="flex-container-top">
+                            <div class="sub-name"><b>Subject1</b></div>
+
+                            <button class="btn-primary" name='download_marksheet'
+                                onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
+                                Marksheet</button>
                         </div>
-
-                        <div class="dashed-container2">
-                            <label for="fileInput" class="file-input-icon"></label>
-                            <br>
-                            <input type="file" id="fileInput" name="fileInput">
-                            <p class="text1">Drag and drop or <label for="fileInput" class="browse-label">browse</label>
-                                <input type="file" id="fileInput" name="fileInput"><br>Examiner1 results.
-                            </p>
-                        </div>
-
-                        <div class="dashed-container3">
-                            <label for="fileInput" class="file-input-icon"></label>
-                            <br>
-                            <input type="file" id="fileInput" name="fileInput">
-                            <p class="text1">Drag and drop or <label for="fileInput" class="browse-label">browse</label>
-                                <input type="file" id="fileInput" name="fileInput"><br>Examiner2 results.
-                            </p>
-                        </div>
-
-                        <div class="dashed-container4">
-                            <label for="fileInput" class="file-input-icon"></label>
-                            <br>
-                            <input type="file" id="fileInput" name="fileInput">
-                            <p class="text1">Drag and drop or <label for="fileInput" class="browse-label">browse</label>
-                                <input type="file" id="fileInput" name="fileInput"><br>Examiner3 results.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <br>
-
-                <div class="subject">
-                    <div class="flex-container-top">
-                        <div class="sub-name"><b>Subject2</b></div>
-                        <a href="your_file_path_here.pdf" class="download-button" download>Download Marksheet</a>
-                    </div>
-                    <div class="flex-container">
-
-                        <div class="dashed-container1">
-                            <label for="fileInput" class="file-input-icon"></label>
-                            <br>
-                            <input type="file" id="fileInput" name="fileInput">
-                            <p class="text1">Drag and drop or <label for="fileInput" class="browse-label">browse</label>
-                                <input type="file" id="fileInput" name="fileInput"><br>assignment results.
-                            </p>
-                        </div>
-
-                        <div class="dashed-container2">
-                            <label for="fileInput" class="file-input-icon"></label>
-                            <br>
-                            <input type="file" id="fileInput" name="fileInput">
-                            <p class="text1">Drag and drop or <label for="fileInput" class="browse-label">browse</label>
-                                <input type="file" id="fileInput" name="fileInput"><br>Examiner1 results.
-                            </p>
-                        </div>
-
-                        <div class="dashed-container3">
-                            <label for="fileInput" class="file-input-icon"></label>
-                            <br>
-                            <input type="file" id="fileInput" name="fileInput">
-                            <p class="text1">Drag and drop or <label for="fileInput" class="browse-label">browse</label>
-                                <input type="file" id="fileInput" name="fileInput"><br>Examiner2 results.
-                            </p>
-                        </div>
-
-                        <div class="dashed-container4">
-                            <label for="fileInput" class="file-input-icon"></label>
-                            <br>
-                            <input type="file" id="fileInput" name="fileInput">
-                            <p class="text1">Drag and drop or <label for="fileInput" class="browse-label">browse</label>
-                                <input type="file" id="fileInput" name="fileInput"><br>Examiner3 results.
-                            </p>
+                        <div class="flex-container">
+                            <?php
+                            $containerId = 'container' . ($subject->SubjectID) . '_1'; // Dynamically generate a unique container ID
+                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_1'; // Dynamically generate a unique file input ID
+                            ?>
+                            <div class="dashed-container1" id="<?= $containerId ?>">
+                                <label for="<?= $fileInputId ?>" class="file-input-icon"></label>
+                                <br>
+                                <input type="file" id="<?= $fileInputId ?>" name="assignment_file"
+                                    value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
+                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>')">
+                                <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
+                                        class="browse-label">browse</label></br> assignment results.</p>
+                            </div>
+                            <?php
+                            $containerId = 'container' . ($subject->SubjectID) . '_2';
+                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_2';
+                            ?>
+                            <div class="dashed-container2" id="<?= $containerId ?>">
+                                <label for="<?= $fileInputId ?>" class="file-input-icon"></label>
+                                <br>
+                                <input type="file" id="<?= $fileInputId ?>" name="assignment_file"
+                                    value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
+                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>')">
+                                <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
+                                        class="browse-label">browse</label></br> Examiner 01 results.</p>
+                            </div>
+                            <?php
+                            $containerId = 'container' . ($subject->SubjectID) . '_3';
+                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_3';
+                            ?>
+                            <div class="dashed-container3" id="<?= $containerId ?>">
+                                <label for="<?= $containerId ?>" class="file-input-icon"></label>
+                                <br>
+                                <input type="file" id="<?= $containerId ?>" name="assignment_file"
+                                    value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
+                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $containerId ?>')">
+                                <p class="text1">Drag and drop or <label for="fileInput3"
+                                        class="browse-label">browse</label></br> Examiner 02 results.</p>
+                            </div>
+                            <?php
+                            $containerId = 'container' . ($subject->SubjectID) . '_4';
+                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_4';
+                            ?>
+                            <div class="dashed-container4" id="<?= $containerId ?>">
+                                <label for="<?= $containerId ?>" class="file-input-icon"></label>
+                                <br>
+                                <input type="file" id="<?= $containerId ?>" name="assignment_file"
+                                    value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
+                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $containerId ?>')">
+                                <p class="text1">Drag and drop or <label for="<?= $containerId ?>"
+                                        class="browse-label">browse</label></br> Examiner 03 results.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <br>
+                <?php endforeach; ?>
+
             </div>
 
 
@@ -530,6 +573,109 @@ $data['role'] = $role;
             <?php $this->view('components/footer/index', $data) ?>
         </div>
 
+
+
 </body>
+<script>
+    function showSubmitButton(containerId, fileInputId) {
+        var container = document.getElementById(containerId);
+        var fileInput = document.getElementById(fileInputId);
+
+        // Check if a file is selected
+        if (fileInput.files.length > 0) {
+            // Check if the submit button is already present
+            var existingSubmitButton = container.querySelector('.btn-secondary');
+            if (!existingSubmitButton) {
+                // Create a submit button dynamically
+                var submitButton = document.createElement('button');
+                submitButton.textContent = 'Submit';
+                submitButton.className = 'btn-secondary';
+                submitButton.type = 'button'; // Change type to 'button'
+                submitButton.addEventListener('click', function () {
+                    uploadFile(fileInputId);
+                });
+
+                // Wrap the file icon and file name in a container
+                var fileInfoContainer = document.createElement('div');
+                fileInfoContainer.className = 'file-info-container';
+
+                // Hide the file icon label
+                container.querySelector('.file-input-icon').style.display = 'none';
+
+                // Create the file icon
+                var fileIcon = document.createElement('div');
+                fileIcon.className = 'file-uploded-icon ';
+                fileInfoContainer.appendChild(fileIcon);
+
+                // Create the file name
+                var fileName = document.createElement('span');
+                fileName.textContent = fileInput.files[0].name;
+                fileName.className = 'uploaded-file-name';
+                fileInfoContainer.appendChild(fileName);
+
+                // Append the container to the container
+                container.appendChild(fileInfoContainer);
+
+                // Append the submit button to the container
+                container.appendChild(submitButton);
+
+                // Hide the file input and associated text
+                fileInput.style.display = 'none';
+                container.querySelector('.text1').style.display = 'none';
+            }
+        }
+    }
+
+
+
+    function uploadFile(fileInputId) {
+        var fileInput = document.getElementById(fileInputId);
+        var formData = new FormData();
+
+        // Append the file to the FormData object
+        formData.append('file', fileInput.files[0]);
+
+        // Perform an AJAX request to handle the file upload
+        // You can use libraries like Axios or the Fetch API for this
+        // Example using Fetch API:
+        fetch('upload.php', {
+            method: 'POST',
+            body: formData,
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from the server
+                console.log(data);
+                alert('File uploaded successfully!');
+                // Optionally, you can update the UI or perform other actions after successful upload
+            })
+            .catch(error => {
+                console.error('Error uploading file:', error);
+                alert('Error uploading file. Please try again.');
+            });
+    }
+
+
+    function downloadFile(subjectCode) {
+        // Modify the file URL dynamically based on the subjectCode
+        var fileUrl = '<?= ROOT ?>assets/csv/output/MarkSheet_' + subjectCode + '.csv';
+
+        // Create an anchor element
+        var a = document.createElement('a');
+        a.href = fileUrl;
+
+        // Set the download attribute with the desired file name
+        a.download = 'MarkSheet_' + subjectCode + '.csv';
+
+        // Append the anchor element to the document
+        document.body.appendChild(a);
+
+        // Trigger a click event on the anchor element
+        a.click();
+
+        // Remove the anchor element from the document
+        document.body.removeChild(a);
+    }
+</script>
 
 </html>
