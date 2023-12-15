@@ -348,6 +348,9 @@ class SAR extends Controller
 
             } else if ($method == 'resultsupload') {
 
+
+
+
                 //get students data from exam participants table
                 $tables = ['student'];
                 $columns = ['*'];

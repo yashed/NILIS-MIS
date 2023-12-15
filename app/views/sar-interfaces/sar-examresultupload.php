@@ -498,71 +498,72 @@ $data['role'] = $role;
                 </div>
                 <?php foreach ($examSubjects as $subject): ?>
                     <?php $json = json_encode($subject); ?>
+                    <form method="POST">
+                        <div class="subject">
+                            <div class="flex-container-top">
+                                <div class="sub-name"><b>Subject1</b></div>
 
-                    <div class="subject">
-                        <div class="flex-container-top">
-                            <div class="sub-name"><b>Subject1</b></div>
-
-                            <button class="btn-primary" name='download_marksheet'
-                                onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
-                                Marksheet</button>
-                        </div>
-                        <div class="flex-container">
-                            <?php
-                            $containerId = 'container' . ($subject->SubjectID) . '_1'; // Dynamically generate a unique container ID
-                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_1'; // Dynamically generate a unique file input ID
-                            ?>
-                            <div class="dashed-container1" id="<?= $containerId ?>">
-                                <label for="<?= $fileInputId ?>" class="file-input-icon"></label>
-                                <br>
-                                <input type="file" id="<?= $fileInputId ?>" name="assignment_file"
-                                    value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
-                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>')">
-                                <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
-                                        class="browse-label">browse</label></br> assignment results.</p>
+                                <button class="btn-primary" name='download_marksheet'
+                                    onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
+                                    Marksheet</button>
                             </div>
-                            <?php
-                            $containerId = 'container' . ($subject->SubjectID) . '_2';
-                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_2';
-                            ?>
-                            <div class="dashed-container2" id="<?= $containerId ?>">
-                                <label for="<?= $fileInputId ?>" class="file-input-icon"></label>
-                                <br>
-                                <input type="file" id="<?= $fileInputId ?>" name="assignment_file"
-                                    value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
-                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>')">
-                                <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
-                                        class="browse-label">browse</label></br> Examiner 01 results.</p>
-                            </div>
-                            <?php
-                            $containerId = 'container' . ($subject->SubjectID) . '_3';
-                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_3';
-                            ?>
-                            <div class="dashed-container3" id="<?= $containerId ?>">
-                                <label for="<?= $containerId ?>" class="file-input-icon"></label>
-                                <br>
-                                <input type="file" id="<?= $containerId ?>" name="assignment_file"
-                                    value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
-                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $containerId ?>')">
-                                <p class="text1">Drag and drop or <label for="fileInput3"
-                                        class="browse-label">browse</label></br> Examiner 02 results.</p>
-                            </div>
-                            <?php
-                            $containerId = 'container' . ($subject->SubjectID) . '_4';
-                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_4';
-                            ?>
-                            <div class="dashed-container4" id="<?= $containerId ?>">
-                                <label for="<?= $containerId ?>" class="file-input-icon"></label>
-                                <br>
-                                <input type="file" id="<?= $containerId ?>" name="assignment_file"
-                                    value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
-                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $containerId ?>')">
-                                <p class="text1">Drag and drop or <label for="<?= $containerId ?>"
-                                        class="browse-label">browse</label></br> Examiner 03 results.</p>
+                            <div class="flex-container">
+                                <?php
+                                $containerId = 'container' . ($subject->SubjectID) . '_1'; // Dynamically generate a unique container ID
+                                $fileInputId = 'fileInput' . ($subject->SubjectID) . '_1'; // Dynamically generate a unique file input ID
+                                ?>
+                                <div class="dashed-container1" id="<?= $containerId ?>">
+                                    <label for="<?= $fileInputId ?>" class="file-input-icon"></label>
+                                    <br>
+                                    <input type="file" id="<?= $fileInputId ?>" name="assignment_file"
+                                        value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
+                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>')">
+                                    <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
+                                            class="browse-label">browse</label></br> assignment results.</p>
+                                </div>
+                                <?php
+                                $containerId = 'container' . ($subject->SubjectID) . '_2';
+                                $fileInputId = 'fileInput' . ($subject->SubjectID) . '_2';
+                                ?>
+                                <div class="dashed-container2" id="<?= $containerId ?>">
+                                    <label for="<?= $fileInputId ?>" class="file-input-icon"></label>
+                                    <br>
+                                    <input type="file" id="<?= $fileInputId ?>" name="assignment_file"
+                                        value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
+                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>')">
+                                    <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
+                                            class="browse-label">browse</label></br> Examiner 01 results.</p>
+                                </div>
+                                <?php
+                                $containerId = 'container' . ($subject->SubjectID) . '_3';
+                                $fileInputId = 'fileInput' . ($subject->SubjectID) . '_3';
+                                ?>
+                                <div class="dashed-container3" id="<?= $containerId ?>">
+                                    <label for="<?= $containerId ?>" class="file-input-icon"></label>
+                                    <br>
+                                    <input type="file" id="<?= $containerId ?>" name="assignment_file"
+                                        value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
+                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $containerId ?>')">
+                                    <p class="text1">Drag and drop or <label for="fileInput3"
+                                            class="browse-label">browse</label></br> Examiner 02 results.</p>
+                                </div>
+                                <?php
+                                $containerId = 'container' . ($subject->SubjectID) . '_4';
+                                $fileInputId = 'fileInput' . ($subject->SubjectID) . '_4';
+                                ?>
+                                <div class="dashed-container4" id="<?= $containerId ?>">
+                                    <label for="<?= $containerId ?>" class="file-input-icon"></label>
+                                    <br>
+                                    <input type="file" id="<?= $containerId ?>" name="assignment_file"
+                                        value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
+                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $containerId ?>')">
+                                    <p class="text1">Drag and drop or <label for="<?= $containerId ?>"
+                                            class="browse-label">browse</label></br> Examiner 03 results.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <br>
+                        <br>
+                    </form>
                 <?php endforeach; ?>
 
             </div>
@@ -590,7 +591,8 @@ $data['role'] = $role;
                 var submitButton = document.createElement('button');
                 submitButton.textContent = 'Submit';
                 submitButton.className = 'btn-secondary';
-                submitButton.type = 'button'; // Change type to 'button'
+                submitButton.name = 'sub1_exam-res';
+                submitButton.type = 'submit'; // Change type to 'button'
                 submitButton.addEventListener('click', function () {
                     uploadFile(fileInputId);
                 });
@@ -634,25 +636,42 @@ $data['role'] = $role;
 
         // Append the file to the FormData object
         formData.append('file', fileInput.files[0]);
-
+        console.log(formData);
+        var targetURL = '<?= ROOT ?>sar/examresultupload';
         // Perform an AJAX request to handle the file upload
         // You can use libraries like Axios or the Fetch API for this
         // Example using Fetch API:
-        fetch('upload.php', {
+        fetch(targetURL, {
             method: 'POST',
             body: formData,
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
-                // Handle the response from the server
                 console.log(data);
                 alert('File uploaded successfully!');
-                // Optionally, you can update the UI or perform other actions after successful upload
             })
             .catch(error => {
                 console.error('Error uploading file:', error);
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.error('Status:', error.response.status);
+                    console.error('Response:', error.response.statusText);
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    console.error('No response received');
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.error('Error message:', error.message);
+                }
                 alert('Error uploading file. Please try again.');
             });
+
     }
 
 
