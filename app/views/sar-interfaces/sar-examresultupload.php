@@ -102,7 +102,7 @@ $data['role'] = $role;
         font-size: 22px;
         font-style: normal;
         font-weight: 600;
-        font-size: 1.2vw;
+        font-size: 1.8vw;
 
     }
 
@@ -112,7 +112,7 @@ $data['role'] = $role;
         font-family: Poppins;
         font-style: normal;
         font-weight: 600;
-        font-size: 25px;
+        font-size: 1.8vw;
     }
 
     .temp2-subsection-2 {
@@ -422,7 +422,7 @@ $data['role'] = $role;
         background: white;
         height: 4vh;
         padding: 5px 5px 5px 5px;
-        border-radius: 12px;
+        border-radius: 8px;
         box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
         border: 1px solid;
         margin-bottom: 10px;
@@ -455,6 +455,31 @@ $data['role'] = $role;
         background-size: cover;
         background-repeat: no-repeat;
         cursor: pointer;
+    }
+
+    .btn-secondary-cancel {
+        min-width: 50%;
+        color: #ff0000;
+        background: white;
+        height: 4vh;
+        padding: 5px 5px 5px 5px;
+        border-radius: 8px;
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        border: 1px solid;
+        margin-bottom: 10px;
+    }
+
+    .btn-secondary-cancel:hover {
+        color: #ff0000;
+        background-color: #F9D2D2;
+        border: 1px solid red;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 1vw;
+
     }
 </style>
 
@@ -501,7 +526,9 @@ $data['role'] = $role;
                     <form method="POST">
                         <div class="subject">
                             <div class="flex-container-top">
-                                <div class="sub-name"><b>Subject1</b></div>
+                                <div class="sub-name"><b>
+                                        <?= $subject->SubjectName ?>
+                                    </b></div>
 
                                 <button class="btn-primary" name='download_marksheet'
                                     onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
@@ -585,6 +612,18 @@ $data['role'] = $role;
         // Check if a file is selected
         if (fileInput.files.length > 0) {
             // Check if the submit button is already present
+            var existingDeleteButton = container.querySelector('.btn-secondary-cancel');
+            if (!existingDeleteButton) {
+                // Create a delete button dynamically
+                var deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.className = 'btn-secondary-cancel';
+                deleteButton.name = 'sub1_exam-res';
+                deleteButton.type = 'button';
+                deleteButton.addEventListener('click', function () {
+                    uploadFile(fileInputId);
+                });
+            }
             var existingSubmitButton = container.querySelector('.btn-secondary');
             if (!existingSubmitButton) {
                 // Create a submit button dynamically
@@ -592,41 +631,49 @@ $data['role'] = $role;
                 submitButton.textContent = 'Submit';
                 submitButton.className = 'btn-secondary';
                 submitButton.name = 'sub1_exam-res';
-                submitButton.type = 'submit'; // Change type to 'button'
+                submitButton.type = 'submit';
                 submitButton.addEventListener('click', function () {
                     uploadFile(fileInputId);
                 });
-
-                // Wrap the file icon and file name in a container
-                var fileInfoContainer = document.createElement('div');
-                fileInfoContainer.className = 'file-info-container';
-
-                // Hide the file icon label
-                container.querySelector('.file-input-icon').style.display = 'none';
-
-                // Create the file icon
-                var fileIcon = document.createElement('div');
-                fileIcon.className = 'file-uploded-icon ';
-                fileInfoContainer.appendChild(fileIcon);
-
-                // Create the file name
-                var fileName = document.createElement('span');
-                fileName.textContent = fileInput.files[0].name;
-                fileName.className = 'uploaded-file-name';
-                fileInfoContainer.appendChild(fileName);
-
-                // Append the container to the container
-                container.appendChild(fileInfoContainer);
-
-                // Append the submit button to the container
-                container.appendChild(submitButton);
-
-                // Hide the file input and associated text
-                fileInput.style.display = 'none';
-                container.querySelector('.text1').style.display = 'none';
             }
+
+            // Wrap the file icon and file name in a container
+            var fileInfoContainer = document.createElement('div');
+            fileInfoContainer.className = 'file-info-container';
+
+            //create container for buttons
+            var buttonContainer = document.createElement('div');
+            buttonContainer.className = 'button-container';
+
+            // Hide the file icon label
+            container.querySelector('.file-input-icon').style.display = 'none';
+
+            // Create the file icon
+            var fileIcon = document.createElement('div');
+            fileIcon.className = 'file-uploded-icon ';
+            fileInfoContainer.appendChild(fileIcon);
+
+            // Create the file name
+            var fileName = document.createElement('span');
+            fileName.textContent = fileInput.files[0].name;
+            fileName.className = 'uploaded-file-name';
+            fileInfoContainer.appendChild(fileName);
+
+            // Append the container to the container
+            container.appendChild(fileInfoContainer);
+
+            //add delete and submit button to container
+            buttonContainer.appendChild(deleteButton);
+            buttonContainer.appendChild(submitButton);
+            container.appendChild(buttonContainer);
+
+
+            // Hide the file input and associated text
+            fileInput.style.display = 'none';
+            container.querySelector('.text1').style.display = 'none';
         }
     }
+
 
 
 
@@ -636,7 +683,7 @@ $data['role'] = $role;
 
         // Append the file to the FormData object
         formData.append('file', fileInput.files[0]);
-        console.log(formData);
+        console.log(fileInput.files[0]);
         var targetURL = '<?= ROOT ?>sar/examresultupload';
         // Perform an AJAX request to handle the file upload
         // You can use libraries like Axios or the Fetch API for this
