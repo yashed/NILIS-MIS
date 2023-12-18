@@ -207,12 +207,15 @@ $data['role'] = $role;
     }
 
     .file-input-icon {
+        display: flex;
         width: 40px;
         height: 40px;
-        background-image: url('<?= ROOT ?>/assets/file-icon.png');
-        background-size: cover;
+        /* background-image: url('<?= ROOT ?>
+        /assets/file-icon.png');
+ background-size: cover;
         background-repeat: no-repeat;
-        cursor: pointer;
+        */ cursor: pointer;
+
     }
 
     input[type="file"] {
@@ -481,6 +484,12 @@ $data['role'] = $role;
         gap: 1vw;
 
     }
+
+    .csv-input-from {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 </style>
 
 <body>
@@ -523,73 +532,89 @@ $data['role'] = $role;
                 </div>
                 <?php foreach ($examSubjects as $subject): ?>
                     <?php $json = json_encode($subject); ?>
-                    <form method="POST">
-                        <div class="subject">
-                            <div class="flex-container-top">
-                                <div class="sub-name"><b>
-                                        <?= $subject->SubjectName ?>
-                                    </b></div>
 
-                                <button class="btn-primary" name='download_marksheet'
-                                    onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
-                                    Marksheet</button>
-                            </div>
-                            <div class="flex-container">
-                                <?php
-                                $containerId = 'container' . ($subject->SubjectID) . '_1'; // Dynamically generate a unique container ID
-                                $fileInputId = 'fileInput' . ($subject->SubjectID) . '_1'; // Dynamically generate a unique file input ID
-                                ?>
-                                <div class="dashed-container1" id="<?= $containerId ?>">
-                                    <label for="<?= $fileInputId ?>" class="file-input-icon"></label>
+                    <div class="subject">
+                        <div class="flex-container-top">
+                            <div class="sub-name"><b>
+                                    <?= $subject->SubjectName ?>
+                                </b></div>
+
+                            <button class="btn-primary" name='download_marksheet'
+                                onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
+                                Marksheet</button>
+                        </div>
+                        <div class="flex-container">
+                            <?php
+                            $containerId = 'container' . ($subject->SubjectID) . '_1'; // Dynamically generate a unique container ID
+                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_1'; // Dynamically generate a unique file input ID
+                            ?>
+
+                            <div class="dashed-container1" id="<?= $containerId ?>">
+                                <form method="POST" class='csv-input-from'>
+                                    <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
+                                        for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
+                                    <!-- <label for="<?= $fileInputId ?>" class="file-input-icon"></label> -->
                                     <br>
                                     <input type="file" id="<?= $fileInputId ?>" name="assignment_file"
                                         value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
                                         onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>')">
                                     <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                             class="browse-label">browse</label></br> assignment results.</p>
-                                </div>
-                                <?php
-                                $containerId = 'container' . ($subject->SubjectID) . '_2';
-                                $fileInputId = 'fileInput' . ($subject->SubjectID) . '_2';
-                                ?>
-                                <div class="dashed-container2" id="<?= $containerId ?>">
-                                    <label for="<?= $fileInputId ?>" class="file-input-icon"></label>
+                                </form>
+                            </div>
+                            </form>
+                            <?php
+                            $containerId = 'container' . ($subject->SubjectID) . '_2';
+                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_2';
+                            ?>
+                            <div class="dashed-container2" id="<?= $containerId ?>">
+                                <form method="POST" class='csv-input-from'>
+                                    <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
+                                        for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
                                     <br>
                                     <input type="file" id="<?= $fileInputId ?>" name="assignment_file"
                                         value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
                                         onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>')">
                                     <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                             class="browse-label">browse</label></br> Examiner 01 results.</p>
-                                </div>
-                                <?php
-                                $containerId = 'container' . ($subject->SubjectID) . '_3';
-                                $fileInputId = 'fileInput' . ($subject->SubjectID) . '_3';
-                                ?>
-                                <div class="dashed-container3" id="<?= $containerId ?>">
-                                    <label for="<?= $containerId ?>" class="file-input-icon"></label>
+                                </form>
+                            </div>
+                            <?php
+                            $containerId = 'container' . ($subject->SubjectID) . '_3';
+                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_3';
+                            ?>
+                            <div class="dashed-container3" id="<?= $containerId ?>">
+                                <form method="POST" class='csv-input-from'>
+                                    <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
+                                        for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
                                     <br>
-                                    <input type="file" id="<?= $containerId ?>" name="assignment_file"
+                                    <input type="file" id="<?= $fileInputId ?>" name="assignment_file"
                                         value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
                                         onchange="showSubmitButton('<?= $containerId ?>', '<?= $containerId ?>')">
-                                    <p class="text1">Drag and drop or <label for="fileInput3"
+                                    <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                             class="browse-label">browse</label></br> Examiner 02 results.</p>
-                                </div>
-                                <?php
-                                $containerId = 'container' . ($subject->SubjectID) . '_4';
-                                $fileInputId = 'fileInput' . ($subject->SubjectID) . '_4';
-                                ?>
-                                <div class="dashed-container4" id="<?= $containerId ?>">
-                                    <label for="<?= $containerId ?>" class="file-input-icon"></label>
+                                </form>
+                            </div>
+                            <?php
+                            $containerId = 'container' . ($subject->SubjectID) . '_4';
+                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_4';
+                            ?>
+                            <div class="dashed-container4" id="<?= $containerId ?>">
+                                <form method="POST" class='csv-input-from'>
+                                    <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
+                                        for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
+                                    <!-- <label for="<?= $containerId ?>" class="file-input-icon"></label> -->
                                     <br>
-                                    <input type="file" id="<?= $containerId ?>" name="assignment_file"
+                                    <input type="file" id="<?= $fileInputId ?>" name="assignment_file"
                                         value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
                                         onchange="showSubmitButton('<?= $containerId ?>', '<?= $containerId ?>')">
-                                    <p class="text1">Drag and drop or <label for="<?= $containerId ?>"
+                                    <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                             class="browse-label">browse</label></br> Examiner 03 results.</p>
-                                </div>
+                                </form>
                             </div>
                         </div>
-                        <br>
+                    </div>
+                    <br>
                     </form>
                 <?php endforeach; ?>
 
@@ -621,7 +646,7 @@ $data['role'] = $role;
                 deleteButton.name = 'sub1_exam-res';
                 deleteButton.type = 'button';
                 deleteButton.addEventListener('click', function () {
-                    uploadFile(fileInputId);
+                    deleteFile(container, fileInput);
                 });
             }
             var existingSubmitButton = container.querySelector('.btn-secondary');
@@ -668,14 +693,29 @@ $data['role'] = $role;
             container.appendChild(buttonContainer);
 
 
+            // Create the file icon image if not present
+            var existingFileIcon = container.querySelector('.file-input-icon');
+            if (!existingFileIcon) {
+                var fileIcon = document.createElement('img');
+                fileIcon.src = '<?= ROOT ?>/assets/file-icon.png';
+                fileIcon.className = 'file-input-icon';
+                fileIcon.setAttribute('for', fileInputId);
+                fileIcon.addEventListener('click', function () {
+                    triggerFileInput(fileInputId);
+                });
+                container.appendChild(fileIcon);
+            }
             // Hide the file input and associated text
             fileInput.style.display = 'none';
             container.querySelector('.text1').style.display = 'none';
         }
     }
 
-
-
+    //function to trigger file input
+    function triggerFileInput(fileInputId) {
+        var fileInput = document.getElementById(fileInputId);
+        fileInput.click();
+    }
 
     function uploadFile(fileInputId) {
         var fileInput = document.getElementById(fileInputId);
@@ -719,6 +759,40 @@ $data['role'] = $role;
                 alert('Error uploading file. Please try again.');
             });
 
+    }
+
+    //handle delete file
+    function deleteFile(container, fileInput) {
+
+
+        // Remove the delete and submit buttons
+        container.querySelector('.btn-secondary-cancel').remove();
+        container.querySelector('.btn-secondary').remove();
+
+        // Remove the file info container
+        container.querySelector('.file-info-container').remove();
+
+        // Remove the file icon image
+        container.querySelector('.file-input-icon').remove();
+
+        //Remove button container
+        container.querySelector('.button-container').remove();
+
+        // Display the file icon image and associated text
+        var fileIcon = document.createElement('img');
+        fileIcon.src = '<?= ROOT ?>/assets/file-icon.png';
+        fileIcon.className = 'file-input-icon';
+        fileIcon.setAttribute('for', fileInput.id);
+        fileIcon.addEventListener('click', function () {
+            triggerFileInput(fileInput.id);
+        });
+        container.appendChild(fileIcon);
+
+        // Display the text
+        container.querySelector('.text1').style.display = 'block';
+
+        // Clear the selected file
+        fileInput.value = '';
     }
 
 
