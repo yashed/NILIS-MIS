@@ -450,6 +450,11 @@ class SAR extends Controller
                         }
                         fclose($f);
                     }
+
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                        show($_POST);
+                    }
+
                 }
 
                 $this->view('sar-interfaces/sar-examresultupload', $data);

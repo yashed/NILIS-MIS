@@ -8,13 +8,13 @@ $data['role'] = $role;
 <?php $this->view('components/navside-bar/sidebar', $data) ?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
 
-<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>temp2 Dashboard</title>
+    <title>Result Upload</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -490,6 +490,30 @@ $data['role'] = $role;
         flex-direction: column;
         align-items: center;
     }
+
+    .dashed-container {
+
+        border-radius: 8px;
+        padding: 10px;
+        width: 18%;
+        height: 270px;
+        margin-top: 3%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 25%;
+        border: 2px dashed #3498db;
+        cursor: pointer;
+    }
+
+    .dashed-container.drag-over {
+        border-color: #e74c3c;
+        /* Change border color when dragging over */
+        background-color: #f2f2f2;
+        /* Change background color when dragging over */
+        color: #e74c3c;
+    }
 </style>
 
 <body>
@@ -549,7 +573,9 @@ $data['role'] = $role;
                             $fileInputId = 'fileInput' . ($subject->SubjectID) . '_1'; // Dynamically generate a unique file input ID
                             ?>
 
-                            <div class="dashed-container1" id="<?= $containerId ?>">
+                            <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
+                                ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
+                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>')">
                                 <form method="POST" class='csv-input-from'>
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
                                         for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
@@ -567,7 +593,7 @@ $data['role'] = $role;
                             $containerId = 'container' . ($subject->SubjectID) . '_2';
                             $fileInputId = 'fileInput' . ($subject->SubjectID) . '_2';
                             ?>
-                            <div class="dashed-container2" id="<?= $containerId ?>">
+                            <div class="dashed-container" id="<?= $containerId ?>">
                                 <form method="POST" class='csv-input-from'>
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
                                         for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
@@ -583,7 +609,7 @@ $data['role'] = $role;
                             $containerId = 'container' . ($subject->SubjectID) . '_3';
                             $fileInputId = 'fileInput' . ($subject->SubjectID) . '_3';
                             ?>
-                            <div class="dashed-container3" id="<?= $containerId ?>">
+                            <div class="dashed-container" id="<?= $containerId ?>">
                                 <form method="POST" class='csv-input-from'>
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
                                         for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
@@ -599,7 +625,7 @@ $data['role'] = $role;
                             $containerId = 'container' . ($subject->SubjectID) . '_4';
                             $fileInputId = 'fileInput' . ($subject->SubjectID) . '_4';
                             ?>
-                            <div class="dashed-container4" id="<?= $containerId ?>">
+                            <div class="dashed-container" id="<?= $containerId ?>">
                                 <form method="POST" class='csv-input-from'>
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
                                         for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
@@ -630,12 +656,68 @@ $data['role'] = $role;
 
 </body>
 <script>
+    function handleDragOver(event) {
+        event.preventDefault();
+        var container = event.target;
+        container.classList.add('drag-over');
+    }
+
+    function handleDragEnter(event) {
+        event.preventDefault();
+        var container = event.target;
+        container.classList.add('drag-over');
+    }
+
+    function handleDragLeave(event) {
+        var container = event.target;
+        container.classList.remove('drag-over');
+    }
+
+    function handleDrop(event, containerId, fileInputId) {
+        event.preventDefault();
+
+        // Remove the drag-over styles
+        var container = document.getElementById(containerId);
+        container.classList.remove('drag-over');
+
+        // Handling the dropped files
+        var fileInput = document.getElementById(fileInputId);
+        var files = event.dataTransfer.files;
+
+        // Validate each dropped file
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            if (file.type === 'text/csv' || file.name.toLowerCase().endsWith('.csv')) {
+                // update the file input with the dropped files
+                fileInput.files = files;
+
+                // Show submit button
+                showSubmitButton(containerId, fileInputId);
+            } else {
+                // not a CSV file, you can provide feedback to the user
+                alert('Please drop a CSV file.');
+            }
+        }
+    }
+
+
+
     function showSubmitButton(containerId, fileInputId) {
+
+
         var container = document.getElementById(containerId);
         var fileInput = document.getElementById(fileInputId);
 
+        if (!container || !fileInput) {
+            console.error('Container or fileInput not found.');
+            return;
+        }
+
+        console.log(fileInput.files);
+
         // Check if a file is selected
         if (fileInput.files.length > 0) {
+
             // Check if the submit button is already present
             var existingDeleteButton = container.querySelector('.btn-secondary-cancel');
             if (!existingDeleteButton) {
@@ -718,13 +800,18 @@ $data['role'] = $role;
     }
 
     function uploadFile(fileInputId) {
+
+
+
         var fileInput = document.getElementById(fileInputId);
         var formData = new FormData();
 
         // Append the file to the FormData object
         formData.append('file', fileInput.files[0]);
-        console.log(fileInput.files[0]);
+        console.log('File data:', fileInput.files[0]);
+
         var targetURL = '<?= ROOT ?>sar/examresultupload';
+
         // Perform an AJAX request to handle the file upload
         // You can use libraries like Axios or the Fetch API for this
         // Example using Fetch API:
@@ -734,6 +821,7 @@ $data['role'] = $role;
         })
             .then(response => {
                 if (!response.ok) {
+                    console.log(response);
                     throw new Error('Network response was not ok');
                 }
                 return response.json();
@@ -744,22 +832,10 @@ $data['role'] = $role;
             })
             .catch(error => {
                 console.error('Error uploading file:', error);
-                if (error.response) {
-                    // The request was made and the server responded with a status code
-                    // that falls out of the range of 2xx
-                    console.error('Status:', error.response.status);
-                    console.error('Response:', error.response.statusText);
-                } else if (error.request) {
-                    // The request was made but no response was received
-                    console.error('No response received');
-                } else {
-                    // Something happened in setting up the request that triggered an Error
-                    console.error('Error message:', error.message);
-                }
                 alert('Error uploading file. Please try again.');
             });
-
     }
+
 
     //handle delete file
     function deleteFile(container, fileInput) {
@@ -772,21 +848,20 @@ $data['role'] = $role;
         // Remove the file info container
         container.querySelector('.file-info-container').remove();
 
-        // Remove the file icon image
-        container.querySelector('.file-input-icon').remove();
-
         //Remove button container
         container.querySelector('.button-container').remove();
 
         // Display the file icon image and associated text
-        var fileIcon = document.createElement('img');
-        fileIcon.src = '<?= ROOT ?>/assets/file-icon.png';
-        fileIcon.className = 'file-input-icon';
-        fileIcon.setAttribute('for', fileInput.id);
-        fileIcon.addEventListener('click', function () {
-            triggerFileInput(fileInput.id);
-        });
-        container.appendChild(fileIcon);
+        container.querySelector('.file-input-icon').style.display = 'flex';
+
+        // var fileIcon = document.createElement('img');
+        // fileIcon.src = '<?= ROOT ?>/assets/file-icon.png';
+        // fileIcon.className = 'file-input-icon';
+        // fileIcon.setAttribute('for', fileInput.id);
+        // fileIcon.addEventListener('click', function () {
+        //     triggerFileInput(fileInput.id);
+        // });
+        // container.appendChild(fileIcon);
 
         // Display the text
         container.querySelector('.text1').style.display = 'block';
