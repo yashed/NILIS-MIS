@@ -6,7 +6,7 @@
             <ul class="menu-links">
                 <h6 class="topic1">MAIN</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr">
+                    <a href="<?= ROOT ?>dr/index">
                         <i class="bx bx-home icon"></i>
                         <span class="text nav-text">Dashboard</span></a>
                 </li>
