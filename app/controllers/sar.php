@@ -451,8 +451,31 @@ class SAR extends Controller
                         fclose($f);
                     }
 
-                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                        show($_POST);
+                    //save file in specific location
+                    if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+                        // Specify the target directory
+                        $targetDirectory = 'assets/csv/examsheets/';
+
+                        // Get the original file name
+                        $originalFileName = basename($_FILES['file']['name']);
+                        show($originalFileName);
+                        // Generate a unique filename to avoid overwriting existing files
+                        $uniqueFileName = 'Results' . '_' . $originalFileName;
+
+                        // Set the target path
+                        $targetPath = $targetDirectory . $uniqueFileName;
+
+                        // Move the uploaded file to the target directory
+                        if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
+                            // File uploaded successfully
+                            echo json_encode(['success' => true, 'message' => 'File uploaded successfully.']);
+                        } else {
+                            // Error moving the file
+                            echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
+                        }
+                    } else {
+                        // Handle file upload error
+                        // echo json_encode(['success' => false, 'message' => 'File upload error.']);
                     }
 
                 }

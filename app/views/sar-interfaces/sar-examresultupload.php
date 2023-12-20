@@ -210,11 +210,14 @@ $data['role'] = $role;
         display: flex;
         width: 40px;
         height: 40px;
-        /* background-image: url('<?= ROOT ?>
-        /assets/file-icon.png');
- background-size: cover;
-        background-repeat: no-repeat;
-        */ cursor: pointer;
+        cursor: pointer;
+
+    }
+
+    .file-input-icon:hover {
+        color: #9AD6FF;
+        width: 45px;
+        height: 45px;
 
     }
 
@@ -230,6 +233,12 @@ $data['role'] = $role;
     .browse-label {
         color: #9AD6FF;
         cursor: pointer;
+    }
+
+    .browse-label:hover {
+        color: #17376E;
+        font-weight: 600;
+
     }
 
     .flex-container {
@@ -569,21 +578,21 @@ $data['role'] = $role;
                         </div>
                         <div class="flex-container">
                             <?php
-                            $containerId = 'container' . ($subject->SubjectID) . '_1'; // Dynamically generate a unique container ID
-                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_1'; // Dynamically generate a unique file input ID
+                            $containerId = 'container' . ($subject->SubjectID) . '_1';
+                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_1';
+                            $formID = 'form' . ($subject->SubjectID) . '_1';
                             ?>
 
                             <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
                                 ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
-                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>')">
-                                <form method="POST" class='csv-input-from'>
+                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>')">
+                                <form method="POST" class='csv-input-from' enctype="multipart/form-data"
+                                    id="<?= $formID ?>">
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
                                         for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
-                                    <!-- <label for="<?= $fileInputId ?>" class="file-input-icon"></label> -->
                                     <br>
-                                    <input type="file" id="<?= $fileInputId ?>" name="assignment_file"
-                                        value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
-                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>')">
+                                    <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
+                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>')">
                                     <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                             class="browse-label">browse</label></br> assignment results.</p>
                                 </form>
@@ -592,15 +601,19 @@ $data['role'] = $role;
                             <?php
                             $containerId = 'container' . ($subject->SubjectID) . '_2';
                             $fileInputId = 'fileInput' . ($subject->SubjectID) . '_2';
+                            $formID = 'form' . ($subject->SubjectID) . '_2';
                             ?>
-                            <div class="dashed-container" id="<?= $containerId ?>">
-                                <form method="POST" class='csv-input-from'>
+
+                            <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
+                                ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
+                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>')">
+                                <form method="POST" class='csv-input-from' enctype="multipart/form-data"
+                                    id="<?= $formID ?>">
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
                                         for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
                                     <br>
-                                    <input type="file" id="<?= $fileInputId ?>" name="assignment_file"
-                                        value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
-                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>')">
+                                    <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
+                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' ,'<?= $formID ?>')">
                                     <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                             class="browse-label">browse</label></br> Examiner 01 results.</p>
                                 </form>
@@ -608,15 +621,19 @@ $data['role'] = $role;
                             <?php
                             $containerId = 'container' . ($subject->SubjectID) . '_3';
                             $fileInputId = 'fileInput' . ($subject->SubjectID) . '_3';
+                            $formID = 'form' . ($subject->SubjectID) . '_3';
                             ?>
-                            <div class="dashed-container" id="<?= $containerId ?>">
-                                <form method="POST" class='csv-input-from'>
+
+                            <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
+                                ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
+                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>')">
+                                <form method="POST" class='csv-input-from' enctype="multipart/form-data"
+                                    id="<?= $formID ?>">
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
                                         for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
                                     <br>
-                                    <input type="file" id="<?= $fileInputId ?>" name="assignment_file"
-                                        value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
-                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $containerId ?>')">
+                                    <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
+                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' ,' <?= $formID ?>')">
                                     <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                             class="browse-label">browse</label></br> Examiner 02 results.</p>
                                 </form>
@@ -624,16 +641,22 @@ $data['role'] = $role;
                             <?php
                             $containerId = 'container' . ($subject->SubjectID) . '_4';
                             $fileInputId = 'fileInput' . ($subject->SubjectID) . '_4';
+                            $formID = 'form' . ($subject->SubjectID) . '_4';
                             ?>
-                            <div class="dashed-container" id="<?= $containerId ?>">
-                                <form method="POST" class='csv-input-from'>
+
+                            <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
+                                ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
+                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>')">
+                                <form method="POST" class='csv-input-from' enctype="multipart/form-data"
+                                    id="<?= $formID ?>">
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
                                         for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
-                                    <!-- <label for="<?= $containerId ?>" class="file-input-icon"></label> -->
                                     <br>
-                                    <input type="file" id="<?= $fileInputId ?>" name="assignment_file"
+                                    <!-- <input type="file" id="<?= $fileInputId ?>" name="file"
                                         value="assignment_<?= $subject->SubjectCode ?>" accept=".csv"
-                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $containerId ?>')">
+                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $containerId ?>')"> -->
+                                    <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
+                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>')">
                                     <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                             class="browse-label">browse</label></br> Examiner 03 results.</p>
                                 </form>
@@ -673,7 +696,7 @@ $data['role'] = $role;
         container.classList.remove('drag-over');
     }
 
-    function handleDrop(event, containerId, fileInputId) {
+    function handleDrop(event, containerId, fileInputId, formId) {
         event.preventDefault();
 
         // Remove the drag-over styles
@@ -692,7 +715,7 @@ $data['role'] = $role;
                 fileInput.files = files;
 
                 // Show submit button
-                showSubmitButton(containerId, fileInputId);
+                showSubmitButton(containerId, fileInputId, formId);
             } else {
                 // not a CSV file, you can provide feedback to the user
                 alert('Please drop a CSV file.');
@@ -702,18 +725,15 @@ $data['role'] = $role;
 
 
 
-    function showSubmitButton(containerId, fileInputId) {
-
-
+    function showSubmitButton(containerId, fileInputId, formId) {
         var container = document.getElementById(containerId);
         var fileInput = document.getElementById(fileInputId);
+        var form = document.getElementById(formId);
 
-        if (!container || !fileInput) {
-            console.error('Container or fileInput not found.');
+        if (!container || !fileInput || !form) {
+            console.error('Container, fileInput, or form not found.');
             return;
         }
-
-        console.log(fileInput.files);
 
         // Check if a file is selected
         if (fileInput.files.length > 0) {
@@ -767,13 +787,15 @@ $data['role'] = $role;
             fileInfoContainer.appendChild(fileName);
 
             // Append the container to the container
-            container.appendChild(fileInfoContainer);
+            form.appendChild(fileInfoContainer);
+
+            // Append the buttonContainer to the form
+            form.appendChild(buttonContainer);
 
             //add delete and submit button to container
             buttonContainer.appendChild(deleteButton);
             buttonContainer.appendChild(submitButton);
-            container.appendChild(buttonContainer);
-
+            // container.appendChild(buttonContainer);
 
             // Create the file icon image if not present
             var existingFileIcon = container.querySelector('.file-input-icon');
@@ -802,29 +824,21 @@ $data['role'] = $role;
     function uploadFile(fileInputId) {
 
 
-
         var fileInput = document.getElementById(fileInputId);
         var formData = new FormData();
-
-        // Append the file to the FormData object
         formData.append('file', fileInput.files[0]);
-        console.log('File data:', fileInput.files[0]);
+        var targetURL = '<?= ROOT ?>sar/examination/resultsupload';
 
-        var targetURL = '<?= ROOT ?>sar/examresultupload';
-
-        // Perform an AJAX request to handle the file upload
-        // You can use libraries like Axios or the Fetch API for this
-        // Example using Fetch API:
         fetch(targetURL, {
             method: 'POST',
             body: formData,
         })
             .then(response => {
                 if (!response.ok) {
-                    console.log(response);
+                    console.log('Res = '.response);
                     throw new Error('Network response was not ok');
                 }
-                return response.json();
+                return response.text();
             })
             .then(data => {
                 console.log(data);
