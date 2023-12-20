@@ -171,6 +171,33 @@ class Model extends Database
 
     }
 
+
+    public function join($tables, $columns, $conditions, $order = null, $limit = null)
+    {
+        // Build the query
+        $query = "SELECT " . implode(", ", $columns) . " FROM " . $this->table;
+
+        foreach ($tables as $table) {
+            $query .= " JOIN $table";
+        }
+
+        // Add conditions
+        if (!empty($conditions)) {
+            $query .= " ON " . implode(" AND ", $conditions);
+        }
+
+        // Add order and limit clauses if provided
+        if ($order) {
+            $query .= " ORDER BY $order";
+        }
+
+        if ($limit) {
+            $query .= " LIMIT $limit";
+        }
+        // Execute the query
+        return $this->query($query);
+    }
+
     public function first($data, $order = 'desc')
     {
 
@@ -193,6 +220,25 @@ class Model extends Database
 
         return false;
     }
+
+    //get newly added column id 
+    public function lastID($primaryKey = 'id')
+    {
+        $query = "SELECT MAX($primaryKey) AS lastID FROM " . $this->table;
+        show($query);
+        $result = $this->query($query);
+        show($result);
+        if ($result !== false) {
+            // Check if the result is an array or object
+            show($result);
+            if (is_array($result)) {
+                return $result[0]->lastID;
+            }
+        }
+
+        return null;
+    }
+
 
     // public function delete($data, $order = 'desc')
     // {
@@ -228,7 +274,6 @@ class Model extends Database
         $keys = array_keys($data);
 
         $query = "select * from " . $this->table . " where ";
-
         foreach ($keys as $key) {
 
             $query .= $key . "=:" . $key . " && ";
@@ -239,7 +284,6 @@ class Model extends Database
 
         //define query to add user data
         $res = $this->query($query, $data);
-
         if (is_array($res)) {
             return $res;
         }

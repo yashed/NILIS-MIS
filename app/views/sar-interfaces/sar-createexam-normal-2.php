@@ -255,6 +255,7 @@ $data['role'] = $role;
         padding: 8px;
         font-size: 14px;
         font-weight: 600px;
+        text-align: center;;
     }
 
     .table td {
@@ -325,8 +326,8 @@ $data['role'] = $role;
 
     .btn-secondary:hover {
         color: black;
-        background-color: #F9D2D2;
-        border: 1px solid red;
+        background-color: #E0E0E0;
+        border: 1px solid #17376e;
     }
 
     input {
@@ -343,6 +344,14 @@ $data['role'] = $role;
         background-color: none;
         border: none;
     }
+    .student-status{
+        color: #10344D;
+        font-weight: 600;
+      
+
+       
+    }
+
 </style>
 
 <body>
@@ -387,7 +396,8 @@ $data['role'] = $role;
                                 <?php foreach ($repeatStudents as $rStudent): ?>
                                     <?php $json = json_encode($rStudent); ?>
                                     <tr>
-                                        <td><input type="checkbox" name="item[]" value="<?= $rStudent->id ?>"></td>
+                                        <td><input type="checkbox" name="item[]" value="<?= $rStudent->id ?>"
+                                        <?= isset($_SESSION['checked_RM_students'][$rStudent->id]) ? 'checked' : '' ?>></td>
                                         <td><input type="text" name="name[]" value=" H.A.Yashed Thisra" readonly></td>
                                         <td><input type="text" name="indexNo[]" value=" <?= $rStudent->indexNo ?>" readonly>
                                         </td>
@@ -399,7 +409,7 @@ $data['role'] = $role;
                                                 readonly>
                                             </td>
                                         <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                                        <td><input type="text" name="status[]" value="Approved" readonly></td>
+                                        <td><input type="text" name="status[]" value="Paid" class ="student-status" readonly></td>
                                     </tr>
                                 <?php endforeach; ?>
 
@@ -407,7 +417,8 @@ $data['role'] = $role;
                                 <?php foreach ($medicalStudents as $mStudent): ?>
                                     <?php $json = json_encode($mStudent); ?>
                                     <tr>
-                                        <td><input type="checkbox" name="item[]" value="<?= $mStudent->id ?>"></td>
+                                        <td><input type="checkbox" name="item[]" value="<?= $mStudent->id ?>"
+                                        <?= isset($_SESSION['checked_RM_students'][$mStudent->id]) ? 'checked' : '' ?>></td>
                                         <td><input type="text" name="name[]" value=" H.A.Yashed Thisra" readonly></td>
                                         <td><input type="text" name="indexNo[]" value=" <?= $mStudent->indexNo ?>" readonly>
                                         </td>
@@ -418,7 +429,7 @@ $data['role'] = $role;
                                         <td><input type="text" name="subjectCode[]" value=" <?= $mStudent->subjectCode ?>"
                                                 readonly></td>
                                         <td><input type="text" name="studentType[]" value="Medical" readonly></td>
-                                        <td><input type="text" name="status[]" value="Approved" readonly></td>
+                                        <td><input type="text" name="status[]" value="Approved" class ="student-status" readonly></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

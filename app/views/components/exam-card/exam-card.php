@@ -22,6 +22,11 @@
         cursor: pointer;
     }
 
+    .exam-card-body:hover {
+        background-color: #F1F1F1;
+        box-shadow: 6px 9px 11px 0px rgba(0, 0, 0, 0.06);
+
+    }
 
     .container {
         display: flex;
@@ -100,10 +105,24 @@
         }
     }
 </style>
+<script>
+    //root variable
+    var rootUrl = "<?= ROOT ?>";
+    var method = "participants";
+    var degreeID = "123";
+    var examID = "123";
+
+    function redirectToURL() {
+        var desiredUrl = rootUrl + "sar/examination/" + method + "?degreeID=" + degreeID + "&examID=" + examID;
+        console.log(desiredUrl);
+        window.location.href = desiredUrl;
+    }
+</script>
 
 <body>
     <div class="exam-card-body">
-        <div class="container">
+
+        <div class="container" onclick="redirectToURL()">
             <div class="card">
                 <div class="content">
                     <div class="degree-name"> DLIM </div>
@@ -115,6 +134,7 @@
         <div class="exam-info">
             <div class="exam-year">1st Semester Examination</div>
         </div>
+
     </div>
 </body>
 

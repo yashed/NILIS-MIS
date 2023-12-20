@@ -56,7 +56,9 @@ class DR extends Controller
         $rowData = ['Full-Name', 'Email', 'Country', 'NIC-No', 'Date-Of-Birth', 'Fax', 'Address', 'Phone-No'];
         $studentCSV = 'assets/csv/output/student-data-input.csv';
         $f = fopen($studentCSV, 'w');
-
+        if ($f == false) {
+            echo 'file is not open successfully';
+        }
         // Write the header row to the CSV file
         fputcsv($f, $rowData);
         fclose($f);

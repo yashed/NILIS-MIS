@@ -1,8 +1,10 @@
 <?php
 
-class DIRECTOR extends Controller{
+class DIRECTOR extends Controller
+{
 
-    public function index(){
+    public function index()
+    {
         $degree = new Degree();
 
         // $degree->insert($_POST);
@@ -11,12 +13,14 @@ class DIRECTOR extends Controller{
         $data['degrees'] = $degree->findAll();
         //show($data['degrees']);
 
-        $this->view('director-interfaces/director-dashboard',$data);
+        $this->view('director-interfaces/director-dashboard', $data);
     }
-    public function notification(){
+    public function notification()
+    {
         $this->view('director-interfaces/director-notification');
     }
-    public function degreeprograms(){
+    public function degreeprograms()
+    {
         $degree = new Degree();
 
         // $degree->insert($_POST);
@@ -25,9 +29,10 @@ class DIRECTOR extends Controller{
         $data['degrees'] = $degree->findAll();
         //show($data['degrees']);
 
-        $this->view('director-interfaces/director-degreeprograms',$data);
+        $this->view('director-interfaces/director-degreeprograms', $data);
     }
-    public function degreeprofile(){
+    public function degreeprofile()
+    {
         $degree = new Degree();
 
         // $degree->insert($_POST);
@@ -36,10 +41,11 @@ class DIRECTOR extends Controller{
         $data['degrees'] = $degree->findAll();
         //show($data['degrees']);
 
-        $this->view('director-interfaces/director-degreeprofile',$data);
+        $this->view('director-interfaces/director-degreeprofile', $data);
     }
-    public function participants($id = null, $action = null, $id2 = null){
-       
+    public function participants($id = null, $action = null, $id2 = null)
+    {
+
         $st = new StudentModel();
         if (!empty($id)) {
             if (!empty($action)) {
@@ -57,7 +63,7 @@ class DIRECTOR extends Controller{
                 return;
             } else {
                 $data['student'] = $st->where(['indexNo' => $id])[0];
-               
+
                 $this->view('common/student/student.view', $data);
                 return;
             }
@@ -67,7 +73,8 @@ class DIRECTOR extends Controller{
         // die;
         $this->view('director-interfaces/director-participants', $data);
     }
-    public function userprofile(){
+    public function userprofile()
+    {
         $degree = new Degree();
 
         // $degree->insert($_POST);
@@ -76,12 +83,14 @@ class DIRECTOR extends Controller{
         $data['degrees'] = $degree->findAll();
         //show($data['degrees']);
 
-        $this->view('director-interfaces/director-userprofile',$data);
+        $this->view('director-interfaces/director-userprofile', $data);
     }
-    public function settings(){
+    public function settings()
+    {
         $this->view('director-interfaces/director-settings');
     }
-    public function login(){
+    public function login()
+    {
         $this->view('common/login/login.view');
     }
 

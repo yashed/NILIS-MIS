@@ -16,31 +16,34 @@ class ExamTimeTable extends Model
         'time',
         'degreeID',
         'semester',
+        'examID'
     ];
 
     public function examTimetableValidate($data)
     {
         $this->errors = [];
 
-        $now = new DateTime();
 
-        if ($data['date'] < $now) {
-            if (empty($this->errors['date'])) {
-                $this->errors['date'] = '* Invalid Date ';
-            }
-        }
-        if (empty($data['subjectName'])) {
-            if (empty($errors['subjectName'])) {
-                $this->errors['subjectName'] = '* Subject Name is required';
-            }
-        }
+        return true;
+        // $now = new DateTime();
+
+        // if ($data['date'] < $now) {
+        //     if (empty($errors['date'])) {
+        //         $this->errors['date'] = '* Invalid Date ';
+        //     }
+        // }
+        // if (empty($data['subjectName'])) {
+        //     if (empty($errors['subjectName'])) {
+        //         $this->errors['subjectName'] = '* Subject Name is required';
+        //     }
+        // }
 
 
-        if (empty($this->errors)) {
+        // if (empty($this->errors)) {
 
-            return true;
-        }
-        return false;
+        //     return true;
+        // }
+        // return false;
     }
 
 
