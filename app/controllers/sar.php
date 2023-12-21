@@ -468,10 +468,10 @@ class SAR extends Controller
                         // Move the uploaded file to the target directory
                         if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
                             // File uploaded successfully
-                            echo json_encode(['success' => true, 'message' => 'File uploaded successfully.']);
+                            // echo json_encode(['success' => true, 'message' => 'File uploaded successfully.']);
                         } else {
                             // Error moving the file
-                            echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
+                            // echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
                         }
                     } else {
                         // Handle file upload error

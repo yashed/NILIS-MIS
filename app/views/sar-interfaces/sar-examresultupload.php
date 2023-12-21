@@ -269,6 +269,7 @@ $data['role'] = $role;
     }
 
     .sub-name {
+        font-weight: 600;
         padding-left: 2%;
         font-size: 20px;
     }
@@ -442,7 +443,7 @@ $data['role'] = $role;
 
     .btn-secondary:hover {
         color: black;
-        background-color: #E0E0E0;
+        background-color: #ACCBFF;
         border: 1px solid #17376e;
     }
 
@@ -568,9 +569,9 @@ $data['role'] = $role;
 
                     <div class="subject">
                         <div class="flex-container-top">
-                            <div class="sub-name"><b>
-                                    <?= $subject->SubjectName ?>
-                                </b></div>
+                            <div class="sub-name">
+                                <?= $subject->SubjectName ?>
+                            </div>
 
                             <button class="btn-primary" name='download_marksheet'
                                 onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
@@ -758,9 +759,10 @@ $data['role'] = $role;
                 submitButton.textContent = 'Submit';
                 submitButton.className = 'btn-secondary';
                 submitButton.name = 'sub1_exam-res';
-                submitButton.type = 'submit';
+                submitButton.type = 'button';
+                submitButton.id = 'button_' + formId;
                 submitButton.addEventListener('click', function () {
-                    uploadFile(fileInputId);
+                    uploadFile(fileInputId, submitButton.id);
                 });
             }
 
@@ -821,12 +823,12 @@ $data['role'] = $role;
         fileInput.click();
     }
 
-    function uploadFile(fileInputId) {
-
+    function uploadFile(fileInputId, buttonId) {
 
         var fileInput = document.getElementById(fileInputId);
         var formData = new FormData();
         formData.append('file', fileInput.files[0]);
+        console.log(fileInput.files[0]);
         var targetURL = '<?= ROOT ?>sar/examination/resultsupload';
 
         fetch(targetURL, {
@@ -843,6 +845,7 @@ $data['role'] = $role;
             .then(data => {
                 console.log(data);
                 alert('File uploaded successfully!');
+                removeSubmitButton(buttonId);
             })
             .catch(error => {
                 console.error('Error uploading file:', error);
@@ -850,6 +853,12 @@ $data['role'] = $role;
             });
     }
 
+    function removeSubmitButton(buttonID) {
+        var button = document.getElementById(buttonID);
+        if (button) {
+            button.remove();
+        }
+    }
 
     //handle delete file
     function deleteFile(container, fileInput) {
@@ -857,7 +866,7 @@ $data['role'] = $role;
 
         // Remove the delete and submit buttons
         container.querySelector('.btn-secondary-cancel').remove();
-        container.querySelector('.btn-secondary').remove();
+
 
         // Remove the file info container
         container.querySelector('.file-info-container').remove();
