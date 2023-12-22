@@ -233,5 +233,21 @@ class Database
  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
  ";
         $this->query($query);
+
+
+        $query = "
+        CREATE TABLE IF NOT EXISTS `mark_sheets` (
+            `Id` int(11) NOT NULL AUTO_INCREMENT,
+            `uploadName` varchar(50) NOT NULL,
+            `newName` varchar(50) NOT NULL,
+            `formId` varchar(20) NOT NULL,
+            `subjectCode` varchar(50) NOT NULL,
+            `date` date NOT NULL,
+            PRIMARY KEY (`Id`),
+            FOREIGN KEY (subjectCode) REFERENCES subject(SubjectCode)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+        ";
+
+        $this->query($query);
     }
 }

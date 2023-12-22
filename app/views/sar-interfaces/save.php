@@ -631,7 +631,7 @@ $data['role'] = $role;
 
                             <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
                                 ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
-                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>')">
+                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>', '<?= $subject->SubjectCode ?>')">
                                 <form method="POST" class='csv-input-from' enctype="multipart/form-data"
                                     id="<?= $formID ?>">
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
@@ -653,7 +653,7 @@ $data['role'] = $role;
 
                             <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
                                 ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
-                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>')">
+                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>', '<?= $subject->SubjectCode ?>')">
                                 <form method="POST" class='csv-input-from' enctype="multipart/form-data"
                                     id="<?= $formID ?>">
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
@@ -702,7 +702,7 @@ $data['role'] = $role;
         container.classList.remove('drag-over');
     }
 
-    function handleDrop(event, containerId, fileInputId, formId, subCode) {
+    function handleDrop(event, containerId, fileInputId, formId, subjectCode) {
         event.preventDefault();
 
         // Remove the drag-over styles
@@ -721,7 +721,7 @@ $data['role'] = $role;
                 fileInput.files = files;
 
                 // Show submit button
-                showSubmitButton(containerId, fileInputId, formId, subCode);
+                showSubmitButton(containerId, fileInputId, formId, subjectCode);
             } else {
                 // not a CSV file, you can provide feedback to the user
                 alert('Please drop a CSV file.');
@@ -731,7 +731,7 @@ $data['role'] = $role;
 
 
 
-    function showSubmitButton(containerId, fileInputId, formId, subCode) {
+    function showSubmitButton(containerId, fileInputId, formId, subjectCode) {
         var container = document.getElementById(containerId);
         var fileInput = document.getElementById(fileInputId);
         var form = document.getElementById(formId);
@@ -767,7 +767,7 @@ $data['role'] = $role;
                 submitButton.type = 'button';
                 submitButton.id = 'button_' + formId;
                 submitButton.addEventListener('click', function () {
-                    uploadFile(fileInputId, submitButton.id, formId, subCode);
+                    uploadFile(fileInputId, submitButton.id, , subjectCode, formID);
                 });
             }
 
@@ -828,17 +828,16 @@ $data['role'] = $role;
         fileInput.click();
     }
 
-    function uploadFile(fileInputId, buttonId, formId, subCode) {
+    function uploadFile(fileInputId, buttonId, subjectCode, formId) {
 
         var fileInput = document.getElementById(fileInputId);
         var formData = new FormData();
-        console.log(fileInput.files[0])
         formData.append('file', fileInput.files[0]);
+        formData.append('subjectCode', subjectCode);
         formData.append('formId', formId);
-        formData.append('subjectCode', subCode);
 
-        console.log('Form ID - ' + formId);
-        console.log('Sub ID - ' + subCode);
+
+        console.log(fileInput.files[0]);
         var targetURL = '<?= ROOT ?>sar/examination/resultsupload';
 
         fetch(targetURL, {

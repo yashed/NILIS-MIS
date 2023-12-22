@@ -65,7 +65,7 @@ class SAR extends Controller
         $examtimetable = new ExamTimeTable();
         $subjects = new Subjects();
         $exam = new Exam();
-
+        $resultSheet = new ResultSheet();
 
         $data['errors'] = [];
         $data['degrees'] = $degree->findAll();
@@ -451,14 +451,18 @@ class SAR extends Controller
                         fclose($f);
                     }
 
-                    //save file in specific location
+
+
+                    // save file in specific location
+                    // Check if the file was uploaded successfully
                     if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+
                         // Specify the target directory
                         $targetDirectory = 'assets/csv/examsheets/';
 
                         // Get the original file name
                         $originalFileName = basename($_FILES['file']['name']);
-                        show($originalFileName);
+
                         // Generate a unique filename to avoid overwriting existing files
                         $uniqueFileName = 'Results' . '_' . $originalFileName;
 
@@ -467,16 +471,33 @@ class SAR extends Controller
 
                         // Move the uploaded file to the target directory
                         if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
-                            // File uploaded successfully
-                            // echo json_encode(['success' => true, 'message' => 'File uploaded successfully.']);
+
+                            // File uploaded successfully, now insert data into the database
+                            $examSheet = [];
+                            $examSheet['formId'] = isset($_POST['formId']) ? $_POST['formId'] : 'dasdas';
+                            $examSheet['subjectCode'] = isset($_POST['subjectCode']) ? $_POST['subjectCode'] : '';
+                            $examSheet['date'] = date("Y-m-d H:i:s");
+                            $examSheet['uploadName'] = $originalFileName;
+                            $examSheet['newName'] = $uniqueFileName;
+
+                            // Insert data into the database
+                            if ($resultSheet->examValidate($examSheet)) {
+                                $resultSheet->insert($examSheet);
+                                echo json_encode(['success' => true, 'message' => 'File uploaded successfully.']);
+                            } else {
+                                // Error inserting data into the database
+                                echo json_encode(['success' => false, 'message' => 'Error inserting data into the database.']);
+                            }
                         } else {
                             // Error moving the file
-                            // echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
+                            echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
                         }
                     } else {
                         // Handle file upload error
+                        message("File upload error", "error");
                         // echo json_encode(['success' => false, 'message' => 'File upload error.']);
                     }
+
 
                 }
 
