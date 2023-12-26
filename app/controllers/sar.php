@@ -464,7 +464,7 @@ class SAR extends Controller
                         $originalFileName = basename($_FILES['file']['name']);
 
                         // Generate a unique filename to avoid overwriting existing files
-                        $uniqueFileName = 'Results' . '_' . $originalFileName;
+                        $uniqueFileName = $_POST['formId'] . '_' . 'Results' . '.csv';
 
                         // Set the target path
                         $targetPath = $targetDirectory . $uniqueFileName;
@@ -474,11 +474,14 @@ class SAR extends Controller
 
                             // File uploaded successfully, now insert data into the database
                             $examSheet = [];
-                            $examSheet['formId'] = isset($_POST['formId']) ? $_POST['formId'] : 'dasdas';
+                            $examSheet['formId'] = isset($_POST['formId']) ? $_POST['formId'] : '';
                             $examSheet['subjectCode'] = isset($_POST['subjectCode']) ? $_POST['subjectCode'] : '';
                             $examSheet['date'] = date("Y-m-d H:i:s");
                             $examSheet['uploadName'] = $originalFileName;
                             $examSheet['newName'] = $uniqueFileName;
+                            $examSheet['type'] = isset($_POST['type']) ? $_POST['type'] : '';
+
+                            show($examSheet);
 
                             // Insert data into the database
                             if ($resultSheet->examValidate($examSheet)) {

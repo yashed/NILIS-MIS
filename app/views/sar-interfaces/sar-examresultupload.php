@@ -593,6 +593,7 @@ $data['role'] = $role;
                                         for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
                                     <br>
                                     <input type='text' value='<?= $formID ?>' name='formID' hidden>
+                                    <input type='text' value='assestment' name='type' hidden>
                                     <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode' hidden>
                                     <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
                                         onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>')">
@@ -616,6 +617,7 @@ $data['role'] = $role;
                                         for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
                                     <br>
                                     <input type='text' value='<?= $formID ?>' name='formID' hidden>
+                                    <input type='text' value='examiner1' name='type' hidden>
                                     <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode' hidden>
                                     <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
                                         onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>')">
@@ -638,6 +640,7 @@ $data['role'] = $role;
                                         for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
                                     <br>
                                     <input type='text' value='<?= $formID ?>' name='formID' hidden>
+                                    <input type='text' value='examiner2' name='type' hidden>
                                     <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode' hidden>
                                     <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
                                         onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>')">
@@ -660,6 +663,7 @@ $data['role'] = $role;
                                         for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
                                     <br>
                                     <input type='text' value='<?= $formID ?>' name='formID' hidden>
+                                    <input type='text' value='examiner3' name='type' hidden>
                                     <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode' hidden>
                                     <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
                                         onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>')">
