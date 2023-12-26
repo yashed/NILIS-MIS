@@ -18,7 +18,7 @@ class Model extends Database
             $data = (array) $data;
         }
 
-        show($data);
+
         //remove unwanted column 
         //this is not a serious error , the code is working with this
         //secho "No error";

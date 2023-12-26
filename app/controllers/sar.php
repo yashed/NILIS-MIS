@@ -310,22 +310,26 @@ class SAR extends Controller
                         $selectedRMStudents = $_SESSION['Selected_RM_Students'];
                         $selectedNormalStudents = $_SESSION['Selected_Normal_Students'];
                         echo ("Repeat Students");
-                        show($selectedRMStudents);
+                        // show($selectedRMStudents);
                         echo ("Students");
-                        show($selectedNormalStudents);
+                        // show($selectedNormalStudents);
                         echo ("Time table");
                         show($timeTableData);
 
 
+                        foreach ($selectedNormalStudents as $student) {
+                            $student->examID = $examID;
+                            show($student);
+                            $examParticipants->insert($student);
+                        }
+                        foreach ($selectedRMStudents as $student) {
+                            $student->examID = $examID;
+                            show($student);
+                            $examParticipants->insert($student);
+                        }
                         //need to add actucal data to add data to tables
                         foreach ($timeTableData as $timeTableRow) {
                             $examtimetable->insert($timeTableRow);
-                        }
-                        foreach ($selectedNormalStudents as $student) {
-                            // $examParticipants->insert($student);
-                        }
-                        foreach ($selectedRMStudents as $student) {
-                            // $examParticipants->insert($student);
                         }
                         message("Exam Was Created Successfully", "success");
                         // redirect('sar/examination');
@@ -340,7 +344,8 @@ class SAR extends Controller
         } else {
 
             //examid must pass through the session
-            $examID = 1;
+            $examID = 43;
+
             if ($method == 'participants') {
                 $participants[] = $examParticipants->where(['degreeID' => $degreeID, 'semester' => $semester, 'examID' => $examID]);
                 $data['participants'] = $participants;
@@ -348,15 +353,11 @@ class SAR extends Controller
 
             } else if ($method == 'resultsupload') {
 
-
-
-
                 //get students data from exam participants table
                 $tables = ['student'];
                 $columns = ['*'];
                 $conditions1 = ['student.degreeID = exam_participants.DegreeID', 'student.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID];
                 $Participants = $examParticipants->join($tables, $columns, $conditions1);
-
 
                 //get repeat student details
                 $tables = ['repeat_students', 'student'];
@@ -386,8 +387,8 @@ class SAR extends Controller
 
                 //show data
                 // show($NormalParticipants);
-                // show($RepeatParticipants);
-                // show($MedicalParticipants);
+                // show($RepeatStudents);
+                // show($MedicalStudents);
 
 
                 if ($NormalParticipants !== false) {
@@ -464,7 +465,7 @@ class SAR extends Controller
                         $originalFileName = basename($_FILES['file']['name']);
 
                         // Generate a unique filename to avoid overwriting existing files
-                        $uniqueFileName = $_POST['formId'] . '_' . 'Results' . '.csv';
+                        $uniqueFileName = $_POST['formId'] . '_' . 'Results' . '_' . uniqid(1) . '.csv';
 
                         // Set the target path
                         $targetPath = $targetDirectory . $uniqueFileName;
@@ -481,7 +482,7 @@ class SAR extends Controller
                             $examSheet['newName'] = $uniqueFileName;
                             $examSheet['type'] = isset($_POST['type']) ? $_POST['type'] : '';
 
-                            show($examSheet);
+
 
                             // Insert data into the database
                             if ($resultSheet->examValidate($examSheet)) {
@@ -491,6 +492,40 @@ class SAR extends Controller
                                 // Error inserting data into the database
                                 echo json_encode(['success' => false, 'message' => 'Error inserting data into the database.']);
                             }
+
+                            //get file content
+                            $fileContent = file_get_contents($targetPath);
+
+                            // Parse CSV content
+                            $lines = explode("\n", $fileContent);
+
+                            // Loop through each line starting from the 4th line (index 3) to skip header lines
+                            for ($i = 3; $i < count($lines); $i++) {
+                                // Split each line into an array of values
+                                $values = str_getcsv($lines[$i]);
+
+                                // Extract relevant information
+                                $indexNo = $values[0];
+                                $regNo = $values[1];
+                                $examiner1Mark = $values[2];
+                                $examiner2Mark = $values[3];
+                                $examiner3Mark = $values[4];
+                                $assignmentMark = $values[5];
+
+                                // Store information in the $students array
+                                $students[] = [
+                                    'studentIndexNo' => $indexNo,
+                                    'examiner1Marks' => $examiner1Mark,
+                                    'examiner2Marks' => $examiner2Mark,
+                                    'examiner3Marks' => $examiner3Mark,
+                                    'assessmentMarks' => $assignmentMark,
+                                    'subjectCode' => $examSheet['subjectCode'],
+                                    'examID	' => $examID
+                                ];
+
+
+                            }
+
                         } else {
                             // Error moving the file
                             echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
