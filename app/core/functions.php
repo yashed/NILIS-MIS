@@ -44,4 +44,20 @@ function message($msg = '', $type = 'success', $erase = false)
 
     return false;
 }
+
+function createMarkSheet($inputCSV, $examID, $subCode)
+{
+
+    $filePath = 'assets/csv/examsheets/final-marksheets';
+    $markSheet = $filePath . '/' . $examID . '_' . $subCode . '.csv';
+
+    //check if marksheet already exists
+    if (file_exists($markSheet)) {
+        $f = fopen($markSheet, 'w');
+
+    } else {
+        file_put_contents($markSheet, $inputCSV);
+    }
+
+}
 ?>
