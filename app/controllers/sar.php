@@ -451,9 +451,6 @@ class SAR extends Controller
                         }
                         fclose($f);
                     }
-
-
-
                     // save file in specific location
                     // Check if the file was uploaded successfully
                     if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
@@ -470,61 +467,84 @@ class SAR extends Controller
                         // Set the target path
                         $targetPath = $targetDirectory . $uniqueFileName;
 
+                        //catch data and save in variables
+                        $subCode = isset($_POST['subjectCode']) ? $_POST['subjectCode'] : '';
+                        $formID = isset($_POST['formId']) ? $_POST['formId'] : '';
+                        $marksType = isset($_POST['type']) ? $_POST['type'] : '';
+
+
                         // Move the uploaded file to the target directory
                         if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
 
                             // File uploaded successfully, now insert data into the database
                             $examSheet = [];
-                            $examSheet['formId'] = isset($_POST['formId']) ? $_POST['formId'] : '';
-                            $examSheet['subjectCode'] = isset($_POST['subjectCode']) ? $_POST['subjectCode'] : '';
+                            $examSheet['formId'] = $formID;
+                            $examSheet['subjectCode'] = $subCode;
                             $examSheet['date'] = date("Y-m-d H:i:s");
                             $examSheet['uploadName'] = $originalFileName;
                             $examSheet['newName'] = $uniqueFileName;
-                            $examSheet['type'] = isset($_POST['type']) ? $_POST['type'] : '';
+                            $examSheet['type'] = $marksType;
 
 
 
                             // Insert data into the database
                             if ($resultSheet->examValidate($examSheet)) {
+
+                                var_dump($examSheet);
+                                //add record to database table
                                 $resultSheet->insert($examSheet);
+
+
+                                //call crateMarkSheet function to update csv file
+                                createMarkSheet($uniqueFileName, $examID, $subCode, $marksType);
+
                                 echo json_encode(['success' => true, 'message' => 'File uploaded successfully.']);
                             } else {
                                 // Error inserting data into the database
                                 echo json_encode(['success' => false, 'message' => 'Error inserting data into the database.']);
                             }
 
-                            //get file content
-                            $fileContent = file_get_contents($targetPath);
-
-                            // Parse CSV content
-                            $lines = explode("\n", $fileContent);
-
-                            // Loop through each line starting from the 4th line (index 3) to skip header lines
-                            for ($i = 3; $i < count($lines); $i++) {
-                                // Split each line into an array of values
-                                $values = str_getcsv($lines[$i]);
-
-                                // Extract relevant information
-                                $indexNo = $values[0];
-                                $regNo = $values[1];
-                                $examiner1Mark = $values[2];
-                                $examiner2Mark = $values[3];
-                                $examiner3Mark = $values[4];
-                                $assignmentMark = $values[5];
-
-                                // Store information in the $students array
-                                $students[] = [
-                                    'studentIndexNo' => $indexNo,
-                                    'examiner1Marks' => $examiner1Mark,
-                                    'examiner2Marks' => $examiner2Mark,
-                                    'examiner3Marks' => $examiner3Mark,
-                                    'assessmentMarks' => $assignmentMark,
-                                    'subjectCode' => $examSheet['subjectCode'],
-                                    'examID	' => $examID
-                                ];
 
 
-                            }
+                            // //get file content
+                            // $fileContent = file_get_contents($targetPath);
+
+                            // // Parse CSV content
+                            // $lines = explode("\n", $fileContent);
+
+                            // // Loop through each line starting from the 4th line (index 3) to skip header lines
+                            // for ($i = 3; $i < count($lines); $i++) {
+                            //     // Split each line into an array of values
+                            //     $values = str_getcsv($lines[$i]);
+
+                            //     // Extract relevant information
+                            //     $indexNo = $values[0];
+                            //     $regNo = $values[1];
+                            //     $examiner1Mark = $values[2];
+                            //     $examiner2Mark = $values[3];
+                            //     $examiner3Mark = $values[4];
+                            //     $assignmentMark = $values[5];
+
+                            //     // Store information in the $students array
+                            //     $students[] = [
+                            //         'studentIndexNo' => $indexNo,
+                            //         'examiner1Marks' => $examiner1Mark,
+                            //         'examiner2Marks' => $examiner2Mark,
+                            //         'examiner3Marks' => $examiner3Mark,
+                            //         'assessmentMarks' => $assignmentMark,
+                            //         'subjectCode' => $examSheet['subjectCode'],
+                            //         'examID	' => $examID
+                            //     ];
+
+
+                            // }
+
+
+                            echo 'call function sar';
+                            //create marksheet for a subject
+
+
+
 
                         } else {
                             // Error moving the file

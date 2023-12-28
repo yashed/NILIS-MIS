@@ -45,19 +45,99 @@ function message($msg = '', $type = 'success', $erase = false)
     return false;
 }
 
-function createMarkSheet($inputCSV, $examID, $subCode)
+function createMarkSheet($inputCSV, $examID, $subCode, $type)
 {
+    var_dump('inside the function' . $inputCSV . 'exam id ' . $examID . 'subject code ' . $subCode . 'type = ' . $type);
 
     $filePath = 'assets/csv/examsheets/final-marksheets';
     $markSheet = $filePath . '/' . $examID . '_' . $subCode . '.csv';
 
-    //check if marksheet already exists
-    if (file_exists($markSheet)) {
-        $f = fopen($markSheet, 'w');
-
-    } else {
-        file_put_contents($markSheet, $inputCSV);
+    // Check if the directory exists, create it if not
+    if (!is_dir($filePath)) {
+        mkdir($filePath, 0777, true);
     }
 
+    // Check if marksheet already exists
+    if (file_exists($markSheet)) {
+        // Open file to do modifications
+        $f = fopen($markSheet, 'a');
+
+
+        // Perform your modifications here if needed
+        $content = file_get_contents('assets/csv/examsheets/' . $inputCSV);
+        $lines = explode("\n", $content);
+
+        //read the content form existing marks sheet
+        $subjectContent = file_get_contents($markSheet);
+        $subjectLines = explode("\n", $subjectContent);
+
+        var_dump('subject content = ' . $subjectContent);
+
+
+        for ($i = 4; $i < count($lines); $i++) {
+            // Split each line into an array of values
+            $values = str_getcsv($lines[$i]);
+            $inputIndex = $values[0];
+            $inputRegNo = $values[1];
+
+            $examiner1Mark = $values[2];
+            var_dump('examiner 1 mark = ' . $examiner1Mark . 'index = ' . $inputIndex . 'reg no = ' . $inputRegNo);
+
+            $examiner2Mark = $values[3];
+            // $examiner3Mark = $values[4];
+            $assignmentMark = $values[4];
+
+
+            for ($j = 4; $j < count($subjectLines); $j++) {
+                $subjectValues = str_getcsv($subjectLines[$j]);
+
+                //get index and reg no from subject marks sheet
+                $subjectIndexNo = $subjectValues[0];
+                $subjectRegNo = $subjectValues[1];
+
+                var_dump('subject index = ' . $subjectIndexNo . 'subject reg no = ' . $subjectRegNo);
+                if ($inputIndex == $subjectIndexNo && $inputRegNo == $subjectRegNo) {
+
+                    if ($type == 'assestment') {
+                        $subjectValues[4] = $assignmentMark;
+                        $subjectLines[$j] = implode(",", $subjectValues);
+                        var_dump('subject line =  ' . $subjectLines[$j]);
+
+                        break;
+
+
+                    } else if ($type == 'examiner1') {
+
+                        $subjectValues[2] = $examiner1Mark;
+                        $subjectLines[$j] = implode(",", $subjectValues);
+                        var_dump('subject line =  ' . $subjectLines[$j]);
+
+                        break;
+
+                    } else if ($type == 'examiner2') {
+
+                        $subjectValues[3] = $examiner2Mark;
+                        $subjectLines[$j] = implode(",", $subjectValues);
+                        var_dump('subject line =  ' . $subjectLines[$j]);
+
+                        break;
+
+                    } else if ($type == 'examiner3') {
+
+                    }
+                }
+            }
+        }
+        var_dump('all subject lines = ' . $subjectLines);
+        file_put_contents($markSheet, implode("\n", $subjectLines));
+        // Close the file
+        fclose($f);
+    } else {
+        // If the file doesn't exist, create it and write content
+        $content = file_get_contents('assets/csv/examsheets/' . $inputCSV);
+
+        file_put_contents($markSheet, $content);
+    }
 }
+
 ?>

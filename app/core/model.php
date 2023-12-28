@@ -194,6 +194,7 @@ class Model extends Database
         if ($limit) {
             $query .= " LIMIT $limit";
         }
+
         // Execute the query
         return $this->query($query);
     }
