@@ -81,7 +81,7 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
             $inputRegNo = $values[1];
 
             $examiner1Mark = $values[2];
-            var_dump('examiner 1 mark = ' . $examiner1Mark . 'index = ' . $inputIndex . 'reg no = ' . $inputRegNo);
+            // var_dump('examiner 1 mark = ' . $examiner1Mark . 'index = ' . $inputIndex . 'reg no = ' . $inputRegNo);
 
             $examiner2Mark = $values[3];
             // $examiner3Mark = $values[4];
@@ -101,7 +101,7 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
                     if ($type == 'assestment') {
                         $subjectValues[4] = $assignmentMark;
                         $subjectLines[$j] = implode(",", $subjectValues);
-                        var_dump('subject line =  ' . $subjectLines[$j]);
+                        // var_dump('subject line =  ' . $subjectLines[$j]);
 
                         break;
 
@@ -110,7 +110,7 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
 
                         $subjectValues[2] = $examiner1Mark;
                         $subjectLines[$j] = implode(",", $subjectValues);
-                        var_dump('subject line =  ' . $subjectLines[$j]);
+                        // var_dump('subject line =  ' . $subjectLines[$j]);
 
                         break;
 
@@ -118,7 +118,7 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
 
                         $subjectValues[3] = $examiner2Mark;
                         $subjectLines[$j] = implode(",", $subjectValues);
-                        var_dump('subject line =  ' . $subjectLines[$j]);
+                        // var_dump('subject line =  ' . $subjectLines[$j]);
 
                         break;
 
@@ -140,4 +140,34 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
     }
 }
 
+function leastGap($mark1, $mark2, $mark3)
+{
+    $gap1 = abs($mark1 - $mark2);
+    $gap2 = abs($mark2 - $mark3);
+    $gap3 = abs($mark1 - $mark3);
+
+    if ($gap1 < $gap2) {
+        if ($gap1 < $gap3) {
+            $marks = [$mark1, $mark2];
+            return $marks;
+        } else {
+            $marks = [$mark2, $mark3];
+            return $marks;
+        }
+    } else {
+        if ($gap2 < $gap3) {
+            $marks = [$mark1, $mark2];
+            return $marks;
+        } else {
+            $marks = [$mark2, $mark3];
+            return $marks;
+        }
+    }
+}
+
+function finalMark($mark1, $mark2, $assigmnet)
+{
+    $finalMark = ($mark1 + $mark2) / 2 + $assigmnet / 2;
+    return $finalMark;
+}
 ?>

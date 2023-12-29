@@ -505,49 +505,16 @@ class SAR extends Controller
                             }
 
 
-
-                            // //get file content
-                            // $fileContent = file_get_contents($targetPath);
-
-                            // // Parse CSV content
-                            // $lines = explode("\n", $fileContent);
-
-                            // // Loop through each line starting from the 4th line (index 3) to skip header lines
-                            // for ($i = 3; $i < count($lines); $i++) {
-                            //     // Split each line into an array of values
-                            //     $values = str_getcsv($lines[$i]);
-
-                            //     // Extract relevant information
-                            //     $indexNo = $values[0];
-                            //     $regNo = $values[1];
-                            //     $examiner1Mark = $values[2];
-                            //     $examiner2Mark = $values[3];
-                            //     $examiner3Mark = $values[4];
-                            //     $assignmentMark = $values[5];
-
-                            //     // Store information in the $students array
-                            //     $students[] = [
-                            //         'studentIndexNo' => $indexNo,
-                            //         'examiner1Marks' => $examiner1Mark,
-                            //         'examiner2Marks' => $examiner2Mark,
-                            //         'examiner3Marks' => $examiner3Mark,
-                            //         'assessmentMarks' => $assignmentMark,
-                            //         'subjectCode' => $examSheet['subjectCode'],
-                            //         'examID	' => $examID
-                            //     ];
-
-
-                            // }
-
-
                             echo 'call function sar';
-                            //create marksheet for a subject
+
 
 
 
 
                         } else {
                             // Error moving the file
+                            $data['errors'] = $resultSheet->errors;
+
                             echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
                         }
                     } else {
