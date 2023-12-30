@@ -1,6 +1,7 @@
 <?php
 $role = "SAR";
 $data['role'] = $role;
+$validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
 ?>
 
@@ -524,9 +525,17 @@ $data['role'] = $role;
         /* Change background color when dragging over */
         color: #e74c3c;
     }
+
+    .user-error {
+        color: red;
+        font-size: 10px;
+        font-weight: 400;
+        margin-left: 5px;
+    }
 </style>
 
 <body>
+
     <div class="temp2-home">
         <div class="temp2-title">Examination</div>
         <div class="temp2-subsection-1">
@@ -599,6 +608,11 @@ $data['role'] = $role;
                                         onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','assestment')">
                                     <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                             class="browse-label">browse</label></br> assignment results.</p>
+                                    <?php if (!empty($errors['marks'])): ?>
+                                        <div class="user-error" for="marks">
+                                            <?= $errors['marks'] ?>
+                                        </div>
+                                    <?php endif; ?>
                                 </form>
                             </div>
                             </form>
@@ -833,6 +847,14 @@ $data['role'] = $role;
     }
 
     function uploadFile(fileInputId, buttonId, formId, subCode, type) {
+
+        var error = <?= json_encode($validateError) ?>;
+        console.log('font end errrors =  ', error);
+
+        if (error !== null && error !== '') {
+            alert('Invalid Marks: ' + error);
+            return;
+        }
 
         var fileInput = document.getElementById(fileInputId);
         var formData = new FormData();

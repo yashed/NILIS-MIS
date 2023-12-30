@@ -501,6 +501,9 @@ class SAR extends Controller
                                 echo json_encode(['success' => true, 'message' => 'File uploaded successfully.']);
                             } else {
                                 // Error inserting data into the database
+                                $data['errors'] = $resultSheet->errors;
+                                // show($data['errors']);
+                                var_dump('errors = ' . $resultSheet->errors['marks']);
                                 echo json_encode(['success' => false, 'message' => 'Error inserting data into the database.']);
                             }
 
@@ -513,7 +516,7 @@ class SAR extends Controller
 
                         } else {
                             // Error moving the file
-                            $data['errors'] = $resultSheet->errors;
+
 
                             echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
                         }
@@ -527,6 +530,8 @@ class SAR extends Controller
                 }
 
                 $this->view('sar-interfaces/sar-examresultupload', $data);
+
+
             } else if ($method == 'results') {
                 $this->view('sar-interfaces/sar-examresults', $data);
             } else {
