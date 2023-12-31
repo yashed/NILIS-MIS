@@ -170,4 +170,37 @@ function finalMark($mark1, $mark2, $assigmnet)
     $finalMark = ($mark1 + $mark2) / 2 + $assigmnet / 2;
     return $finalMark;
 }
+
+function insertMarks($file, $examID, $subCode)
+{
+    //need to add condition to check the file is full of marks or not
+    $mark = new Marks;
+
+    $data['examID'] = $examID;
+    $data['subjectCode'] = $subCode;
+
+
+    $filePath = 'assets/csv/examsheets/final-marksheets' . $file;
+    $content = file_get_contents($filePath);
+    $lines = explode("\n", $content);
+
+    //iterate through data in file
+    for ($i = 4; $i < count($lines); $i++) {
+
+        //get line
+        $values = str_getcsv($lines[$i]);
+
+        //catch data 
+        $data['studentIndexNo'] = $values[0];
+        $data['examiner1Marks'] = $values[2];
+        $data['examiner2Marks'] = $values[3];
+        $data['assessmentMarks'] = $values[4];
+        $data['examiner2Marks'] = !empty($values[5]) ? $values[5] : '';
+
+
+
+    }
+
+
+}
 ?>
