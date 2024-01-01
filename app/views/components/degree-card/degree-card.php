@@ -19,7 +19,7 @@
         }
 
         .degree-img {
-            width: 113px;
+            width: 98px;
             height: 123px;
             flex-shrink: 0;
         }

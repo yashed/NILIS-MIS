@@ -31,7 +31,7 @@
                 </li>
                 <li class="nav-link">
                     <a href="<?= ROOT ?>dr/degreeprograms">
-                        <i class="bx bx-home icon"></i>
+                        <i class="bx bx-layer-plus"></i>
                         <span class="text nav-text">Degree Programs</span>
                     </a>
                 </li>
