@@ -516,6 +516,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
         flex: 25%;
         border: 2px dashed #3498db;
         cursor: pointer;
+        gap: 30px;
     }
 
     .dashed-container.drag-over {
@@ -531,6 +532,12 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
         font-size: 10px;
         font-weight: 400;
         margin-left: 5px;
+    }
+
+    .marks-type {
+        font-size: 1.5vw;
+        text-align: center;
+        color: #939393;
     }
 </style>
 
@@ -596,6 +603,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                             <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
                                 ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
                                 ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','assestment')">
+                                <div class='marks-type'>Assestment Marks </div>
                                 <form method="POST" class='csv-input-from' enctype="multipart/form-data"
                                     id="<?= $formID ?>">
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
@@ -625,6 +633,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                             <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
                                 ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
                                 ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>', 'examiner1')">
+                                <div class='marks-type'>Examiner 01 Marks </div>
                                 <form method="POST" class='csv-input-from' enctype="multipart/form-data"
                                     id="<?= $formID ?>">
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
@@ -648,6 +657,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                             <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
                                 ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
                                 ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>', 'examiner2')">
+                                <div class='marks-type'>Examiner 02 Marks </div>
                                 <form method="POST" class='csv-input-from' enctype="multipart/form-data"
                                     id="<?= $formID ?>">
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
@@ -671,6 +681,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                             <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
                                 ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
                                 ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner3')">
+                                <div class='marks-type'>Examiner 03 Marks </div>
                                 <form method="POST" class='csv-input-from' enctype="multipart/form-data"
                                     id="<?= $formID ?>">
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
@@ -800,6 +811,9 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
             // Hide the file icon label
             container.querySelector('.file-input-icon').style.display = 'none';
 
+            //hide type labe
+            container.querySelector('.marks-type').style.display = 'none';
+
             // Create the file icon
             var fileIcon = document.createElement('div');
             fileIcon.className = 'file-uploded-icon ';
@@ -913,6 +927,10 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
         // Display the file icon image and associated text
         container.querySelector('.file-input-icon').style.display = 'flex';
+
+        //Display type label
+        container.querySelector('.marks-type').style.display = 'block';
+
 
         // var fileIcon = document.createElement('img');
         // fileIcon.src = '<?= ROOT ?>/assets/file-icon.png';

@@ -62,6 +62,14 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
         // Open file to do modifications
         $f = fopen($markSheet, 'a');
 
+        //add column if examiner 3
+        if ($type = 'examiner3') {
+
+            $egnoreLines = file($markSheet, FILE_IGNORE_NEW_LINES);
+            $egnoreLines[3] = '"Index No","Registration No","Examiner 01 Mark","Examiner 02 Marks","Assignment Marks","Examiner 03 Marks" ';
+            // Write the modified content 
+            file_put_contents($markSheet, implode("\n", $egnoreLines));
+        }
 
         // Perform your modifications here if needed
         $content = file_get_contents('assets/csv/examsheets/' . $inputCSV);
@@ -72,6 +80,7 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
         $subjectLines = explode("\n", $subjectContent);
 
         var_dump('subject content = ' . $subjectContent);
+
 
 
         for ($i = 4; $i < count($lines); $i++) {
@@ -123,7 +132,8 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
                         break;
 
                     } else if ($type == 'examiner3') {
-
+                        $subjectValues[5] = $examiner2Mark;
+                        $subjectLines[$j] = implode(",", $subjectValues);
                     }
                 }
             }

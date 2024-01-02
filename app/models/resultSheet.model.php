@@ -16,7 +16,9 @@ class ResultSheet extends Model
         'newName',
         'formId',
         'subjectCode',
-        'date'
+        'date',
+        'type',
+        'examId'
 
     ];
 

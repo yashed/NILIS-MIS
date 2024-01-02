@@ -484,6 +484,9 @@ class SAR extends Controller
                             $examSheet['uploadName'] = $originalFileName;
                             $examSheet['newName'] = $uniqueFileName;
                             $examSheet['type'] = $marksType;
+                            $examSheet['type'] = $marksType;
+                            $examSheet['examId'] = $examID;
+
 
 
 

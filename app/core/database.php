@@ -244,8 +244,11 @@ class Database
             `newName` varchar(50) NOT NULL,
             `formId` varchar(20) NOT NULL,
             `subjectCode` varchar(50) NOT NULL,
+            `type` varchar(30) NOT NULL,
+            `examId` int(11) NOT NULL,
             `date` date NOT NULL,
             PRIMARY KEY (`Id`),
+            Foreign key (examId) references exam(examID),
             FOREIGN KEY (subjectCode) REFERENCES subject(SubjectCode)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
         ";
