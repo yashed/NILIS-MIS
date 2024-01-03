@@ -496,6 +496,10 @@ class SAR extends Controller
                                 var_dump($examSheet);
                                 //add record to database table
                                 $resultSheet->insert($examSheet);
+                                $message = 'Upload ' . $marksType . ' Marksheet for ' . $subCode . ' in ExamId = ' . $examID . ' successfully.';
+                                show($message);
+                                activity($message);
+
 
 
                                 //call crateMarkSheet function to update csv file

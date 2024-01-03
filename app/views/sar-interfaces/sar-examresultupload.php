@@ -539,6 +539,32 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
         text-align: center;
         color: #939393;
     }
+
+    .button-bar {
+        display: flex;
+        gap: 20px;
+
+    }
+
+    .btn-secondary-2 {
+        min-width: 25vh;
+        color: #fff;
+        height: 5vh;
+        padding: 5px 15px 5px 15px;
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        color: #17376e;
+        border: 0px;
+        margin-bottom: 10px;
+        border: 1px solid #17376e;
+    }
+
+    .btn-secondary-2:hover {
+        color: black;
+        background-color: #E2E2E2;
+        border: 1px solid #17376e;
+    }
 </style>
 
 <body>
@@ -588,10 +614,14 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                             <div class="sub-name">
                                 <?= $subject->SubjectName ?>
                             </div>
-
-                            <button class="btn-primary" name='download_marksheet'
-                                onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
-                                Marksheet</button>
+                            <div class="button-bar">
+                                <button class="btn-primary" name='download_marksheet'
+                                    onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
+                                    Marksheet</button>
+                                <button class="btn-secondary-2" name='download_marksheet'
+                                    onclick="downloadFile('<?= $subject->SubjectCode ?>')" hidden>Download
+                                    Examiner 03 Marksheet</button>
+                            </div>
                         </div>
                         <div class="flex-container">
                             <?php

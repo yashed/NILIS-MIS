@@ -307,5 +307,19 @@ class Database
         ";
 
         $this->query($query);
+
+        $query = "
+        CREATE TABLE IF NOT EXISTS `activity` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `user` varchar(40) NOT NULL,
+            `discription` varchar(500) NOT NULL,
+            `date` date NOT NULL,
+            `time` TIME NOT NULL,
+            PRIMARY KEY (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ";
+
+        $this->query($query);
+
     }
 }

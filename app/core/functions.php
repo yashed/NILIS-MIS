@@ -212,5 +212,24 @@ function insertMarks($file, $examID, $subCode)
     }
 
 
+
 }
+function activity($message)
+{
+    show('$message');
+    $activity = new Activity;
+
+    //assign data into array
+    $data['discription'] = $message;
+    $data['user'] = $_SESSION['USER_DATA']->role;
+    $data['date'] = date("Y-m-d");
+    $data['time'] = date("H:i:s");
+
+    if ($activity->Validate($data)) {
+
+        //insert data to table
+        $activity->insert($data);
+    }
+}
+
 ?>
