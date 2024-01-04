@@ -79,7 +79,7 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
         $subjectContent = file_get_contents($markSheet);
         $subjectLines = explode("\n", $subjectContent);
 
-        var_dump('subject content = ' . $subjectContent);
+        // var_dump('subject content = ' . $subjectContent);
 
 
 
@@ -91,9 +91,8 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
 
             $examiner1Mark = $values[2];
             // var_dump('examiner 1 mark = ' . $examiner1Mark . 'index = ' . $inputIndex . 'reg no = ' . $inputRegNo);
-
             $examiner2Mark = $values[3];
-            // $examiner3Mark = $values[4];
+            // $examiner3Mark = $values[5];
             $assignmentMark = $values[4];
 
 
@@ -104,10 +103,11 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
                 $subjectIndexNo = $subjectValues[0];
                 $subjectRegNo = $subjectValues[1];
 
-                var_dump('subject index = ' . $subjectIndexNo . 'subject reg no = ' . $subjectRegNo);
+                // var_dump('subject index = ' . $subjectIndexNo . 'subject reg no = ' . $subjectRegNo);
                 if ($inputIndex == $subjectIndexNo && $inputRegNo == $subjectRegNo) {
 
                     if ($type == 'assestment') {
+                        var_dump('inside the if condition', 'assignment mark = ' . $assignmentMark);
                         $subjectValues[4] = $assignmentMark;
                         $subjectLines[$j] = implode(",", $subjectValues);
                         // var_dump('subject line =  ' . $subjectLines[$j]);
@@ -134,11 +134,13 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
                     } else if ($type == 'examiner3') {
                         $subjectValues[5] = $examiner2Mark;
                         $subjectLines[$j] = implode(",", $subjectValues);
+
+                        break;
                     }
                 }
             }
         }
-        var_dump('all subject lines = ' . $subjectLines);
+        // var_dump('all subject lines = ' . $subjectLines);
         file_put_contents($markSheet, implode("\n", $subjectLines));
         // Close the file
         fclose($f);
@@ -219,9 +221,10 @@ function activity($message)
     show('$message');
     $activity = new Activity;
 
+    // show($_SESSION['USER_DATA']);
     //assign data into array
     $data['discription'] = $message;
-    $data['user'] = $_SESSION['USER_DATA']->role;
+    $data['user'] = $_SESSION['USER_DATA']->username;
     $data['date'] = date("Y-m-d");
     $data['time'] = date("H:i:s");
 
@@ -232,4 +235,28 @@ function activity($message)
     }
 }
 
+
+function checkGap($file, $examId, $subCode)
+{
+
+    $filePath = 'assets/csv/examsheets/final-marksheets/' . $file;
+    $content = file_get_contents($filePath);
+    $lines = explode("\n", $content);
+
+    //iterate through data in file
+    for ($i = 4; $i < count($lines); $i++) {
+
+        //get line
+        $values = str_getcsv($lines[$i]);
+
+        //check the gap
+        $gap = abs($values[2] - $values[3]);
+        if ($gap > 10) {
+            var_dump('gap is greater than 10');
+            return false;
+        }
+    }
+    return true;
+
+}
 ?>

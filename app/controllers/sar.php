@@ -47,6 +47,7 @@ class SAR extends Controller
         //get the degree id from the url
         $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
         $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
+        $examID = isset($_GET['semester']) ? $_GET['semester'] : null;
 
         // show($degreeID);
         // show($degreeID);
@@ -484,7 +485,6 @@ class SAR extends Controller
                             $examSheet['uploadName'] = $originalFileName;
                             $examSheet['newName'] = $uniqueFileName;
                             $examSheet['type'] = $marksType;
-                            $examSheet['type'] = $marksType;
                             $examSheet['examId'] = $examID;
 
 
@@ -510,7 +510,7 @@ class SAR extends Controller
                                 // Error inserting data into the database
                                 $data['errors'] = $resultSheet->errors;
                                 // show($data['errors']);
-                                var_dump('errors = ' . $resultSheet->errors['marks']);
+                                // var_dump('errors = ' . $resultSheet->errors['marks']);
                                 echo json_encode(['success' => false, 'message' => 'Error inserting data into the database.']);
                             }
 
@@ -534,6 +534,42 @@ class SAR extends Controller
                     }
 
 
+                }
+
+                //enable examiner3 marks upload
+
+                foreach ($data['subjects'] as $subject) {
+                    $uploadedRes = $resultSheet->where(['examId' => $examID, 'subjectCode' => $subject->SubjectCode]);
+                    // show($uploadedRes);
+
+                    if (is_array($uploadedRes)) {
+
+                        if (count($uploadedRes) == 2) {
+                            $validate = false;
+                            foreach ($uploadedRes as $res) {
+                                if ($res->type == 'examiner1' || $res->type == 'examiner2') {
+                                    $validate = true;
+                                } else {
+                                    $validate = false;
+                                }
+                            }
+                            //check the marks gap between examiner1 and examiner2
+                            if ($validate) {
+                                $fileName = $examID . '_' . $subject->SubjectCode . '.csv';
+
+                                //call the function to check the gap
+                                if (checkGap($fileName, $examID, $subject->SubjectCode)) {
+                                    $data['examiner3'] = true;
+                                    show('examiner3');
+                                } else {
+                                    $data['examiner3'] = false;
+                                    show('no examiner3');
+                                }
+
+
+                            }
+                        }
+                    }
                 }
 
                 $this->view('sar-interfaces/sar-examresultupload', $data);

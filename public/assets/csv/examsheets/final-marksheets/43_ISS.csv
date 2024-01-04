@@ -1,10 +1,9 @@
 "Name of  Programme  : 2"
 "Subject  : Information System Sercurity"
 
-"Index No","Registration No","Examiner 01 Mark","Examiner 02 Marks","Assignment Marks","Examiner 03 Marks" 
-DILIM/003,DILIM/2022/003 , 34, 23, ,
-DILIM/005,DILIM/2022/005 ,44, 43, ,
-DILIM/007,DILIM/2022/007 , 45,54, ,
-DILIM/009,DILIM/2022/009 , 43,34, ,
-DILIM/011,DILIM/2022/011 , 43,22, ,
-,,,,,
+"Index No","Registration No","Examiner 01 Mark","Examiner 02 Marks","Assignment Marks"
+DILIM/003,DILIM/2022/003 , 34, , 
+DILIM/005,DILIM/2022/005 ,44, , 
+DILIM/007,DILIM/2022/007 , 45, , 
+DILIM/009,DILIM/2022/009 , 43, , 
+DILIM/011,DILIM/2022/011 , 43, , 

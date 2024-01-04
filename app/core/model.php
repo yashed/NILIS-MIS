@@ -282,7 +282,6 @@ class Model extends Database
 
         //trim lasf && and space if there exists
         $query = trim($query, '&& ');
-
         //define query to add user data
         $res = $this->query($query, $data);
         if (is_array($res)) {
