@@ -7,7 +7,8 @@ $degreeId = isset($_GET['id']) ? $_GET['id'] : null;
 // Fetch the degree data based on the ID (You need to implement this part)
 $degreeData = fetchDegreeDataById($degreeId);
 
-function fetchDegreeDataById($degreeId) {
+function fetchDegreeDataById($degreeId)
+{
     // Assuming you are using MySQL as your database
     $servername = "localhost";
     $username = "root";
@@ -150,10 +151,12 @@ function fetchDegreeDataById($degreeId) {
         padding: 5px 3px 3px 5px;
         cursor: pointer;
     }
+
     #delete_degree:hover {
         color: white;
         background-color: red;
     }
+
     .Subject_table {
         margin: 5%;
         border-spacing: 5px;
@@ -183,6 +186,7 @@ function fetchDegreeDataById($degreeId) {
         margin: 2% 5% 3% 5%;
         border-spacing: 5px;
         height: 35px;
+        width: 90%;
     }
 
     .create_time_table_raw {
@@ -190,6 +194,7 @@ function fetchDegreeDataById($degreeId) {
         border-spacing: 5px;
         align-items: center;
         height: 35px;
+        width: 90%;
     }
 
     .box_4 input {
@@ -202,7 +207,8 @@ function fetchDegreeDataById($degreeId) {
     }
 
     .box_4 .event {
-        width: 80%;
+        width: 85%;
+        padding-left: 10px;
     }
 
     .time_table .duration {
@@ -224,17 +230,29 @@ function fetchDegreeDataById($degreeId) {
         border: 1px solid gainsboro;
         color: gray;
         align-items: center;
+        cursor: pointer;
     }
 
     #save,
     #update {
-        background-color: rgb(184, 163, 163);
+        background-color: #A8A8A8;
         border-radius: 7px;
         width: 100%;
-        height: 25px;
-        background: transparent;
+        height: 35px;
+        border-color: var(--text-color);
+        font-weight: 500;
     }
-
+    #save:hover,
+    #update:hover {
+        background-color: #A8A8A8;
+        color: var(--sidebar-color);
+        border-radius: 7px;
+        width: 100%;
+        height: 35px;
+        font-weight: 500;
+        border-color: var(--sidebar-color);
+        border-width: 2px;
+    }
     .box_2 p,
     .box_3 p,
     .box_4 p {
@@ -249,7 +267,6 @@ function fetchDegreeDataById($degreeId) {
         color: black;
         margin: 1% 1% 1% 3%;
     }
-    
 </style>
 
 <body>
@@ -361,6 +378,7 @@ function fetchDegreeDataById($degreeId) {
                             <th colspan="3"><button class="add-new-event" id="add_new_event">&#128198 Add New Event</button></th>
                         </tr>
                         <tr>
+                            <td></td>
                             <td width="12%"><button class="pin" id="update">Update</button></td>
                             <td width="12%"><button class="pin" id="save">Save</button></td>
                         </tr>
