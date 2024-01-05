@@ -111,22 +111,26 @@ $data['role'] = $role;
         /* opacity: 0; */
         /* z-index: 100;  */
     }
+
     .model-box.active {
         opacity: 1;
         transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
     }
+
     .danger {
         border-color: red;
         border-width: 5px;
         border-style: groove;
         border-radius: 5px;
     }
+
     .user-error {
         color: red;
         font-size: 10px;
         font-weight: 400;
         margin-left: 5px;
     }
+
     .bt-name {
         color: #fff;
         padding: 8px 22px;
@@ -210,18 +214,18 @@ $data['role'] = $role;
                         <div class="input-fields" style="margin: 20px 0px 10px 0px;">
 
                             <label for="degree type" class="drop-down">Degree Type:</label><br>
-                            <select name="degree type" id="degree type" style="width: 360px;">
+                            <select name="degree type" id="degree_type" style="width: 360px;" onchange="handleDegreeTypeChange()">
                                 <option value="" default hidden>Select</option>
-                                <option value="1 Year" <?= (set_value('degree type') === '1 Year') ? 'selected' : '' ?>>1 Year Degree</option>
-                                <option value="2 Year" <?= (set_value('degree type') === '2 Year') ? 'selected' : '' ?>>2 Year Degree</option>
+                                <option value="1 Year" <?= (set_value('degree_type') === '1 Year') ? 'selected' : '' ?>>1 Year Degree</option>
+                                <option value="2 Year" <?= (set_value('degree_type') === '2 Year') ? 'selected' : '' ?>>2 Year Degree</option>
                             </select><br><br><br>
 
                             <label for="select degree type" class="drop-down">Select Degree Program:</label><br>
-                            <select name="select degree type" id="select degree type" style="width: 360px;">
+                            <select name="select degree type" id="select_degree_type" style="width: 360px;">
                                 <option value="" default hidden>Select</option>
-                                <option value="DLMS" <?= (set_value('degree type') === 'DLMS') ? 'selected' : '' ?>>DLMS</option>
-                                <option value="ENCM" <?= (set_value('degree type') === 'ENCM') ? 'selected' : '' ?>>ENCM</option>
-                                <option value="DSL" <?= (set_value('degree type') === 'DSL') ? 'selected' : '' ?>>DSL</option>
+                                <option value="DLMS" <?= (set_value('select_degree_type') === 'DLMS') ? 'selected' : '' ?>>DLMS</option>
+                                <option value="ENCM" <?= (set_value('select_degree_type') === 'ENCM') ? 'selected' : '' ?>>ENCM</option>
+                                <option value="DSL" <?= (set_value('select_degree_type') === 'DSL') ? 'selected' : '' ?>>DSL</option>
 
                             </select><br><br><br>
                         </div>
@@ -242,7 +246,7 @@ $data['role'] = $role;
                             <div class="box_3_1">
                                 <p>Subject</p>
                             </div>
-                            <div class="box_3_2">
+                            <div class="box_3_2" id="semester_subjects_credits">
                                 <table class="Subject_table">
                                     <tr>
                                         <th>Semester 1</th>
@@ -277,8 +281,60 @@ $data['role'] = $role;
                                         <th>Credits</th>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" name="subject_5" class="subject" placeholder="Subject 5"></td>
+                                        <td><input type="text" name="subject_5" class="subject" placeholder="Subject 1"></td>
                                         <td><input type="text" name="cedits_5" class="credits" placeholder="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="subject_6" class="subject" placeholder="Subject 2"></td>
+                                        <td><input type="text" name="cedits_6" class="credits" placeholder="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="subject_7" class="subject" placeholder="Subject 3"></td>
+                                        <td><input type="text" name="cedits_7" class="credits" placeholder="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="subject_8" class="subject" placeholder="Subject 4"></td>
+                                        <td><input type="text" name="cedits_8" class="credits" placeholder="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Semester 3</th>
+                                        <th>Credits</th>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="subject_9" class="subject" placeholder="Subject 1"></td>
+                                        <td><input type="text" name="cedits_9" class="credits" placeholder="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="subject_10" class="subject" placeholder="Subject 2"></td>
+                                        <td><input type="text" name="cedits_10" class="credits" placeholder="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="subject_11" class="subject" placeholder="Subject 3"></td>
+                                        <td><input type="text" name="cedits_11" class="credits" placeholder="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="subject_12" class="subject" placeholder="Subject 4"></td>
+                                        <td><input type="text" name="cedits_12" class="credits" placeholder="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Semester 4</th>
+                                        <th>Credits</th>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="subject_13" class="subject" placeholder="Subject 1"></td>
+                                        <td><input type="text" name="cedits_13" class="credits" placeholder="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="subject_14" class="subject" placeholder="Subject 2"></td>
+                                        <td><input type="text" name="cedits_14" class="credits" placeholder="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="subject_15" class="subject" placeholder="Subject 3"></td>
+                                        <td><input type="text" name="cedits_15" class="credits" placeholder="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="subject_16" class="subject" placeholder="Subject 4"></td>
+                                        <td><input type="text" name="cedits_16" class="credits" placeholder="2"></td>
                                     </tr>
                                 </table>
                             </div>
@@ -361,11 +417,12 @@ $data['role'] = $role;
         </div>
 </body>
 <script>
+    //for form blur-background
     // function onCreateDegreeClick() {
     //     document.querySelector("#create-popup").classList.add("active");
     //     document.querySelector("#body").classList.add("active");
     // }
-
+    //for form animations
     function myFunction() {
         const lb = document.querySelector(".model-box");
         lb.style.display = "block";
@@ -407,6 +464,35 @@ $data['role'] = $role;
         Form2.style.left = "40px";
         Form3.style.left = "450px";
         progress.style.width = "120px";
+    }
+    //for degree type semesters
+    function handleDegreeTypeChange() {
+        var degreeTypeSelect = document.getElementById('degree_type');
+        var semesterSubjectsCredits = document.getElementById('semester_subjects_credits');
+
+        // Clear the previous content
+        semesterSubjectsCredits.innerHTML = '';
+
+        // Check the selected degree type
+        if (degreeTypeSelect.value === '1 Year') {
+            // If it's a one-year degree, show two semesters
+            showSemesterFields(2);
+        } else if (degreeTypeSelect.value === '2 Year') {
+            // If it's a two-year degree, show four semesters
+            showSemesterFields(4);
+        }
+    }
+    function showSemesterFields(numSemesters) {
+        // Generate HTML for semester-wise subjects and credits based on the number of semesters
+        for (var i = 1; i <= numSemesters; i++) {
+            semesterSubjectsCredits.innerHTML += `
+                <h3>Semester ${i}</h3>
+                <label for="subject_${i}" class="drop-down">Subject ${i}:</label>
+                <input type="text" name="subject_${i}" class="subject" placeholder="Subject ${i}" required>
+                <label for="credits_${i}" class="drop-down">Credits ${i}:</label>
+                <input type="text" name="credits_${i}" class="credits" placeholder="2" required><br><br>
+            `;
+        }
     }
 </script>
 

@@ -639,8 +639,10 @@ $data['role'] = $role;
                         <div class="degree-cards">
                             <?php $count = 0; ?>
                             <?php foreach ($degrees as $degree) : ?>
-                                <div class="director-card1">
-                                    <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                                <div class="dr-card1">
+                                    <a href="<?= ROOT ?>dr/degreeprofile?id=<?= $degree->DegreeID ?>" style="text-decoration: none;">
+                                        <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                                    </a>
                                 </div>
                                 <?php $count++; ?>
                             <?php endforeach; ?>

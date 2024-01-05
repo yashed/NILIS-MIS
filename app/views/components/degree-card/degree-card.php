@@ -77,19 +77,21 @@
 </head>
 
 <body>
-    <div class="degree-body">
-        <div class="degree-card">
-            <img src="<?= ROOT ?>/assets/degree-card/icon.png" alt="icon.png" class="degree-img">
-            <div class="degree-content">
-                <div class="degree-name"><?= $degree->DegreeShortName ?></div>
-                <div class="degree-sub-name"><?= $degree->DegreeName ?></div>
+    <a href="<?= ROOT ?>dr/degreeprofile?id=<?= $degree->DegreeID ?>" style="text-decoration: none;">
+        <div class="degree-body">
+            <div class="degree-card">
+                <img src="<?= ROOT ?>/assets/degree-card/icon.png" alt="icon.png" class="degree-img">
+                <div class="degree-content">
+                    <div class="degree-name"><?= $degree->DegreeShortName ?></div>
+                    <div class="degree-sub-name"><?= $degree->DegreeName ?></div>
+                </div>
+            </div>
+            <div class="degree-info">
+                <div class="degree-year">Academic Year - <?= $degree->AcademicYear ?></div>
+                <div class="degree-type"><?= $degree->DegreeType ?> Program</div>
             </div>
         </div>
-        <div class="degree-info">
-            <div class="degree-year">Academic Year - <?= $degree->AcademicYear ?></div>
-            <div class="degree-type"><?= $degree->DegreeType ?> Program</div>
-        </div>
-    </div>
+    </a>
 </body>
 
 </html>
