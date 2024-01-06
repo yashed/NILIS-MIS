@@ -18,7 +18,7 @@ class Model extends Database
             $data = (array) $data;
         }
 
-        show($data);
+
         //remove unwanted column 
         //this is not a serious error , the code is working with this
         //secho "No error";
@@ -194,6 +194,7 @@ class Model extends Database
         if ($limit) {
             $query .= " LIMIT $limit";
         }
+
         // Execute the query
         return $this->query($query);
     }
@@ -281,7 +282,6 @@ class Model extends Database
 
         //trim lasf && and space if there exists
         $query = trim($query, '&& ');
-
         //define query to add user data
         $res = $this->query($query, $data);
         if (is_array($res)) {

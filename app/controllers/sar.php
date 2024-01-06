@@ -47,6 +47,7 @@ class SAR extends Controller
         //get the degree id from the url
         $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
         $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
+        $examID = isset($_GET['semester']) ? $_GET['semester'] : null;
 
         // show($degreeID);
         // show($degreeID);
@@ -65,7 +66,7 @@ class SAR extends Controller
         $examtimetable = new ExamTimeTable();
         $subjects = new Subjects();
         $exam = new Exam();
-
+        $resultSheet = new ResultSheet();
 
         $data['errors'] = [];
         $data['degrees'] = $degree->findAll();
@@ -310,22 +311,26 @@ class SAR extends Controller
                         $selectedRMStudents = $_SESSION['Selected_RM_Students'];
                         $selectedNormalStudents = $_SESSION['Selected_Normal_Students'];
                         echo ("Repeat Students");
-                        show($selectedRMStudents);
+                        // show($selectedRMStudents);
                         echo ("Students");
-                        show($selectedNormalStudents);
+                        // show($selectedNormalStudents);
                         echo ("Time table");
                         show($timeTableData);
 
 
+                        foreach ($selectedNormalStudents as $student) {
+                            $student->examID = $examID;
+                            show($student);
+                            $examParticipants->insert($student);
+                        }
+                        foreach ($selectedRMStudents as $student) {
+                            $student->examID = $examID;
+                            show($student);
+                            $examParticipants->insert($student);
+                        }
                         //need to add actucal data to add data to tables
                         foreach ($timeTableData as $timeTableRow) {
                             $examtimetable->insert($timeTableRow);
-                        }
-                        foreach ($selectedNormalStudents as $student) {
-                            // $examParticipants->insert($student);
-                        }
-                        foreach ($selectedRMStudents as $student) {
-                            // $examParticipants->insert($student);
                         }
                         message("Exam Was Created Successfully", "success");
                         // redirect('sar/examination');
@@ -340,7 +345,8 @@ class SAR extends Controller
         } else {
 
             //examid must pass through the session
-            $examID = 1;
+            $examID = 43;
+
             if ($method == 'participants') {
                 $participants[] = $examParticipants->where(['degreeID' => $degreeID, 'semester' => $semester, 'examID' => $examID]);
                 $data['participants'] = $participants;
@@ -348,15 +354,11 @@ class SAR extends Controller
 
             } else if ($method == 'resultsupload') {
 
-
-
-
                 //get students data from exam participants table
                 $tables = ['student'];
                 $columns = ['*'];
                 $conditions1 = ['student.degreeID = exam_participants.DegreeID', 'student.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID];
                 $Participants = $examParticipants->join($tables, $columns, $conditions1);
-
 
                 //get repeat student details
                 $tables = ['repeat_students', 'student'];
@@ -386,8 +388,8 @@ class SAR extends Controller
 
                 //show data
                 // show($NormalParticipants);
-                // show($RepeatParticipants);
-                // show($MedicalParticipants);
+                // show($RepeatStudents);
+                // show($MedicalStudents);
 
 
                 if ($NormalParticipants !== false) {
@@ -450,37 +452,129 @@ class SAR extends Controller
                         }
                         fclose($f);
                     }
-
-                    //save file in specific location
+                    // save file in specific location
+                    // Check if the file was uploaded successfully
                     if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+
                         // Specify the target directory
                         $targetDirectory = 'assets/csv/examsheets/';
 
                         // Get the original file name
                         $originalFileName = basename($_FILES['file']['name']);
-                        show($originalFileName);
+
                         // Generate a unique filename to avoid overwriting existing files
-                        $uniqueFileName = 'Results' . '_' . $originalFileName;
+                        $uniqueFileName = $_POST['formId'] . '_' . uniqid(1) . '.csv';
 
                         // Set the target path
                         $targetPath = $targetDirectory . $uniqueFileName;
 
+                        //catch data and save in variables
+                        $subCode = isset($_POST['subjectCode']) ? $_POST['subjectCode'] : '';
+                        $formID = isset($_POST['formId']) ? $_POST['formId'] : '';
+                        $marksType = isset($_POST['type']) ? $_POST['type'] : '';
+
+
                         // Move the uploaded file to the target directory
                         if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
-                            // File uploaded successfully
-                            echo json_encode(['success' => true, 'message' => 'File uploaded successfully.']);
+
+                            // File uploaded successfully, now insert data into the database
+                            $examSheet = [];
+                            $examSheet['formId'] = $formID;
+                            $examSheet['subjectCode'] = $subCode;
+                            $examSheet['date'] = date("Y-m-d H:i:s");
+                            $examSheet['uploadName'] = $originalFileName;
+                            $examSheet['newName'] = $uniqueFileName;
+                            $examSheet['type'] = $marksType;
+                            $examSheet['examId'] = $examID;
+
+
+
+
+                            // Insert data into the database
+                            if ($resultSheet->examValidate($examSheet)) {
+
+                                var_dump($examSheet);
+                                //add record to database table
+                                $resultSheet->insert($examSheet);
+                                $message = 'Upload ' . $marksType . ' Marksheet for ' . $subCode . ' in ExamId = ' . $examID . ' successfully.';
+                                show($message);
+                                // activity($message);
+
+
+
+                                //call crateMarkSheet function to update csv file
+                                createMarkSheet($uniqueFileName, $examID, $subCode, $marksType);
+
+                                echo json_encode(['success' => true, 'message' => 'File uploaded successfully.']);
+                            } else {
+                                // Error inserting data into the database
+                                $data['errors'] = $resultSheet->errors;
+                                // show($data['errors']);
+                                // var_dump('errors = ' . $resultSheet->errors['marks']);
+                                echo json_encode(['success' => false, 'message' => 'Error inserting data into the database.']);
+                            }
+
+
+                            echo 'call function sar';
+
+
+
+
+
                         } else {
                             // Error moving the file
+
+
                             echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
                         }
                     } else {
                         // Handle file upload error
+                        message("File upload error", "error");
                         // echo json_encode(['success' => false, 'message' => 'File upload error.']);
                     }
 
+
+                }
+
+                //enable examiner3 marks upload
+
+                foreach ($data['subjects'] as $subject) {
+                    $uploadedRes = $resultSheet->where(['examId' => $examID, 'subjectCode' => $subject->SubjectCode]);
+                    // show($uploadedRes);
+
+                    if (is_array($uploadedRes)) {
+
+                        if (count($uploadedRes) == 2) {
+                            $validate = false;
+                            foreach ($uploadedRes as $res) {
+                                if ($res->type == 'examiner1' || $res->type == 'examiner2') {
+                                    $validate = true;
+                                } else {
+                                    $validate = false;
+                                }
+                            }
+                            //check the marks gap between examiner1 and examiner2
+                            if ($validate) {
+                                $fileName = $examID . '_' . $subject->SubjectCode . '.csv';
+
+                                //call the function to check the gap
+                                if (checkGap($fileName, $examID, $subject->SubjectCode)) {
+                                    $data['examiner3'] = true;
+                                    show('examiner3');
+                                } else {
+                                    $data['examiner3'] = false;
+                                    show('no examiner3');
+                                }
+
+
+                            }
+                        }
+                    }
                 }
 
                 $this->view('sar-interfaces/sar-examresultupload', $data);
+
+
             } else if ($method == 'results') {
                 $this->view('sar-interfaces/sar-examresults', $data);
             } else {

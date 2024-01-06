@@ -1,7 +1,6 @@
 <?php
 $role = "SAR";
 $data['role'] = $role;
-$validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
 ?>
 
@@ -516,7 +515,6 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
         flex: 25%;
         border: 2px dashed #3498db;
         cursor: pointer;
-        gap: 30px;
     }
 
     .dashed-container.drag-over {
@@ -526,49 +524,9 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
         /* Change background color when dragging over */
         color: #e74c3c;
     }
-
-    .user-error {
-        color: red;
-        font-size: 10px;
-        font-weight: 400;
-        margin-left: 5px;
-    }
-
-    .marks-type {
-        font-size: 1.5vw;
-        text-align: center;
-        color: #939393;
-    }
-
-    .button-bar {
-        display: flex;
-        gap: 20px;
-
-    }
-
-    .btn-secondary-2 {
-        min-width: 25vh;
-        color: #fff;
-        height: 5vh;
-        padding: 5px 15px 5px 15px;
-        border-radius: 12px;
-        background: #ffffff;
-        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
-        color: #17376e;
-        border: 0px;
-        margin-bottom: 10px;
-        border: 1px solid #17376e;
-    }
-
-    .btn-secondary-2:hover {
-        color: black;
-        background-color: #E2E2E2;
-        border: 1px solid #17376e;
-    }
 </style>
 
 <body>
-
     <div class="temp2-home">
         <div class="temp2-title">Examination</div>
         <div class="temp2-subsection-1">
@@ -614,14 +572,10 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                             <div class="sub-name">
                                 <?= $subject->SubjectName ?>
                             </div>
-                            <div class="button-bar">
-                                <button class="btn-primary" name='download_marksheet'
-                                    onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
-                                    Marksheet</button>
-                                <button class="btn-secondary-2" name='download_marksheet'
-                                    onclick="downloadFile('<?= $subject->SubjectCode ?>')" hidden>Download
-                                    Examiner 03 Marksheet</button>
-                            </div>
+
+                            <button class="btn-primary" name='download_marksheet'
+                                onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
+                                Marksheet</button>
                         </div>
                         <div class="flex-container">
                             <?php
@@ -632,25 +586,18 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
                             <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
                                 ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
-                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','assestment')">
-                                <div class='marks-type'>Assestment Marks </div>
+                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>')">
                                 <form method="POST" class='csv-input-from' enctype="multipart/form-data"
                                     id="<?= $formID ?>">
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
                                         for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
                                     <br>
                                     <input type='text' value='<?= $formID ?>' name='formID' hidden>
-                                    <input type='text' value='assestment' name='type' hidden>
                                     <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode' hidden>
                                     <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
-                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','assestment')">
+                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>')">
                                     <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                             class="browse-label">browse</label></br> assignment results.</p>
-                                    <?php if (!empty($errors['marks'])): ?>
-                                        <div class="user-error" for="marks">
-                                            <?= $errors['marks'] ?>
-                                        </div>
-                                    <?php endif; ?>
                                 </form>
                             </div>
                             </form>
@@ -662,18 +609,16 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
                             <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
                                 ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
-                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>', 'examiner1')">
-                                <div class='marks-type'>Examiner 01 Marks </div>
+                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>')">
                                 <form method="POST" class='csv-input-from' enctype="multipart/form-data"
                                     id="<?= $formID ?>">
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
                                         for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
                                     <br>
                                     <input type='text' value='<?= $formID ?>' name='formID' hidden>
-                                    <input type='text' value='examiner1' name='type' hidden>
                                     <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode' hidden>
                                     <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
-                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>', 'examiner1')">
+                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>')">
                                     <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                             class="browse-label">browse</label></br> Examiner 01 results.</p>
                                 </form>
@@ -686,18 +631,16 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
                             <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
                                 ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
-                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>', 'examiner2')">
-                                <div class='marks-type'>Examiner 02 Marks </div>
+                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>', '<?= $subject->SubjectCode ?>')">
                                 <form method="POST" class='csv-input-from' enctype="multipart/form-data"
                                     id="<?= $formID ?>">
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
                                         for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
                                     <br>
                                     <input type='text' value='<?= $formID ?>' name='formID' hidden>
-                                    <input type='text' value='examiner2' name='type' hidden>
                                     <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode' hidden>
                                     <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
-                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>', 'examiner2')">
+                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>')">
                                     <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                             class="browse-label">browse</label></br> Examiner 02 results.</p>
                                 </form>
@@ -710,18 +653,16 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
                             <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
                                 ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
-                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner3')">
-                                <div class='marks-type'>Examiner 03 Marks </div>
+                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>', '<?= $subject->SubjectCode ?>')">
                                 <form method="POST" class='csv-input-from' enctype="multipart/form-data"
                                     id="<?= $formID ?>">
                                     <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
                                         for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
                                     <br>
                                     <input type='text' value='<?= $formID ?>' name='formID' hidden>
-                                    <input type='text' value='examiner3' name='type' hidden>
                                     <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode' hidden>
                                     <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
-                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>' , 'examiner3')">
+                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>')">
                                     <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                             class="browse-label">browse</label></br> Examiner 03 results.</p>
                                 </form>
@@ -761,7 +702,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
         container.classList.remove('drag-over');
     }
 
-    function handleDrop(event, containerId, fileInputId, formId, subCode, type) {
+    function handleDrop(event, containerId, fileInputId, formId, subjectCode) {
         event.preventDefault();
 
         // Remove the drag-over styles
@@ -780,7 +721,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                 fileInput.files = files;
 
                 // Show submit button
-                showSubmitButton(containerId, fileInputId, formId, subCode, type);
+                showSubmitButton(containerId, fileInputId, formId, subjectCode);
             } else {
                 // not a CSV file, you can provide feedback to the user
                 alert('Please drop a CSV file.');
@@ -790,7 +731,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
 
 
-    function showSubmitButton(containerId, fileInputId, formId, subCode, type) {
+    function showSubmitButton(containerId, fileInputId, formId, subjectCode) {
         var container = document.getElementById(containerId);
         var fileInput = document.getElementById(fileInputId);
         var form = document.getElementById(formId);
@@ -826,7 +767,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                 submitButton.type = 'button';
                 submitButton.id = 'button_' + formId;
                 submitButton.addEventListener('click', function () {
-                    uploadFile(fileInputId, submitButton.id, formId, subCode, type);
+                    uploadFile(fileInputId, submitButton.id, , subjectCode, formID);
                 });
             }
 
@@ -840,9 +781,6 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
             // Hide the file icon label
             container.querySelector('.file-input-icon').style.display = 'none';
-
-            //hide type labe
-            container.querySelector('.marks-type').style.display = 'none';
 
             // Create the file icon
             var fileIcon = document.createElement('div');
@@ -890,26 +828,16 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
         fileInput.click();
     }
 
-    function uploadFile(fileInputId, buttonId, formId, subCode, type) {
-
-        var error = <?= json_encode($validateError) ?>;
-        console.log('font end errrors =  ', error);
-
-        if (error !== null && error !== '') {
-            alert('Invalid Marks: ' + error);
-            return;
-        }
+    function uploadFile(fileInputId, buttonId, subjectCode, formId) {
 
         var fileInput = document.getElementById(fileInputId);
         var formData = new FormData();
-        console.log(fileInput.files[0])
         formData.append('file', fileInput.files[0]);
+        formData.append('subjectCode', subjectCode);
         formData.append('formId', formId);
-        formData.append('subjectCode', subCode);
-        formData.append('type', type);
 
-        console.log('Form ID - ' + formId);
-        console.log('Sub ID - ' + subCode);
+
+        console.log(fileInput.files[0]);
         var targetURL = '<?= ROOT ?>sar/examination/resultsupload';
 
         fetch(targetURL, {
@@ -957,10 +885,6 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
         // Display the file icon image and associated text
         container.querySelector('.file-input-icon').style.display = 'flex';
-
-        //Display type label
-        container.querySelector('.marks-type').style.display = 'block';
-
 
         // var fileIcon = document.createElement('img');
         // fileIcon.src = '<?= ROOT ?>/assets/file-icon.png';

@@ -14,6 +14,8 @@ class Database
     }
     public function query($query, $data = [], $type = 'object')
     {
+        // show($query);
+        // show($data);
         $con = $this->connect();
         $stm = $con->prepare($query);
         if ($stm) {
@@ -233,5 +235,91 @@ class Database
  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
  ";
         $this->query($query);
+
+
+        $query = "
+        CREATE TABLE IF NOT EXISTS `mark_sheets` (
+            `Id` int(11) NOT NULL AUTO_INCREMENT,
+            `uploadName` varchar(50) NOT NULL,
+            `newName` varchar(50) NOT NULL,
+            `formId` varchar(20) NOT NULL,
+            `subjectCode` varchar(50) NOT NULL,
+            `type` varchar(30) NOT NULL,
+            `examId` int(11) NOT NULL,
+            `date` date NOT NULL,
+            PRIMARY KEY (`Id`),
+            Foreign key (examId) references exam(examID),
+            FOREIGN KEY (subjectCode) REFERENCES subject(SubjectCode)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+        ";
+
+        $this->query($query);
+
+        $query = "
+        CREATE TABLE IF NOT EXISTS `marks` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `studentIndexNo` varchar(40) NOT NULL,
+            `subjectCode` varchar(50) NOT NULL,
+            `examID` int(11) NOT NULL,
+            `examiner1Marks` int(10) DEFAULT NULL,
+            `examiner2Marks` int(10) DEFAULT NULL,
+            `examiner3Marks` int(10) DEFAULT NULL,
+            `assessmentMarks` int(10) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            FOREIGN KEY (`studentIndexNo`) REFERENCES `student` (`indexNo`),
+            FOREIGN KEY (`subjectCode`) REFERENCES `subject` (`SubjectCode`),
+            FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ";
+
+        $this->query($query);
+
+
+        $query = "
+        CREATE TABLE IF NOT EXISTS `attempts` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `studentIndexNo` varchar(40) NOT NULL,
+            `subjectCode` varchar(50) NOT NULL,
+            `examID` int(11) NOT NULL,
+            `attempts` int(10) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            FOREIGN KEY (`studentIndexNo`) REFERENCES `student` (`indexNo`),
+            FOREIGN KEY (`subjectCode`) REFERENCES `subject` (`SubjectCode`),
+            FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ";
+
+        $this->query($query);
+
+
+        $query = "
+        CREATE TABLE IF NOT EXISTS `final_marks` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `studentIndexNo` varchar(40) NOT NULL,
+            `subjectCode` varchar(50) NOT NULL,
+            `examID` int(11) NOT NULL,
+            `finalMarks` int(10) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            FOREIGN KEY (`studentIndexNo`) REFERENCES `student` (`indexNo`),
+            FOREIGN KEY (`subjectCode`) REFERENCES `subject` (`SubjectCode`),
+            FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ";
+
+        $this->query($query);
+
+        $query = "
+        CREATE TABLE IF NOT EXISTS `activity` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `user` varchar(40) NOT NULL,
+            `discription` varchar(500) NOT NULL,
+            `date` date NOT NULL,
+            `time` TIME NOT NULL,
+            PRIMARY KEY (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ";
+
+        $this->query($query);
+
     }
 }
