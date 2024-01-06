@@ -23,7 +23,7 @@ class Marks extends Model
 
     ];
 
-    public function examValidate($data)
+    public function markValidate($data)
     {
         return true;
     }

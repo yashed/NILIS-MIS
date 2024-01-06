@@ -498,6 +498,8 @@ class SAR extends Controller
                                 $resultSheet->insert($examSheet);
                                 $message = 'Upload ' . $marksType . ' Marksheet for ' . $subCode . ' in ExamId = ' . $examID . ' successfully.';
                                 show($message);
+
+                                //uncomment this to add activity log
                                 // activity($message);
 
 
@@ -513,13 +515,6 @@ class SAR extends Controller
                                 // var_dump('errors = ' . $resultSheet->errors['marks']);
                                 echo json_encode(['success' => false, 'message' => 'Error inserting data into the database.']);
                             }
-
-
-                            echo 'call function sar';
-
-
-
-
 
                         } else {
                             // Error moving the file
@@ -565,7 +560,8 @@ class SAR extends Controller
                                     $data['examiner3'] = false;
                                     show('no examiner3');
                                 }
-
+                                /** The case in there is when we pass the data into view to show them it must reload 
+                                 * but when using fetch it did't reload the file. must fix this  */
 
                             }
                         }

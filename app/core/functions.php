@@ -48,7 +48,7 @@ function message($msg = '', $type = 'success', $erase = false)
 function createMarkSheet($inputCSV, $examID, $subCode, $type)
 {
     var_dump('inside the function' . $inputCSV . 'exam id ' . $examID . 'subject code ' . $subCode . 'type = ' . $type);
-
+    $examiner3 = false;
     $filePath = 'assets/csv/examsheets/final-marksheets';
     $markSheet = $filePath . '/' . $examID . '_' . $subCode . '.csv';
 
@@ -65,6 +65,7 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
         //add column if examiner 3
         if ($type == 'examiner3') {
 
+            $examiner3 = true;
             $egnoreLines = file($markSheet, FILE_IGNORE_NEW_LINES);
             $egnoreLines[3] = '"Index No","Registration No","Examiner 01 Mark","Examiner 02 Marks","Assignment Marks","Examiner 03 Marks" ';
             // Write the modified content 
@@ -94,9 +95,12 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
             $examiner1Mark = $values[2];
             // var_dump('examiner 1 mark = ' . $examiner1Mark . 'index = ' . $inputIndex . 'reg no = ' . $inputRegNo);
             $examiner2Mark = $values[3];
-            // $examiner3Mark = $values[5];
             $assignmentMark = $values[4];
 
+            //check the examiner 3 is there or not
+            if ($examiner3) {
+                $examiner3Mark = $values[5];
+            }
 
             for ($j = 4; $j < count($subjectLines); $j++) {
                 $subjectValues = str_getcsv($subjectLines[$j]);
@@ -128,9 +132,7 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
 
 
                     } else if ($type == 'examiner3') {
-                        // $subjectValues[5] = $examiner2Mark;
-
-
+                        $subjectValues[5] = $examiner3Mark;
 
                     }
 
@@ -210,9 +212,12 @@ function insertMarks($file, $examID, $subCode)
         $data['examiner1Marks'] = $values[2];
         $data['examiner2Marks'] = $values[3];
         $data['assessmentMarks'] = $values[4];
-        $data['examiner2Marks'] = !empty($values[5]) ? $values[5] : '';
+        $data['examiner3Marks'] = !empty($values[5]) ? $values[5] : '';
 
-
+        //insert data into table
+        if ($mark->markValidate($data)) {
+            $mark->insert($data);
+        }
 
     }
 
