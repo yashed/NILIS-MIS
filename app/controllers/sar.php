@@ -463,7 +463,7 @@ class SAR extends Controller
                         $originalFileName = basename($_FILES['file']['name']);
 
                         // Generate a unique filename to avoid overwriting existing files
-                        $uniqueFileName = $_POST['formId'] . '_' . 'Results' . '_' . uniqid(1) . '.csv';
+                        $uniqueFileName = $_POST['formId'] . '_' . uniqid(1) . '.csv';
 
                         // Set the target path
                         $targetPath = $targetDirectory . $uniqueFileName;
@@ -498,7 +498,7 @@ class SAR extends Controller
                                 $resultSheet->insert($examSheet);
                                 $message = 'Upload ' . $marksType . ' Marksheet for ' . $subCode . ' in ExamId = ' . $examID . ' successfully.';
                                 show($message);
-                                activity($message);
+                                // activity($message);
 
 
 

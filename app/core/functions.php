@@ -63,13 +63,14 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
         $f = fopen($markSheet, 'a');
 
         //add column if examiner 3
-        if ($type = 'examiner3') {
+        if ($type == 'examiner3') {
 
             $egnoreLines = file($markSheet, FILE_IGNORE_NEW_LINES);
             $egnoreLines[3] = '"Index No","Registration No","Examiner 01 Mark","Examiner 02 Marks","Assignment Marks","Examiner 03 Marks" ';
             // Write the modified content 
             file_put_contents($markSheet, implode("\n", $egnoreLines));
         }
+
 
         // Perform your modifications here if needed
         $content = file_get_contents('assets/csv/examsheets/' . $inputCSV);
@@ -86,9 +87,10 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
         for ($i = 4; $i < count($lines); $i++) {
             // Split each line into an array of values
             $values = str_getcsv($lines[$i]);
+            // var_dump('values = ', $values);
+
             $inputIndex = $values[0];
             $inputRegNo = $values[1];
-
             $examiner1Mark = $values[2];
             // var_dump('examiner 1 mark = ' . $examiner1Mark . 'index = ' . $inputIndex . 'reg no = ' . $inputRegNo);
             $examiner2Mark = $values[3];
@@ -106,37 +108,38 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
                 // var_dump('subject index = ' . $subjectIndexNo . 'subject reg no = ' . $subjectRegNo);
                 if ($inputIndex == $subjectIndexNo && $inputRegNo == $subjectRegNo) {
 
-                    if ($type == 'assestment') {
-                        var_dump('inside the if condition', 'assignment mark = ' . $assignmentMark);
-                        $subjectValues[4] = $assignmentMark;
-                        $subjectLines[$j] = implode(",", $subjectValues);
-                        // var_dump('subject line =  ' . $subjectLines[$j]);
 
-                        break;
+                    if ($type == 'assestment') {
+
+                        $subjectValues[4] = $assignmentMark;
 
 
                     } else if ($type == 'examiner1') {
 
-                        $subjectValues[2] = $examiner1Mark;
-                        $subjectLines[$j] = implode(",", $subjectValues);
-                        // var_dump('subject line =  ' . $subjectLines[$j]);
 
-                        break;
+                        $subjectValues[2] = $examiner1Mark;
+
 
                     } else if ($type == 'examiner2') {
 
                         $subjectValues[3] = $examiner2Mark;
-                        $subjectLines[$j] = implode(",", $subjectValues);
-                        // var_dump('subject line =  ' . $subjectLines[$j]);
 
-                        break;
+
+
 
                     } else if ($type == 'examiner3') {
-                        $subjectValues[5] = $examiner2Mark;
-                        $subjectLines[$j] = implode(",", $subjectValues);
+                        // $subjectValues[5] = $examiner2Mark;
 
-                        break;
+
+
                     }
+
+                    // Update the line in the final mark sheet
+                    var_dump('subject values = ', $subjectValues);
+                    $subjectLines[$j] = implode(",", $subjectValues);
+
+                    // Break out of the inner loop once the entry is found and updated
+                    break;
                 }
             }
         }
