@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,16 +17,19 @@
             box-shadow: 4px 7px 9px 0px rgba(0, 0, 0, 0.08);
             padding: 3px 3px 5px 3px;
         }
+
         .degree-img {
-            width: 113px;
+            width: 98px;
             height: 123px;
             flex-shrink: 0;
         }
+
         .degree-card {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
         }
+
         .degree-content {
             display: flex;
             flex-direction: column;
@@ -37,10 +41,12 @@
             margin-right: 20px;
             margin-left: 20px;
         }
+
         .degree-name {
             font-size: 55px;
             font-weight: 1000;
         }
+
         .degree-sub-name {
             color: #9AD6FF;
             font-size: 18px;
@@ -48,10 +54,12 @@
             text-align: right;
             /* float: right; */
         }
+
         .degree-name {
             color: #17376E;
             text-align: left;
         }
+
         .degree-info {
             display: flex;
             flex-direction: row;
@@ -67,19 +75,23 @@
         }
     </style>
 </head>
+
 <body>
-    <div class="degree-body">
-        <div class="degree-card">
-            <img src="<?=ROOT?>/assets/degree-card/icon.png" alt="icon.png" class="degree-img">
-            <div class="degree-content">
-                <div class="degree-name"><?=$degree->DegreeName?></div>
-                <div class="degree-sub-name">Diploma in Library Management</div>
+    <a href="<?= ROOT ?>dr/degreeprofile?id=<?= $degree->DegreeID ?>" style="text-decoration: none;">
+        <div class="degree-body">
+            <div class="degree-card">
+                <img src="<?= ROOT ?>/assets/degree-card/icon.png" alt="icon.png" class="degree-img">
+                <div class="degree-content">
+                    <div class="degree-name"><?= $degree->DegreeShortName ?></div>
+                    <div class="degree-sub-name"><?= $degree->DegreeName ?></div>
+                </div>
+            </div>
+            <div class="degree-info">
+                <div class="degree-year">Academic Year - <?= $degree->AcademicYear ?></div>
+                <div class="degree-type"><?= $degree->DegreeType ?> Program</div>
             </div>
         </div>
-        <div class="degree-info">
-            <div class="degree-year">Academic Year - <?=$degree->AcademicYear?></div>
-            <div class="degree-type"><?=$degree->DegreeType?> Program</div>
-        </div>
-    </div>
+    </a>
 </body>
+
 </html>
