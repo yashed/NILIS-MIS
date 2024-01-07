@@ -9,7 +9,6 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href="<?=ROOT?>css/student/style.css">
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <style>
         #overlay {
             display: none;
@@ -33,7 +32,6 @@
             flex-direction: row;
             column-gap: 20px;
         }
-
         .pop-up {
             display: none;
             position: fixed;
@@ -44,7 +42,6 @@
             padding: 20px;
             z-index: 2;
         }
-
         .pop-up1 {
             display: none;
             position: fixed;
@@ -55,7 +52,6 @@
             padding: 20px;
             z-index: 2;
         }
-
         .pop-up2 {
             display: none;
             position: fixed;
@@ -71,7 +67,10 @@
 
 <body>
 <div class="dr-userprofile">
-    <div class="white-container1-1">Diploma in Library and Information Management</div>
+    <div class="white-container1-1">
+        <div class="white-container1">Diploma in Library and Information Management</div>
+        <div class="white-container1-core">Participants</div>
+    </div>
     <div class="white-container2-1">
         <p class="left-top-text2">User Details</p>
         <div class="row">
