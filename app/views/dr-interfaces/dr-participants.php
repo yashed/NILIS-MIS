@@ -520,19 +520,17 @@ $data['role'] = $role;
     });
 
     function sortTable(column, sort_asc) {
-    const sortedRows = [...table_rows].sort((a, b) => {
-        const first_row = a.querySelectorAll('td')[column].textContent.toLowerCase();
-        const second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
+        const sortedRows = [...table_rows].sort((a, b) => {
+            const first_row = a.querySelectorAll('td')[column].textContent.toLowerCase();
+            const second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
 
-        return sort_asc ? first_row.localeCompare(second_row) : second_row.localeCompare(first_row);
-    });
-
-    // Remove existing rows
-    table_rows.forEach(row => row.remove());
-
-    // Append sorted rows
-    sortedRows.forEach(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
-}
+            return sort_asc ? first_row.localeCompare(second_row) : second_row.localeCompare(first_row);
+        });
+        // Remove existing rows
+        table_rows.forEach(row => row.remove());
+        // Append sorted rows
+        sortedRows.forEach(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
+    }
 
     // function customSort(a, b) {
     //     // Custom sorting function to handle alphanumeric strings

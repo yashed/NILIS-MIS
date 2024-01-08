@@ -374,7 +374,6 @@ $data['role'] = $role;
             });
 
             let subMenu = document.getElementById("subMenu");
-
             function toggleMenu() {
                 subMenu.classList.toggle("open-menu");
             }
@@ -392,7 +391,6 @@ $data['role'] = $role;
             `;
                 let newRow = document.createElement("tr");
                 newRow.innerHTML = template;
-
                 table.appendChild(newRow);
             });
         });
