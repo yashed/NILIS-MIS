@@ -3,7 +3,6 @@ $role = "SAR";
 $data['role'] = $role;
 $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
-
 ?>
 
 <?php $this->view('components/navside-bar/header', $data) ?>
@@ -786,6 +785,12 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
     elements.forEach(function (element) {
         element.dataset.active = examiner3;
     });
+
+
+    // Fetch data from the controller
+
+
+
     function handleDragOver(event) {
         event.preventDefault();
         var container = event.target;
@@ -1041,6 +1046,33 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
         // Remove the anchor element from the document
         document.body.removeChild(a);
     }
+
+
+
+    // var targetURL = '<?= ROOT ?>sar/examination/resultsupload';
+    // // Fetch data from the controller
+    // fetch(targetURL)
+    //     .then(response => {
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+    //         return response.text();
+    //     })
+    //     .then(data => {
+    //         // Update the view with the received data
+    //         var examiner3 = data.examiner3;
+
+
+    //         var elements = document.querySelectorAll('.dashed-container-3');
+    //         elements.forEach(function (element) {
+    //             element.dataset.active = examiner3;
+    //         });
+
+    //     })
+    //     .catch(error => {
+    //         console.error('Error fetching data:', error);
+    //     });
+
 </script>
 
 </html>

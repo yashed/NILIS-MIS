@@ -555,12 +555,12 @@ class SAR extends Controller
                                 //call the function to check the gap
                                 if (checkGap($fileName, $examID, $subject->SubjectCode)) {
                                     $data['examiner3'] = true;
-                                    // var_dump('examiner3 true');
-                                    // show('examiner3');
+                                    var_dump('examiner3 true');
+                                    show('examiner3');
                                 } else {
                                     $data['examiner3'] = false;
-                                    // var_dump('examiner3 false');
-                                    // show('no examiner3');
+                                    var_dump('examiner3 false');
+                                    show('no examiner3');
                                 }
                                 /** The case in there is when we pass the data into view to show them it must reload 
                                  * but when using fetch it did't reload the file. must fix this  */
@@ -572,8 +572,9 @@ class SAR extends Controller
                         }
                     }
                 }
-
+                // echo json_encode($data);
                 $this->view('sar-interfaces/sar-examresultupload', $data);
+
 
 
             } else if ($method == 'results') {
