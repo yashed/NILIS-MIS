@@ -260,7 +260,8 @@ $data['role'] = $role;
     }
 
     #save {
-        background-color: #A8A8A8;
+        background-color: var(--sidebar-color);
+        color: var(--text-color);
         border-radius: 7px;
         width: 100%;
         height: 35px;
@@ -270,7 +271,7 @@ $data['role'] = $role;
     }
 
     #save:hover {
-        background-color: #A8A8A8;
+        background-color: var(--text-color);
         color: var(--sidebar-color);
         border-radius: 7px;
         width: 100%;

@@ -5,13 +5,19 @@
         <div class="menu">
             <ul class="menu-links">
                 <h6 class="topic1">MAIN</h6>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/index">
-                        <i class="bx bx-home icon"></i>
-                        <span class="text nav-text">Dashboard</span></a>
-                </li>
+                
 
+
+
+
+                
                 <li class="nav-link">
+                    <a href="<?= ROOT ?>dr">
+                        <i class="bx bx-home icon"></i>
+                        <span class="text nav-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-link js">
                     <a href="#">
                         <i class='bx bxl-postgresql icon'></i>
                         <span class="text nav-text">Courses<i class="bx bxs-down-arrow arrow"></i></span>

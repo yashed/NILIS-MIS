@@ -1,4 +1,5 @@
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
     const body = document.querySelector("body");
     const sidebar = body.querySelector(".sidebar");
     const toggle = body.querySelector(".toggle");
@@ -49,7 +50,7 @@
         });
     }
 
-    const coursesLink = document.querySelector(".nav-link");
+    const coursesLink = document.querySelector(".js");
 
     coursesLink.addEventListener("click", (e) => {
         e.preventDefault();
@@ -58,13 +59,14 @@
     });
 
     document.addEventListener("click", (event) => {
-        const coursesLink = document.querySelector(".nav-link");
+        const coursesLink = document.querySelector(".js");
         const submenu = coursesLink.querySelector(".sub-menu-drop");
 
         if (event.target !== coursesLink && event.target.parentNode !== coursesLink) {
             submenu.style.display = "none";
         }
     });
+});
 </script>
 
 

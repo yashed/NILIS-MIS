@@ -47,31 +47,6 @@ class Model extends Database
 
         return true;
     }
-
-    //get all data 
-    public function findAll()
-    {
-
-        $query = "select * from " . $this->table;
-
-        //define query to add user data
-        $res = $this->query($query);
-
-        if (is_array($res)) {
-            return $res;
-        }
-
-        return false;
-    }
-
-    public function setid($id)
-    {
-
-        $query = 'set @id =' . $id . ';' . 'UPDATE ' . $this->table . ' SET id = (@id := @id + 1);';
-        $this->query($query);
-
-    }
-
     /* public function insert($data)
     {
         //remove unwanted columns
@@ -94,6 +69,43 @@ class Model extends Database
 
     } */
 
+    //get all data 
+    public function findAll()
+    {
+
+        $query = "select * from " . $this->table;
+
+        //define query to add user data
+        $res = $this->query($query);
+
+        if (is_array($res)) {
+            return $res;
+        }
+
+        return false;
+    }
+    /* public function findAll($order = 'desc')
+    {
+
+        $query = "select * from ".$this->table;
+ 
+        $res = $this->query($query);
+
+        if(is_array($res))
+        {
+            return $res;
+        }
+
+        return false;
+
+    } */
+
+    public function setid($id)
+    {
+
+        $query = 'set @id =' . $id . ';' . 'UPDATE ' . $this->table . ' SET id = (@id := @id + 1);';
+        $this->query($query);
+    }
     public function update($id, $data)
     {
 
@@ -133,22 +145,6 @@ class Model extends Database
         }
     }
 
-    /* public function findAll($order = 'desc')
-    {
-
-        $query = "select * from ".$this->table;
- 
-        $res = $this->query($query);
-
-        if(is_array($res))
-        {
-            return $res;
-        }
-
-        return false;
-
-    } */
-
     public function where2($data)
     {
 
@@ -168,9 +164,7 @@ class Model extends Database
         }
 
         return false;
-
     }
-
 
     public function join($tables, $columns, $conditions, $order = null, $limit = null)
     {
@@ -352,7 +346,4 @@ class Model extends Database
      // show($query);
      // show($data);
  } */
-
-
-
 }

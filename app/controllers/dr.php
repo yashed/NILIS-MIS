@@ -2,8 +2,6 @@
 
 class DR extends Controller
 {
-
-
     public function index()
     {
 
@@ -14,7 +12,7 @@ class DR extends Controller
 
         $data['degrees'] = $degree->findAll();
         //show( $data[ 'degrees' ] );
-        echo 'view';
+        // echo 'view';
         $this->view('dr-interfaces/dr-dashboard', $data);
     }
 
@@ -87,7 +85,6 @@ class DR extends Controller
                 }
             } else {
                 echo 'Error uploading file.';
-
             }
         }
 
@@ -150,7 +147,4 @@ class DR extends Controller
     {
         $this->view('login/login.view');
     }
-
 }
-
-?>
