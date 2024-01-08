@@ -261,10 +261,10 @@ function checkGap($file, $examId, $subCode)
         $gap = abs($values[2] - $values[3]);
         if ($gap > 10) {
             var_dump('gap is greater than 10');
-            return false;
+            return true;
         }
     }
-    return true;
+    return false;
 
 }
 ?>

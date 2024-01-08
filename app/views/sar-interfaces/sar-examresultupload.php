@@ -2,6 +2,7 @@
 $role = "SAR";
 $data['role'] = $role;
 $validateError = isset($errors['marks']) ? $errors['marks'] : null;
+$examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
 
 ?>
 
@@ -565,6 +566,39 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
         background-color: #E2E2E2;
         border: 1px solid #17376e;
     }
+
+    .dashed-container-3 {
+
+        border-radius: 8px;
+        padding: 10px;
+        width: 18%;
+        height: 270px;
+        margin-top: 3%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 25%;
+        border: 2px dashed #3498db;
+        cursor: pointer;
+        gap: 30px;
+    }
+
+    .dashed-container-3[data-active="true"] {
+        display: flex;
+    }
+
+    .dashed-container-3[data-active="false"] {
+        display: none;
+    }
+
+    .dashed-container-3.drag-over {
+        border-color: #e74c3c;
+        /* Change border color when dragging over */
+        background-color: #f2f2f2;
+        /* Change background color when dragging over */
+        color: #e74c3c;
+    }
 </style>
 
 <body>
@@ -708,7 +742,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                             $formID = 'form' . ($subject->SubjectID) . '_4';
                             ?>
 
-                            <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
+                            <div class="dashed-container-3" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
                                 ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
                                 ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner3')">
                                 <div class='marks-type'>Examiner 03 Marks </div>
@@ -744,6 +778,14 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
 </body>
 <script>
+    var examiner3 = <?= json_encode($examiner3) ?>;
+    console.log('examiner 3 = ', examiner3);
+    var elements = document.querySelectorAll('.dashed-container-3');
+
+    // Loop each element and update the data-active attribute
+    elements.forEach(function (element) {
+        element.dataset.active = examiner3;
+    });
     function handleDragOver(event) {
         event.preventDefault();
         var container = event.target;
