@@ -22,10 +22,10 @@
 .container{
     background-position: center;
     background-size: cover;
-    width: 440px;
-    height: 500px;
+    width: 540px;
+    height: 600px;
     margin: 8px auto;
-    margin-top: 100px;
+    margin-top: 80px;
     background: var(--text-color);
     border-radius: 5px;    
     position: relative;
@@ -43,8 +43,8 @@ h3{
 .container form{
     width: 280px;
     position: absolute;
-    top: 100px;
-    left: 40px;
+    top: 150px;
+    left: 70px;
     transition: 0.5s;
 }
 form input{
@@ -71,7 +71,7 @@ form input{
 form button{
     width: 110px;
     height: 35px;
-    margin: 0 10px;
+    margin: 0 25px;
     background: var(--sidebar-color);
     border-radius: 30px;
     border: 0px;
@@ -80,18 +80,18 @@ form button{
     cursor: pointer;
 }
 #Form2{
-    left: 450px;
+    left: 550px;
+    width: 400px;
 }
 #Form3{
-    left: 450px;
+    left: 550px;
 }
 .step-row{
-    width: 360px;
+    width: 450px;
     height: 8px;
     margin: 10px 0 50px 40px;
     display: flex;
     align-items: center;
-    box-shadow: 0 -1px 5px -1px #000;
     position: relative;
     background-color: var(--primary-color);
     border-radius: 10px;
@@ -141,10 +141,14 @@ form button{
 }
 /*form2*/
 
-
+#form2_p {
+    float: left;
+    margin-bottom: 5px;
+    left: -5px;
+}
 .box_3{
     border-radius: 5px;
-    margin:0 2px 5px 8px;
+    margin:30px 2px 0px -32px;
     background-color: var(--text-color);
     grid-column: 2 / 2 ;
     grid-row: 2/ 2 ;
@@ -152,12 +156,12 @@ form button{
     width: 344px;
 }
 .Subject_table{
-    margin:5% ;
+    margin:5% 6% 5% 5%;
     border-spacing: 5px;
     text-align: left;
 }
 .Subject_table input{
-    width:90%;
+    width: 80%;
     height: 30px;
     background: transparent;
     outline:none;
@@ -171,12 +175,24 @@ form button{
 .box_3_2{
     overflow-y: auto;
     max-height: 80%;
+    width: 450px;
+    right: 50px;
 }
 .box_3 p{
-    font-size: 20px;
+    font-size: 18px;
     color: var(--sidebar-color);
-    margin: 3% 0 0 5%;
+    margin: 3% 0 0 9%;
     font-weight: 350;
 }
-
+#semester_container {
+    left: -10px;
+    align-items: center;
+}
+.Subject_table .subCode {
+    width: 110%;
+    margin: 0px 0px 0px -8px;
+}
+.Subject_table .subject {
+    margin-left: 0px;
+}
 /*close and open buttons*/
