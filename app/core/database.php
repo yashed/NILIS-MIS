@@ -151,22 +151,22 @@ class Database {
 
 //Exam Tables
         //exam participation table
-       $query = "
-    CREATE TABLE IF NOT EXISTS exa_participants(
-        degreeID varchar(20) NOT NULL,
-        semester int(10) NOT NULL,
-        indexNo varchar(40) NOT NULL,
-        regNo varchar(40) NOT NULL,
-        attempt int(10) NOT NULL,
-        degreeName varchar(40) NOT NULL,
-        studentType varchar(40) NOT NULL,
-        FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
-        FOREIGN KEY (indexNo) REFERENCES student(indexNo),
-        PRIMARY KEY (degreeID, semester, indexNo)
-    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
-    ";
+    //    $query = "
+    // CREATE TABLE IF NOT EXISTS exa_participants(
+    //     degreeID varchar(20) NOT NULL,
+    //     semester int(10) NOT NULL,
+    //     indexNo varchar(40) NOT NULL,
+    //     regNo varchar(40) NOT NULL,
+    //     attempt int(10) NOT NULL,
+    //     degreeName varchar(40) NOT NULL,
+    //     studentType varchar(40) NOT NULL,
+    //     FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
+    //     FOREIGN KEY (indexNo) REFERENCES student(indexNo),
+    //     PRIMARY KEY (degreeID, semester, indexNo)
+    // ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
+    // ";
 
-        $this->query($query);
+    //     $this->query($query);
 
 
         $query = "

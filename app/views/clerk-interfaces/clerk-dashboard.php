@@ -13,7 +13,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>DR Dashboard</title>
+        <title>SAR Dashboard</title>
     </head>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -39,8 +39,7 @@
     position: relative;
     width: calc(100% - 250px);
     transition: var(--tran-05);
-    /* background: var(--body-color); */
-    background-color: #17376E;
+    background: var(--body-color);
 }
 .dr-title {
     font-size: 30px;
@@ -200,13 +199,11 @@
 </a>
 </div> -->
                 <div class="dr-card1">
-                <a href="<?=ROOT?>dr/degreeprofile" style="text-decoration: none;">
                 <?php foreach($degrees as $degree):?>
                     <div>
                     <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
                     </div>
                 <?php endforeach;?>
-                </a>
                 </div>
                 </div> 
             </div>
