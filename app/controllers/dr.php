@@ -142,7 +142,18 @@ class DR extends Controller
     {
         $this->view('dr-interfaces/dr-settings');
     }
-
+    public function reports()
+    {
+        $this->view('dr-interfaces/dr-reports');
+    }
+    public function attendance()
+    {
+        $this->view('dr-interfaces/dr-attendance');
+    }
+    public function examination()
+    {
+        $this->view('dr-interfaces/dr-examination');
+    }
     public function login()
     {
         $this->view('login/login.view');
