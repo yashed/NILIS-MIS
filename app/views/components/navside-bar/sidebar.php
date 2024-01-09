@@ -1,16 +1,9 @@
 <?php if ($role == "DR") : ?>
-
     <div class="menu-bar">
         <hr>
         <div class="menu">
             <ul class="menu-links">
                 <h6 class="topic1">MAIN</h6>
-                
-
-
-
-
-                
                 <li class="nav-link">
                     <a href="<?= ROOT ?>dr">
                         <i class="bx bx-home icon"></i>

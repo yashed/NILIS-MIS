@@ -204,8 +204,8 @@
                     </div>
                 </div>
                 <div class="column2-2">
-                    <div class="data1"><b>Fax:</b><br>
-                        <div class="Fax"><?= $student->fax ?></div>
+                    <div class="data1"><b>WhatsApp Number:</b><br>
+                        <div class="Fax"><?= $student->whatsapp_number ?></div>
                     </div><br>
                     <div class="data2"><b>Address:</b><br>
                         <div class="adr"> <?= $student->address ?></div>
@@ -246,11 +246,11 @@
                 <input type="text" id="nicno" placeholder="N.I.C Number" name="nicNo">
                 <label for="bday">Birthdate</label>
                 <input type="text" id="bday" placeholder="Birthdate" name="birthdate">
-                <label for="fax">Fax</label>
-                <input type="text" id="fax" placeholder="Fax" name="fax">
+                <label for="whatsapp_number">WhatsApp Number</label>
+                <input type="text" id="whatsapp_number" placeholder="whatsapp_number" name="whatsapp_number">
                 <label for="addr">Address</label>
                 <input type="text" id="addr" placeholder="Adress" name="address">
-                <label for="phoneno">Pnone Number</label>
+                <label for="phoneno">Phone Number</label>
                 <input type="text" id="phoneno" placeholder="Fax" name="phoneNo">
 
                 <input type="submit" id="submitbutton" value="Submit">
