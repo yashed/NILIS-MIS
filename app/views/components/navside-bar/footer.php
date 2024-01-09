@@ -40,31 +40,32 @@
     //         arrowParent.classList.toggle("show");
     //     });
     // }
-    const arrows = document.querySelectorAll(".arrow");
+    
+    // const arrows = document.querySelectorAll(".arrow");
 
-    for (let i = 0; i < arrows.length; i++) {
-        arrows[i].addEventListener("click", (e) => {
-            console.log("Arrow clicked");
-            let arrowParent = e.target.parentElement.parentElement;
-            arrowParent.classList.toggle("show");
-        });
-    }
+    // for (let i = 0; i < arrows.length; i++) {
+    //     arrows[i].addEventListener("click", (e) => {
+    //         console.log("Arrow clicked");
+    //         let arrowParent = e.target.parentElement.parentElement;
+    //         arrowParent.classList.toggle("show");
+    //     });
+    // }
 
-    const coursesLink = document.querySelector(".js");
+    // const coursesLink = document.querySelector(".js");
 
-    coursesLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        const submenu = coursesLink.querySelector(".sub-menu-drop");
-        submenu.style.display = submenu.style.display === "block" ? "none" : "block";
-    });
+    // coursesLink.addEventListener("click", (e) => {
+    //     e.preventDefault();
+    //     const submenu = coursesLink.querySelector(".sub-menu-drop");
+    //     submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+    // });
 
-    document.addEventListener("click", (event) => {
-        const coursesLink = document.querySelector(".js");
-        const submenu = coursesLink.querySelector(".sub-menu-drop");
+    // document.addEventListener("click", (event) => {
+    //     const coursesLink = document.querySelector(".js");
+    //     const submenu = coursesLink.querySelector(".sub-menu-drop");
 
-        if (event.target !== coursesLink && event.target.parentNode !== coursesLink) {
-            submenu.style.display = "none";
-        }
+    //     if (event.target !== coursesLink && event.target.parentNode !== coursesLink) {
+    //         submenu.style.display = "none";
+    //     }
     });
 });
 </script>

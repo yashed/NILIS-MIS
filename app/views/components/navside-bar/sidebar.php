@@ -10,7 +10,7 @@
                         <span class="text nav-text">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-link js">
+                <!-- <li class="nav-link js">
                     <a href="#">
                         <i class='bx bxl-postgresql icon'></i>
                         <span class="text nav-text">Courses<i class="bx bxs-down-arrow arrow"></i></span>
@@ -20,7 +20,7 @@
                         <li><a href="#">Block Chain</a></li>
                         <li><a href="#">Cryptography</a></li>
                     </ul>
-                </li>
+                </li> -->
 
                 <li class="nav-link">
                     <a href="<?= ROOT ?>dr/notification">
