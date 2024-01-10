@@ -1,22 +1,21 @@
 <?php
 
-class Admission extends Controller{
+class Admission extends Controller
+{
 
-    public function index(){
-        
-        // $db = new Database();
-        // $db->create_tables();
-     
+    public function index()
+    {
     }
-    
-    public function login(){
+
+    public function login()
+    {
 
         $this->view('sar-interfaces/admission-card-login');
     }
-     
-    public function Card(){
+
+    public function Card()
+    {
 
         $this->view('sar-interfaces/admission-card');
     }
 }
-?>

@@ -199,7 +199,7 @@ header .image-text .headder-text {
 }
 
 .hero {
-    left: 250px;
+    left: 260px;
     position: relative;
     width: calc(100% - 250px);
     transition: var(--tran-05);
@@ -263,7 +263,6 @@ header .image-text .headder-text {
     padding: 20px;
     margin: 12px;
     border-radius: 6px;
-    /* z-index: 1000; */
     top: 40px;
     left: 35%;
 }
@@ -331,7 +330,9 @@ header .image-text .headder-text {
     font-weight: 600;
 }
 
-
+body.submenu-open {
+    backdrop-filter: blur(5px);
+}
 /*
 
 

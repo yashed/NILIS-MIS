@@ -6,15 +6,27 @@
 class Admin extends Controller
 {
 
+
   public function index()
   {
+    //uncoment this to add autherization
 
+    // if (!Auth::is_admin()) {
+    //   message('You are not authorized to view this page',s 'error');
+    //   header('Location: login');
+    // }
+
+    $data['title'] = "Page not found";
+
+    $this->view('admin-interfaces/admin-dashboard', $data);
+  }
+  public function dashboard()
+  {
     $data['title'] = 'Dashboard';
     $this->view('admin-interfaces/admin-dashboard', $data);
   }
   public function users()
   {
-
 
     $data['errors'] = [];
     $user = new User();
@@ -28,19 +40,16 @@ class Admin extends Controller
 
       // header('Location: users');
       if ($_POST['submit'] == "update") {
-        
-        if($user->validateUpdate($_POST)){
-          
-         
+
+        if ($user->validateUpdate($_POST)) {
+
+
           $user->update($_POST['id'], $_POST);
           message("User profile was successfully updated");
-
+        } else {
+          message("User profile was not updated Corectly", 'error');
         }
-        else{
-          message("User profile was not updated Corectly" , 'error');
-        }
-      }
-       else if ($_POST['submit'] == "add") {
+      } else if ($_POST['submit'] == "add") {
         if ($user->validate($_POST)) {
           try {
             //set default passsword
@@ -56,11 +65,9 @@ class Admin extends Controller
           } catch (\Throwable $th) {
             var_dump($th);
           }
+        } else {
+          message("User profile was not created Corectly", 'error');
         }
-        else{
-          message("User profile was not created Corectly" , 'error');
-        }
-        
       } else if ($_POST['submit'] == "delete") {
 
         $user->delete2($_POST);
@@ -109,16 +116,17 @@ class Admin extends Controller
     $degree = new Degree();
 
     // $degree->insert($_POST);
- 
+
 
     $data['degrees'] = $degree->findAll();
-   
+
 
     $this->view('admin-interfaces/admin-degreeprograms', $data);
   }
-  public function settings(){
+  public function settings()
+  {
     $this->view('admin-interfaces/admin-settings');
-}
+  }
   public function degree()
   {
   }

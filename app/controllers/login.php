@@ -1,25 +1,26 @@
 <?php
 
-class Login extends Controller{
+class Login extends Controller
+{
 
-    
-    public function index(){
-        
+
+    public function index()
+    {
+
         $data['errors'] = [];
         $data['title'] = 'Login';
         $user = new User();
-        
-        if($_SERVER['REQUEST_METHOD'] == "POST"){
+
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
             //validate
             $row = $user->first([
-                'username'=>$_POST['username']
+                'username' => $_POST['username']
             ]);
-           
-            if($row){
-                if(password_verify($_POST['password'],$row->password))
-                {
+
+            if ($row) {
+                if (password_verify($_POST['password'], $row->password)) {
                     //authentication
-                    Auth :: authenticate($row);
+                    Auth::authenticate($row);
 
 
                     if ($_SESSION['USER_DATA']->role == 'admin') {
@@ -38,19 +39,16 @@ class Login extends Controller{
                         header('Location: login');
                     }
 
-            
+
                     // redirect('home');
                     // header('Location: admin/adduser');
                 }
             }
-            
+
             $data['errors']['username'] = 'Wrong username or password';
         }
-        
-        
-        $this->view('common/login/login',$data);
-        
-}
-}
 
-?>
+
+        $this->view('common/login/login', $data);
+    }
+}

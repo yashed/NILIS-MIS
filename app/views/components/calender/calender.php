@@ -5,134 +5,177 @@
 <html lang="en" dir="ltr">
 
 <head>
-    <meta charset="utf-8" />
-    <title>Dynamic Calendar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
 
-body {
-    min-height: 100vh;
-}
+    body {
 
-.wrapper {
-    width: 365px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-}
+        min-height: 100vh;
 
-.wrapper header {
-    display: flex;
-    align-items: center;
-    padding: 25px 30px 10px;
-    justify-content: space-between;
-}
+    }
 
-header .icons {
-    display: flex;
-}
+    .wrapper {
+        width: 80%;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
 
-header .icons span {
-    height: 38px;
-    width: 38px;
-    margin: 0 1px;
-    cursor: pointer;
-    color: #878787;
-    text-align: center;
-    line-height: 38px;
-    font-size: 1.9rem;
-    user-select: none;
-    border-radius: 50%;
-}
+    .wrapper header {
+        display: flex;
+        align-items: center;
+        padding: 25px 30px 5px;
+        justify-content: space-between;
+    }
 
-.icons span:last-child {
-    margin-right: -10px;
-}
+    header .icons {
+        display: flex;
+    }
 
-header .icons span:hover {
-    background: #f2f2f2;
-}
+    header .icons span {
+        /* height: 38px; */
+        width: 30px;
+        margin: 0 1px;
+        cursor: pointer;
+        color: #878787;
+        text-align: center;
+        line-height: 38px;
+        font-size: 1.2rem;
+        user-select: none;
+        border-radius: 20px;
+    }
 
-header .current-date {
-    font-size: 1.45rem;
-    font-weight: 500;
-}
+    .icons span:last-child {
+        margin-right: -10px;
+    }
 
-.calendar {
-    padding: 20px;
-}
+    header .icons span:hover {
+        background: #f2f2f2;
+    }
 
-.calendar ul {
-    display: flex;
-    flex-wrap: wrap;
-    list-style: none;
-    text-align: center;
-}
+    header .current-date {
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
 
-.calendar .days {
-    margin-bottom: 20px;
-}
+    .calendar {
+        padding: 20px;
+    }
 
-.calendar li {
-    color: #333;
-    width: calc(100% / 7);
-    font-size: 14px;
-}
+    .calendar ul {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        text-align: center;
+    }
 
-.calendar .weeks li {
-    font-weight: 500;
-    cursor: default;
-}
+    .calendar .days {
+        margin-bottom: 10px;
+    }
 
-.calendar .days li {
-    z-index: 1;
-    cursor: pointer;
-    position: relative;
-    margin-top: 30px;
-}
+    .calendar li {
+        color: #333;
+        width: calc(100% / 7);
+        font-size: 10px;
+    }
 
-.days li.inactive {
-    color: #aaa;
-}
+    .calendar .weeks li {
+        font-weight: 500;
+        cursor: default;
+    }
 
-.days li.active {
-    color: #fff;
-}
+    .calendar .days li {
+        z-index: 1;
+        cursor: pointer;
+        position: relative;
+        margin-top: 10%;
+    }
 
-.days li::before {
-    position: absolute;
-    content: "";
-    left: 50%;
-    top: 50%;
-    height: 40px;
-    width: 40px;
-    z-index: -1;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-}
+    .days li.inactive {
+        color: #aaa;
+    }
 
-.days li.active::before {
-    background: #17376E;
-}
+    .days li.active {
+        color: #fff;
+    }
 
-.days li:not(.active):hover::before {
-    background: #f2f2f2;
-}
+    .days li::before {
+        position: absolute;
+        content: "";
+        left: 50%;
+        top: 50%;
+        height: 30px;
+        width: 30px;
+        z-index: -1;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .days li.active::before {
+        background: #17376E;
+    }
+
+    .days li:not(.active):hover::before {
+        background: #f2f2f2;
+    }
+
+    @media (max-width: 1000px) {
+        .wrapper {
+            width: 80%;
+        }
+
+        .calendar li {
+            font-size: 8px;
+        }
+
+        header .current-date {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        header .icons span {
+            /* height: 38px; */
+            width: 20px;
+            margin: 0 1px;
+            cursor: pointer;
+            color: #878787;
+            text-align: center;
+            line-height: 38px;
+            font-size: 0.6rem;
+            user-select: none;
+            border-radius: 20px;
+        }
+
+        .calendar .days li {
+            z-index: 1;
+            cursor: pointer;
+            position: relative;
+            margin-top: 8px;
+
+        }
+
+    }
+
+    .calender-body2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+    }
 </style>
 
 <body>
-    <div class="body2">
+    <div class="calender-body2">
         <div class="wrapper">
             <header>
                 <p class="current-date"></p>
@@ -156,7 +199,7 @@ header .current-date {
             </div>
         </div>
     </div>
-    <script src="<?=ROOT?>js/calender-component.js" defer></script>
+    <script src="<?= ROOT ?>js/calender-component.js" defer></script>
 </body>
 
 </html>
