@@ -2,11 +2,6 @@
 $role = "DR";
 $data['role'] = $role;
 ?>
-
-<!-- <?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?> -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -175,15 +170,15 @@ $data['role'] = $role;
 
 <body>
     <div class="main" id="body">
-        <?php $this->view('components/navside-bar/header', $data) ?>
+        <!-- <?php $this->view('components/navside-bar/header', $data) ?>
         <?php $this->view('components/navside-bar/sidebar', $data) ?>
-        <?php $this->view('components/navside-bar/footer', $data) ?>
+        <?php $this->view('components/navside-bar/footer', $data) ?> -->
         <div class="dr-home">
             <div class="dr-title">Degree Program</div>
             <div class="dr-subsection-1">
 
                 <div class="button-btn">
-                    <button onclick="myFunction(), onCreateDegreeClick()" type="button" class="bt-name" style="float: right; margin-right: 40px;">Create Degree Program</button>
+                    <button onclick="myFunction()" type="button" class="bt-name" style="float: right; margin-right: 40px;">Create Degree Program</button>
                 </div>
 
                 <div class="dr-sub-title">Ongoing Degree Programs</div>
@@ -211,7 +206,7 @@ $data['role'] = $role;
 
                 <div class="container">
                     <h3>Create New Degree Program</h3>
-                    <form id="Form1" method="post">
+                    <form id="Form1" method="post" action="">
                         <div class="input-fields" style="margin: 20px 0px 10px 0px;">
 
                             <label for="degree type" class="drop-down">Degree Type:</label><br>
@@ -240,7 +235,7 @@ $data['role'] = $role;
                         </div>
                     </form>
 
-                    <form id="Form2" method="post">
+                    <form id="Form2" method="post"  action="">
                         <p id="form2_p">Define Subjects and Credits</p>
 
                         <div class="box_3">
@@ -258,8 +253,7 @@ $data['role'] = $role;
                             </div>
                         </div>
                     </form>
-
-                    <form id="Form3" method="post">
+                    <form id="Form3" method="post" action="">
                         <h5 style="font-size: 16px; font-weight: 400; margin-bottom: -20px;">Define Scheme of Assignment</h5>
                         <div class="box_3">
                             <div class="box_3_1">
@@ -280,44 +274,66 @@ $data['role'] = $role;
                                         <td><input style="width: 60px;" type="text" name="gpa_1" class="gpa" placeholder="4.00"></td>
                                     </tr>
                                     <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_1" class="grade" placeholder="A"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_1" class="maxvalue" placeholder="89"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_1" class="minvalue" placeholder="80"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_1" class="gpa" placeholder="4.00"></td>
+                                        <td><input style="width: 60px;" type="text" name="grade_2" class="grade" placeholder="A"></td>
+                                        <td><input style="width: 50px;" type="text" name="maxvalue_2" class="maxvalue" placeholder="89"></td>
+                                        <td><input style="width: 50px;" type="text" name="minvalue_2" class="minvalue" placeholder="80"></td>
+                                        <td><input style="width: 60px;" type="text" name="gpa_2" class="gpa" placeholder="4.00"></td>
                                     </tr>
                                     <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_1" class="grade" placeholder="A-"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_1" class="maxvalue" placeholder="79"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_1" class="minvalue" placeholder="75"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_1" class="gpa" placeholder="3.70"></td>
+                                        <td><input style="width: 60px;" type="text" name="grade_3" class="grade" placeholder="A-"></td>
+                                        <td><input style="width: 50px;" type="text" name="maxvalue_3" class="maxvalue" placeholder="79"></td>
+                                        <td><input style="width: 50px;" type="text" name="minvalue_3" class="minvalue" placeholder="75"></td>
+                                        <td><input style="width: 60px;" type="text" name="gpa_3" class="gpa" placeholder="3.70"></td>
                                     </tr>
                                     <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_1" class="grade" placeholder="B+"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_1" class="maxvalue" placeholder="74"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_1" class="minvalue" placeholder="70"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_1" class="gpa" placeholder="3.40"></td>
+                                        <td><input style="width: 60px;" type="text" name="grade_4" class="grade" placeholder="B+"></td>
+                                        <td><input style="width: 50px;" type="text" name="maxvalue_4" class="maxvalue" placeholder="74"></td>
+                                        <td><input style="width: 50px;" type="text" name="minvalue_4" class="minvalue" placeholder="70"></td>
+                                        <td><input style="width: 60px;" type="text" name="gpa_4" class="gpa" placeholder="3.40"></td>
                                     </tr>
                                     <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_1" class="grade" placeholder="B"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_1" class="maxvalue" placeholder="69"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_1" class="minvalue" placeholder="65"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_1" class="gpa" placeholder="3.00"></td>
+                                        <td><input style="width: 60px;" type="text" name="grade_5" class="grade" placeholder="B"></td>
+                                        <td><input style="width: 50px;" type="text" name="maxvalue_5" class="maxvalue" placeholder="69"></td>
+                                        <td><input style="width: 50px;" type="text" name="minvalue_5" class="minvalue" placeholder="65"></td>
+                                        <td><input style="width: 60px;" type="text" name="gpa_5" class="gpa" placeholder="3.00"></td>
                                     </tr>
                                     <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_1" class="grade" placeholder="B-"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_1" class="maxvalue" placeholder="64"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_1" class="minvalue" placeholder="60"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_1" class="gpa" placeholder="2.70"></td>
+                                        <td><input style="width: 60px;" type="text" name="grade_6" class="grade" placeholder="B-"></td>
+                                        <td><input style="width: 50px;" type="text" name="maxvalue_6" class="maxvalue" placeholder="64"></td>
+                                        <td><input style="width: 50px;" type="text" name="minvalue_6" class="minvalue" placeholder="60"></td>
+                                        <td><input style="width: 60px;" type="text" name="gpa_6" class="gpa" placeholder="2.70"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input style="width: 60px;" type="text" name="grade_7" class="grade" placeholder="C+"></td>
+                                        <td><input style="width: 50px;" type="text" name="maxvalue_7" class="maxvalue" placeholder="59"></td>
+                                        <td><input style="width: 50px;" type="text" name="minvalue_7" class="minvalue" placeholder="55"></td>
+                                        <td><input style="width: 60px;" type="text" name="gpa_7" class="gpa" placeholder="2.40"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input style="width: 60px;" type="text" name="grade_8" class="grade" placeholder="C"></td>
+                                        <td><input style="width: 50px;" type="text" name="maxvalue_8" class="maxvalue" placeholder="54"></td>
+                                        <td><input style="width: 50px;" type="text" name="minvalue_8" class="minvalue" placeholder="50"></td>
+                                        <td><input style="width: 60px;" type="text" name="gpa_8" class="gpa" placeholder="2.00"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input style="width: 60px;" type="text" name="grade_9" class="grade" placeholder="C-"></td>
+                                        <td><input style="width: 50px;" type="text" name="maxvalue_9" class="maxvalue" placeholder="49"></td>
+                                        <td><input style="width: 50px;" type="text" name="minvalue_9" class="minvalue" placeholder="45"></td>
+                                        <td><input style="width: 60px;" type="text" name="gpa_9" class="gpa" placeholder="1.70"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input style="width: 60px;" type="text" name="grade_10" class="grade" placeholder="F"></td>
+                                        <td><input style="width: 50px;" type="text" name="maxvalue_10" class="maxvalue" placeholder="44"></td>
+                                        <td><input style="width: 50px;" type="text" name="minvalue_10" class="minvalue" placeholder="0"></td>
+                                        <td><input style="width: 60px;" type="text" name="gpa_10" class="gpa" placeholder="00"></td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
-
                         <div class="btn-box">
                             <div class="button-btn">
                                 <button type="button" class="bt-name-white" id="Back2">Back</button>
                                 <button type="Submit" class="bt-name" style="text-decoration: none; margin-right: -53px;" href="<?= ROOT ?>dr/newDegree">Create</button>
-
                             </div>
                         </div>
                     </form>
@@ -358,16 +374,13 @@ $data['role'] = $role;
     var numSemesters = 4;
     // Validate Form1 before proceeding
     Next1.onclick = function() {
-        Form1.style.left = "-550px";
-        Form2.style.left = "100px";
-        progress.style.width = "150px";
-        // if (validateForm1()) {
-        //     Form1.style.left = "-550px";
-        //     Form2.style.left = "100px";
-        //     progress.style.width = "120px";
-        // } else {
-        //     alert(" Please fill out all the fields.");
-        // }
+        if (validateForm1()) {
+            Form1.style.left = "-550px";
+            Form2.style.left = "100px";
+            progress.style.width = "150px";
+        } else {
+            alert(" Please fill out all the fields.");
+        }
     }
     Back1.onclick = function() {
         Form1.style.left = "70px";
@@ -376,16 +389,13 @@ $data['role'] = $role;
     }
     // Validate Form2 before proceeding
     Next2.onclick = function() {
-        Form2.style.left = "-550px";
-        Form3.style.left = "100px";
-        progress.style.width = "300px";
-        // if (validateForm2()) {
-        //     Form2.style.left = "-550px";
-        //     Form3.style.left = "100px";
-        //     progress.style.width = "240px";
-        // } else {
-        //     alert(" Please fill out all the fields.");
-        // }
+        if (validateForm2()) {
+            Form2.style.left = "-550px";
+            Form3.style.left = "100px";
+            progress.style.width = "300px";
+        } else {
+            alert(" Please fill out all the fields.");
+        }
     }
     Back2.onclick = function() {
         Form2.style.left = "100px";
@@ -403,20 +413,48 @@ $data['role'] = $role;
         return true;
     }
 
-    // function validateForm2() {
+    function validateForm2() {
+        
+        for (var j = 1; j <= numSemesters; j++) {       //semesters
+            for (var k = 1; k <= 4; k++) {              //subjects
+                var subject = document.getElementById("subject_${j}_${k}").value;
+                var credits = document.getElementById("credits_${j}_${k}").value;
+                var subCodes = document.getElementById("subCode_${j}_${k}").value;
+                // document.write(5 + 6);
+                console.log(`Checking Semester ${j}, Subject ${k}`);
+                // Check if subject and credits are filled for each semester
+                if (subject.trim() === "" || credits.trim() === "" || subCodes.trim() === "") {
+                    // alert("Please fill out all fields for Semester " + j);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+//     function validateForm2() {
+//     for (var j = 1; j <= numSemesters; j++) {
+//         for (var k = 1; k <= 1; k++) {
+//             var subjectElement = document.getElementById(`subject_${j}_${k}`);
+//             var creditsElement = document.getElementById(`credits_${j}_${k}`);
+//             var subCodesElement = document.getElementById(`subCode_${j}_${k}`);
 
-    //     for (var j = 1; j <= numSemesters; j++) {
-    //         var subject = document.getElementById("subject_" + j).value;
-    //         var credits = document.getElementById("credits_" + j).value;
-    //         document.write(5 + 6);
-    //         // Check if subject and credits are filled for each semester
-    //         if (subject.trim() === "" || credits.trim() === "") {
-    //             alert("Please fill out all fields for Semester " + j);
-    //             return false;
-    //         }
-    //     }
-    //     return true;
-    // }
+//             console.log(`subjectElement for ${j}_${k}:`, subjectElement);
+//             console.log(`creditsElement for ${j}_${k}:`, creditsElement);
+//             console.log(`subCodesElement for ${j}_${k}:`, subCodesElement);
+
+//             var subject = subjectElement ? subjectElement.value : "";
+//             var credits = creditsElement ? creditsElement.value : "";
+//             var subCodes = subCodesElement ? subCodesElement.value : "";
+
+//             console.log(`Checking Semester ${j}, Subject ${k}`);
+//             // Check if subject and credits are filled for each semester
+//             if (subject.trim() === "" || credits.trim() === "" || subCodes.trim() === "") {
+//                 return false;
+//             }
+//         }
+//     }
+//     return true;
+// }
 
     // Function to handle degree type change
     function handleDegreeTypeChange() {
@@ -427,8 +465,6 @@ $data['role'] = $role;
             showSemesters(2);
         } else if (degreeType === "2 Year") {
             showSemesters(4);
-        } else {
-            hideAllSemesters();
         }
     }
     // Function to show a specific number of semesters
@@ -445,47 +481,42 @@ $data['role'] = $role;
                                         <th>Credits</th>
                                     </tr>
                                     <tr>
-                                        <td><input style="width: 130px; margin-right: 14px;" style="width: 50px;" value="<?= set_value('subject_${i}_1') ?>" type="text" name="subject_${i}_1" class="subject" placeholder="Subject 1" id="subject_${i}_1" style="border: <?= !empty($errors['subject_${i}_1']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                        <td><input style="width: 130px; margin-right: 14px;" style="width: 50px;" value="<?= set_value('subject_${i}_1') ?>" type="text" name="SubjectName" class="subject" placeholder="Subject 1" id="subject_${i}_1" style="border: <?= !empty($errors['subject_${i}_1']) ? '1px solid red' : '1px solid #ccc' ?>;">
                                             <?php if (!empty($errors['subject_${i}_1'])) : ?>
                                                 <div class="user-error" for="subject_${i}_1"><?= $errors['subject_${i}_1'] ?></div>
                                             <?php endif; ?>
                                         </td>
-                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('subCode_${i}_1') ?>" type="text" name="subCode_${i}_1" class="subCode" placeholder="" id=subCode_${i}_1" style="border: <?= !empty($errors['subCode_${i}_1']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('subCode_${i}_1') ?>" type="text" name="SubjectCode" class="subCode" placeholder="" id=subCode_${i}_1" style="border: <?= !empty($errors['subCode_${i}_1']) ? '1px solid red' : '1px solid #ccc' ?>;">
                                             <?php if (!empty($errors['subCode_${i}_1'])) : ?>
                                                 <div class="user-error" for="subCode_${i}_1"><?= $errors['subCode_${i}_1'] ?></div>
                                             <?php endif; ?>
                                         </td>
-                                        <td><input style="width: 60px;" value="<?= set_value('credits_${i}_1') ?>" type="text" name="credits_${i}_1" class="credits" placeholder="2" id="credits_${i}_1" style="border: <?= !empty($errors['credits_${i}_1']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                        <td><input style="width: 60px;" value="<?= set_value('credits_${i}_1') ?>" type="number" name="NoCredits" class="credits" placeholder="2" id="credits_${i}_1" style="border: <?= !empty($errors['credits_${i}_1']) ? '1px solid red' : '1px solid #ccc' ?>;">
                                             <?php if (!empty($errors['NoCredit'])) : ?>
-                                                <div class="danger" for="credits_${i}_1><?= $errors['NoCredit'] ?></div>
+                                                <div class="danger" for="credits_${i}_1"><?= $errors['NoCredit'] ?></div>
                                             <?php endif; ?>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td><input style="width: 130px; margin-right: 14px;" type="text" name="subject_${i}_2" class="subject" id="subject_${i}_2" placeholder="Subject 2"></td>
-                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('subCode_${i}_2') ?>" type="text" name="subCode_${i}_2" class="subCode" placeholder="" id="subCode_${i}_2" style="border: <?= !empty($errors['subCode_${i}_2']) ? '1px solid red' : '1px solid #ccc' ?>;"></td>
-                                        <td><input style="width: 60px;" type="text" name="credits_${i}_2" class="credits" id="credits_${i}_2" placeholder="2"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 130px; margin-right: 14px;" type="text" name="subject_${i}_3" class="subject" id="subject_${i}_3" placeholder="Subject 3"></td>
-                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('subCode_${i}_3') ?>" type="text" name="subCode_${i}_3" class="subCode" placeholder="" id="subCode_${i}_3" style="border: <?= !empty($errors['subCode_${i}_3']) ? '1px solid red' : '1px solid #ccc' ?>;"></td>
-                                        <td><input style="width: 60px;" type="text" name="credits_${i}_3" class="credits" id="credits_${i}_3" placeholder="2"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 130px; margin-right: 14px;" type="text" name="subject_${i}_4" class="subject" id="subject_${i}_4" placeholder="Subject 4"></td>
-                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('subCode_${i}_4') ?>" type="text" name="subCode_${i}_4" class="subCode" placeholder="" id="subCode_${i}_4" style="border: <?= !empty($errors['subCode_${i}_4']) ? '1px solid red' : '1px solid #ccc' ?>;"></td>
-                                        <td><input style="width: 60px;" type="text" name="credits_${i}_4" class="credits" id="credits_${i}_4" placeholder="2"></td>
-                                    </tr>
-                                </table>
-        `;
-            semesterContainer.appendChild(semesterDiv);
-        }
-    }
-    // Function to hide all semesters
-    function hideAllSemesters() {
-        var semesterContainer = document.getElementById("semester_container");
-        semesterContainer.innerHTML = ""; // Clear content
+                                    </table>
+                                    `;
+                                    semesterContainer.appendChild(semesterDiv);
+                                }
     }
 </script>
 
 </html>
+<!-- <tr>
+    <td><input style="width: 130px; margin-right: 14px;" type="text" name="subject_${i}_2" class="subject" id="subject_${i}_2" placeholder="Subject 2"></td>
+    <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('subCode_${i}_2') ?>" type="text" name="subCode_${i}_2" class="subCode" placeholder="" id="subCode_${i}_2" style="border: <?= !empty($errors['subCode_${i}_2']) ? '1px solid red' : '1px solid #ccc' ?>;"></td>
+    <td><input style="width: 60px;" type="text" name="credits_${i}_2" class="credits" id="credits_${i}_2" placeholder="2"></td>
+</tr>
+<tr>
+    <td><input style="width: 130px; margin-right: 14px;" type="text" name="subject_${i}_3" class="subject" id="subject_${i}_3" placeholder="Subject 3"></td>
+    <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('subCode_${i}_3') ?>" type="text" name="subCode_${i}_3" class="subCode" placeholder="" id="subCode_${i}_3" style="border: <?= !empty($errors['subCode_${i}_3']) ? '1px solid red' : '1px solid #ccc' ?>;"></td>
+    <td><input style="width: 60px;" type="text" name="credits_${i}_3" class="credits" id="credits_${i}_3" placeholder="2"></td>
+</tr>
+<tr>
+    <td><input style="width: 130px; margin-right: 14px;" type="text" name="subject_${i}_4" class="subject" id="subject_${i}_4" placeholder="Subject 4"></td>
+    <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('subCode_${i}_4') ?>" type="text" name="subCode_${i}_4" class="subCode" placeholder="" id="subCode_${i}_4" style="border: <?= !empty($errors['subCode_${i}_4']) ? '1px solid red' : '1px solid #ccc' ?>;"></td>
+    <td><input style="width: 60px;" type="text" name="credits_${i}_4" class="credits" id="credits_${i}_4" placeholder="2"></td>
+</tr> -->

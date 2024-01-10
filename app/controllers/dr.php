@@ -24,9 +24,9 @@ class DR extends Controller
     public function degreeprograms()
     {
         $degree = new Degree();
-
+        $result = $degree -> validate($_POST);
         // $degree->insert( $_POST );
-        // show( $_POST );
+        show( $_POST );
 
         $data['degrees'] = $degree->findAll();
         //show( $data[ 'degrees' ] );
