@@ -508,6 +508,51 @@ class SAR extends Controller
                                 createMarkSheet($uniqueFileName, $examID, $subCode, $marksType);
 
                                 echo json_encode(['success' => true, 'message' => 'File uploaded successfully.']);
+
+
+                                //enable examiner3 marks upload
+                                $data['examiner3'] = true;
+                                foreach ($data['subjects'] as $subject) {
+                                    $uploadedRes = $resultSheet->where(['examId' => $examID, 'subjectCode' => $subject->SubjectCode]);
+                                    // show($uploadedRes);
+
+                                    if (is_array($uploadedRes)) {
+
+                                        if (count($uploadedRes) == 2) {
+                                            $validate = false;
+                                            foreach ($uploadedRes as $res) {
+                                                if ($res->type == 'examiner1' || $res->type == 'examiner2') {
+                                                    $validate = true;
+                                                } else {
+                                                    $validate = false;
+                                                }
+                                            }
+                                            //check the marks gap between examiner1 and examiner2
+                                            if ($validate) {
+                                                $fileName = $examID . '_' . $subject->SubjectCode . '.csv';
+
+                                                //call the function to check the gap
+                                                if (checkGap($fileName, $examID, $subject->SubjectCode)) {
+                                                    $data['examiner3'] = true;
+                                                    var_dump('examiner3 true');
+                                                    show('examiner3');
+                                                } else {
+                                                    $data['examiner3'] = false;
+                                                    var_dump('examiner3 false');
+                                                    show('no examiner3');
+                                                }
+                                                /** The case in there is when we pass the data into view to show them it must reload 
+                                                 * but when using fetch it did't reload the file. must fix this  */
+
+
+                                                /**when uploading marks get the least gap marks and calculate final marks and upload to database
+                                                 */
+
+                                                echo json_encode($data);
+                                            }
+                                        }
+                                    }
+                                }
                             } else {
                                 // Error inserting data into the database
                                 $data['errors'] = $resultSheet->errors;
@@ -522,6 +567,8 @@ class SAR extends Controller
 
                             echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
                         }
+
+
                     } else {
                         // Handle file upload error
                         message("File upload error", "error");
@@ -529,50 +576,10 @@ class SAR extends Controller
                     }
 
 
+
                 }
 
-                //enable examiner3 marks upload
 
-                foreach ($data['subjects'] as $subject) {
-                    $uploadedRes = $resultSheet->where(['examId' => $examID, 'subjectCode' => $subject->SubjectCode]);
-                    // show($uploadedRes);
-
-                    if (is_array($uploadedRes)) {
-
-                        if (count($uploadedRes) == 2) {
-                            $validate = false;
-                            foreach ($uploadedRes as $res) {
-                                if ($res->type == 'examiner1' || $res->type == 'examiner2') {
-                                    $validate = true;
-                                } else {
-                                    $validate = false;
-                                }
-                            }
-                            //check the marks gap between examiner1 and examiner2
-                            if ($validate) {
-                                $fileName = $examID . '_' . $subject->SubjectCode . '.csv';
-
-                                //call the function to check the gap
-                                if (checkGap($fileName, $examID, $subject->SubjectCode)) {
-                                    $data['examiner3'] = true;
-                                    var_dump('examiner3 true');
-                                    show('examiner3');
-                                } else {
-                                    $data['examiner3'] = false;
-                                    var_dump('examiner3 false');
-                                    show('no examiner3');
-                                }
-                                /** The case in there is when we pass the data into view to show them it must reload 
-                                 * but when using fetch it did't reload the file. must fix this  */
-
-
-                                /**when uploading marks get the least gap marks and calculate final marks and upload to database
-                                 */
-                            }
-                        }
-                    }
-                }
-                // echo json_encode($data);
                 $this->view('sar-interfaces/sar-examresultupload', $data);
 
 
