@@ -532,20 +532,6 @@ $data['role'] = $role;
         sortedRows.forEach(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
     }
 
-    // function customSort(a, b) {
-    //     // Custom sorting function to handle alphanumeric strings
-    //     const numA = parseFloat(a) || a;
-    //     const numB = parseFloat(b) || b;
-
-    //     if (numA === numB) {
-    //         return a.localeCompare(b, undefined, {
-    //             numeric: true
-    //         });
-    //     } else {
-    //         return numA > numB ? 1 : -1;
-    //     }
-    // }
-
     // 3. Converting HTML table to PDF
 
     const pdf_btn = document.querySelector('#toPDF');
@@ -710,17 +696,17 @@ $data['role'] = $role;
     }
 
     // Get the table
-    var myTable = document.getElementById('table_p');
+    // var myTable = document.getElementById('table_p');
 
-    // Example: Get the name (second column, index 1) from the first row (index 0)
-    var rowIndex = 1; // Change this index to select a different row
-    var columnIndex = 2; // Change this index to select a different column
-    document.getElementById('tr1').onclick = function() {
-        var value = getValueFromSelectedRow(myTable, rowIndex, columnIndex);
-        console.log("Value from selected row:", value);
+    // // Example: Get the name (second column, index 1) from the first row (index 0)
+    // var rowIndex = 1; // Change this index to select a different row
+    // var columnIndex = 2; // Change this index to select a different column
+    // document.getElementById('tr1').onclick = function() {
+    //     var value = getValueFromSelectedRow(myTable, rowIndex, columnIndex);
+    //     console.log("Value from selected row:", value);
 
 
-    }
+    // }
     //
     //
     // for pass the data
@@ -741,19 +727,17 @@ $data['role'] = $role;
 
 
     // for make row clickable
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const table = document.getElementById('table_p');
         const rows = table.querySelectorAll('tbody tr');
 
         rows.forEach((row) => {
-            row.addEventListener('click', function() {
+            row.addEventListener('click', function () {
                 // Get the unique identifier from the data-id attribute
                 const studentId = row.getAttribute('data-id');
 
                 // Navigate to the target page with the data as a query parameter
-                window.location.href =
-                    'http://localhost/NILIS-MIS/app/views/dr-interfaces/dr-userprofile?studentId=' +
-                    studentId;
+                window.location.href = '<?= ROOT ?>dr/userprofile?studentId=' + studentId;
             });
         });
     });
