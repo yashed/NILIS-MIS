@@ -412,6 +412,7 @@ $data['role'] = $role;
         }
         return true;
     }
+
     function validateForm2() {
         for (var j = 1; j <= numSemesters; j++) { //semesters
             for (var k = 1; k <= 2; k++) { //subjects
@@ -501,11 +502,11 @@ $data['role'] = $role;
 </tr> -->
 
 <!-- // console.log(`subjectElement for:`, subjectElement);
-                // console.log(`creditsElement for:`, creditsElement);
-                // console.log(`subCodesElement for:`, subCodesElement); -->
+    // console.log(`creditsElement for:`, creditsElement);
+    // console.log(`subCodesElement for:`, subCodesElement); -->
 <!-- var subjectElement = document.getElementById(`subjectName`);
-                var creditsElement = document.getElementById(`NoCredits`);
-                var subCodesElement = document.getElementById(`subjectCode`); -->
+    var creditsElement = document.getElementById(`NoCredits`);
+    var subCodesElement = document.getElementById(`subjectCode`); -->
 
 <!-- // function validateForm2() {
 
