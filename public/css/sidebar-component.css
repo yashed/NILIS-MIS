@@ -329,6 +329,10 @@ header .image-text .headder-text {
 .sub-menu-link:hover .icon {
     font-weight: 600;
 }
+
+/* body.submenu-open {
+    backdrop-filter: blur(5px);
+} */
 /*
 
 

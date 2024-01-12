@@ -1,8 +1,9 @@
 <?php
 
-class DR extends Controller{
-
-    public function index(){
+class DR extends Controller
+{
+    public function index()
+    {
 
         $degree = new Degree();
 
@@ -10,9 +11,9 @@ class DR extends Controller{
         // show( $_POST );
 
         $data['degrees'] = $degree->findAll();
-        //show($data['degrees']);
-
-        $this->view('dr-interfaces/dr-dashboard',$data);
+        //show( $data[ 'degrees' ] );
+        // echo 'view';
+        $this->view('dr-interfaces/dr-dashboard', $data);
     }
 
     public function notification()
@@ -22,16 +23,17 @@ class DR extends Controller{
 
     public function degreeprograms()
     {
-
-    public function degreeprograms()
-    {
         $degree = new Degree();
+        $subject = new Subjects();
 
-        // $degree->insert($_POST);
-        // show($_POST);
+        $result1 = $degree -> validate($_POST);
+        $result2 = $subject -> validate($_POST);
+        // $degree->insert( $_POST );
+        show( $_POST );
 
         $data['degrees'] = $degree->findAll();
-        //show($data['degrees']);
+        $data['subjects'] = $subject->findAll();
+        //show( $data[ 'degrees' ] );
 
         $this->view('dr-interfaces/dr-degreeprograms', $data);
     }
@@ -76,23 +78,19 @@ class DR extends Controller{
                 //         mkdir( $uploadDirectory, 0777, true );
                 //     }
 
-        $fileName = $_FILES['student-data']['name'];
-        $fileTmpName = $_FILES['student-data']['tmp_name'];
-        $targetPath = $uploadDirectory . $fileName;
-        echo $targetPath;
-        if (move_uploaded_file($fileTmpName, $targetPath)) {
-            echo "File uploaded successfully.";
-        } else {
-            echo "Failed to upload file.";
+                $fileName = $_FILES['student-data']['name'];
+                $fileTmpName = $_FILES['student-data']['tmp_name'];
+                $targetPath = $uploadDirectory . $fileName;
+                echo $targetPath;
+                if (move_uploaded_file($fileTmpName, $targetPath)) {
+                    echo 'File uploaded successfully.';
+                } else {
+                    echo 'Failed to upload file.';
+                }
+            } else {
+                echo 'Error uploading file.';
+            }
         }
-    } else {
-        echo "Error uploading file.";
-       
-    }
-}
-
-
-
 
         $data['degrees'] = $degree->findAll();
         //show( $data[ 'degrees' ] );
@@ -134,22 +132,34 @@ class DR extends Controller{
             } else {
                 $data['student'] = $st->where(['indexNo' => $id])[0];
 
-$this->view('common/student/student.view', $data);
-return;
-}
-}
-$data['students'] = $st->findAll();
-//print_r($data);
-// die;
-$this->view('dr-interfaces/dr-participants.view', $data);
-}
-public function settings(){
-$this->view('dr-interfaces/dr-settings');
-}
-public function login(){
-$this->view('login/login.view');
-}
+                $this->view('common/student/student.view', $data);
+                return;
+            }
+        }
+        $data['students'] = $st->findAll();
+        //print_r( $data );
+        // die;
+        $this->view('dr-interfaces/dr-participants', $data);
+    }
 
+    public function settings()
+    {
+        $this->view('dr-interfaces/dr-settings');
+    }
+    public function reports()
+    {
+        $this->view('dr-interfaces/dr-reports');
+    }
+    public function attendance()
+    {
+        $this->view('dr-interfaces/dr-attendance');
+    }
+    public function examination()
+    {
+        $this->view('dr-interfaces/dr-examination');
+    }
+    public function login()
+    {
+        $this->view('login/login.view');
+    }
 }
-
-?>
