@@ -188,11 +188,14 @@ form button{
     left: -10px;
     align-items: center;
 }
-.Subject_table .subCode {
+#semester {
+    margin: 4px 0 -10px 27px;
+}
+.Subject_table .subjectCode {
     width: 110%;
     margin: 0px 0px 0px -8px;
 }
-.Subject_table .subject {
+.Subject_table .SubjectName {
     margin-left: 0px;
 }
 /*close and open buttons*/
