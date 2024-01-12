@@ -235,7 +235,7 @@ $data['role'] = $role;
                         </div>
                     </form>
 
-                    <form id="Form2" method="post"  action="">
+                    <form id="Form2" method="post" action="">
                         <p id="form2_p">Define Subjects and Credits</p>
 
                         <div class="box_3">
@@ -413,18 +413,36 @@ $data['role'] = $role;
         return true;
     }
 
+    // function validateForm2() {
+
+    //     for (var j = 1; j <= numSemesters; j++) {       //semesters
+    //         for (var k = 1; k <= 1; k++) {              //subjects
+    //             var subject = document.getElementById("subjectName").value;
+    //             var credits = document.getElementById("NoCredits").value;
+    //             var subCodes = document.getElementById("subjectCode").value;
+    //             // Check if subject and credits are filled for each semester
+    //             if (subject.trim() === "" || credits.trim() === "" || subCodes.trim() === "") {
+    //                 // alert("Please fill out all fields for Semester " + j);
+    //                 return false;
+    //             }
+    //         }
+    //     }
+    //     return true;
+    // }
     function validateForm2() {
-        
-        for (var j = 1; j <= numSemesters; j++) {       //semesters
-            for (var k = 1; k <= 4; k++) {              //subjects
-                var subject = document.getElementById("subject_${j}_${k}").value;
-                var credits = document.getElementById("credits_${j}_${k}").value;
-                var subCodes = document.getElementById("subCode_${j}_${k}").value;
-                // document.write(5 + 6);
-                console.log(`Checking Semester ${j}, Subject ${k}`);
+        for (var j = 1; j <= numSemesters; j++) {
+            for (var k = 1; k <= 1; k++) {
+                var semesterContainer = document.getElementById("semester_container");
+                var subjectElement = semesterContainer.querySelector('.SubjectName').value;
+                var creditsElement = semesterContainer.querySelector('.NoCredits').value;
+                var subCodesElement = semesterContainer.querySelector('.SubjectCode').value;
+
+                var subject = subjectElement ? subjectElement.value : "";
+                var credits = creditsElement ? creditsElement.value : "";
+                var subCodes = subCodesElement ? subCodesElement.value : "";
+
                 // Check if subject and credits are filled for each semester
                 if (subject.trim() === "" || credits.trim() === "" || subCodes.trim() === "") {
-                    // alert("Please fill out all fields for Semester " + j);
                     return false;
                 }
             }
@@ -433,20 +451,16 @@ $data['role'] = $role;
     }
 //     function validateForm2() {
 //     for (var j = 1; j <= numSemesters; j++) {
-//         for (var k = 1; k <= 1; k++) {
-//             var subjectElement = document.getElementById(`subject_${j}_${k}`);
-//             var creditsElement = document.getElementById(`credits_${j}_${k}`);
-//             var subCodesElement = document.getElementById(`subCode_${j}_${k}`);
+//         for (var k = 1; k <= 1; k++) { // Assuming you have one subject per semester
+//             var semesterContainer = document.getElementById("semester_container");
+//             var subjectElement = semesterContainer.querySelector(`.semester${j} .SubjectName`).value;
+//             var creditsElement = semesterContainer.querySelector(`.semester${j} .NoCredits`).value;
+//             var subCodesElement = semesterContainer.querySelector(`.semester${j} .SubjectCode`).value;
 
-//             console.log(`subjectElement for ${j}_${k}:`, subjectElement);
-//             console.log(`creditsElement for ${j}_${k}:`, creditsElement);
-//             console.log(`subCodesElement for ${j}_${k}:`, subCodesElement);
+//             var subject = subjectElement ? subjectElement : "";
+//             var credits = creditsElement ? creditsElement : "";
+//             var subCodes = subCodesElement ? subCodesElement : "";
 
-//             var subject = subjectElement ? subjectElement.value : "";
-//             var credits = creditsElement ? creditsElement.value : "";
-//             var subCodes = subCodesElement ? subCodesElement.value : "";
-
-//             console.log(`Checking Semester ${j}, Subject ${k}`);
 //             // Check if subject and credits are filled for each semester
 //             if (subject.trim() === "" || credits.trim() === "" || subCodes.trim() === "") {
 //                 return false;
@@ -474,33 +488,34 @@ $data['role'] = $role;
         for (var i = 1; i <= numSemesters; i++) {
             var semesterDiv = document.createElement("div");
             semesterDiv.innerHTML += `
-            <table class="Subject_table" id="Subject_table_${i}">
+            <table class="Subject_table" id="Subject_table">
+            <p id="Semester" name="semester" class="semester${i}">Semester ${i}</p>
                                     <tr>
-                                        <th id="Semester_${i}">Semester ${i}</th>
+                                        <th>Subject Name</th>
                                         <th>Subject Code</th>
                                         <th>Credits</th>
                                     </tr>
                                     <tr>
-                                        <td><input style="width: 130px; margin-right: 14px;" style="width: 50px;" value="<?= set_value('subject_${i}_1') ?>" type="text" name="SubjectName" class="subject" placeholder="Subject 1" id="subject_${i}_1" style="border: <?= !empty($errors['subject_${i}_1']) ? '1px solid red' : '1px solid #ccc' ?>;">
-                                            <?php if (!empty($errors['subject_${i}_1'])) : ?>
-                                                <div class="user-error" for="subject_${i}_1"><?= $errors['subject_${i}_1'] ?></div>
+                                        <td><input style="width: 130px; margin-right: 14px;" style="width: 50px;" value="<?= set_value('SubjectName') ?>" type="text" name="SubjectName" class="SubjectName" placeholder="Subject 1" id="SubjectName" style="border: <?= !empty($errors['SubjectName']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                            <?php if (!empty($errors['SubjectName'])) : ?>
+                                                <div class="user-error" for="SubjectName"><?= $errors['SubjectName'] ?></div>
                                             <?php endif; ?>
                                         </td>
-                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('subCode_${i}_1') ?>" type="text" name="SubjectCode" class="subCode" placeholder="" id=subCode_${i}_1" style="border: <?= !empty($errors['subCode_${i}_1']) ? '1px solid red' : '1px solid #ccc' ?>;">
-                                            <?php if (!empty($errors['subCode_${i}_1'])) : ?>
-                                                <div class="user-error" for="subCode_${i}_1"><?= $errors['subCode_${i}_1'] ?></div>
+                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('SubjectCode') ?>" type="text" name="SubjectCode" class="SubjectCode" placeholder="SubjectCode" id="SubjectCode" style="border: <?= !empty($errors['SubjectCode']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                            <?php if (!empty($errors['SubjectCode'])) : ?>
+                                                <div class="user-error" for="SubjectCode"><?= $errors['SubjectCode'] ?></div>
                                             <?php endif; ?>
                                         </td>
-                                        <td><input style="width: 60px;" value="<?= set_value('credits_${i}_1') ?>" type="number" name="NoCredits" class="credits" placeholder="2" id="credits_${i}_1" style="border: <?= !empty($errors['credits_${i}_1']) ? '1px solid red' : '1px solid #ccc' ?>;">
-                                            <?php if (!empty($errors['NoCredit'])) : ?>
-                                                <div class="danger" for="credits_${i}_1"><?= $errors['NoCredit'] ?></div>
+                                        <td><input style="width: 60px;" value="<?= set_value('NoCredits') ?>" type="number" name="NoCredits" class="NoCredits" placeholder="2" id="NoCredits" style="border: <?= !empty($errors['NoCredits']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                            <?php if (!empty($errors['NoCredits'])) : ?>
+                                                <div class="danger" for="NoCredits"><?= $errors['NoCredits'] ?></div>
                                             <?php endif; ?>
                                         </td>
                                     </tr>
                                     </table>
                                     `;
-                                    semesterContainer.appendChild(semesterDiv);
-                                }
+            semesterContainer.appendChild(semesterDiv);
+        }
     }
 </script>
 
@@ -520,3 +535,10 @@ $data['role'] = $role;
     <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('subCode_${i}_4') ?>" type="text" name="subCode_${i}_4" class="subCode" placeholder="" id="subCode_${i}_4" style="border: <?= !empty($errors['subCode_${i}_4']) ? '1px solid red' : '1px solid #ccc' ?>;"></td>
     <td><input style="width: 60px;" type="text" name="credits_${i}_4" class="credits" id="credits_${i}_4" placeholder="2"></td>
 </tr> -->
+
+<!-- // console.log(`subjectElement for:`, subjectElement);
+                // console.log(`creditsElement for:`, creditsElement);
+                // console.log(`subCodesElement for:`, subCodesElement); -->
+                <!-- var subjectElement = document.getElementById(`subjectName`);
+                var creditsElement = document.getElementById(`NoCredits`);
+                var subCodesElement = document.getElementById(`subjectCode`); -->

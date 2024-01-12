@@ -24,11 +24,15 @@ class DR extends Controller
     public function degreeprograms()
     {
         $degree = new Degree();
-        $result = $degree -> validate($_POST);
+        $subject = new Subjects();
+
+        $result1 = $degree -> validate($_POST);
+        $result2 = $subject -> validate($_POST);
         // $degree->insert( $_POST );
         show( $_POST );
 
         $data['degrees'] = $degree->findAll();
+        $data['subjects'] = $subject->findAll();
         //show( $data[ 'degrees' ] );
 
         $this->view('dr-interfaces/dr-degreeprograms', $data);
