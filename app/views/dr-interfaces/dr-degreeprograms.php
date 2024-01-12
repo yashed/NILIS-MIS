@@ -345,6 +345,7 @@ $data['role'] = $role;
         </div>
 </body>
 <script>
+    // window.addEventListener('DOMContentLoaded', function() {
     //for form blur-background
     // function onCreateDegreeClick() {
     //     document.querySelector("#create-popup").classList.add("active");
@@ -402,7 +403,6 @@ $data['role'] = $role;
         Form3.style.left = "550px";
         progress.style.width = "150px";
     }
-
     // Function to validate Form1, Form2, Form3 fields
     function validateForm1() {
         var degreeType = document.getElementById("degree_type").value;
@@ -412,64 +412,21 @@ $data['role'] = $role;
         }
         return true;
     }
-
-    // function validateForm2() {
-
-    //     for (var j = 1; j <= numSemesters; j++) {       //semesters
-    //         for (var k = 1; k <= 1; k++) {              //subjects
-    //             var subject = document.getElementById("subjectName").value;
-    //             var credits = document.getElementById("NoCredits").value;
-    //             var subCodes = document.getElementById("subjectCode").value;
-    //             // Check if subject and credits are filled for each semester
-    //             if (subject.trim() === "" || credits.trim() === "" || subCodes.trim() === "") {
-    //                 // alert("Please fill out all fields for Semester " + j);
-    //                 return false;
-    //             }
-    //         }
-    //     }
-    //     return true;
-    // }
     function validateForm2() {
-        for (var j = 1; j <= numSemesters; j++) {
-            for (var k = 1; k <= 1; k++) {
-                var semesterContainer = document.getElementById("semester_container");
-                var subjectElement = semesterContainer.querySelector('.SubjectName').value;
-                var creditsElement = semesterContainer.querySelector('.NoCredits').value;
-                var subCodesElement = semesterContainer.querySelector('.SubjectCode').value;
-
-                var subject = subjectElement ? subjectElement.value : "";
-                var credits = creditsElement ? creditsElement.value : "";
-                var subCodes = subCodesElement ? subCodesElement.value : "";
-
+        for (var j = 1; j <= numSemesters; j++) { //semesters
+            for (var k = 1; k <= 2; k++) { //subjects
+                var subject = document.getElementById("subjectName${k}").value.trim();
+                var credits = document.getElementById("NoCredits${k}").value.trim();
+                var subCodes = document.getElementById("subjectCode${k}").value.trim();
                 // Check if subject and credits are filled for each semester
-                if (subject.trim() === "" || credits.trim() === "" || subCodes.trim() === "") {
+                if (subject === "" || credits === "" || subCodes === "") {
+                    // alert("Please fill out all fields for Semester " + j);
                     return false;
                 }
             }
         }
         return true;
     }
-//     function validateForm2() {
-//     for (var j = 1; j <= numSemesters; j++) {
-//         for (var k = 1; k <= 1; k++) { // Assuming you have one subject per semester
-//             var semesterContainer = document.getElementById("semester_container");
-//             var subjectElement = semesterContainer.querySelector(`.semester${j} .SubjectName`).value;
-//             var creditsElement = semesterContainer.querySelector(`.semester${j} .NoCredits`).value;
-//             var subCodesElement = semesterContainer.querySelector(`.semester${j} .SubjectCode`).value;
-
-//             var subject = subjectElement ? subjectElement : "";
-//             var credits = creditsElement ? creditsElement : "";
-//             var subCodes = subCodesElement ? subCodesElement : "";
-
-//             // Check if subject and credits are filled for each semester
-//             if (subject.trim() === "" || credits.trim() === "" || subCodes.trim() === "") {
-//                 return false;
-//             }
-//         }
-//     }
-//     return true;
-// }
-
     // Function to handle degree type change
     function handleDegreeTypeChange() {
         var degreeType = document.getElementById("degree_type").value;
@@ -485,7 +442,8 @@ $data['role'] = $role;
     function showSemesters(numSemesters) {
         var semesterContainer = document.getElementById("semester_container");
         semesterContainer.innerHTML = ""; // Clear previous content
-        for (var i = 1; i <= numSemesters; i++) {
+        var j = 0;
+        for (var i = 1; i <= numSemesters; i++, j++) {
             var semesterDiv = document.createElement("div");
             semesterDiv.innerHTML += `
             <table class="Subject_table" id="Subject_table">
@@ -496,27 +454,33 @@ $data['role'] = $role;
                                         <th>Credits</th>
                                     </tr>
                                     <tr>
-                                        <td><input style="width: 130px; margin-right: 14px;" style="width: 50px;" value="<?= set_value('SubjectName') ?>" type="text" name="SubjectName" class="SubjectName" placeholder="Subject 1" id="SubjectName" style="border: <?= !empty($errors['SubjectName']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                        <td><input style="width: 130px; margin-right: 14px;" style="width: 50px;" value="<?= set_value('SubjectName') ?>" type="text" name="SubjectName" class="SubjectName" placeholder="Subject 1" id="SubjectName${i}" style="border: <?= !empty($errors['SubjectName']) ? '1px solid red' : '1px solid #ccc' ?>;">
                                             <?php if (!empty($errors['SubjectName'])) : ?>
                                                 <div class="user-error" for="SubjectName"><?= $errors['SubjectName'] ?></div>
                                             <?php endif; ?>
                                         </td>
-                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('SubjectCode') ?>" type="text" name="SubjectCode" class="SubjectCode" placeholder="SubjectCode" id="SubjectCode" style="border: <?= !empty($errors['SubjectCode']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('SubjectCode') ?>" type="text" name="SubjectCode" class="SubjectCode" placeholder="SubjectCode" id="SubjectCode${i}" style="border: <?= !empty($errors['SubjectCode']) ? '1px solid red' : '1px solid #ccc' ?>;">
                                             <?php if (!empty($errors['SubjectCode'])) : ?>
                                                 <div class="user-error" for="SubjectCode"><?= $errors['SubjectCode'] ?></div>
                                             <?php endif; ?>
                                         </td>
-                                        <td><input style="width: 60px;" value="<?= set_value('NoCredits') ?>" type="number" name="NoCredits" class="NoCredits" placeholder="2" id="NoCredits" style="border: <?= !empty($errors['NoCredits']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                        <td><input style="width: 60px;" value="<?= set_value('NoCredits') ?>" type="number" name="NoCredits" class="NoCredits" placeholder="2" id="NoCredits${i}" style="border: <?= !empty($errors['NoCredits']) ? '1px solid red' : '1px solid #ccc' ?>;">
                                             <?php if (!empty($errors['NoCredits'])) : ?>
                                                 <div class="danger" for="NoCredits"><?= $errors['NoCredits'] ?></div>
                                             <?php endif; ?>
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input style="width: 130px; margin-right: 14px;" type="text" name="SubjectName" class="SubjectName" id="SubjectName${i}" placeholder="Subject 2"></td>
+                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('SubjectCode') ?>" type="text" name="SubjectCode" class="SubjectCode" placeholder="" id="SubjectCode${i}" style="border: <?= !empty($errors['SubjectCode']) ? '1px solid red' : '1px solid #ccc' ?>;"></td>
+                                        <td><input style="width: 60px;" type="text" name="NoCredits" class="NoCredits" id="NoCredits${i}" placeholder="2"></td>
                                     </tr>
                                     </table>
                                     `;
             semesterContainer.appendChild(semesterDiv);
         }
     }
+    // });
 </script>
 
 </html>
@@ -539,6 +503,67 @@ $data['role'] = $role;
 <!-- // console.log(`subjectElement for:`, subjectElement);
                 // console.log(`creditsElement for:`, creditsElement);
                 // console.log(`subCodesElement for:`, subCodesElement); -->
-                <!-- var subjectElement = document.getElementById(`subjectName`);
+<!-- var subjectElement = document.getElementById(`subjectName`);
                 var creditsElement = document.getElementById(`NoCredits`);
                 var subCodesElement = document.getElementById(`subjectCode`); -->
+
+<!-- // function validateForm2() {
+
+//     for (var j = 1; j <= numSemesters; j++) {       //semesters
+//         for (var k = 1; k <= 1; k++) {              //subjects
+//             var subject = document.getElementById("subjectName").value;
+//             var credits = document.getElementById("NoCredits").value;
+//             var subCodes = document.getElementById("subjectCode").value;
+//             // Check if subject and credits are filled for each semester
+//             if (subject.trim() === "" || credits.trim() === "" || subCodes.trim() === "") {
+//                 // alert("Please fill out all fields for Semester " + j);
+//                 return false;
+//             }
+//         }
+//     }
+//     return true;
+// }
+//     function validateForm2() {
+//     for (var j = 1; j <= numSemesters; j++) {
+//         for (var k = 1; k <= 1; k++) { // Assuming you have one subject per semester
+//             var semesterContainer = document.getElementById("semester_container");
+//             var subjectElement = semesterContainer.querySelector(`.semester${j} .SubjectName`).value;
+//             var creditsElement = semesterContainer.querySelector(`.semester${j} .NoCredits`).value;
+//             var subCodesElement = semesterContainer.querySelector(`.semester${j} .SubjectCode`).value;
+
+//             var subject = subjectElement ? subjectElement : "";
+//             var credits = creditsElement ? creditsElement : "";
+//             var subCodes = subCodesElement ? subCodesElement : "";
+
+//             // Check if subject and credits are filled for each semester
+//             if (subject.trim() === "" || credits.trim() === "" || subCodes.trim() === "") {
+//                 return false;
+//             }
+//         }
+//     }
+//     return true;
+// }
+function validateForm2() {
+        for (var j = 1; j <= numSemesters; j++) {
+            for (var k = 1; k <= 1; k++) {
+                var semesterContainer = document.getElementById("semester_container");
+                var subjectElement = semesterContainer.querySelector('.SubjectName').value.trim();
+                var creditsElement = semesterContainer.querySelector('.NoCredits').value.trim();
+                var subCodesElement = semesterContainer.querySelector('.SubjectCode').value.trim();
+
+                var subject = subjectElement ? subjectElement.value : "";
+                var credits = creditsElement ? creditsElement.value : "";
+                var subCodes = subCodesElement ? subCodesElement.value : "";
+
+                console.log(`subjectElement for:`, subjectElement);
+                console.log(`creditsElement for:`, creditsElement);
+                console.log(`subCodesElement for:`, subCodesElement);
+
+                // Check if subject and credits are filled for each semester
+                if (subject === "" || credits === "" || subCodes === "") {
+                    return false;
+                }
+            }
+        }
+        return true;
+    } -->
