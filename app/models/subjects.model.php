@@ -16,7 +16,7 @@ class Subjects extends Model
         'SubjectName',
         'NoCredits',
         'DegreeID',
-
+        'semester',
 
     ];
     public function validate($data)
@@ -52,6 +52,12 @@ class Subjects extends Model
 		} else if (!preg_match("/^[0-9]+$/", trim($data['DegreeID']))) {
 			$this->errors['DegreeID'] = "DegreeID can only have numbers.";
 		}
+        //semester
+        if (empty($data['semester'])) {
+            $this->errors['semester'] = "A semester is required";
+        } else if (!preg_match("/^[0-9]+$/", trim($data['semester']))) {
+            $this->errors['semester'] = "semester can only have numbers.";
+        }
 		if (empty($this->errors)) {
 			return true;
 		}
