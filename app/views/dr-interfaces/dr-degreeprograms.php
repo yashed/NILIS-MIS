@@ -1,7 +1,17 @@
 <?php
 $role = "DR";
 $data['role'] = $role;
+$role = "DR";
+$data['role'] = $role;
 ?>
+<<<<<<< HEAD
+=======
+
+<!-- <?php $this->view('components/navside-bar/header', $data) ?>
+<?php $this->view('components/navside-bar/sidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?> -->
+
+>>>>>>> 7aa59e2173b4bb116eb3f25e48dddedc36bcc0b0
 <!DOCTYPE html>
 <html lang="en">
 
@@ -145,7 +155,10 @@ $data['role'] = $role;
     .bt-name-white {
         background: #fff;
         padding: 8px 22px;
+<<<<<<< HEAD
         /* margin-left: -100px; */
+=======
+>>>>>>> 7aa59e2173b4bb116eb3f25e48dddedc36bcc0b0
         border-radius: 6px;
         color: #17376E;
         box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.20);
@@ -170,17 +183,47 @@ $data['role'] = $role;
 
 <body>
     <div class="main" id="body">
+<<<<<<< HEAD
         <!-- <?php $this->view('components/navside-bar/header', $data) ?>
         <?php $this->view('components/navside-bar/sidebar', $data) ?>
         <?php $this->view('components/navside-bar/footer', $data) ?> -->
+=======
+        <?php $this->view('components/navside-bar/header', $data) ?>
+        <?php $this->view('components/navside-bar/sidebar', $data) ?>
+        <?php $this->view('components/navside-bar/footer', $data) ?>
+>>>>>>> 7aa59e2173b4bb116eb3f25e48dddedc36bcc0b0
         <div class="dr-home">
             <div class="dr-title">Degree Program</div>
             <div class="dr-subsection-1">
 
                 <div class="button-btn">
+<<<<<<< HEAD
                     <button onclick="myFunction()" type="button" class="bt-name" style="float: right; margin-right: 40px;">Create Degree Program</button>
+=======
+                    <button onclick="myFunction(), onCreateDegreeClick()" type="button" class="bt-name" style="float: right; margin-right: 40px;">Create Degree Program</button>
+>>>>>>> 7aa59e2173b4bb116eb3f25e48dddedc36bcc0b0
                 </div>
 
+                <div class="dr-sub-title">Ongoing Degree Programs</div>
+                <div class="dr-degree-bar">
+                    <?php $count = 0; ?>
+                    <?php foreach ($degrees as $degree) : ?>
+                        <div class="dr-card1">
+                            <a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
+                                <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                            </a>
+                        </div>
+                        <?php $count++; ?>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <div class="dr-subsection-1">
+                <div class="dr-sub-title">Completed Degree Programs</div>
+                <p>Completed Degree Programs are not yet.</p>
+            </div>
+            <div class="dr-footer">
+                <?php $this->view('components/footer/index', $data) ?>
+            </div>
                 <div class="dr-sub-title">Ongoing Degree Programs</div>
                 <div class="dr-degree-bar">
                     <?php $count = 0; ?>
@@ -206,18 +249,30 @@ $data['role'] = $role;
 
                 <div class="container">
                     <h3>Create New Degree Program</h3>
+<<<<<<< HEAD
                     <form id="Form1" method="post" action="">
                         <div class="input-fields" style="margin: 20px 0px 10px 0px;">
 
                             <label for="degree type" class="drop-down">Degree Type:</label><br>
                             <select name="degree type" id="degree_type" style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;" onchange="handleDegreeTypeChange()">
+=======
+                    <form id="Form1" method="post">
+                        <div class="input-fields" style="margin: 20px 0px 10px 0px;">
+
+                            <label for="degree type" class="drop-down">Degree Type:</label><br>
+                            <select name="degree type" id="degree_type" style="width: 360px;" onchange="handleDegreeTypeChange()">
+>>>>>>> 7aa59e2173b4bb116eb3f25e48dddedc36bcc0b0
                                 <option value="" default hidden>Select</option>
                                 <option value="1 Year" <?= (set_value('degree_type') === '1 Year') ? 'selected' : '' ?>>1 Year Degree</option>
                                 <option value="2 Year" <?= (set_value('degree_type') === '2 Year') ? 'selected' : '' ?>>2 Year Degree</option>
                             </select><br><br><br>
 
                             <label for="select degree type" class="drop-down">Select Degree Program:</label><br>
+<<<<<<< HEAD
                             <select name="select degree type" id="select_degree_type" style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;">
+=======
+                            <select name="select degree type" id="select_degree_type" style="width: 360px;">
+>>>>>>> 7aa59e2173b4bb116eb3f25e48dddedc36bcc0b0
                                 <option value="" default hidden>Select</option>
                                 <option value="DLMS" <?= (set_value('select_degree_type') === 'DLMS') ? 'selected' : '' ?>>DLMS</option>
                                 <option value="ENCM" <?= (set_value('select_degree_type') === 'ENCM') ? 'selected' : '' ?>>ENCM</option>
@@ -228,15 +283,27 @@ $data['role'] = $role;
 
                         <div class="btn-box">
                             <div class="button-btn">
+                        <div class="btn-box">
+                            <div class="button-btn">
 
                                 <button onclick="myFunction2()" type="button" class="bt-name-white" id="Cancel1">Cancel</button>
                                 <button onclick="myFunction(), validateForm1()" type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next1">Continue</button>
                             </div>
                         </div>
                     </form>
+                                <button onclick="myFunction2()" type="button" class="bt-name-white" id="Cancel1">Cancel</button>
+                                <button onclick="myFunction(), validateForm1()" type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next1">Continue</button>
+                            </div>
+                        </div>
+                    </form>
 
+<<<<<<< HEAD
                     <form id="Form2" method="post" action="">
                         <p id="form2_p">Define Subjects and Credits</p>
+=======
+                    <form id="Form2" method="post">
+                        <p>Define Subjects and Credits</p>
+>>>>>>> 7aa59e2173b4bb116eb3f25e48dddedc36bcc0b0
 
                         <div class="box_3">
                             <div class="box_3_1">
@@ -248,6 +315,7 @@ $data['role'] = $role;
                         </div>
                         <div class="btn-box">
                             <div class="button-btn">
+<<<<<<< HEAD
                                 <button type="button" class="bt-name-white" id="Back1" style="left: 0px;">Back</button>
                                 <button onclick="myFunction(), validateForm2()" type="button" class="bt-name" style="text-decoration: none; margin-right: 80px;" id="Next2">Continue</button>
                             </div>
@@ -255,6 +323,16 @@ $data['role'] = $role;
                     </form>
                     <form id="Form3" method="post" action="">
                         <h5 style="font-size: 16px; font-weight: 400; margin-bottom: -20px;">Define Scheme of Assignment</h5>
+=======
+                                <button type="button" class="bt-name-white" id="Back1">Back</button>
+                                <button onclick="myFunction(), validateForm2()" type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next2">Continue</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <form id="Form3" method="post">
+                        <h5>Define Scheme of Assignment</h5>
+>>>>>>> 7aa59e2173b4bb116eb3f25e48dddedc36bcc0b0
                         <div class="box_3">
                             <div class="box_3_1">
                                 <p>Subject</p>
@@ -262,6 +340,7 @@ $data['role'] = $role;
                             <div class="box_3_2">
                                 <table class="Subject_table">
                                     <tr>
+<<<<<<< HEAD
                                         <th style="width: 100px;">Grade</th>
                                         <th style="width: 100px;">Max Mark</th>
                                         <th style="width: 100px;">Min Mark</th>
@@ -326,14 +405,64 @@ $data['role'] = $role;
                                         <td><input style="width: 50px;" type="text" name="maxvalue_10" class="maxvalue" placeholder="44"></td>
                                         <td><input style="width: 50px;" type="text" name="minvalue_10" class="minvalue" placeholder="0"></td>
                                         <td><input style="width: 60px;" type="text" name="gpa_10" class="gpa" placeholder="00"></td>
+=======
+                                        <th>Grade</th>
+                                        <th>Max Mark</th>
+                                        <th>Min Mark</th>
+                                        <th>GPV</th>
+                                    </tr>
+                                    <tr>
+                                        <td width="20%"><input type="text" name="subject_1" class="subject" placeholder="A+"></td>
+                                        <td width="40%"><input type="text" name="cedits_1" class="credits" placeholder="100"></td>
+                                        <td width="40%"><input type="text" name="cedits_1" class="credits" placeholder="90"></td>
+                                        <td width="60%"><input type="text" name="cedits_1" class="credits" placeholder="4.00"></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="40%"><input type="text" name="subject_1" class="subject" placeholder="A"></td>
+                                        <td width="40%"><input type="text" name="cedits_1" class="credits" placeholder="89"></td>
+                                        <td width="40%"><input type="text" name="cedits_1" class="credits" placeholder="80"></td>
+                                        <td width="60%"><input type="text" name="cedits_1" class="credits" placeholder="4.00"></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="40%"><input type="text" name="subject_1" class="subject" placeholder="A-"></td>
+                                        <td><input type="text" name="cedits_1" class="credits" placeholder="79"></td>
+                                        <td><input type="text" name="cedits_1" class="credits" placeholder="75"></td>
+                                        <td width="60%"><input type="text" name="cedits_1" class="credits" placeholder="3.70"></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="40%"><input type="text" name="subject_1" class="subject" placeholder="B+"></td>
+                                        <td><input type="text" name="cedits_1" class="credits" placeholder="74"></td>
+                                        <td><input type="text" name="cedits_1" class="credits" placeholder="70"></td>
+                                        <td width="60%"><input type="text" name="cedits_1" class="credits" placeholder="3.40"></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="40%"><input type="text" name="subject_1" class="subject" placeholder="B"></td>
+                                        <td><input type="text" name="cedits_1" class="credits" placeholder="69"></td>
+                                        <td><input type="text" name="cedits_1" class="credits" placeholder="65"></td>
+                                        <td width="60%"><input type="text" name="cedits_1" class="credits" placeholder="3.00"></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="40%"><input type="text" name="subject_1" class="subject" placeholder="B-"></td>
+                                        <td><input type="text" name="cedits_1" class="credits" placeholder="64"></td>
+                                        <td><input type="text" name="cedits_1" class="credits" placeholder="60"></td>
+                                        <td width="60%"><input type="text" name="cedits_1" class="credits" placeholder="2.70"></td>
+>>>>>>> 7aa59e2173b4bb116eb3f25e48dddedc36bcc0b0
                                     </tr>
                                 </table>
                             </div>
                         </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7aa59e2173b4bb116eb3f25e48dddedc36bcc0b0
                         <div class="btn-box">
                             <div class="button-btn">
                                 <button type="button" class="bt-name-white" id="Back2">Back</button>
                                 <button type="Submit" class="bt-name" style="text-decoration: none; margin-right: -53px;" href="<?= ROOT ?>dr/newDegree">Create</button>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7aa59e2173b4bb116eb3f25e48dddedc36bcc0b0
                             </div>
                         </div>
                     </form>
@@ -345,13 +474,21 @@ $data['role'] = $role;
         </div>
 </body>
 <script>
+<<<<<<< HEAD
     // window.addEventListener('DOMContentLoaded', function() {
+=======
+>>>>>>> 7aa59e2173b4bb116eb3f25e48dddedc36bcc0b0
     //for form blur-background
     // function onCreateDegreeClick() {
     //     document.querySelector("#create-popup").classList.add("active");
     //     document.querySelector("#body").classList.add("active");
     // }
 
+    //for form move within forms
+    function myFunction() {
+        const lb = document.querySelector(".model-box");
+        lb.style.display = "block";
+    }
     //for form move within forms
     function myFunction() {
         const lb = document.querySelector(".model-box");
@@ -365,7 +502,18 @@ $data['role'] = $role;
     var Form1 = document.getElementById("Form1");
     var Form2 = document.getElementById("Form2");
     var Form3 = document.getElementById("Form3");
+    function myFunction2() {
+        const lb = document.querySelector(".model-box");
+        lb.style.display = "none";
+    }
+    var Form1 = document.getElementById("Form1");
+    var Form2 = document.getElementById("Form2");
+    var Form3 = document.getElementById("Form3");
 
+    var Next1 = document.getElementById("Next1");
+    var Next2 = document.getElementById("Next2");
+    var Back1 = document.getElementById("Back1");
+    var Back2 = document.getElementById("Back2");
     var Next1 = document.getElementById("Next1");
     var Next2 = document.getElementById("Next2");
     var Back1 = document.getElementById("Back1");
@@ -376,6 +524,7 @@ $data['role'] = $role;
     // Validate Form1 before proceeding
     Next1.onclick = function() {
         if (validateForm1()) {
+<<<<<<< HEAD
             Form1.style.left = "-550px";
             Form2.style.left = "100px";
             progress.style.width = "150px";
@@ -567,3 +716,120 @@ function validateForm2() {
         }
         return true;
     } -->
+=======
+            Form1.style.left = "-450px";
+            Form2.style.left = "40px";
+            progress.style.width = "120px";
+        } else {
+            alert(" Please fill out all the fields.");
+        }
+    }
+    Back1.onclick = function() {
+        Form1.style.left = "40px";
+        Form2.style.left = "450px";
+        progress.style.width = "10px";
+    }
+    // Validate Form2 before proceeding
+    Next2.onclick = function() {
+        if (validateForm2()) {
+            Form2.style.left = "-450px";
+            Form3.style.left = "40px";
+            progress.style.width = "240px";
+        } else {
+            alert(" Please fill out all the fields.");
+        }
+    }
+    Back2.onclick = function() {
+        Form2.style.left = "40px";
+        Form3.style.left = "450px";
+        progress.style.width = "120px";
+    }
+
+    // Function to validate Form1, Form2, Form3 fields
+    function validateForm1() {
+        var degreeType = document.getElementById("degree_type").value;
+        var selectDegreeType = document.getElementById("select_degree_type").value;
+        if (degreeType === "" || selectDegreeType === "") {
+            return false;
+        }
+        return true;
+    }
+
+    function validateForm2() {
+
+        for (var j = 1; j <= numSemesters; j++) {
+            var subject = document.getElementById("subject_" + j).value;
+            var credits = document.getElementById("credits_" + j).value;
+            document.write(5 + 6);
+            // Check if subject and credits are filled for each semester
+            if (subject.trim() === "" || credits.trim() === "") {
+                alert("Please fill out all fields for Semester " + j);
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    // Function to handle degree type change
+    function handleDegreeTypeChange() {
+        var degreeType = document.getElementById("degree_type").value;
+        var semesterContainer = document.getElementById("semester_container");
+        // You can customize this logic based on your degree types
+        if (degreeType === "1 Year") {
+            showSemesters(2);
+        } else if (degreeType === "2 Year") {
+            showSemesters(4);
+        } else {
+            hideAllSemesters();
+        }
+    }
+    // Function to show a specific number of semesters
+    function showSemesters(numSemesters) {
+        var semesterContainer = document.getElementById("semester_container");
+        semesterContainer.innerHTML = ""; // Clear previous content
+        for (var i = 1; i <= numSemesters; i++) {
+            var semesterDiv = document.createElement("div");
+            semesterDiv.innerHTML += `
+            <table class="Subject_table" id="Subject_table_${i}">
+                                    <tr>
+                                        <th id="Semester_${i}">Semester ${i}</th>
+                                        <th>Credits</th>
+                                    </tr>
+                                    <tr>
+                                        <td width="80%"><input value="<?= set_value('subject_${i}') ?>" type="text" name="subject_${i}" class="subject" placeholder="Subject 1" id="subject_${i}" style="border: <?= !empty($errors['subject_${i}']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                            <?php if (!empty($errors['subject_${i}'])) : ?>
+                                                <div class="user-error" for="subject_${i}"><?= $errors['subject_${i}'] ?></div>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td><input value="<?= set_value('credit_${i}') ?>" type="text" name="credits_${i}" class="credits" placeholder="2" id="credits_${i}" style="border: <?= !empty($errors['credits_${i}']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                            <?php if (!empty($errors['NoCredit'])) : ?>
+                                                <div class="danger"><?= $errors['NoCredit'] ?></div>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="subject_${i}" class="subject" id="subject_${i}" placeholder="Subject 2"></td>
+                                        <td><input type="text" name="credits_${i}" class="credits" id="credits_${i}" placeholder="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="subject_${i}" class="subject" id="subject_${i}" placeholder="Subject 3"></td>
+                                        <td><input type="text" name="credits_${i}" class="credits" id="credits_${i}" placeholder="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="subject_${i}" class="subject" id="subject_${i}" placeholder="Subject 4"></td>
+                                        <td><input type="text" name="credits_${i}" class="credits" id="credits_${i}" placeholder="2"></td>
+                                    </tr>
+                                </table>
+        `;
+            semesterContainer.appendChild(semesterDiv);
+        }
+    }
+    // Function to hide all semesters
+    function hideAllSemesters() {
+        var semesterContainer = document.getElementById("semester_container");
+        semesterContainer.innerHTML = ""; // Clear content
+    }
+</script>
+
+</html>
+>>>>>>> 7aa59e2173b4bb116eb3f25e48dddedc36bcc0b0
