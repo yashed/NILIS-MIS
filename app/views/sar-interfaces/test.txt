@@ -2,7 +2,130 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
+string(335) ""Name of  Programme  : 2"
+"Subject  : Information System Sercurity"
 
+"Index No","Registration No","Examiner 01 Mark","Examiner 02 Marks","Assignment Marks"
+DILIM/003,DILIM/2022/003 , 34 , , ,
+DILIM/005,DILIM/2022/005 ,44 , , ,
+DILIM/007,DILIM/2022/007 , 45 , , ,
+DILIM/009,DILIM/2022/009 , 43 , , ,
+DILIM/011,DILIM/2022/011 , 43 , , ,
+"
+<br />
+<b>Warning</b>:  Undefined array key 2 in <b>/Applications/XAMPP/xamppfiles/htdocs/NILIS-MIS/app/models/ResultSheet.model.php</b> on line <b>41</b><br />
+array(7) {
+  ["formId"]=>
+  string(7) "form5_2"
+  ["subjectCode"]=>
+  string(3) "ISS"
+  ["date"]=>
+  string(19) "2024-01-12 05:15:34"
+  ["uploadName"]=>
+  string(10) "ISS_E1.csv"
+  ["newName"]=>
+  string(26) "form5_2_165a0bce617709.csv"
+  ["type"]=>
+  string(9) "examiner1"
+  ["examId"]=>
+  int(43)
+}
+<pre>insert into mark_sheets(formId,subjectCode,date,uploadName,newName,type,examId) values (:formId,:subjectCode,:date,:uploadName,:newName,:type,:examId)</pre><pre>Upload examiner1 Marksheet for ISS in ExamId = 43 successfully.</pre>string(87) "inside the functionform5_2_165a0bce617709.csvexam id 43subject code ISStype = examiner1"
+string(17) "subject values = "
+array(6) {
+  [0]=>
+  string(9) "DILIM/003"
+  [1]=>
+  string(15) "DILIM/2022/003 "
+  [2]=>
+  string(4) " 34 "
+  [3]=>
+  string(4) " 23 "
+  [4]=>
+  string(3) " 34"
+  [5]=>
+  string(1) " "
+}
+string(17) "subject values = "
+array(6) {
+  [0]=>
+  string(9) "DILIM/005"
+  [1]=>
+  string(15) "DILIM/2022/005 "
+  [2]=>
+  string(3) "44 "
+  [3]=>
+  string(4) " 43 "
+  [4]=>
+  string(3) " 44"
+  [5]=>
+  string(0) ""
+}
+string(17) "subject values = "
+array(6) {
+  [0]=>
+  string(9) "DILIM/007"
+  [1]=>
+  string(15) "DILIM/2022/007 "
+  [2]=>
+  string(4) " 45 "
+  [3]=>
+  string(3) "54 "
+  [4]=>
+  string(3) " 56"
+  [5]=>
+  string(0) ""
+}
+string(17) "subject values = "
+array(6) {
+  [0]=>
+  string(9) "DILIM/009"
+  [1]=>
+  string(15) "DILIM/2022/009 "
+  [2]=>
+  string(4) " 43 "
+  [3]=>
+  string(3) "34 "
+  [4]=>
+  string(3) " 66"
+  [5]=>
+  string(0) ""
+}
+string(17) "subject values = "
+array(6) {
+  [0]=>
+  string(9) "DILIM/011"
+  [1]=>
+  string(15) "DILIM/2022/011 "
+  [2]=>
+  string(4) " 43 "
+  [3]=>
+  string(3) "22 "
+  [4]=>
+  string(3) " 34"
+  [5]=>
+  string(0) ""
+}
+<br />
+<b>Warning</b>:  Undefined array key 1 in <b>/Applications/XAMPP/xamppfiles/htdocs/NILIS-MIS/app/core/functions.php</b> on line <b>94</b><br />
+<br />
+<b>Warning</b>:  Undefined array key 2 in <b>/Applications/XAMPP/xamppfiles/htdocs/NILIS-MIS/app/core/functions.php</b> on line <b>95</b><br />
+<br />
+<b>Warning</b>:  Undefined array key 3 in <b>/Applications/XAMPP/xamppfiles/htdocs/NILIS-MIS/app/core/functions.php</b> on line <b>97</b><br />
+<br />
+<b>Warning</b>:  Undefined array key 4 in <b>/Applications/XAMPP/xamppfiles/htdocs/NILIS-MIS/app/core/functions.php</b> on line <b>98</b><br />
+string(17) "subject values = "
+array(4) {
+  [0]=>
+  string(0) ""
+  [1]=>
+  string(0) ""
+  [2]=>
+  NULL
+  [3]=>
+  string(0) ""
+}
+{"success":true,"message":"File uploaded successfully."}{"success":false,"message":"Error moving the uploaded file."}
  <!DOCTYPE html>
     <html lang="en">
         <head>
@@ -1045,7 +1168,7 @@ document.addEventListener("click", (event) => {
 
 </body>
 <script>
-    // var examiner3 = false;
+    // var examiner3 = true;
     // console.log('examiner 3 = ', examiner3);
     // var elements = document.querySelectorAll('.dashed-container-3');
 

@@ -518,7 +518,7 @@ class SAR extends Controller
 
                                     if (is_array($uploadedRes)) {
 
-                                        if (count($uploadedRes) == 2) {
+                                        if (count($uploadedRes) >= 2) {
                                             $validate = false;
                                             foreach ($uploadedRes as $res) {
                                                 if ($res->type == 'examiner1' || $res->type == 'examiner2') {
@@ -538,6 +538,27 @@ class SAR extends Controller
                                                     show('examiner3');
                                                 } else {
                                                     $data['examiner3'] = false;
+
+                                                    //check whether assestment marks are available
+                                                    $assignmentMarks = $resultSheet->where([
+                                                        'examId' => $examID,
+                                                        'subjectCode' => $subject->SubjectCode,
+                                                        'type' => 'assestment'
+                                                    ]);
+                                                    var_dump("assignment marks ", $assignmentMarks);
+                                                    if (!empty($assignmentMarks)) {
+                                                        $data['assignment'] = true;
+                                                        //upload the student marks to database
+                                                        $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
+
+                                                        //call the function to upload marks to database
+                                                        echo 'call insertMarks function';
+                                                        insertMarks($resFileName, $examID, $subject->SubjectCode);
+                                                    } else {
+                                                        $data['assignment'] = false;
+                                                        echo 'Assignment marks are not available.';
+                                                    }
+
                                                     var_dump('examiner3 false');
                                                     show('no examiner3');
                                                 }
@@ -548,7 +569,7 @@ class SAR extends Controller
                                                 /**when uploading marks get the least gap marks and calculate final marks and upload to database
                                                  */
 
-                                                echo json_encode($data);
+                                                // echo json_encode($data);
                                             }
                                         }
                                     }

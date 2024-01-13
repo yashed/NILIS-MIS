@@ -197,7 +197,7 @@ function insertMarks($file, $examID, $subCode)
     $data['subjectCode'] = $subCode;
 
 
-    $filePath = 'assets/csv/examsheets/final-marksheets' . $file;
+    $filePath = 'assets/csv/examsheets/final-marksheets/' . $file;
     $content = file_get_contents($filePath);
     $lines = explode("\n", $content);
 
@@ -212,10 +212,11 @@ function insertMarks($file, $examID, $subCode)
         $data['examiner1Marks'] = $values[2];
         $data['examiner2Marks'] = $values[3];
         $data['assessmentMarks'] = $values[4];
-        $data['examiner3Marks'] = !empty($values[5]) ? $values[5] : '';
+        $data['examiner3Marks'] = !empty($values[5]) ? $values[5] : -1;
 
         //insert data into table
         if ($mark->markValidate($data)) {
+            echo 'inside the validate';
             $mark->insert($data);
         }
 
@@ -252,12 +253,13 @@ function checkGap($file, $examId, $subCode)
     $lines = explode("\n", $content);
 
     //iterate through data in file
-    for ($i = 4; $i < count($lines); $i++) {
+    for ($i = 4; $i < count($lines) - 1; $i++) {
 
         //get line
         $values = str_getcsv($lines[$i]);
 
         //check the gap
+        var_dump('values = ' . $values[2] . ' ' . $values[3]);
         $gap = abs($values[2] - $values[3]);
         if ($gap > 10) {
             var_dump('gap is greater than 10');

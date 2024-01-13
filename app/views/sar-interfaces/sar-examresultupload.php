@@ -777,14 +777,14 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
 
 </body>
 <script>
-    // var examiner3 = <?= json_encode($examiner3) ?>;
-    // console.log('examiner 3 = ', examiner3);
-    // var elements = document.querySelectorAll('.dashed-container-3');
+    var examiner3 = <?= json_encode($examiner3) ?>;
+    console.log('examiner 3 = ', examiner3);
+    var elements = document.querySelectorAll('.dashed-container-3');
 
-    // // Loop each element and update the data-active attribute
-    // elements.forEach(function (element) {
-    //     element.dataset.active = examiner3;
-    // });
+    // Loop each element and update the data-active attribute
+    elements.forEach(function (element) {
+        element.dataset.active = examiner3;
+    });
 
 
     // Fetch data from the controller
@@ -1049,29 +1049,30 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
 
     console.log("before fetch");
 
-    var targetURL = '<?= ROOT ?>sar/examination/resultsupload';
-    // Fetch data from the controller
-    fetch(targetURL)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text(); // Directly return text
-        })
-        .then(data => {
-            console.log('data = ', data);
-            // Update the view with the received data
-            var examiner3 = data;
+    // var targetURL = '<?= ROOT ?>sar/examination/resultsupload';
+    // // Fetch data from the controller
+    // fetch(targetURL)
+    //     .then(response => {
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+    //         return response.text(); // Directly return text
+    //     })
+    //     .then(data => {
+    //         // console.log('data = ', data)
 
-            var elements = document.querySelectorAll('.dashed-container-3');
-            elements.forEach(function (element) {
-                element.dataset.active = examiner3;
-            });
+    //         // Update the view with the received data
+    //         var examiner3 = data["examiner3"];
+    //         console.log('examiner 3 = ', examiner3);
+    //         var elements = document.querySelectorAll('.dashed-container-3');
+    //         elements.forEach(function (element) {
+    //             element.dataset.active = examiner3;
+    //         });
 
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
+    //     })
+    //     .catch(error => {
+    //         console.error('Error fetching data:', error);
+    //     });
 
 
 </script>
