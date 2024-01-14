@@ -473,7 +473,7 @@ $data['role'] = $role;
                                     </tr>
                                     <tr>
                                         <td><input style="width: 130px; margin-right: 14px;" type="text" name="SubjectName" class="SubjectName" id="SubjectName${i}" placeholder="Subject 2"></td>
-                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('SubjectCode') ?>" type="text" name="SubjectCode" class="SubjectCode" placeholder="" id="SubjectCode${i}" style="border: <?= !empty($errors['SubjectCode']) ? '1px solid red' : '1px solid #ccc' ?>;"></td>
+                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('SubjectCode') ?>" type="text" name="SubjectCode" class="SubjectCode" placeholder="SubjectCode" id="SubjectCode${i}" style="border: <?= !empty($errors['SubjectCode']) ? '1px solid red' : '1px solid #ccc' ?>;"></td>
                                         <td><input style="width: 60px;" type="text" name="NoCredits" class="NoCredits" id="NoCredits${i}" placeholder="2"></td>
                                     </tr>
                                     </table>
