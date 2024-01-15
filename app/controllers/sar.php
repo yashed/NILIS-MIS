@@ -570,6 +570,33 @@ class SAR extends Controller
                                                  */
 
                                                 // echo json_encode($data);
+                                            } else {
+                                                if ($marksType == 'examiner3') {
+                                                    $data['examiner3'] = true;
+
+                                                    //check whether assestment marks are available
+                                                    $assignmentMarks = $resultSheet->where([
+                                                        'examId' => $examID,
+                                                        'subjectCode' => $subject->SubjectCode,
+                                                        'type' => 'assestment'
+                                                    ]);
+                                                    var_dump("assignment marks ", $assignmentMarks);
+                                                    if (!empty($assignmentMarks)) {
+                                                        $data['assignment'] = true;
+                                                        //upload the student marks to database
+                                                        $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
+
+                                                        //call the function to upload marks to database
+                                                        echo 'call insertMarks function';
+                                                        insertMarks($resFileName, $examID, $subject->SubjectCode);
+                                                    } else {
+                                                        $data['assignment'] = false;
+                                                        echo 'Assignment marks are not available.';
+                                                    }
+
+                                                } else {
+                                                    echo 'examiner1 and examiner2 marks are not available';
+                                                }
                                             }
                                         }
                                     }

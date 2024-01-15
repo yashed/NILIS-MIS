@@ -778,6 +778,7 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
 </body>
 <script>
     var examiner3 = <?= json_encode($examiner3) ?>;
+    var examiner3 = true;
     console.log('examiner 3 = ', examiner3);
     var elements = document.querySelectorAll('.dashed-container-3');
 
