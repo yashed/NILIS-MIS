@@ -144,7 +144,7 @@ $data['role'] = $role;
                     <path d="M33.5 21V33" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
                     <path d="M33.5 45H33.53" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
-                <h2>Are you sure waant to delete this student data?</h2><br>
+                <h2>Are you sure want to delete this student data?</h2><br>
                 <div class="yesorno">
                     <a href="<?= ROOT ?>Student/<?= $student->indexNo ?>/delete/<?= $student->id ?>"><button class="close-button">Yes,I'm Sure</button></a>
                     <button class="close-button">No,Close</button>
