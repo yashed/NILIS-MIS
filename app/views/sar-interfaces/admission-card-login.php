@@ -221,6 +221,13 @@
         height: 76.389px;
     }
 </style>
+<?php
+$semester = $examDetails[0]->semester ?? null;
+$degree = $degreeDetails[0]->DegreeShortName ?? null;
+
+
+
+?>
 
 <body>
     <div class="admisssion-card">
@@ -237,7 +244,11 @@
                     NILIS Examinations - Admission Card
                 </div>
                 <div class="admission-login-subtitle">
-                    <span> Semester 1</span> - <span>DILIM</span>
+                    <span> Semester
+                        <?= $semester ?>
+                    </span> - <span>
+                        <?= $degree ?>
+                    </span>
                 </div>
                 <div class="admission-login-input">
                     <lable class="login-input-title">Enter your Index number</lable>
