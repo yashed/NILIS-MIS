@@ -250,16 +250,17 @@ $degree = $degreeDetails[0]->DegreeShortName ?? null;
                         <?= $degree ?>
                     </span>
                 </div>
-                <div class="admission-login-input">
-                    <lable class="login-input-title">Enter your Index number</lable>
-                    <input type="text" name="index" class="input-index" placeholder="Index Number">
-                    <span class="error" hidden>Invalid Index Number</span>
-                </div>
+                <form method="POST">
+                    <div class="admission-login-input">
+                        <lable class="login-input-title">Enter your Index number</lable>
+                        <input type="text" name="index" class="input-index" placeholder="Index Number">
+                        <span class="error" hidden>Invalid Index Number</span>
+                    </div>
 
-                <div class="login-btn">
-                    <button class="btn-primary" type="submit"
-                        onClick="location.href='<?= ROOT ?>admission/card'">Login</button>
-                </div>
+                    <div class="login-btn">
+                        <button class="btn-primary" type="submit" name='submit' value='submit'>Login</button>
+                    </div>
+                </form>
             </article>
         </div>
         <div class="exam-create-footer">

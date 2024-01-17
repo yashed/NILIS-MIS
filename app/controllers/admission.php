@@ -30,12 +30,18 @@ class Admission extends Controller
         $data['examDetails'] = $examDetails;
         $data['degreeDetails'] = $degreeDetails;
 
+        if (isset($_POST['submit'])) {
+            show("workd");
 
+            redirect('admission/card?index=' . $_POST['index'] . '');
+
+        }
         $this->view('sar-interfaces/admission-card-login', $data);
     }
 
     public function Card()
     {
+        $indexNo = isset($_GET['index']) ? $_GET['index'] : null;
 
         $this->view('sar-interfaces/admission-card');
     }
