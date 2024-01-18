@@ -19,7 +19,7 @@ class StudentModel extends Model
         'name',
         'nicNo',
         'birthdate',
-        'fax',
+        'whatsapp_number',
         'address',
         'phoneNo',
         'degreeID'
@@ -71,10 +71,10 @@ class StudentModel extends Model
             $this->errors['birthdate'] = "birthdate can only have numbers, and [/-]";
         }
         //fax
-        if (empty($data['fax'])) {
-            $this->errors['fax'] = 'A fax is required';
+        if (empty($data['whatsapp_number'])) {
+            $this->errors['whatsapp_number'] = 'A whatsapp number is required';
         } else if (!preg_match("/^\+?[0-9\- ]+$/", $data['fax'])) {
-            $this->errors['fax'] = "fax can only have numbers";
+            $this->errors['whatsapp_number'] = "whatsapp number can only have numbers";
         }
         //address
         if (empty($data['address'])) {
