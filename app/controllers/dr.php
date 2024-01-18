@@ -98,18 +98,46 @@ class DR extends Controller
         $this->view('dr-interfaces/dr-newdegree', $data);
     }
 
+    // public function userprofile()
+    // {
+    //     $degree = new Degree();
+    //     $st = new StudentModel();
+
+    //     // $degree->insert( $_POST );
+    //     // show( $_POST );
+
+    //     $data['degrees'] = $degree->findAll();
+    //     $data['students'] = $st->findAll();
+    //     //show( $data[ 'degrees' ] );
+
+    //     $this->view('dr-interfaces/dr-userprofile', $data);
+    // }
+
     public function userprofile()
     {
         $degree = new Degree();
-
-        // $degree->insert( $_POST );
-        // show( $_POST );
-
         $data['degrees'] = $degree->findAll();
-        //show( $data[ 'degrees' ] );
 
-        $this->view('dr-interfaces/dr-userprofile', $data);
+        // Fetch the specific student data using the ID from the URL
+        $studentId = isset($_GET['studentId']) ? $_GET['studentId'] : null;
+        // show($studentId);
+        // Check if the student ID is provided in the URL
+        if ($studentId) {
+            $studentModel = new StudentModel();
+            $data['student'] = $studentModel->find($studentId);
+
+            // Check if the student data is retrieved
+            if ($data['student']) {
+                $this->view('dr-interfaces/dr-userprofile', $data);
+            } else {
+                echo "Error: Student not found.";
+            }
+        } else {
+            echo "Error: Student ID not provided in the URL.";
+        }
     }
+
+
 
     public function participants($id = null, $action = null, $id2 = null)
     {
