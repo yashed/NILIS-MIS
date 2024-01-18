@@ -83,12 +83,12 @@ $data['role'] = $role;
                 <div class="column1">
                     <div class=name>
                         <img src="<?= ROOT ?>assets/dr/imgano.png">
-                        <p><?= $student->name ?></p>
+                        <p><?= $student['name'] ?></p>
                     </div>
                 </div>
                 <div class="column2">
                     <div class="data1"><b>Email:</b><br>
-                        <div class="email"><?= $student->Email ?></div>
+                        <div class="email"><?= $student['Email'] ?></div>
                     </div><br>
                     <div class="data2"><b>Registration number:</b><br>
                         <div class="regNum"> <?= $student->regNo ?></div>
@@ -124,11 +124,11 @@ $data['role'] = $role;
                         </label>
                     </div></br>
                     <div class="change-deg">
-                        <label for="Degrees">Change Degree Program</label>
+                        <label for="Degrees">Change Diploma Program</label>
                         <select id="Degree" name="Degree">
-                            <option value="Degree1">Degree1</option>
-                            <option value="Degree2">Degree2</option>
-                            <option value="Degree3">Degree3</option>
+                            <option value="Degree1">DLIM Diploma</option>
+                            <option value="Degree2">DSL Diploma</option>
+                            <option value="Degree3">HDLM Diploma</option>
                         </select><br>
                     </div>
                     <input type="submit" id="update-deg" value="Submit">
@@ -139,14 +139,14 @@ $data['role'] = $role;
         <div id="overlay"></div>
         <div class="pop-up2">
             <div class="popupForm">
-                <svg xmlns="http://www.w3.org/2000/svg" width="67" height="66" viewBox="0 0 67 66" fill="none">
-                    <path d="M33.5 63C50.0685 63 63.5 49.5685 63.5 33C63.5 16.4315 50.0685 3 33.5 3C16.9315 3 3.5 16.4315 3.5 33C3.5 49.5685 16.9315 63 33.5 63Z" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M33.5 21V33" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M33.5 45H33.53" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                <h2>Are you sure want to delete this student data?</h2><br>
+                <center><svg id="userDeletePopupImg" xmlns="http://www.w3.org/2000/svg" width="67" height="66" viewBox="0 0 67 66" fill="none">
+                        <path d="M33.5 63C50.0685 63 63.5 49.5685 63.5 33C63.5 16.4315 50.0685 3 33.5 3C16.9315 3 3.5 16.4315 3.5 33C3.5 49.5685 16.9315 63 33.5 63Z" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M33.5 21V33" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M33.5 45H33.53" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg></center>
+                <h2 id="userDeletePopupH2"><center>Are you sure want to delete this student data?</center></h2><br>
                 <div class="yesorno">
-                    <a href="<?= ROOT ?>Student/<?= $student->indexNo ?>/delete/<?= $student->id ?>"><button class="close-button">Yes,I'm Sure</button></a>
+                    <a href="<?= ROOT ?>Student/<?= $students->indexNo ?>/delete/<?= $students->id ?>"><button class="close-button">Yes,I'm Sure</button></a>
                     <button class="close-button">No,Close</button>
                 </div>
             </div>
