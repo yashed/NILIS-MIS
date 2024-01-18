@@ -342,7 +342,13 @@ id=# */
 #changedegreebutton:hover {
   background-color: #ccc;
 }
-
+#userDeletePopupImg {
+  height: 100px;
+  width: 100px;
+}
+#userDeletePopupH2 {
+  font-weight: 400;
+}
 #deletebutton {
   display: inline-block;
   padding: 10px 20px;
