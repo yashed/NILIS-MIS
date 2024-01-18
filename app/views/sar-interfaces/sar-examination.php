@@ -1,15 +1,12 @@
 <?php
-
-
-
-    $role = "SAR";
-    $data['role'] = $role;
+$role = "SAR";
+$data['role'] = $role;
 
 ?>
 
-<?php $this->view('components/navside-bar/header',$data) ?>
-<?php $this->view('components/navside-bar/sidebar',$data) ?>
-<?php $this->view('components/navside-bar/footer',$data) ?>
+<?php $this->view('components/navside-bar/header', $data) ?>
+<?php $this->view('components/navside-bar/sidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,256 +17,267 @@
     <title>exam Dashboard</title>
 </head>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
-* {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    * {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-:root {
-    --body-color: #E2E2E2;
-    --sidebar-color: #17376E;
-    --primary-color: #9AD6FF;
-    --text-color: #ffffff;
-    --tran-02: all 0.2s ease;
-    --tran-03: all 0.3s ease;
-    --tran-04: all 0.4s ease;
-    --tran-05: all 0.5s ease;
-}
+    :root {
+        --body-color: #E2E2E2;
+        --sidebar-color: #17376E;
+        --primary-color: #9AD6FF;
+        --text-color: #ffffff;
+        --tran-02: all 0.2s ease;
+        --tran-03: all 0.3s ease;
+        --tran-04: all 0.4s ease;
+        --tran-05: all 0.5s ease;
+    }
 
-.exam-home {
-    height: 100vh;
-    left: 250px;
-    position: relative;
-    width: calc(100% - 250px);
-    transition: var(--tran-05);
-    background: var(--body-color);
-}
+    .exam-home {
+        height: 100vh;
+        left: 250px;
+        position: relative;
+        width: calc(100% - 250px);
+        transition: var(--tran-05);
+        background: var(--body-color);
+    }
 
-.exam-title {
-    font-size: 30px;
-    font-weight: 600;
-    color: black;
-    padding: 10px 0px 10px 32px;
-    background-color: var(--text-color);
-    border-radius: 6px;
-    margin: 7px 4px 7px 4px;
-}
+    .exam-title {
+        font-size: 30px;
+        font-weight: 600;
+        color: black;
+        padding: 10px 0px 10px 32px;
+        background-color: var(--text-color);
+        border-radius: 6px;
+        margin: 7px 4px 7px 4px;
+    }
 
-.sidebar.close~.exam-home {
-    left: 88px;
-    width: calc(100% - 88px);
-}
+    .sidebar.close~.exam-home {
+        left: 88px;
+        width: calc(100% - 88px);
+    }
 
-.exam-subsection-0 {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    /* background-color: var(--text-color); */
-    padding: 15px 10px 15px 35px;
-    border-radius: 6px;
-    margin: 7px 4px 7px 4px;
-    flex-wrap: wrap;
+    .exam-subsection-0 {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        /* background-color: var(--text-color); */
+        padding: 15px 10px 15px 35px;
+        border-radius: 6px;
+        margin: 7px 4px 7px 4px;
+        flex-wrap: wrap;
 
-}
+    }
 
-.exam-subsection-01 {
-    display: flex;
-    padding: 15px 30px 14px 30px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background-color: var(--text-color);
-    box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.12);
-    width: 25%;
-    height: 150px;
-    flex-direction: row;
-    gap: 60px;
-}
+    .exam-subsection-01 {
+        display: flex;
+        padding: 15px 30px 14px 30px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        background-color: var(--text-color);
+        box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.12);
+        width: 25%;
+        height: 150px;
+        flex-direction: row;
+        gap: 60px;
+    }
 
-.exam-subcard-data {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
+    .exam-subcard-data {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
 
-.exam-subcard-data-value {
-    font-size: 38px;
-    font-weight: 600;
-    color: #17376E;
-}
+    .exam-subcard-data-value {
+        font-size: 38px;
+        font-weight: 600;
+        color: #17376E;
+    }
 
-.exam-subcard-data-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #17376E;
-}
+    .exam-subcard-data-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #17376E;
+    }
 
-.exam-subsection-1 {
-    background-color: var(--text-color);
-    padding: 10px 50px 30px 35px;
-    border-radius: 6px;
-    margin: 7px 4px 7px 4px;
-}
+    .exam-subsection-1 {
+        background-color: var(--text-color);
+        padding: 10px 50px 30px 35px;
+        border-radius: 6px;
+        margin: 7px 4px 7px 4px;
+    }
 
-.exam-sub-title {
+    .exam-sub-title {
 
-    color: #17376E;
-    font-family: Poppins;
-    font-size: 22px;
-    font-style: normal;
-    font-weight: 600;
-    margin: 40px;
+        color: #17376E;
+        font-family: Poppins;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 600;
+        margin: 40px;
 
-}
+    }
 
-.exam-subsection-2 {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    .exam-subsection-2 {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
 
-    /* padding: 10px 10px 30px 35px; */
-    /* border-radius: 6px; */
-    /* margin: 7px 4px 7px 4px; */
-}
+        /* padding: 10px 10px 30px 35px; */
+        /* border-radius: 6px; */
+        /* margin: 7px 4px 7px 4px; */
+    }
 
-.exam-subsection-21 {
-    display: flex;
-    flex-direction: column;
-    background-color: var(--text-color);
-    padding: 10px 10px 30px 35px;
-    border-radius: 6px;
-    margin: 3px 4px 7px 4px;
-    width: 50%;
-}
+    .exam-subsection-21 {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--text-color);
+        padding: 10px 10px 30px 35px;
+        border-radius: 6px;
+        margin: 3px 4px 7px 4px;
+        width: 50%;
+    }
 
-.exam-subsection-22 {
-    background-color: var(--text-color);
-    padding: 10px 10px 31px 35px;
-    border-radius: 6px;
-    margin: 3px 4px 7px 4px;
-    width: 50%;
-}
+    .exam-subsection-22 {
+        background-color: var(--text-color);
+        padding: 10px 10px 31px 35px;
+        border-radius: 6px;
+        margin: 3px 4px 7px 4px;
+        width: 50%;
+    }
 
-.exam-calender {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    .exam-calender {
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-}
+    }
 
-.exam-degree-bar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
+    .exam-degree-bar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
 
-.exam-card1 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+    .exam-card1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 35%;
+    }
 
-.exam-card2 {
-    display: flex;
-    flex-direction: column;
-}
+    .exam-card-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
 
-.exam-exam-bar {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-    gap: 30px;
-}
+    .exam-card2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 70%;
+    }
 
-.exam-exam-card1 {
-    display: flex;
-    flex-direction: column;
-}
+    .exam-card3 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 70%;
+    }
 
-.exam-exam-card2 {
-    display: flex;
-    flex-direction: column;
-}
+    .exam-exam-bar {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 30px;
+    }
 
-.dropdown {
-    width: 200px;
-}
 
-.dropdown-content {
 
-    display: none;
-    position: absolute;
-    background-color: #fff;
-    border: 1px solid rgba(23, 55, 110, 0.46);
-    box-shadow: 0px 8px 11px 0px rgba(0, 0, 0, 0.15);
-    border-radius: 12px;
-    min-width: 200px;
-    z-index: 1;
+    .dropdown {
+        width: 200px;
+    }
 
-}
+    .dropdown-content {
 
-.dropdown-content a {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid rgba(23, 55, 110, 0.46);
+        box-shadow: 0px 8px 11px 0px rgba(0, 0, 0, 0.15);
+        border-radius: 12px;
+        min-width: 200px;
+        z-index: 1;
 
-    font-size: 14px;
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    font-weight: 400;
-    text-align: center;
-}
+    }
 
-.dropdown-content a:hover {
-    background-color: #E0E0E0;
-    border-radius: 12px;
-}
+    .dropdown-content a {
 
-.dropdown:hover .dropdown-content {
-    display: block;
-}
+        font-size: 14px;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        font-weight: 400;
+        text-align: center;
+    }
 
-button {
-    width: 100%;
-    color: #fff;
-    height: 5vh;
-    padding: 5px 5px 5px 5px;
-    border-radius: 12px;
-    background: #17376e;
-    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
-    border: 0px;
-    margin-bottom: 10px;
-    /* margin-top: 25px; */
-    flex-wrap: wrap;
-}
+    .dropdown-content a:hover {
+        background-color: #E0E0E0;
+        border-radius: 12px;
+    }
 
-.bt-name {
-    font-size: 16px;
-    font-weight: 500px;
-}
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
 
-button:hover {
-    color: #17376e;
-    background-color: white;
-    border: 1px solid var(--colour-secondary-1, #17376e);
-}
-.exam-subsection-1-titlebar{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
+    button {
+        width: 100%;
+        color: #fff;
+        padding: 0.5em 1em 0.5em 1em;
+        border-radius: 8px;
+        background: #17376e;
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        border: 0px;
+        margin-bottom: 10px;
+        /* margin-top: 25px; */
+        flex-wrap: wrap;
+    }
+
+    .bt-name {
+        font-size: 16px;
+        font-weight: 500px;
+    }
+
+    button:hover {
+        color: #17376e;
+        background-color: white;
+        border: 1px solid var(--colour-secondary-1, #17376e);
+    }
+
+    .exam-subsection-1-titlebar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
 </style>
 
 <body>
@@ -285,17 +293,15 @@ button:hover {
                         <div class="bt-name">Create Examination</div>
                     </button>
                     <div class="dropdown-content">
-                        <a href="<?=ROOT?>/sar/examination/create/1">Normal Examination</a>
+                        <a href="<?= ROOT ?>sar/examination/create/1">Normal Examination</a>
 
                         <a href="#">Special Examination</a>
                     </div>
                 </div>
             </div>
             <div class="exam-degree-bar">
-
                 <div class="exam-card1">
-
-                    <?php $this->view('components/exam-card/exam-card',$data) ?>
+                    <?php $this->view('components/exam-card/exam-card', $data) ?>
 
                 </div>
             </div>
@@ -306,9 +312,9 @@ button:hover {
                     Ongoing Examination
 
                 </div>
-                <div class="exam-card1">
-                    <div class="exam-sub-title">
-                        <?php $this->view('components/exam-card/exam-card',$data) ?>
+                <div class="exam-card-content">
+                    <div class="exam-card2">
+                        <?php $this->view('components/exam-card/exam-card', $data) ?>
                     </div>
                 </div>
 
@@ -317,16 +323,17 @@ button:hover {
                 <div class="exam-sub-title">
                     Complited Examination
                 </div>
-                <div class="exam-card1">
-                    <div class="exam-sub-title">
-                        <?php $this->view('components/exam-card/exam-card',$data) ?>
+                <div class="exam-card-content">
+                    <div class="exam-card3">
+                        <?php $this->view('components/exam-card/exam-card', $data) ?>
                     </div>
                 </div>
+
 
             </div>
         </div>
         <div class="exam-footer">
-            <?php $this->view('components/footer/index',$data) ?>
+            <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>
 

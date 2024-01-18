@@ -214,7 +214,18 @@
             </div>
 
         </div>
-      
+        <div class="temp3-subsection-2">
+            <div class="temp3-subsection-21">
+                <div class="temp3-sub-title">
+                    Sub title 2 </br>
+
+
+                </div>
+                <div class="temp3-exam-bar">
+
+                </div>
+            </div>
+        </div>
         <div class="temp3-footer">
             <?php $this->view('components/footer/index',$data) ?>
         </div>

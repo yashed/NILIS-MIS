@@ -6,15 +6,27 @@
 class Admin extends Controller
 {
 
+
   public function index()
   {
+    //uncoment this to add autherization
 
+    // if (!Auth::is_admin()) {
+    //   message('You are not authorized to view this page',s 'error');
+    //   header('Location: login');
+    // }
+
+    $data['title'] = "Page not found";
+
+    $this->view('admin-interfaces/admin-dashboard', $data);
+  }
+  public function dashboard()
+  {
     $data['title'] = 'Dashboard';
     $this->view('admin-interfaces/admin-dashboard', $data);
   }
   public function users()
   {
-
 
     $data['errors'] = [];
     $user = new User();
@@ -28,10 +40,16 @@ class Admin extends Controller
 
       // header('Location: users');
       if ($_POST['submit'] == "update") {
-        $user->update($_POST['id'], $_POST);
-        message("User profile was successfully updated");
-      }
-       else if ($_POST['submit'] == "add") {
+
+        if ($user->validateUpdate($_POST)) {
+
+
+          $user->update($_POST['id'], $_POST);
+          message("User profile was successfully updated");
+        } else {
+          message("User profile was not updated Corectly", 'error');
+        }
+      } else if ($_POST['submit'] == "add") {
         if ($user->validate($_POST)) {
           try {
             //set default passsword
@@ -47,6 +65,8 @@ class Admin extends Controller
           } catch (\Throwable $th) {
             var_dump($th);
           }
+        } else {
+          message("User profile was not created Corectly", 'error');
         }
       } else if ($_POST['submit'] == "delete") {
 
@@ -58,7 +78,7 @@ class Admin extends Controller
     $data['users'] = $user->findAll();
     $data['errors'] = $user->errors;
     $data['title'] = 'Users';
-    // show($_POST);
+
     $this->view('admin-interfaces/admin-users', $data);
   }
   // public function update(){
@@ -75,7 +95,7 @@ class Admin extends Controller
   //     $id = $id ?? Auth::getId();
   //     $data['title'] = 'Update';
   //     $data['row'] = $row = $user->first(['id'=>$id]);
-  //     show($data['row']);
+  //   
   //     if($_SERVER['REQUEST_METHOD'] == "POST" && $row)
   //     {
   //       $user->update($id,$_POST);
@@ -89,10 +109,23 @@ class Admin extends Controller
 
   public function notification()
   {
+    $this->view('admin-interfaces/admin-notification');
   }
+  public function degreeprograms()
+  {
+    $degree = new Degree();
 
+    // $degree->insert($_POST);
+
+
+    $data['degrees'] = $degree->findAll();
+
+
+    $this->view('admin-interfaces/admin-degreeprograms', $data);
+  }
   public function settings()
   {
+    $this->view('admin-interfaces/admin-settings');
   }
   public function degree()
   {

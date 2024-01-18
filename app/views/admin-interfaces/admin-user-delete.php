@@ -1,4 +1,4 @@
-<div class="popup" id="delete-popup">
+<div class="popup" id="delete-popup" style="width:30%;">
     <div class="close-btn" id="close-delete-popup">
         &times;
     </div>
@@ -25,11 +25,8 @@
 </div>
 
 <script>
-    document.querySelector("#delete-user").addEventListener("click", function() {
-        document.querySelector("#delete-popup").classList.add("active");
-    });
-
     document.querySelector("#close-delete-popup").addEventListener("click", function() {
         document.querySelector("#delete-popup").classList.remove("active");
+        document.querySelector("#body").classList.remove("active");
     });
 </script>

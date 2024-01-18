@@ -1,11 +1,22 @@
 <?php
 
-class Test extends Controller{
+class Test extends Controller
+{
 
-    
-    public function index(){
 
-        $this->view('view-templates/temp3');
+
+    public function index()
+    {
+        $repeatStudents = new RepeatStudents();
+        $repeatStudents->setid(200);
+
+
+        $this->view('view-templates/temp1');
+    }
+
+    public function t1()
+    {
+        $this->view('sar-interfaces/test');
     }
 }
 ?>
