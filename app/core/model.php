@@ -72,34 +72,30 @@ class Model extends Database
     //get all data 
     public function findAll()
     {
-
         $query = "select * from " . $this->table;
-
         //define query to add user data
         $res = $this->query($query);
-
         if (is_array($res)) {
             return $res;
         }
 
         return false;
     }
-    /* public function findAll($order = 'desc')
+
+    public function find($id)
     {
-
-        $query = "select * from ".$this->table;
- 
-        $res = $this->query($query);
-
-        if(is_array($res))
-        {
-            return $res;
+        // $db = new Database(); // Replace with your database connection logic
+        // Modify the query to include the 'name' field
+        $query = "select * from " . $this->table . " WHERE id = :id";
+        $params = [':id' => $id];
+        $result = $this->query($query, $params); // Replace with your database query logic
+        // Check if the query was successful
+        if (is_array($result) && !empty($result)) {
+            return $result; // Assuming you want to return the first result
+        } else {
+            return null; // Return null if the student is not found or an error occurs
         }
-
-        return false;
-
-    } */
-
+    }
     public function setid($id)
     {
 
