@@ -32,7 +32,7 @@ $data['role'] = $role;
         }
 
         .yesorno {
-            margin-left: 100px;
+            margin: 5% 25%;
             display: flex;
             flex-direction: row;
             column-gap: 20px;
@@ -150,12 +150,12 @@ $data['role'] = $role;
                             <option value="ENCM" <?= (set_value('select_degree_type') === 'ENCM') ? 'selected' : '' ?>>ENCM</option>
                             <option value="DSL" <?= (set_value('select_degree_type') === 'DSL') ? 'selected' : '' ?>>DSL</option>
                         </select><br><br>
-                        <h3 style="font-size: 14px; font-weight: 200">Note -  After submit all the information of this student may transfer to new degree program and student data will suspend from the current degree program</h3>
+                        <h3 style="font-size: 14px; font-weight: 200">Note - After submit all the information of this student may transfer to new degree program and student data will suspend from the current degree program</h3>
                     </div>
                     <div class="btn-box">
                         <div class="button-btn">
 
-                            <button type="button" class="bt-name-white" id="Cancel1">Cancel</button>
+                            <button type="button" class="bt-name-white close-button" id="Cancel1">Cancel</button>
                             <button type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next1">Submit</button>
                         </div>
                     </div>
@@ -172,7 +172,7 @@ $data['role'] = $role;
                     </svg></center>
                 <h2 id="userDeletePopupH2">
                     <center>Are you sure want to delete this student data?</center>
-                </h2><br>
+                </h2>
                 <div class="yesorno">
                     <a href="<?= ROOT ?>Student/<?= $student[0]->indexNo ?>/delete/<?= $student[0]->id ?>"><button class="close-button-2">Yes,I'm Sure</button></a>
                     <button class="close-button-3">No,Cancel</button>
@@ -255,20 +255,6 @@ $data['role'] = $role;
                 </div>
                 <div class="buttonx">
                     <input type="button" id="updateButton" class="button" value="Update" onclick="updateData1()">
-                    <script>
-                        function updateData1() {
-                            // Show the overlay and pop-up
-                            $('#overlay').css('display', 'block');
-                            $('.pop-up').css('display', 'block');
-
-                            $('.close-button').click(function(e) {
-                                // Hide the pop-up and overlay when the close button is clicked
-                                $('.pop-up').css('display', 'none');
-                                $('#overlay').css('display', 'none');
-                                e.stopPropagation();
-                            });
-                        }
-                    </script>
                 </div>
             </div>
         </div>
@@ -318,7 +304,18 @@ $data['role'] = $role;
                 e.stopPropagation();
             });
         }
+        function updateData1() {
+            // Show the overlay and pop-up
+            $('#overlay').css('display', 'block');
+            $('.pop-up').css('display', 'block');
 
+            $('.close-button').click(function(e) {
+                // Hide the pop-up and overlay when the close button is clicked
+                $('.pop-up').css('display', 'none');
+                $('#overlay').css('display', 'none');
+                e.stopPropagation();
+            });
+        }
         function updateData2() {
             // Show the overlay and pop-up
             $('#overlay').css('display', 'block');

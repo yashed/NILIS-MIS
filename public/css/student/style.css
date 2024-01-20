@@ -263,7 +263,7 @@ th {
 }
 
 .close-button {
-  width: 100%;
+  /* width: 100%; */
   background-color: var(--text-color);
   color: var(--sidebar-color);
   padding: 8px 22px;
@@ -333,7 +333,7 @@ th {
 }
 #userDeletePopupH2 {
   font-weight: 400;
-  margin-top: 20px;
+  margin: 20px 10px;
 }
 #deletebutton {
   display: inline-block;
