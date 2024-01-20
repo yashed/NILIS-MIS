@@ -1,14 +1,281 @@
-<?php
-$role = "SAR";
-$data['role'] = $role;
-$validateError = isset($errors['marks']) ? $errors['marks'] : null;
-$examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
-?>
+<head>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
 
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
+string(335) ""Name of  Programme  : 2"
+"Subject  : Information System Sercurity"
 
+"Index No","Registration No","Examiner 01 Mark","Examiner 02 Marks","Assignment Marks"
+DILIM/003,DILIM/2022/003 , 34 , , ,
+DILIM/005,DILIM/2022/005 ,44 , , ,
+DILIM/007,DILIM/2022/007 , 45 , , ,
+DILIM/009,DILIM/2022/009 , 43 , , ,
+DILIM/011,DILIM/2022/011 , 43 , , ,
+"
+<br />
+<b>Warning</b>:  Undefined array key 2 in <b>/Applications/XAMPP/xamppfiles/htdocs/NILIS-MIS/app/models/ResultSheet.model.php</b> on line <b>41</b><br />
+array(7) {
+  ["formId"]=>
+  string(7) "form5_2"
+  ["subjectCode"]=>
+  string(3) "ISS"
+  ["date"]=>
+  string(19) "2024-01-12 05:15:34"
+  ["uploadName"]=>
+  string(10) "ISS_E1.csv"
+  ["newName"]=>
+  string(26) "form5_2_165a0bce617709.csv"
+  ["type"]=>
+  string(9) "examiner1"
+  ["examId"]=>
+  int(43)
+}
+<pre>insert into mark_sheets(formId,subjectCode,date,uploadName,newName,type,examId) values (:formId,:subjectCode,:date,:uploadName,:newName,:type,:examId)</pre><pre>Upload examiner1 Marksheet for ISS in ExamId = 43 successfully.</pre>string(87) "inside the functionform5_2_165a0bce617709.csvexam id 43subject code ISStype = examiner1"
+string(17) "subject values = "
+array(6) {
+  [0]=>
+  string(9) "DILIM/003"
+  [1]=>
+  string(15) "DILIM/2022/003 "
+  [2]=>
+  string(4) " 34 "
+  [3]=>
+  string(4) " 23 "
+  [4]=>
+  string(3) " 34"
+  [5]=>
+  string(1) " "
+}
+string(17) "subject values = "
+array(6) {
+  [0]=>
+  string(9) "DILIM/005"
+  [1]=>
+  string(15) "DILIM/2022/005 "
+  [2]=>
+  string(3) "44 "
+  [3]=>
+  string(4) " 43 "
+  [4]=>
+  string(3) " 44"
+  [5]=>
+  string(0) ""
+}
+string(17) "subject values = "
+array(6) {
+  [0]=>
+  string(9) "DILIM/007"
+  [1]=>
+  string(15) "DILIM/2022/007 "
+  [2]=>
+  string(4) " 45 "
+  [3]=>
+  string(3) "54 "
+  [4]=>
+  string(3) " 56"
+  [5]=>
+  string(0) ""
+}
+string(17) "subject values = "
+array(6) {
+  [0]=>
+  string(9) "DILIM/009"
+  [1]=>
+  string(15) "DILIM/2022/009 "
+  [2]=>
+  string(4) " 43 "
+  [3]=>
+  string(3) "34 "
+  [4]=>
+  string(3) " 66"
+  [5]=>
+  string(0) ""
+}
+string(17) "subject values = "
+array(6) {
+  [0]=>
+  string(9) "DILIM/011"
+  [1]=>
+  string(15) "DILIM/2022/011 "
+  [2]=>
+  string(4) " 43 "
+  [3]=>
+  string(3) "22 "
+  [4]=>
+  string(3) " 34"
+  [5]=>
+  string(0) ""
+}
+<br />
+<b>Warning</b>:  Undefined array key 1 in <b>/Applications/XAMPP/xamppfiles/htdocs/NILIS-MIS/app/core/functions.php</b> on line <b>94</b><br />
+<br />
+<b>Warning</b>:  Undefined array key 2 in <b>/Applications/XAMPP/xamppfiles/htdocs/NILIS-MIS/app/core/functions.php</b> on line <b>95</b><br />
+<br />
+<b>Warning</b>:  Undefined array key 3 in <b>/Applications/XAMPP/xamppfiles/htdocs/NILIS-MIS/app/core/functions.php</b> on line <b>97</b><br />
+<br />
+<b>Warning</b>:  Undefined array key 4 in <b>/Applications/XAMPP/xamppfiles/htdocs/NILIS-MIS/app/core/functions.php</b> on line <b>98</b><br />
+string(17) "subject values = "
+array(4) {
+  [0]=>
+  string(0) ""
+  [1]=>
+  string(0) ""
+  [2]=>
+  NULL
+  [3]=>
+  string(0) ""
+}
+{"success":true,"message":"File uploaded successfully."}{"success":false,"message":"Error moving the uploaded file."}
+ <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <link rel="stylesheet" type="text/css" href="http://localhost/NILIS-MIS/public/css/sidebar-component.css">
+            <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+            <title>Navsidebar</title>
+        </head>
+        <body>
+            <nav class="sidebar close">
+                <header>
+                    <div class="image-text">
+                        <span class="image">
+                            <img src="http://localhost/NILIS-MIS/public/assets/NILIS-logo.png" alt="logo">
+                        </span>
+                        <div class="text header-text">
+                            <h4 class="name1">National Institute of</h4>
+                            <h5 class="name2">Library and Information Sciences</h5>
+                            <span class="profession">University of Colombo</span>
+                        </div>
+                    </div>
+                    <i class='bx bx-chevron-right toggle'></i>
+                </header>
+
+    <div class="menu-bar">
+        <hr>
+        <div class="menu">
+            <ul class="menu-links">
+                <h6 class="topic1">MAIN</h6>
+                <li class="nav-link">
+                    <a href="http://localhost/NILIS-MIS/public/sar">
+                        <i class="bx bx-home icon"></i>
+                        <span class="text nav-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="http://localhost/NILIS-MIS/public/sar/notification">
+                        <i class="bx bx-bell icon"></i>
+                        <span class="text nav-text">Notification</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="http://localhost/NILIS-MIS/public/sar/degreeprograms">
+                        <i class="bx bx-home icon"></i>
+                        <span class="text nav-text">Degree Programs</span>
+                    </a>
+                </li>
+                <hr class="horizontal-line">
+                <h6 class="topic2">SETTINGS</h6>
+                <li class="nav-link">
+                    <a href="http://localhost/NILIS-MIS/public/sar/settings">
+                        <i class="bx bx-cog icon"></i>
+                        <span class="text nav-text">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </nav>
+
+    <div class="hero">
+        <nav>
+            <ul class="hero-ul">
+                <li class="hero-ul-li"><i class="bx bxs-bell icon"></i></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
+            </ul>
+
+            <div class="sub-menu-wrap" id="subMenu">
+                <div class="sub-menu">
+                    <div class="user-info">
+                        <img src="http://localhost/NILIS-MIS/public/components/navside-bar/MyOriginalPhoto.jpg">
+                        <h3>Bimsara Anjana</h3>
+                    </div>
+                    <hr>
+                    <a href="http://localhost/NILIS-MIS/public/login" class="sub-menu-link">
+                        <i class="bx bx-log-out icon"></i>
+                        <p>Logout</p>
+                        <span>></span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+
+
+
+<script>
+const body = document.querySelector("body");
+const sidebar = body.querySelector(".sidebar");
+const toggle = body.querySelector(".toggle");
+
+toggle.addEventListener("click", () => {
+    sidebar.classList.toggle("close");
+});
+
+const userPic = body.querySelector(".user-pic");
+const subMenuWrap = document.querySelector(".sub-menu-wrap");
+
+userPic.addEventListener("click", () => {
+    subMenuWrap.style.display = subMenuWrap.style.display === "block" ? "none" : "block";
+});
+
+subMenuWrap.addEventListener("click", (event) => {
+    if (event.target === subMenuWrap) {
+        subMenuWrap.style.display = "none";
+    }
+});
+
+// drop menu side
+
+// let arrows = document.querySelectorAll(".arrow");
+// for (var i = 0; i < arrows.length; i++) {
+//     arrows[i].addEventListener("click", (e) => {
+//         console.log("Arrow clicked");
+//         let arrowParent = e.target.parentElement.parentElement;
+//         arrowParent.classList.toggle("show");
+//     });
+// }
+const arrows = document.querySelectorAll(".arrow");
+
+for (let i = 0; i < arrows.length; i++) {
+    arrows[i].addEventListener("click", (e) => {
+        console.log("Arrow clicked");
+        let arrowParent = e.target.parentElement.parentElement;
+        arrowParent.classList.toggle("show");
+    });
+}
+
+const coursesLink = document.querySelector(".nav-link");
+
+coursesLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    const submenu = coursesLink.querySelector(".sub-menu-drop");
+    submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+});
+
+document.addEventListener("click", (event) => {
+    const coursesLink = document.querySelector(".nav-link");
+    const submenu = coursesLink.querySelector(".sub-menu-drop");
+
+    if (event.target !== coursesLink && event.target.parentNode !== coursesLink) {
+        submenu.style.display = "none";
+    }
+});
+</script>
+
+
+</body>
+
+</html>
 
 <html lang="en">
 
@@ -465,7 +732,7 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
     .file-uploded-icon {
         width: 60px;
         height: 60px;
-        background-image: url('<?= ROOT ?>/assets/result-upload/csv-upload.svg');
+        background-image: url('http://localhost/NILIS-MIS/public//assets/result-upload/csv-upload.svg');
         background-size: cover;
         background-repeat: no-repeat;
         cursor: pointer;
@@ -612,12 +879,20 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
             <div class="row">
                 <div class="column1">
                     <div class="data1">Course Name<br>
-                        <!-- <div class="email"><?= $student->Email ?></div> -->
+                        <!-- <div class="email"><br />
+<b>Warning</b>:  Undefined variable $student in <b>/Applications/XAMPP/xamppfiles/htdocs/NILIS-MIS/app/views/sar-interfaces/sar-examresultupload.php</b> on line <b>615</b><br />
+<br />
+<b>Warning</b>:  Attempt to read property "Email" on null in <b>/Applications/XAMPP/xamppfiles/htdocs/NILIS-MIS/app/views/sar-interfaces/sar-examresultupload.php</b> on line <b>615</b><br />
+</div> -->
                         <div class="course" id="course">Diploma in School Librarianship</div>
                     </div>
                     <br>
                     <div class="data2">Examination:<br>
-                        <!-- <div class="regNum"> <?= $student->regNo ?></div> -->
+                        <!-- <div class="regNum"> <br />
+<b>Warning</b>:  Undefined variable $student in <b>/Applications/XAMPP/xamppfiles/htdocs/NILIS-MIS/app/views/sar-interfaces/sar-examresultupload.php</b> on line <b>620</b><br />
+<br />
+<b>Warning</b>:  Attempt to read property "regNo" on null in <b>/Applications/XAMPP/xamppfiles/htdocs/NILIS-MIS/app/views/sar-interfaces/sar-examresultupload.php</b> on line <b>620</b><br />
+</div> -->
                         <div class="exam" id="exam">2nd Semester Examination</div>
                     </div>
                 </div>
@@ -639,123 +914,95 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
                 <div class="temp2-sub-title2">
                     Results Submission </br>
                 </div>
-                <?php foreach ($examSubjects as $subject): ?>
-                    <?php $json = json_encode($subject); ?>
-
+                                    
                     <div class="subject">
                         <div class="flex-container-top">
                             <div class="sub-name">
-                                <?= $subject->SubjectName ?>
-                            </div>
+                                Information System Sercurity                            </div>
                             <div class="button-bar">
                                 <button class="btn-primary" name='download_marksheet'
-                                    onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
+                                    onclick="downloadFile('ISS')">Download
                                     Marksheet</button>
                                 <button class="btn-secondary-2" name='download_marksheet'
-                                    onclick="downloadFile('<?= $subject->SubjectCode ?>')" hidden>Download
+                                    onclick="downloadFile('ISS')" hidden>Download
                                     Examiner 03 Marksheet</button>
                             </div>
                         </div>
                         <div class="flex-container">
-                            <?php
-                            $containerId = 'container' . ($subject->SubjectID) . '_1';
-                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_1';
-                            $formID = 'form' . ($subject->SubjectID) . '_1';
-                            ?>
-
-                            <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
+                            
+                            <div class="dashed-container" id="container5_1" ondragover="handleDragOver(event)"
                                 ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
-                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','assestment')">
+                                ondrop="handleDrop(event, 'container5_1', 'fileInput5_1' , 'form5_1' , 'ISS','assestment')">
                                 <div class='marks-type'>Assestment Marks </div>
                                 <form method="POST" class='csv-input-from' enctype="multipart/form-data"
-                                    id="<?= $formID ?>">
-                                    <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
-                                        for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
+                                    id="form5_1">
+                                    <img src='http://localhost/NILIS-MIS/public//assets/file-icon.png' class="file-input-icon"
+                                        for="fileInput5_1" onclick="triggerFileInput('fileInput5_1')">
                                     <br>
-                                    <input type='text' value='<?= $formID ?>' name='formID' hidden>
+                                    <input type='text' value='form5_1' name='formID' hidden>
                                     <input type='text' value='assestment' name='type' hidden>
-                                    <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode' hidden>
-                                    <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
-                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','assestment')">
-                                    <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
+                                    <input type='text' value='ISS' name='subjectCode' hidden>
+                                    <input type="file" id="fileInput5_1" name="file" accept=".csv"
+                                        onchange="showSubmitButton('container5_1', 'fileInput5_1' , 'form5_1' , 'ISS','assestment')">
+                                    <p class="text1">Drag and drop or <label for="fileInput5_1"
                                             class="browse-label">browse</label></br> assignment results.</p>
-                                    <?php if (!empty($errors['marks'])): ?>
-                                        <div class="user-error" for="marks">
-                                            <?= $errors['marks'] ?>
-                                        </div>
-                                    <?php endif; ?>
-                                </form>
+                                                                    </form>
                             </div>
                             </form>
-                            <?php
-                            $containerId = 'container' . ($subject->SubjectID) . '_2';
-                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_2';
-                            $formID = 'form' . ($subject->SubjectID) . '_2';
-                            ?>
-
-                            <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
+                            
+                            <div class="dashed-container" id="container5_2" ondragover="handleDragOver(event)"
                                 ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
-                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>', 'examiner1')">
+                                ondrop="handleDrop(event, 'container5_2', 'fileInput5_2' , 'form5_2' , 'ISS', 'examiner1')">
                                 <div class='marks-type'>Examiner 01 Marks </div>
                                 <form method="POST" class='csv-input-from' enctype="multipart/form-data"
-                                    id="<?= $formID ?>">
-                                    <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
-                                        for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
+                                    id="form5_2">
+                                    <img src='http://localhost/NILIS-MIS/public//assets/file-icon.png' class="file-input-icon"
+                                        for="fileInput5_2" onclick="triggerFileInput('fileInput5_2')">
                                     <br>
-                                    <input type='text' value='<?= $formID ?>' name='formID' hidden>
+                                    <input type='text' value='form5_2' name='formID' hidden>
                                     <input type='text' value='examiner1' name='type' hidden>
-                                    <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode' hidden>
-                                    <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
-                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>', 'examiner1')">
-                                    <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
+                                    <input type='text' value='ISS' name='subjectCode' hidden>
+                                    <input type="file" id="fileInput5_2" name="file" accept=".csv"
+                                        onchange="showSubmitButton('container5_2', 'fileInput5_2' , 'form5_2' , 'ISS', 'examiner1')">
+                                    <p class="text1">Drag and drop or <label for="fileInput5_2"
                                             class="browse-label">browse</label></br> Examiner 01 results.</p>
                                 </form>
                             </div>
-                            <?php
-                            $containerId = 'container' . ($subject->SubjectID) . '_3';
-                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_3';
-                            $formID = 'form' . ($subject->SubjectID) . '_3';
-                            ?>
-
-                            <div class="dashed-container" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
+                            
+                            <div class="dashed-container" id="container5_3" ondragover="handleDragOver(event)"
                                 ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
-                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>', 'examiner2')">
+                                ondrop="handleDrop(event, 'container5_3', 'fileInput5_3' , 'form5_3' , 'ISS', 'examiner2')">
                                 <div class='marks-type'>Examiner 02 Marks </div>
                                 <form method="POST" class='csv-input-from' enctype="multipart/form-data"
-                                    id="<?= $formID ?>">
-                                    <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
-                                        for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
+                                    id="form5_3">
+                                    <img src='http://localhost/NILIS-MIS/public//assets/file-icon.png' class="file-input-icon"
+                                        for="fileInput5_3" onclick="triggerFileInput('fileInput5_3')">
                                     <br>
-                                    <input type='text' value='<?= $formID ?>' name='formID' hidden>
+                                    <input type='text' value='form5_3' name='formID' hidden>
                                     <input type='text' value='examiner2' name='type' hidden>
-                                    <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode' hidden>
-                                    <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
-                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>', 'examiner2')">
-                                    <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
+                                    <input type='text' value='ISS' name='subjectCode' hidden>
+                                    <input type="file" id="fileInput5_3" name="file" accept=".csv"
+                                        onchange="showSubmitButton('container5_3', 'fileInput5_3' , 'form5_3' , 'ISS', 'examiner2')">
+                                    <p class="text1">Drag and drop or <label for="fileInput5_3"
                                             class="browse-label">browse</label></br> Examiner 02 results.</p>
                                 </form>
                             </div>
-                            <?php
-                            $containerId = 'container' . ($subject->SubjectID) . '_4';
-                            $fileInputId = 'fileInput' . ($subject->SubjectID) . '_4';
-                            $formID = 'form' . ($subject->SubjectID) . '_4';
-                            ?>
-
-                            <div class="dashed-container-3" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
+                            
+                            <div class="dashed-container-3" id="container5_4" ondragover="handleDragOver(event)"
                                 ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
-                                ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner3')">
+                                ondrop="handleDrop(event, 'container5_4', 'fileInput5_4' , 'form5_4' , 'ISS','examiner3')">
                                 <div class='marks-type'>Examiner 03 Marks </div>
                                 <form method="POST" class='csv-input-from' enctype="multipart/form-data"
-                                    id="<?= $formID ?>">
-                                    <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
-                                        for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
+                                    id="form5_4">
+                                    <img src='http://localhost/NILIS-MIS/public//assets/file-icon.png' class="file-input-icon"
+                                        for="fileInput5_4" onclick="triggerFileInput('fileInput5_4')">
                                     <br>
-                                    <input type='text' value='<?= $formID ?>' name='formID' hidden>
+                                    <input type='text' value='form5_4' name='formID' hidden>
                                     <input type='text' value='examiner3' name='type' hidden>
-                                    <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode' hidden>
-                                    <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
-                                        onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>' , 'examiner3')">
-                                    <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
+                                    <input type='text' value='ISS' name='subjectCode' hidden>
+                                    <input type="file" id="fileInput5_4" name="file" accept=".csv"
+                                        onchange="showSubmitButton('container5_4', 'fileInput5_4' , 'form5_4' , 'ISS' , 'examiner3')">
+                                    <p class="text1">Drag and drop or <label for="fileInput5_4"
                                             class="browse-label">browse</label></br> Examiner 03 results.</p>
                                 </form>
                             </div>
@@ -763,29 +1010,172 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
                     </div>
                     <br>
                     </form>
-                <?php endforeach; ?>
-
+                                    
+                    <div class="subject">
+                        <div class="flex-container-top">
+                            <div class="sub-name">
+                                LAB2                            </div>
+                            <div class="button-bar">
+                                <button class="btn-primary" name='download_marksheet'
+                                    onclick="downloadFile('LAB2')">Download
+                                    Marksheet</button>
+                                <button class="btn-secondary-2" name='download_marksheet'
+                                    onclick="downloadFile('LAB2')" hidden>Download
+                                    Examiner 03 Marksheet</button>
+                            </div>
+                        </div>
+                        <div class="flex-container">
+                            
+                            <div class="dashed-container" id="container6_1" ondragover="handleDragOver(event)"
+                                ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
+                                ondrop="handleDrop(event, 'container6_1', 'fileInput6_1' , 'form6_1' , 'LAB2','assestment')">
+                                <div class='marks-type'>Assestment Marks </div>
+                                <form method="POST" class='csv-input-from' enctype="multipart/form-data"
+                                    id="form6_1">
+                                    <img src='http://localhost/NILIS-MIS/public//assets/file-icon.png' class="file-input-icon"
+                                        for="fileInput6_1" onclick="triggerFileInput('fileInput6_1')">
+                                    <br>
+                                    <input type='text' value='form6_1' name='formID' hidden>
+                                    <input type='text' value='assestment' name='type' hidden>
+                                    <input type='text' value='LAB2' name='subjectCode' hidden>
+                                    <input type="file" id="fileInput6_1" name="file" accept=".csv"
+                                        onchange="showSubmitButton('container6_1', 'fileInput6_1' , 'form6_1' , 'LAB2','assestment')">
+                                    <p class="text1">Drag and drop or <label for="fileInput6_1"
+                                            class="browse-label">browse</label></br> assignment results.</p>
+                                                                    </form>
+                            </div>
+                            </form>
+                            
+                            <div class="dashed-container" id="container6_2" ondragover="handleDragOver(event)"
+                                ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
+                                ondrop="handleDrop(event, 'container6_2', 'fileInput6_2' , 'form6_2' , 'LAB2', 'examiner1')">
+                                <div class='marks-type'>Examiner 01 Marks </div>
+                                <form method="POST" class='csv-input-from' enctype="multipart/form-data"
+                                    id="form6_2">
+                                    <img src='http://localhost/NILIS-MIS/public//assets/file-icon.png' class="file-input-icon"
+                                        for="fileInput6_2" onclick="triggerFileInput('fileInput6_2')">
+                                    <br>
+                                    <input type='text' value='form6_2' name='formID' hidden>
+                                    <input type='text' value='examiner1' name='type' hidden>
+                                    <input type='text' value='LAB2' name='subjectCode' hidden>
+                                    <input type="file" id="fileInput6_2" name="file" accept=".csv"
+                                        onchange="showSubmitButton('container6_2', 'fileInput6_2' , 'form6_2' , 'LAB2', 'examiner1')">
+                                    <p class="text1">Drag and drop or <label for="fileInput6_2"
+                                            class="browse-label">browse</label></br> Examiner 01 results.</p>
+                                </form>
+                            </div>
+                            
+                            <div class="dashed-container" id="container6_3" ondragover="handleDragOver(event)"
+                                ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
+                                ondrop="handleDrop(event, 'container6_3', 'fileInput6_3' , 'form6_3' , 'LAB2', 'examiner2')">
+                                <div class='marks-type'>Examiner 02 Marks </div>
+                                <form method="POST" class='csv-input-from' enctype="multipart/form-data"
+                                    id="form6_3">
+                                    <img src='http://localhost/NILIS-MIS/public//assets/file-icon.png' class="file-input-icon"
+                                        for="fileInput6_3" onclick="triggerFileInput('fileInput6_3')">
+                                    <br>
+                                    <input type='text' value='form6_3' name='formID' hidden>
+                                    <input type='text' value='examiner2' name='type' hidden>
+                                    <input type='text' value='LAB2' name='subjectCode' hidden>
+                                    <input type="file" id="fileInput6_3" name="file" accept=".csv"
+                                        onchange="showSubmitButton('container6_3', 'fileInput6_3' , 'form6_3' , 'LAB2', 'examiner2')">
+                                    <p class="text1">Drag and drop or <label for="fileInput6_3"
+                                            class="browse-label">browse</label></br> Examiner 02 results.</p>
+                                </form>
+                            </div>
+                            
+                            <div class="dashed-container-3" id="container6_4" ondragover="handleDragOver(event)"
+                                ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)"
+                                ondrop="handleDrop(event, 'container6_4', 'fileInput6_4' , 'form6_4' , 'LAB2','examiner3')">
+                                <div class='marks-type'>Examiner 03 Marks </div>
+                                <form method="POST" class='csv-input-from' enctype="multipart/form-data"
+                                    id="form6_4">
+                                    <img src='http://localhost/NILIS-MIS/public//assets/file-icon.png' class="file-input-icon"
+                                        for="fileInput6_4" onclick="triggerFileInput('fileInput6_4')">
+                                    <br>
+                                    <input type='text' value='form6_4' name='formID' hidden>
+                                    <input type='text' value='examiner3' name='type' hidden>
+                                    <input type='text' value='LAB2' name='subjectCode' hidden>
+                                    <input type="file" id="fileInput6_4" name="file" accept=".csv"
+                                        onchange="showSubmitButton('container6_4', 'fileInput6_4' , 'form6_4' , 'LAB2' , 'examiner3')">
+                                    <p class="text1">Drag and drop or <label for="fileInput6_4"
+                                            class="browse-label">browse</label></br> Examiner 03 results.</p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    </form>
+                
             </div>
 
 
         </div>
         <div class="temp2-footer">
-            <?php $this->view('components/footer/index', $data) ?>
-        </div>
+            <style>
+.footer-body {
+    margin: 0;
+    min-height: 100vh;
+}
+
+.footer {
+    position: sticky;
+    top: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 80px;
+    /* padding: 34px 270px 33px 271px; */
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 8px 8px 0px 0px;
+    background-color: #17376E;
+    gap: 10px;
+}
+
+.footer-nilis {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 400;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 15px;
+    /* 107.143% */
+    letter-spacing: -0.28px;
+}
+
+.footer-address {
+    color: #FFF;
+    font-family: Poppins;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 15px;
+    letter-spacing: -0.24px;
+}
+</style>
+
+<body class="footer-body">
+    <div class="footer">
+        <div class="footer-nilis">© 2020, All rights reserved by National Institute of Library & Information Sciences
+            (NILIS)</div>
+        <div class="footer-address">Colombo, 0300300, Sri Lanka.</div>
+    </div>
+</body>        </div>
 
 
 
 </body>
 <script>
-    var examiner3 = <?= json_encode($examiner3) ?>;
-    var examiner3 = true;
-    console.log('examiner 3 = ', examiner3);
-    var elements = document.querySelectorAll('.dashed-container-3');
+    // var examiner3 = true;
+    // console.log('examiner 3 = ', examiner3);
+    // var elements = document.querySelectorAll('.dashed-container-3');
 
-    // Loop each element and update the data-active attribute
-    elements.forEach(function (element) {
-        element.dataset.active = examiner3;
-    });
+    // // Loop each element and update the data-active attribute
+    // elements.forEach(function (element) {
+    //     element.dataset.active = examiner3;
+    // });
 
 
     // Fetch data from the controller
@@ -918,7 +1308,7 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
             var existingFileIcon = container.querySelector('.file-input-icon');
             if (!existingFileIcon) {
                 var fileIcon = document.createElement('img');
-                fileIcon.src = '<?= ROOT ?>/assets/file-icon.png';
+                fileIcon.src = 'http://localhost/NILIS-MIS/public//assets/file-icon.png';
                 fileIcon.className = 'file-input-icon';
                 fileIcon.setAttribute('for', fileInputId);
                 fileIcon.addEventListener('click', function () {
@@ -940,7 +1330,7 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
 
     function uploadFile(fileInputId, buttonId, formId, subCode, type) {
 
-        var error = <?= json_encode($validateError) ?>;
+        var error = null;
         console.log('font end errrors =  ', error);
 
         if (error !== null && error !== '') {
@@ -958,7 +1348,7 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
 
         console.log('Form ID - ' + formId);
         console.log('Sub ID - ' + subCode);
-        var targetURL = '<?= ROOT ?>sar/examination/resultsupload';
+        var targetURL = 'http://localhost/NILIS-MIS/public/sar/examination/resultsupload';
 
         fetch(targetURL, {
             method: 'POST',
@@ -1011,7 +1401,7 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
 
 
         // var fileIcon = document.createElement('img');
-        // fileIcon.src = '<?= ROOT ?>/assets/file-icon.png';
+        // fileIcon.src = 'http://localhost/NILIS-MIS/public//assets/file-icon.png';
         // fileIcon.className = 'file-input-icon';
         // fileIcon.setAttribute('for', fileInput.id);
         // fileIcon.addEventListener('click', function () {
@@ -1029,7 +1419,7 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
 
     function downloadFile(subjectCode) {
         // Modify the file URL dynamically based on the subjectCode
-        var fileUrl = '<?= ROOT ?>assets/csv/output/MarkSheet_' + subjectCode + '.csv';
+        var fileUrl = 'http://localhost/NILIS-MIS/public/assets/csv/output/MarkSheet_' + subjectCode + '.csv';
 
         // Create an anchor element
         var a = document.createElement('a');
@@ -1050,30 +1440,29 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
 
     console.log("before fetch");
 
-    // var targetURL = '<?= ROOT ?>sar/examination/resultsupload';
-    // // Fetch data from the controller
-    // fetch(targetURL)
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.text(); // Directly return text
-    //     })
-    //     .then(data => {
-    //         // console.log('data = ', data)
+    var targetURL = 'http://localhost/NILIS-MIS/public/sar/examination/resultsupload';
+    // Fetch data from the controller
+    fetch(targetURL)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text(); // Directly return text
+        })
+        .then(data => {
+            console.log('data = ', data);
+            // Update the view with the received data
+            var examiner3 = data;
 
-    //         // Update the view with the received data
-    //         var examiner3 = data["examiner3"];
-    //         console.log('examiner 3 = ', examiner3);
-    //         var elements = document.querySelectorAll('.dashed-container-3');
-    //         elements.forEach(function (element) {
-    //             element.dataset.active = examiner3;
-    //         });
+            var elements = document.querySelectorAll('.dashed-container-3');
+            elements.forEach(function (element) {
+                element.dataset.active = examiner3;
+            });
 
-    //     })
-    //     .catch(error => {
-    //         console.error('Error fetching data:', error);
-    //     });
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
 
 
 </script>

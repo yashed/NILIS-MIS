@@ -321,5 +321,19 @@ class Database
 
         $this->query($query);
 
+
+        $query = "
+        CREATE TABLE IF NOT EXISTS `index_token` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `indexNo` varchar(40) NOT NULL,
+            `examID` int(11) NOT NULL,
+            `token` varchar(255) NOT NULL,
+            PRIMARY KEY (`id`),
+            FOREIGN KEY (`indexNo`) REFERENCES `student` (`indexNo`),
+            FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            ";
+
+        $this->query($query);
     }
 }
