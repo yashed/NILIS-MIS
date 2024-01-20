@@ -420,3 +420,164 @@ th {
   margin: 30px 10px 20px 10px;
   text-align: center;
 }
+
+/*pop up for update*/
+
+.popup {
+  position: fixed;
+  top: -150%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.25);
+  opacity: 0;
+  background: #fff;
+  width: 500px;
+  padding: 20px 30px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+  z-index: 100;
+}
+
+.popup {
+  top: 50%;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+}
+
+.popup .close-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 15px;
+  height: 15px;
+  background: #17376e;
+  color: #ffffff;
+  text-align: center;
+  line-height: 15px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.popup .form h2 {
+  text-align: center;
+  color: #17376e;
+  margin: 10px 0px 20px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.popup .form .form-element {
+  display: flex;
+  margin: 15px 0px;
+  align-content: flex-end;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.popup .form .form-element label {
+  font-size: 14px;
+  color: #222;
+}
+
+.popup .form .form-element input[type="text"],
+.popup .form .form-element input[type="password"] {
+  margin-top: 5px;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+.popup .form .form-element button {
+  padding: 10px;
+  height: 5vh;
+  width: 30%;
+  border: none;
+  outline: none;
+  background: #17376e;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.popup .form .form-element a {
+  display: block;
+  text-align: right;
+  font-size: 15px;
+  color: #1a79ca;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+
+/* .user-data {
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+} */
+
+.data-input-fields {
+  display: flex;
+  flex-direction: row;
+}
+
+.column-01 {
+  display: flex;
+  flex-direction: column;
+}
+
+.column-02 {
+  display: flex;
+  flex-direction: column;
+}
+
+#form-element-dropdown-create,
+#form-element-dropdown-update {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+.user-update {
+  cursor: pointer;
+}
+
+.user-delete {
+  cursor: pointer;
+}
+
+.delete-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center
+}
+
+.delete-card button {
+  width: 50%;
+  height: 5vh;
+  border-radius: 12px;
+  background: #17376e;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+  border: 0px;
+  cursor: pointer;
+}
+
+.popup-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}

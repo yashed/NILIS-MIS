@@ -261,27 +261,58 @@ $data['role'] = $role;
         <div class="pop-up">
             <div class="popupForm2">
                 <form method="post">
-                    <h2>Change Student Details</h2>
-                    <input type="hidden" id="id" name="id" value="<?= $student[0]->id ?>">
-                    <label for="fname">Name</label>
-                    <input type="text" id="fname" placeholder="Full Name" name="name">
-                    <label for="mail">Email</label>
-                    <input type="text" id="mail" placeholder="Email Address" name="Email">
-                    <label for="country">Country</label>
-                    <input type="text" id="country" placeholder="Currently living country" name="country">
-                    <label for="nicno">N.I.C</label>
-                    <input type="text" id="nicno" placeholder="N.I.C Number" name="nicNo">
-                    <label for="bday">Birthdate</label>
-                    <input type="text" id="bday" placeholder="Birthdate" name="birthdate">
-                    <label for="whatsapp_number">WhatsApp Number</label>
-                    <input type="text" id="whatsapp_number" placeholder="whatsapp_number" name="whatsapp_number">
-                    <label for="addr">Address</label>
-                    <input type="text" id="addr" placeholder="Adress" name="address">
-                    <label for="phoneno">Phone Number</label>
-                    <input type="text" id="phoneno" placeholder="Fax" name="phoneNo">
+                    <div class="popup-card">
+                        <div class="form">
+                            <h2>Change Student Details</h2>
+                            <div class="form-input-fields">
+                                <div class="user-data">
+                                    <input type="text" name="id" hidden>
+                                    <div class="coloum-01">
+                                        <div class="form-element">
+                                            <label for="fname">First Name</label>
+                                            <input type="text" placeholder="Enter" id="up-fname" name="fname" value="<?= set_value('fname') ?>">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="email">Email</label>
+                                            <input type="text" placeholder="Enter" id="up-email" name="email" value="<?= set_value('email') ?>">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="nicNo">N.I.C</label>
+                                            <input type="text" placeholder="Enter" id="up-email" name="nicNo" value="<?= set_value('nicNo') ?>">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="whatsapp_number">WhatsApp Number</label>
+                                            <input type="text" placeholder="Enter" id="whatsapp_number" name="whatsapp_number" value="<?= set_value('whatsapp_number') ?>">
+                                        </div>
+                                    </div>
+                                    <div class="coloum-02">
+                                        <div class="form-element">
+                                            <label for="lname">Last Name</label>
+                                            <input type="text" placeholder="Enter" id="up-lname" name="lname" value="<?= set_value('lname') ?>">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="phoneNo">Phone Number</label>
+                                            <input type="text" placeholder="Enter" id="up-phoneNo" name="phoneNo" value="<?= set_value('phoneNo') ?>">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="cpassword">Birthdate</label>
+                                            <input type="password" placeholder="Enter" id="up-cpassword" name="cpassword">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="address">N.I.C</label>
+                                            <input type="text" placeholder="Enter" id="up-email" name="address" value="<?= set_value('address') ?>">
+                                        </div>
+                                    </div>
 
-                    <input type="submit" id="submitbutton" value="Submit">
-                    <button class="close-button">Close</button>
+                                </div>
+                                <div class="user-create-update">
+                                    <button class="close-button">Close</button>
+                                    <button name='submit' value='update' id="submitbutton" type="submit">Update</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -304,6 +335,7 @@ $data['role'] = $role;
                 e.stopPropagation();
             });
         }
+
         function updateData1() {
             // Show the overlay and pop-up
             $('#overlay').css('display', 'block');
@@ -316,6 +348,7 @@ $data['role'] = $role;
                 e.stopPropagation();
             });
         }
+
         function updateData2() {
             // Show the overlay and pop-up
             $('#overlay').css('display', 'block');
@@ -362,3 +395,26 @@ $data['role'] = $role;
 </body>
 
 </html>
+<!-- <form method="post">
+                    <h2>Change Student Details</h2>
+                    <input type="hidden" id="id" name="id" value="<?= $student[0]->id ?>">
+                    <label for="fname">Name</label>
+                    <input type="text" id="fname" placeholder="Full Name" name="name">
+                    <label for="mail">Email</label>
+                    <input type="text" id="mail" placeholder="Email Address" name="Email">
+                    <label for="country">Country</label>
+                    <input type="text" id="country" placeholder="Currently living country" name="country">
+                    <label for="nicno">N.I.C</label>
+                    <input type="text" id="nicno" placeholder="N.I.C Number" name="nicNo">
+                    <label for="bday">Birthdate</label>
+                    <input type="text" id="bday" placeholder="Birthdate" name="birthdate">
+                    <label for="whatsapp_number">WhatsApp Number</label>
+                    <input type="text" id="whatsapp_number" placeholder="whatsapp_number" name="whatsapp_number">
+                    <label for="addr">Address</label>
+                    <input type="text" id="addr" placeholder="Adress" name="address">
+                    <label for="phoneno">Phone Number</label>
+                    <input type="text" id="phoneno" placeholder="Fax" name="phoneNo">
+
+                    <input type="submit" id="submitbutton" value="Submit">
+                    <button class="close-button">Close</button>
+                </form> -->
