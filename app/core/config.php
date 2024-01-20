@@ -15,7 +15,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
 
     //databse config for local server
     define('DBHOST', 'localhost');
-    define('DBNAME', 'nilis_bd');
+    define('DBNAME', 'nilis_db');
     define('DBUSER', 'root');
     define('DBPASS', '');
     define('DBDRIVER', 'mysql');
@@ -26,7 +26,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
 } else {
     //database config for live server
     define('DBHOST', 'localhost');
-    define('DBNAME', 'nilis_bd');
+    define('DBNAME', 'nilis_db');
     define('DBUSER', 'root');
     define('DBPASS', '');
     define('DBDRIVER', 'mysql');

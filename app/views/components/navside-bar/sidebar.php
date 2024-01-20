@@ -1,28 +1,15 @@
 <?php if ($role == "DR") : ?>
-
     <div class="menu-bar">
         <hr>
         <div class="menu">
             <ul class="menu-links">
                 <h6 class="topic1">MAIN</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/index">
+                    <a href="<?= ROOT ?>dr">
                         <i class="bx bx-home icon"></i>
-                        <span class="text nav-text">Dashboard</span></a>
-                </li>
-
-                <li class="nav-link">
-                    <a href="#">
-                        <i class='bx bxl-postgresql icon'></i>
-                        <span class="text nav-text">Courses<i class="bx bxs-down-arrow arrow"></i></span>
+                        <span class="text nav-text">Dashboard</span>
                     </a>
-
-                    <ul class="sub-menu-drop">
-                        <li><a href="#">Block Chain</a></li>
-                        <li><a href="#">Cryptography</a></li>
-                    </ul>
                 </li>
-
                 <li class="nav-link">
                     <a href="<?= ROOT ?>dr/notification">
                         <i class="bx bx-bell icon"></i>
@@ -31,7 +18,7 @@
                 </li>
                 <li class="nav-link">
                     <a href="<?= ROOT ?>dr/degreeprograms">
-                        <i class="bx bx-home icon"></i>
+                        <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Programs</span>
                     </a>
                 </li>
@@ -51,8 +38,8 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-                <li class="hero-ul-li"><i class="bx bxs-bell icon"></i></li>
-                <li class="hero-ul-li"><img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+                <li class="hero-ul-li"><img src="http://localhost\NILIS-MIS\app\views\components\navside-bar\MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -62,7 +49,7 @@
                         <h3>Bimsara Anjana</h3>
                     </div>
                     <hr>
-                    <a href="http://localhost/NILIS-MIS/public/logout" class="sub-menu-link">
+                    <a href="<?= ROOT ?>logout" class="sub-menu-link">
                         <i class="bx bx-log-out icon"></i>
                         <p>Logout</p>
                         <span>></span>
@@ -115,7 +102,7 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-                <li class="hero-ul-li"><i class="bx bxs-bell icon"></i></li>
+            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
                 <li class="hero-ul-li"><img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
@@ -177,7 +164,7 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-                <li class="hero-ul-li"><i class="bx bxs-bell icon"></i></li>
+            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
                 <li class="hero-ul-li"><img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
@@ -245,7 +232,7 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-                <li class="hero-ul-li"><i class="bx bxs-bell icon"></i></li>
+            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
                 <li class="hero-ul-li"><img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
@@ -307,7 +294,7 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-                <li class="hero-ul-li"><i class="bx bxs-bell icon"></i></li>
+            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
                 <li class="hero-ul-li"><img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
@@ -369,7 +356,7 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-                <li class="hero-ul-li"><i class="bx bxs-bell icon"></i></li>
+            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
                 <li class="hero-ul-li"><img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 

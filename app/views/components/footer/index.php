@@ -14,8 +14,6 @@
     /* padding: 34px 270px 33px 271px; */
     justify-content: center;
     align-items: center;
-
-    border-radius: 8px 8px 0px 0px;
     background-color: #17376E;
     gap: 10px;
 }
