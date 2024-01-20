@@ -11,6 +11,8 @@ class Admission extends Controller
     {
         $exam = new Exam();
         $degree = new Degree();
+        $admissionToken = new AdmissionToken();
+
 
         $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
 
@@ -19,21 +21,49 @@ class Admission extends Controller
 
             $examDetails = $exam->where(['examID' => intval($examID)]);
 
+        } else {
+            $examDetails = null;
+        }
+        if ($examDetails != null) {
+            $degreeID = $examDetails[0]->degreeID;
+
+            //get degree details
+            if ($degreeID != null) {
+                $degreeDetails = $degree->where(['degreeID' => intval($degreeID)]);
+
+            } else {
+                $degreeDetails = null;
+            }
+
+            $data['degreeDetails'] = $degreeDetails;
         }
 
-        $degreeID = $examDetails[0]->degreeID;
 
-        //get degree details
-        $degreeDetails = $degree->where(['degreeID' => intval($degreeID)]);
 
         //create data array
         $data['examDetails'] = $examDetails;
-        $data['degreeDetails'] = $degreeDetails;
+
 
         if (isset($_POST['submit'])) {
-            show("workd");
 
-            redirect('admission/card?index=' . $_POST['index'] . '');
+            //create token according to index number and examID
+            $token = md5($_POST['index'] . $examID);
+
+            $tokenData['indexNo'] = $_POST['index'];
+            $tokenData['examID'] = $examID;
+            $tokenData['token'] = $token;
+
+            //insert token to database
+            if ($admissionToken->Validate($tokenData)) {
+                $admissionToken->insert($tokenData);
+            }
+
+
+
+
+
+
+            redirect('admission/card?token=' . $token);
 
         }
         $this->view('sar-interfaces/admission-card-login', $data);
@@ -41,8 +71,13 @@ class Admission extends Controller
 
     public function Card()
     {
+        $student = new StudentModel();
         $indexNo = isset($_GET['index']) ? $_GET['index'] : null;
 
-        $this->view('sar-interfaces/admission-card');
+        $studentData = $student->where(['indexNo' => $indexNo]);
+        $data['studentData'] = $studentData;
+
+
+        $this->view('sar-interfaces/admission-card', $data);
     }
 }
