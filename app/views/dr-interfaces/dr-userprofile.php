@@ -278,7 +278,7 @@ $data['role'] = $role;
                                         </div>
                                         <div class="form-element">
                                             <label for="nicNo">N.I.C</label>
-                                            <input type="text" placeholder="Enter" id="up-email" name="nicNo" value="<?= set_value('nicNo') ?>">
+                                            <input type="text" placeholder="Enter" id="up-nicNo" name="nicNo" value="<?= set_value('nicNo') ?>">
                                         </div>
                                         <div class="form-element">
                                             <label for="whatsapp_number">WhatsApp Number</label>
@@ -296,11 +296,11 @@ $data['role'] = $role;
                                         </div>
                                         <div class="form-element">
                                             <label for="cpassword">Birthdate</label>
-                                            <input type="password" placeholder="Enter" id="up-cpassword" name="cpassword">
+                                            <input type="date" placeholder="Enter" id="up-birthdate" name="Birthdate">
                                         </div>
                                         <div class="form-element">
-                                            <label for="address">N.I.C</label>
-                                            <input type="text" placeholder="Enter" id="up-email" name="address" value="<?= set_value('address') ?>">
+                                            <label for="address">Address</label>
+                                            <input type="text" placeholder="Enter" id="up-Address" name="address" value="<?= set_value('address') ?>">
                                         </div>
                                     </div>
 
