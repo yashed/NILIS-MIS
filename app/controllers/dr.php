@@ -125,7 +125,7 @@ class DR extends Controller
         if ($studentId) {
             $studentModel = new StudentModel();
             $data['student'] = $studentModel->find($studentId);
-
+            // var_dump($data['student']);
             // Check if the student data is retrieved
             if ($data['student']) {
                 $this->view('dr-interfaces/dr-userprofile', $data);
