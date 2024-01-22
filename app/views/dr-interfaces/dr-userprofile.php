@@ -119,25 +119,6 @@ $data['role'] = $role;
 
         <div class="pop-up1">
             <div class="popupForm1">
-                <!-- <form method="post">
-                    <h1>Change Degree Program</h1><br>
-                    <div class="cur-deg">
-                        <input type="hidden" name="id" value="<?= $student[0]->id ?>">
-                        <label for="degree">
-                            <h3>Current Diploma Program : </h3><?= $student[0]->degreeID ?>
-                        </label>
-                    </div></br>
-                    <div class="change-deg">
-                        <label for="Degrees">Change Diploma Program</label>
-                        <select id="Degree" name="Degree">
-                            <option value="Degree1">DLIM Diploma</option>
-                            <option value="Degree2">DSL Diploma</option>
-                            <option value="Degree3">HDLM Diploma</option>
-                        </select><br>
-                    </div>
-                    <input type="submit" id="update-deg" value="Submit">
-                    <button class="close-button">Close</button>
-                </form> -->
                 <form id="Form1" method="post" action="">
                     <h1 style="font-size: 18px;">Change Degree Program</h1><br>
                     <div class="input-fields" style="margin: 20px 0px 10px 0px;">
@@ -156,10 +137,22 @@ $data['role'] = $role;
                         <div class="button-btn">
 
                             <button type="button" class="bt-name-white close-button" id="Cancel1">Cancel</button>
-                            <button type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next1">Submit</button>
+                            <button type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next1" onclick="myFunction()">Submit</button>
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+        <div id="overlay"></div>
+        <div class="pop-up1-1">
+            <div class="popupForm1-1">
+                <svg onclick="crossForDiplomaChange()" id="crossForDiplomaChange" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M3.05288 17.1929C2.09778 16.2704 1.33596 15.167 0.811868 13.9469C0.287778 12.7269 0.0119157 11.4147 0.000377568 10.0869C-0.0111606 8.7591 0.241856 7.44231 0.744665 6.21334C1.24747 4.98438 1.99001 3.86786 2.92893 2.92893C3.86786 1.99001 4.98438 1.24747 6.21334 0.744665C7.44231 0.241856 8.7591 -0.0111606 10.0869 0.000377568C11.4147 0.0119157 12.7269 0.287778 13.9469 0.811868C15.167 1.33596 16.2704 2.09778 17.1929 3.05288C19.0145 4.9389 20.0224 7.46493 19.9996 10.0869C19.9768 12.7089 18.9251 15.217 17.0711 17.0711C15.217 18.9251 12.7089 19.9768 10.0869 19.9996C7.46493 20.0224 4.9389 19.0145 3.05288 17.1929ZM11.5229 10.1229L14.3529 7.29288L12.9429 5.88288L10.1229 8.71288L7.29288 5.88288L5.88288 7.29288L8.71288 10.1229L5.88288 12.9529L7.29288 14.3629L10.1229 11.5329L12.9529 14.3629L14.3629 12.9529L11.5329 10.1229H11.5229Z" fill="#17376E" />
+                </svg>
+                <h2>Diploma Program Changed.</h2>
+                <p>
+                    <center>Student Reg. No. - <?= $student[0]->regNo ?></center>
+                </p>
             </div>
         </div>
         <div id="overlay"></div>
@@ -258,63 +251,62 @@ $data['role'] = $role;
                 </div>
             </div>
         </div>
-        <div class="pop-up">
-            <div class="popupForm2">
-                <form method="post">
-                    <div class="popup-card">
-                        <div class="form">
-                            <h2>Change Student Details</h2>
-                            <div class="form-input-fields">
-                                <div class="user-data">
-                                    <input type="text" name="id" hidden>
-                                    <div class="coloum-01">
-                                        <div class="form-element">
-                                            <label for="fname">First Name</label>
-                                            <input type="text" placeholder="Enter" id="up-fname" name="fname" value="<?= set_value('fname') ?>">
-                                        </div>
-                                        <div class="form-element">
-                                            <label for="email">Email</label>
-                                            <input type="text" placeholder="Enter" id="up-email" name="email" value="<?= set_value('email') ?>">
-                                        </div>
-                                        <div class="form-element">
-                                            <label for="nicNo">N.I.C</label>
-                                            <input type="text" placeholder="Enter" id="up-nicNo" name="nicNo" value="<?= set_value('nicNo') ?>">
-                                        </div>
-                                        <div class="form-element">
-                                            <label for="whatsapp_number">WhatsApp Number</label>
-                                            <input type="text" placeholder="Enter" id="whatsapp_number" name="whatsapp_number" value="<?= set_value('whatsapp_number') ?>">
-                                        </div>
+        <div class="popup" id="update-popup">
+            <form method="post">
+                <div class="popup-card">
+                    <div class="form">
+                        <h2>Update User Details</h2>
+                        <div class="form-input-fields">
+                            <div class="user-data">
+                                <input type="text" name="id" hidden>
+                                <div class="coloum-01">
+                                    <div class="form-element">
+                                        <label for="fname">First Name</label>
+                                        <input type="text" placeholder="Enter" id="up-fname" name="fname" value="<?= set_value('fname') ?>">
                                     </div>
-                                    <div class="coloum-02">
-                                        <div class="form-element">
-                                            <label for="lname">Last Name</label>
-                                            <input type="text" placeholder="Enter" id="up-lname" name="lname" value="<?= set_value('lname') ?>">
-                                        </div>
-                                        <div class="form-element">
-                                            <label for="phoneNo">Phone Number</label>
-                                            <input type="text" placeholder="Enter" id="up-phoneNo" name="phoneNo" value="<?= set_value('phoneNo') ?>">
-                                        </div>
-                                        <div class="form-element">
-                                            <label for="cpassword">Birthdate</label>
-                                            <input type="date" placeholder="Enter" id="up-birthdate" name="Birthdate">
-                                        </div>
-                                        <div class="form-element">
-                                            <label for="address">Address</label>
-                                            <input type="text" placeholder="Enter" id="up-Address" name="address" value="<?= set_value('address') ?>">
-                                        </div>
+                                    <div class="form-element">
+                                        <label for="email">Email</label>
+                                        <input type="text" placeholder="Enter" id="up-email" name="email" value="<?= set_value('email') ?>">
                                     </div>
+                                    <div class="form-element">
+                                        <label for="nicNo">NIC</label>
+                                        <input type="text" placeholder="Enter" id="up-nicNo" name="nicNo" value="<?= set_value('nicNo') ?>">
+                                    </div>
+                                    <div class="form-element">
+                                        <label for="whatsapp_number">Whatsapp Number</label>
+                                        <input type="text" placeholder="Enter" id="up-whatsapp_number" name="whatsapp_number" value="<?= set_value('whatsapp_number') ?>">
+                                    </div>
+                                </div>
 
+                                <div class="coloum-02">
+                                    <div class="form-element">
+                                        <label for="lname">Last Name</label>
+                                        <input type="text" placeholder="Enter" id="up-lname" name="lname" value="<?= set_value('lname') ?>">
+                                    </div>
+                                    <div class="form-element">
+                                        <label for="phoneNo">Phone Number</label>
+                                        <input type="text" placeholder="Enter" id="up-phoneNo" name="phoneNo" value="<?= set_value('phoneNo') ?>">
+                                    </div>
+                                    <div class="form-element">
+                                        <label for="address">Address</label>
+                                        <input type="text" placeholder="Enter" id="up-address" name="address" value="<?= set_value('address') ?>">
+                                    </div>
+                                    <div class="form-element">
+                                        <label for="birthdate">Birthdate</label>
+                                        <input type="text" placeholder="Enter" id="up-birthdate" name="birthdate" value="<?= set_value('birthdate') ?>">
+                                    </div>
                                 </div>
-                                <div class="user-create-update">
-                                    <button class="close-button">Close</button>
-                                    <button name='submit' value='update' id="submitbutton" type="submit">Update</button>
-                                </div>
+
                             </div>
-
+                            <div class="user-create-update">
+                                <button class="close-button">Close</button>
+                                <button name='submit' value='update' id="submitbutton" type="submit">Update</button>
+                            </div>
                         </div>
+
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
         <div id="overlay"></div>
         <div class="dr-footer">
@@ -339,11 +331,11 @@ $data['role'] = $role;
         function updateData1() {
             // Show the overlay and pop-up
             $('#overlay').css('display', 'block');
-            $('.pop-up').css('display', 'block');
+            $('.popup').css('display', 'block');
 
             $('.close-button').click(function(e) {
                 // Hide the pop-up and overlay when the close button is clicked
-                $('.pop-up').css('display', 'none');
+                $('.popup').css('display', 'none');
                 $('#overlay').css('display', 'none');
                 e.stopPropagation();
             });
@@ -362,6 +354,21 @@ $data['role'] = $role;
             });
         }
 
+        function myFunction() {
+            $('.pop-up1').css('display', 'none');
+            $('#overlay').css('display', 'block');
+            $('.pop-up1-1').css('display', 'block');
+
+            $('#overlay').click(function(e) {
+                $('.pop-up1-1').css('display', 'none');
+                $('#overlay').css('display', 'none');
+                e.stopPropagation();
+            });
+        }
+        function crossForDiplomaChange() {
+            $('.pop-up1-1').css('display', 'none');
+            $('#overlay').css('display', 'none');
+        }
         (() => {
             const body = document.querySelector("body"),
                 sidebar = body.querySelector(".sidebar"),
@@ -418,3 +425,61 @@ $data['role'] = $role;
                     <input type="submit" id="submitbutton" value="Submit">
                     <button class="close-button">Close</button>
                 </form> -->
+<!-- <div class="pop-up">
+            <div class="popupForm2">
+                <form method="post">
+                    <div class="popup-card">
+                        <div class="form">
+                            <h2>Change Student Details</h2>
+                            <div class="form-input-fields">
+                                <div class="user-data">
+                                    <input type="text" name="id" hidden>
+                                    <div class="coloum-01">
+                                        <div class="form-element">
+                                            <label for="fname">First Name</label>
+                                            <input type="text" placeholder="Enter" id="up-fname" name="fname" value="<?= set_value('fname') ?>">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="email">Email</label>
+                                            <input type="text" placeholder="Enter" id="up-email" name="email" value="<?= set_value('email') ?>">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="nicNo">N.I.C</label>
+                                            <input type="text" placeholder="Enter" id="up-nicNo" name="nicNo" value="<?= set_value('nicNo') ?>">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="whatsapp_number">WhatsApp Number</label>
+                                            <input type="text" placeholder="Enter" id="whatsapp_number" name="whatsapp_number" value="<?= set_value('whatsapp_number') ?>">
+                                        </div>
+                                    </div>
+                                    <div class="coloum-02">
+                                        <div class="form-element">
+                                            <label for="lname">Last Name</label>
+                                            <input type="text" placeholder="Enter" id="up-lname" name="lname" value="<?= set_value('lname') ?>">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="phoneNo">Phone Number</label>
+                                            <input type="text" placeholder="Enter" id="up-phoneNo" name="phoneNo" value="<?= set_value('phoneNo') ?>">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="cpassword">Birthdate</label>
+                                            <input type="date" placeholder="Enter" id="up-birthdate" name="Birthdate">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="address">Address</label>
+                                            <input type="text" placeholder="Enter" id="up-Address" name="address" value="<?= set_value('address') ?>">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="user-create-update">
+                                    <button class="close-button">Close</button>
+                                    <button name='submit' value='update' id="submitbutton" type="submit">Update</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> -->
