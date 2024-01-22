@@ -67,7 +67,7 @@
 }
 .white-container2-1 {
   background-color: white;
-  height: 500px;
+  height: 400px;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
@@ -160,7 +160,6 @@
   row-gap: 10px;
 }
 .left-top-text2 {
-  /* padding-left: 10%; */
   padding-top: 2%;
   text-align: left;
   margin: 0;
@@ -181,9 +180,7 @@
 
 .buttons {
   display: flex;
-  /* Use flexbox to arrange the buttons horizontally */
   justify-content: space-between;
-  /* Adjust horizontal spacing between buttons */
 }
 
 .left-top-text3 {
@@ -201,24 +198,17 @@
 
 td {
   font-size: 16px;
-  /* Data font size */
   width: 300px;
   padding: 5px;
-  /* Data cell padding */
   border: 1px solid #ffffff;
-  /* Data cell border */
   text-align: center;
 }
 
 th {
   background-color: #ffffff;
-  /* Header background color */
   font-size: 18px;
-  /* Header font size */
   font-weight: bold;
-  /* Header font weight */
   padding: 10px;
-  /* Header cell padding */
 }
 
 .bday,
@@ -235,7 +225,7 @@ th {
   background-color: #17376e;
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 8px 22px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -249,29 +239,18 @@ th {
   border-radius: 8px;
   width: 150px;
   height: 40px;
-  padding-bottom: 30px;
+  padding-bottom: 22px;
 }
 
 #updateButton:hover {
   background-color: #ccc;
 }
 
-/* .input[type=submit] {
-  width: 100%;
-  background-color:#17376E;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  width:100px;
-} */
-
 #submitbutton {
   width: 100%;
   background-color: #17376e;
   color: #ffffff;
-  padding: 10px;
+  padding: 8px 22px;
   margin: 8px 0;
   border: none;
   border-radius: 4px;
@@ -284,63 +263,69 @@ th {
 }
 
 .close-button {
-  width: 100%;
-  background-color: #ccc;
-  color: #17376e;
-  padding: 10px;
+  /* width: 100%; */
+  background-color: var(--text-color);
+  color: var(--sidebar-color);
+  padding: 8px 22px;
   margin: 8px 0;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  width: 100px;
-  border-color: #000000;
+  border: 2px solid red;
   border-width: 1px;
 }
-
+.close-button-2 {
+  background-color: var(--text-color);
+  color: red;
+  padding: 8px 22px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid red;
+  border-width: 1px;
+}
+.close-button-3 {
+  background-color: var(--text-color);
+  color: black;
+  padding: 8px 22px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid black;
+  border-width: 1px;
+}
 .close-button:hover {
   background-color: #e2e2e2;
 }
 
-/* input[type=submit]:hover {
-  background-color: whitesmoke;
-} */
-
 .popupForm1 {
   border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
+  background-color: var(--text-color);
+  padding: 23px;
   width: 500px;
-  height: 300px;
+  height: 500px;
 }
 
 .popupForm2 {
   border-radius: 5px;
-  background-color: #f2f2f2;
+  background-color: var(--text-color);
   padding: 20px;
   width: 500px;
   height: 800px;
 }
 
-/* class->.ad
-id=# */
-
-/* #changedegreebutton{
-  margin: left 800px;;
-  border-radius: 8px;
-  width: 250px;
-  height: 40px;
-  padding-bottom: 30px;
-} */
-
 #changedegreebutton {
   border-radius: 8px;
   width: 250px;
   height: 40px;
-  padding-bottom: 30px;
 }
 
 #changedegreebutton:hover {
-  background-color: #ccc;
+  background-color: var(--text-color);
+  color: var(--sidebar-color);
+  border: 2px solid var(--sidebar-color);
 }
 #userDeletePopupImg {
   height: 100px;
@@ -348,11 +333,11 @@ id=# */
 }
 #userDeletePopupH2 {
   font-weight: 400;
+  margin: 20px 10px;
 }
 #deletebutton {
   display: inline-block;
-  padding: 10px 20px;
-  background-color: white;
+  background-color: var(--text-color);
   border: 2px solid red;
   color: red;
   text-align: center;
@@ -361,11 +346,12 @@ id=# */
   cursor: pointer;
   border-radius: 8px;
   height: 40px;
-  padding-bottom: 30px;
+  margin-left: 20;
 }
 
 #deletebutton:hover {
-  background-color: #e2e2e2;
+  background-color: red;
+  color: var(--text-color);
 }
 
 .cur-deg,
@@ -392,4 +378,236 @@ id=# */
 
 #update-deg:hover {
   background-color: #ccc;
+}
+.drop-down {
+  margin: 30vh 4vh 10vh 0;
+  font-size: 12px;
+}
+.bt-name-white {
+  background: #fff;
+  padding: 8px 22px;
+  margin-left: -100px;
+  border-radius: 6px;
+  color: #17376e;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+  border: 0px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.bt-name-white:hover {
+  color: #fff;
+  background: #17376e;
+}
+.bt-name {
+  color: #fff;
+  padding: 8px 22px;
+  border-radius: 6px;
+  background: #17376e;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+  border: 0px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 20px;
+}
+
+.bt-name:hover {
+  background: #fff;
+  color: #17376e;
+}
+.btn-box {
+  width: 100%;
+  margin: 30px 10px 20px 10px;
+  text-align: center;
+}
+
+/*pop up for update*/
+
+.popup {
+  position: fixed;
+  top: -150%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.25);
+  opacity: 0;
+  background: #fff;
+  width: 500px;
+  padding: 20px 30px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms,
+    transform 200ms ease-in-out 0ms;
+  z-index: 100;
+}
+
+.popup.active {
+  top: 50%;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms,
+    transform 200ms ease-in-out 0ms;
+}
+
+.popup .close-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 15px;
+  height: 15px;
+  background: #17376e;
+  color: #ffffff;
+  text-align: center;
+  line-height: 15px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.popup .form h2 {
+  text-align: center;
+  color: #17376e;
+  margin: 10px 0px 20px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.popup .form .form-element {
+  display: flex;
+  margin: 15px 0px;
+  align-content: flex-end;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.popup .form .form-element label {
+  font-size: 14px;
+  color: #222;
+}
+
+.popup .form .form-element input[type="text"],
+.popup .form .form-element input[type="password"] {
+  margin-top: 5px;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+.popup .form .form-element button {
+  padding: 10px;
+  height: 5vh;
+  width: 30%;
+  border: none;
+  outline: none;
+  background: #17376e;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.popup .form .form-element a {
+  display: block;
+  text-align: right;
+  font-size: 15px;
+  color: #1a79ca;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* .user-data {
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+} */
+
+.data-input-fields {
+  display: flex;
+  flex-direction: row;
+}
+
+.column-01 {
+  display: flex;
+  flex-direction: column;
+}
+
+.column-01 {
+  display: flex;
+  flex-direction: column;
+}
+
+#form-element-dropdown-create,
+#form-element-dropdown-update {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+.user-update {
+  cursor: pointer;
+}
+
+.user-delete {
+  cursor: pointer;
+}
+
+.delete-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.delete-card button {
+  width: 50%;
+  height: 5vh;
+  border-radius: 12px;
+  background: #17376e;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+  border: 0px;
+  cursor: pointer;
+}
+
+.popup-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.pop-up1-1 {
+  display: none;
+  position: fixed;
+  background-color: var(--text-color);
+  color: black;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  margin: 5px 8px;
+  padding: 40px 65px;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+.pop-up1-1 h2 {
+  font-weight: 600;
+  margin: 20px 10px;
+}
+.pop-up1-1 p {
+  font-weight: 400;
+  margin: 20px 10px;
+}
+#crossForDiplomaChange{
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 20px;
+  cursor: pointer;
 }
