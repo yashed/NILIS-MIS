@@ -321,22 +321,19 @@ class Database
 
         $this->query($query);
 
-        
+
         $query = "
-        CREATE TABLE IF NOT EXISTS `notifications` (
-            notify_id int(11) NOT NULL AUTO_INCREMENT,
-            description varchar(40) NOT NULL,
-            user varchar(40) NOT NULL,
-            starting_date DATE NOT NULL,
-            remaining_time  NOT NULL,
-            PRIMARY KEY (notify_id),
-            FOREIGN KEY (user) REFERENCES users(username),
-            FOREIGN KEY (starting_date) REFERENCES degree_timetable(StartingDate)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-        ";
+        CREATE TABLE IF NOT EXISTS `index_token` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `indexNo` varchar(40) NOT NULL,
+            `examID` int(11) NOT NULL,
+            `token` varchar(255) NOT NULL,
+            PRIMARY KEY (`id`),
+            FOREIGN KEY (`indexNo`) REFERENCES `student` (`indexNo`),
+            FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            ";
 
         $this->query($query);
-
-        
     }
 }

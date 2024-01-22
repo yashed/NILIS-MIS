@@ -8,6 +8,24 @@ $data['role'] = $role;
 <?php $this->view('components/navside-bar/sidebar', $data) ?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
 
+<?php
+// Database configuration
+$dbHost     = "localhost";
+$dbUsername = "root";
+$dbPassword = "";
+$dbName     = "nilis_db";
+
+// Create database connection
+$db = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+
+// Check connection
+if ($db->connect_error) {
+    die("Connection failed: " . $db->connect_error);
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -126,7 +144,7 @@ $data['role'] = $role;
         flex-direction: row;
         margin-top: 2%;
         width: 81vw;
-padding-right: 1vw;
+        padding-right: 1vw;
     }
 
     .admission-button {
@@ -136,7 +154,7 @@ padding-right: 1vw;
         color: #17376E;
         text-decoration: none;
         align-items: center;
-       
+
         border-radius: 5px;
         cursor: pointer;
         width: 12vw;
@@ -189,9 +207,9 @@ padding-right: 1vw;
         cursor: pointer;
     }
 
-    input[type="file"] {
-        display: none;
-    }
+    /* input[type="file"] {
+    display: none;
+} */
 
     .text1 {
         font-size: 15px;
@@ -294,8 +312,8 @@ padding-right: 1vw;
         margin: 1vw;
         border-radius: .6rem;
         /* overflow: auto;
-        overflow: overlay;
-        outline-style: groove; */
+    overflow: overlay;
+    outline-style: groove; */
         outline-width: 2px;
         outline-color: #ffffff;
     }
@@ -368,66 +386,7 @@ padding-right: 1vw;
         font-size: 0.8vw;
     }
 
-    /* tbody tr.hide {
-        opacity: 0;
-        transform: translateX(100%);
-    }
 
-    tbody tr:hover {
-        background-color: #eeeeee !important;
-    }
-
-    tbody tr td,
-    tbody tr td p,
-    tbody tr td img {
-        transition: .2s ease-in-out;
-    }
-
-    tbody tr.hide td,
-    tbody tr.hide td p {
-        padding: 0;
-        font: 0 / 0 sans-serif;
-        transition: .2s ease-in-out .5s;
-    }
-
-    tbody tr.hide td img {
-        width: 0;
-        height: 0;
-        transition: .2s ease-in-out .5s;
-    }
-
-
-    @media (max-width: 1000px) {
-        td:not(:first-of-type) {
-            min-width: 12.1rem;
-        }
-    }
-
-    thead th span.icon-arrow {
-        display: inline-block;
-        width: 1.3rem;
-        height: 1.3rem;
-        border-radius: 50%;
-        border: 1.4px solid transparent;
-
-        text-align: center;
-        font-size: 1rem;
-
-        margin-left: .5rem;
-        transition: .2s ease-in-out;
-    }
-
-    thead th:hover span.icon-arrow {
-        border: 1.4px solid;
-    }
-
-    thead th.active span.icon-arrow {
-        color: #ffffff;
-    }
-
-    thead th.asc span.icon-arrow {
-        transform: rotate(180deg);
-    } */
 
     .input-main-group {
         display: flex;
@@ -490,71 +449,111 @@ padding-right: 1vw;
 <body>
     <div class="temp2-home">
         <div class="temp2-title">Attendance</div>
-     
 
         <div class="temp2-subsection-2">
             <div class="temp2-subsection-21">
+                <div class="row">
+                    <!-- Import link -->
+                    <div class="col-md-12 head">
+                        <div class="float-right">
+                            <a href="javascript:void(0);" class="btn btn-success" onclick="formToggle('importFrm');"><i class="plus"></i> Import</a>
+                        </div>
+                    </div>
+                    <!-- CSV file upload form -->
+                    <div class="col-md-12" id="importFrm" style="display: none;">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <input type="file" class="btn btn-primary" name="csvFile" />
+                            <input type="submit" class="btn btn-primary" name="importSubmit" value="Submit">
+                        </form>
+                    </div>
 
+                    <section class="table__body">
+                        <table id="table_p">
+                            <thead>
+                                <tr>
 
-                
-                <section class="table__body">
-                    <table id="table_p">
-                        <thead>
-                            <tr>
-                                <th> Name </th>
-                                <th> Role </th>
-                                <th> Index Number </th>
-                                <th> Registration Number </th>
-                                <th> Attendance </th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                                    <th> Index </th>
+                                    <th> Name</th>
+                                    <th> Attendance </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                if (isset($_POST['importSubmit'])) {
+                                    // Allowed mime types
+                                    $csvMimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain');
 
-                            <tr>
-                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt=""> Bimsara Anjana</td>
-                                <td> Student </td>
-                                <td> DLIM/001</td>
-                                <td> DLIM/01/01</td>
-                                <td> 80% </td>
-                            </tr>
-                            <tr>
-                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt=""> Yashed Thisara</td>
-                                <td> Student </td>
-                                <td> DLIM/002</td>
-                                <td> DLIM/01/02</td>
-                                <td> 90% </td>
-                            </tr>
-                            <tr>
-                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt=""> Senudi Disakya</td>
-                                <td> Student </td>
-                                <td> DLIM/003</td>
-                                <td> DLIM/01/03</td>
-                                <td> 90% </td>
-                            </tr>
-                            <tr>
-                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt=""> Sanduni Ekanayake</td>
-                                <td> Student </td>
-                                <td> DLIM/004</td>
-                                <td> DLIM/01/04</td>
-                                <td> 60% </td>
-                            </tr>
+                                    // Validate whether the selected file is a CSV file
+                                    if (!empty($_FILES['csvFile']['name']) && in_array($_FILES['csvFile']['type'], $csvMimes)) {
+                                        // If the file is uploaded
+                                        if (is_uploaded_file($_FILES['csvFile']['tmp_name'])) {
+                                            // Open the uploaded CSV file with read-only mode
+                                            $csvFile = fopen($_FILES['csvFile']['tmp_name'], 'r');
+                                            // Skip the first line
+                                            fgetcsv($csvFile);
+                                            // Parse data from CSV file line by line
+                                            while (($line = fgetcsv($csvFile)) !== FALSE) {
+                                                // Get row data
 
+                                                
+                                                $index = $line[0];
+                                                $name = $line[1];
+                                                $attendance = $line[2];
 
-                        </tbody>
-                    </table>
-                </section>
+                                                print_r($line);
 
-                <br>
+                                                $prevQuery = "SELECT * FROM student WHERE indexNo = '$index' LIMIT 1;";
+                                                $prevResult = $db->query($prevQuery);
 
+                                                print_r($prevResult); 
 
+                                                if ($prevResult->num_rows > 0) {
+                                                   
+                                                    $db->query("UPDATE student SET attendance = '$attendance',name='$name' WHERE indexNo = '$index'");
+                                                } 
+                                            }
+                                            fclose($csvFile);
+                                        }
+                                        } 
+                                }
+
+                                $result = $db->query("SELECT * FROM student ");
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                ?>
+                                        <tr>
+
+                                            <td><?php echo $row['indexNo']; ?></td>
+                                            <td><?php echo $row['name']; ?></td>
+                                            <td><?php echo $row['Attendance']; ?></td>
+                                        </tr>
+                                    <?php }
+                                } else { ?>
+                                    <tr>
+                                        <td colspan="3">No member(s) found...</td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </section>
+                    <br>
+                </div>
             </div>
-
-
         </div>
         <div class="temp2-footer">
             <?php $this->view('components/footer/index', $data) ?>
         </div>
-       
 </body>
 
 </html>
+
+<script>
+    function formToggle(ID) {
+        var element = document.getElementById(ID);
+        if (element.style.display === "none") {
+            element.style.display = "block";
+        } else {
+            element.style.display = "none";
+        }
+    }
+</script>
