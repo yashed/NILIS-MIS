@@ -285,7 +285,7 @@ th {
   border: 2px solid red;
   border-width: 1px;
 }
-.close-button-3 { 
+.close-button-3 {
   background-color: var(--text-color);
   color: black;
   padding: 8px 22px;
@@ -388,8 +388,8 @@ th {
   padding: 8px 22px;
   margin-left: -100px;
   border-radius: 6px;
-  color: #17376E;
-  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.20);
+  color: #17376e;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
   border: 0px;
   font-size: 14px;
   font-weight: 600;
@@ -397,14 +397,14 @@ th {
 
 .bt-name-white:hover {
   color: #fff;
-  background: #17376E;
+  background: #17376e;
 }
 .bt-name {
   color: #fff;
   padding: 8px 22px;
   border-radius: 6px;
-  background: #17376E;
-  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.20);
+  background: #17376e;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
   border: 0px;
   font-size: 14px;
   font-weight: 600;
@@ -413,7 +413,7 @@ th {
 
 .bt-name:hover {
   background: #fff;
-  color: #17376E;
+  color: #17376e;
 }
 .btn-box {
   width: 100%;
@@ -434,15 +434,17 @@ th {
   padding: 20px 30px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
-  transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+  transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms,
+    transform 200ms ease-in-out 0ms;
   z-index: 100;
 }
 
-.popup {
+.popup.active {
   top: 50%;
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
-  transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+  transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms,
+    transform 200ms ease-in-out 0ms;
 }
 
 .popup .close-btn {
@@ -515,7 +517,6 @@ th {
   font-weight: 600;
 }
 
-
 /* .user-data {
   display: flex;
   gap: 30px;
@@ -535,7 +536,7 @@ th {
   flex-direction: column;
 }
 
-.column-02 {
+.column-01 {
   display: flex;
   flex-direction: column;
 }
@@ -561,7 +562,7 @@ th {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  align-items: center
+  align-items: center;
 }
 
 .delete-card button {
@@ -580,4 +581,33 @@ th {
   gap: 20px;
   align-items: center;
   flex-wrap: wrap;
+}
+.pop-up1-1 {
+  display: none;
+  position: fixed;
+  background-color: var(--text-color);
+  color: black;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  margin: 5px 8px;
+  padding: 40px 65px;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+.pop-up1-1 h2 {
+  font-weight: 600;
+  margin: 20px 10px;
+}
+.pop-up1-1 p {
+  font-weight: 400;
+  margin: 20px 10px;
+}
+#crossForDiplomaChange{
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 20px;
+  cursor: pointer;
 }
