@@ -71,6 +71,21 @@ class Admission extends Controller
 
     public function Card()
     {
+        $token = isset($_GET['token']) ? $_GET['token'] : null;
+
+        if ($token != null) {
+            $admissionToken = new AdmissionToken();
+            $tokenData = $admissionToken->where(['token' => $token]);
+            $indexNo = $tokenData[0]->indexNo;
+            $examID = $tokenData[0]->examID;
+        } else {
+
+            message('Invalid Token', 'danger');
+        }
+
+        //get student data
+
+
         $student = new StudentModel();
         $indexNo = isset($_GET['index']) ? $_GET['index'] : null;
 
