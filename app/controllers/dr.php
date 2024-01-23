@@ -2,8 +2,6 @@
 
 class DR extends Controller
 {
-
-
     public function index()
     {
 
@@ -14,7 +12,7 @@ class DR extends Controller
 
         $data['degrees'] = $degree->findAll();
         //show( $data[ 'degrees' ] );
-        echo 'view';
+        // echo 'view';
         $this->view('dr-interfaces/dr-dashboard', $data);
     }
 
@@ -26,11 +24,15 @@ class DR extends Controller
     public function degreeprograms()
     {
         $degree = new Degree();
+        $subject = new Subjects();
 
+        $result1 = $degree->validate($_POST);
+        $result2 = $subject->validate($_POST);
         // $degree->insert( $_POST );
-        // show( $_POST );
+        show($_POST);
 
         $data['degrees'] = $degree->findAll();
+        $data['subjects'] = $subject->findAll();
         //show( $data[ 'degrees' ] );
 
         $this->view('dr-interfaces/dr-degreeprograms', $data);
@@ -87,7 +89,6 @@ class DR extends Controller
                 }
             } else {
                 echo 'Error uploading file.';
-
             }
         }
 
@@ -97,18 +98,46 @@ class DR extends Controller
         $this->view('dr-interfaces/dr-newdegree', $data);
     }
 
+    // public function userprofile()
+    // {
+    //     $degree = new Degree();
+    //     $st = new StudentModel();
+
+    //     // $degree->insert( $_POST );
+    //     // show( $_POST );
+
+    //     $data['degrees'] = $degree->findAll();
+    //     $data['students'] = $st->findAll();
+    //     //show( $data[ 'degrees' ] );
+
+    //     $this->view('dr-interfaces/dr-userprofile', $data);
+    // }
+
     public function userprofile()
     {
         $degree = new Degree();
-
-        // $degree->insert( $_POST );
-        // show( $_POST );
-
         $data['degrees'] = $degree->findAll();
-        //show( $data[ 'degrees' ] );
 
-        $this->view('dr-interfaces/dr-userprofile', $data);
+        // Fetch the specific student data using the ID from the URL
+        $studentId = isset($_GET['studentId']) ? $_GET['studentId'] : null;
+        // show($studentId);
+        // Check if the student ID is provided in the URL
+        if ($studentId) {
+            $studentModel = new StudentModel();
+            $data['student'] = $studentModel->find($studentId);
+            // var_dump($data['student']);
+            // Check if the student data is retrieved
+            if ($data['student']) {
+                $this->view('dr-interfaces/dr-userprofile', $data);
+            } else {
+                echo "Error: Student not found.";
+            }
+        } else {
+            echo "Error: Student ID not provided in the URL.";
+        }
     }
+
+
 
     public function participants($id = null, $action = null, $id2 = null)
     {
@@ -145,16 +174,22 @@ class DR extends Controller
     {
         $this->view('dr-interfaces/dr-settings');
     }
-
+    public function reports()
+    {
+        $this->view('dr-interfaces/dr-reports');
+    }
+    public function attendance()
+    {
+        $this->view('dr-interfaces/dr-attendance');
+    }
+    public function examination()
+    {
+        $this->view('dr-interfaces/dr-examination');
+    }
     public function login()
     {
         $this->view('login/login.view');
     }
 
-    public function dr_notifications() {
-        $this->view( 'dr-interfaces/dr-notification');
-    }
-
+   
 }
-
-?>

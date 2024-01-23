@@ -30,7 +30,7 @@
                     <ul class="menu-links">
                         <h6 class="topic3">PROGRAMS</h6>
                         <li class="nav-link">
-                            <a href="<?= ROOT ?>#">
+                            <a href="<?= ROOT ?>dr/newDegree">
                                 <i class="bx bx-layer-plus icon"></i>
                                 <span class="text nav-text">Degree Name</span></a>
                         </li>

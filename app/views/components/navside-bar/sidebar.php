@@ -1,28 +1,15 @@
 <?php if ($role == "DR") : ?>
-
     <div class="menu-bar">
         <hr>
         <div class="menu">
             <ul class="menu-links">
                 <h6 class="topic1">MAIN</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/index">
+                    <a href="<?= ROOT ?>dr">
                         <i class="bx bx-home icon"></i>
-                        <span class="text nav-text">Dashboard</span></a>
-                </li>
-
-                <li class="nav-link">
-                    <a href="#">
-                        <i class='bx bxl-postgresql icon'></i>
-                        <span class="text nav-text">Courses<i class="bx bxs-down-arrow arrow"></i></span>
+                        <span class="text nav-text">Dashboard</span>
                     </a>
-
-                    <ul class="sub-menu-drop">
-                        <li><a href="#">Block Chain</a></li>
-                        <li><a href="#">Cryptography</a></li>
-                    </ul>
                 </li>
-
                 <li class="nav-link">
                     <a href="<?= ROOT ?>dr/notification">
                         <i class="bx bx-bell icon"></i>
