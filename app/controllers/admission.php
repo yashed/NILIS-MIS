@@ -55,13 +55,9 @@ class Admission extends Controller
 
             //insert token to database
             if ($admissionToken->Validate($tokenData)) {
+
                 $admissionToken->insert($tokenData);
             }
-
-
-
-
-
 
             redirect('admission/card?token=' . $token);
 
@@ -84,10 +80,40 @@ class Admission extends Controller
         }
 
         //get student data
-
-
         $student = new StudentModel();
-        $indexNo = isset($_GET['index']) ? $_GET['index'] : null;
+        $examParticipants = new ExamParticipants();
+        $examTimeTable = new ExamTimeTable;
+        $repeateStudent = new RepeatStudents;
+        $medicalStudent = new MedicalStudents;
+
+
+        //get exam participant data
+        $studentExamData = $examParticipants->where(['indexNo' => $indexNo, 'examID' => $examID]);
+        $semester = $studentExamData[0]->semester;
+        show($studentExamData[0]->semester);
+
+
+        //check the type of the participant
+        if ($studentExamData[0]->studentType == 'initial') {
+            $examData = $examTimeTable->where(['examID' => $examID]);
+            $data['examData'] = $examData;
+
+
+
+        } else if ($studentExamData[0]->studentType == 'repeate') {
+
+            //get the attempt of the repeate student
+            $attempt = $repeateStudent->where(['indexNo' => $indexNo, 'semester' => $semester]);
+            //get subject the student repeat
+            $subjects = $repeateStudent->where(['indexNo' => $indexNo, 'semester' => $semester, 'attempt' => $attempt[0]->attempt]);
+
+            show($subjects);
+
+        } else if ($studentExamData[0]->studentType == 'medical') {
+
+        }
+
+
 
         $studentData = $student->where(['indexNo' => $indexNo]);
         $data['studentData'] = $studentData;
