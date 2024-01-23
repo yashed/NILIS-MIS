@@ -281,7 +281,7 @@ function fetchDegreeDataById($degreeId)
                     <tr>
                         <td>
                             <b>Type</b><br>
-                            <input type="text" name="type" id="type">
+                            <input type="text" name="type" id="type"><?= $degrees->degree_type?>
                         </td>
                         <td>
                             <b>Acodemic Year</b>
