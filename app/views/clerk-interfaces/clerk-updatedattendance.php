@@ -454,18 +454,7 @@ if ($db->connect_error) {
             <div class="temp2-subsection-21">
                 <div class="row">
                     <!-- Import link -->
-                    <div class="col-md-12 head">
-                        <div class="float-right">
-                            <a href="javascript:void(0);" class="btn btn-success" onclick="formToggle('importFrm');"><i class="plus"></i> Import</a>
-                        </div>
-                    </div>
-                    <!-- CSV file upload form -->
-                    <div class="col-md-12" id="importFrm" style="display: none;">
-                        <form action="" method="post" enctype="multipart/form-data">
-                            <input type="file" class="btn btn-primary" name="csvFile" />
-                            <input type="submit" class="btn btn-primary" name="importSubmit" value="Submit">
-                        </form>
-                    </div>
+                    
 
                     <section class="table__body">
                         <table id="table_p">
@@ -479,43 +468,7 @@ if ($db->connect_error) {
                             </thead>
                             <tbody>
                                 <?php
-                                if (isset($_POST['importSubmit'])) {
-                                    // Allowed mime types
-                                    $csvMimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain');
-
-                                    // Validate whether the selected file is a CSV file
-                                    if (!empty($_FILES['csvFile']['name']) && in_array($_FILES['csvFile']['type'], $csvMimes)) {
-                                        // If the file is uploaded
-                                        if (is_uploaded_file($_FILES['csvFile']['tmp_name'])) {
-                                            // Open the uploaded CSV file with read-only mode
-                                            $csvFile = fopen($_FILES['csvFile']['tmp_name'], 'r');
-                                            // Skip the first line
-                                            fgetcsv($csvFile);
-                                            // Parse data from CSV file line by line
-                                            while (($line = fgetcsv($csvFile)) !== FALSE) {
-                                                // Get row data
-
-                                                
-                                                $index = $line[0];
-                                                $name = $line[1];
-                                                $attendance = $line[2];
-
-                                                print_r($line);
-
-                                                $prevQuery = "SELECT * FROM student WHERE indexNo = '$index' LIMIT 1;";
-                                                $prevResult = $db->query($prevQuery);
-
-                                                print_r($prevResult); 
-
-                                                if ($prevResult->num_rows > 0) {
-                                                   
-                                                    $db->query("UPDATE student SET attendance = '$attendance',name='$name' WHERE indexNo = '$index'");
-                                                } 
-                                            }
-                                            fclose($csvFile);
-                                        }
-                                        } 
-                                }
+                              
 
                                 $result = $db->query("SELECT * FROM student ");
                                 if ($result->num_rows > 0) {
@@ -547,13 +500,3 @@ if ($db->connect_error) {
 
 </html>
 
-<script>
-    function formToggle(ID) {
-        var element = document.getElementById(ID);
-        if (element.style.display === "none") {
-            element.style.display = "block";
-        } else {
-            element.style.display = "none";
-        }
-    }
-</script>
