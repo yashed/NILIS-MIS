@@ -80,10 +80,9 @@
 }
 .white-container3-1 {
   flex: 1;
-  padding: 7px 0px 5px 32px;
+  padding: 7px 0px 50px 32px;
   margin: 5px 4px 2px 4px;
   background-color: white;
-  height: 800px;
   width: 50%;
   font-size: 22px;
   border-radius: 10px;
@@ -93,7 +92,6 @@
   padding: 7px 5px 5px 32px;
   margin: 5px 4px 2px 4px;
   background-color: white;
-  height: 800px;
   width: 50%;
   font-size: 22px;
   border-radius: 10px;
@@ -233,9 +231,11 @@ th {
   margin: 4px 2px;
   cursor: pointer;
 }
-
+.buttonx {
+  margin-top: 20px;
+}
 #updateButton {
-  margin-left: 52%;
+  margin-left: 37%;
   border-radius: 8px;
   width: 150px;
   height: 40px;
@@ -424,6 +424,7 @@ th {
 /*pop up for update*/
 
 .popup {
+  display: none;
   position: fixed;
   top: -150%;
   left: 50%;

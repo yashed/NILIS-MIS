@@ -24,7 +24,7 @@ $data['role'] = $role;
         }
 
         .button-container {
-            margin-top: 35px;
+            margin-top: 45px;
             display: flex;
             flex-direction: row;
             float: right;
@@ -143,7 +143,7 @@ $data['role'] = $role;
                 </form>
             </div>
         </div>
-        <div id="overlay"></div>
+        <!-- <div id="overlay1"></div> -->
         <div class="pop-up1-1">
             <div class="popupForm1-1">
                 <svg onclick="crossForDiplomaChange()" id="crossForDiplomaChange" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -171,7 +171,7 @@ $data['role'] = $role;
                     <button class="close-button-3">No,Cancel</button>
                 </div>
             </div>
-            <div id="overlay"></div>
+            <!-- <div id="overlay2"></div> -->
         </div>
         <div class="flex-container">
             <div class="white-container3-1">
@@ -229,21 +229,21 @@ $data['role'] = $role;
                     <div class="column2-1">
                         <div class="data1"><b>Date Of Birth:</b><br>
                             <div class="bday"><?= $student[0]->birthdate ?></div>
-                        </div><br>
+                        </div>
                         <div class="data2"><b>N.I.C. No:</b><br>
                             <div class="nic"> <?= $student[0]->nicNo ?></div>
-                        </div><br>
-                        <div class="data2"><b>Phone Number:</b><br>
-                            <div class="phoneNum"> <?= $student[0]->phoneNo ?></div>
+                        </div>
+                        <div class="data2"><b>WhatsApp Number:</b><br>
+                            <div class="Fax"><?= $student[0]->whatsapp_number ?></div>
                         </div>
                     </div>
                     <div class="column2-2">
-                        <div class="data1"><b>WhatsApp Number:</b><br>
-                            <div class="Fax"><?= $student[0]->whatsapp_number ?></div>
-                        </div><br>
-                        <div class="data2"><b>Address:</b><br>
+                        <div class="data3"><b>Address:</b><br>
                             <div class="adr"> <?= $student[0]->address ?></div>
                         </div>
+                        <div class="data4"><b>Phone Number:</b><br>
+                            <div class="phoneNum"> <?= $student[0]->phoneNo ?></div>
+                        </div><br>
                     </div>
                 </div>
                 <div class="buttonx">
@@ -277,7 +277,6 @@ $data['role'] = $role;
                                         <input type="text" placeholder="Enter" id="up-whatsapp_number" name="whatsapp_number" value="<?= set_value('whatsapp_number') ?>">
                                     </div>
                                 </div>
-
                                 <div class="coloum-02">
                                     <div class="form-element">
                                         <label for="lname">Last Name</label>
@@ -308,11 +307,12 @@ $data['role'] = $role;
                 </div>
             </form>
         </div>
-        <div id="overlay"></div>
+        <!-- <div id="overlay3"></div> -->
         <div class="dr-footer">
             <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         //Change Degree and Delete button
         function updateData() {
@@ -332,6 +332,7 @@ $data['role'] = $role;
             // Show the overlay and pop-up
             $('#overlay').css('display', 'block');
             $('.popup').css('display', 'block');
+            console.log("updateData1 function called");
 
             $('.close-button').click(function(e) {
                 // Hide the pop-up and overlay when the close button is clicked
@@ -365,6 +366,7 @@ $data['role'] = $role;
                 e.stopPropagation();
             });
         }
+
         function crossForDiplomaChange() {
             $('.pop-up1-1').css('display', 'none');
             $('#overlay').css('display', 'none');
@@ -389,44 +391,15 @@ $data['role'] = $role;
         function toggleMenu() {
             document.getElementById("subMenu").classList.toggle("open-menu");
         }
-
-
         // Add this code to target_page.php
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
-            const studentId = urlParams.get('studentId');
-
-            // Now you can use the `studentId` to fetch and display the corresponding student's data.
+            const studentId = urlParams.get('studentId'); // Now you can use the `studentId` to fetch and display the corresponding student's data.
         });
     </script>
 </body>
-
 </html>
-<!-- <form method="post">
-                    <h2>Change Student Details</h2>
-                    <input type="hidden" id="id" name="id" value="<?= $student[0]->id ?>">
-                    <label for="fname">Name</label>
-                    <input type="text" id="fname" placeholder="Full Name" name="name">
-                    <label for="mail">Email</label>
-                    <input type="text" id="mail" placeholder="Email Address" name="Email">
-                    <label for="country">Country</label>
-                    <input type="text" id="country" placeholder="Currently living country" name="country">
-                    <label for="nicno">N.I.C</label>
-                    <input type="text" id="nicno" placeholder="N.I.C Number" name="nicNo">
-                    <label for="bday">Birthdate</label>
-                    <input type="text" id="bday" placeholder="Birthdate" name="birthdate">
-                    <label for="whatsapp_number">WhatsApp Number</label>
-                    <input type="text" id="whatsapp_number" placeholder="whatsapp_number" name="whatsapp_number">
-                    <label for="addr">Address</label>
-                    <input type="text" id="addr" placeholder="Adress" name="address">
-                    <label for="phoneno">Phone Number</label>
-                    <input type="text" id="phoneno" placeholder="Fax" name="phoneNo">
-
-                    <input type="submit" id="submitbutton" value="Submit">
-                    <button class="close-button">Close</button>
-                </form> -->
-<!-- <div class="pop-up">
-            <div class="popupForm2">
+            <!-- <div class="popupForm2">
                 <form method="post">
                     <div class="popup-card">
                         <div class="form">
