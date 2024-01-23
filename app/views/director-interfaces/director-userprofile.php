@@ -2,9 +2,9 @@
     $role = "Director";
     $data['role']=$role;
 ?>
-<?php $this->view('components/navside-bar/header',$data) ?>
-<?php $this->view('components/navside-bar/sidebar',$data) ?>
-<?php $this->view('components/navside-bar/footer',$data) ?>
+<?php $this->view('components/navside-bar/header', $data) ?>
+<?php $this->view('components/navside-bar/sidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -66,6 +66,467 @@
             background-color: #fff;
             padding: 20px;
             z-index: 2;
+
+            body {
+  background-color: #E2E2E2;
+  margin: 0;
+  padding: 0;
+}
+
+.white-container1-1 {
+  background-color: white;
+
+  height: 120px;
+  padding:2%;
+
+  color: #000000;
+  font-size:100%;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: all 0.5s ease;
+}
+
+
+
+.left-top-text {
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  color: #c02626;
+  margin-bottom: 30px;
+  font-family: "Poppins", sans-serif;
+}
+
+.white-container2-1 {
+
+  background-color: white;
+   
+  height: 500px;
+  font-family: "Poppins", sans-serif;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  transition: all 0.5s ease;
+}
+
+
+
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.white-container3-1 {
+  flex: 1;
+  padding-left: 10%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  height: 800px;
+  width: 50%;
+  /* font-family: "Poppins", sans-serif; */
+  font-size: 24px;
+  border-radius: 10px;
+
+  transition: all 0.5s ease;
+}
+
+
+
+
+
+.white-container4-1 {
+  flex: 1;
+  padding-left: 5%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  height: 800px;
+  width: 50%;
+  font-family: "Poppins", sans-serif;
+  font-size: 24px;
+  border-radius: 10px;
+}
+
+.row {
+  display: flex;
+  font-family: "Poppins", sans-serif;
+  /* margin-left: 5%; */
+}
+
+.column1 {
+  flex: 33.33%;
+  background-color: #ffffff;
+  height: 150px;
+  /* margin-left: 5%; */
+}
+
+.column2 {
+  flex: 33.33%;
+  background-color: #ffffff;
+  padding: 2%;
+  height: 150px;
+}
+
+.column3 {
+  flex: 33.33%;
+  background-color:#ffffff;
+  padding: 2%;
+  height: 150px;
+}
+
+.data1 {
+  font-family: "Poppins", sans-serif;
+  font-size: 25px;
+  padding-left: 10%;
+  color: #17376E;
+}
+
+.data2 {
+  font-family: "Poppins", sans-serif;
+  font-size: 25px;
+  padding-left: 10%;
+  color: #17376E;
+  padding-top: 20px;
+}
+
+.data3 {
+  font-family: "Poppins", sans-serif;
+  font-size: 25px;
+  padding-left: 10%;
+  color: #17376E;
+}
+
+.data4 {
+  font-family: "Poppins", sans-serif;
+  font-size: 25px;
+  padding-left: 10%;
+  color: #17376E;
+  padding-top: 20px;
+}
+
+
+
+.email {
+  padding-top: 5px;
+  font-size: 18px;
+  color: #000000;
+
+}
+
+.regNum {
+  padding-top: 5px;
+  font-size: 18px;
+  color: #000000;
+}
+
+.country {
+  padding-top: 5px;
+  font-size: 18px;
+  color: #000000;
+}
+
+.indexNum {
+  padding-top: 5px;
+  font-size: 18px;
+  color: #000000;
+}
+
+.name {
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+}
+
+.left-top-text1 {
+  padding-left: 10%; 
+  padding-top: 2%;
+  text-align: left;
+  margin: 0;
+  
+  color: #17376E;
+  margin-bottom: 30px;
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+
+.left-top-text2 {
+  /* padding-left: 10%; */
+  padding-top: 2%;
+  text-align: left;
+  margin: 0;
+  
+  color: #17376E;
+  margin-bottom: 30px;
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.row2 {
+  display: flex;
+  font-family: "Poppins", sans-serif;
+  margin-left: 10%;
+}
+
+.column2-2{
+  padding-left: 15%;
+}
+
+
+
+.buttons {
+  display: flex;
+  /* Use flexbox to arrange the buttons horizontally */
+  justify-content: space-between;
+  /* Adjust horizontal spacing between buttons */
+}
+
+.left-top-text3 {
+  text-align: left;
+  margin: 0;
+  padding-top: 10px;
+  padding-left: 15px;
+  color: #000000;
+  margin-bottom: 5px;
+  font-family: "Poppins", sans-serif;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 300px;
+}
+
+td {
+  font-size: 17px;
+  /* Data font size */
+  width: 300px;
+  padding: 5px;
+  /* Data cell padding */
+  border: 1px solid #ffffff;
+  /* Data cell border */
+  text-align: center;
+
+}
+
+th {
+  background-color: #ffffff;
+  /* Header background color */
+  font-size: 20px;
+  /* Header font size */
+  font-weight: bold;
+  /* Header font weight */
+  padding: 20px;
+  /* Header cell padding */
+
+}
+
+.bday {
+  padding-top: 5px;
+  padding-bottom: 30px;
+  font-size: 18px;
+  color: #000000;
+
+}
+
+.nic {
+  padding-top: 5px;
+  padding-bottom: 30px;
+  font-size: 18px;
+  color: #000000;
+}
+
+.phoneNum {
+  padding-top: 5px;
+  padding-bottom: 30px;
+  font-size: 18px;
+  color: #000000;
+}
+
+.Fax {
+  padding-top: 5px;
+  padding-bottom: 30px;
+  font-size: 18px;
+  color: #000000;
+}
+
+.adr {
+  padding-top: 5px;
+  padding-bottom: 30px;
+  font-size: 18px;
+  color: #000000;
+}
+
+.button {
+  background-color: #17376E;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+#updateButton {
+  margin-left: 52%;
+  border-radius: 8px;
+  width: 150px;
+  height: 40px;
+  padding-bottom: 30px;
+}
+
+#updateButton:hover {
+  background-color: #ccc;
+}
+
+
+
+/* .input[type=submit] {
+  width: 100%;
+  background-color:#17376E;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width:100px;
+} */
+
+#submitbutton {
+  width: 100%;
+  background-color: #17376E;
+  color: #ffffff;
+  padding: 10px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100px;
+}
+
+#submitbutton:hover {
+  background-color: #ccc;
+}
+
+.close-button {
+  width: 100%;
+  background-color: #ccc;
+  color: #17376E;
+  padding: 10px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100px;
+  border-color: #000000;
+  border-width: 1px;
+}
+
+.close-button:hover {
+  background-color: #E2E2E2;
+}
+
+/* input[type=submit]:hover {
+  background-color: whitesmoke;
+} */
+
+.popupForm1 {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  width: 500px;
+  height: 300px;
+}
+
+.popupForm2 {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  width: 500px;
+  height: 800px;
+}
+
+/* class->.ad
+id=# */
+
+/* #changedegreebutton{
+  margin: left 800px;;
+  border-radius: 8px;
+  width: 250px;
+  height: 40px;
+  padding-bottom: 30px;
+} */
+
+#changedegreebutton {
+  border-radius: 8px;
+  width: 250px;
+  height: 40px;
+  padding-bottom: 30px;
+}
+
+
+#changedegreebutton:hover {
+  background-color: #ccc;
+}
+
+#deletebutton {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: white;
+  border: 2px solid red;
+  color: red;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  height: 40px;
+  padding-bottom: 30px;
+}
+
+#deletebutton:hover {
+  background-color: #E2E2E2;
+}
+
+.cur-deg {
+  font-size: 20px;
+}
+
+.change-deg {
+  font-size: 20px;
+}
+
+.change-deg select {
+  padding: 20px;
+  font-size: 18px;
+}
+
+#update-deg {
+  width: 100%;
+  background-color: #17376E;
+  color: #ffffff;
+  padding: 10px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100px;
+}
+
+#update-deg:hover {
+  background-color: #ccc;
+}
         }
     </style>
 </head>
@@ -82,6 +543,8 @@
                     <p><?= $student->name ?></p>
                 </div>
             </div>
+
+
             <div class="column2">
                 <div class="data1"><b>Email:</b><br>
                     <div class="email"><?= $student->Email ?></div>
@@ -99,48 +562,11 @@
                 </div>
             </div>
         </div>
-        <div class="button-container">
-            <div class="buttony">
-                <input type="button" id="changedegreebutton" class="button" value="Change Degree Program" onclick="updateData()">
-            </div>
-            <div class="buttony">
-                <input type="button" id="deletebutton" class="button" value="Delete" onclick="updateData2()">
-            </div>
-        </div>
+        
     </div>
 
-    <div class="pop-up1">
-        <div class="popupForm1">
-            <form method="post">
-                <h1>Change Degree Program</h1><br>
-                <div class="cur-deg">
-                    <input type="hidden" name="id" value="<?=$student->id?>">
-                    <label for="degree"><h3>Current Degree Program : </h3><?=$student->Degree?></label>
-                </div></br>
-                <div class="change-deg">
-                    <label for="Degrees">Change Degree Program</label>
-                    <select id="Degree" name="Degree">
-                        <option value="Degree1">Degree1</option>
-                        <option value="Degree2">Degree2</option>
-                        <option value="Degree3">Degree3</option>
-                    </select><br>
-                </div>
-                <input type="submit" id="update-deg" value="Submit">
-                <button class="close-button">Close</button>
-            </form>
-        </div>
-    </div>
-    <div id="overlay"></div>
-    <div class="pop-up2">
-        <div class="popupForm">
-            <h2>Do you want to delete this student data?</h2><br>
-            <div class="yesorno">
-                <a href="<?=ROOT?>Student/<?=$student->indexNo?>/delete/<?=$student->id?>"><button class="close-button">Yes,I'm Sure</button></a>
-                <button class="close-button">No,Close</button>
-            </div>
-        </div>
-        <div id="overlay"></div>    
-    </div>
+  
+
     <div class="flex-container">
         <div class="white-container3-1">
             <p class="left-top-text2">Examination Results</p>
@@ -214,114 +640,16 @@
                     </div>
                 </div>
             </div>
-            <div class="buttonx">
-                <input type="button" id="updateButton" class="button" value="Update" onclick="updateData1()">
-                <script>
-                    function updateData1() {
-                        // Show the overlay and pop-up
-                        $('#overlay').css('display', 'block');
-                        $('.pop-up').css('display', 'block');
-
-                        $('.close-button').click(function(e) {
-                            // Hide the pop-up and overlay when the close button is clicked
-                            $('.pop-up').css('display', 'none');
-                            $('#overlay').css('display', 'none');
-                            e.stopPropagation();
-                        });
-                    }
-                </script>
-            </div>
+           
         </div>
     </div>
-    <div class="pop-up">
-        <div class="popupForm2">
-            <form method="post">
-                <h2>Change Student Details</h2>
-                <input type="hidden" id="id"  name="id" value="<?=$student->id?>">
-                <label for="fname">Name</label>
-                <input type="text" id="fname"placeholder="Full Name" name="name">
-                <label for="mail">Email</label>
-                <input type="text" id="mail" placeholder="Email Address" name="Email">
-                <label for="country">Country</label>
-                <input type="text" id="country" placeholder="Currently living country" name="country">
-                <label for="nicno">N.I.C</label>
-                <input type="text" id="nicno" placeholder="N.I.C Number" name="nicNo">
-                <label for="bday">Birthdate</label>
-                <input type="text" id="bday" placeholder="Birthdate" name="birthdate">
-                <label for="fax">Fax</label>
-                <input type="text" id="fax" placeholder="Fax" name="fax">
-                <label for="addr">Address</label>
-                <input type="text" id="addr" placeholder="Adress" name="address">
-                <label for="phoneno">Pnone Number</label>
-                <input type="text" id="phoneno" placeholder="Fax" name="phoneNo">
 
-                <input type="submit" id="submitbutton" value="Submit">
-                <button class="close-button">Close</button>
-            </form>
-        </div>
-    </div>
     <div id="overlay"></div>
-    <div class="director-footer">
+    <div class="dr-footer">
         <?php $this->view('components/footer/index',$data) ?>
     </div>
 </div>                    
-    <script>
-        //Change Degree and Delete button
-        function updateData() {
-            // Show the overlay and pop-up
-            $('#overlay').css('display', 'block');
-            $('.pop-up1').css('display', 'block');
 
-            $('.close-button').click(function(e) {
-                // Hide the pop-up and overlay when the close button is clicked
-                $('.pop-up1').css('display', 'none');
-                $('#overlay').css('display', 'none');
-                e.stopPropagation();
-            });
-        }
-        function updateData2() {
-            // Show the overlay and pop-up
-            $('#overlay').css('display', 'block');
-            $('.pop-up2').css('display', 'block');
-
-            $('.close-button').click(function(e) {
-                // Hide the pop-up and overlay when the close button is clicked
-                $('.pop-up2').css('display', 'none');
-                $('#overlay').css('display', 'none');
-                e.stopPropagation();
-            });
-        }
-
-        (()=> {
-            const body = document.querySelector("body"),
-            sidebar = body.querySelector(".sidebar"),
-            toggle = body.querySelector(".toggle")  
-            whitecontainer11 = body.querySelector(".white-container1-1");
-            whitecontainer21= body.querySelector(".white-container2-1");
-            whitecontainer31 = body.querySelector(".white-container3-1");
-                    
-            toggle.addEventListener("click", () => {
-                //sidebar.classList.toggle("close");
-                whitecontainer11.classList.toggle("close");
-                whitecontainer21.classList.toggle("close");
-                whitecontainer31.classList.toggle("close");
-            
-            });
-        })()
-
-        function toggleMenu() {
-            document.getElementById("subMenu").classList.toggle("open-menu");
-        }
-
-
-        // Add this code to target_page.php
-        document.addEventListener('DOMContentLoaded', function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const studentId = urlParams.get('studentId');
-
-            // Now you can use the `studentId` to fetch and display the corresponding student's data.
-        });
-
-    </script>
+       
 </body>
 </html>
