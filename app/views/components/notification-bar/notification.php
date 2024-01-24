@@ -144,7 +144,7 @@
                 <?php
                 $con = mysqli_connect("localhost", "root", "", "nilis_db");
                 ?>
-                There is an upcoming examination in Diploma in
+                There will be an upcoming examination scheduled on <date> for the diploma <degree_name>  
                 
 <?php
                 if ($con) {
