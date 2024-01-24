@@ -281,18 +281,18 @@ function fetchDegreeDataById($degreeId)
                     <tr>
                         <td>
                             <b>Type</b><br>
-                            <input type="text" name="type" id="type"><?= $degrees->degree_type?>
+                            <input type="text" name="type" id="type"><?= $degrees[0]->DegreeType?>
                         </td>
                         <td>
-                            <b>Acodemic Year</b>
-                            <input type="text" name="year" id="year">
+                            <b>Academic Year</b>
+                            <input type="text" name="year" id="year"><?= $degrees[0]->AcademicYear?>
                         </td>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <b>Participants</b>
-                            <input type="text" name="participants" id="participants_1">
+                            <b>Degree Name</b>
+                            <input type="text" name="participants" id="participants_1"><?= $degrees[0]->DegreeName?>
                         </td>
                         </td>
                         <td>
