@@ -279,14 +279,6 @@ class SAR extends Controller
                     $ExamData['semester'] = $semester;
                     $ExamData['status'] = 'ongoing';
 
-                    //insert data to exam table
-                    if ($exam->examValidate($ExamData)) {
-                        $exam->insert($ExamData);
-                        $examID = $exam->lastID('examID');
-
-                    } else {
-                        $data['errors'] = $exam->errors;
-                    }
 
                     $subCount = count($_POST['subName']);
 
@@ -332,6 +324,17 @@ class SAR extends Controller
                         foreach ($timeTableData as $timeTableRow) {
                             $examtimetable->insert($timeTableRow);
                         }
+
+
+                        //insert data to exam table
+                        if ($exam->examValidate($ExamData)) {
+                            $exam->insert($ExamData);
+                            $examID = $exam->lastID('examID');
+
+                        } else {
+                            $data['errors'] = $exam->errors;
+                        }
+
                         message("Exam Was Created Successfully", "success");
                         // redirect('sar/examination');
 

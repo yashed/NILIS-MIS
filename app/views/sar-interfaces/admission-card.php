@@ -1,3 +1,7 @@
+<head>
+    <title>Admission Card</title>
+</head>
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
     @import url('https://fonts.cdnfonts.com/css/times-new-roman');
@@ -262,8 +266,13 @@
                     <div class="admission-exam">Second Semester Examination - 2022 December</div>
                     <div class="admission-card">Admission Card</div>
                     <div class="admission-name-index">
-                        <div class="admission-name">Name of the Candidate: <b>Dombagolla H.D.D.M.</b></div>
-                        <div class="admission-index">Index Number: <b>DLIM/296</b></div>
+                        <div class="admission-name">Name of the Candidate: <b>
+                                <?= $studentData[0]->name ?>
+                            </b></div>
+                        <div class="admission-index">Index Number: <b>
+                                <?= $studentData[0]->indexNo;
+                                ?>
+                            </b></div>
                     </div>
 
                 </div>
@@ -278,72 +287,79 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <?php foreach ($timeTableData as $ttdata): ?>
+                                <?php $json = json_encode($ttdata);
+                                // show($ttdata); ?>
+                                <tr>
 
-                                <td>2022.12.17
-                                    </br>9.00a.m-12.00noon</td>
-                                <td>2.4 Information Management</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
+                                    <td>
+                                        <?= $ttdata[0]->date ?>
+                                        </br>9.00a.m-12.00noon
+                                    </td>
+                                    <td>
+                                        <?= $ttdata[0]->subjectName ?>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <!-- <tr>
 
-                                <td>2022.12.17
-                                    </br>9.00a.m-12.00noon</td>
-                                <td>2.5 Information Management</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
+                                    <td>2022.12.17
+                                        </br>9.00a.m-12.00noon</td>
+                                    <td>2.5 Information Management</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
 
-                                <td>2022.12.17
-                                    </br>9.00a.m-12.00noon</td>
-                                <td>2.6 Information Management</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
+                                    <td>2022.12.17
+                                        </br>9.00a.m-12.00noon</td>
+                                    <td>2.6 Information Management</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
 
-                                <td>2022.12.17
-                                    </br>9.00a.m-12.00noon</td>
-                                <td>2.7 Information Management</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
+                                    <td>2022.12.17
+                                        </br>9.00a.m-12.00noon</td>
+                                    <td>2.7 Information Management</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
 
-                                <td>2022.12.17
-                                    </br>9.00a.m-12.00noon</td>
-                                <td>2.7 Information Management</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
+                                    <td>2022.12.17
+                                        </br>9.00a.m-12.00noon</td>
+                                    <td>2.7 Information Management</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
 
-                                <td>2022.12.17
-                                    </br>9.00a.m-12.00noon</td>
-                                <td>2.7 Information Management</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
+                                    <td>2022.12.17
+                                        </br>9.00a.m-12.00noon</td>
+                                    <td>2.7 Information Management</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
 
-                                <td>2022.12.17
-                                    </br>9.00a.m-12.00noon</td>
-                                <td>2.7 Information Management</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
+                                    <td>2022.12.17
+                                        </br>9.00a.m-12.00noon</td>
+                                    <td>2.7 Information Management</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
 
-                                <td>2022.12.17
-                                    </br>9.00a.m-12.00noon</td>
-                                <td>2.7 Information Management</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                                    <td>2022.12.17
+                                        </br>9.00a.m-12.00noon</td>
+                                    <td>2.7 Information Management</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr> -->
 
-
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>

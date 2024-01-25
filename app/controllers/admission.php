@@ -90,15 +90,21 @@ class Admission extends Controller
         //get exam participant data
         $studentExamData = $examParticipants->where(['indexNo' => $indexNo, 'examID' => $examID]);
         $semester = $studentExamData[0]->semester;
-        show($studentExamData[0]->semester);
+
+        //get exam data
+        $examData = $examTimeTable->where(['examID' => $examID]);
+
+
 
 
         //check the type of the participant
         if ($studentExamData[0]->studentType == 'initial') {
-            $examData = $examTimeTable->where(['examID' => $examID]);
-            $data['examData'] = $examData;
+
+            //get time table data 
+            $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'degreeID' => $studentExamData[0]->degreeID, 'semester' => $semester]);
 
 
+            //uncomment this if we have to handel medical studentsa and repeate students seperately
 
         } else if ($studentExamData[0]->studentType == 'repeate') {
 
@@ -107,16 +113,44 @@ class Admission extends Controller
             //get subject the student repeat
             $subjects = $repeateStudent->where(['indexNo' => $indexNo, 'semester' => $semester, 'attempt' => $attempt[0]->attempt]);
 
-            show($subjects);
+            //get time table data
+            $examTimeTableData = [];
 
-        } else if ($studentExamData[0]->studentType == 'medical') {
+            //get subject data from timetable for each subject
+            foreach ($subjects as $subject) {
+                $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'degreeID' => $studentExamData[0]->degreeID, 'semester' => $semester, 'subjectCode' => $subject->subjectCode]);
+            }
+
+
+        } else if (($studentExamData[0]->studentType == 'medical')) {
+
+            show($studentExamData[0]->studentType);
+            //get student details from medical student table
+            $attempt = $medicalStudent->where(['indexNo' => $indexNo, 'semester' => $semester]);
+
+            //get subject the student repeat
+            $subjects = $medicalStudent->where(['indexNo' => $indexNo, 'semester' => $semester, 'attempt' => $attempt[0]->attempt]);
+
+
+            $examTimeTableData = [];
+            //get subject data from timetable for each subject
+            foreach ($subjects as $subject) {
+
+                $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'degreeID' => $studentExamData[0]->degreeID, 'semester' => $semester, 'subjectCode' => $subject->subjectCode]);
+            }
+
 
         }
 
 
 
         $studentData = $student->where(['indexNo' => $indexNo]);
+        $examData = $examTimeTable->where(['examID' => $examID]);
         $data['studentData'] = $studentData;
+        $data['timeTableData'] = $examTimeTableData;
+
+
+        $data['examData'] = $examData;
 
 
         $this->view('sar-interfaces/admission-card', $data);
