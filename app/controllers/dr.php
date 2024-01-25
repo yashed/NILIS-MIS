@@ -26,8 +26,8 @@ class DR extends Controller
         $degree = new Degree();
         $subject = new Subjects();
 
-        $result1 = $degree->validate($_POST);
-        $result2 = $subject->validate($_POST);
+        // $result1 = $degree->validate($_POST);
+        // $result2 = $subject->validate($_POST);
         // $degree->insert( $_POST );
         show($_POST);
 
