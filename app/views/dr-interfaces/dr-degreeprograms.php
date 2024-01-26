@@ -367,13 +367,6 @@ $data['role'] = $role;
         </div>
 </body>
 <script>
-    // document.addEventListener('DOMContentLoaded', function() {
-    //for form blur-background
-    // function onCreateDegreeClick() {
-    //     document.querySelector("#create-popup").classList.add("active");
-    //     document.querySelector("#body").classList.add("active");
-    // }
-
     //for form move within forms
     function myFunction() {
         const lb = document.querySelector(".model-box");
@@ -439,9 +432,7 @@ $data['role'] = $role;
         for (var j = 1; j <= numSemesters; j++) { // semesters
             var subjectTable = document.getElementById(`Subject_table${j}`);
             var subjectRows = subjectTable.querySelectorAll('tr');
-            console.log(`subjectRows for:`, subjectRows.length);
-            console.log(`semester for:`, numSemesters);
-            for (var k = 1; k <= subjectRows.length; k++) { // loop through all rows except the header
+            for (var k = 1; k < subjectRows.length; k++) { // loop through all rows except the header
                 var subject = subjectRows[k].querySelector(`#SubjectName${j}_${k}`).value.trim();
                 var subCodes = subjectRows[k].querySelector(`#SubjectCode${j}_${k}`).value.trim();
                 var credits = subjectRows[k].querySelector(`#NoCredits${j}_${k}`).value.trim();
@@ -455,6 +446,7 @@ $data['role'] = $role;
         }
         return true;
     }
+
     // Function to handle degree type change
     function handleDegreeTypeChange() {
         var degreeType = document.getElementById("degree_type").value;
@@ -472,8 +464,9 @@ $data['role'] = $role;
         semesterContainer.innerHTML = ""; // Clear previous content
         for (var i = 1; i <= numSemesters; i++) {
             var semesterDiv = document.createElement("div");
+            var tableId = `Subject_table${i}`;
             semesterDiv.innerHTML += `
-            <table class="Subject_table" id="Subject_table${i}">
+            <table class="Subject_table" id="${tableId}">
                 <p id="Semester" name="semester" class="semester${i}">Semester ${i}</p>
                 <tr>
                     <th>Subject Name</th>
@@ -490,8 +483,8 @@ $data['role'] = $role;
                 <button type="button" class="addSubject" style="left: 0px;" id="addSubject${i}">Add Subject</button>
             </div>
         `;
-            semesterContainer.appendChild(semesterDiv); // Add event listener for dynamically adding subjects
-            addSubjectButtonListener(i);
+        semesterContainer.appendChild(semesterDiv); // Add event listener for dynamically adding subjects
+        addSubjectButtonListener(i);
         }
     }
     // Function to add event listener for dynamically adding subjects
@@ -508,14 +501,19 @@ $data['role'] = $role;
             document.querySelector(`#Subject_table${semesterNumber}`).insertAdjacentHTML('beforeend', template);
         });
     }
-    // document.addEventListener('DOMContentLoaded', (event) => { // Call the showSemesters function with the desired number of semesters
-    //     showSemesters(4);
-    // });
     // });
 </script>
 
 </html>
-<!-- // function validateForm2() {
+<!-- 
+// document.addEventListener('DOMContentLoaded', function() {
+    //for form blur-background
+    // function onCreateDegreeClick() {
+    //     document.querySelector("#create-popup").classList.add("active");
+    //     document.querySelector("#body").classList.add("active");
+    // }
+
+// function validateForm2() {
 //     for (var j = 1; j <= numSemesters; j++) {       //semesters
 //         for (var k = 1; k <= 1; k++) {              //subjects
 //             var subject = document.getElementById("subjectName").value;
