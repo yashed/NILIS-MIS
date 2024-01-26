@@ -38,17 +38,6 @@ $data['role'] = $role;
             column-gap: 20px;
         }
 
-        .pop-up {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 20px;
-            z-index: 2;
-        }
-
         .pop-up1 {
             display: none;
             position: fixed;
@@ -259,7 +248,7 @@ $data['role'] = $role;
                         <div class="form-input-fields">
                             <div class="user-data">
                                 <input type="text" name="id" hidden>
-                                <div class="coloum-01">
+                                <div class="column-01">
                                     <div class="form-element">
                                         <label for="fname">First Name</label>
                                         <input type="text" placeholder="Enter" id="up-fname" name="fname" value="<?= set_value('fname') ?>">
@@ -277,7 +266,7 @@ $data['role'] = $role;
                                         <input type="text" placeholder="Enter" id="up-whatsapp_number" name="whatsapp_number" value="<?= set_value('whatsapp_number') ?>">
                                     </div>
                                 </div>
-                                <div class="coloum-02">
+                                <div class="column-02">
                                     <div class="form-element">
                                         <label for="lname">Last Name</label>
                                         <input type="text" placeholder="Enter" id="up-lname" name="lname" value="<?= set_value('lname') ?>">
@@ -297,7 +286,7 @@ $data['role'] = $role;
                                 </div>
 
                             </div>
-                            <div class="user-create-update">
+                            <div class="student-create-update">
                                 <button class="close-button">Close</button>
                                 <button name='submit' value='update' id="submitbutton" type="submit">Update</button>
                             </div>
@@ -327,20 +316,38 @@ $data['role'] = $role;
                 e.stopPropagation();
             });
         }
+        // function updateData1() {
+        //     // Show the overlay and pop-up
+        //     console.log("updateData1 function called");
+        //     $('#overlay').css('display', 'block');
+        //     $('.popup').css('display', 'block');
+        // }
 
+        // // Bind the click event for the close button outside the function
+        // $('.close-button').click(function(e) {
+        //     // Hide the pop-up and overlay when the close button is clicked
+        //     console.log("Close button clicked");
+        //     $('.popup').css('display', 'none');
+        //     $('#overlay').css('display', 'none');
+        //     e.stopPropagation();
+        // });
         function updateData1() {
             // Show the overlay and pop-up
-            $('#overlay').css('display', 'block');
-            $('.popup').css('display', 'block');
+            $('#overlay').show();
+            $('.popup').show();
+            console.log($('#overlay').css('display'));
+            console.log($('.popup').css('display'));
             console.log("updateData1 function called");
-
-            $('.close-button').click(function(e) {
-                // Hide the pop-up and overlay when the close button is clicked
-                $('.popup').css('display', 'none');
-                $('#overlay').css('display', 'none');
-                e.stopPropagation();
-            });
         }
+
+        // Bind the click event for the close button outside the function
+        $('.close-button').click(function(e) {
+            // Hide the pop-up and overlay when the close button is clicked
+            $('.popup').hide();
+            $('#overlay').hide();
+            console.log("Close button clicked");
+            e.stopPropagation();
+        });
 
         function updateData2() {
             // Show the overlay and pop-up
@@ -398,8 +405,9 @@ $data['role'] = $role;
         });
     </script>
 </body>
+
 </html>
-            <!-- <div class="popupForm2">
+<!-- <div class="popupForm2">
                 <form method="post">
                     <div class="popup-card">
                         <div class="form">

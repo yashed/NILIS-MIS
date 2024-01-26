@@ -126,24 +126,9 @@
   padding-left: 10%;
   color: #17376e;
 }
-.email {
-  padding-top: 5px;
-  font-size: 18px;
-  color: #000000;
-}
-
-.regNum {
-  padding-top: 5px;
-  font-size: 18px;
-  color: #000000;
-}
-
-.country {
-  padding-top: 5px;
-  font-size: 18px;
-  color: #000000;
-}
-
+.email,
+.regNum,
+.country,
 .indexNum {
   padding-top: 5px;
   font-size: 18px;
@@ -243,7 +228,9 @@ th {
 }
 
 #updateButton:hover {
-  background-color: #ccc;
+  background-color: var(--text-color);
+  color: var(--sidebar-color);
+  border: 2px solid var(--sidebar-color);
 }
 
 #submitbutton {
@@ -251,7 +238,7 @@ th {
   background-color: #17376e;
   color: #ffffff;
   padding: 8px 22px;
-  margin: 8px 0;
+  margin: 8px 27px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -306,14 +293,6 @@ th {
   padding: 23px;
   width: 500px;
   height: 500px;
-}
-
-.popupForm2 {
-  border-radius: 5px;
-  background-color: var(--text-color);
-  padding: 20px;
-  width: 500px;
-  height: 800px;
 }
 
 #changedegreebutton {
@@ -426,10 +405,10 @@ th {
 .popup {
   display: none;
   position: fixed;
-  top: -150%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(1.25);
-  opacity: 0;
+  opacity: 1;
   background: #fff;
   width: 500px;
   padding: 20px 30px;
@@ -440,33 +419,18 @@ th {
   z-index: 100;
 }
 
-.popup.active {
-  top: 50%;
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-  transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms,
-    transform 200ms ease-in-out 0ms;
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
 }
-
-.popup .close-btn {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  width: 15px;
-  height: 15px;
-  background: #17376e;
-  color: #ffffff;
-  text-align: center;
-  line-height: 15px;
-  border-radius: 15px;
-  cursor: pointer;
-}
-
 .popup .form h2 {
   text-align: center;
   color: #17376e;
   margin: 10px 0px 20px;
-  font-size: 25px;
+  font-size: 22px;
   font-weight: 600;
 }
 
@@ -485,8 +449,7 @@ th {
   color: #222;
 }
 
-.popup .form .form-element input[type="text"],
-.popup .form .form-element input[type="password"] {
+.popup .form .form-element input[type="text"] {
   margin-top: 5px;
   display: block;
   width: 100%;
@@ -494,6 +457,7 @@ th {
   outline: none;
   border: 1px solid #aaa;
   border-radius: 5px;
+  height: 33px;
 }
 
 .popup .form .form-element button {
@@ -509,80 +473,30 @@ th {
   border-radius: 10px;
 }
 
-.popup .form .form-element a {
-  display: block;
-  text-align: right;
-  font-size: 15px;
-  color: #1a79ca;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-/* .user-data {
+.user-data {
   display: flex;
   gap: 30px;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
   justify-content: center;
   align-items: center;
-} */
-
-.data-input-fields {
-  display: flex;
-  flex-direction: row;
 }
 
-.column-01 {
-  display: flex;
-  flex-direction: column;
-}
-
-.column-01 {
-  display: flex;
-  flex-direction: column;
-}
-
-#form-element-dropdown-create,
-#form-element-dropdown-update {
-  width: 100%;
-  padding: 10px;
-  outline: none;
-  border: 1px solid #aaa;
-  border-radius: 5px;
-}
-
-.user-update {
-  cursor: pointer;
-}
-
-.user-delete {
-  cursor: pointer;
-}
-
-.delete-card {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-}
-
-.delete-card button {
+.column-01,
+.column-02 {
   width: 50%;
-  height: 5vh;
-  border-radius: 12px;
-  background: #17376e;
-  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
-  border: 0px;
-  cursor: pointer;
 }
 
 .popup-card {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  align-items: center;
   flex-wrap: wrap;
 }
+.student-create-update {
+  margin: 2% 0% 0% 27%;
+}
+
 .pop-up1-1 {
   display: none;
   position: fixed;
