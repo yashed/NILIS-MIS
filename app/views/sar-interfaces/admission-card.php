@@ -1,7 +1,3 @@
-<head>
-    <title>Admission Card</title>
-</head>
-
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
     @import url('https://fonts.cdnfonts.com/css/times-new-roman');
@@ -57,15 +53,6 @@
         height: 29.7cm;
     }
 
-    @media print {
-
-        body,
-        page {
-            background: white;
-            margin: 0;
-            box-shadow: 0;
-        }
-    }
 
     .admission-content {
         margin: 10px;
@@ -239,6 +226,22 @@
     }
 
     @media print {
+
+        #print {
+            display: none;
+        }
+
+        title {
+            display: none;
+        }
+
+        body,
+        page {
+            background: white;
+            margin: 0;
+            box-shadow: 0;
+        }
+
         .print-btn {
             display: none;
         }
@@ -250,6 +253,13 @@
 
     }
 </style>
+
+
+<head>
+    <title>Admission Card</title>
+</head>
+
+
 
 <body>
     <div class="admisssion-card">
