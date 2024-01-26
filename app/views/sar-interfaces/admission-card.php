@@ -234,6 +234,10 @@
         border: 1px solid #F00;
     }
 
+    .admission-detail {
+        margin-top: 40px;
+    }
+
     @media print {
         .print-btn {
             display: none;
@@ -302,66 +306,27 @@
                                     <td></td>
                                     <td></td>
                                 </tr>
-                                <!-- <tr>
 
-                                    <td>2022.12.17
-                                        </br>9.00a.m-12.00noon</td>
-                                    <td>2.5 Information Management</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-
-                                    <td>2022.12.17
-                                        </br>9.00a.m-12.00noon</td>
-                                    <td>2.6 Information Management</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-
-                                    <td>2022.12.17
-                                        </br>9.00a.m-12.00noon</td>
-                                    <td>2.7 Information Management</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-
-                                    <td>2022.12.17
-                                        </br>9.00a.m-12.00noon</td>
-                                    <td>2.7 Information Management</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-
-                                    <td>2022.12.17
-                                        </br>9.00a.m-12.00noon</td>
-                                    <td>2.7 Information Management</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-
-                                    <td>2022.12.17
-                                        </br>9.00a.m-12.00noon</td>
-                                    <td>2.7 Information Management</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-
-                                    <td>2022.12.17
-                                        </br>9.00a.m-12.00noon</td>
-                                    <td>2.7 Information Management</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr> -->
 
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+
+                </div>
+                <div class='admission-detail'>
+                    <div class="admission-details-signature">
+                        .........................................
+                    </div>
+                    <div class="admission-details-name">
+                        Yashed Thisara
+                    </div>
+                    <div class="admission-details-possision">
+                        Senior Assistant Registrar
+                    </div>
+                    <div class="admission-details-date">
+                        <?= date("Y-m-d") ?>
+                    </div>
+
                 </div>
             </div>
 

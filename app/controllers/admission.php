@@ -99,12 +99,21 @@ class Admission extends Controller
 
         //check the type of the participant
         if ($studentExamData[0]->studentType == 'initial') {
+            $examTimeTableData = [];
 
             //get time table data 
-            $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'degreeID' => $studentExamData[0]->degreeID, 'semester' => $semester]);
+            $TimeTableData[] = $examTimeTable->where(['examID' => $examID, 'degreeID' => $studentExamData[0]->degreeID, 'semester' => $semester]);
+
+            //convert array data to single array
+            //in there it include multiple data inside one index so we need to get each data to seperate index that is why add this code
+            foreach ($TimeTableData as $ttdata) {
+                foreach ($ttdata as $tt) {
+                    $examTimeTableData[] = [$tt];
+                }
+            }
 
 
-            //uncomment this if we have to handel medical studentsa and repeate students seperately
+
 
         } else if ($studentExamData[0]->studentType == 'repeate') {
 
@@ -113,13 +122,21 @@ class Admission extends Controller
             //get subject the student repeat
             $subjects = $repeateStudent->where(['indexNo' => $indexNo, 'semester' => $semester, 'attempt' => $attempt[0]->attempt]);
 
+
+            // show($subjects);
             //get time table data
             $examTimeTableData = [];
 
+            // $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'degreeID' => $studentExamData[0]->degreeID, 'semester' => $semester]);
+            // show($examTimeTableData);
+
             //get subject data from timetable for each subject
             foreach ($subjects as $subject) {
+
                 $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'degreeID' => $studentExamData[0]->degreeID, 'semester' => $semester, 'subjectCode' => $subject->subjectCode]);
+
             }
+
 
 
         } else if (($studentExamData[0]->studentType == 'medical')) {
@@ -138,7 +155,7 @@ class Admission extends Controller
 
                 $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'degreeID' => $studentExamData[0]->degreeID, 'semester' => $semester, 'subjectCode' => $subject->subjectCode]);
             }
-
+            show($examTimeTableData);
 
         }
 
@@ -148,8 +165,6 @@ class Admission extends Controller
         $examData = $examTimeTable->where(['examID' => $examID]);
         $data['studentData'] = $studentData;
         $data['timeTableData'] = $examTimeTableData;
-
-
         $data['examData'] = $examData;
 
 
