@@ -644,22 +644,26 @@ class SAR extends Controller
                 if (isset($_POST['submit'])) {
 
 
-                    $resultSubCode = isset($_POST['subCode']) ? $_POST['subCode'] : 'ISS';
-                    show($resultSubCode);
+                    $resultSubCode = isset($_POST['subCode']) ? $_POST['subCode'] : '';
+                    // show($resultSubCode);
 
 
                 }
+                // remove any leading or trailing spaces from the string
+                $resultSubCode = trim($resultSubCode);
+
 
                 //get examination results using marks and final marks
                 $tables = ['final_marks'];
                 $columns = ['*'];
-                $conditions = ['marks.examID = final_marks.examID', 'marks.studentIndexNo = final_marks.studentIndexNo', 'marks.subjectCode = final_marks.subjectCode', 'marks.examID = ' . $examID, 'marks.subjectCode = "' . $resultSubCode . '"'];
+                $conditions = ['marks.examID = final_marks.examID', 'marks.studentIndexNo = final_marks.studentIndexNo', 'marks.subjectCode = final_marks.subjectCode', 'marks.examID = ' . $examID, 'marks.subjectCode =  "' . $resultSubCode . '"'];
                 $examResults = $examMarks->join($tables, $columns, $conditions);
-                show($examResults);
+                // show($examResults);
 
 
 
                 $data['subNames'] = $examSubjects;
+                $data['examResults'] = $examResults;
 
                 $this->view('sar-interfaces/sar-examresults', $data);
             } else {
