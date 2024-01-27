@@ -186,6 +186,7 @@ class Model extends Database
         }
 
         // Execute the query
+
         return $this->query($query);
     }
 

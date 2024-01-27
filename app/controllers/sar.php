@@ -55,7 +55,7 @@ class SAR extends Controller
         //need to get these values form the session
         $degreeID = 2;
         $semester = 1;
-        $examID = 1;
+        $examID = 43;
 
         $model = new Model();
         $degree = new Degree();
@@ -636,6 +636,31 @@ class SAR extends Controller
 
 
             } else if ($method == 'results') {
+
+                $examMarks = new Marks();
+
+                $examSubjects = $examtimetable->where(['examID' => $examID]);
+
+                if (isset($_POST['submit'])) {
+
+
+                    $resultSubCode = isset($_POST['subCode']) ? $_POST['subCode'] : 'ISS';
+                    show($resultSubCode);
+
+
+                }
+
+                //get examination results using marks and final marks
+                $tables = ['final_marks'];
+                $columns = ['*'];
+                $conditions = ['marks.examID = final_marks.examID', 'marks.studentIndexNo = final_marks.studentIndexNo', 'marks.subjectCode = final_marks.subjectCode', 'marks.examID = ' . $examID, 'marks.subjectCode = "' . $resultSubCode . '"'];
+                $examResults = $examMarks->join($tables, $columns, $conditions);
+                show($examResults);
+
+
+
+                $data['subNames'] = $examSubjects;
+
                 $this->view('sar-interfaces/sar-examresults', $data);
             } else {
                 $this->view('sar-interfaces/sar-examination', $data);
