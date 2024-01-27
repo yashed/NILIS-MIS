@@ -71,6 +71,8 @@ $data['role'] = $role;
 
 
     .temp2-subsection-1 {
+
+
         background-color: #ffffff;
         border-radius: 6px;
         height: 18vw;
@@ -94,9 +96,10 @@ $data['role'] = $role;
 
         color: #17376E;
         font-family: Poppins;
+        font-size: 22px;
         font-style: normal;
         font-weight: 600;
-        font-size: 25px;
+        font-size: 1.2vw;
     }
 
     .temp2-subsection-2 {
@@ -109,11 +112,13 @@ $data['role'] = $role;
     .temp2-subsection-21 {
         display: flex;
         flex-direction: column;
-        background-color: var(--text-color);
-        padding: 1% 1% 1% 1%;
-        border-radius: 6px;
         width: 100%;
         height: auto;
+        background-color: #ffffff;
+        border-radius: 6px;
+        padding: 1vw 2vw 1vw 2vw;
+        margin-left: 4px;
+        padding-top: 1vw;
     }
 
     .temp2-footer {
@@ -270,6 +275,45 @@ $data['role'] = $role;
         background-color: white;
         border: 1px solid
     }
+
+    .result-table {
+        margin-top: 20px;
+        margin: 20px
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 0.8vw;
+
+    }
+
+    th {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+
+    }
+
+    td {
+        border: 1px solid #ddd;
+        padding: 5px;
+        text-align: center;
+
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    @media screen and (max-width: 600px) {
+
+        /* Make the table responsive on smaller screens */
+        table {
+            overflow-x: auto;
+        }
+    }
 </style>
 
 <body>
@@ -343,6 +387,407 @@ $data['role'] = $role;
                     </div>
 
                 </form>
+
+                <div class="result-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Email</th>
+                                <th>Email</th>
+                                <th>Email</th>
+                                <th>Email</th>
+                                <th>Email</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>25</td>
+                                <td>john@example.com</td>
+                                <td>john@example.com</td>
+                                <td>john@example.com</td>
+                                <td>john@example.com</td>
+                                <td>john@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>30</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                                <td>jane@example.com</td>
+                            </tr>
+
+
+                            <!-- Add more rows as needed -->
+                        </tbody>
+                    </table>
+
+                </div>
             </div>
 
 
