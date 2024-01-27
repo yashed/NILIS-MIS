@@ -1,22 +1,23 @@
 <?php
 $role = "DR";
 $data['role'] = $role;
+
 // Get the degree ID from the URL parameter
 $degreeId = isset($_GET['id']) ? $_GET['id'] : null;
 
-// Fetch the degree data based on the ID (You need to implement this part)
+// Fetch the degree data based on the ID
 $degreeData = fetchDegreeDataById($degreeId);
 
 function fetchDegreeDataById($degreeId)
 {
-    // Assuming you are using MySQL as your database
+    // Replace these with your actual database connection details
     $servername = "localhost";
     $username = "root";
     $password = "";
     $dbname = "nilis_db";
 
     // Create connection
-    $conn = new mysqli("localhost", "root", "", "nilis_db");
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
     // Check connection
     if ($conn->connect_error) {
@@ -140,6 +141,8 @@ function fetchDegreeDataById($degreeId)
         outline: none;
         border-radius: 5px;
         border: 1px solid gainsboro;
+        padding: 0px 20px 0px 13px;
+        margin-right: 40px;
     }
 
     #delete_degree {
@@ -242,6 +245,7 @@ function fetchDegreeDataById($degreeId)
         border-color: var(--text-color);
         font-weight: 500;
     }
+
     #save:hover,
     #update:hover {
         background-color: #A8A8A8;
@@ -253,6 +257,7 @@ function fetchDegreeDataById($degreeId)
         border-color: var(--sidebar-color);
         border-width: 2px;
     }
+
     .box_2 p,
     .box_3 p,
     .box_4 p {
@@ -277,33 +282,35 @@ function fetchDegreeDataById($degreeId)
             </div>
             <div class="box_2">
                 <p>Overview</p>
-                <table class="Overview_table">
-                    <tr>
-                        <td>
-                            <b>Type</b><br>
-                            <input type="text" name="type" id="type">
+                <?php if ($degreeData) : ?>
+                    <table class="Overview_table">
+                        <tr>
+                            <td>
+                                <b>Degree Name</b><br>
+                                <input type="text" name="type" id="type" value="<?= $degreeData['DegreeShortName'] ?>">
+                            </td>
+                            <td>
+                                <b>Academic Year</b><br>
+                                <input type="text" name="year" id="year" value="<?= $degreeData['AcademicYear'] ?>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Type</b><br>
+                                <input type="text" name="type" id="type" value="<?= $degreeData['DegreeType'] ?>">
+                            </td>
+                            <td>
+                                <b>Participants</b><br>
+                                <input type="text" name="year" id="year" value="<?= $degreeData['AcademicYear'] ?>">
+                            </td>
+                        </tr>
+                        <td colspan="2">
+                            <center><button class="pin" id="delete_degree">Delete Degree</button></center>
                         </td>
-                        <td>
-                            <b>Acodemic Year</b>
-                            <input type="text" name="year" id="year">
-                        </td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>Participants</b>
-                            <input type="text" name="participants" id="participants_1">
-                        </td>
-                        </td>
-                        <td>
-                            <b>Participants</b>
-                            <input type="text" name="participants" id="participants_2">
-                        </td>
-                    </tr>
-                    <td colspan="2">
-                        <center><button class="pin" id="delete_degree">Delete Degree</button></center>
-                    </td>
-                </table>
+                    </table>
+                <?php else : ?>
+                    <p>No data found for the specified degree ID.</p>
+                <?php endif; ?>
             </div>
             <div class="box_3">
                 <div class="box_3_1">

@@ -166,6 +166,28 @@ $data['role'] = $role;
         overflow: hidden;
 
     }
+
+    .addSubject {
+        width: 80%;
+        height: 35px;
+        background: transparent;
+        outline: none;
+        border-radius: 5px;
+        border: 1px solid gainsboro;
+        color: gray;
+        align-items: center;
+        cursor: pointer;
+        margin-bottom: 15px;
+    }
+
+    .addSubject:hover {
+        border: 3px solid gainsboro;
+        font-weight: 600;
+    }
+
+    .button-btn1 {
+        margin-top: 50px;
+    }
 </style>
 
 <body>
@@ -247,7 +269,7 @@ $data['role'] = $role;
                             </div>
                         </div>
                         <div class="btn-box">
-                            <div class="button-btn">
+                            <div class="button-btn1">
                                 <button type="button" class="bt-name-white" id="Back1" style="left: 0px;">Back</button>
                                 <button onclick="myFunction(), validateForm2()" type="button" class="bt-name" style="text-decoration: none; margin-right: 80px;" id="Next2">Continue</button>
                             </div>
@@ -345,13 +367,6 @@ $data['role'] = $role;
         </div>
 </body>
 <script>
-    // window.addEventListener('DOMContentLoaded', function() {
-    //for form blur-background
-    // function onCreateDegreeClick() {
-    //     document.querySelector("#create-popup").classList.add("active");
-    //     document.querySelector("#body").classList.add("active");
-    // }
-
     //for form move within forms
     function myFunction() {
         const lb = document.querySelector(".model-box");
@@ -414,20 +429,24 @@ $data['role'] = $role;
     }
 
     function validateForm2() {
-        for (var j = 1; j <= numSemesters; j++) { //semesters
-            for (var k = 1; k <= 2; k++) { //subjects
-                var subject = document.getElementById("subjectName${k}").value.trim();
-                var credits = document.getElementById("NoCredits${k}").value.trim();
-                var subCodes = document.getElementById("subjectCode${k}").value.trim();
-                // Check if subject and credits are filled for each semester
+        for (var j = 1; j <= numSemesters; j++) { // semesters
+            var subjectTable = document.getElementById(`Subject_table${j}`);
+            var subjectRows = subjectTable.querySelectorAll('tr');
+            for (var k = 1; k < subjectRows.length; k++) { // loop through all rows except the header
+                var subject = subjectRows[k].querySelector(`#SubjectName${j}_${k}`).value.trim();
+                var subCodes = subjectRows[k].querySelector(`#SubjectCode${j}_${k}`).value.trim();
+                var credits = subjectRows[k].querySelector(`#NoCredits${j}_${k}`).value.trim();
+
+                // Check if subject and credits are filled for each subject
                 if (subject === "" || credits === "" || subCodes === "") {
-                    // alert("Please fill out all fields for Semester " + j);
+                    alert("Please fill out all fields for Semester " + j + " Subject " + k);
                     return false;
                 }
             }
         }
         return true;
     }
+
     // Function to handle degree type change
     function handleDegreeTypeChange() {
         var degreeType = document.getElementById("degree_type").value;
@@ -439,77 +458,62 @@ $data['role'] = $role;
             showSemesters(4);
         }
     }
-    // Function to show a specific number of semesters
+
     function showSemesters(numSemesters) {
         var semesterContainer = document.getElementById("semester_container");
         semesterContainer.innerHTML = ""; // Clear previous content
-        var j = 0;
-        for (var i = 1; i <= numSemesters; i++, j++) {
+        for (var i = 1; i <= numSemesters; i++) {
             var semesterDiv = document.createElement("div");
+            var tableId = `Subject_table${i}`;
             semesterDiv.innerHTML += `
-            <table class="Subject_table" id="Subject_table">
-            <p id="Semester" name="semester" class="semester${i}">Semester ${i}</p>
-                                    <tr>
-                                        <th>Subject Name</th>
-                                        <th>Subject Code</th>
-                                        <th>Credits</th>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 130px; margin-right: 14px;" style="width: 50px;" value="<?= set_value('SubjectName') ?>" type="text" name="SubjectName" class="SubjectName" placeholder="Subject 1" id="SubjectName${i}" style="border: <?= !empty($errors['SubjectName']) ? '1px solid red' : '1px solid #ccc' ?>;">
-                                            <?php if (!empty($errors['SubjectName'])) : ?>
-                                                <div class="user-error" for="SubjectName"><?= $errors['SubjectName'] ?></div>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('SubjectCode') ?>" type="text" name="SubjectCode" class="SubjectCode" placeholder="SubjectCode" id="SubjectCode${i}" style="border: <?= !empty($errors['SubjectCode']) ? '1px solid red' : '1px solid #ccc' ?>;">
-                                            <?php if (!empty($errors['SubjectCode'])) : ?>
-                                                <div class="user-error" for="SubjectCode"><?= $errors['SubjectCode'] ?></div>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td><input style="width: 60px;" value="<?= set_value('NoCredits') ?>" type="number" name="NoCredits" class="NoCredits" placeholder="2" id="NoCredits${i}" style="border: <?= !empty($errors['NoCredits']) ? '1px solid red' : '1px solid #ccc' ?>;">
-                                            <?php if (!empty($errors['NoCredits'])) : ?>
-                                                <div class="danger" for="NoCredits"><?= $errors['NoCredits'] ?></div>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 130px; margin-right: 14px;" type="text" name="SubjectName" class="SubjectName" id="SubjectName${i}" placeholder="Subject 2"></td>
-                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('SubjectCode') ?>" type="text" name="SubjectCode" class="SubjectCode" placeholder="SubjectCode" id="SubjectCode${i}" style="border: <?= !empty($errors['SubjectCode']) ? '1px solid red' : '1px solid #ccc' ?>;"></td>
-                                        <td><input style="width: 60px;" type="text" name="NoCredits" class="NoCredits" id="NoCredits${i}" placeholder="2"></td>
-                                    </tr>
-                                    </table>
-                                    `;
-            semesterContainer.appendChild(semesterDiv);
+            <table class="Subject_table" id="${tableId}">
+                <p id="Semester" name="semester" class="semester${i}">Semester ${i}</p>
+                <tr>
+                    <th>Subject Name</th>
+                    <th>Subject Code</th>
+                    <th>Credits</th>
+                </tr>
+                <tr>
+                    <td><input style="width: 130px; margin-right: 14px;" value="" type="text" name="SubjectName" class="SubjectName" placeholder="Subject 1" id="SubjectName${i}_1" style="border: 1px solid #ccc;"></td>
+                    <td><input style="width: 130px; margin-right: 14px;" value="" type="text" name="SubjectCode" class="SubjectCode" placeholder="SubjectCode" id="SubjectCode${i}_1" style="border: 1px solid #ccc;"></td>
+                    <td><input style="width: 60px;" value="" type="number" name="NoCredits" class="NoCredits" placeholder="2" id="NoCredits${i}_1" style="border: 1px solid #ccc;"></td>
+                </tr>
+            </table>
+            <div>
+                <button type="button" class="addSubject" style="left: 0px;" id="addSubject${i}">Add Subject</button>
+            </div>
+        `;
+        semesterContainer.appendChild(semesterDiv); // Add event listener for dynamically adding subjects
+        addSubjectButtonListener(i);
         }
+    }
+    // Function to add event listener for dynamically adding subjects
+    function addSubjectButtonListener(semesterNumber) {
+        document.querySelector(`#addSubject${semesterNumber}`).addEventListener("click", () => {
+            let subjectCount = document.querySelectorAll(`#Subject_table${semesterNumber} tr`).length;
+            let template = `
+            <tr>
+                <td><input style="width: 130px; margin-right: 14px;" value="" type="text" name="SubjectName" class="SubjectName" placeholder="Subject ${subjectCount}" id="SubjectName${semesterNumber}_${subjectCount}" style="border: 1px solid #ccc;"></td>
+                <td><input style="width: 130px; margin-right: 14px;" value="" type="text" name="SubjectCode" class="SubjectCode" placeholder="SubjectCode" id="SubjectCode${semesterNumber}_${subjectCount}" style="border: 1px solid #ccc;"></td>
+                <td><input style="width: 60px;" value="" type="number" name="NoCredits" class="NoCredits" placeholder="2" id="NoCredits${semesterNumber}_${subjectCount}" style="border: 1px solid #ccc;"></td>
+            </tr>
+        `;
+            document.querySelector(`#Subject_table${semesterNumber}`).insertAdjacentHTML('beforeend', template);
+        });
     }
     // });
 </script>
 
 </html>
-<!-- <tr>
-    <td><input style="width: 130px; margin-right: 14px;" type="text" name="subject_${i}_2" class="subject" id="subject_${i}_2" placeholder="Subject 2"></td>
-    <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('subCode_${i}_2') ?>" type="text" name="subCode_${i}_2" class="subCode" placeholder="" id="subCode_${i}_2" style="border: <?= !empty($errors['subCode_${i}_2']) ? '1px solid red' : '1px solid #ccc' ?>;"></td>
-    <td><input style="width: 60px;" type="text" name="credits_${i}_2" class="credits" id="credits_${i}_2" placeholder="2"></td>
-</tr>
-<tr>
-    <td><input style="width: 130px; margin-right: 14px;" type="text" name="subject_${i}_3" class="subject" id="subject_${i}_3" placeholder="Subject 3"></td>
-    <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('subCode_${i}_3') ?>" type="text" name="subCode_${i}_3" class="subCode" placeholder="" id="subCode_${i}_3" style="border: <?= !empty($errors['subCode_${i}_3']) ? '1px solid red' : '1px solid #ccc' ?>;"></td>
-    <td><input style="width: 60px;" type="text" name="credits_${i}_3" class="credits" id="credits_${i}_3" placeholder="2"></td>
-</tr>
-<tr>
-    <td><input style="width: 130px; margin-right: 14px;" type="text" name="subject_${i}_4" class="subject" id="subject_${i}_4" placeholder="Subject 4"></td>
-    <td><input style="width: 130px; margin-right: 14px;" value="<?= set_value('subCode_${i}_4') ?>" type="text" name="subCode_${i}_4" class="subCode" placeholder="" id="subCode_${i}_4" style="border: <?= !empty($errors['subCode_${i}_4']) ? '1px solid red' : '1px solid #ccc' ?>;"></td>
-    <td><input style="width: 60px;" type="text" name="credits_${i}_4" class="credits" id="credits_${i}_4" placeholder="2"></td>
-</tr> -->
+<!-- 
+// document.addEventListener('DOMContentLoaded', function() {
+    //for form blur-background
+    // function onCreateDegreeClick() {
+    //     document.querySelector("#create-popup").classList.add("active");
+    //     document.querySelector("#body").classList.add("active");
+    // }
 
-<!-- // console.log(`subjectElement for:`, subjectElement);
-    // console.log(`creditsElement for:`, creditsElement);
-    // console.log(`subCodesElement for:`, subCodesElement); -->
-<!-- var subjectElement = document.getElementById(`subjectName`);
-    var creditsElement = document.getElementById(`NoCredits`);
-    var subCodesElement = document.getElementById(`subjectCode`); -->
-
-<!-- // function validateForm2() {
-
+// function validateForm2() {
 //     for (var j = 1; j <= numSemesters; j++) {       //semesters
 //         for (var k = 1; k <= 1; k++) {              //subjects
 //             var subject = document.getElementById("subjectName").value;
@@ -567,4 +571,19 @@ function validateForm2() {
             }
         }
         return true;
-    } -->
+    } 
+    // function validateForm2() {
+    //     for (var j = 1; j <= numSemesters; j++) { //semesters
+    //         for (var k = 1; k <= 2; k++) { //subjects
+    //             var subject = document.getElementById("SubjectName${j}_${k}").value.trim();
+    //             var subCodes = document.getElementById("SubjectCode${j}_${k}").value.trim();
+    //             var credits = document.getElementById("NoCredits${j}_${k}").value.trim();
+    //             // Check if subject and credits are filled for each semester
+    //             if (subject === "" || credits === "" || subCodes === "") {
+    //                 // alert("Please fill out all fields for Semester " + j);
+    //                 return false;
+    //             }
+    //         }
+    //     }
+    //     return true;
+    // }-->

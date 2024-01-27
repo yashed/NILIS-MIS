@@ -26,8 +26,8 @@ class DR extends Controller
         $degree = new Degree();
         $subject = new Subjects();
 
-        $result1 = $degree->validate($_POST);
-        $result2 = $subject->validate($_POST);
+        // $result1 = $degree->validate($_POST);
+        // $result2 = $subject->validate($_POST);
         // $degree->insert( $_POST );
         show($_POST);
 
@@ -80,7 +80,7 @@ class DR extends Controller
 
                 $fileName = $_FILES['student-data']['name'];
                 $fileTmpName = $_FILES['student-data']['tmp_name'];
-                $targetPath = $uploadDirectory . $fileName;
+                $targetPath = $uploadDirectory . basename($fileName);
                 echo $targetPath;
                 if (move_uploaded_file($fileTmpName, $targetPath)) {
                     echo 'File uploaded successfully.';
