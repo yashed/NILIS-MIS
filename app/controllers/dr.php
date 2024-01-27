@@ -80,7 +80,7 @@ class DR extends Controller
 
                 $fileName = $_FILES['student-data']['name'];
                 $fileTmpName = $_FILES['student-data']['tmp_name'];
-                $targetPath = $uploadDirectory . $fileName;
+                $targetPath = $uploadDirectory . basename($fileName);
                 echo $targetPath;
                 if (move_uploaded_file($fileTmpName, $targetPath)) {
                     echo 'File uploaded successfully.';
