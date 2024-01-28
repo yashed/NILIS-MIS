@@ -71,12 +71,11 @@ class DR extends Controller
             show($_FILES);
             if (isset($_FILES['student-data']) && $_FILES['student-data']['error'] === UPLOAD_ERR_OK) {
                 $uploadDirectory = 'assets/csv/input/';
-
-                // Replace with your desired directory path
-                // Ensure the directory exists
-                // if ( !is_dir( $uploadDirectory ) ) {
-                //         mkdir( $uploadDirectory, 0777, true );
-                //     }
+                // Ensure the directory exists and set proper permissions
+                if (!is_dir($uploadDirectory)) {
+                    mkdir($uploadDirectory, 0777, true);
+                    chmod($uploadDirectory, 0777);
+                }
 
                 $fileName = $_FILES['student-data']['name'];
                 $fileTmpName = $_FILES['student-data']['tmp_name'];
@@ -84,6 +83,35 @@ class DR extends Controller
                 echo $targetPath;
                 if (move_uploaded_file($fileTmpName, $targetPath)) {
                     echo 'File uploaded successfully.';
+                    // Process the uploaded CSV file and insert data into the database
+                    $csvFile = fopen($targetPath, 'r');
+                    // Skip the header row
+                    fgetcsv($csvFile);
+                    // Initialize Degree model or your database interaction method
+                    $degree = new Degree();
+                    while (($rowData = fgetcsv($csvFile)) !== false) {
+                        // Assuming the order of columns in the CSV matches the order in the $rowData array
+                        $fullName = $rowData[0];
+                        $email = $rowData[1];
+                        $country = $rowData[2];
+                        $nicNo = $rowData[3];
+                        $dob = $rowData[4];
+                        $fax = $rowData[5];
+                        $address = $rowData[6];
+                        $phoneNo = $rowData[7];
+                        // Insert data into the database
+                        $degree->insert([
+                            'full_name' => $fullName,
+                            'email' => $email,
+                            'country' => $country,
+                            'nic_no' => $nicNo,
+                            'date_of_birth' => $dob,
+                            'fax' => $fax,
+                            'address' => $address,
+                            'phone_no' => $phoneNo,
+                        ]);
+                    }
+                    fclose($csvFile);
                 } else {
                     echo 'Failed to upload file.';
                 }
