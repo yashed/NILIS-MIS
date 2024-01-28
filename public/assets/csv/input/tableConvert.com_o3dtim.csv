@@ -1,0 +1,6 @@
+﻿id,Email,regNo,country,indexNo,name,nicNo,birthdate,fax,address,phoneNo,degreeID
+41,student21@email.com,DILIM/2022/021,Sri Lanka,DILIM/021,Student 21,NIC654321,2000-01-21,98765432,Address 21,8765432109,1
+42,student22@email.com,DSL/2022/022,Sri Lanka,DSL/022,Student 22,NIC987654,2000-02-22,87654321,Address 22,9876543220,2
+43,student23@email.com,DILIM/2022/023,Sri Lanka,DILIM/023,Student 23,NIC543210,2000-03-23,54321098,Address 23,5678901234,1
+44,student24@email.com,DSL/2022/024,Sri Lanka,DSL/024,Student 24,NIC109876,2000-04-24,87654321,Address 24,9876543120,2
+45,student25@email.com,DILIM/2022/025,Sri Lanka,DILIM/025,Student 25,NIC567890,2000-05-25,12345678,Address 25,1234568901,1
