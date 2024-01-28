@@ -1,8 +1,5 @@
 <?php
-
-
-
-    $role = "SAR";
+$role = "director";
     $data['role'] = $role;
 
 ?>
