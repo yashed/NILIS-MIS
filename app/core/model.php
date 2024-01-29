@@ -275,6 +275,9 @@ class Model extends Database
         $query = trim($query, '&& ');
         //define query to add user data
         $res = $this->query($query, $data);
+        // show($query);
+        // show($data);
+
         if (is_array($res)) {
             return $res;
         }

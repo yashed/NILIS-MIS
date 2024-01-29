@@ -352,7 +352,14 @@ class SAR extends Controller
 
             if ($method == 'participants') {
                 $participants[] = $examParticipants->where(['degreeID' => $degreeID, 'semester' => $semester, 'examID' => $examID]);
-                $data['participants'] = $participants;
+
+                // show($participants);
+                $data['examParticipants'] = $participants;
+                $data['examID'] = $examID;
+                $data['degreeID'] = $degreeID;
+
+
+
                 $this->view('sar-interfaces/sar-examparticipants', $data);
 
             } else if ($method == 'resultsupload') {
@@ -666,6 +673,7 @@ class SAR extends Controller
                 $data['examResults'] = $examResults;
 
                 $this->view('sar-interfaces/sar-examresults', $data);
+
             } else {
                 $this->view('sar-interfaces/sar-examination', $data);
             }
@@ -693,10 +701,10 @@ class SAR extends Controller
     {
         $this->view('sar-interfaces/sar-examresults');
     }
-    public function examparticipants()
-    {
-        $this->view('sar-interfaces/sar-examparticipants');
-    }
+    // public function examparticipants()
+    // {
+    //     $this->view('sar-interfaces/sar-examparticipants');
+    // }
     public function showresults()
     {
         $this->view('sar-interfaces/sar-examresultshow');
