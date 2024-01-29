@@ -12,41 +12,40 @@ class Model extends Database
 
     public function insert($data)
     {
-
         // Convert object to array if $data is an object
         if (is_object($data)) {
             $data = (array) $data;
         }
 
+        // Check if $data is empty
+        if (empty($data)) {
+            return false;
+        }
 
-        //remove unwanted column 
-        //this is not a serious error , the code is working with this
-        //secho "No error";
-
+        // Check for allowed columns
         if (!empty($this->allowedColumns)) {
-
             foreach ($data as $key => $value) {
                 if (!in_array($key, $this->allowedColumns)) {
-                    unset($data[$key]);
+                    return false;
                 }
             }
         }
 
-        //get array keys from data
+        // Get array keys from data
         $keys = array_keys($data);
 
-        //define query to add user data
-        $query = "insert into " . $this->table;
+        // Define query to add user data
+        $query = "INSERT INTO " . $this->table;
 
-        //add column names and values to the query (impolad function devide data by given character in array)
-        $query .= "(" . implode(",", $keys) . ") values (:" . implode(",:", $keys) . ")";
-        show($query);
+        // Add column names and values to the query
+        $query .= "(" . implode(",", $keys) . ") VALUES (:" . implode(",:", $keys) . ")";
 
-        //call query function to execute the query
-        $this->query($query, $data);
+        // For debugging, show the data before executing the query
+        show($data);
 
-        return true;
     }
+
+
     /* public function insert($data)
     {
         //remove unwanted columns

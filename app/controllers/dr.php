@@ -83,34 +83,35 @@ class DR extends Controller
                 echo $targetPath;
                 if (move_uploaded_file($fileTmpName, $targetPath)) {
                     echo 'File uploaded successfully.';
-                    // Process the uploaded CSV file and insert data into the database
+                    // Inside your newDegree function after successful file upload
                     $csvFile = fopen($targetPath, 'r');
+
                     // Skip the header row
                     fgetcsv($csvFile);
+
                     // Initialize Degree model or your database interaction method
                     $degree = new Degree();
+
                     while (($rowData = fgetcsv($csvFile)) !== false) {
                         // Assuming the order of columns in the CSV matches the order in the $rowData array
-                        $fullName = $rowData[0];
-                        $email = $rowData[1];
-                        $country = $rowData[2];
-                        $nicNo = $rowData[3];
-                        $dob = $rowData[4];
-                        $fax = $rowData[5];
-                        $address = $rowData[6];
-                        $phoneNo = $rowData[7];
+                        $data = [
+                            'full_name' => $rowData[0],
+                            'email' => $rowData[1],
+                            'country' => $rowData[2],
+                            'nic_no' => $rowData[3],
+                            'date_of_birth' => $rowData[4],
+                            'fax' => $rowData[5],
+                            'address' => $rowData[6],
+                            'phone_no' => $rowData[7],
+                        ];
+
+                        // For debugging, show the data before calling insert
+                        show($data);
+
                         // Insert data into the database
-                        $degree->insert([
-                            'full_name' => $fullName,
-                            'email' => $email,
-                            'country' => $country,
-                            'nic_no' => $nicNo,
-                            'date_of_birth' => $dob,
-                            'fax' => $fax,
-                            'address' => $address,
-                            'phone_no' => $phoneNo,
-                        ]);
+                        $degree->insert($data);
                     }
+
                     fclose($csvFile);
                 } else {
                     echo 'Failed to upload file.';
