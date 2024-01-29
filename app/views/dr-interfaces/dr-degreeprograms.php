@@ -205,20 +205,38 @@ $data['role'] = $role;
 
                 <div class="dr-sub-title">Ongoing Degree Programs</div>
                 <div class="dr-degree-bar">
-                    <?php $count = 0; ?>
-                    <?php foreach ($degrees as $degree) : ?>
-                        <div class="dr-card1">
-                            <a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
-                                <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
-                            </a>
-                        </div>
-                        <?php $count++; ?>
-                    <?php endforeach; ?>
+                    <?php if ($degrees) : ?>
+                        <?php $count = 0; ?>
+                        <?php foreach ($degrees as $degree) : ?>
+                            <div class="dr-card1">
+                                <a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
+                                    <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                                </a>
+                            </div>
+                            <?php $count++; ?>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <p>No data found for the diploma program.</p>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="dr-subsection-1">
                 <div class="dr-sub-title">Completed Degree Programs</div>
-                <p>Completed Degree Programs are not yet.</p>
+                <div class="dr-degree-bar">
+                    <?php if ($degrees) : ?>
+                        <?php $count = 0; ?>
+                        <?php foreach ($degrees as $degree) : ?>
+                            <div class="dr-card1">
+                                <a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
+                                    <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                                </a>
+                            </div>
+                            <?php $count++; ?>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <p>No data found under the completed diploma program.</p>
+                    <?php endif; ?>
+                </div>
             </div>
             <div class="dr-footer">
                 <?php $this->view('components/footer/index', $data) ?>
@@ -271,7 +289,7 @@ $data['role'] = $role;
                         <div class="btn-box">
                             <div class="button-btn1">
                                 <button type="button" class="bt-name-white" id="Back1" style="left: 0px;">Back</button>
-                                <button onclick="myFunction(), validateForm2()" type="button" class="bt-name" style="text-decoration: none; margin-right: 80px;" id="Next2">Continue</button>
+                                <button onclick="myFunction(), validateForm2(), generateGrades()" type="button" class="bt-name" style="text-decoration: none; margin-right: 80px;" id="Next2">Continue</button>
                             </div>
                         </div>
                     </form>
@@ -289,73 +307,14 @@ $data['role'] = $role;
                                         <th style="width: 100px;">Min Mark</th>
                                         <th style="width: 100px;">GPV</th>
                                     </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_1" class="grade" placeholder="A+"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_1" class="maxvalue" placeholder="100"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_1" class="minvalue" placeholder="90"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_1" class="gpa" placeholder="4.00"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_2" class="grade" placeholder="A"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_2" class="maxvalue" placeholder="89"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_2" class="minvalue" placeholder="80"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_2" class="gpa" placeholder="4.00"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_3" class="grade" placeholder="A-"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_3" class="maxvalue" placeholder="79"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_3" class="minvalue" placeholder="75"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_3" class="gpa" placeholder="3.70"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_4" class="grade" placeholder="B+"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_4" class="maxvalue" placeholder="74"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_4" class="minvalue" placeholder="70"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_4" class="gpa" placeholder="3.40"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_5" class="grade" placeholder="B"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_5" class="maxvalue" placeholder="69"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_5" class="minvalue" placeholder="65"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_5" class="gpa" placeholder="3.00"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_6" class="grade" placeholder="B-"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_6" class="maxvalue" placeholder="64"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_6" class="minvalue" placeholder="60"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_6" class="gpa" placeholder="2.70"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_7" class="grade" placeholder="C+"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_7" class="maxvalue" placeholder="59"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_7" class="minvalue" placeholder="55"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_7" class="gpa" placeholder="2.40"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_8" class="grade" placeholder="C"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_8" class="maxvalue" placeholder="54"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_8" class="minvalue" placeholder="50"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_8" class="gpa" placeholder="2.00"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_9" class="grade" placeholder="C-"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_9" class="maxvalue" placeholder="49"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_9" class="minvalue" placeholder="45"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_9" class="gpa" placeholder="1.70"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_10" class="grade" placeholder="F"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_10" class="maxvalue" placeholder="44"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_10" class="minvalue" placeholder="0"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_10" class="gpa" placeholder="00"></td>
-                                    </tr>
+                                    <div class="Grade_table" id="Grade_table"></div>
                                 </table>
                             </div>
                         </div>
                         <div class="btn-box">
                             <div class="button-btn">
                                 <button type="button" class="bt-name-white" id="Back2">Back</button>
-                                <button type="Submit" class="bt-name" style="text-decoration: none; margin-right: -53px;" href="<?= ROOT ?>dr/newDegree">Create</button>
+                                <button type="Submit" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next3" onclick="validateForm3()">Create</button>
                             </div>
                         </div>
                     </form>
@@ -367,6 +326,7 @@ $data['role'] = $role;
         </div>
 </body>
 <script>
+    var numSemesters;
     //for form move within forms
     function myFunction() {
         const lb = document.querySelector(".model-box");
@@ -383,11 +343,11 @@ $data['role'] = $role;
 
     var Next1 = document.getElementById("Next1");
     var Next2 = document.getElementById("Next2");
+    var Next3 = document.getElementById("Next3");
     var Back1 = document.getElementById("Back1");
     var Back2 = document.getElementById("Back2");
 
     var progress = document.getElementById("progress");
-    var numSemesters = 4;
     // Validate Form1 before proceeding
     Next1.onclick = function() {
         if (validateForm1()) {
@@ -405,18 +365,23 @@ $data['role'] = $role;
     }
     // Validate Form2 before proceeding
     Next2.onclick = function() {
-        if (validateForm2()) {
+        if (validateForm2(numSemesters)) {
             Form2.style.left = "-550px";
             Form3.style.left = "100px";
             progress.style.width = "300px";
-        } else {
-            alert(" Please fill out all the fields.");
         }
     }
     Back2.onclick = function() {
         Form2.style.left = "100px";
         Form3.style.left = "550px";
         progress.style.width = "150px";
+    }
+    Next3.onclick = function() {
+        if (validateForm3()) {
+
+        } else {
+            alert(" Please fill out all the fields.");
+        }
     }
     // Function to validate Form1, Form2, Form3 fields
     function validateForm1() {
@@ -428,7 +393,7 @@ $data['role'] = $role;
         return true;
     }
 
-    function validateForm2() {
+    function validateForm2(numSemesters) {
         for (var j = 1; j <= numSemesters; j++) { // semesters
             var subjectTable = document.getElementById(`Subject_table${j}`);
             var subjectRows = subjectTable.querySelectorAll('tr');
@@ -439,7 +404,7 @@ $data['role'] = $role;
 
                 // Check if subject and credits are filled for each subject
                 if (subject === "" || credits === "" || subCodes === "") {
-                    alert("Please fill out all fields for Semester " + j + " Subject " + k);
+                    alert("Please fill out all fields, Semester " + j + " Subject " + k);
                     return false;
                 }
             }
@@ -447,15 +412,32 @@ $data['role'] = $role;
         return true;
     }
 
+    function validateForm3() {
+        var gradeTable = document.getElementById(`Grade_table`);
+        for (var k = 1; k < 15; k++) { // loop through all rows except the header
+            var maxmark = document.querySelector(`#maxvalue${k}`).value.trim();
+            var minmark = document.querySelector(`#minvalue${k}`).value.trim();
+            var gpa = document.querySelector(`#gpa${k}`).value.trim();
+
+            // Check if subject and credits are filled for each subject
+            if (maxmark === "" || minmark === "" || gpa === "") {
+                alert("Please fill out all fields in ");
+                return false;
+            }
+        }
+        return true;
+    }
     // Function to handle degree type change
     function handleDegreeTypeChange() {
         var degreeType = document.getElementById("degree_type").value;
         var semesterContainer = document.getElementById("semester_container");
         // You can customize this logic based on your degree types
         if (degreeType === "1 Year") {
+            numSemesters = 2;
             showSemesters(2);
         } else if (degreeType === "2 Year") {
-            showSemesters(4);
+            numSemesters = 4;
+            showSemester
         }
     }
 
@@ -483,8 +465,8 @@ $data['role'] = $role;
                 <button type="button" class="addSubject" style="left: 0px;" id="addSubject${i}">Add Subject</button>
             </div>
         `;
-        semesterContainer.appendChild(semesterDiv); // Add event listener for dynamically adding subjects
-        addSubjectButtonListener(i);
+            semesterContainer.appendChild(semesterDiv); // Add event listener for dynamically adding subjects
+            addSubjectButtonListener(i);
         }
     }
     // Function to add event listener for dynamically adding subjects
@@ -501,89 +483,24 @@ $data['role'] = $role;
             document.querySelector(`#Subject_table${semesterNumber}`).insertAdjacentHTML('beforeend', template);
         });
     }
+
+    function generateGrades() {
+        var gradecontainer = document.getElementById("Grade_table");
+        gradecontainer.innerHTML = ""; // Clear previous content
+        for (var i = 1; i <= 15; i++) {
+            var gradeDiv = document.createElement("div");
+            gradeDiv.innerHTML += `
+                <tr>
+                    <td><input style="width: 60px;" type="text" name="grade" class="grade" placeholder="A+" id="grade${i}"></td>
+                    <td><input style="width: 50px;" type="text" name="maxvalue" class="maxvalue" placeholder="100" id="maxvalue${i}"></td>
+                    <td><input style="width: 50px;" type="text" name="minvalue" class="minvalue" placeholder="90" id="minvalue${i}"></td>
+                    <td><input style="width: 60px;" type="text" name="gpa" class="gpa" placeholder="4.00" id="gpa${i}"></td>
+                </tr>
+        `;
+            gradecontainer.appendChild(gradeDiv);
+        }
+    }
     // });
 </script>
 
 </html>
-<!-- 
-// document.addEventListener('DOMContentLoaded', function() {
-    //for form blur-background
-    // function onCreateDegreeClick() {
-    //     document.querySelector("#create-popup").classList.add("active");
-    //     document.querySelector("#body").classList.add("active");
-    // }
-
-// function validateForm2() {
-//     for (var j = 1; j <= numSemesters; j++) {       //semesters
-//         for (var k = 1; k <= 1; k++) {              //subjects
-//             var subject = document.getElementById("subjectName").value;
-//             var credits = document.getElementById("NoCredits").value;
-//             var subCodes = document.getElementById("subjectCode").value;
-//             // Check if subject and credits are filled for each semester
-//             if (subject.trim() === "" || credits.trim() === "" || subCodes.trim() === "") {
-//                 // alert("Please fill out all fields for Semester " + j);
-//                 return false;
-//             }
-//         }
-//     }
-//     return true;
-// }
-//     function validateForm2() {
-//     for (var j = 1; j <= numSemesters; j++) {
-//         for (var k = 1; k <= 1; k++) { // Assuming you have one subject per semester
-//             var semesterContainer = document.getElementById("semester_container");
-//             var subjectElement = semesterContainer.querySelector(`.semester${j} .SubjectName`).value;
-//             var creditsElement = semesterContainer.querySelector(`.semester${j} .NoCredits`).value;
-//             var subCodesElement = semesterContainer.querySelector(`.semester${j} .SubjectCode`).value;
-
-//             var subject = subjectElement ? subjectElement : "";
-//             var credits = creditsElement ? creditsElement : "";
-//             var subCodes = subCodesElement ? subCodesElement : "";
-
-//             // Check if subject and credits are filled for each semester
-//             if (subject.trim() === "" || credits.trim() === "" || subCodes.trim() === "") {
-//                 return false;
-//             }
-//         }
-//     }
-//     return true;
-// }
-function validateForm2() {
-        for (var j = 1; j <= numSemesters; j++) {
-            for (var k = 1; k <= 1; k++) {
-                var semesterContainer = document.getElementById("semester_container");
-                var subjectElement = semesterContainer.querySelector('.SubjectName').value.trim();
-                var creditsElement = semesterContainer.querySelector('.NoCredits').value.trim();
-                var subCodesElement = semesterContainer.querySelector('.SubjectCode').value.trim();
-
-                var subject = subjectElement ? subjectElement.value : "";
-                var credits = creditsElement ? creditsElement.value : "";
-                var subCodes = subCodesElement ? subCodesElement.value : "";
-
-                console.log(`subjectElement for:`, subjectElement);
-                console.log(`creditsElement for:`, creditsElement);
-                console.log(`subCodesElement for:`, subCodesElement);
-
-                // Check if subject and credits are filled for each semester
-                if (subject === "" || credits === "" || subCodes === "") {
-                    return false;
-                }
-            }
-        }
-        return true;
-    } 
-    // function validateForm2() {
-    //     for (var j = 1; j <= numSemesters; j++) { //semesters
-    //         for (var k = 1; k <= 2; k++) { //subjects
-    //             var subject = document.getElementById("SubjectName${j}_${k}").value.trim();
-    //             var subCodes = document.getElementById("SubjectCode${j}_${k}").value.trim();
-    //             var credits = document.getElementById("NoCredits${j}_${k}").value.trim();
-    //             // Check if subject and credits are filled for each semester
-    //             if (subject === "" || credits === "" || subCodes === "") {
-    //                 // alert("Please fill out all fields for Semester " + j);
-    //                 return false;
-    //             }
-    //         }
-    //     }
-    //     return true;
-    // }-->
