@@ -127,6 +127,16 @@ class Admin extends Controller
   {
     $this->view('admin-interfaces/admin-settings');
   }
+  public function activity()
+  {
+
+    $activity = new Activity();
+
+    $data['activities'] = $activity->findAll();
+
+
+    $this->view('admin-interfaces/admin-activity-log', $data);
+  }
   public function degree()
   {
   }
