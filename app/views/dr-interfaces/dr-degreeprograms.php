@@ -270,7 +270,7 @@ $data['role'] = $role;
                             <div class="button-btn">
 
                                 <button onclick="myFunction2()" type="button" class="bt-name-white" id="Cancel1">Cancel</button>
-                                <button onclick="myFunction(), validateForm1()" type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next1">Continue</button>
+                                <button onclick="validateForm1()" type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next1">Continue</button>
                             </div>
                         </div>
                     </form>
@@ -289,7 +289,7 @@ $data['role'] = $role;
                         <div class="btn-box">
                             <div class="button-btn1">
                                 <button type="button" class="bt-name-white" id="Back1" style="left: 0px;">Back</button>
-                                <button onclick="myFunction(), validateForm2(), generateGrades()" type="button" class="bt-name" style="text-decoration: none; margin-right: 80px;" id="Next2">Continue</button>
+                                <button onclick="validateForm2()" type="button" class="bt-name" style="text-decoration: none; margin-right: 80px;" id="Next2">Continue</button>
                             </div>
                         </div>
                     </form>
@@ -301,20 +301,14 @@ $data['role'] = $role;
                             </div>
                             <div class="box_3_2">
                                 <table class="Subject_table">
-                                    <tr>
-                                        <th style="width: 100px;">Grade</th>
-                                        <th style="width: 100px;">Max Mark</th>
-                                        <th style="width: 100px;">Min Mark</th>
-                                        <th style="width: 100px;">GPV</th>
-                                    </tr>
                                     <div class="Grade_table" id="Grade_table"></div>
                                 </table>
                             </div>
                         </div>
-                        <div class="btn-box">
+                        <div class="btn-box1">
                             <div class="button-btn">
                                 <button type="button" class="bt-name-white" id="Back2">Back</button>
-                                <button type="Submit" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next3" onclick="validateForm3()">Create</button>
+                                <button type="Submit" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next3" onclick="validateForm3(event)">Create</button>
                             </div>
                         </div>
                     </form>
@@ -354,6 +348,7 @@ $data['role'] = $role;
             Form1.style.left = "-550px";
             Form2.style.left = "100px";
             progress.style.width = "150px";
+            myFunction();
         } else {
             alert(" Please fill out all the fields.");
         }
@@ -369,6 +364,8 @@ $data['role'] = $role;
             Form2.style.left = "-550px";
             Form3.style.left = "100px";
             progress.style.width = "300px";
+            myFunction();
+            generateGrades();
         }
     }
     Back2.onclick = function() {
@@ -376,11 +373,9 @@ $data['role'] = $role;
         Form3.style.left = "550px";
         progress.style.width = "150px";
     }
-    Next3.onclick = function() {
-        if (validateForm3()) {
-
-        } else {
-            alert(" Please fill out all the fields.");
+    Next3.onclick = function(event) {
+        if (validateForm3(event)) {
+            window.location.href = "<?= ROOT ?>dr/newdegree";
         }
     }
     // Function to validate Form1, Form2, Form3 fields
@@ -412,16 +407,17 @@ $data['role'] = $role;
         return true;
     }
 
-    function validateForm3() {
+    function validateForm3(event) {
         var gradeTable = document.getElementById(`Grade_table`);
-        for (var k = 1; k < 15; k++) { // loop through all rows except the header
+        for (var k = 1; k <= 3; k++) { // loop through all rows except the header
             var maxmark = document.querySelector(`#maxvalue${k}`).value.trim();
             var minmark = document.querySelector(`#minvalue${k}`).value.trim();
             var gpa = document.querySelector(`#gpa${k}`).value.trim();
-
+            // console.log(maxmark);
             // Check if subject and credits are filled for each subject
             if (maxmark === "" || minmark === "" || gpa === "") {
-                alert("Please fill out all fields in ");
+                alert("Please fill out all fields in " + getGradeKey(k));
+                event.preventDefault();
                 return false;
             }
         }
@@ -437,7 +433,7 @@ $data['role'] = $role;
             showSemesters(2);
         } else if (degreeType === "2 Year") {
             numSemesters = 4;
-            showSemester
+            showSemesters(4);
         }
     }
 
@@ -483,24 +479,52 @@ $data['role'] = $role;
             document.querySelector(`#Subject_table${semesterNumber}`).insertAdjacentHTML('beforeend', template);
         });
     }
-
+    var grades = {
+        "A+": "4.00",
+        "A": "4.00",
+        "A-": "3.70",
+        "B+": "3.30",
+        "B": "3.00",
+        "B-": "2.70",
+        "C+": "2.30",
+        "C": "2.00",
+        "C-": "1.70",
+        "D+": "1.30",
+        "D": "1.00",
+        "D-": "0.70",
+        "F": "0.30"
+    };
     function generateGrades() {
         var gradecontainer = document.getElementById("Grade_table");
-        gradecontainer.innerHTML = ""; // Clear previous content
-        for (var i = 1; i <= 15; i++) {
-            var gradeDiv = document.createElement("div");
-            gradeDiv.innerHTML += `
-                <tr>
-                    <td><input style="width: 60px;" type="text" name="grade" class="grade" placeholder="A+" id="grade${i}"></td>
-                    <td><input style="width: 50px;" type="text" name="maxvalue" class="maxvalue" placeholder="100" id="maxvalue${i}"></td>
-                    <td><input style="width: 50px;" type="text" name="minvalue" class="minvalue" placeholder="90" id="minvalue${i}"></td>
-                    <td><input style="width: 60px;" type="text" name="gpa" class="gpa" placeholder="4.00" id="gpa${i}"></td>
-                </tr>
+
+        gradecontainer.innerHTML = "";
+
+        var headerRow = document.createElement("tr");
+        headerRow.innerHTML = `
+        <th style="width: 100px; margin-top: 20px;">Grade</th>
+        <th style="width: 100px; margin-top: 20px;">Max Mark</th>
+        <th style="width: 100px; margin-top: 20px;">Min Mark</th>
+        <th style="width: 100px; margin-top: 20px;">GPV</th>
+    `;
+        gradecontainer.appendChild(headerRow);
+
+        for (var i = 1; i <= 3; i++) {
+            var gradeRow = document.createElement("tr");
+            var currentGrade = grades[getGradeKey(i)];
+            gradeRow.innerHTML = `
+            <td><center><input style="width: 60px;" type="text" name="grade" class="grade" value="${getGradeKey(i)}" id="grade${i}" readonly></center></td>
+            <td><center><input style="width: 50px;" type="text" name="maxvalue" class="maxvalue" placeholder="100" id="maxvalue${i}"></center></td>
+            <td><center><input style="width: 50px;" type="text" name="minvalue" class="minvalue" placeholder="90" id="minvalue${i}"></center></td>
+            <td><center><input style="width: 60px;" type="text" name="gpa" class="gpa" placeholder="${currentGrade}" id="gpa${i}"></center></td>
         `;
-            gradecontainer.appendChild(gradeDiv);
+            gradecontainer.appendChild(gradeRow);
         }
+    }
+    // Function to get the grade key dynamically
+    function getGradeKey(index) {
+        var keys = Object.keys(grades);
+        return keys[index - 1];
     }
     // });
 </script>
-
 </html>

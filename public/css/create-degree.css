@@ -63,6 +63,11 @@ form input {
   margin: 30px 10px 20px 10px;
   text-align: center;
 }
+.btn-box1 {
+  width: 100%;
+  margin: 60px 10px 20px 10px;
+  text-align: center;
+}
 /* .btn-box .bt-name1:hover{
     background-color: #222d76;
     color: #fff;
@@ -197,4 +202,23 @@ form button {
 .Subject_table .SubjectName {
   margin-left: 0px;
 }
-/*close and open buttons*/
+.Grade_table .grade {
+  border: 1px black solid;
+  border-radius: 5px;
+  padding-left: 20px;
+}
+.Grade_table .maxvalue {
+  border: 1px black solid;
+  border-radius: 5px;
+  padding-left: 14px;
+}
+.Grade_table .minvalue {
+  border: 1px black solid;
+  border-radius: 5px;
+  padding-left: 14px;
+}
+.Grade_table .gpa {
+  border: 1px black solid;
+  border-radius: 5px;
+  padding-left: 15px;
+}
