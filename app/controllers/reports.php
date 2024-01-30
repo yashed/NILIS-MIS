@@ -14,4 +14,8 @@ class Reports extends Controller
     {
         $this->view('reports/report-roe-login');
     }
+    public function exam_results()
+    {
+        $this->view('reports/report-roe-card');
+    }
 }
