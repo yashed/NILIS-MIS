@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-
         .banner {
             margin-left: 1%;
             display: flex;
@@ -45,7 +44,7 @@
             color: #17376E;
             padding-top: 35px;
             flex: 99%;
-           
+
         }
 
         .development-message {
@@ -59,7 +58,7 @@
             color: #292929;
             margin-left: 45px;
             margin-bottom: 0.3%;
-margin-top: 1%;
+            margin-top: 1%;
         }
 
         .buttons-container {
@@ -137,22 +136,68 @@ margin-top: 1%;
 
 
                 <div class="note">
-                    Note
+                    USER-SAR
                 </div>
             </div>
             <div class="development-message">
-                <!-- Development Message Content Goes Here -->
-                There is an upcoming examination in Diploma in Library and Information Management. Please go and Create examination.
-            </div>
-            <div class="buttons-container">
-                <div class="button1">
-                    Create Examination
-                </div>
 
-            </div>
+                <?php
+                $con = mysqli_connect("localhost", "root", "", "nilis_db");
+                ?>
+                There will be an upcoming examination scheduled on <date> for the diploma <degree_name>  
+                
+<?php
+                if ($con) {
+                    $query = "SELECT degree_timetable.*,degree.*FROM degree_timetable INNER JOIN degree ON degree_timetable.DegreeID=degree.DegreeID WHERE EventID = ?";
 
-        </div>
+                    $stmt = mysqli_stmt_init($con);
+
+                    if (mysqli_stmt_prepare($stmt, $query)) {
+                        $eventID = 1;
+                        mysqli_stmt_bind_param($stmt, "i", $eventID);
+                        mysqli_stmt_execute($stmt);
+                        $result = mysqli_stmt_get_result($stmt);
+
+                        if ($row = mysqli_fetch_assoc($result)) {
+                ?>
+                            <?= $row['DegreeName']; ?>
+                            .Needs to Create examination.
+                            </br>
+                            StartingDate: <?= $row['StartingDate']; ?>
+                            </br>
+                            EndingDate: <?= $row['EndingDate']; ?>
+
+
+</body>
+
+</html>
+<?php
+                        } else {
+                            echo "No Record Found";
+                        }
+
+                        mysqli_stmt_close($stmt);
+                    } else {
+                        echo "Error in preparing the statement";
+                    }
+
+                    mysqli_close($con);
+                } else {
+                    echo "Connection error: " . mysqli_connect_error();
+                }
+?>
+
+</div>
+</br>
+<div class="buttons-container">
+    <div class="button1">
+        Create Examination
     </div>
+
+</div>
+
+</div>
+</div>
 </body>
 
 </html>

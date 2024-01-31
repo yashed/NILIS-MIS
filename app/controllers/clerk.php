@@ -29,3 +29,4 @@ class Clerk extends Controller
         $this->view('clerk-interfaces\clerk-attendance');
     }
 }
+

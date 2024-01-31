@@ -498,6 +498,8 @@ class SAR extends Controller
                                 $resultSheet->insert($examSheet);
                                 $message = 'Upload ' . $marksType . ' Marksheet for ' . $subCode . ' in ExamId = ' . $examID . ' successfully.';
                                 show($message);
+
+                                //uncomment this to add activity log
                                 // activity($message);
 
 
@@ -506,6 +508,99 @@ class SAR extends Controller
                                 createMarkSheet($uniqueFileName, $examID, $subCode, $marksType);
 
                                 echo json_encode(['success' => true, 'message' => 'File uploaded successfully.']);
+
+
+                                //enable examiner3 marks upload
+                                $data['examiner3'] = true;
+                                foreach ($data['subjects'] as $subject) {
+                                    $uploadedRes = $resultSheet->where(['examId' => $examID, 'subjectCode' => $subject->SubjectCode]);
+                                    // show($uploadedRes);
+
+                                    if (is_array($uploadedRes)) {
+
+                                        if (count($uploadedRes) >= 2) {
+                                            $validate = false;
+                                            foreach ($uploadedRes as $res) {
+                                                if ($res->type == 'examiner1' || $res->type == 'examiner2') {
+                                                    $validate = true;
+                                                } else {
+                                                    $validate = false;
+                                                }
+                                            }
+                                            //check the marks gap between examiner1 and examiner2
+                                            if ($validate) {
+                                                $fileName = $examID . '_' . $subject->SubjectCode . '.csv';
+
+                                                //call the function to check the gap
+                                                if (checkGap($fileName, $examID, $subject->SubjectCode)) {
+                                                    $data['examiner3'] = true;
+                                                    var_dump('examiner3 true');
+                                                    show('examiner3');
+                                                } else {
+                                                    $data['examiner3'] = false;
+
+                                                    //check whether assestment marks are available
+                                                    $assignmentMarks = $resultSheet->where([
+                                                        'examId' => $examID,
+                                                        'subjectCode' => $subject->SubjectCode,
+                                                        'type' => 'assestment'
+                                                    ]);
+                                                    var_dump("assignment marks ", $assignmentMarks);
+                                                    if (!empty($assignmentMarks)) {
+                                                        $data['assignment'] = true;
+                                                        //upload the student marks to database
+                                                        $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
+
+                                                        //call the function to upload marks to database
+                                                        echo 'call insertMarks function';
+                                                        insertMarks($resFileName, $examID, $subject->SubjectCode);
+                                                    } else {
+                                                        $data['assignment'] = false;
+                                                        echo 'Assignment marks are not available.';
+                                                    }
+
+                                                    var_dump('examiner3 false');
+                                                    show('no examiner3');
+                                                }
+                                                /** The case in there is when we pass the data into view to show them it must reload 
+                                                 * but when using fetch it did't reload the file. must fix this  */
+
+
+                                                /**when uploading marks get the least gap marks and calculate final marks and upload to database
+                                                 */
+
+                                                // echo json_encode($data);
+                                            } else {
+                                                if ($marksType == 'examiner3') {
+                                                    $data['examiner3'] = true;
+
+                                                    //check whether assestment marks are available
+                                                    $assignmentMarks = $resultSheet->where([
+                                                        'examId' => $examID,
+                                                        'subjectCode' => $subject->SubjectCode,
+                                                        'type' => 'assestment'
+                                                    ]);
+                                                    var_dump("assignment marks ", $assignmentMarks);
+                                                    if (!empty($assignmentMarks)) {
+                                                        $data['assignment'] = true;
+                                                        //upload the student marks to database
+                                                        $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
+
+                                                        //call the function to upload marks to database
+                                                        echo 'call insertMarks function';
+                                                        insertMarks($resFileName, $examID, $subject->SubjectCode);
+                                                    } else {
+                                                        $data['assignment'] = false;
+                                                        echo 'Assignment marks are not available.';
+                                                    }
+
+                                                } else {
+                                                    echo 'examiner1 and examiner2 marks are not available';
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             } else {
                                 // Error inserting data into the database
                                 $data['errors'] = $resultSheet->errors;
@@ -514,19 +609,14 @@ class SAR extends Controller
                                 echo json_encode(['success' => false, 'message' => 'Error inserting data into the database.']);
                             }
 
-
-                            echo 'call function sar';
-
-
-
-
-
                         } else {
                             // Error moving the file
 
 
                             echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
                         }
+
+
                     } else {
                         // Handle file upload error
                         message("File upload error", "error");
@@ -534,45 +624,12 @@ class SAR extends Controller
                     }
 
 
+
                 }
 
-                //enable examiner3 marks upload
-
-                foreach ($data['subjects'] as $subject) {
-                    $uploadedRes = $resultSheet->where(['examId' => $examID, 'subjectCode' => $subject->SubjectCode]);
-                    // show($uploadedRes);
-
-                    if (is_array($uploadedRes)) {
-
-                        if (count($uploadedRes) == 2) {
-                            $validate = false;
-                            foreach ($uploadedRes as $res) {
-                                if ($res->type == 'examiner1' || $res->type == 'examiner2') {
-                                    $validate = true;
-                                } else {
-                                    $validate = false;
-                                }
-                            }
-                            //check the marks gap between examiner1 and examiner2
-                            if ($validate) {
-                                $fileName = $examID . '_' . $subject->SubjectCode . '.csv';
-
-                                //call the function to check the gap
-                                if (checkGap($fileName, $examID, $subject->SubjectCode)) {
-                                    $data['examiner3'] = true;
-                                    show('examiner3');
-                                } else {
-                                    $data['examiner3'] = false;
-                                    show('no examiner3');
-                                }
-
-
-                            }
-                        }
-                    }
-                }
 
                 $this->view('sar-interfaces/sar-examresultupload', $data);
+
 
 
             } else if ($method == 'results') {
@@ -611,6 +668,10 @@ class SAR extends Controller
     public function showresults()
     {
         $this->view('sar-interfaces/sar-examresultshow');
+    }
+    public function notifications()
+    {
+        $this->view('sar-interfaces/sar-notification');
     }
 
 }
