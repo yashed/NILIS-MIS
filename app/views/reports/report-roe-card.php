@@ -60,15 +60,15 @@
 
     .admission-title {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
-        gap: 40px;
+        gap: 100px;
         align-items: center;
     }
 
     .admission-title img {
-        width: 5em;
-        height: 111.11px;
+        width: 4em;
+        height: 81.11px;
         margin-top: 20px;
 
     }
@@ -81,17 +81,17 @@
         font-family: Times New Roman;
         font-size: 26px;
         font-style: normal;
-        font-weight: 400;
+        font-weight: 600;
 
     }
 
     .admission-course-name {
         color: var(--black, #000);
         text-align: center;
-        font-family: Times New Roman;
-        font-size: 20px;
+        font-family: poppins;
+        font-size: 18px;
         font-style: normal;
-        font-weight: 700;
+        font-weight: 500;
         line-height: normal;
     }
 
@@ -124,16 +124,16 @@
 
     .admission-name-index {
         color: var(--black, #000);
-        font-family: Times New Roman;
+        font-family: poppins;
         font-size: 16px;
         font-style: normal;
-        font-weight: 400;
+        font-weight: 600;
         line-height: normal;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-around;
-        gap: 30px;
-        margin-top: 40px;
+
+
     }
 
     .admission-content {
@@ -146,7 +146,7 @@
 
     .admission-table {
         margin: 50px 0px 20px 0px;
-        font-family: Inter;
+        font-family: poppins;
         border-collapse: collapse;
         width: 100%;
         /* min-height: px; */
@@ -155,15 +155,17 @@
     .admission-table tr {
         border: 1px solid #ddd;
         border-radius: 10px;
+        text-align: center;
 
     }
 
     .admission-table td {
 
-        font-family: Inter;
+        font-family: poppins;
+        text-align: center;
         border: 1px solid #ddd;
         padding: 4px;
-        text-align: left;
+
         font-size: 14px;
         padding: 10px 5px 10px 5px;
     }
@@ -225,6 +227,11 @@
         margin-top: 40px;
     }
 
+    .results-abr {
+        font-family: poppins;
+        font-size: 11px;
+    }
+
     @media print {
 
         #print {
@@ -264,7 +271,7 @@
 <body>
     <div class="admisssion-card">
         <div class="print-btn">
-            <button class="print-btn-primary" type="submit" onclick="window.print()">Print Admission</button>
+            <button class="print-btn-primary" type="submit" onclick="window.print()">Print</button>
         </div>
         <page size="A4">
             <div class="admission-content">
@@ -275,17 +282,18 @@
                         Colombo</div>
                 </div>
                 <div class="admission-header">
-                    <div class="admission-course-name">Diploma in Library and Information Management - DLIM 2021/2022
+                    <div class="admission-course-name">Student Record of Examinations - Diploma in Library and
+                        Information Management
                     </div>
-                    <div class="admission-exam">Second Semester Examination - 2022 December</div>
-                    <div class="admission-card">Admission Card</div>
+                    <div class="results-abr"><b>MC</b> - Medical | <b>EC</b> - Exceptional Circumstances | <b>CM</b> -
+                        Completed | <b>NC</b> - Not
+                        Completed | <b>F</b> - Absent | <b>CN</b> - Cancelled | <b>WH</b> - Withheld</div>
                     <div class="admission-name-index">
-                        <div class="admission-name">Name of the Candidate: <b>
-                                <?= $studentData[0]->name ?>
+                        <div class="admission-name">Name : <b>
+
                             </b></div>
-                        <div class="admission-index">Index Number: <b>
-                                <?= $studentData[0]->indexNo;
-                                ?>
+                        <div class="admission-index">Index Number : <b>
+
                             </b></div>
                     </div>
 
@@ -294,31 +302,46 @@
                     <table class="admission-table">
                         <thead>
                             <tr>
-                                <th>Date</th>
                                 <th>Subject</th>
-                                <th>Signature of the </br>Candidate</th>
-                                <th>Signature of the </br>Invigilator</th>
+                                <th>Year</th>
+                                <th>Semester</th>
+                                <th>Credits</th>
+                                <th>Results</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($timeTableData as $ttdata): ?>
-                                <?php $json = json_encode($ttdata);
-                                // show($ttdata); ?>
-                                <tr>
 
-                                    <td>
-                                        <?= $ttdata[0]->date ?>
-                                        </br>9.00a.m-12.00noon
-                                    </td>
-                                    <td>
-                                        <?= $ttdata[0]->subjectName ?>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                            <tr>
+                                <td>Subject 01</td>
+                                <td>[22]</td>
+                                <td>[1]</td>
+                                <td>3</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td>Subject 02</td>
+                                <td>[22]</td>
+                                <td>[1]</td>
+                                <td>3</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td>Subject 03</td>
+                                <td>[22]</td>
+                                <td>[1]</td>
+                                <td>3</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td>Subject 04</td>
+                                <td>[22]</td>
+                                <td>[1]</td>
+                                <td>3</td>
+                                <td>A</td>
+                            </tr>
 
 
-                            <?php endforeach; ?>
+
                         </tbody>
                     </table>
 

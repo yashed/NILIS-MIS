@@ -619,7 +619,8 @@ $data['role'] = $role;
                         <tbody>
 
                             <tr>
-                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt=""> Bimsara Anjana</td>
+                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt="">
+                                    Bimsara Anjana</td>
                                 <td> DLIM/01/01 </td>
                                 <td> 70</td>
                                 <td> 80</td>
@@ -629,7 +630,8 @@ $data['role'] = $role;
                                 <td> B</td>
                             </tr>
                             <tr>
-                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt=""> Yashed Thisara</td>
+                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt="">
+                                    Yashed Thisara</td>
                                 <td> DLIM/01/02 </td>
                                 <td> 50</td>
                                 <td> 60</td>
