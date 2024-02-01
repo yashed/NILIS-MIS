@@ -47,7 +47,9 @@ class SAR extends Controller
         //get the degree id from the url
         $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
         $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
-        $examID = isset($_GET['semester']) ? $_GET['semester'] : null;
+
+        //need to get the semster to handel the two yaer exam
+        $semester = isset($_GET['semester']) ? $_GET['semester'] : null;
 
         // show($degreeID);
         // show($degreeID);
