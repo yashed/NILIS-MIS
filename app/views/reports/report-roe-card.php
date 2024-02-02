@@ -1,5 +1,5 @@
 <head>
-    <title>Admission Card</title>
+    <title>Record Of Examination</title>
     <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
 </head>
 
@@ -160,7 +160,6 @@
 
     .admission-table tr {
         border: 1px solid #ddd;
-        border-radius: 10px;
         text-align: center;
 
     }
@@ -291,7 +290,9 @@
 <body>
     <div class="admisssion-card">
         <div class="print-btn">
-            <button class="print-btn-primary" type="submit" onclick="window.print()">Print</button>
+            <!-- <button class="print-btn-primary" type="submit" onclick="window.print()">Print</button> -->
+            <button class="print-btn-primary" type="submit" onclick="generatePDF()"
+                id="downloadButton">Download</button>
         </div>
         <page size="A4">
             <div class="admission-content">
@@ -440,5 +441,26 @@
 
 </body>
 
+<script>
+
+    function generatePDF() {
+        const element = document.querySelector('.admisssion-card');
+        html2pdf(element, {
+            margin: 0,
+            filename: 'record_of_examination.pdf',
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        });
+
+        // Hide the download button 
+        const downloadButton = document.getElementById('downloadButton');
+        downloadButton.style.display = 'none';
+
+        // Show the download button after a delay
+        setTimeout(function () {
+            downloadButton.style.display = 'block';
+        }, 3000);
+    }
+</script>
 
 </html>
