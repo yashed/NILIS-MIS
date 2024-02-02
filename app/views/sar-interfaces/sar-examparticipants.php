@@ -158,7 +158,7 @@ $data['role'] = $role;
         margin-right: 2vw;
     }
 
-   
+
 
     .admission-button2 {
         padding: 0.5% 1.8%;
@@ -172,7 +172,7 @@ $data['role'] = $role;
         width: 14vw;
         font-size: 0.9vw;
     }
-    
+
 
     .temp2-sub-title2 {
         color: #17376E;
@@ -340,8 +340,8 @@ $data['role'] = $role;
     }
 
     td img {
-        width: 36px;
-        height: 36px;
+        width: 40px;
+        height: 40px;
         margin: .5rem;
         border-radius: 50%;
         vertical-align: middle;
@@ -382,66 +382,7 @@ $data['role'] = $role;
         font-size: 0.8vw;
     }
 
-    /* tbody tr.hide {
-        opacity: 0;
-        transform: translateX(100%);
-    }
 
-    tbody tr:hover {
-        background-color: #eeeeee !important;
-    }
-
-    tbody tr td,
-    tbody tr td p,
-    tbody tr td img {
-        transition: .2s ease-in-out;
-    }
-
-    tbody tr.hide td,
-    tbody tr.hide td p {
-        padding: 0;
-        font: 0 / 0 sans-serif;
-        transition: .2s ease-in-out .5s;
-    }
-
-    tbody tr.hide td img {
-        width: 0;
-        height: 0;
-        transition: .2s ease-in-out .5s;
-    }
-
-
-    @media (max-width: 1000px) {
-        td:not(:first-of-type) {
-            min-width: 12.1rem;
-        }
-    }
-
-    thead th span.icon-arrow {
-        display: inline-block;
-        width: 1.3rem;
-        height: 1.3rem;
-        border-radius: 50%;
-        border: 1.4px solid transparent;
-
-        text-align: center;
-        font-size: 1rem;
-
-        margin-left: .5rem;
-        transition: .2s ease-in-out;
-    }
-
-    thead th:hover span.icon-arrow {
-        border: 1.4px solid;
-    }
-
-    thead th.active span.icon-arrow {
-        color: #ffffff;
-    }
-
-    thead th.asc span.icon-arrow {
-        transform: rotate(180deg);
-    } */
 
     .input-main-group {
         display: flex;
@@ -500,7 +441,7 @@ $data['role'] = $role;
         color: var(--sidebar-color);
     }
 
-    
+
     .modal {
         display: none;
         position: fixed;
@@ -519,7 +460,8 @@ $data['role'] = $role;
         margin: 15% auto;
         padding: 20px;
         border: 1px solid #888;
-        width: 80%;
+        width: 70vw;
+        border-radius: 10px;
     }
 
     .close {
@@ -535,8 +477,6 @@ $data['role'] = $role;
         text-decoration: none;
         cursor: pointer;
     }
-
-
 </style>
 
 <body>
@@ -593,27 +533,32 @@ $data['role'] = $role;
                                 <th> Attempt </th>
                                 <th> Index Number </th>
                                 <th> Registration Number </th>
+                                <th> Student Type </th>
                                 <th> Admission Card </th>
                             </tr>
                         </thead>
                         <tbody>
-
-                            <tr>
-                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt=""> Bimsara Anjana</td>
-                                <td> 3 </td>
-                                <td> DLIM/001</td>
-                                <td> DLIM/01/01</td>
-                                <td> tap to see Admission card </td>
-                            </tr>
-                            <tr>
-                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt=""> Yashed Thisara</td>
-                                <td> 3 </td>
-                                <td> DLIM/001</td>
-                                <td> DLIM/01/01</td>
-                                <td> tap to see Admission card </td>
-                            </tr>
-
-
+                            <?php foreach ($examParticipants as $students): ?>
+                                <?php foreach ($students as $student): ?>
+                                    <?php $json = json_encode($student); ?>
+                                    <tr>
+                                        <td class="table__body-td-name"><img src="<?= ROOT ?>assets/student.png" alt="">
+                                            Bimsara Anjana</td>
+                                        <td>
+                                            <?= $student->attempt ?>
+                                        </td>
+                                        <td>
+                                            <?= $student->indexNo ?>
+                                        </td>
+                                        <td> DLIM/01/01</td>
+                                        <td>
+                                            <?= $student->studentType ?>
+                                        </td>
+                                        <td> <a href="http://localhost/NILIS-MIS/public/admission/login?degreeID=10&examID=43">tap
+                                                to see Admission card </a></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </section>
@@ -630,37 +575,37 @@ $data['role'] = $role;
         </div>
 
         <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeModal">&times;</span>
-            <?php $this->view('components/file-upload/exam-attendance-upload', $data) ?>
+            <div class="modal-content">
+                <span class="close" id="closeModal">&times;</span>
+                <?php $this->view('components/file-upload/exam-attendance-upload', $data) ?>
+            </div>
         </div>
-    </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var modal = document.getElementById('myModal');
-        var btn = document.getElementById('openModal');
-        var span = document.getElementById('closeModal');
-        var body = document.body;
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var modal = document.getElementById('myModal');
+                var btn = document.getElementById('openModal');
+                var span = document.getElementById('closeModal');
+                var body = document.body;
 
-        btn.onclick = function () {
-            modal.style.display = "block";
-            body.classList.add('modal-open'); 
-        }
+                btn.onclick = function () {
+                    modal.style.display = "block";
+                    body.classList.add('modal-open');
+                }
 
-        span.onclick = function () {
-            modal.style.display = "none";
-            body.classList.remove('modal-open');
-        }
+                span.onclick = function () {
+                    modal.style.display = "none";
+                    body.classList.remove('modal-open');
+                }
 
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-                body.classList.remove('modal-open');
-            }
-        }
-    });
-</script>
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                        body.classList.remove('modal-open');
+                    }
+                }
+            });
+        </script>
 
 
 </body>

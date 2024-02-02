@@ -69,14 +69,16 @@ $data['role'] = $role;
 
 
 
-   
+
     .temp2-subsection-1 {
-        background-color:#ffffff;
+
+
+        background-color: #ffffff;
         border-radius: 6px;
         height: 18vw;
         padding: 1vw 2vw 1vw 2vw;
-margin-left: 4px;
-padding-top: 1vw;
+        margin-left: 4px;
+        padding-top: 1vw;
     }
 
     .temp2-sub-title1 {
@@ -87,16 +89,17 @@ padding-top: 1vw;
         font-style: normal;
         font-weight: 600;
         font-size: 1.2vw;
-       
+
     }
 
     .temp2-sub-title2 {
 
         color: #17376E;
         font-family: Poppins;
+        font-size: 22px;
         font-style: normal;
         font-weight: 600;
-        font-size: 25px;
+        font-size: 1.2vw;
     }
 
     .temp2-subsection-2 {
@@ -109,11 +112,13 @@ padding-top: 1vw;
     .temp2-subsection-21 {
         display: flex;
         flex-direction: column;
-        background-color: var(--text-color);
-        padding: 1% 1% 1% 1%;
-        border-radius: 6px;
         width: 100%;
         height: auto;
+        background-color: #ffffff;
+        border-radius: 6px;
+        padding: 1vw 2vw 1vw 2vw;
+        margin-left: 4px;
+        padding-top: 1vw;
     }
 
     .temp2-footer {
@@ -193,15 +198,15 @@ padding-top: 1vw;
         padding-top: 5px;
         font-size: 0.9vw;
         color: #000000;
-font-weight: 300;
+        font-weight: 300;
     }
 
     .input-main-group {
         display: flex;
         align-items: center;
-        margin-left: 25%;
         background-color: #ffffff;
         gap: 1%;
+        justify-content: center;
     }
 
     .custom-dropdown {
@@ -210,7 +215,7 @@ font-weight: 300;
         margin: 10px;
         border: #E2E2E2;
         min-width: 200px;
-        font-size:1vw;
+        font-size: 1vw;
     }
 
     .custom-dropdown .icon {
@@ -220,7 +225,7 @@ font-weight: 300;
         transform: translateY(-50%);
         font-size: 25px;
         color: #000;
-        /* Set the color you prefer */
+
     }
 
     .custom-dropdown select {
@@ -233,29 +238,92 @@ font-weight: 300;
         text-align: center;
         cursor: pointer;
         font-size: 16px;
-        font-size:1vw ;
-        padding-left: 40px;
-        /* Adjust this value to leave space for the icon */
+        font-size: 1vw;
+
     }
 
     .custom-dropdown select:hover {
         background-color: #eeeeee;
-        /* Change the background color on hover */
+
     }
 
-    .dr-degree-programs-button {
-        height: 70%;
-        border-radius: 7px;
-        background-color: var(--sidebar-color);
-        color: var(--text-color);
-        width: 10%;
-        min-width: 80px;
-        font-size:1vw ;
+    .btn-primary {
+        min-width: 10vh;
+        color: #fff;
+        height: 5vh;
+        padding: 5px 5px 5px 5px;
+        border-radius: 8px;
+        background: #17376e;
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        border: 0px;
+
+
     }
 
-    .dr-degree-programs-button:hover {
-        background-color: var(--text-color);
-        color: var(--sidebar-color);
+    .bt-name {
+        font-size: 16px;
+        font-weight: 500px;
+    }
+
+    .btn-primary-name {
+        font-size: 1vw;
+        font-weight: 500px;
+    }
+
+    .btn-primary:hover {
+        color: #17376e;
+        background-color: white;
+        border: 1px solid
+    }
+
+    .result-table {
+        margin-top: 20px;
+        margin: 20px
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 0.8vw;
+
+    }
+
+    th {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+
+    }
+
+    td {
+        border: 1px solid #ddd;
+        padding: 5px;
+        text-align: center;
+
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    @media screen and (max-width: 600px) {
+
+        /* Make the table responsive on smaller screens */
+        table {
+            overflow-x: auto;
+        }
+    }
+
+    .result-message {
+        text-align: center;
+        font-size: 2vw;
+        font-weight: 500px;
+        color: #17376E;
+
+        padding-top: 20px;
+        height: 15vw;
+
     }
 </style>
 
@@ -300,22 +368,86 @@ font-weight: 300;
                 <div class="temp2-sub-title2">
                     Results</br>
                 </div>
-                <div class="input-main-group">
-                    <div class="custom-dropdown">
-                        <div class="icon">
-                            <i class='bx bx-search'></i>
+                <form method="POST" id="examination-results">
+                    <div class="input-main-group">
+                        <div class="custom-dropdown">
+                            <div class="icon">
+                                <i class='bx bx-search' style="width:20px ; height : 20px;"></i>
+                            </div>
+
+                            <select id="sub" name="subCode">
+                                <?php foreach ($subNames as $subject): ?>
+                                    <?php $json = json_encode($subject); ?>
+
+                                    <option value=" <?= $subject->subjectCode ?>" name="subjectCode">
+                                        <?= $subject->subjectName ?>
+                                    </option>
+
+                                <?php endforeach; ?>
+
+                            </select>
+
+
+
                         </div>
-                        <select id="sub" name="sub">
-                            <option value="Subject1">Subject1</option>
-                            <option value="Subject2">Subject2</option>
-                            <option value="Subject3">Subject3</option>
-                            <option value="Subject4">Subject4</option>
-                        </select>
+                        <button class="btn-primary" type="submit" name="submit" value="selectSubject">
+                            <div class="btn-primary-name">
+                                Search
+                            </div>
+                        </button>
                     </div>
-                    <button class="dr-degree-programs-button">Search</button>
+
+                </form>
+
+                <div class="result-table">
+                    <?php if (!empty($examResults)): ?>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Index No</th>
+                                    <th>Subject Code</th>
+                                    <th>Examiner 01 Marks</th>
+                                    <th>Examiner 02 Marks</th>
+                                    <th>Examiner 03 Marks</th>
+                                    <th>Assestment Marks</th>
+                                    <th>Final Mark</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($examResults as $result): ?>
+                                    <tr>
+                                        <td>
+                                            <?= $result->studentIndexNo ?>
+                                        </td>
+                                        <td>
+                                            <?= $result->subjectCode ?>
+                                        </td>
+                                        <td>
+                                            <?= $result->examiner1Marks ?>
+                                        </td>
+                                        <td>
+                                            <?= $result->examiner2Marks ?>
+                                        </td>
+                                        <td>
+                                            <?= $result->examiner3Marks ?>
+                                        </td>
+                                        <td>
+                                            <?= $result->assessmentMarks ?>
+                                        </td>
+                                        <td>
+                                            <?= $result->finalMarks ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+
+                            </tbody>
+                        </table>
+                    <?php else: ?>
+                        <div class="result-message">Results not uploaded yet.</div>
+                    <?php endif; ?>
+
                 </div>
-
-
             </div>
 
 

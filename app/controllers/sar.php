@@ -55,7 +55,7 @@ class SAR extends Controller
         //need to get these values form the session
         $degreeID = 2;
         $semester = 1;
-        $examID = 1;
+        $examID = 43;
 
         $model = new Model();
         $degree = new Degree();
@@ -279,14 +279,6 @@ class SAR extends Controller
                     $ExamData['semester'] = $semester;
                     $ExamData['status'] = 'ongoing';
 
-                    //insert data to exam table
-                    if ($exam->examValidate($ExamData)) {
-                        $exam->insert($ExamData);
-                        $examID = $exam->lastID('examID');
-
-                    } else {
-                        $data['errors'] = $exam->errors;
-                    }
 
                     $subCount = count($_POST['subName']);
 
@@ -332,6 +324,17 @@ class SAR extends Controller
                         foreach ($timeTableData as $timeTableRow) {
                             $examtimetable->insert($timeTableRow);
                         }
+
+
+                        //insert data to exam table
+                        if ($exam->examValidate($ExamData)) {
+                            $exam->insert($ExamData);
+                            $examID = $exam->lastID('examID');
+
+                        } else {
+                            $data['errors'] = $exam->errors;
+                        }
+
                         message("Exam Was Created Successfully", "success");
                         // redirect('sar/examination');
 
@@ -349,7 +352,14 @@ class SAR extends Controller
 
             if ($method == 'participants') {
                 $participants[] = $examParticipants->where(['degreeID' => $degreeID, 'semester' => $semester, 'examID' => $examID]);
-                $data['participants'] = $participants;
+
+                // show($participants);
+                $data['examParticipants'] = $participants;
+                $data['examID'] = $examID;
+                $data['degreeID'] = $degreeID;
+
+
+
                 $this->view('sar-interfaces/sar-examparticipants', $data);
 
             } else if ($method == 'resultsupload') {
@@ -633,7 +643,37 @@ class SAR extends Controller
 
 
             } else if ($method == 'results') {
+
+                $examMarks = new Marks();
+
+                $examSubjects = $examtimetable->where(['examID' => $examID]);
+
+                if (isset($_POST['submit'])) {
+
+
+                    $resultSubCode = isset($_POST['subCode']) ? $_POST['subCode'] : '';
+                    // show($resultSubCode);
+
+
+                }
+                // remove any leading or trailing spaces from the string
+                $resultSubCode = trim($resultSubCode);
+
+
+                //get examination results using marks and final marks
+                $tables = ['final_marks'];
+                $columns = ['*'];
+                $conditions = ['marks.examID = final_marks.examID', 'marks.studentIndexNo = final_marks.studentIndexNo', 'marks.subjectCode = final_marks.subjectCode', 'marks.examID = ' . $examID, 'marks.subjectCode =  "' . $resultSubCode . '"'];
+                $examResults = $examMarks->join($tables, $columns, $conditions);
+                // show($examResults);
+
+
+
+                $data['subNames'] = $examSubjects;
+                $data['examResults'] = $examResults;
+
                 $this->view('sar-interfaces/sar-examresults', $data);
+
             } else {
                 $this->view('sar-interfaces/sar-examination', $data);
             }
@@ -661,10 +701,10 @@ class SAR extends Controller
     {
         $this->view('sar-interfaces/sar-examresults');
     }
-    public function examparticipants()
-    {
-        $this->view('sar-interfaces/sar-examparticipants');
-    }
+    // public function examparticipants()
+    // {
+    //     $this->view('sar-interfaces/sar-examparticipants');
+    // }
     public function showresults()
     {
         $this->view('sar-interfaces/sar-examresultshow');
