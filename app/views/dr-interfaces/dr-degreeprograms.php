@@ -289,7 +289,7 @@ $data['role'] = $role;
                         <div class="btn-box">
                             <div class="button-btn1">
                                 <button type="button" class="bt-name-white" id="Back1" style="left: 0px;">Back</button>
-                                <button onclick="validateForm2()" type="button" class="bt-name" style="text-decoration: none; margin-right: 80px;" id="Next2">Continue</button>
+                                <button type="button" class="bt-name" style="text-decoration: none; margin-right: 80px;" id="Next2">Continue</button>
                             </div>
                         </div>
                     </form>
@@ -308,7 +308,7 @@ $data['role'] = $role;
                         <div class="btn-box1">
                             <div class="button-btn">
                                 <button type="button" class="bt-name-white" id="Back2">Back</button>
-                                <button type="Submit" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next3" onclick="validateForm3(event)">Create</button>
+                                <button type="Submit" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next3">Create</button>
                             </div>
                         </div>
                     </form>
@@ -353,18 +353,18 @@ $data['role'] = $role;
             if (degreeType.value === "1 Year") duration = 1;
             else if (degreeType.value === "2 Year") duration = 2;
 
-            if (selectDegreeType.value === "DLMS") degree = "Diploma in Library Management Studies";
-            else if (selectDegreeType.value === "ENCM") degree = "Executive National Certificate in Management";
-            else if (selectDegreeType.value === "DSL") degree = "Diploma in Science Library";
+            if (selectDegreeType.value === "DLMS") degree_name = "Diploma in Library Management Studies";
+            else if (selectDegreeType.value === "ENCM") degree_name = "Executive National Certificate in Management";
+            else if (selectDegreeType.value === "DSL") degree_name = "Diploma in Science Library";
 
             var formData1 = new FormData(Form1);
-            formData1.append('degree', degree);
+            formData1.append('degree_name', degree_name);
             formData1.append('duration', duration);
 
             $.ajax({
                 url: 'http://localhost/NILIS-MIS/app/controllers/dr.php',
                 data: formData1,
-                method:"POST",
+                method: "POST",
                 processData: false,
                 contentType: false,
                 success: function(data) {
@@ -408,34 +408,32 @@ $data['role'] = $role;
     Next3.onclick = function(event) {
         event.preventDefault();
         if (validateForm3(event)) {
-            // var formData1 = new FormData(Form1);
-            // formData1.append('degree_type', degreeType.value);
-            // formData1.append('select_degree_type', selectDegreeType.value);
-            // var formData2 = new FormData(Form2);
-            // var formData3 = new FormData(Form3);
-
-            // console.log(formData1);
-            // Combine all form data
-            var combinedFormData = new FormData();
-            combinedFormData.append('form1', formData1);
-            combinedFormData.append('form2', formData2);
-            combinedFormData.append('form3', formData3);
-
-            sendFormData(combinedFormData, "<?php echo ROOT; ?>dr.php");
+                var SubjectName = [];
+                var SubjectCode = [];
+                var NoCredits = [];
+                $('.SubjectName').each(function() {
+                    SubjectName.push($(this).text());
+                });
+                $('.SubjectCode').each(function() {
+                    SubjectCode.push($(this).text());
+                });
+                $('.NoCredits').each(function() {
+                    NoCredits.push($(this).text());
+                });
+                $.ajax({
+                    url: "http://localhost/NILIS-MIS/app/controllers/dr.php",
+                    method: "POST",
+                    data: {
+                        SubjectName: SubjectName,
+                        SubjectCode: SubjectCode,
+                        NoCredits: NoCredits
+                    },
+                    success: function(data) {
+                        alert(data);
+                    }
+                });
             // window.location.href = "<?= ROOT ?>dr/newdegree";
         }
-    }
-
-    function sendFormData(formData, url) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", url, true);
-        xhr.onreadystatechange = function() {
-            // if (xhr.readyState == 4 && xhr.status == 200) {
-            //     // Handle the response from the server if needed
-            //     console.log(xhr.responseText);
-            // }
-        };
-        xhr.send(formData);
     }
     // Function to validate Form1, Form2, Form3 fields
     function validateForm1() {
@@ -448,11 +446,6 @@ $data['role'] = $role;
     }
 
     function validateForm2(numSemesters) {
-        // var formData = new FormData(document.getElementById("Form2")); // Get form data
-        // formData.append("numSemesters", numSemesters); // Append numSemesters to form data
-        // var xhr = new XMLHttpRequest(); // Make an AJAX request to the controller
-        // xhr.open("POST", "YourController.php", true);
-        // xhr.send(formData);
         for (var j = 1; j <= numSemesters; j++) { // semesters
             var subjectTable = document.getElementById(`Subject_table${j}`);
             var subjectRows = subjectTable.querySelectorAll('tr');
@@ -593,64 +586,14 @@ $data['role'] = $role;
 </script>
 
 </html>
-<!--  
-    $numSemesters = $_POST['numSemesters'];  
-     // if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        //     // Assuming "degree_type" and "select_degree_type" are the form fields in Form1
-        //     $degreeType = isset($_POST["degree_type"]) ? $_POST["degree_type"] : null;
-        //     $selectDegreeType = isset($_POST["select_degree_type"]) ? $_POST["select_degree_type"] : null;
+<!-- // var formData1 = new FormData(Form1);
+            // var formData2 = new FormData(Form2);
+            // var formData3 = new FormData(Form3);
 
-        //     if ($degreeType !== null && $selectDegreeType !== null) {
-        //         // Store Form1 data in the session
-        //         $_SESSION["form1_data"] = array(
-        //             'degree_type' => $degreeType,
-        //             'select_degree_type' => $selectDegreeType
-        //         );
-        //     }
-        // }
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Assuming you have a loop to handle dynamic form fields in Form2
-        for ($i = 1; $i <= $numSemesters; $i++) {
-            // Extract form data for each semester
-            $subjectName = $_POST["SubjectName{$i}_1"];
-            $subjectCode = $_POST["SubjectCode{$i}_1"];
-            $credits = $_POST["NoCredits{$i}_1"];
-    
-            // Store Form2 data in the session
-            $_SESSION["form2_data"][$i] = array(
-                'subject_name' => $subjectName,
-                'subject_code' => $subjectCode,
-                'credits' => $credits
-            );
-        }
-    }
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Assuming you have a loop to handle dynamic form fields in Form3
-        for ($i = 1; $i <= 3; $i++) {
-            // Extract form data for each grade
-            $maxMark = $_POST["maxvalue{$i}"];
-            $minMark = $_POST["minvalue{$i}"];
-            $gpa = $_POST["gpa{$i}"];
-    
-            // Store Form3 data in the session
-            $_SESSION["form3_data"][$i] = array(
-                'max_mark' => $maxMark,
-                'min_mark' => $minMark,
-                'gpa' => $gpa
-            );
-        }
-        // show($_SESSION["form1_data"]);
-        // Now that the entire form process is complete, insert data into the database
-        $form1Data = $_SESSION["form1_data"];
-        $form2Data = $_SESSION["form2_data"];
-        $form3Data = $_SESSION["form3_data"];
-    
-        // Perform SQL queries to insert data into the database
-        // ... (your existing code for database insertion)
-    
-        // Clear the session data after successful insertion
-        // unset($_SESSION["form1_data"]);
-        // unset($_SESSION["form2_data"]);
-        // unset($_SESSION["form3_data"]);
-    }
--->
+            // console.log(formData1);
+            // Combine all form data
+            // var combinedFormData = new FormData();
+            // combinedFormData.append('form1', formData1);
+            // combinedFormData.append('form2', formData2);
+            // combinedFormData.append('form3', formData3);
+            // sendFormData(combinedFormData, "<?php echo ROOT; ?>dr.php"); -->

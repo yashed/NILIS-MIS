@@ -25,16 +25,58 @@ class DR extends Controller
     {
         $degree = new Degree();
         $subject = new Subjects();
-
-        // $result1 = $degree->validate($_POST);
-        // $result2 = $subject->validate($_POST);
-        // $degree->insert( $_POST );
-        show($_POST);
+        $grade = new Grades();
 
         $data['degrees'] = $degree->findAll();
         $data['subjects'] = $subject->findAll();
-        //show( $data[ 'degrees' ] );
 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if all form data is present
+            // if (isset($_POST['form1']) && isset($_POST['form2']) && isset($_POST['form3'])) {
+            if (isset($_POST['formData1'])) {
+                $form1Data = $_POST['formData1'];
+                show($form1Data);
+                $degreeType = $form1Data['degree_type'];
+                $selectDegreeType = $form1Data['select_degree_type'];
+                $degreeName = $form1Data['degree_name'];
+                $duration = $form1Data['duration'];
+
+                // Insert into the 'Degree' table
+                $degree->insert([
+                    'DegreeType' => $degreeType,
+                    'DegreeShortName' => $selectDegreeType,
+                    'DegreeName' => $degreeName,
+                    'Duration' => $duration,
+                    'AcademicYear' => '2023',
+                ]);
+
+                echo "Data successfully saved in the database";
+            } else {
+                echo "Incomplete form data";
+            }
+            $connect = mysqli_connect("localhost", "root", "", "nilis_db");
+            if (isset($_POST["SubjectName"])) {
+                $SubjectName = $_POST["SubjectName"];
+                $SubjectCode = $_POST["SubjectCode"];
+                $NoCredits = $_POST["NoCredits"];
+                $query = '';
+                for ($count = 0; $count < count($SubjectName); $count++) {
+                    $SubjectName_clean = mysqli_real_escape_string($connect, $SubjectName[$count]);
+                    $SubjectCode_clean = mysqli_real_escape_string($connect, $SubjectCode[$count]);
+                    $NoCredits_clean = mysqli_real_escape_string($connect, $NoCredits[$count]);
+                    if ($SubjectName_clean != '' && $SubjectCode_clean != '' && $NoCredits_clean != '') {
+                        $query .= '
+                        INSERT INTO item(SubjectName, SubjectCode, NoCredits, DegreeID, semester) 
+                        VALUES("' . $SubjectName_clean . '", "' . $SubjectCode_clean . '", "' . $NoCredits_clean . '"); 
+                        ';
+                    }
+                }
+            }
+        } else {
+            echo "Invalid request method";
+        }
+
+        print_r($_POST);
         $this->view('dr-interfaces/dr-degreeprograms', $data);
     }
 
