@@ -246,75 +246,74 @@ $data['role'] = $role;
 
                 <div class="container">
                     <h3>Create New Degree Program</h3>
-                    <form id="Form1" method="post">
-                        <div class="input-fields" style="margin: 20px 0px 10px 0px;">
+                    <form action="<?= ROOT ?>dr/newdegree" method="post">
+                        <div id="Form1">
+                            <br>
+                            <div class="input-fields" style="margin: 20px 0px 10px 0px;">
+                                <div class="step-row">
+                                    <div id="progress1"></div>
+                                </div>
+                                <label for="degree type" class="drop-down">Degree Type:</label><br>
+                                <select name="degree type" id="degree_type" style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;" onchange="handleDegreeTypeChange()">
+                                    <option value="" default hidden>Select</option>
+                                    <option value="1 Year" <?= (set_value('degree_type') === '1 Year') ? 'selected' : '' ?>>1 Year Degree</option>
+                                    <option value="2 Year" <?= (set_value('degree_type') === '2 Year') ? 'selected' : '' ?>>2 Year Degree</option>
+                                </select><br><br><br>
 
-                            <label for="degree type" class="drop-down">Degree Type:</label><br>
-                            <select name="degree type" id="degree_type" style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;" onchange="handleDegreeTypeChange()">
-                                <option value="" default hidden>Select</option>
-                                <option value="1 Year" <?= (set_value('degree_type') === '1 Year') ? 'selected' : '' ?>>1 Year Degree</option>
-                                <option value="2 Year" <?= (set_value('degree_type') === '2 Year') ? 'selected' : '' ?>>2 Year Degree</option>
-                            </select><br><br><br>
+                                <label for="select degree type" class="drop-down">Select Degree Program:</label><br>
+                                <select name="select degree type" id="select_degree_type" style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;">
+                                    <option value="" default hidden>Select</option>
+                                    <option value="DLMS" <?= (set_value('select_degree_type') === 'DLMS') ? 'selected' : '' ?>>DLMS</option>
+                                    <option value="ENCM" <?= (set_value('select_degree_type') === 'ENCM') ? 'selected' : '' ?>>ENCM</option>
+                                    <option value="DSL" <?= (set_value('select_degree_type') === 'DSL') ? 'selected' : '' ?>>DSL</option>
 
-                            <label for="select degree type" class="drop-down">Select Degree Program:</label><br>
-                            <select name="select degree type" id="select_degree_type" style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;">
-                                <option value="" default hidden>Select</option>
-                                <option value="DLMS" <?= (set_value('select_degree_type') === 'DLMS') ? 'selected' : '' ?>>DLMS</option>
-                                <option value="ENCM" <?= (set_value('select_degree_type') === 'ENCM') ? 'selected' : '' ?>>ENCM</option>
-                                <option value="DSL" <?= (set_value('select_degree_type') === 'DSL') ? 'selected' : '' ?>>DSL</option>
+                                </select><br><br><br>
+                            </div>
 
-                            </select><br><br><br>
+                            <div class="btn-box">
+                                <div class="button-btn">
+
+                                    <button onclick="myFunction2()" type="button" class="bt-name-white" id="Cancel1">Cancel</button>
+                                    <button type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next1">Continue</button>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="btn-box">
-                            <div class="button-btn">
-
-                                <button onclick="myFunction2()" type="button" class="bt-name-white" id="Cancel1">Cancel</button>
-                                <button type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next1">Continue</button>
+                        <div id="Form2">
+                            <p id="form2_p">Define Subjects and Credits</p>
+                            <div class="step-row">
+                                <div id="progress2"></div>
+                            </div>
+                            <div class="box_3">
+                                <div class="box_3_2" id="semester_subjects_credits">
+                                    <div id="semester_container"></div>
+                                </div>
+                            </div>
+                            <div class="btn-box">
+                                <div class="button-btn1">
+                                    <button type="button" class="bt-name-white" id="Back1" style="left: 0px;">Back</button>
+                                    <button type="button" class="bt-name" style="text-decoration: none; margin-right: 80px;" id="Next2">Continue</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Form3">
+                            <p id="form2_p">Define Scheme of Assignment</p>
+                            <div class="step-row">
+                                <div id="progress3"></div>
+                            </div>
+                            <div class="box_3">
+                                <div class="box_3_2">
+                                        <div class="Grade_table" id="Grade_table"></div>
+                                </div>
+                            </div>
+                            <div class="btn-box1">
+                                <div class="button-btn">
+                                    <button type="button" class="bt-name-white" id="Back2">Back</button>
+                                    <button type="Submit" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next3">Create</button>
+                                </div>
                             </div>
                         </div>
                     </form>
-
-                    <form id="Form2" method="post">
-                        <p id="form2_p">Define Subjects and Credits</p>
-
-                        <div class="box_3">
-                            <div class="box_3_1">
-                                <p>Subject</p>
-                            </div>
-                            <div class="box_3_2" id="semester_subjects_credits">
-                                <div id="semester_container"></div>
-                            </div>
-                        </div>
-                        <div class="btn-box">
-                            <div class="button-btn1">
-                                <button type="button" class="bt-name-white" id="Back1" style="left: 0px;">Back</button>
-                                <button type="button" class="bt-name" style="text-decoration: none; margin-right: 80px;" id="Next2">Continue</button>
-                            </div>
-                        </div>
-                    </form>
-                    <form id="Form3" method="post" action="">
-                        <h5 style="font-size: 16px; font-weight: 400; margin-bottom: -20px;">Define Scheme of Assignment</h5>
-                        <div class="box_3">
-                            <div class="box_3_1">
-                                <p>Subject</p>
-                            </div>
-                            <div class="box_3_2">
-                                <table class="Subject_table">
-                                    <div class="Grade_table" id="Grade_table"></div>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="btn-box1">
-                            <div class="button-btn">
-                                <button type="button" class="bt-name-white" id="Back2">Back</button>
-                                <button type="Submit" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next3">Create</button>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="step-row">
-                        <div id="progress"></div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -341,97 +340,47 @@ $data['role'] = $role;
     var Back1 = document.getElementById("Back1");
     var Back2 = document.getElementById("Back2");
 
-    var progress = document.getElementById("progress");
+    var progress1 = document.getElementById("progress1");
+    var progress2 = document.getElementById("progress2");
+    var progress3 = document.getElementById("progress3");
 
     // Validate Form1 before proceeding
     Next1.onclick = function() {
         if (validateForm1()) {
-            var degree, duration;
-            var degreeType = document.getElementById("degree_type");
-            var selectDegreeType = document.getElementById("select_degree_type");
-
-            if (degreeType.value === "1 Year") duration = 1;
-            else if (degreeType.value === "2 Year") duration = 2;
-
-            if (selectDegreeType.value === "DLMS") degree_name = "Diploma in Library Management Studies";
-            else if (selectDegreeType.value === "ENCM") degree_name = "Executive National Certificate in Management";
-            else if (selectDegreeType.value === "DSL") degree_name = "Diploma in Science Library";
-
-            var formData1 = new FormData(Form1);
-            formData1.append('degree_name', degree_name);
-            formData1.append('duration', duration);
-
-            $.ajax({
-                url: 'http://localhost/NILIS-MIS/app/controllers/dr.php',
-                data: formData1,
-                method: "POST",
-                processData: false,
-                contentType: false,
-                success: function(data) {
-                    console.log('FormData Object Send Successfully!')
-                },
-                error: function(err) {
-                    console.log('FormData Object Send Failed!')
-                },
-            });
-            for (var pair of formData1.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
-            }
-            Form1.style.left = "-550px";
-            Form2.style.left = "100px";
-            progress.style.width = "150px";
+            console.log("Form1 Validated");
+            Form1.style.display = "none";
+            Form2.style.display = "block";
+            progress2.style.width = "150px";
             myFunction();
         } else {
             alert(" Please fill out all the fields.");
         }
     }
     Back1.onclick = function() {
-        Form1.style.left = "70px";
-        Form2.style.left = "550px";
-        progress.style.width = "10px";
+        Form1.style.display = "block";
+        Form2.style.display = "none";
+        progress1.style.width = "10px";
     }
     // Validate Form2 before proceeding
     Next2.onclick = function() {
         if (validateForm2(numSemesters)) {
-            Form2.style.left = "-550px";
-            Form3.style.left = "100px";
-            progress.style.width = "300px";
+            Form2.style.display = "none";
+            Form3.style.display = "block";
+            progress3.style.width = "300px";
             myFunction();
             generateGrades();
         }
     }
     Back2.onclick = function() {
-        Form2.style.left = "100px";
-        Form3.style.left = "550px";
-        progress.style.width = "150px";
+        Form2.style.display = "block";
+        Form3.style.display = "none";
+        progress2.style.width = "150px";
     }
     Next3.onclick = function(event) {
         event.preventDefault();
         if (validateForm3(event)) {
-                var SubjectName = [];
-                var SubjectCode = [];
-                var NoCredits = [];
-                $('.SubjectName').each(function() {
-                    SubjectName.push($(this).text());
-                });
-                $('.SubjectCode').each(function() {
-                    SubjectCode.push($(this).text());
-                });
-                $('.NoCredits').each(function() {
-                    NoCredits.push($(this).text());
-                });
-                $.ajax({
-                    url: "http://localhost/NILIS-MIS/app/controllers/dr.php",
-                    method: "POST",
-                    data: {
-                        SubjectName: SubjectName,
-                        SubjectCode: SubjectCode,
-                        NoCredits: NoCredits
-                    },
-                    success: function(data) {
-                        alert(data);
-                    }
-                });
+            progress3.style.width = "450px";
+
             // window.location.href = "<?= ROOT ?>dr/newdegree";
         }
     }
@@ -558,10 +507,10 @@ $data['role'] = $role;
 
         var headerRow = document.createElement("tr");
         headerRow.innerHTML = `
-        <th style="width: 100px; margin-top: 20px;">Grade</th>
-        <th style="width: 100px; margin-top: 20px;">Max Mark</th>
-        <th style="width: 100px; margin-top: 20px;">Min Mark</th>
-        <th style="width: 100px; margin-top: 20px;">GPV</th>
+        <th style="width: 100px; margin: 20px 0px 10px 0px;">Grade</th>
+        <th style="width: 100px; margin: 20px 0px 10px 0px;">Max Mark</th>
+        <th style="width: 100px; margin: 20px 0px 10px 0px;">Min Mark</th>
+        <th style="width: 100px; margin: 20px 0px 10px 0px;">GPV</th>
     `;
         gradecontainer.appendChild(headerRow);
 
@@ -597,3 +546,59 @@ $data['role'] = $role;
             // combinedFormData.append('form2', formData2);
             // combinedFormData.append('form3', formData3);
             // sendFormData(combinedFormData, "<?php echo ROOT; ?>dr.php"); -->
+
+<!-- var degree, duration;
+            var degreeType = document.getElementById("degree_type");
+            var selectDegreeType = document.getElementById("select_degree_type");
+
+            if (degreeType.value === "1 Year") duration = 1;
+            else if (degreeType.value === "2 Year") duration = 2;
+
+            if (selectDegreeType.value === "DLMS") degree_name = "Diploma in Library Management Studies";
+            else if (selectDegreeType.value === "ENCM") degree_name = "Executive National Certificate in Management";
+            else if (selectDegreeType.value === "DSL") degree_name = "Diploma in Science Library";
+
+            var formData1 = new FormData(Form1);
+            formData1.append('degree_name', degree_name);
+            formData1.append('duration', duration);
+
+            $.ajax({
+                url: 'http://localhost/NILIS-MIS/app/controllers/dr.php',
+                data: formData1,
+                method: "POST",
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    console.log('FormData Object Send Successfully!')
+                },
+                error: function(err) {
+                    console.log('FormData Object Send Failed!')
+                },
+            });
+            for (var pair of formData1.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            } -->
+<!-- var SubjectName = [];
+                var SubjectCode = [];
+                var NoCredits = [];
+                $('.SubjectName').each(function() {
+                    SubjectName.push($(this).text());
+                });
+                $('.SubjectCode').each(function() {
+                    SubjectCode.push($(this).text());
+                });
+                $('.NoCredits').each(function() {
+                    NoCredits.push($(this).text());
+                });
+                $.ajax({
+                    url: "http://localhost/NILIS-MIS/app/controllers/dr.php",
+                    method: "POST",
+                    data: {
+                        SubjectName: SubjectName,
+                        SubjectCode: SubjectCode,
+                        NoCredits: NoCredits
+                    },
+                    success: function(data) {
+                        alert(data);
+                    }
+                }); -->
