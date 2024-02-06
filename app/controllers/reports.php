@@ -17,7 +17,7 @@ class Reports extends Controller
     public function exam_results()
     {
 
-        // get degree id 
+
 
         //check wheter this can handel through session
         $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
@@ -28,5 +28,16 @@ class Reports extends Controller
         //get all marks for degree
         $marks = $marks->where(['degreeID' => $degreeID]);
         $this->view('reports/report-roe-card');
+    }
+    public function test()
+    {
+
+        $mail = new Mail();
+        $data = [
+            'to' => 'yashed@gmail.com',
+            'subject' => 'Test mail',
+        ];
+
+        $mail->send($data);
     }
 }

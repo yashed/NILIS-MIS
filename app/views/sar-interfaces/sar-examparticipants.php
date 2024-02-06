@@ -477,6 +477,29 @@ $data['role'] = $role;
         text-decoration: none;
         cursor: pointer;
     }
+
+    .profile-message {
+        color: #10344D;
+        font-family: Poppins;
+        font-size: 22px;
+        border-radius: 10px;
+        font-style: normal;
+        font-weight: 600;
+        margin: 40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        background-color: #f8d7da;
+        height: 5vh;
+    }
+
+    .error-message-profile {
+        padding: 0px 70px 0px 70px;
+        width: 100%;
+        text-align: center;
+    }
 </style>
 
 <body>
@@ -518,13 +541,26 @@ $data['role'] = $role;
         <div class="temp2-subsection-2">
             <div class="temp2-subsection-21">
 
-
-                <div class="flex-container-top">
-                    <div class="temp2-sub-title2">Participants</div>
-                    <button class="admission-button0">Download Attendance Sheet</button>
-                    <button class="admission-button1" id="openModal">Exam Attendance Submit</button>
-                    <button class="admission-button2">Send Admission Card</button>
-                </div>
+                <form method="post">
+                    <div class="flex-container-top">
+                        <div class="temp2-sub-title2">Participants</div>
+                        <button class="admission-button0">Download Attendance Sheet</button>
+                        <button class="admission-button1" id="openModal">Exam Attendance Submit</button>
+                        <button class="admission-button2" type="submit" name="admission" value="clicked">Send Admission
+                            Card</button>
+                    </div>
+                </form>
+                <?php
+                if (message()) {
+                    echo '<div class="profile-message">';
+                    if ($_SESSION['message_type'] == 'success') {
+                        echo "<div class='error-message-profile' >" . message('', '', true) . "</div>";
+                    } else {
+                        echo "<div class='error-message-profile' style='color:red;'>" . message('', '', true) . "</div>";
+                    }
+                    echo '</div>';
+                }
+                ?>
                 <section class="table__body">
                     <table id="table_p">
                         <thead>
