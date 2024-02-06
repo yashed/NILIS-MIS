@@ -27,9 +27,9 @@ class Mail
 
         $mail->setFrom('nilisexamination@gmail.com');
 
-        $mail->addAddress('yashedthisara2001@gmail.com'); // add parameter
+        $mail->addAddress($userMail); // add parameter
         $mail->isHTML(true);
-        $mail->Subject = 'subject'; //add parameter
+        $mail->Subject = $subject; //add parameter
         $mail->Body = '
         <html lang="en">
         <head>
@@ -89,7 +89,14 @@ class Mail
         </html>
     ';
 
-        $mail->send();
+        //uncomment bellow to send mails
+
+        if ($mail->send()) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
 }
