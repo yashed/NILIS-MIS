@@ -31,8 +31,10 @@ class Admin extends Controller
     $data['errors'] = [];
     $user = new User();
 
-    //uncomment bellow code to create user table
-    //   $user->create_tables();
+    $popupCreate = false;
+    $popupUpdate = false;
+
+
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       //call insert function in user.model.php to add data
@@ -42,15 +44,19 @@ class Admin extends Controller
       if ($_POST['submit'] == "update") {
 
         if ($user->validateUpdate($_POST)) {
-
+          $popupUpdate = false;
 
           $user->update($_POST['id'], $_POST);
           message("User profile was successfully updated");
         } else {
+
+          $popupUpdate = true;
           message("User profile was not updated Corectly", 'error');
         }
       } else if ($_POST['submit'] == "add") {
         if ($user->validate($_POST)) {
+          $popupCreate = false;
+
           try {
             //set default passsword
             $password = $_POST['role'] . '123';
@@ -66,6 +72,7 @@ class Admin extends Controller
             var_dump($th);
           }
         } else {
+          $popupCreate = true;
           message("User profile was not created Corectly", 'error');
         }
       } else if ($_POST['submit'] == "delete") {
@@ -78,6 +85,8 @@ class Admin extends Controller
     $data['users'] = $user->findAll();
     $data['errors'] = $user->errors;
     $data['title'] = 'Users';
+    $data['popupCreate'] = $popupCreate;
+    $data['popupUpdate'] = $popupUpdate;
 
     $this->view('admin-interfaces/admin-users', $data);
   }

@@ -500,9 +500,24 @@ $data['role'] = $role;
         width: 100%;
         text-align: center;
     }
+
+    .loader-wraper {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        z-index: 1000;
+    }
 </style>
 
 <body>
+    <div class="loader-wraper">
+        <?php $this->view('components/loader/index') ?>
+    </div>
     <div class="temp2-home">
         <div class="temp2-title">Examination</div>
         <div class="temp2-subsection-1">
@@ -645,5 +660,11 @@ $data['role'] = $role;
 
 
 </body>
+
+<script>
+    $(window).on("load", function () {
+        $(".loader-wraper").fadeOut("slow");
+    });
+</script>
 
 </html>
