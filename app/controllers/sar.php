@@ -376,9 +376,9 @@ class SAR extends Controller
                         $mailSubject = "Admission Card";
                         $name = $participant->name;
 
-                        if ($admissionMail->send($to, $mailSubject, '', $name) == false) {
-                            $mailSendCheck = false;
-                        }
+                        // if ($admissionMail->send($to, $mailSubject, '', $name) == false) {
+                        //     $mailSendCheck = false;
+                        // }
                     }
 
                     //need to add a message to show the result of the mail sending
