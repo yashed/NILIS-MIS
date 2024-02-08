@@ -16,12 +16,11 @@ class Model extends Database
         if (is_object($data)) {
             $data = (array) $data;
         }
-
+        // show($data);
         // Check if $data is empty
         if (empty($data)) {
             return false;
         }
-
         // Check for allowed columns
         if (!empty($this->allowedColumns)) {
             foreach ($data as $key => $value) {
@@ -30,21 +29,15 @@ class Model extends Database
                 }
             }
         }
-
         // Get array keys from data
         $keys = array_keys($data);
-
         // Define query to add user data
         $query = "INSERT INTO " . $this->table;
-
         // Add column names and values to the query
         $query .= "(" . implode(",", $keys) . ") VALUES (:" . implode(",:", $keys) . ")";
-
         // For debugging, show the data before executing the query
         show($data);
-
     }
-
 
     /* public function insert($data)
     {
@@ -213,12 +206,12 @@ class Model extends Database
     public function lastID($primaryKey = 'id')
     {
         $query = "SELECT MAX($primaryKey) AS lastID FROM " . $this->table;
-        show($query);
+        // show($query);
         $result = $this->query($query);
-        show($result);
+        // show($result);
         if ($result !== false) {
             // Check if the result is an array or object
-            show($result);
+            // show($result);
             if (is_array($result)) {
                 return $result[0]->lastID;
             }

@@ -21,62 +21,105 @@ class DR extends Controller
         $this->view('dr-interfaces/dr-notification');
     }
 
-    public function degreeprograms()
+    public function degreeprograms($action = null, $id = null)
     {
+        $degree_name = "";
+        $duration = 0;
+        show($_POST);
         $degree = new Degree();
         $subject = new Subjects();
         $grade = new Grades();
+        
+        $data = [];
+        $data['action'] = $action;
+        $data['id'] = $id;
+        
+        if ($action == 'add') {
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                if ($_POST['degree_type'] === "1 Year") {
+                    $duration = 1;
+                } else if ($_POST['degree_type'] === "2 Year") {
+                    $duration = 2;
+                } 
+                if (($_POST['select_degree_type']) === 'DLMS') {
+                    $degree_name = "Diploma in Library Management Studies";
+                } else if (($_POST['select_degree_type']) === 'ENCM') {
+                    $degree_name = "Executive National Certificate in Management";
+                } else if (($_POST['select_degree_type']) === 'DSL') {
+                    $degree_name = "Diploma in Science Library";
+                }
+                $data = [
+                    'DegreeType' => $_POST['degree_type'],
+                    'DegreeShortName' => $_POST['select_degree_type'],
+                    'DegreeName' => $degree_name,
+                    'Duration' => $duration,
+                    'AcademicYear' => '2023',
+                ];
+                $degree->insert($data);
+                $degree_id = $degree->lastID();
+                if (isset($_POST['subjectsData'])) {
+                    // Decode the JSON string sent with key 'subjectsData'
+                    $subjectsData = json_decode($_POST['subjectsData'], true);
+                    // Iterate over each subject's data and insert it into the database
+                    foreach ($subjectsData as $subjectData) {
+                        // Construct the data array for insertion
+                        $data1 = [
+                            'SubjectCode' => $subjectData['subjectCode'],
+                            'SubjectName' => $subjectData['subjectName'],
+                            'NoCredits' => $subjectData['credits'],
+                            'DegreeID' => $degree_id,
+                            'semester' => $subjectData['semester'],
+                        ];
+                        // Insert the subject's data into the database
+                        $subject->insert($data1);
+                    }
+                }
+                if (isset($_POST['gradeData'])) {
+                    // Decode the JSON string sent with key 'subjectsData'
+                    $gradeData = json_decode($_POST['gradeData'], true);
+                    // Iterate over each subject's data and insert it into the database
+                    foreach ($gradeData as $gradeData) {
+                        // Construct the data array for insertion
+                        $data2 = [
+                            'Grade' => $gradeData['grade'],
+                            'Max Marks' => $gradeData['maxMarks'],
+                            'Min Marks' => $gradeData['minMarks'],
+                            'GPV' => $gradeData['gpv'],
+                            'DegreeID' => $degree_id,
+                        ];
+                        // Insert the subject's data into the database
+                        $subject->insert($data2);
+                    }
+                }
+                show("Your Diploma was successfuly created");
+
+                // $data['errors'] = $course->errors;
+            }
+        } elseif ($action == 'delete') {
+
+            // $categories = $category->findAll('asc');
+            // $languages = $language->findAll('asc');
+            // $levels = $level->findAll('asc');
+            // $prices = $price->findAll('asc');
+            // $currencies = $currency->findAll('asc');
+
+            // //get course information
+            // $data['row'] = $row = $course->first(['user_id'=>$user_id,'id'=>$id]);
+
+            // if($_SERVER['REQUEST_METHOD'] == "POST" && $row)
+            // {
+
+            // 	$course->delete($row->id);
+            // 	message("Course deleted successfully");
+            // 	redirect('admin/courses');
+            // }
+
+        }
 
         $data['degrees'] = $degree->findAll();
         $data['subjects'] = $subject->findAll();
+        // $data['grades'] = $grade->findAll();
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Check if all form data is present
-            // if (isset($_POST['form1']) && isset($_POST['form2']) && isset($_POST['form3'])) {
-            if (isset($_POST['formData1'])) {
-                $form1Data = $_POST['formData1'];
-                show($form1Data);
-                $degreeType = $form1Data['degree_type'];
-                $selectDegreeType = $form1Data['select_degree_type'];
-                $degreeName = $form1Data['degree_name'];
-                $duration = $form1Data['duration'];
-
-                // Insert into the 'Degree' table
-                $degree->insert([
-                    'DegreeType' => $degreeType,
-                    'DegreeShortName' => $selectDegreeType,
-                    'DegreeName' => $degreeName,
-                    'Duration' => $duration,
-                    'AcademicYear' => '2023',
-                ]);
-
-                echo "Data successfully saved in the database";
-            } else {
-                echo "Incomplete form data";
-            }
-            $connect = mysqli_connect("localhost", "root", "", "nilis_db");
-            if (isset($_POST["SubjectName"])) {
-                $SubjectName = $_POST["SubjectName"];
-                $SubjectCode = $_POST["SubjectCode"];
-                $NoCredits = $_POST["NoCredits"];
-                $query = '';
-                for ($count = 0; $count < count($SubjectName); $count++) {
-                    $SubjectName_clean = mysqli_real_escape_string($connect, $SubjectName[$count]);
-                    $SubjectCode_clean = mysqli_real_escape_string($connect, $SubjectCode[$count]);
-                    $NoCredits_clean = mysqli_real_escape_string($connect, $NoCredits[$count]);
-                    if ($SubjectName_clean != '' && $SubjectCode_clean != '' && $NoCredits_clean != '') {
-                        $query .= '
-                        INSERT INTO item(SubjectName, SubjectCode, NoCredits, DegreeID, semester) 
-                        VALUES("' . $SubjectName_clean . '", "' . $SubjectCode_clean . '", "' . $NoCredits_clean . '"); 
-                        ';
-                    }
-                }
-            }
-        } else {
-            echo "Invalid request method";
-        }
-
-        print_r($_POST);
         $this->view('dr-interfaces/dr-degreeprograms', $data);
     }
 
@@ -168,22 +211,6 @@ class DR extends Controller
 
         $this->view('dr-interfaces/dr-newdegree', $data);
     }
-
-    // public function userprofile()
-    // {
-    //     $degree = new Degree();
-    //     $st = new StudentModel();
-
-    //     // $degree->insert( $_POST );
-    //     // show( $_POST );
-
-    //     $data['degrees'] = $degree->findAll();
-    //     $data['students'] = $st->findAll();
-    //     //show( $data[ 'degrees' ] );
-
-    //     $this->view('dr-interfaces/dr-userprofile', $data);
-    // }
-
     public function userprofile()
     {
         $degree = new Degree();
@@ -262,3 +289,43 @@ class DR extends Controller
         $this->view('login/login.view');
     }
 }
+// // if (isset($_POST['form1']) && isset($_POST['form2']) && isset($_POST['form3'])) {
+//     if (isset($_POST['formData1'])) {
+//         $form1Data = $_POST['formData1'];
+//         show($form1Data);
+//         $degreeType = $form1Data['degree_type'];
+//         $selectDegreeType = $form1Data['select_degree_type'];
+//         $degreeName = $form1Data['degree_name'];
+//         $duration = $form1Data['duration'];
+
+//         // Insert into the 'Degree' table
+//         $degree->insert([
+//             'DegreeType' => $degreeType,
+//             'DegreeShortName' => $selectDegreeType,
+//             'DegreeName' => $degreeName,
+//             'Duration' => $duration,
+//             'AcademicYear' => '2023',
+//         ]);
+
+//         echo "Data successfully saved in the database";
+//     } else {
+//         echo "Incomplete form data";
+//     }
+//     $connect = mysqli_connect("localhost", "root", "", "nilis_db");
+//     if (isset($_POST["SubjectName"])) {
+//         $SubjectName = $_POST["SubjectName"];
+//         $SubjectCode = $_POST["SubjectCode"];
+//         $NoCredits = $_POST["NoCredits"];
+//         $query = '';
+//         for ($count = 0; $count < count($SubjectName); $count++) {
+//             $SubjectName_clean = mysqli_real_escape_string($connect, $SubjectName[$count]);
+//             $SubjectCode_clean = mysqli_real_escape_string($connect, $SubjectCode[$count]);
+//             $NoCredits_clean = mysqli_real_escape_string($connect, $NoCredits[$count]);
+//             if ($SubjectName_clean != '' && $SubjectCode_clean != '' && $NoCredits_clean != '') {
+//                 $query .= '
+//                 INSERT INTO item(SubjectName, SubjectCode, NoCredits, DegreeID, semester) 
+//                 VALUES("' . $SubjectName_clean . '", "' . $SubjectCode_clean . '", "' . $NoCredits_clean . '"); 
+//                 ';
+//             }
+//         }
+//     }

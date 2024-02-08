@@ -246,7 +246,7 @@ $data['role'] = $role;
 
                 <div class="container">
                     <h3>Create New Degree Program</h3>
-                    <form action="<?= ROOT ?>dr/newdegree" method="post">
+                    <form method="post" action="<?= ROOT ?>dr/degreeprograms/add">
                         <div id="Form1">
                             <br>
                             <div class="input-fields" style="margin: 20px 0px 10px 0px;">
@@ -259,20 +259,17 @@ $data['role'] = $role;
                                     <option value="1 Year" <?= (set_value('degree_type') === '1 Year') ? 'selected' : '' ?>>1 Year Degree</option>
                                     <option value="2 Year" <?= (set_value('degree_type') === '2 Year') ? 'selected' : '' ?>>2 Year Degree</option>
                                 </select><br><br><br>
-
                                 <label for="select degree type" class="drop-down">Select Degree Program:</label><br>
                                 <select name="select degree type" id="select_degree_type" style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;">
                                     <option value="" default hidden>Select</option>
                                     <option value="DLMS" <?= (set_value('select_degree_type') === 'DLMS') ? 'selected' : '' ?>>DLMS</option>
                                     <option value="ENCM" <?= (set_value('select_degree_type') === 'ENCM') ? 'selected' : '' ?>>ENCM</option>
                                     <option value="DSL" <?= (set_value('select_degree_type') === 'DSL') ? 'selected' : '' ?>>DSL</option>
-
                                 </select><br><br><br>
                             </div>
 
                             <div class="btn-box">
                                 <div class="button-btn">
-
                                     <button onclick="myFunction2()" type="button" class="bt-name-white" id="Cancel1">Cancel</button>
                                     <button type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next1">Continue</button>
                                 </div>
@@ -303,13 +300,13 @@ $data['role'] = $role;
                             </div>
                             <div class="box_3">
                                 <div class="box_3_2">
-                                        <div class="Grade_table" id="Grade_table"></div>
+                                    <div class="Grade_table" id="Grade_table"></div>
                                 </div>
                             </div>
                             <div class="btn-box1">
                                 <div class="button-btn">
                                     <button type="button" class="bt-name-white" id="Back2">Back</button>
-                                    <button type="Submit" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next3">Create</button>
+                                    <button type="submit" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next3">Create</button>
                                 </div>
                             </div>
                         </div>
@@ -347,7 +344,6 @@ $data['role'] = $role;
     // Validate Form1 before proceeding
     Next1.onclick = function() {
         if (validateForm1()) {
-            console.log("Form1 Validated");
             Form1.style.display = "none";
             Form2.style.display = "block";
             progress2.style.width = "150px";
@@ -379,8 +375,54 @@ $data['role'] = $role;
     Next3.onclick = function(event) {
         event.preventDefault();
         if (validateForm3(event)) {
-            progress3.style.width = "450px";
+            var subjectsData = [];
+            for (var i = 1; i <= numSemesters; i++) {
+                var semesterTable = document.getElementById(`Subject_table${i}`);
+                var subjectRows = semesterTable.querySelectorAll('tr');
+                for (var j = 1; j < subjectRows.length; j++) {
+                    var subjectName = document.getElementById(`SubjectName${i}_${j}`).value.trim();
+                    var subjectCode = document.getElementById(`SubjectCode${i}_${j}`).value.trim();
+                    var credits = document.getElementById(`NoCredits${i}_${j}`).value.trim();
+                    var semesterNumber = i;
+                    // Push data to subjectsData array
+                    subjectsData.push({
+                        subjectName: subjectName,
+                        subjectCode: subjectCode,
+                        credits: credits,
+                        semester: semesterNumber
+                    });
+                }
+            }
+            // Convert subjectsData to a JSON string and add it to a hidden input field in the form
+            var subjectsDataInput = document.createElement('input');
+            subjectsDataInput.setAttribute('type', 'hidden');
+            subjectsDataInput.setAttribute('name', 'subjectsData');
+            subjectsDataInput.setAttribute('value', JSON.stringify(subjectsData));
+            document.querySelector('form').appendChild(subjectsDataInput);
 
+            var gradeData = [];
+            var gradeTable = document.getElementById(`Grade_table`);
+            for (var k = 1; k <= 3; k++) { // loop through all rows except the header
+                var maxmark = document.querySelector(`#maxvalue${k}`).value.trim();
+                var minmark = document.querySelector(`#minvalue${k}`).value.trim();
+                var gpa = document.querySelector(`#gpa${k}`).value.trim();
+                // Push data to gradeData array
+                gradeData.push({
+                    grades: grade,
+                    maxmark: maxmark,
+                    minmark: minmark,
+                    gpa: gpa
+                });
+                // Add hidden input fields for maxmark, minmark, and gpa
+                var maxmarkInput = document.createElement('input');
+                maxmarkInput.setAttribute('type', 'hidden');
+                maxmarkInput.setAttribute('name', `gradeData`);
+                maxmarkInput.setAttribute('value', JSON.stringify(gradeData));
+                document.querySelector('form').appendChild(maxmarkInput);
+            }
+
+            progress3.style.width = "450px";
+            document.querySelector("form").submit();
             // window.location.href = "<?= ROOT ?>dr/newdegree";
         }
     }
@@ -499,6 +541,11 @@ $data['role'] = $role;
         "D-": "0.70",
         "F": "0.30"
     };
+    let i = 0;
+for (let grade in grades) {
+    console.log(`Key ${i}: ${grade}`);
+    i++;
+}
 
     function generateGrades() {
         var gradecontainer = document.getElementById("Grade_table");
@@ -535,70 +582,3 @@ $data['role'] = $role;
 </script>
 
 </html>
-<!-- // var formData1 = new FormData(Form1);
-            // var formData2 = new FormData(Form2);
-            // var formData3 = new FormData(Form3);
-
-            // console.log(formData1);
-            // Combine all form data
-            // var combinedFormData = new FormData();
-            // combinedFormData.append('form1', formData1);
-            // combinedFormData.append('form2', formData2);
-            // combinedFormData.append('form3', formData3);
-            // sendFormData(combinedFormData, "<?php echo ROOT; ?>dr.php"); -->
-
-<!-- var degree, duration;
-            var degreeType = document.getElementById("degree_type");
-            var selectDegreeType = document.getElementById("select_degree_type");
-
-            if (degreeType.value === "1 Year") duration = 1;
-            else if (degreeType.value === "2 Year") duration = 2;
-
-            if (selectDegreeType.value === "DLMS") degree_name = "Diploma in Library Management Studies";
-            else if (selectDegreeType.value === "ENCM") degree_name = "Executive National Certificate in Management";
-            else if (selectDegreeType.value === "DSL") degree_name = "Diploma in Science Library";
-
-            var formData1 = new FormData(Form1);
-            formData1.append('degree_name', degree_name);
-            formData1.append('duration', duration);
-
-            $.ajax({
-                url: 'http://localhost/NILIS-MIS/app/controllers/dr.php',
-                data: formData1,
-                method: "POST",
-                processData: false,
-                contentType: false,
-                success: function(data) {
-                    console.log('FormData Object Send Successfully!')
-                },
-                error: function(err) {
-                    console.log('FormData Object Send Failed!')
-                },
-            });
-            for (var pair of formData1.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
-            } -->
-<!-- var SubjectName = [];
-                var SubjectCode = [];
-                var NoCredits = [];
-                $('.SubjectName').each(function() {
-                    SubjectName.push($(this).text());
-                });
-                $('.SubjectCode').each(function() {
-                    SubjectCode.push($(this).text());
-                });
-                $('.NoCredits').each(function() {
-                    NoCredits.push($(this).text());
-                });
-                $.ajax({
-                    url: "http://localhost/NILIS-MIS/app/controllers/dr.php",
-                    method: "POST",
-                    data: {
-                        SubjectName: SubjectName,
-                        SubjectCode: SubjectCode,
-                        NoCredits: NoCredits
-                    },
-                    success: function(data) {
-                        alert(data);
-                    }
-                }); -->

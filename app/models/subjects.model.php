@@ -17,7 +17,6 @@ class Subjects extends Model
         'NoCredits',
         'DegreeID',
         'semester',
-
     ];
     public function validate($data)
 	{

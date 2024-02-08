@@ -13,11 +13,10 @@ class Degree extends Model
 
 		'DegreeID',
 		'DegreeType',
+		'DegreeShortName',
 		'DegreeName',
 		'Duration',
 		'AcademicYear',
-		'SubjectID',
-		'GradeID',
 	];
 
 	public function validate($data)
@@ -26,12 +25,14 @@ class Degree extends Model
 		//DegreeID
 		if (empty($data['DegreeID'])) {
 			$this->errors['DegreeID'] = "A DegreeID is required";
-		} else if (!preg_match("/^[0-9]+$/", trim($data['DegreeID']))) {
-			$this->errors['DegreeID'] = "DegreeID can only have numbers.";
 		}
 		//DegreeType
 		if (empty($data['DegreeType'])) {
 			$this->errors['DegreeType'] = "A DegreeType is required";
+		}
+		//DegreeShortName
+		if (empty($data['DegreeShortName'])) {
+			$this->errors['DegreeShortName'] = "A DegreeShortName is required";
 		}
 		//DegreeName
 		if (empty($data['DegreeName'])) {
@@ -44,18 +45,6 @@ class Degree extends Model
 		//Duration
 		if (empty($data['Duration'])) {
 			$this->errors['Duration'] = "A Duration is required";
-		}
-		//SubjectID
-		if (empty($data['SubjectID'])) {
-			$this->errors['SubjectID'] = "A SubjectID is required";
-		} else if (!preg_match("/^[0-9]+$/", trim($data['SubjectID']))) {
-			$this->errors['SubjectID'] = "SubjectID can only have numbers.";
-		}
-		//GradeID
-		if (empty($data['GradeID'])) {
-			$this->errors['GradeID'] = "A GradeID is required";
-		} else if (!preg_match("/^[0-9]+$/", trim($data['GradeID']))) {
-			$this->errors['GradeID'] = "GradeID can only have numbers.";
 		}
 		if (empty($this->errors)) {
 			return true;
