@@ -400,24 +400,25 @@ $data['role'] = $role;
             subjectsDataInput.setAttribute('value', JSON.stringify(subjectsData));
             document.querySelector('form').appendChild(subjectsDataInput);
 
-            var gradeData = [];
+            var gradesData = [];
             var gradeTable = document.getElementById(`Grade_table`);
+            var keys = Object.keys(grades);
             for (var k = 1; k <= 3; k++) { // loop through all rows except the header
                 var maxmark = document.querySelector(`#maxvalue${k}`).value.trim();
                 var minmark = document.querySelector(`#minvalue${k}`).value.trim();
                 var gpa = document.querySelector(`#gpa${k}`).value.trim();
-                // Push data to gradeData array
-                gradeData.push({
-                    grades: grade,
-                    maxmark: maxmark,
-                    minmark: minmark,
-                    gpa: gpa
+                // Push data to gradesData array
+                gradesData.push({
+                    grade: keys[k-1],
+                    maxMarks: maxmark,
+                    minMarks: minmark,
+                    gpv: grades[keys[k-1]]
                 });
                 // Add hidden input fields for maxmark, minmark, and gpa
                 var maxmarkInput = document.createElement('input');
                 maxmarkInput.setAttribute('type', 'hidden');
-                maxmarkInput.setAttribute('name', `gradeData`);
-                maxmarkInput.setAttribute('value', JSON.stringify(gradeData));
+                maxmarkInput.setAttribute('name', `gradesData`);
+                maxmarkInput.setAttribute('value', JSON.stringify(gradesData));
                 document.querySelector('form').appendChild(maxmarkInput);
             }
 
@@ -541,12 +542,6 @@ $data['role'] = $role;
         "D-": "0.70",
         "F": "0.30"
     };
-    let i = 0;
-for (let grade in grades) {
-    console.log(`Key ${i}: ${grade}`);
-    i++;
-}
-
     function generateGrades() {
         var gradecontainer = document.getElementById("Grade_table");
 
