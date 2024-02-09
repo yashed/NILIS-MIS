@@ -1,35 +1,68 @@
 <style>
     /* HTML: <div class="loader"></div> */
     .loader {
-        width: 50px;
+        width: 40px;
+        height: 40px;
         aspect-ratio: 1;
-        display: grid;
+        position: relative;
     }
 
-    .loader::before,
-    .loader::after {
+    .loader:before,
+    .loader:after {
         content: "";
-        grid-area: 1/1;
-        --c: no-repeat radial-gradient(farthest-side, #25b09b 92%, #0000);
-        background:
-            var(--c) 50% 0,
-            var(--c) 50% 100%,
-            var(--c) 100% 50%,
-            var(--c) 0 50%;
-        background-size: 12px 12px;
-        animation: l12 1s infinite;
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: -8px 0 0 -8px;
+        width: 16px;
+        aspect-ratio: 1;
+        background: #17376e;
+        animation:
+            l2-1 2s infinite,
+            l2-2 1s infinite;
     }
 
-    .loader::before {
-        margin: 4px;
-        filter: hue-rotate(45deg);
-        background-size: 8px 8px;
-        animation-timing-function: linear
+    .loader:after {
+        background: #9ad6ff;
+        animation-delay: -1s, 0s;
     }
 
-    @keyframes l12 {
+    @keyframes l2-1 {
+        0% {
+            top: 0;
+            left: 0
+        }
+
+        25% {
+            top: 100%;
+            left: 0
+        }
+
+        50% {
+            top: 100%;
+            left: 100%
+        }
+
+        75% {
+            top: 0;
+            left: 100%
+        }
+
         100% {
-            transform: rotate(.5turn)
+            top: 0;
+            left: 0
+        }
+    }
+
+    @keyframes l2-2 {
+
+        40%,
+        50% {
+            transform: rotate(0.25turn) scale(0.5)
+        }
+
+        100% {
+            transform: rotate(0.5turn) scale(1)
         }
     }
 </style>

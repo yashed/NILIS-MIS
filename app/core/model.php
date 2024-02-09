@@ -212,6 +212,54 @@ class Model extends Database
 
         return false;
     }
+    public function where($data)
+    {
+
+        $keys = array_keys($data);
+
+        $query = "select * from " . $this->table . " where ";
+        foreach ($keys as $key) {
+
+            $query .= $key . "=:" . $key . " && ";
+        }
+
+        //trim lasf && and space if there exists
+        $query = trim($query, '&& ');
+        //define query to add user data
+        $res = $this->query($query, $data);
+        // show($query);
+        // show($data);
+
+        if (is_array($res)) {
+            return $res;
+        }
+
+        return false;
+    }
+
+    //get the count that match the conditions
+    public function count($data)
+    {
+        $keys = array_keys($data);
+
+        $query = "SELECT COUNT(*) AS ExamParticipants FROM " . $this->table . " WHERE ";
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . " && ";
+        }
+
+        // Trim last AND and space if there exist
+        $query = trim($query, '&& ');
+
+        // Execute the query
+        $result = $this->query($query, $data);
+
+        // If the query executed successfully and returned a result
+        if ($result !== false) {
+            return $result;
+        }
+
+        return 0; // Return 0 if there are no records or an error occurred
+    }
 
     //get newly added column id 
     public function lastID($primaryKey = 'id')
@@ -260,30 +308,6 @@ class Model extends Database
     }
 
 
-    public function where($data)
-    {
-
-        $keys = array_keys($data);
-
-        $query = "select * from " . $this->table . " where ";
-        foreach ($keys as $key) {
-
-            $query .= $key . "=:" . $key . " && ";
-        }
-
-        //trim lasf && and space if there exists
-        $query = trim($query, '&& ');
-        //define query to add user data
-        $res = $this->query($query, $data);
-        // show($query);
-        // show($data);
-
-        if (is_array($res)) {
-            return $res;
-        }
-
-        return false;
-    }
 
     public function delete2($data)
     {

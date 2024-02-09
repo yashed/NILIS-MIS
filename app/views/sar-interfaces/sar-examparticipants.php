@@ -507,10 +507,20 @@ $data['role'] = $role;
         position: absolute;
         top: 0;
         left: 0;
-        background: #000;
+        background: rgba(0, 0, 0, 0.70);
         display: flex;
         justify-content: center;
         z-index: 1000;
+        align-items: center;
+    }
+
+    .loader-css {
+        width: 10%;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+
     }
 
     .participants-body.active {
@@ -550,7 +560,9 @@ $data['role'] = $role;
 <body class="participants-body" id="body">
 
     <div class="loader-wraper">
-        <?php $this->view('components/loader/index') ?>
+        <div class="loader-css">
+            <?php $this->view('components/loader/index') ?>
+        </div>
     </div>
     <div class="temp2-home">
         <div class="temp2-title">Examination</div>

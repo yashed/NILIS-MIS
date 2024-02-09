@@ -360,7 +360,10 @@ class SAR extends Controller
                 $conditions0 = ['student.degreeID = exam_participants.DegreeID', 'student.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID];
                 $participantsMailName = $examParticipants->join($table, $columns, $conditions0);
 
-                // show($participantsMail);
+
+
+                //get the count of exam participants
+                $numberOfStudnets = $examParticipants->count(['examID' => $examID]);
 
                 $participants[] = $examParticipants->where(['examID' => $examID]);
                 // show($participants);
@@ -376,9 +379,9 @@ class SAR extends Controller
                         $mailSubject = "Admission Card";
                         $name = $participant->name;
 
-                        // if ($admissionMail->send($to, $mailSubject, '', $name) == false) {
-                        //     $mailSendCheck = false;
-                        // }
+                        if ($admissionMail->send($to, $mailSubject, '', $name) == false) {
+                            $mailSendCheck = false;
+                        }
                     }
 
                     //need to add a message to show the result of the mail sending
