@@ -15,6 +15,7 @@ $data['role'] = $role;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>temp3 Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -80,8 +81,8 @@ $data['role'] = $role;
         font-style: normal;
         font-weight: 600;
         padding-top: 1vw;
-padding-bottom: 1vw;
-padding-left: 5vw;
+        padding-bottom: 1vw;
+        padding-left: 5vw;
     }
 
     .flex {
@@ -139,7 +140,7 @@ padding-left: 5vw;
     }
 
     .admission-button2 {
-        /* padding: 0.5% 0.5% 0.5% 1%; */
+         padding: 0.5% 0.5% 0.5% 1%; 
         background-color: #17376E;
         color: #fff;
         text-decoration: none;
@@ -151,7 +152,7 @@ padding-left: 5vw;
         cursor: pointer;
 
         font-size: 0.8vw;
-        /* width: 12vw; */
+        width: 12vw;
         flex: 10%;
     }
 
@@ -174,7 +175,7 @@ padding-left: 5vw;
         gap: 30px;
         flex-direction: row;
         padding-right: 11vw;
-        padding-left: 5vw;
+        
 
 
     }
@@ -182,13 +183,13 @@ padding-left: 5vw;
     .column-01 {
         display: flex;
         flex-direction: column;
-        width: 37vw;
+        width: 50vw;
     }
 
     .column-02 {
         display: flex;
         flex-direction: column;
-        width: 37vw;
+        width: 50vw;
     }
 
     .form-element1 {
@@ -231,7 +232,7 @@ padding-left: 5vw;
 
             </div>
 
-
+            <form action="" method="POST">
             <div class=name>
                 <img src="<?= ROOT ?>assets/dr/imgano.png">
                 <!-- <p><h2><?= $student->name ?></h2></p> -->
@@ -241,45 +242,57 @@ padding-left: 5vw;
                             Senudi Disakya Muthugala
                         </p>
                     </div>
-                    <a href="your_file_path_here.pdf" class="admission-button" download>Cancel</a>
-                    <a href="your_file_path_here.pdf" class="admission-button2" download>Save</a>
+                    <a href="" class="admission-button" download>Cancel</a>
+                    <div class="form-element">
+                    <button type="submit" name="update_user_data" class="admission-button2">Save Data</button>
+                </div>
                 </div>
 
             </div>
+
+
             
-            
-            <div class="user-data">
-                <div class="column-01">
-                    <div class="form-element1">
-                        <label for="fname">
-                            <div class="label-name">First Name</div>
-                        </label>
-                        <input type="text" placeholder="Enter" id="fname">
+            <div class="form-element">
+                            <label for="id">
+                                <div class="label-name">ID</div>
+                            </label>
+                            <input type="text" placeholder="Enter" id="id" name="id" class="form-control">
+                        </div>
+                <div class="user-data">
+               
+                    <div class="column-01">
+                        
+                        <div class="form-element">
+                            <label for="fname">
+                                <div class="label-name">First Name</div>
+                            </label>
+                            <input type="text" placeholder="Enter" id="fname" name="fname" class="form-control">
+                        </div>
+                    </div>
+                    <div class="column-02">
+                        <div class="form-element">
+                            <label for="lname">
+                                <div class="label-name">Last Name</div>
+                            </label>
+                            <input type="text" placeholder="Enter" id="lname" name="lname" class="form-control">
+                        </div>
                     </div>
                 </div>
-                <div class="column-02">
-                    <div class="form-element2">
-                        <label for="lname">
-                            <div class="label-name">Last Name</div>
-                        </label>
-                        <input type="text" placeholder="Enter" id="fname">
-                    </div>
+                <div class="form-element">
+                    <label for="email">
+                        <div class="label-name">Email</div>
+                    </label>
+                    <input type="text" placeholder="Enter" id="email" name="email" class="form-control">
                 </div>
-            </div>
-            <div class="form-element3">
-                <label for="email">
-                    <div class="label-name">Email</div>
-                </label>
-                <input type="text" placeholder="Enter" id="email">
-            </div>
-            <div class="form-element4">
-                <label for="role">
-                    <div class="label-name">Role</div>
-                </label>
-                <input type="text" placeholder="Enter" id="role">
+                <div class="form-element">
+                    <label for="role">
+                        <div class="label-name">Phone Number</div>
+                    </label>
+                    <input type="text" placeholder="Enter" id="phoneNo" name="phoneNo" class="form-control">
 
-            </div>
-
+                </div>
+               
+            </form>
 
         </div>
 

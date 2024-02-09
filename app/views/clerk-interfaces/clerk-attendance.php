@@ -8,22 +8,7 @@ $data['role'] = $role;
 <?php $this->view('components/navside-bar/sidebar', $data) ?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
 
-<?php
-// Database configuration
-$dbHost     = "localhost";
-$dbUsername = "root";
-$dbPassword = "";
-$dbName     = "nilis_db";
 
-// Create database connection
-$db = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
-
-// Check connection
-if ($db->connect_error) {
-    die("Connection failed: " . $db->connect_error);
-}
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -227,7 +212,7 @@ if ($db->connect_error) {
 
         <div class="temp2-subsection-2">
             <div class="temp2-subsection-21">
-               
+
                 <div class="record-file">Add Attendance Record File</div>
                 <div class="dashed-container1">
                     <label for="fileInput" class="file-input-icon"></label>
@@ -258,25 +243,7 @@ if ($db->connect_error) {
             <?php $this->view('components/footer/index', $data) ?>
         </div>
 
-        <?php
-                if (isset($_POST['importSubmit'])) {
-                    // Allowed mime types
-                    $csvMimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain');
-
-                    // Validate whether the selected file is a CSV file
-                    if (!empty($_FILES['csvFile']['name']) && in_array($_FILES['csvFile']['type'], $csvMimes)) {
-                        // If the file is uploaded
-                        if (is_uploaded_file($_FILES['csvFile']['tmp_name'])) {
-                            // Your existing code for processing attendance
-                            echo '<script>alert("File submitted successfully!");</script>';
-                        } else {
-                            echo '<script>alert("Error: File upload failed!");</script>';
-                        }
-                    } else {
-                        echo '<script>alert("Error: Please select a valid CSV file!");</script>';
-                    }
-                }
-                ?>
+      
 
         <script>
             function formToggle(ID) {
@@ -289,7 +256,7 @@ if ($db->connect_error) {
             }
 
             function redirectToUpdatedAttendance() {
-                window.location.href = "updatedattendance";
+                window.location.href = "<?= ROOT ?>clerk/updatedattendance";
             }
         </script>
 </body>

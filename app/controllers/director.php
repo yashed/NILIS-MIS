@@ -43,6 +43,7 @@ class DIRECTOR extends Controller
 
         $this->view('director-interfaces/director-degreeprofile', $data);
     }
+    
     public function participants($id = null, $action = null, $id2 = null)
     {
 
