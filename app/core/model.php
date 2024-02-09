@@ -36,7 +36,8 @@ class Model extends Database
         // Add column names and values to the query
         $query .= "(" . implode(",", $keys) . ") VALUES (:" . implode(",:", $keys) . ")";
         // For debugging, show the data before executing the query
-        show($data);
+        $this->query($query,$data);
+        // show($data);
     }
 
     /* public function insert($data)
