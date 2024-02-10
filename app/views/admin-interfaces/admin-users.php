@@ -510,8 +510,8 @@ $data['role'] = $role;
                                 <select name="role" id="form-element-dropdown-create">
                                     <option value="admin" class="form-element-dropdown-op"
                                         <?= (set_value('role') === 'admin') ? 'selected' : '' ?>>Admin</option>
-                                    <option value="clark" <?= (set_value('role') === 'clark') ? 'selected' : '' ?>>
-                                        Clark</option>
+                                    <option value="clerk" <?= (set_value('role') === 'clark') ? 'selected' : '' ?>>
+                                        Clerk</option>
                                     <option value="director" <?= (set_value('role') === 'director') ? 'selected' : '' ?>>
                                         Director
                                     </option>

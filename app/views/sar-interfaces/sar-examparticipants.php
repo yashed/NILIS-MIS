@@ -606,12 +606,11 @@ $data['role'] = $role;
                     <div class="flex-container-top">
                         <div class="temp2-sub-title2">Participants</div>
                         <button class="admission-button0">Download Attendance Sheet</button>
-                        <button class="admission-button1" id="openModal">Exam Attendance Submit</button>
-
                         <button class="admission-button2" type="submit" name="admission" value="clicked"
                             onClick="showMailPopup(event)">Send Admission Card</button>
                     </div>
                 </form>
+                <button class="admission-button1" id="openModal">Exam Attendance Submit</button>
                 <?php
                 if (message()) {
                     echo '<div class="profile-message">';
