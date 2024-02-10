@@ -14,8 +14,6 @@ class Database
     }
     public function query($query, $data = [], $type = 'object')
     {
-        // show($query);
-        // show($data);
         $con = $this->connect();
         $stm = $con->prepare($query);
         if ($stm) {
@@ -95,12 +93,12 @@ class Database
 
         //Grading Values Table
         $query = "
-        CREATE TABLE IF NOT EXISTS `grading values` (
+        CREATE TABLE IF NOT EXISTS `grading_values` (
             `GradeID` int(11) NOT NULL AUTO_INCREMENT,
             `DegreeID` int(11) NOT NULL,
             `Grade` varchar(5) NOT NULL,
-            `Max Marks` int(10) NOT NULL,
-            `Min Marks` int(10) NOT NULL,
+            `MaxMarks` int(10) NOT NULL,
+            `MinMarks` int(10) NOT NULL,
             `GPV` varchar(20) NOT NULL,
             PRIMARY KEY (`GradeID`),
             FOREIGN KEY (DegreeID) REFERENCES degree(DegreeID),
