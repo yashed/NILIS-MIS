@@ -109,18 +109,17 @@ class Database
         $this->query($query);
         //Degree Time table table
         $query = "
-      CREATE TABLE IF NOT EXISTS `degree_timetable` (
-    `EventID` INT NOT NULL AUTO_INCREMENT,
-    `DegreeID` int(11) NOT NULL,
-    `EventName` VARCHAR(50) NOT NULL,
-    `EventType` VARCHAR(50) NOT NULL,
-    `StartingDate` DATE NOT NULL,
-    `EndingDate` DATE NOT NULL,
-    PRIMARY KEY (`EventID`,`DegreeID`),
-    KEY `DegreeID` (`DegreeID`),
-    CONSTRAINT `degree_timetable_ibfk_1` FOREIGN KEY (`DegreeID`) REFERENCES `degree` (`DegreeID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
-
+        CREATE TABLE IF NOT EXISTS `degree_timetable` (
+            `EventID` INT NOT NULL AUTO_INCREMENT,
+            `DegreeID` int(11) NOT NULL,
+            `EventName` VARCHAR(50) NOT NULL,
+            `EventType` VARCHAR(30) NOT NULL,
+            `StartingDate` DATE NOT NULL,
+            `EndingDate` DATE NOT NULL,
+            PRIMARY KEY (`EventID`,`DegreeID`),
+            KEY `DegreeID` (`DegreeID`),
+            CONSTRAINT `degree_timetable_ibfk_1` FOREIGN KEY (`DegreeID`) REFERENCES `degree` (`DegreeID`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
         ";
         $this->query($query);
         //student Table
@@ -134,7 +133,7 @@ class Database
             name text NOT NULL,
             nicNo varchar(40) NOT NULL,
             birthdate varchar(40) NOT NULL,
-            fax varchar(40) NOT NULL,
+            whatsappNo int(12) NOT NULL,
             address varchar(100) NOT NULL,
             phoneNo int(20) NOT NULL,
             degreeID INT(11) NOT NULL,
