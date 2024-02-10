@@ -415,11 +415,11 @@ $data['role'] = $role;
                     gpv: grades[keys[k-1]]
                 });
                 // Add hidden input fields for maxmark, minmark, and gpa
-                var maxmarkInput = document.createElement('input');
-                maxmarkInput.setAttribute('type', 'hidden');
-                maxmarkInput.setAttribute('name', `gradesData`);
-                maxmarkInput.setAttribute('value', JSON.stringify(gradesData));
-                document.querySelector('form').appendChild(maxmarkInput);
+                var gradesDataInput = document.createElement('input');
+                gradesDataInput.setAttribute('type', 'hidden');
+                gradesDataInput.setAttribute('name', `gradesData`);
+                gradesDataInput.setAttribute('value', JSON.stringify(gradesData));
+                document.querySelector('form').appendChild(gradesDataInput);
             }
 
             progress3.style.width = "450px";
