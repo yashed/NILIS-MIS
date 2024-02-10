@@ -4,12 +4,12 @@ class Grades extends Model
 {
 
     public $errors = [];
-    protected $table = "grading values";
+    protected $table = "grading_values";
     protected $allowedColumns = [
         'GradeID',
         'Grade',
-        'Max Marks',
-        'Min Marks',
+        'MaxMarks',
+        'MinMarks',
         'GPV',
         'DegreeID',
 
