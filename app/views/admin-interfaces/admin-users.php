@@ -516,8 +516,7 @@ $data['role'] = $role;
                                         Director
                                     </option>
                                     <option value="dr" <?= (set_value('role') === 'dr') ? 'selected' : '' ?>>
-                                        Deputy
-                                        Registrar</option>
+                                        DR</option>
                                     <option value="sar" <?= (set_value('role') === 'sar') ? 'selected' : '' ?>>
                                         SAR
                                     </option>
