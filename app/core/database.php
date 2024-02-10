@@ -298,9 +298,12 @@ class Database
             `studentIndexNo` varchar(40) NOT NULL,
             `subjectCode` varchar(50) NOT NULL,
             `examID` int(11) NOT NULL,
+            `degreeID` int(11) NOT NULL,
             `finalMarks` int(10) DEFAULT NULL,
+            `grade` varchar(10) DEFAULT NULL,
             PRIMARY KEY (`id`),
             FOREIGN KEY (`studentIndexNo`) REFERENCES `student` (`indexNo`),
+            FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`),
             FOREIGN KEY (`subjectCode`) REFERENCES `subject` (`SubjectCode`),
             FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

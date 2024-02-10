@@ -42,6 +42,15 @@ class User extends Model
                $this->errors['phoneNo'] = 'Phone number is required';
 
           }
+          //validate phone number
+          // Validate phone number
+          if (empty($data['phoneNo'])) {
+               $this->errors['phoneNo'] = 'Phone number is required';
+          } elseif (!preg_match('/^\d{10}$/', $data['phoneNo'])) {
+               $this->errors['phoneNo'] = 'Phone number must be exactly 10 digits';
+          }
+
+
           //check confirm password
           if (empty($data['cpassword']) && !empty($data['newpassword'])) {
                $this->errors['cpassword'] = 'Confirm Password is required';
@@ -102,6 +111,12 @@ class User extends Model
           if (empty($data['phoneNo'])) {
                $this->errors['phoneNo'] = 'Phone number is required';
 
+          }
+          // Validate phone number
+          if (empty($data['phoneNo'])) {
+               $this->errors['phoneNo'] = 'Phone number is required';
+          } elseif (!preg_match('/^\d{10}$/', $data['phoneNo'])) {
+               $this->errors['phoneNo'] = 'Phone number must be exactly 10 digits';
           }
 
           //check confirm password
