@@ -192,9 +192,9 @@ $data['role'] = $role;
 
 <body>
     <div class="main" id="body">
-        <!-- <?php $this->view('components/navside-bar/header', $data) ?>
+        <?php $this->view('components/navside-bar/header', $data) ?>
         <?php $this->view('components/navside-bar/sidebar', $data) ?>
-        <?php $this->view('components/navside-bar/footer', $data) ?> -->
+        <?php $this->view('components/navside-bar/footer', $data) ?>
         <div class="dr-home">
             <div class="dr-title">Degree Program</div>
             <div class="dr-subsection-1">
@@ -403,16 +403,16 @@ $data['role'] = $role;
             var gradesData = [];
             var gradeTable = document.getElementById(`Grade_table`);
             var keys = Object.keys(grades);
-            for (var k = 1; k <= 3; k++) { // loop through all rows except the header
+            for (var k = 1; k <= 2; k++) { // loop through all rows except the header
                 var maxmark = document.querySelector(`#maxvalue${k}`).value.trim();
                 var minmark = document.querySelector(`#minvalue${k}`).value.trim();
                 var gpa = document.querySelector(`#gpa${k}`).value.trim();
                 // Push data to gradesData array
                 gradesData.push({
-                    grade: keys[k-1],
+                    grade: keys[k - 1],
                     maxMarks: maxmark,
                     minMarks: minmark,
-                    gpv: grades[keys[k-1]]
+                    gpv: grades[keys[k - 1]]
                 });
                 // Add hidden input fields for maxmark, minmark, and gpa
                 var gradesDataInput = document.createElement('input');
@@ -424,7 +424,6 @@ $data['role'] = $role;
 
             progress3.style.width = "450px";
             document.querySelector("form").submit();
-            // window.location.href = "<?= ROOT ?>dr/newdegree";
         }
     }
     // Function to validate Form1, Form2, Form3 fields
@@ -451,6 +450,18 @@ $data['role'] = $role;
                     alert("Please fill out all fields, Semester " + j + " Subject " + k);
                     return false;
                 }
+                if (!/^[a-zA-Z\s]+$/.test(subject.trim())) {
+                    alert("SubjectName can only have letters and spaces. Semester " + j + " Subject " + k);
+                    return false;
+                }
+                if (!/^[a-zA-Z0-9]+$/.test(subCodes)) {
+                    alert("SubjectCode can only have letters and numbers. Semester " + j + " Subject " + k);
+                    return false;
+                }
+                if (!/^[0-9]+$/.test(credits)) {
+                    alert("NoCredits can only have numbers. Semester " + j + " Subject " + k);
+                    return false;
+                }
             }
         }
         return true;
@@ -458,13 +469,28 @@ $data['role'] = $role;
 
     function validateForm3(event) {
         var gradeTable = document.getElementById(`Grade_table`);
-        for (var k = 1; k <= 3; k++) { // loop through all rows except the header
+        for (var k = 1; k <= 2; k++) { // loop through all rows except the header
             var maxmark = document.querySelector(`#maxvalue${k}`).value.trim();
             var minmark = document.querySelector(`#minvalue${k}`).value.trim();
             var gpa = document.querySelector(`#gpa${k}`).value.trim();
             // Check if subject and credits are filled for each subject
             if (maxmark === "" || minmark === "" || gpa === "") {
                 alert("Please fill out all fields in " + getGradeKey(k));
+                event.preventDefault();
+                return false;
+            }
+            if (!/^\d+(\.\d+)?$/.test(maxmark)) {
+                alert("Max Mark for row " + k + " must be a numeric value.");
+                event.preventDefault();
+                return false;
+            }
+            if (!/^\d+(\.\d+)?$/.test(minmark)) {
+                alert("Min Mark for row " + k + " must be a numeric value.");
+                event.preventDefault();
+                return false;
+            }
+            if (!/^\d+(\.\d+)?$/.test(gpa)) {
+                alert("GPA for row " + k + " must be a numeric value.");
                 event.preventDefault();
                 return false;
             }
@@ -542,6 +568,7 @@ $data['role'] = $role;
         "D-": "0.70",
         "F": "0.30"
     };
+
     function generateGrades() {
         var gradecontainer = document.getElementById("Grade_table");
 
@@ -556,7 +583,7 @@ $data['role'] = $role;
     `;
         gradecontainer.appendChild(headerRow);
 
-        for (var i = 1; i <= 3; i++) {
+        for (var i = 1; i <= 2; i++) {
             var gradeRow = document.createElement("tr");
             var currentGrade = grades[getGradeKey(i)];
             gradeRow.innerHTML = `
