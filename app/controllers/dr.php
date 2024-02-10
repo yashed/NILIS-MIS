@@ -6,13 +6,9 @@ class DR extends Controller
     {
 
         $degree = new Degree();
-
-        // $degree->insert( $_POST );
         // show( $_POST );
 
         $data['degrees'] = $degree->findAll();
-        //show( $data[ 'degrees' ] );
-        // echo 'view';
         $this->view('dr-interfaces/dr-dashboard', $data);
     }
 
@@ -23,9 +19,9 @@ class DR extends Controller
 
     public function degreeprograms($action = null, $id = null)
     {
+        // show($_POST);
         $degree_name = "";
         $duration = 0;
-        show($_POST);
         $degree = new Degree();
         $subject = new Subjects();
         $grade = new Grades();
@@ -77,41 +73,23 @@ class DR extends Controller
                 if (isset($_POST['gradesData'])) {
                     // Decode the JSON string sent with key 'gradesData'
                     $gradesData = json_decode($_POST['gradesData'], true);
-                    // Iterate over each subject's data and insert it into the database
+                    // Iterate over each grade's data and insert it into the database
                     foreach ($gradesData as $gradeData) {
                         // Construct the data array for insertion
                         $data2 = [
                             'Grade' => $gradeData['grade'],
-                            'Max Marks' => $gradeData['maxMarks'],
-                            'Min Marks' => $gradeData['minMarks'],
+                            'MaxMarks' => $gradeData['maxMarks'],
+                            'MinMarks' => $gradeData['minMarks'],
                             'GPV' => $gradeData['gpv'],
                             'DegreeID' => $degree_id,
                         ];
-                        // Insert the subject's data into the database
-                        $subject->insert($data2);
+                        // Insert the grade's data into the database
+                        $grade->insert($data2);
                     }
                 }
-                // show("Your Diploma was successfuly created");
-                // $data['errors'] = $course->errors;
             }
         } elseif ($action == 'delete') {
 
-            // $categories = $category->findAll('asc');
-            // $languages = $language->findAll('asc');
-            // $levels = $level->findAll('asc');
-            // $prices = $price->findAll('asc');
-            // $currencies = $currency->findAll('asc');
-
-            // //get course information
-            // $data['row'] = $row = $course->first(['user_id'=>$user_id,'id'=>$id]);
-
-            // if($_SERVER['REQUEST_METHOD'] == "POST" && $row)
-            // {
-
-            // 	$course->delete($row->id);
-            // 	message("Course deleted successfully");
-            // 	redirect('admin/courses');
-            // }
 
         }
 
