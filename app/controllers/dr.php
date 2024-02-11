@@ -32,6 +32,7 @@ class DR extends Controller
         
         if ($action == 'add') {
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                $currentYear = date('Y');
                 if ($_POST['degree_type'] === "1 Year") {
                     $duration = 1;
                 } else if ($_POST['degree_type'] === "2 Year") {
@@ -49,7 +50,7 @@ class DR extends Controller
                     'DegreeShortName' => $_POST['select_degree_type'],
                     'DegreeName' => $degree_name,
                     'Duration' => $duration,
-                    'AcademicYear' => '2023',
+                    'AcademicYear' => $currentYear,
                 ];
                 $degree->insert($data);
                 $degree_id = $degree->lastID('DegreeID');
@@ -87,6 +88,7 @@ class DR extends Controller
                         $grade->insert($data2);
                     }
                 }
+                redirect("dr/newdegree");
             }
         } elseif ($action == 'delete') {
 
@@ -103,21 +105,18 @@ class DR extends Controller
     public function degreeprofile()
     {
         $degree = new Degree();
-
-        // $degree->insert( $_POST );
-        // show( $_POST );
-
         $data['degrees'] = $degree->findAll();
-        // show( $data[ 'degrees' ] );
 
         $this->view('dr-interfaces/dr-degreeprofile', $data);
     }
 
-    public function newDegree()
+    public function newDegree($action = null, $id = null)
     {
         //Create CSV file to getstudent data
         $degree = new Degree();
-        $rowData = ['Full-Name', 'Email', 'Country', 'NIC-No', 'Date-Of-Birth', 'Fax', 'Address', 'Phone-No'];
+        $student = new StudentModel();
+        $degree_id = $degree->lastID('DegreeID');
+        $rowData = ['Full-Name', 'Email', 'Country', 'NIC-No', 'Date-Of-Birth', 'whatsappNo', 'Address', 'Phone-No'];
         $studentCSV = 'assets/csv/output/student-data-input.csv';
         $f = fopen($studentCSV, 'w');
         if ($f == false) {
@@ -128,7 +127,7 @@ class DR extends Controller
         fclose($f);
 
         //get uploaded csv file
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['student-data'] == 'upload-csv') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['student-data']) && $_POST['student-data'] == 'upload-csv') {
             show($_POST);
             show($_FILES);
             if (isset($_FILES['student-data']) && $_FILES['student-data']['error'] === UPLOAD_ERR_OK) {
@@ -151,27 +150,25 @@ class DR extends Controller
                     // Skip the header row
                     fgetcsv($csvFile);
 
-                    // Initialize Degree model or your database interaction method
-                    $degree = new Degree();
-
                     while (($rowData = fgetcsv($csvFile)) !== false) {
                         // Assuming the order of columns in the CSV matches the order in the $rowData array
                         $data = [
-                            'full_name' => $rowData[0],
-                            'email' => $rowData[1],
+                            'Email' => $rowData[1],
                             'country' => $rowData[2],
-                            'nic_no' => $rowData[3],
-                            'date_of_birth' => $rowData[4],
-                            'fax' => $rowData[5],
+                            'name' => $rowData[0],
+                            'nicNo' => $rowData[3],
+                            'birthdate' => $rowData[4],
+                            'whatsappNo' => $rowData[5],
                             'address' => $rowData[6],
-                            'phone_no' => $rowData[7],
+                            'phoneNo' => $rowData[7],
+                            'degreeID' => $degree_id,
                         ];
 
                         // For debugging, show the data before calling insert
                         show($data);
 
                         // Insert data into the database
-                        $degree->insert($data);
+                        $student->insert($data);
                     }
 
                     fclose($csvFile);
@@ -182,11 +179,33 @@ class DR extends Controller
                 echo 'Error uploading file.';
             }
         }
+        $timeTable = new DegreeTimeTable;
+        $data = [];
+        $data['action'] = $action;
+        $data['id'] = $id;
 
-        $data['degrees'] = $degree->findAll();
-        //show( $data[ 'degrees' ] );
-
-        $this->view('dr-interfaces/dr-newdegree', $data);
+        if ($action == 'add') {
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                if (isset($_POST['timetableData'])) {
+                    $timetableData = json_decode($_POST['timetableData'], true);
+                    // Iterate over each subject's data and insert it into the database
+                    foreach ($timetableData as $timetableData) {
+                        // Construct the data array for insertion
+                        $data1 = [
+                            'DegreeID' => $degree_id,
+                            'EventName' => $timetableData['eventName'],
+                            'EventType' => $timetableData['eventType'],
+                            'StartingDate' => $timetableData['eventStart'],
+                            'EndingDate' => $timetableData['eventEnd'],
+                        ];
+                        // Insert the subject's data into the database
+                        $timeTable->insert($data1);
+                    }
+                }
+                redirect("dr/degreeprofile");
+            }
+        }
+        $this->view('dr-interfaces/dr-newdegree');
     }
     public function userprofile()
     {
