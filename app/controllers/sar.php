@@ -2,7 +2,13 @@
 
 class SAR extends Controller
 {
-
+    // function __construct()
+    // {
+    //     if (!Auth::is_dr()) {
+    //         message('You are not authorized to view this page');
+    //         redirect('login');
+    //     }
+    // }
     public function index()
     {
         //uncoment this to add autherization to sar
