@@ -406,16 +406,18 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
         color: var(--sidebar-color);
     }
 
+
     .btn-primary {
-        min-width: 25vh;
+        width: 14vw;
         color: #fff;
-        height: 5vh;
+        height: 2.5vw;
         padding: 5px 5px 5px 5px;
-        border-radius: 12px;
+        border-radius: 8px;
         background: #17376e;
         box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
         border: 0px;
         margin-bottom: 10px;
+        font-size: 0.9vw;
         /* margin-top: 25px; */
     }
 

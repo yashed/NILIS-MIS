@@ -11,7 +11,15 @@ class Database
     private function connect()
     {
         $str = DBDRIVER . ":host=" . DBHOST . ";dbname=" . DBNAME;
-        return new PDO($str, DBUSER, DBPASS);
+        return new PDO(
+            $str,
+            DBUSER,
+            DBPASS,
+            array(
+                PDO::ATTR_PERSISTENT => true
+            )
+        );
+
     }
 
     public function query($query, $data = [], $type = 'object')
