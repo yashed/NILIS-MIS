@@ -1,3 +1,9 @@
+<head>
+    <title>Record Of Examination</title>
+    <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+</head>
+
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
     @import url('https://fonts.cdnfonts.com/css/times-new-roman');
@@ -145,7 +151,7 @@
     }
 
     .admission-table {
-        margin: 50px 0px 20px 0px;
+        margin: 20px 0px 20px 0px;
         font-family: poppins;
         border-collapse: collapse;
         width: 100%;
@@ -154,7 +160,6 @@
 
     .admission-table tr {
         border: 1px solid #ddd;
-        border-radius: 10px;
         text-align: center;
 
     }
@@ -184,6 +189,7 @@
 
     .admission-data-tb {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
 
@@ -232,6 +238,19 @@
         font-size: 11px;
     }
 
+    .roe-table {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .year-name {
+        font-family: poppins;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
     @media print {
 
         #print {
@@ -271,7 +290,9 @@
 <body>
     <div class="admisssion-card">
         <div class="print-btn">
-            <button class="print-btn-primary" type="submit" onclick="window.print()">Print</button>
+            <!-- <button class="print-btn-primary" type="submit" onclick="window.print()">Print</button> -->
+            <button class="print-btn-primary" type="submit" onclick="generatePDF()"
+                id="downloadButton">Download</button>
         </div>
         <page size="A4">
             <div class="admission-content">
@@ -299,51 +320,103 @@
 
                 </div>
                 <div class="admission-data-tb">
-                    <table class="admission-table">
-                        <thead>
-                            <tr>
-                                <th>Subject</th>
-                                <th>Year</th>
-                                <th>Semester</th>
-                                <th>Credits</th>
-                                <th>Results</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div class="roe-table">
+                        <div class="year-name">
+                            Year 01
+                        </div>
+                        <table class="admission-table">
+                            <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Year</th>
+                                    <th>Semester</th>
+                                    <th>Credits</th>
+                                    <th>Results</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                            <tr>
-                                <td>Subject 01</td>
-                                <td>[22]</td>
-                                <td>[1]</td>
-                                <td>3</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Subject 02</td>
-                                <td>[22]</td>
-                                <td>[1]</td>
-                                <td>3</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Subject 03</td>
-                                <td>[22]</td>
-                                <td>[1]</td>
-                                <td>3</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Subject 04</td>
-                                <td>[22]</td>
-                                <td>[1]</td>
-                                <td>3</td>
-                                <td>A</td>
-                            </tr>
+                                <tr>
+                                    <td>Subject 01</td>
+                                    <td>[22]</td>
+                                    <td>[1]</td>
+                                    <td>3</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>Subject 02</td>
+                                    <td>[22]</td>
+                                    <td>[1]</td>
+                                    <td>3</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>Subject 03</td>
+                                    <td>[22]</td>
+                                    <td>[1]</td>
+                                    <td>3</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>Subject 04</td>
+                                    <td>[22]</td>
+                                    <td>[1]</td>
+                                    <td>3</td>
+                                    <td>A</td>
+                                </tr>
 
 
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="roe-table">
+                        <div class="year-name">
+                            Year 02
+                        </div>
+                        <table class="admission-table">
+                            <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Year</th>
+                                    <th>Semester</th>
+                                    <th>Credits</th>
+                                    <th>Results</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td>Subject 01</td>
+                                    <td>[22]</td>
+                                    <td>[1]</td>
+                                    <td>3</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>Subject 02</td>
+                                    <td>[22]</td>
+                                    <td>[1]</td>
+                                    <td>3</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>Subject 03</td>
+                                    <td>[22]</td>
+                                    <td>[1]</td>
+                                    <td>3</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>Subject 04</td>
+                                    <td>[22]</td>
+                                    <td>[1]</td>
+                                    <td>3</td>
+                                    <td>A</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
                 <div class='admission-detail'>
@@ -368,5 +441,26 @@
 
 </body>
 
+<script>
+
+    function generatePDF() {
+        const element = document.querySelector('.admisssion-card');
+        html2pdf(element, {
+            margin: 0,
+            filename: 'record_of_examination.pdf',
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        });
+
+        // Hide the download button 
+        const downloadButton = document.getElementById('downloadButton');
+        downloadButton.style.display = 'none';
+
+        // Show the download button after a delay
+        setTimeout(function () {
+            downloadButton.style.display = 'block';
+        }, 3000);
+    }
+</script>
 
 </html>

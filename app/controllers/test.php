@@ -16,6 +16,7 @@ class Test extends Controller
 
     public function t1()
     {
+
         $this->view('sar-interfaces/test');
     }
 }

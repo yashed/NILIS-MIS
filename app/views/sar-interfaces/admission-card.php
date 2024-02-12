@@ -1,3 +1,9 @@
+<head>
+    <title>Admission Card</title>
+    <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+</head>
+
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
     @import url('https://fonts.cdnfonts.com/css/times-new-roman');
@@ -154,7 +160,7 @@
 
     .admission-table tr {
         border: 1px solid #ddd;
-        border-radius: 10px;
+
 
     }
 
@@ -264,7 +270,9 @@
 <body>
     <div class="admisssion-card">
         <div class="print-btn">
-            <button class="print-btn-primary" type="submit" onclick="window.print()">Print Admission</button>
+            <!-- <button class="print-btn-primary" type="submit" onclick="window.print()">Print Admission</button> -->
+            <button class="print-btn-primary" type="submit" onclick="generatePDF()" id="downloadAdmisiionButton">Print
+                Admission</button>
         </div>
         <page size="A4">
             <div class="admission-content">
@@ -324,8 +332,7 @@
 
                 </div>
                 <div class='admission-detail'>
-                    <div class="admission-details-signature">
-                        .........................................
+                    <div class="admission-details-signature">.........................................
                     </div>
                     <div class="admission-details-name">
                         Yashed Thisara
@@ -345,5 +352,27 @@
 
 </body>
 
+<script>
+
+
+    function generatePDF() {
+        const element = document.querySelector('.admisssion-card');
+        html2pdf(element, {
+            margin: 0,
+            filename: 'admission_card.pdf',
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        });
+
+        // Hide the download button 
+        const downloadButton = document.getElementById('downloadAdmisiionButton');
+        downloadButton.style.display = 'none';
+
+        // Show the download button after a delay
+        setTimeout(function () {
+            downloadButton.style.display = 'block';
+        }, 3000);
+    }
+</script>
 
 </html>

@@ -155,7 +155,7 @@ class Admission extends Controller
 
                 $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'degreeID' => $studentExamData[0]->degreeID, 'semester' => $semester, 'subjectCode' => $subject->subjectCode]);
             }
-            show($examTimeTableData);
+
 
         }
 
@@ -165,6 +165,8 @@ class Admission extends Controller
         $examData = $examTimeTable->where(['examID' => $examID]);
         $data['studentData'] = $studentData;
         $data['timeTableData'] = $examTimeTableData;
+
+        // show($data['timeTableData']);
         $data['examData'] = $examData;
 
 
