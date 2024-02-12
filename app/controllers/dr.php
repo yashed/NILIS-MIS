@@ -111,7 +111,7 @@ class DR extends Controller
     }
 
     public function newDegree($action = null, $id = null)
-    {
+    {   
         //Create CSV file to getstudent data
         $degree = new Degree();
         $student = new StudentModel();
@@ -120,7 +120,7 @@ class DR extends Controller
         $studentCSV = 'assets/csv/output/student-data-input.csv';
         $f = fopen($studentCSV, 'w');
         if ($f == false) {
-            echo 'file is not open successfully';
+            echo "<script>console.log('file is not open successfully');</script>";
         }
         // Write the header row to the CSV file
         fputcsv($f, $rowData);

@@ -2,8 +2,8 @@
 $role = "DR";
 $data['role'] = $role;
 ?>
-<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
+<!-- <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?> -->
 
 <head>
 </head>
@@ -371,7 +371,7 @@ $data['role'] = $role;
                 <div class="box_4_2">
                     <table class="create_time_table_raw">
                         <tr>
-                            <th colspan="3"><button class="add-new-event" id="add_new_event">&#128198 Add New Event</button></th>
+                            <th colspan="3"><button type="button" class="add-new-event" id="add_new_event">&#128198 Add New Event</button></th>
                         </tr>
                         <tr>
                             <td></td>
@@ -390,7 +390,7 @@ $data['role'] = $role;
         let add = document.querySelector("#add_new_event");
         let table = document.querySelector(".Time_table");
         let i = 5;
-        add.addEventListener("click", () => {
+        add.addEventListener("click", (event) => {
             let template = `
                 <tr>
                     <td><input type="text" value="" name="event_${i}" class="event" id="event_${i}" placeholder="New Event"></td>
