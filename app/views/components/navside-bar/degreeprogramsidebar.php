@@ -142,10 +142,10 @@
                         <i class="bx bx-book icon"></i>
                         <span class="text nav-text">Examination</span>
                     </a>
-                    <div class="dropdown-content">
-                        <a href="<?= ROOT ?>sar/results">Examination Results</a>
-                        <a href="<?= ROOT ?>sar/attendance">Examination Attendance</a>
-                        <a href="<?= ROOT ?>sar/participants">Examination Participants</a>
+                    <div class="dropdown">
+                        <a href="<?= ROOT ?>sar/results"><center>Examination Results</center></a>
+                        <a href="<?= ROOT ?>sar/attendance"><center>Examination Attendance</center></a>
+                        <a href="<?= ROOT ?>sar/participants"><center>Examination Participants</center></a>
                     </div>
                 </li>
                 <li class="nav-link">

@@ -349,32 +349,50 @@ header .image-text .headder-text {
  
  */
 
-.dropdown-content {
+.dropdown {
   display: none;
   position: absolute;
   background-color: var(--sidebar-color);
+  color: var(--text-color);
   margin: 0px 0px 0px 240px;
   padding: 5px 7px 5px 7px;
+  border: 1px solid rgba(23, 55, 110, 0.46);
+  box-shadow: 0px 8px 11px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  min-width: 215px;
 }
 
-.sidebar.close .dropdown-content {
+.dropdown::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  bottom: -20px;
+  left: -20px;
+  opacity: 0;
+  z-index: -1;
+}
+.dropdown:hover::before {
+  opacity: 1;
+}
+.sidebar.close .dropdown {
   margin-left: 78px;
 }
 
-.dropdown-content a {
+.dropdown a {
   background-color: var(--sidebar-color);
   color: var(--text-color);
-  padding: 3px 0px 3px 3px;
-  font-size: 12px;
+  padding: 12px 16px;
+  font-size: 13px;
   font-weight: 500;
 }
 
-.dropdown-content a:hover {
+.dropdown a:hover {
   color: var(--sidebar-color);
   background-color: var(--text-color);
 }
 
-.nav-link:hover .dropdown-content {
+.nav-link:hover .dropdown {
   display: block;
   background-color: var(--sidebar-color);
   color: var(--text-color);
