@@ -89,7 +89,7 @@ $data['role'] = $role;
                 </div>
                 <div class="column3">
                     <div class="data3"><b>Country:</b><br>
-                        <div class="country"> Sri Lanka</div>
+                        <div class="country"> <?= $student[0]->country ?></div>
                     </div><br>
                     <div class="data4"><b>Index number:</b><br>
                         <div class="indexNum"> <?= $student[0]->indexNo ?></div>
@@ -221,7 +221,7 @@ $data['role'] = $role;
                             <div class="nic"> <?= $student[0]->nicNo ?></div>
                         </div>
                         <div class="data2"><b>WhatsApp Number:</b><br>
-                            <div class="Fax"><?= $student[0]->whatsapp_number ?></div>
+                            <div class="Fax"><?= $student[0]->whatsappNo ?></div>
                         </div>
                     </div>
                     <div class="column2-2">

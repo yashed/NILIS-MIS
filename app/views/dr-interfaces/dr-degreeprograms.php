@@ -192,9 +192,9 @@ $data['role'] = $role;
 
 <body>
     <div class="main" id="body">
-        <!-- <?php $this->view('components/navside-bar/header', $data) ?>
+        <?php $this->view('components/navside-bar/header', $data) ?>
         <?php $this->view('components/navside-bar/sidebar', $data) ?>
-        <?php $this->view('components/navside-bar/footer', $data) ?> -->
+        <?php $this->view('components/navside-bar/footer', $data) ?>
         <div class="dr-home">
             <div class="dr-title">Degree Program</div>
             <div class="dr-subsection-1">
@@ -205,20 +205,38 @@ $data['role'] = $role;
 
                 <div class="dr-sub-title">Ongoing Degree Programs</div>
                 <div class="dr-degree-bar">
-                    <?php $count = 0; ?>
-                    <?php foreach ($degrees as $degree) : ?>
-                        <div class="dr-card1">
-                            <a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
-                                <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
-                            </a>
-                        </div>
-                        <?php $count++; ?>
-                    <?php endforeach; ?>
+                    <?php if ($degrees) : ?>
+                        <?php $count = 0; ?>
+                        <?php foreach ($degrees as $degree) : ?>
+                            <div class="dr-card1">
+                                <a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
+                                    <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                                </a>
+                            </div>
+                            <?php $count++; ?>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <p>No data found for the diploma program.</p>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="dr-subsection-1">
                 <div class="dr-sub-title">Completed Degree Programs</div>
-                <p>Completed Degree Programs are not yet.</p>
+                <div class="dr-degree-bar">
+                    <?php if ($degrees) : ?>
+                        <?php $count = 0; ?>
+                        <?php foreach ($degrees as $degree) : ?>
+                            <div class="dr-card1">
+                                <a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
+                                    <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                                </a>
+                            </div>
+                            <?php $count++; ?>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <p>No data found under the completed diploma program.</p>
+                    <?php endif; ?>
+                </div>
             </div>
             <div class="dr-footer">
                 <?php $this->view('components/footer/index', $data) ?>
@@ -228,145 +246,77 @@ $data['role'] = $role;
 
                 <div class="container">
                     <h3>Create New Degree Program</h3>
-                    <form id="Form1" method="post" action="">
-                        <div class="input-fields" style="margin: 20px 0px 10px 0px;">
+                    <form method="post" action="<?= ROOT ?>dr/degreeprograms/add">
+                        <div id="Form1">
+                            <br>
+                            <div class="input-fields" style="margin: 20px 0px 10px 0px;">
+                                <div class="step-row">
+                                    <div id="progress1"></div>
+                                </div>
+                                <label for="degree type" class="drop-down">Degree Type:</label><br>
+                                <select name="degree type" id="degree_type" style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;" onchange="handleDegreeTypeChange()">
+                                    <option value="" default hidden>Select</option>
+                                    <option value="1 Year" <?= (set_value('degree_type') === '1 Year') ? 'selected' : '' ?>>1 Year Degree</option>
+                                    <option value="2 Year" <?= (set_value('degree_type') === '2 Year') ? 'selected' : '' ?>>2 Year Degree</option>
+                                </select><br><br><br>
+                                <label for="select degree type" class="drop-down">Select Degree Program:</label><br>
+                                <select name="select degree type" id="select_degree_type" style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;">
+                                    <option value="" default hidden>Select</option>
+                                    <option value="DLMS" <?= (set_value('select_degree_type') === 'DLMS') ? 'selected' : '' ?>>DLMS</option>
+                                    <option value="ENCM" <?= (set_value('select_degree_type') === 'ENCM') ? 'selected' : '' ?>>ENCM</option>
+                                    <option value="DSL" <?= (set_value('select_degree_type') === 'DSL') ? 'selected' : '' ?>>DSL</option>
+                                </select><br><br><br>
+                            </div>
 
-                            <label for="degree type" class="drop-down">Degree Type:</label><br>
-                            <select name="degree type" id="degree_type" style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;" onchange="handleDegreeTypeChange()">
-                                <option value="" default hidden>Select</option>
-                                <option value="1 Year" <?= (set_value('degree_type') === '1 Year') ? 'selected' : '' ?>>1 Year Degree</option>
-                                <option value="2 Year" <?= (set_value('degree_type') === '2 Year') ? 'selected' : '' ?>>2 Year Degree</option>
-                            </select><br><br><br>
-
-                            <label for="select degree type" class="drop-down">Select Degree Program:</label><br>
-                            <select name="select degree type" id="select_degree_type" style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;">
-                                <option value="" default hidden>Select</option>
-                                <option value="DLMS" <?= (set_value('select_degree_type') === 'DLMS') ? 'selected' : '' ?>>DLMS</option>
-                                <option value="ENCM" <?= (set_value('select_degree_type') === 'ENCM') ? 'selected' : '' ?>>ENCM</option>
-                                <option value="DSL" <?= (set_value('select_degree_type') === 'DSL') ? 'selected' : '' ?>>DSL</option>
-
-                            </select><br><br><br>
-                        </div>
-
-                        <div class="btn-box">
-                            <div class="button-btn">
-
-                                <button onclick="myFunction2()" type="button" class="bt-name-white" id="Cancel1">Cancel</button>
-                                <button onclick="myFunction(), validateForm1()" type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next1">Continue</button>
+                            <div class="btn-box">
+                                <div class="button-btn">
+                                    <button onclick="myFunction2()" type="button" class="bt-name-white" id="Cancel1">Cancel</button>
+                                    <button type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next1">Continue</button>
+                                </div>
                             </div>
                         </div>
-                    </form>
 
-                    <form id="Form2" method="post" action="">
-                        <p id="form2_p">Define Subjects and Credits</p>
-
-                        <div class="box_3">
-                            <div class="box_3_1">
-                                <p>Subject</p>
+                        <div id="Form2">
+                            <p id="form2_p">Define Subjects and Credits</p>
+                            <div class="step-row">
+                                <div id="progress2"></div>
                             </div>
-                            <div class="box_3_2" id="semester_subjects_credits">
-                                <div id="semester_container"></div>
+                            <div class="box_3">
+                                <div class="box_3_2" id="semester_subjects_credits">
+                                    <div id="semester_container"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="btn-box">
-                            <div class="button-btn1">
-                                <button type="button" class="bt-name-white" id="Back1" style="left: 0px;">Back</button>
-                                <button onclick="myFunction(), validateForm2()" type="button" class="bt-name" style="text-decoration: none; margin-right: 80px;" id="Next2">Continue</button>
-                            </div>
-                        </div>
-                    </form>
-                    <form id="Form3" method="post" action="">
-                        <h5 style="font-size: 16px; font-weight: 400; margin-bottom: -20px;">Define Scheme of Assignment</h5>
-                        <div class="box_3">
-                            <div class="box_3_1">
-                                <p>Subject</p>
-                            </div>
-                            <div class="box_3_2">
-                                <table class="Subject_table">
-                                    <tr>
-                                        <th style="width: 100px;">Grade</th>
-                                        <th style="width: 100px;">Max Mark</th>
-                                        <th style="width: 100px;">Min Mark</th>
-                                        <th style="width: 100px;">GPV</th>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_1" class="grade" placeholder="A+"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_1" class="maxvalue" placeholder="100"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_1" class="minvalue" placeholder="90"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_1" class="gpa" placeholder="4.00"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_2" class="grade" placeholder="A"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_2" class="maxvalue" placeholder="89"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_2" class="minvalue" placeholder="80"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_2" class="gpa" placeholder="4.00"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_3" class="grade" placeholder="A-"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_3" class="maxvalue" placeholder="79"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_3" class="minvalue" placeholder="75"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_3" class="gpa" placeholder="3.70"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_4" class="grade" placeholder="B+"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_4" class="maxvalue" placeholder="74"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_4" class="minvalue" placeholder="70"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_4" class="gpa" placeholder="3.40"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_5" class="grade" placeholder="B"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_5" class="maxvalue" placeholder="69"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_5" class="minvalue" placeholder="65"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_5" class="gpa" placeholder="3.00"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_6" class="grade" placeholder="B-"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_6" class="maxvalue" placeholder="64"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_6" class="minvalue" placeholder="60"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_6" class="gpa" placeholder="2.70"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_7" class="grade" placeholder="C+"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_7" class="maxvalue" placeholder="59"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_7" class="minvalue" placeholder="55"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_7" class="gpa" placeholder="2.40"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_8" class="grade" placeholder="C"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_8" class="maxvalue" placeholder="54"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_8" class="minvalue" placeholder="50"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_8" class="gpa" placeholder="2.00"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_9" class="grade" placeholder="C-"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_9" class="maxvalue" placeholder="49"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_9" class="minvalue" placeholder="45"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_9" class="gpa" placeholder="1.70"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input style="width: 60px;" type="text" name="grade_10" class="grade" placeholder="F"></td>
-                                        <td><input style="width: 50px;" type="text" name="maxvalue_10" class="maxvalue" placeholder="44"></td>
-                                        <td><input style="width: 50px;" type="text" name="minvalue_10" class="minvalue" placeholder="0"></td>
-                                        <td><input style="width: 60px;" type="text" name="gpa_10" class="gpa" placeholder="00"></td>
-                                    </tr>
-                                </table>
+                            <div class="btn-box">
+                                <div class="button-btn1">
+                                    <button type="button" class="bt-name-white" id="Back1" style="left: 0px;">Back</button>
+                                    <button type="button" class="bt-name" style="text-decoration: none; margin-right: 80px;" id="Next2">Continue</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="btn-box">
-                            <div class="button-btn">
-                                <button type="button" class="bt-name-white" id="Back2">Back</button>
-                                <button type="Submit" class="bt-name" style="text-decoration: none; margin-right: -53px;" href="<?= ROOT ?>dr/newDegree">Create</button>
+                        <div id="Form3">
+                            <p id="form2_p">Define Scheme of Assignment</p>
+                            <div class="step-row">
+                                <div id="progress3"></div>
+                            </div>
+                            <div class="box_3">
+                                <div class="box_3_2">
+                                    <div class="Grade_table" id="Grade_table"></div>
+                                </div>
+                            </div>
+                            <div class="btn-box1">
+                                <div class="button-btn">
+                                    <button type="button" class="bt-name-white" id="Back2">Back</button>
+                                    <button type="submit" class="bt-name" style="text-decoration: none; margin-right: -53px;" id="Next3">Create</button>
+                                </div>
                             </div>
                         </div>
                     </form>
-                    <div class="step-row">
-                        <div id="progress"></div>
-                    </div>
                 </div>
             </div>
         </div>
 </body>
 <script>
+    var numSemesters;
     //for form move within forms
     function myFunction() {
         const lb = document.querySelector(".model-box");
@@ -383,40 +333,98 @@ $data['role'] = $role;
 
     var Next1 = document.getElementById("Next1");
     var Next2 = document.getElementById("Next2");
+    var Next3 = document.getElementById("Next3");
     var Back1 = document.getElementById("Back1");
     var Back2 = document.getElementById("Back2");
 
-    var progress = document.getElementById("progress");
-    var numSemesters = 4;
+    var progress1 = document.getElementById("progress1");
+    var progress2 = document.getElementById("progress2");
+    var progress3 = document.getElementById("progress3");
+
     // Validate Form1 before proceeding
     Next1.onclick = function() {
         if (validateForm1()) {
-            Form1.style.left = "-550px";
-            Form2.style.left = "100px";
-            progress.style.width = "150px";
+            Form1.style.display = "none";
+            Form2.style.display = "block";
+            progress2.style.width = "150px";
+            myFunction();
         } else {
             alert(" Please fill out all the fields.");
         }
     }
     Back1.onclick = function() {
-        Form1.style.left = "70px";
-        Form2.style.left = "550px";
-        progress.style.width = "10px";
+        Form1.style.display = "block";
+        Form2.style.display = "none";
+        progress1.style.width = "10px";
     }
     // Validate Form2 before proceeding
     Next2.onclick = function() {
-        if (validateForm2()) {
-            Form2.style.left = "-550px";
-            Form3.style.left = "100px";
-            progress.style.width = "300px";
-        } else {
-            alert(" Please fill out all the fields.");
+        if (validateForm2(numSemesters)) {
+            Form2.style.display = "none";
+            Form3.style.display = "block";
+            progress3.style.width = "300px";
+            myFunction();
+            generateGrades();
         }
     }
     Back2.onclick = function() {
-        Form2.style.left = "100px";
-        Form3.style.left = "550px";
-        progress.style.width = "150px";
+        Form2.style.display = "block";
+        Form3.style.display = "none";
+        progress2.style.width = "150px";
+    }
+    Next3.onclick = function(event) {
+        event.preventDefault();
+        if (validateForm3(event)) {
+            var subjectsData = [];
+            for (var i = 1; i <= numSemesters; i++) {
+                var semesterTable = document.getElementById(`Subject_table${i}`);
+                var subjectRows = semesterTable.querySelectorAll('tr');
+                for (var j = 1; j < subjectRows.length; j++) {
+                    var subjectName = document.getElementById(`SubjectName${i}_${j}`).value.trim();
+                    var subjectCode = document.getElementById(`SubjectCode${i}_${j}`).value.trim();
+                    var credits = document.getElementById(`NoCredits${i}_${j}`).value.trim();
+                    var semesterNumber = i;
+                    // Push data to subjectsData array
+                    subjectsData.push({
+                        subjectName: subjectName,
+                        subjectCode: subjectCode,
+                        credits: credits,
+                        semester: semesterNumber
+                    });
+                }
+            }
+            // Convert subjectsData to a JSON string and add it to a hidden input field in the form
+            var subjectsDataInput = document.createElement('input');
+            subjectsDataInput.setAttribute('type', 'hidden');
+            subjectsDataInput.setAttribute('name', 'subjectsData');
+            subjectsDataInput.setAttribute('value', JSON.stringify(subjectsData));
+            document.querySelector('form').appendChild(subjectsDataInput);
+
+            var gradesData = [];
+            var gradeTable = document.getElementById(`Grade_table`);
+            var keys = Object.keys(grades);
+            for (var k = 1; k <= 2; k++) { // loop through all rows except the header
+                var maxmark = document.querySelector(`#maxvalue${k}`).value.trim();
+                var minmark = document.querySelector(`#minvalue${k}`).value.trim();
+                var gpa = document.querySelector(`#gpa${k}`).value.trim();
+                // Push data to gradesData array
+                gradesData.push({
+                    grade: keys[k - 1],
+                    maxMarks: maxmark,
+                    minMarks: minmark,
+                    gpv: grades[keys[k - 1]]
+                });
+                // Add hidden input fields for maxmark, minmark, and gpa
+                var gradesDataInput = document.createElement('input');
+                gradesDataInput.setAttribute('type', 'hidden');
+                gradesDataInput.setAttribute('name', `gradesData`);
+                gradesDataInput.setAttribute('value', JSON.stringify(gradesData));
+                document.querySelector('form').appendChild(gradesDataInput);
+            }
+
+            progress3.style.width = "450px";
+            document.querySelector("form").submit();
+        }
     }
     // Function to validate Form1, Form2, Form3 fields
     function validateForm1() {
@@ -428,7 +436,7 @@ $data['role'] = $role;
         return true;
     }
 
-    function validateForm2() {
+    function validateForm2(numSemesters) {
         for (var j = 1; j <= numSemesters; j++) { // semesters
             var subjectTable = document.getElementById(`Subject_table${j}`);
             var subjectRows = subjectTable.querySelectorAll('tr');
@@ -439,7 +447,19 @@ $data['role'] = $role;
 
                 // Check if subject and credits are filled for each subject
                 if (subject === "" || credits === "" || subCodes === "") {
-                    alert("Please fill out all fields for Semester " + j + " Subject " + k);
+                    alert("Please fill out all fields, Semester " + j + " Subject " + k);
+                    return false;
+                }
+                if (!/^[a-zA-Z\s]+$/.test(subject.trim())) {
+                    alert("SubjectName can only have letters and spaces. Semester " + j + " Subject " + k);
+                    return false;
+                }
+                if (!/^[a-zA-Z0-9]+$/.test(subCodes)) {
+                    alert("SubjectCode can only have letters and numbers. Semester " + j + " Subject " + k);
+                    return false;
+                }
+                if (!/^[0-9]+$/.test(credits)) {
+                    alert("NoCredits can only have numbers. Semester " + j + " Subject " + k);
                     return false;
                 }
             }
@@ -447,14 +467,46 @@ $data['role'] = $role;
         return true;
     }
 
+    function validateForm3(event) {
+        var gradeTable = document.getElementById(`Grade_table`);
+        for (var k = 1; k <= 2; k++) { // loop through all rows except the header
+            var maxmark = document.querySelector(`#maxvalue${k}`).value.trim();
+            var minmark = document.querySelector(`#minvalue${k}`).value.trim();
+            var gpa = document.querySelector(`#gpa${k}`).value.trim();
+            // Check if subject and credits are filled for each subject
+            if (maxmark === "" || minmark === "" || gpa === "") {
+                alert("Please fill out all fields in " + getGradeKey(k));
+                event.preventDefault();
+                return false;
+            }
+            if (!/^\d+(\.\d+)?$/.test(maxmark)) {
+                alert("Max Mark for row " + k + " must be a numeric value.");
+                event.preventDefault();
+                return false;
+            }
+            if (!/^\d+(\.\d+)?$/.test(minmark)) {
+                alert("Min Mark for row " + k + " must be a numeric value.");
+                event.preventDefault();
+                return false;
+            }
+            if (!/^\d+(\.\d+)?$/.test(gpa)) {
+                alert("GPA for row " + k + " must be a numeric value.");
+                event.preventDefault();
+                return false;
+            }
+        }
+        return true;
+    }
     // Function to handle degree type change
     function handleDegreeTypeChange() {
         var degreeType = document.getElementById("degree_type").value;
         var semesterContainer = document.getElementById("semester_container");
         // You can customize this logic based on your degree types
         if (degreeType === "1 Year") {
+            numSemesters = 2;
             showSemesters(2);
         } else if (degreeType === "2 Year") {
+            numSemesters = 4;
             showSemesters(4);
         }
     }
@@ -483,8 +535,8 @@ $data['role'] = $role;
                 <button type="button" class="addSubject" style="left: 0px;" id="addSubject${i}">Add Subject</button>
             </div>
         `;
-        semesterContainer.appendChild(semesterDiv); // Add event listener for dynamically adding subjects
-        addSubjectButtonListener(i);
+            semesterContainer.appendChild(semesterDiv); // Add event listener for dynamically adding subjects
+            addSubjectButtonListener(i);
         }
     }
     // Function to add event listener for dynamically adding subjects
@@ -501,89 +553,54 @@ $data['role'] = $role;
             document.querySelector(`#Subject_table${semesterNumber}`).insertAdjacentHTML('beforeend', template);
         });
     }
+    var grades = {
+        "A+": "4.00",
+        "A": "4.00",
+        "A-": "3.70",
+        "B+": "3.30",
+        "B": "3.00",
+        "B-": "2.70",
+        "C+": "2.30",
+        "C": "2.00",
+        "C-": "1.70",
+        "D+": "1.30",
+        "D": "1.00",
+        "D-": "0.70",
+        "F": "0.30"
+    };
+
+    function generateGrades() {
+        var gradecontainer = document.getElementById("Grade_table");
+
+        gradecontainer.innerHTML = "";
+
+        var headerRow = document.createElement("tr");
+        headerRow.innerHTML = `
+        <th style="width: 100px; margin: 20px 0px 10px 0px;">Grade</th>
+        <th style="width: 100px; margin: 20px 0px 10px 0px;">Max Mark</th>
+        <th style="width: 100px; margin: 20px 0px 10px 0px;">Min Mark</th>
+        <th style="width: 100px; margin: 20px 0px 10px 0px;">GPV</th>
+    `;
+        gradecontainer.appendChild(headerRow);
+
+        for (var i = 1; i <= 2; i++) {
+            var gradeRow = document.createElement("tr");
+            var currentGrade = grades[getGradeKey(i)];
+            gradeRow.innerHTML = `
+            <td><center><input style="width: 60px;" type="text" name="grade" class="grade" value="${getGradeKey(i)}" id="grade${i}" readonly></center></td>
+            <td><center><input style="width: 50px;" type="text" name="maxvalue" class="maxvalue" placeholder="100" id="maxvalue${i}"></center></td>
+            <td><center><input style="width: 50px;" type="text" name="minvalue" class="minvalue" placeholder="90" id="minvalue${i}"></center></td>
+            <td><center><input style="width: 60px;" type="text" name="gpa" class="gpa" placeholder="${currentGrade}" id="gpa${i}"></center></td>
+        `;
+            gradecontainer.appendChild(gradeRow);
+        }
+    }
+    // Function to get the grade key dynamically
+    function getGradeKey(index) {
+        var keys = Object.keys(grades);
+        return keys[index - 1];
+    }
     // });
 </script>
 
 </html>
-<!-- 
-// document.addEventListener('DOMContentLoaded', function() {
-    //for form blur-background
-    // function onCreateDegreeClick() {
-    //     document.querySelector("#create-popup").classList.add("active");
-    //     document.querySelector("#body").classList.add("active");
-    // }
-
-// function validateForm2() {
-//     for (var j = 1; j <= numSemesters; j++) {       //semesters
-//         for (var k = 1; k <= 1; k++) {              //subjects
-//             var subject = document.getElementById("subjectName").value;
-//             var credits = document.getElementById("NoCredits").value;
-//             var subCodes = document.getElementById("subjectCode").value;
-//             // Check if subject and credits are filled for each semester
-//             if (subject.trim() === "" || credits.trim() === "" || subCodes.trim() === "") {
-//                 // alert("Please fill out all fields for Semester " + j);
-//                 return false;
-//             }
-//         }
-//     }
-//     return true;
-// }
-//     function validateForm2() {
-//     for (var j = 1; j <= numSemesters; j++) {
-//         for (var k = 1; k <= 1; k++) { // Assuming you have one subject per semester
-//             var semesterContainer = document.getElementById("semester_container");
-//             var subjectElement = semesterContainer.querySelector(`.semester${j} .SubjectName`).value;
-//             var creditsElement = semesterContainer.querySelector(`.semester${j} .NoCredits`).value;
-//             var subCodesElement = semesterContainer.querySelector(`.semester${j} .SubjectCode`).value;
-
-//             var subject = subjectElement ? subjectElement : "";
-//             var credits = creditsElement ? creditsElement : "";
-//             var subCodes = subCodesElement ? subCodesElement : "";
-
-//             // Check if subject and credits are filled for each semester
-//             if (subject.trim() === "" || credits.trim() === "" || subCodes.trim() === "") {
-//                 return false;
-//             }
-//         }
-//     }
-//     return true;
-// }
-function validateForm2() {
-        for (var j = 1; j <= numSemesters; j++) {
-            for (var k = 1; k <= 1; k++) {
-                var semesterContainer = document.getElementById("semester_container");
-                var subjectElement = semesterContainer.querySelector('.SubjectName').value.trim();
-                var creditsElement = semesterContainer.querySelector('.NoCredits').value.trim();
-                var subCodesElement = semesterContainer.querySelector('.SubjectCode').value.trim();
-
-                var subject = subjectElement ? subjectElement.value : "";
-                var credits = creditsElement ? creditsElement.value : "";
-                var subCodes = subCodesElement ? subCodesElement.value : "";
-
-                console.log(`subjectElement for:`, subjectElement);
-                console.log(`creditsElement for:`, creditsElement);
-                console.log(`subCodesElement for:`, subCodesElement);
-
-                // Check if subject and credits are filled for each semester
-                if (subject === "" || credits === "" || subCodes === "") {
-                    return false;
-                }
-            }
-        }
-        return true;
-    } 
-    // function validateForm2() {
-    //     for (var j = 1; j <= numSemesters; j++) { //semesters
-    //         for (var k = 1; k <= 2; k++) { //subjects
-    //             var subject = document.getElementById("SubjectName${j}_${k}").value.trim();
-    //             var subCodes = document.getElementById("SubjectCode${j}_${k}").value.trim();
-    //             var credits = document.getElementById("NoCredits${j}_${k}").value.trim();
-    //             // Check if subject and credits are filled for each semester
-    //             if (subject === "" || credits === "" || subCodes === "") {
-    //                 // alert("Please fill out all fields for Semester " + j);
-    //                 return false;
-    //             }
-    //         }
-    //     }
-    //     return true;
-    // }-->
