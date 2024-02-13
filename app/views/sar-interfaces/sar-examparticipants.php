@@ -4,17 +4,13 @@ $data['role'] = $role;
 
 ?>
 
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>temp2 Dashboard</title>
+    <title>Exam Participants</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -118,6 +114,7 @@ $data['role'] = $role;
         width: 100%;
         height: auto;
         padding: 1vw 2vw 1vw 2vw;
+        align-items: center;
     }
 
     .flex-container-top {
@@ -141,6 +138,7 @@ $data['role'] = $role;
         width: 15vw;
         font-size: 0.9vw;
         margin-right: 2vw;
+        height: 100%;
     }
 
     .admission-button1 {
@@ -156,6 +154,7 @@ $data['role'] = $role;
         width: 13vw;
         font-size: 0.9vw;
         margin-right: 2vw;
+        height: 100%;
     }
 
 
@@ -171,6 +170,7 @@ $data['role'] = $role;
         cursor: pointer;
         width: 14vw;
         font-size: 0.9vw;
+        height: 100%;
     }
 
 
@@ -303,7 +303,7 @@ $data['role'] = $role;
     }
 
     .table__body {
-        width: 95%;
+        width: 100%;
         max-height: calc(89% - 1.6rem);
         /* background-color: var(--body-color); */
         margin: 1vw;
@@ -523,6 +523,10 @@ $data['role'] = $role;
 
     }
 
+    .participants-body {
+        width: 100%;
+    }
+
     .participants-body.active {
         filter: blur(5px);
         pointer-events: none;
@@ -545,144 +549,195 @@ $data['role'] = $role;
         top: -150%;
         left: 50%;
         transform: translate(-50%, -50%) scale(1.25);
+        border: 1.5px solid rgba(00, 00, 00, 0.30);
         opacity: 0;
         background: #fff;
-        width: 60%;
+        width: 40%;
         /* height: 60vh; */
         padding: 40px;
-        box-shadow: 17px 10px 400px rgba(0, 0, 0, 1.15);
+        box-shadow: 9px 11px 60.9px 0px rgba(0, 0, 0, 0.60);
         border-radius: 10px;
         transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
         z-index: 2000;
     }
+
+    .close-btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 15px;
+        height: 15px;
+        background: #17376e;
+        color: #ffffff;
+        text-align: center;
+        line-height: 15px;
+        border-radius: 15px;
+        cursor: pointer;
+    }
+
+    .display-message {
+        width: 70%;
+    }
+
+    .participants-form-header {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 10px;
+        margin-bottom: 20px;
+
+    }
+
+    .participant-form-btns {
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+
+    }
 </style>
 
-<body class="participants-body" id="body">
-
-    <div class="loader-wraper">
+<body>
+    <div class=" loader-wraper">
         <div class="loader-css">
             <?php $this->view('components/loader/index') ?>
         </div>
     </div>
-    <div class="temp2-home">
-        <div class="temp2-title">Examination</div>
-        <div class="temp2-subsection-1">
-            <div class="temp2-sub-title1">
-                Overview
-            </div>
+    <div class="participants-body" id="body">
+        <?php $this->view('components/navside-bar/header', $data) ?>
+        <?php $this->view('components/navside-bar/sidebar', $data) ?>
+        <?php $this->view('components/navside-bar/footer', $data) ?>
 
-            <div class="row">
+        <div class="temp2-home">
 
-
-
-                <div class="column1">
-                    <div class="data1">Course Name<br>
-                        <!-- <div class="email"><?= $student->Email ?></div> -->
-                        <div class="course" id="course">Diploma in School Librarianship</div>
-                    </div>
-                    <br>
-                    <div class="data2">Examination:<br>
-                        <!-- <div class="regNum"> <?= $student->regNo ?></div> -->
-                        <div class="exam" id="exam">2nd Semester Examination</div>
-                    </div>
+            <div class="temp2-title">Examination</div>
+            <div class="temp2-subsection-1">
+                <div class="temp2-sub-title1">
+                    Overview
                 </div>
 
-                <div class="column2">
-                    <div class="data3">Participation:<br>
-                        <div class="count" id="count"> 216</div>
+                <div class="row">
+
+
+
+                    <div class="column1">
+                        <div class="data1">Course Name<br>
+                            <!-- <div class="email"><?= $student->Email ?></div> -->
+                            <div class="course" id="course">Diploma in School Librarianship</div>
+                        </div>
+                        <br>
+                        <div class="data2">Examination:<br>
+                            <!-- <div class="regNum"> <?= $student->regNo ?></div> -->
+                            <div class="exam" id="exam">2nd Semester Examination</div>
+                        </div>
                     </div>
-                    <br>
-                    <div class="data4">Academic Year:<br>
-                        <div class="year" id="year"> 2023/2024</div>
+
+                    <div class="column2">
+                        <div class="data3">Participation:<br>
+                            <div class="count" id="count"> 216</div>
+                        </div>
+                        <br>
+                        <div class="data4">Academic Year:<br>
+                            <div class="year" id="year"> 2023/2024</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="temp2-subsection-2">
-            <div class="temp2-subsection-21">
+            <div class="temp2-subsection-2">
+                <div class="temp2-subsection-21">
 
-                <form method="post">
-                    <div class="flex-container-top">
+                    <div class="participants-form-header">
                         <div class="temp2-sub-title2">Participants</div>
-                        <button class="admission-button0">Download Attendance Sheet</button>
-                        <button class="admission-button2" type="submit" name="admission" value="clicked"
-                            onClick="showMailPopup(event)">Send Admission Card</button>
+                        <div class="participant-form-btns">
+                            <button class="admission-button1" id="openModal">Exam Attendance Submit</button>
+                            <form method="post">
+
+                                <button class="admission-button0">Download Attendance Sheet</button>
+                                <button class="admission-button2" type="submit" name="admission" value="clicked"
+                                    onClick="showMailPopup(event)">Send Admission Card</button>
+
+                            </form>
+                        </div>
                     </div>
-                </form>
-                <button class="admission-button1" id="openModal">Exam Attendance Submit</button>
-                <?php
-                if (message()) {
-                    echo '<div class="profile-message">';
-                    if ($_SESSION['message_type'] == 'success') {
-                        echo "<div class='error-message-profile' >" . message('', '', true) . "</div>";
-                    } else {
-                        echo "<div class='error-message-profile' style='color:red;'>" . message('', '', true) . "</div>";
-                    }
-                    echo '</div>';
-                }
-                ?>
-                <section class="table__body">
-                    <table id="table_p">
-                        <thead>
-                            <tr>
-                                <th> Name </th>
-                                <th> Attempt </th>
-                                <th> Index Number </th>
-                                <th> Registration Number </th>
-                                <th> Student Type </th>
-                                <th> Admission Card </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($examParticipants as $students): ?>
-                                <?php foreach ($students as $student): ?>
-                                    <?php $json = json_encode($student); ?>
-                                    <tr>
-                                        <td class="table__body-td-name"><img src="<?= ROOT ?>assets/student.png" alt="">
-                                            Bimsara Anjana</td>
-                                        <td>
-                                            <?= $student->attempt ?>
-                                        </td>
-                                        <td>
-                                            <?= $student->indexNo ?>
-                                        </td>
-                                        <td> DLIM/01/01</td>
-                                        <td>
-                                            <?= $student->studentType ?>
-                                        </td>
-                                        <td> <a href="http://localhost/NILIS-MIS/public/admission/login?degreeID=10&examID=43">tap
-                                                to see Admission card </a></td>
-                                    </tr>
+                    <div class="display-message">
+                        <?php
+                        if (message()) {
+                            echo '<div class="profile-message">';
+                            if ($_SESSION['message_type'] == 'success') {
+                                echo "<div class='error-message-profile' >" . message('', '', true) . "</div>";
+                            } else {
+                                echo "<div class='error-message-profile' style='color:red;'>" . message('', '', true) . "</div>";
+                            }
+                            echo '</div>';
+                        }
+                        ?>
+                    </div>
+                    <section class="table__body">
+                        <table id="table_p">
+                            <thead>
+                                <tr>
+                                    <th> Name </th>
+                                    <th> Attempt </th>
+                                    <th> Index Number </th>
+                                    <th> Registration Number </th>
+                                    <th> Student Type </th>
+                                    <th> Admission Card </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($examParticipants as $students): ?>
+                                    <?php foreach ($students as $student): ?>
+                                        <?php $json = json_encode($student); ?>
+                                        <tr>
+                                            <td class="table__body-td-name"><img src="<?= ROOT ?>assets/student.png" alt="">
+                                                Bimsara Anjana</td>
+                                            <td>
+                                                <?= $student->attempt ?>
+                                            </td>
+                                            <td>
+                                                <?= $student->indexNo ?>
+                                            </td>
+                                            <td> DLIM/01/01</td>
+                                            <td>
+                                                <?= $student->studentType ?>
+                                            </td>
+                                            <td> <a
+                                                    href="http://localhost/NILIS-MIS/public/admission/login?degreeID=10&examID=43">tap
+                                                    to see Admission card </a></td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 <?php endforeach; ?>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </section>
+                            </tbody>
+                        </table>
+                    </section>
 
-                <br>
+                    <br>
+
+
+                </div>
 
 
             </div>
 
-
-        </div>
-        <div class="temp2-footer">
-            <?php $this->view('components/footer/index', $data) ?>
-        </div>
-
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <span class="close" id="closeModal">&times;</span>
-                <?php $this->view('components/file-upload/exam-attendance-upload', $data) ?>
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" id="closeModal">&times;</span>
+                    <?php $this->view('components/file-upload/exam-attendance-upload', $data) ?>
+                </div>
+            </div>
+            <div class="user-create-footer">
+                <?php $this->view('components/footer/index', $data) ?>
             </div>
         </div>
+
     </div>
 
     <div class="mail-popup" id="mail-popup">
-        <?php $this->view('components/popup/sendMail', $data) ?>
+        <?php $this->view('components/popup/sendMails', $data) ?>
     </div>
+
 </body>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var modal = document.getElementById('myModal');
