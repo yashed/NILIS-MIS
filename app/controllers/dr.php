@@ -25,11 +25,11 @@ class DR extends Controller
         $degree = new Degree();
         $subject = new Subjects();
         $grade = new Grades();
-        
+
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
-        
+
         if ($action == 'add') {
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $currentYear = date('Y');
@@ -37,7 +37,7 @@ class DR extends Controller
                     $duration = 1;
                 } else if ($_POST['degree_type'] === "2 Year") {
                     $duration = 2;
-                } 
+                }
                 if (($_POST['select_degree_type']) === 'DLMS') {
                     $degree_name = "Diploma in Library Management Studies";
                 } else if (($_POST['select_degree_type']) === 'ENCM') {
@@ -90,31 +90,51 @@ class DR extends Controller
                 }
                 redirect("dr/newdegree");
             }
-        } elseif ($action == 'delete') {
-
-
         }
-
         $data['degrees'] = $degree->findAll();
         $data['subjects'] = $subject->findAll();
-        // $data['grades'] = $grade->findAll();
+        $data['grades'] = $grade->findAll();
 
         $this->view('dr-interfaces/dr-degreeprograms', $data);
     }
 
     public function degreeprofile()
     {
-        $degree = new Degree();
-        $data['degrees'] = $degree->findAll();
-
-        $this->view('dr-interfaces/dr-degreeprofile', $data);
+        $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
+        // Check if degree ID is provided
+        if ($degreeID !== null) {
+            $degree = new Degree();
+            $subject = new Subjects();
+            $degreeTimeTable = new DegreeTimeTable();
+            $data['degrees'] = $degree->findAll();
+            $data['degreeTimeTable'] = $degreeTimeTable->findAll();
+            // Assuming you have a method to fetch subjects by degree ID
+            $subjectsByDegree = $subject->find($degreeID);
+            // Check if subjects were found
+            if ($subjectsByDegree !== null) {
+                // Populate $data['subjects'] correctly
+                $data['subjects'] = $subjectsByDegree;
+            } else {
+                // Handle case when no subjects were found for the degree ID
+                $data['subjects'] = []; // Set to an empty array
+                echo "Error: No subjects found for the specified degree ID.";
+            }
+            // Load the view with the data
+            $this->view('dr-interfaces/dr-degreeprofile', $data);
+        } else {
+            echo "Error: Degree ID not provided in the URL.";
+        }
     }
 
+
     public function newDegree($action = null, $id = null)
-    {   
+    {
         //Create CSV file to getstudent data
         $degree = new Degree();
         $student = new StudentModel();
+        $data = [];
+        $data['action'] = $action;
+        $data['id'] = $id;
         $degree_id = $degree->lastID('DegreeID');
         $rowData = ['Full-Name', 'Email', 'Country', 'NIC-No', 'Date-Of-Birth', 'whatsappNo', 'Address', 'Phone-No'];
         $studentCSV = 'assets/csv/output/student-data-input.csv';
@@ -179,12 +199,12 @@ class DR extends Controller
                 echo 'Error uploading file.';
             }
         }
-        $timeTable = new DegreeTimeTable;
-        $data = [];
-        $data['action'] = $action;
-        $data['id'] = $id;
-
+        $timeTable = new DegreeTimeTable();
+        $action = "d";
+        echo "<script>console.log(" . $action . ");</script>";
+        echo "<script>console.log('wutto');</script>";
         if ($action == 'add') {
+            echo "<script>console.log('fucked');</script>";
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 if (isset($_POST['timetableData'])) {
                     $timetableData = json_decode($_POST['timetableData'], true);
