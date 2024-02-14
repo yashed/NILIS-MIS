@@ -306,11 +306,11 @@ $data['role'] = $role;
                         <label for="student-data" class="file-input-icon"></label>
                         <input type="file" id="student-data" name="student-data">
                         <p class="text1">Drag and drop or <label for="student-data" class="browse-label">browser</label> your files</p>
-                        <button type="submit" class="download-button" name="upload-csv">Upload</button>
+                        <button type="submit" class="download-button" name="student-data" value="upload-csv">Upload</button>
                     </div>
                 </form>
             </div>
-            <form class="box_4" method="post">
+            <form class="box_4" method="post" action="<?= ROOT ?>dr/newDegree/add" id="form1">
                 <p>Define Degree Time Table</p>
                 <div class="box_4_1">
                     <table class="Time_table" id="Time_table">
@@ -375,7 +375,7 @@ $data['role'] = $role;
                         </tr>
                         <tr>
                             <td></td>
-                            <td width="12%"><button class="pin" type="submit" id="save">Save</button></td>
+                            <td width="12%"><button class="pin" type="" id="save">Save</button></td>
                         </tr>
                     </table>
                 </div>
@@ -389,7 +389,7 @@ $data['role'] = $role;
         //Add new event
         let add = document.querySelector("#add_new_event");
         let table = document.querySelector(".Time_table");
-        let i = 5;
+        let i = 2;
         add.addEventListener("click", (event) => {
             let template = `
                 <tr>
@@ -413,13 +413,14 @@ $data['role'] = $role;
 
 
         var save = document.getElementById("save");
-        save.onclick = function() {
-            // event.preventDefault();
+        save.onclick = function(event) {
+            event.preventDefault();
             var timetableData = [];
+            i=2;
             var timeTable = document.getElementById(`Time_table`);
             for (var k = 1; k < i; k++) { // loop through all rows except the header
                 var eventName = document.getElementById(`event_${k}`).value.trim();
-                var eventType = document.getElementById(`type_${k}`).value;
+                var eventType = document.getElementById(`type_${k}`).value.trim();
                 var eventStart = document.getElementById(`start_${k}`).value.trim();
                 var eventEnd = document.getElementById(`end_${k}`).value.trim();
                 // Push data to timetableData array
@@ -429,14 +430,14 @@ $data['role'] = $role;
                     eventStart: eventStart,
                     eventEnd: eventEnd
                 });
-                // Add hidden input fields for maxmark, minmark, and gpa
+                // console.log(timetableData); 
                 var timetableDataInput = document.createElement('input');
                 timetableDataInput.setAttribute('type', 'hidden');
                 timetableDataInput.setAttribute('name', `timetableData`);
                 timetableDataInput.setAttribute('value', JSON.stringify(timetableData));
                 document.querySelector('form').appendChild(timetableDataInput);
             }
-            document.querySelector("form").submit();
+            document.getElementById("form1").submit();
         }
     </script>
 </body>
