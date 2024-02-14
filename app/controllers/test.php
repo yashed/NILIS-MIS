@@ -16,9 +16,8 @@ class Test extends Controller
 
     public function t1()
     {
-        $mail = new Mail();
-        $mail->send("dad", 'subject', 'message');
-        $this->view('sar-interfaces/test');
+
+        $this->view('components/calender/calender-2ndview');
     }
 }
 ?>
