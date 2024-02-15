@@ -477,9 +477,93 @@ $data['role'] = $role;
         text-decoration: none;
         cursor: pointer;
     }
+
+    .profile-message {
+        color: #10344D;
+        font-family: Poppins;
+        font-size: 22px;
+        border-radius: 10px;
+        font-style: normal;
+        font-weight: 600;
+        margin: 40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        background-color: #f8d7da;
+        height: 5vh;
+    }
+
+    .error-message-profile {
+        padding: 0px 70px 0px 70px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .loader-wraper {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.70);
+        display: flex;
+        justify-content: center;
+        z-index: 1000;
+        align-items: center;
+    }
+
+    .loader-css {
+        width: 10%;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+
+    }
+
+    .participants-body.active {
+        filter: blur(5px);
+        pointer-events: none;
+        user-select: none;
+        overflow: hidden;
+
+
+    }
+
+    .mail-popup.active {
+
+        top: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+    }
+
+    .mail-popup {
+        position: fixed;
+        top: -150%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.25);
+        opacity: 0;
+        background: #fff;
+        width: 60%;
+        /* height: 60vh; */
+        padding: 40px;
+        box-shadow: 17px 10px 400px rgba(0, 0, 0, 1.15);
+        border-radius: 10px;
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+        z-index: 2000;
+    }
 </style>
 
-<body>
+<body class="participants-body" id="body">
+
+    <div class="loader-wraper">
+        <div class="loader-css">
+            <?php $this->view('components/loader/index') ?>
+        </div>
+    </div>
     <div class="temp2-home">
         <div class="temp2-title">Examination</div>
         <div class="temp2-subsection-1">
@@ -518,13 +602,26 @@ $data['role'] = $role;
         <div class="temp2-subsection-2">
             <div class="temp2-subsection-21">
 
-
-                <div class="flex-container-top">
-                    <div class="temp2-sub-title2">Participants</div>
-                    <button class="admission-button0">Download Attendance Sheet</button>
-                    <button class="admission-button1" id="openModal">Exam Attendance Submit</button>
-                    <button class="admission-button2">Send Admission Card</button>
-                </div>
+                <form method="post">
+                    <div class="flex-container-top">
+                        <div class="temp2-sub-title2">Participants</div>
+                        <button class="admission-button0">Download Attendance Sheet</button>
+                        <button class="admission-button2" type="submit" name="admission" value="clicked"
+                            onClick="showMailPopup(event)">Send Admission Card</button>
+                    </div>
+                </form>
+                <button class="admission-button1" id="openModal">Exam Attendance Submit</button>
+                <?php
+                if (message()) {
+                    echo '<div class="profile-message">';
+                    if ($_SESSION['message_type'] == 'success') {
+                        echo "<div class='error-message-profile' >" . message('', '', true) . "</div>";
+                    } else {
+                        echo "<div class='error-message-profile' style='color:red;'>" . message('', '', true) . "</div>";
+                    }
+                    echo '</div>';
+                }
+                ?>
                 <section class="table__body">
                     <table id="table_p">
                         <thead>
@@ -580,34 +677,53 @@ $data['role'] = $role;
                 <?php $this->view('components/file-upload/exam-attendance-upload', $data) ?>
             </div>
         </div>
+    </div>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                var modal = document.getElementById('myModal');
-                var btn = document.getElementById('openModal');
-                var span = document.getElementById('closeModal');
-                var body = document.body;
-
-                btn.onclick = function () {
-                    modal.style.display = "block";
-                    body.classList.add('modal-open');
-                }
-
-                span.onclick = function () {
-                    modal.style.display = "none";
-                    body.classList.remove('modal-open');
-                }
-
-                window.onclick = function (event) {
-                    if (event.target == modal) {
-                        modal.style.display = "none";
-                        body.classList.remove('modal-open');
-                    }
-                }
-            });
-        </script>
-
-
+    <div class="mail-popup" id="mail-popup">
+        <?php $this->view('components/popup/sendMail', $data) ?>
+    </div>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var modal = document.getElementById('myModal');
+        var btn = document.getElementById('openModal');
+        var span = document.getElementById('closeModal');
+        var body = document.body;
+
+        btn.onclick = function () {
+            modal.style.display = "block";
+            body.classList.add('modal-open');
+        }
+
+        span.onclick = function () {
+            modal.style.display = "none";
+            body.classList.remove('modal-open');
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                body.classList.remove('modal-open');
+            }
+        }
+    });
+</script>
+<script>
+    $(window).on("load", function () {
+        $(".loader-wraper").fadeOut("slow");
+    });
+
+    function showMailPopup() {
+
+        console.log('run');
+        document.querySelector("#mail-popup").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+        console.log('run again');
+    }
+
+
+</script>
+
+
 
 </html>

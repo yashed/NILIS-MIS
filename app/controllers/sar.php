@@ -47,7 +47,9 @@ class SAR extends Controller
         //get the degree id from the url
         $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
         $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
-        $examID = isset($_GET['semester']) ? $_GET['semester'] : null;
+
+        //need to get the semster to handel the two yaer exam
+        $semester = isset($_GET['semester']) ? $_GET['semester'] : null;
 
         // show($degreeID);
         // show($degreeID);
@@ -351,14 +353,45 @@ class SAR extends Controller
             $examID = 43;
 
             if ($method == 'participants') {
-                $participants[] = $examParticipants->where(['degreeID' => $degreeID, 'semester' => $semester, 'examID' => $examID]);
 
+                $admissionMail = new Mail();
+                $table = ['student'];
+                $columns = ['student.Email', 'student.name'];
+                $conditions0 = ['student.degreeID = exam_participants.DegreeID', 'student.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID];
+                $participantsMailName = $examParticipants->join($table, $columns, $conditions0);
+
+
+
+                //get the count of exam participants
+                $numberOfStudnets = $examParticipants->count(['examID' => $examID]);
+
+                $participants[] = $examParticipants->where(['examID' => $examID]);
                 // show($participants);
                 $data['examParticipants'] = $participants;
                 $data['examID'] = $examID;
                 $data['degreeID'] = $degreeID;
 
+                //run the mail sending function after click the button
+                if (isset($_POST['admission']) == 'clicked') {
+                    $mailSendCheck = true;
+                    foreach ($participantsMailName as $participant) {
+                        $to = $participant->Email;
+                        $mailSubject = "Admission Card";
+                        $name = $participant->name;
 
+                        if ($admissionMail->send($to, $mailSubject, '', $name) == false) {
+                            $mailSendCheck = false;
+                        }
+                    }
+
+                    //need to add a message to show the result of the mail sending
+                    if ($mailSendCheck) {
+                        message("Admission Cards Sent Successfully", "success");
+                        $_POST['admission'] = '';
+                    } else {
+                        message("Admission Cards Sent Failed", "error");
+                    }
+                }
 
                 $this->view('sar-interfaces/sar-examparticipants', $data);
 

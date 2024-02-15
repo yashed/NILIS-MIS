@@ -34,7 +34,7 @@ class Login extends Controller
                     } else if ($_SESSION['USER_DATA']->role == 'asar') {
                         header('Location: asar');
                     } else if ($_SESSION['USER_DATA']->role == 'clerk') {
-                        header('Location: clerk');
+                        redirect('clerk');
                     } else {
                         header('Location: login');
                     }
