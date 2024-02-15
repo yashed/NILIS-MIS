@@ -129,82 +129,14 @@ class DR extends Controller
 
     public function newDegree($action = null, $id = null)
     {
-        //Create CSV file to getstudent data
         $degree = new Degree();
         $student = new StudentModel();
+        $timeTable = new DegreeTimeTable();
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
         $degree_id = $degree->lastID('DegreeID');
-        $rowData = ['Full-Name', 'Email', 'Country', 'NIC-No', 'Date-Of-Birth', 'whatsappNo', 'Address', 'Phone-No'];
-        $studentCSV = 'assets/csv/output/student-data-input.csv';
-        $f = fopen($studentCSV, 'w');
-        if ($f == false) {
-            echo "<script>console.log('file is not open successfully');</script>";
-        }
-        // Write the header row to the CSV file
-        fputcsv($f, $rowData);
-        fclose($f);
-
-        //get uploaded csv file
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['student-data']) && $_POST['student-data'] == 'upload-csv') {
-            show($_POST);
-            show($_FILES);
-            if (isset($_FILES['student-data']) && $_FILES['student-data']['error'] === UPLOAD_ERR_OK) {
-                $uploadDirectory = 'assets/csv/input/';
-                // Ensure the directory exists and set proper permissions
-                if (!is_dir($uploadDirectory)) {
-                    mkdir($uploadDirectory, 0777, true);
-                    chmod($uploadDirectory, 0777);
-                }
-
-                $fileName = $_FILES['student-data']['name'];
-                $fileTmpName = $_FILES['student-data']['tmp_name'];
-                $targetPath = $uploadDirectory . basename($fileName);
-                echo $targetPath;
-                if (move_uploaded_file($fileTmpName, $targetPath)) {
-                    echo 'File uploaded successfully.';
-                    // Inside your newDegree function after successful file upload
-                    $csvFile = fopen($targetPath, 'r');
-
-                    // Skip the header row
-                    fgetcsv($csvFile);
-
-                    while (($rowData = fgetcsv($csvFile)) !== false) {
-                        // Assuming the order of columns in the CSV matches the order in the $rowData array
-                        $data = [
-                            'Email' => $rowData[1],
-                            'country' => $rowData[2],
-                            'name' => $rowData[0],
-                            'nicNo' => $rowData[3],
-                            'birthdate' => $rowData[4],
-                            'whatsappNo' => $rowData[5],
-                            'address' => $rowData[6],
-                            'phoneNo' => $rowData[7],
-                            'degreeID' => $degree_id,
-                        ];
-
-                        // For debugging, show the data before calling insert
-                        show($data);
-
-                        // Insert data into the database
-                        $student->insert($data);
-                    }
-
-                    fclose($csvFile);
-                } else {
-                    echo 'Failed to upload file.';
-                }
-            } else {
-                echo 'Error uploading file.';
-            }
-        }
-        $timeTable = new DegreeTimeTable();
-        $action = "d";
-        echo "<script>console.log(" . $action . ");</script>";
-        echo "<script>console.log('wutto');</script>";
         if ($action == 'add') {
-            echo "<script>console.log('fucked');</script>";
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 if (isset($_POST['timetableData'])) {
                     $timetableData = json_decode($_POST['timetableData'], true);
@@ -222,7 +154,60 @@ class DR extends Controller
                         $timeTable->insert($data1);
                     }
                 }
-                redirect("dr/degreeprofile");
+                redirect("dr/degreeprofile?id=$degree_id");
+            }
+        } else {
+            // Write the header row to the CSV file
+            $rowData = ['Full-Name', 'Email', 'Country', 'NIC-No', 'Date-Of-Birth', 'whatsappNo', 'Address', 'Phone-No'];
+            // get uploaded csv fill
+            $studentCSV = 'assets/csv/output/student-data-input.csv';
+            // Create CSV file to getstudent data
+            $f = fopen($studentCSV, 'w');
+            fputcsv($f, $rowData);
+            if ($f == false) {
+                echo "<script>console.log('file is not open successfully');</script>";
+            }
+            fclose($f);
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['student-data']) && $_POST['student-data'] == 'upload-csv') {
+                if (isset($_FILES['student-data']) && $_FILES['student-data']['error'] === UPLOAD_ERR_OK) {
+                    $uploadDirectory = 'assets/csv/input/';
+                    // Ensure the directory exists and set proper permissions
+                    if (!is_dir($uploadDirectory)) {
+                        mkdir($uploadDirectory, 0777, true);
+                        chmod($uploadDirectory, 0777);
+                    }
+                    $fileName = $_FILES['student-data']['name'];
+                    $fileTmpName = $_FILES['student-data']['tmp_name'];
+                    $targetPath = $uploadDirectory . basename($fileName);
+                    if (move_uploaded_file($fileTmpName, $targetPath)) {
+                        echo "<script>console.log('File uploaded successfully.');</script>";
+                        // Inside your newDegree function after successful file upload
+                        $csvFile = fopen($targetPath, 'r');
+                        // Skip the header row
+                        fgetcsv($csvFile);
+                        while (($rowData = fgetcsv($csvFile)) !== false) {
+                            // Assuming the order of columns in the CSV matches the order in the $rowData array
+                            $data = [
+                                'Email' => $rowData[1],
+                                'country' => $rowData[2],
+                                'name' => $rowData[0],
+                                'nicNo' => $rowData[3],
+                                'birthdate' => $rowData[4],
+                                'whatsappNo' => $rowData[5],
+                                'address' => $rowData[6],
+                                'phoneNo' => $rowData[7],
+                                'degreeID' => $degree_id,
+                            ];
+                            // Insert data into the database
+                            $student->insert($data);
+                        }
+                        fclose($csvFile);
+                    } else {
+                        echo "<script>console.log('Failed to upload file.');</script>";
+                    }
+                } else {
+                    echo "<script>console.log('Error uploading file.');</script>";
+                }
             }
         }
         $this->view('dr-interfaces/dr-newdegree');
