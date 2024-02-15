@@ -595,6 +595,24 @@ $data['role'] = $role;
 
     }
 </style>
+<?php
+// Assuming $examParticipants is an array containing all participants
+$perPage = 5; // Number of records per page
+$totalRecords = count($examParticipants); // Total number of records
+$totalPages = ceil($totalRecords / $perPage); // Total number of pages
+
+// Get current page from URL parameter, default to page 1
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+// Calculate starting index and ending index for pagination
+$start = ($page - 1) * $perPage;
+$end = $start + $perPage;
+
+// Slice the array to get records for the current page
+$currentRecords = array_slice($examParticipants, $start, $perPage);
+
+
+?>
 
 <body>
     <div class=" loader-wraper">
@@ -685,7 +703,7 @@ $data['role'] = $role;
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($examParticipants as $students): ?>
+                                <?php foreach ($currentRecords as $students): ?>
                                     <?php foreach ($students as $student): ?>
                                         <?php $json = json_encode($student); ?>
                                         <tr>
@@ -711,7 +729,21 @@ $data['role'] = $role;
                         </table>
                     </section>
 
+
                     <br>
+                    <div class="pagination">
+                        <?php if ($page > 1): ?>
+                            <a href="?page=<?= $page - 1 ?>">Previous</a>
+                        <?php endif; ?>
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <a href="?page=<?= $i ?>" <?= $page === $i ? 'class="active"' : '' ?>>
+                                <?= $i ?>
+                            </a>
+                        <?php endfor; ?>
+                        <?php if ($page < $totalPages): ?>
+                            <a href="?page=<?= $page + 1 ?>">Next</a>
+                        <?php endif; ?>
+                    </div>
 
 
                 </div>
