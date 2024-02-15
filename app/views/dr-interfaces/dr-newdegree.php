@@ -435,7 +435,7 @@ $data['role'] = $role;
                 timetableDataInput.setAttribute('type', 'hidden');
                 timetableDataInput.setAttribute('name', `timetableData`);
                 timetableDataInput.setAttribute('value', JSON.stringify(timetableData));
-                document.querySelector('form').appendChild(timetableDataInput);
+                document.getElementById('form1').appendChild(timetableDataInput);
             }
             document.getElementById("form1").submit();
         }
