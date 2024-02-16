@@ -10,14 +10,17 @@
     body {
         width: 100vw;
         height: 100vh;
-        background-color: #ff5252;
+        background-color: #E2E2E2;
         display: grid;
         place-items: center;
     }
 
     .container {
-        width: 770px;
+        width: 95%;
+        height: 90%;
         background-color: #fff;
+        border-radius: 12px;
+        padding: 10px;
     }
 
     .header {
@@ -33,7 +36,8 @@
     }
 
     button {
-        width: 75px;
+        width: 25px;
+        height: 20px;
         cursor: pointer;
         border: none;
         outline: none;
@@ -67,11 +71,18 @@
         margin: auto;
         display: flex;
         flex-wrap: wrap;
+        /* justify-content: center; */
+    }
+
+    .calender-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .day {
-        width: 100px;
-        height: 100px;
+        width: 15%;
+        height: 68px;
         padding: 10px;
         cursor: pointer;
         margin: 5px;
@@ -171,6 +182,19 @@
     .error {
         border-color: #ea2027 !important;
     }
+
+    .title-bar {
+        font-size: 30px;
+        width: 95%;
+        font-weight: 600;
+        color: black;
+        padding: 10px 0px 10px 32px;
+        background-color: var(--text-color);
+        border-radius: 6px;
+        margin: 7px 4px 7px 4px;
+    }
+
+    }
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -181,10 +205,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" /> -->
 </head>
 
 <body>
+    <div class="title-bar">Calendar</div>
     <div class="container">
         <div class="header">
             <div id="month"></div>
@@ -202,7 +227,11 @@
             <div>Fri</div>
             <div>Sat</div>
         </div>
-        <div id="calendar"></div>
+        <div class="calender-wrap">
+            <div id="calendar">
+
+            </div>
+        </div>
     </div>
     <div id="modal"></div>
     <div id="addEvent">

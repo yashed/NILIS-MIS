@@ -14,38 +14,38 @@ define('APP_DESC', 'Examination Managment System');
 
 //connect to live server
 //database config for live server
-define('DBHOST', 'sql6.freesqldatabase.com');
-define('DBNAME', 'sql6683375');
-define('DBUSER', 'sql6683375');
-define('DBPASS', '9d2kNaSuiA');
-define('DBDRIVER', 'mysql');
+// define('DBHOST', 'sql6.freesqldatabase.com');
+// define('DBNAME', 'sql6683375');
+// define('DBUSER', 'sql6683375');
+// define('DBPASS', '9d2kNaSuiA');
+// define('DBDRIVER', 'mysql');
 
 
-// root path 
-define('ROOT', 'http://localhost/NILIS-MIS/public/');
+// // root path 
+// define('ROOT', 'http://localhost/NILIS-MIS/public/');
 
-// if ($_SERVER['SERVER_NAME'] == 'localhost') {
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
 
-//     //databse config for local server
-//     define('DBHOST', 'localhost');
-//     define('DBNAME', 'nilis_db');
-//     define('DBUSER', 'root');
-//     define('DBPASS', '');
-//     define('DBDRIVER', 'mysql');
+    //databse config for local server
+    define('DBHOST', 'localhost');
+    define('DBNAME', 'nilis_db');
+    define('DBUSER', 'root');
+    define('DBPASS', '');
+    define('DBDRIVER', 'mysql');
 
-//     //root path (localhost)
-//     //root path 
-//     define('ROOT', 'http://localhost/NILIS-MIS/public/');
-// } else {
-//     //database config for live server
-//     define('DBHOST', 'sql6.freesqldatabase.com');
-//     define('DBNAME', 'sql6683375');
-//     define('DBUSER', 'sql6683375');
-//     define('DBPASS', '9d2kNaSuiA');
-//     define('DBDRIVER', 'mysql');
+    //root path (localhost)
+    //root path 
+    define('ROOT', 'http://localhost/NILIS-MIS/public/');
+} else {
+    //database config for live server
+    define('DBHOST', 'sql6.freesqldatabase.com');
+    define('DBNAME', 'sql6683375');
+    define('DBUSER', 'sql6683375');
+    define('DBPASS', '9d2kNaSuiA');
+    define('DBDRIVER', 'mysql');
 
 
-//     //root path 
-//     define('ROOT', 'http://localhost/NILIS-MIS/public/');
-// }
+    //root path 
+    define('ROOT', 'http://localhost/NILIS-MIS/public/');
+}
 ?>
