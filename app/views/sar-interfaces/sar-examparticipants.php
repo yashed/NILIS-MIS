@@ -4,8 +4,7 @@ $data['role'] = $role;
 
 ?>
 
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
+<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
 
 <!DOCTYPE html>
