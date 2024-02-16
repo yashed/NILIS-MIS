@@ -142,11 +142,19 @@
                         <i class="bx bx-book icon"></i>
                         <span class="text nav-text">Examination</span>
                     </a>
-                    <div class="dropdown">
-                        <a href="<?= ROOT ?>sar/results"><center>Examination Results</center></a>
-                        <a href="<?= ROOT ?>sar/attendance"><center>Examination Attendance</center></a>
-                        <a href="<?= ROOT ?>sar/participants"><center>Examination Participants</center></a>
-                    </div>
+                    <?php
+                    // Check if the URL contains any of the specified patterns
+                    $url = $_SERVER['REQUEST_URI'];
+                    if (strpos($url, "examination/participants") !== false || 
+                        strpos($url, "examination/resultsupload") !== false || 
+                        strpos($url, "examination/results") !== false) {
+                        echo '<div class="dropdown">' .
+                            '<a href="' . ROOT . 'sar/results"><center>Examination Participants</center></a>' .
+                            '<a href="' . ROOT . 'sar/attendance"><center>Examination Submission</center></a>' .
+                            '<a href="' . ROOT . 'sar/participants"><center>Examination Results</center></a>' .
+                            '</div>';
+                    }
+                    ?>
                 </li>
                 <li class="nav-link">
                     <a href="<?= ROOT ?>dr/attendance">

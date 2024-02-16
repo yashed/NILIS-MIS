@@ -28,10 +28,6 @@
                 body.classList.remove("submenu-open");
             }
         });
-
-
-        // drop menu side
-        
     });
 </script>
 
