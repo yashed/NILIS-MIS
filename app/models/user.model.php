@@ -101,8 +101,9 @@ class User extends Model
           }
           if (empty($data['phoneNo'])) {
                $this->errors['phoneNo'] = 'Phone number is required';
-
-          }
+           } elseif (!preg_match("/^[0-9]{10}$/", $data['phoneNo'])) {
+               $this->errors['phoneNo'] = 'Phone number must contain exactly 10 digits';
+           }
 
           //check confirm password
           if (empty($data['cpassword']) && !empty($data['newpassword'])) {

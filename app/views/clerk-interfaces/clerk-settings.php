@@ -4,8 +4,7 @@ $data['role'] = $role;
 
 ?>
 
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
+<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
 
 <!DOCTYPE html>
@@ -15,7 +14,7 @@ $data['role'] = $role;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>temp3 Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+   
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -140,7 +139,7 @@ $data['role'] = $role;
     }
 
     .admission-button2 {
-         padding: 0.5% 0.5% 0.5% 1%; 
+        padding: 0.5% 0.5% 0.5% 1%;
         background-color: #17376E;
         color: #fff;
         text-decoration: none;
@@ -175,7 +174,7 @@ $data['role'] = $role;
         gap: 30px;
         flex-direction: row;
         padding-right: 11vw;
-        
+
 
 
     }
@@ -233,40 +232,37 @@ $data['role'] = $role;
             </div>
 
             <form action="" method="POST">
-            <div class=name>
-                <img src="<?= ROOT ?>assets/dr/imgano.png">
-                <!-- <p><h2><?= $student->name ?></h2></p> -->
-                <div class="flex">
-                    <div class="student-name">
-                        <p>
-                            Senudi Disakya Muthugala
-                        </p>
-                    </div>
-                    <a href="" class="admission-button" download>Cancel</a>
-                    <div class="form-element">
-                    <button type="submit" name="update_user_data" class="admission-button2">Save Data</button>
-                </div>
-                </div>
-
-            </div>
 
 
-            
-            <div class="form-element">
-                            <label for="id">
-                                <div class="label-name">ID</div>
-                            </label>
-                            <input type="text" placeholder="Enter" id="id" name="id" class="form-control">
+                <div class=name>
+                    <img src="<?= ROOT ?>assets/dr/imgano.png">
+                    <!-- <p><h2><?= $student->name ?></h2></p> -->
+                    <div class="flex">
+                        <div class="student-name">
+                            <p>
+                                Senudi Disakya Muthugala
+                            </p>
                         </div>
+                        <a href="" class="admission-button" download>Cancel</a>
+                        <div class="form-element">
+                            <button type="submit"  name="update_user_data" class="admission-button2">Save Data</button>
+                        </div>
+                    </div>
+
+                </div>
+
                 <div class="user-data">
-               
+
                     <div class="column-01">
-                        
+
                         <div class="form-element">
                             <label for="fname">
                                 <div class="label-name">First Name</div>
                             </label>
-                            <input type="text" placeholder="Enter" id="fname" name="fname" class="form-control">
+                            <input type="text" placeholder="<?= $user->fname ?>" id="fname" name="fname" class="form-control" value="<?= $user->fname ?>">
+                            <?php if (isset($_POST['update_user_data']) && empty($_POST['fname'])) : ?>
+                                <span class="error">First name is required.</span>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="column-02">
@@ -274,24 +270,35 @@ $data['role'] = $role;
                             <label for="lname">
                                 <div class="label-name">Last Name</div>
                             </label>
-                            <input type="text" placeholder="Enter" id="lname" name="lname" class="form-control">
+                            <input type="text" placeholder="<?= $user->lname ?>" id="lname" name="lname" class="form-control" value="<?= $user->lname ?>">
+
+                            <?php if (isset($_POST['update_user_data']) && empty($_POST['lname'])) : ?>
+                                <span class="error">Last name is required.</span>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
+
                 <div class="form-element">
                     <label for="email">
                         <div class="label-name">Email</div>
                     </label>
-                    <input type="text" placeholder="Enter" id="email" name="email" class="form-control">
+                    <input type="text" placeholder="<?= $user->email ?>" id="email" name="email" class="form-control" value="<?= $user->email ?>">
+                    <?php if (isset($_POST['update_user_data']) && empty($_POST['email'])) : ?>
+                        <span class="error">Email is required.</span>
+                    <?php endif; ?>
                 </div>
                 <div class="form-element">
                     <label for="role">
                         <div class="label-name">Phone Number</div>
                     </label>
-                    <input type="text" placeholder="Enter" id="phoneNo" name="phoneNo" class="form-control">
+                    <input type="text" placeholder="<?= $user->phoneNo ?>" id="phoneNo" name="phoneNo" class="form-control" value="<?= $user->phoneNo ?>">
+                    <?php if (isset($_POST['update_user_data']) && empty($_POST['phoneNo'])) : ?>
+                        <span class="error">Phone Number is required.</span>
+                    <?php endif; ?>
 
                 </div>
-               
+
             </form>
 
         </div>
@@ -301,7 +308,70 @@ $data['role'] = $role;
     <div class="temp3-footer">
         <?php $this->view('components/footer/index', $data) ?>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var firstNameInput = document.getElementById('fname');
+            var lastNameInput = document.getElementById('lname');
+            var emailInput = document.getElementById('email');
+            var phoneNoInput = document.getElementById('phoneNo');
+            var submitButton = document.getElementById('submitBtn');
+            var errorMessage = document.getElementById('fname-error');
+            var errorMessage = document.getElementById('lname-error');
+            var errorMessage = document.getElementById('email-error');
+            var errorMessage = document.getElementById('phoneNo-error');
 
+
+            function checkFirstName() {
+                if (firstNameInput.value.trim() === '') {
+                    submitButton.disabled = true;
+                    errorMessage.style.display = 'block';
+                } else {
+                    submitButton.disabled = false;
+                    errorMessage.style.display = 'none';
+                }
+            }
+
+            function checkLastName() {
+                if (firstNameInput.value.trim() === '') {
+                    submitButton.disabled = true;
+                    errorMessage.style.display = 'block';
+                } else {
+                    submitButton.disabled = false;
+                    errorMessage.style.display = 'none';
+                }
+            }
+
+            function checkEmail() {
+                if (firstNameInput.value.trim() === '') {
+                    submitButton.disabled = true;
+                    errorMessage.style.display = 'block';
+                } else {
+                    submitButton.disabled = false;
+                    errorMessage.style.display = 'none';
+                }
+            }
+
+            function checkPhoneNo() {
+                if (firstNameInput.value.trim() === '') {
+                    submitButton.disabled = true;
+                    errorMessage.style.display = 'block';
+                } else {
+                    submitButton.disabled = false;
+                    errorMessage.style.display = 'none';
+                }
+            }
+
+            checkFirstName();
+            checkLastName();
+            checkEmail();
+            checkPhoneNo();
+
+            firstNameInput.addEventListener('input', checkFirstName);
+            lastNameInput.addEventListener('input', checkLastName);
+            emailInput.addEventListener('input', checkEmail);
+            phoneNoInput.addEventListener('input', checkPhoneNo);
+        });
+    </script>
 </body>
 
 </html>
