@@ -516,8 +516,7 @@ $data['role'] = $role;
                                         Director
                                     </option>
                                     <option value="dr" <?= (set_value('role') === 'dr') ? 'selected' : '' ?>>
-                                        Deputy
-                                        Registrar</option>
+                                        DR</option>
                                     <option value="sar" <?= (set_value('role') === 'sar') ? 'selected' : '' ?>>
                                         SAR
                                     </option>
@@ -786,7 +785,25 @@ $data['role'] = $role;
     <?php $this->view('admin-interfaces/admin-user-delete') ?>
     </div>
     <script src="<?= ROOT ?>js/form.js"></script>
+    <script>
 
+        // Echoing PHP variable into JavaScript
+        var popupStatusCreate = <?php echo $popupCreate ? 'true' : 'false'; ?>;
+        var popupStatusUpdate = <?php echo $popupUpdate ? 'true' : 'false'; ?>;
+        console.log("Popup Status Create: ", popupStatusCreate);
+        console.log("Popup Status Update: ", popupStatusUpdate);
 
+        if (popupStatusCreate) {
+            // Adding 'active' class to the popup and body elements
+            document.querySelector("#create-popup").classList.add("active");
+            document.querySelector("#body").classList.add("active");
+        }
 
+        if (popupStatusUpdate) {
+            // Adding 'active' class to the popup and body elements
+            document.querySelector("#update-popup").classList.add("active");
+            document.querySelector("#body").classList.add("active");
+        }
+
+    </script>
 </body>

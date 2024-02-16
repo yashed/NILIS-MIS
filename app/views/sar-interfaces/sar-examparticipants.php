@@ -158,7 +158,7 @@ $data['role'] = $role;
         margin-right: 2vw;
     }
 
-   
+
 
     .admission-button2 {
         padding: 0.5% 1.8%;
@@ -172,7 +172,7 @@ $data['role'] = $role;
         width: 14vw;
         font-size: 0.9vw;
     }
-    
+
 
     .temp2-sub-title2 {
         color: #17376E;
@@ -340,8 +340,8 @@ $data['role'] = $role;
     }
 
     td img {
-        width: 36px;
-        height: 36px;
+        width: 40px;
+        height: 40px;
         margin: .5rem;
         border-radius: 50%;
         vertical-align: middle;
@@ -382,66 +382,7 @@ $data['role'] = $role;
         font-size: 0.8vw;
     }
 
-    /* tbody tr.hide {
-        opacity: 0;
-        transform: translateX(100%);
-    }
 
-    tbody tr:hover {
-        background-color: #eeeeee !important;
-    }
-
-    tbody tr td,
-    tbody tr td p,
-    tbody tr td img {
-        transition: .2s ease-in-out;
-    }
-
-    tbody tr.hide td,
-    tbody tr.hide td p {
-        padding: 0;
-        font: 0 / 0 sans-serif;
-        transition: .2s ease-in-out .5s;
-    }
-
-    tbody tr.hide td img {
-        width: 0;
-        height: 0;
-        transition: .2s ease-in-out .5s;
-    }
-
-
-    @media (max-width: 1000px) {
-        td:not(:first-of-type) {
-            min-width: 12.1rem;
-        }
-    }
-
-    thead th span.icon-arrow {
-        display: inline-block;
-        width: 1.3rem;
-        height: 1.3rem;
-        border-radius: 50%;
-        border: 1.4px solid transparent;
-
-        text-align: center;
-        font-size: 1rem;
-
-        margin-left: .5rem;
-        transition: .2s ease-in-out;
-    }
-
-    thead th:hover span.icon-arrow {
-        border: 1.4px solid;
-    }
-
-    thead th.active span.icon-arrow {
-        color: #ffffff;
-    }
-
-    thead th.asc span.icon-arrow {
-        transform: rotate(180deg);
-    } */
 
     .input-main-group {
         display: flex;
@@ -500,7 +441,7 @@ $data['role'] = $role;
         color: var(--sidebar-color);
     }
 
-    
+
     .modal {
         display: none;
         position: fixed;
@@ -519,7 +460,8 @@ $data['role'] = $role;
         margin: 15% auto;
         padding: 20px;
         border: 1px solid #888;
-        width: 80%;
+        width: 70vw;
+        border-radius: 10px;
     }
 
     .close {
@@ -536,10 +478,92 @@ $data['role'] = $role;
         cursor: pointer;
     }
 
+    .profile-message {
+        color: #10344D;
+        font-family: Poppins;
+        font-size: 22px;
+        border-radius: 10px;
+        font-style: normal;
+        font-weight: 600;
+        margin: 40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        background-color: #f8d7da;
+        height: 5vh;
+    }
 
+    .error-message-profile {
+        padding: 0px 70px 0px 70px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .loader-wraper {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.70);
+        display: flex;
+        justify-content: center;
+        z-index: 1000;
+        align-items: center;
+    }
+
+    .loader-css {
+        width: 10%;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+
+    }
+
+    .participants-body.active {
+        filter: blur(5px);
+        pointer-events: none;
+        user-select: none;
+        overflow: hidden;
+
+
+    }
+
+    .mail-popup.active {
+
+        top: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+    }
+
+    .mail-popup {
+        position: fixed;
+        top: -150%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.25);
+        opacity: 0;
+        background: #fff;
+        width: 60%;
+        /* height: 60vh; */
+        padding: 40px;
+        box-shadow: 17px 10px 400px rgba(0, 0, 0, 1.15);
+        border-radius: 10px;
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+        z-index: 2000;
+    }
 </style>
 
-<body>
+<body class="participants-body" id="body">
+
+    <div class="loader-wraper">
+        <div class="loader-css">
+            <?php $this->view('components/loader/index') ?>
+        </div>
+    </div>
     <div class="temp2-home">
         <div class="temp2-title">Examination</div>
         <div class="temp2-subsection-1">
@@ -578,13 +602,26 @@ $data['role'] = $role;
         <div class="temp2-subsection-2">
             <div class="temp2-subsection-21">
 
-
-                <div class="flex-container-top">
-                    <div class="temp2-sub-title2">Participants</div>
-                    <button class="admission-button0">Download Attendance Sheet</button>
-                    <button class="admission-button1" id="openModal">Exam Attendance Submit</button>
-                    <button class="admission-button2">Send Admission Card</button>
-                </div>
+                <form method="post">
+                    <div class="flex-container-top">
+                        <div class="temp2-sub-title2">Participants</div>
+                        <button class="admission-button0">Download Attendance Sheet</button>
+                        <button class="admission-button2" type="submit" name="admission" value="clicked"
+                            onClick="showMailPopup(event)">Send Admission Card</button>
+                    </div>
+                </form>
+                <button class="admission-button1" id="openModal">Exam Attendance Submit</button>
+                <?php
+                if (message()) {
+                    echo '<div class="profile-message">';
+                    if ($_SESSION['message_type'] == 'success') {
+                        echo "<div class='error-message-profile' >" . message('', '', true) . "</div>";
+                    } else {
+                        echo "<div class='error-message-profile' style='color:red;'>" . message('', '', true) . "</div>";
+                    }
+                    echo '</div>';
+                }
+                ?>
                 <section class="table__body">
                     <table id="table_p">
                         <thead>
@@ -593,27 +630,32 @@ $data['role'] = $role;
                                 <th> Attempt </th>
                                 <th> Index Number </th>
                                 <th> Registration Number </th>
+                                <th> Student Type </th>
                                 <th> Admission Card </th>
                             </tr>
                         </thead>
                         <tbody>
-
-                            <tr>
-                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt=""> Bimsara Anjana</td>
-                                <td> 3 </td>
-                                <td> DLIM/001</td>
-                                <td> DLIM/01/01</td>
-                                <td> tap to see Admission card </td>
-                            </tr>
-                            <tr>
-                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt=""> Yashed Thisara</td>
-                                <td> 3 </td>
-                                <td> DLIM/001</td>
-                                <td> DLIM/01/01</td>
-                                <td> tap to see Admission card </td>
-                            </tr>
-
-
+                            <?php foreach ($examParticipants as $students): ?>
+                                <?php foreach ($students as $student): ?>
+                                    <?php $json = json_encode($student); ?>
+                                    <tr>
+                                        <td class="table__body-td-name"><img src="<?= ROOT ?>assets/student.png" alt="">
+                                            Bimsara Anjana</td>
+                                        <td>
+                                            <?= $student->attempt ?>
+                                        </td>
+                                        <td>
+                                            <?= $student->indexNo ?>
+                                        </td>
+                                        <td> DLIM/01/01</td>
+                                        <td>
+                                            <?= $student->studentType ?>
+                                        </td>
+                                        <td> <a href="http://localhost/NILIS-MIS/public/admission/login?degreeID=10&examID=43">tap
+                                                to see Admission card </a></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </section>
@@ -630,12 +672,17 @@ $data['role'] = $role;
         </div>
 
         <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeModal">&times;</span>
-            <?php $this->view('components/file-upload/exam-attendance-upload', $data) ?>
+            <div class="modal-content">
+                <span class="close" id="closeModal">&times;</span>
+                <?php $this->view('components/file-upload/exam-attendance-upload', $data) ?>
+            </div>
         </div>
     </div>
 
+    <div class="mail-popup" id="mail-popup">
+        <?php $this->view('components/popup/sendMail', $data) ?>
+    </div>
+</body>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var modal = document.getElementById('myModal');
@@ -645,7 +692,7 @@ $data['role'] = $role;
 
         btn.onclick = function () {
             modal.style.display = "block";
-            body.classList.add('modal-open'); 
+            body.classList.add('modal-open');
         }
 
         span.onclick = function () {
@@ -661,8 +708,22 @@ $data['role'] = $role;
         }
     });
 </script>
+<script>
+    $(window).on("load", function () {
+        $(".loader-wraper").fadeOut("slow");
+    });
+
+    function showMailPopup() {
+
+        console.log('run');
+        document.querySelector("#mail-popup").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+        console.log('run again');
+    }
 
 
-</body>
+</script>
+
+
 
 </html>

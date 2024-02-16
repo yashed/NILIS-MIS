@@ -47,7 +47,9 @@ class SAR extends Controller
         //get the degree id from the url
         $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
         $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
-        $examID = isset($_GET['semester']) ? $_GET['semester'] : null;
+
+        //need to get the semster to handel the two yaer exam
+        $semester = isset($_GET['semester']) ? $_GET['semester'] : null;
 
         // show($degreeID);
         // show($degreeID);
@@ -55,7 +57,7 @@ class SAR extends Controller
         //need to get these values form the session
         $degreeID = 2;
         $semester = 1;
-        $examID = 1;
+        $examID = 43;
 
         $model = new Model();
         $degree = new Degree();
@@ -279,14 +281,6 @@ class SAR extends Controller
                     $ExamData['semester'] = $semester;
                     $ExamData['status'] = 'ongoing';
 
-                    //insert data to exam table
-                    if ($exam->examValidate($ExamData)) {
-                        $exam->insert($ExamData);
-                        $examID = $exam->lastID('examID');
-
-                    } else {
-                        $data['errors'] = $exam->errors;
-                    }
 
                     $subCount = count($_POST['subName']);
 
@@ -332,6 +326,17 @@ class SAR extends Controller
                         foreach ($timeTableData as $timeTableRow) {
                             $examtimetable->insert($timeTableRow);
                         }
+
+
+                        //insert data to exam table
+                        if ($exam->examValidate($ExamData)) {
+                            $exam->insert($ExamData);
+                            $examID = $exam->lastID('examID');
+
+                        } else {
+                            $data['errors'] = $exam->errors;
+                        }
+
                         message("Exam Was Created Successfully", "success");
                         // redirect('sar/examination');
 
@@ -348,8 +353,46 @@ class SAR extends Controller
             $examID = 43;
 
             if ($method == 'participants') {
-                $participants[] = $examParticipants->where(['degreeID' => $degreeID, 'semester' => $semester, 'examID' => $examID]);
-                $data['participants'] = $participants;
+
+                $admissionMail = new Mail();
+                $table = ['student'];
+                $columns = ['student.Email', 'student.name'];
+                $conditions0 = ['student.degreeID = exam_participants.DegreeID', 'student.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID];
+                $participantsMailName = $examParticipants->join($table, $columns, $conditions0);
+
+
+
+                //get the count of exam participants
+                $numberOfStudnets = $examParticipants->count(['examID' => $examID]);
+
+                $participants[] = $examParticipants->where(['examID' => $examID]);
+                // show($participants);
+                $data['examParticipants'] = $participants;
+                $data['examID'] = $examID;
+                $data['degreeID'] = $degreeID;
+
+                //run the mail sending function after click the button
+                if (isset($_POST['admission']) == 'clicked') {
+                    $mailSendCheck = true;
+                    foreach ($participantsMailName as $participant) {
+                        $to = $participant->Email;
+                        $mailSubject = "Admission Card";
+                        $name = $participant->name;
+
+                        if ($admissionMail->send($to, $mailSubject, '', $name) == false) {
+                            $mailSendCheck = false;
+                        }
+                    }
+
+                    //need to add a message to show the result of the mail sending
+                    if ($mailSendCheck) {
+                        message("Admission Cards Sent Successfully", "success");
+                        $_POST['admission'] = '';
+                    } else {
+                        message("Admission Cards Sent Failed", "error");
+                    }
+                }
+
                 $this->view('sar-interfaces/sar-examparticipants', $data);
 
             } else if ($method == 'resultsupload') {
@@ -633,7 +676,37 @@ class SAR extends Controller
 
 
             } else if ($method == 'results') {
+
+                $examMarks = new Marks();
+
+                $examSubjects = $examtimetable->where(['examID' => $examID]);
+
+                if (isset($_POST['submit'])) {
+
+
+                    $resultSubCode = isset($_POST['subCode']) ? $_POST['subCode'] : '';
+                    // show($resultSubCode);
+
+
+                }
+                // remove any leading or trailing spaces from the string
+                $resultSubCode = trim($resultSubCode);
+
+
+                //get examination results using marks and final marks
+                $tables = ['final_marks'];
+                $columns = ['*'];
+                $conditions = ['marks.examID = final_marks.examID', 'marks.studentIndexNo = final_marks.studentIndexNo', 'marks.subjectCode = final_marks.subjectCode', 'marks.examID = ' . $examID, 'marks.subjectCode =  "' . $resultSubCode . '"'];
+                $examResults = $examMarks->join($tables, $columns, $conditions);
+                // show($examResults);
+
+
+
+                $data['subNames'] = $examSubjects;
+                $data['examResults'] = $examResults;
+
                 $this->view('sar-interfaces/sar-examresults', $data);
+
             } else {
                 $this->view('sar-interfaces/sar-examination', $data);
             }
@@ -661,10 +734,10 @@ class SAR extends Controller
     {
         $this->view('sar-interfaces/sar-examresults');
     }
-    public function examparticipants()
-    {
-        $this->view('sar-interfaces/sar-examparticipants');
-    }
+    // public function examparticipants()
+    // {
+    //     $this->view('sar-interfaces/sar-examparticipants');
+    // }
     public function showresults()
     {
         $this->view('sar-interfaces/sar-examresultshow');
