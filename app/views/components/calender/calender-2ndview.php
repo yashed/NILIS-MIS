@@ -11,8 +11,9 @@
         width: 100vw;
         height: 100vh;
         background-color: #E2E2E2;
-        display: grid;
+        display: flex;
         place-items: center;
+        flex-direction: column;
     }
 
     .container {
@@ -30,7 +31,7 @@
     }
 
     .header #month {
-        color: #ff5252;
+        color: #17376E;
         font-size: 30px;
         font-weight: 600;
     }
@@ -47,21 +48,26 @@
     }
 
     .header button {
-        background-color: #ff5252;
+        background-color: #17376E;
     }
 
     .weekdays {
         width: 100%;
         display: flex;
-        background-color: #2f3640;
+        background-color: #17376E;
         font-size: 17px;
         color: #fff;
         font-weight: 500;
+        border-radius: 8px;
+        gap: 5%;
+        align-items: center;
+        height: 30px;
     }
 
     .weekdays div {
         width: 100px;
         padding: 10px;
+        font-size: 1.2vw;
         text-align: center;
         text-transform: uppercase;
     }
@@ -81,8 +87,8 @@
     }
 
     .day {
-        width: 15%;
-        height: 68px;
+        width: 12.5vw;
+        height: 8vw;
         padding: 10px;
         cursor: pointer;
         margin: 5px;
@@ -176,11 +182,11 @@
     }
 
     #btnDelete {
-        background-color: #ea2027;
+        background-color: #17376E;
     }
 
     .error {
-        border-color: #ea2027 !important;
+        border-color: #17376E !important;
     }
 
     .title-bar {
@@ -188,12 +194,28 @@
         width: 95%;
         font-weight: 600;
         color: black;
-        padding: 10px 0px 10px 32px;
+        padding: 10px 0px 10px 10px;
         background-color: var(--text-color);
         border-radius: 6px;
         margin: 7px 4px 7px 4px;
+        display: flex;
+        flex-direction: row;
+        gap: 40px
     }
 
+    .back-button-btn {
+        display: flex;
+        border-radius: 40px;
+        background: #F3F3F3;
+        width: 40px;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .back-button-btn:hover {
+        box-shadow: 0px 2px 8.6px 0px rgba(0, 0, 0, 0.17);
+        background: #FEFBFB;
     }
 </style>
 <!DOCTYPE html>
@@ -209,7 +231,18 @@
 </head>
 
 <body>
-    <div class="title-bar">Calendar</div>
+    <div class="title-bar">
+        <div class="back-button">
+            <button class="back-button-btn" onclick="history.back()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                    <path d="M25.67 11.77L23.89 10L14 19.9L23.9 29.8L25.67 28.03L17.54 19.9L25.67 11.77Z"
+                        fill="#17376E" />
+                </svg>
+
+            </button>
+        </div>
+        <div class="bar-title">Calendar</div>
+    </div>
     <div class="container">
         <div class="header">
             <div id="month"></div>
