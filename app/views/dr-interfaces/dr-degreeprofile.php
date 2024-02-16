@@ -288,7 +288,7 @@ function fetchDegreeDataById($degreeId)
     <div class="dr-large-box">
         <div class="large-box">
             <div class="box_1">
-                <p>Degree Name</p>
+                <p>Degree Name: <?= $degreeData['DegreeName'] ?></p>
             </div>
             <div class="box_2">
                 <p>Overview</p>
@@ -324,7 +324,26 @@ function fetchDegreeDataById($degreeId)
             </div>
             <div class="box_3">
                 <div class="box_3_2" id="semester_subjects_credits">
-                    <div id="semester_container"></div>
+                    <div id="semester_container">
+                        <?php foreach ($degreeData['Semesters'] as $semester => $subjects) : ?>
+                            <table class="Subject_table">
+                                <p id="Semester" name="semester" class="semester<?= $semester ?>">Semester <?= $semester ?></p>
+                                <tr>
+                                    <th>Subject Name</th>
+                                    <th>Subject Code</th>
+                                    <th>Credits</th>
+                                </tr>
+                                <?php foreach ($subjects as $subject) : ?>
+                                    <tr>
+                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= $subject['SubjectName'] ?>" type="text" name="SubjectName" class="SubjectName" placeholder="Subject" id="SubjectName<?= $semester ?>_<?= $subject['ID'] ?>" style="border: 1px solid #ccc;"></td>
+                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= $subject['SubjectCode'] ?>" type="text" name="SubjectCode" class="SubjectCode" placeholder="Subject Code" id="SubjectCode<?= $semester ?>_<?= $subject['ID'] ?>" style="border: 1px solid #ccc;"></td>
+                                        <td><input style="width: 60px;" value="<?= $subject['NoCredits'] ?>" type="number" name="NoCredits" class="NoCredits" placeholder="Credits" id="NoCredits<?= $semester ?>_<?= $subject['ID'] ?>" style="border: 1px solid #ccc;"></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
+                        <?php endforeach; ?>
+
+                    </div>
                 </div>
             </div>
             <form class="box_4" method="post">
@@ -388,7 +407,7 @@ function fetchDegreeDataById($degreeId)
                 <div class="box_4_2">
                     <table class="create_time_table_raw">
                         <tr>
-                            <th colspan="3"><button class="add-new-event" id="add_new_event">&#128198 Add New Event</button></th>
+                            <th colspan="3"><button class="add-new-event" type="button" id="add_new_event">&#128198 Add New Event</button></th>
                         </tr>
                         <tr>
                             <td></td>
