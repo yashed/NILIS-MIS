@@ -186,7 +186,7 @@
                     <span id="next" class="material-symbols-rounded">chevron_right</span>
                 </div>
             </header>
-            <div class="calendar">
+            <div class="calendar" onclick="loadNextView()">
                 <ul class="weeks">
                     <li>Sun</li>
                     <li>Mon</li>
@@ -269,6 +269,11 @@
             });
         });
 
+        //go to second view of the calendar
+        function loadNextView() {
+            console.log("click");
+            window.location.href = 'http://localhost/NILIS-MIS/public/calendar';
+        }
     </script>
 </body>
 

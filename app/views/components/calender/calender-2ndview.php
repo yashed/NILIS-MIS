@@ -1,3 +1,9 @@
+<?php
+$role = "Admin";
+$data['role'] = $role;
+
+?>
+
 <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800&display=swap");
 
@@ -195,7 +201,7 @@
         font-weight: 600;
         color: black;
         padding: 10px 0px 10px 10px;
-        background-color: var(--text-color);
+        background-color: #fff;
         border-radius: 6px;
         margin: 7px 4px 7px 4px;
         display: flex;
