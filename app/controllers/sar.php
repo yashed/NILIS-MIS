@@ -538,11 +538,12 @@ class SAR extends Controller
 
 
 
-
+                            // $data['examiner3'] = false;
+                            $examiner3 = true;
                             // Insert data into the database
                             if ($resultSheet->examValidate($examSheet)) {
 
-                                var_dump($examSheet);
+
                                 //add record to database table
                                 $resultSheet->insert($examSheet);
                                 $message = 'Upload ' . $marksType . ' Marksheet for ' . $subCode . ' in ExamId = ' . $examID . ' successfully.';
@@ -560,7 +561,9 @@ class SAR extends Controller
 
 
                                 //enable examiner3 marks upload
-                                $data['examiner3'] = true;
+                                // $data['examiner3'] = true;
+                                $examiner3 = true;
+
                                 foreach ($data['subjects'] as $subject) {
                                     $uploadedRes = $resultSheet->where(['examId' => $examID, 'subjectCode' => $subject->SubjectCode]);
                                     // show($uploadedRes);
@@ -568,6 +571,7 @@ class SAR extends Controller
                                     if (is_array($uploadedRes)) {
 
                                         if (count($uploadedRes) >= 2) {
+                                            show("Uploaded results", $uploadedRes);
                                             $validate = false;
                                             foreach ($uploadedRes as $res) {
                                                 if ($res->type == 'examiner1' || $res->type == 'examiner2') {
@@ -582,11 +586,16 @@ class SAR extends Controller
 
                                                 //call the function to check the gap
                                                 if (checkGap($fileName, $examID, $subject->SubjectCode)) {
-                                                    $data['examiner3'] = true;
+                                                    // $data['examiner3'] = true;
+                                                    // $data['examiner3SubCode'] = $subject->SubjectCode;
+
+                                                    $examiner3 = true;
+                                                    $examiner3SubCode = $subject->SubjectCode;
+
                                                     var_dump('examiner3 true');
-                                                    show('examiner3');
                                                 } else {
-                                                    $data['examiner3'] = false;
+                                                    // $data['examiner3'] = false;
+                                                    $examiner3 = false;
 
                                                     //check whether assestment marks are available
                                                     $assignmentMarks = $resultSheet->where([
@@ -594,7 +603,7 @@ class SAR extends Controller
                                                         'subjectCode' => $subject->SubjectCode,
                                                         'type' => 'assestment'
                                                     ]);
-                                                    var_dump("assignment marks ", $assignmentMarks);
+
                                                     if (!empty($assignmentMarks)) {
                                                         $data['assignment'] = true;
                                                         //upload the student marks to database
@@ -608,7 +617,7 @@ class SAR extends Controller
                                                         echo 'Assignment marks are not available.';
                                                     }
 
-                                                    var_dump('examiner3 false');
+
                                                     show('no examiner3');
                                                 }
                                                 /** The case in there is when we pass the data into view to show them it must reload 
@@ -621,7 +630,9 @@ class SAR extends Controller
                                                 // echo json_encode($data);
                                             } else {
                                                 if ($marksType == 'examiner3') {
-                                                    $data['examiner3'] = true;
+                                                    // $data['examiner3'] = true;
+                                                    // $data['examiner3SubCode'] = $subject->SubjectCode;
+
 
                                                     //check whether assestment marks are available
                                                     $assignmentMarks = $resultSheet->where([
@@ -644,7 +655,7 @@ class SAR extends Controller
                                                     }
 
                                                 } else {
-                                                    echo 'examiner1 and examiner2 marks are not available';
+                                                    echo 'examiner1 or examiner2 marks are not available';
                                                 }
                                             }
                                         }
@@ -664,7 +675,13 @@ class SAR extends Controller
 
                             echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
                         }
-
+                        show("Examiner3 data");
+                        $examiner3Data = [
+                            'status' => $examiner3,
+                            'SubCode' => $examiner3SubCode,
+                        ];
+                        header('Content-Type: application/json');
+                        echo json_encode($examiner3Data);
 
                     } else {
                         // Handle file upload error
@@ -675,6 +692,8 @@ class SAR extends Controller
 
 
                 }
+                // 
+
 
 
                 $this->view('sar-interfaces/sar-examresultupload', $data);
@@ -694,7 +713,12 @@ class SAR extends Controller
                     // show($resultSubCode);
 
 
+                } else {
+                    $resultSubCode = '';
                 }
+
+                $subjectDetails = $subjects->where(['SubjectCode' => $resultSubCode, 'DegreeID' => $degreeID]);
+                show($subjectDetails);
                 // remove any leading or trailing spaces from the string
                 $resultSubCode = trim($resultSubCode);
 

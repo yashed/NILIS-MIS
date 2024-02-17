@@ -413,7 +413,7 @@ $data['role'] = $role;
         font-size: 0.8vw;
     }
 
-    /* tbody tr.hide {
+    tbody tr.hide {
         opacity: 0;
         transform: translateX(100%);
     }
@@ -472,9 +472,9 @@ $data['role'] = $role;
 
     thead th.asc span.icon-arrow {
         transform: rotate(180deg);
-    } */
+    }
 
-    .input-main-group {
+    */ .input-main-group {
         display: flex;
         align-items: center;
         margin-left: 25%;

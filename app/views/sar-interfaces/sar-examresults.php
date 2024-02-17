@@ -325,6 +325,13 @@ $data['role'] = $role;
         height: 15vw;
 
     }
+
+    .subject-details {
+        display: flex;
+        font-size: 1vw;
+        flex-direction: column;
+        padding-left: 20px;
+    }
 </style>
 
 <body>
@@ -401,6 +408,10 @@ $data['role'] = $role;
 
                 <div class="result-table">
                     <?php if (!empty($examResults)): ?>
+                        <div class="subject-details">
+                            <div class="subject-name">Subject : </div>
+                            <div class="subject-credits">Credits :</div>
+                        </div>
                         <table>
                             <thead>
                                 <tr>
