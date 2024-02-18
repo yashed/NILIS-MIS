@@ -8,8 +8,13 @@
         box-sizing: border-box;
     }
 
-    .table {
+    .table-body-container {
         margin: 50px 0px 20px 0px;
+        max-height: 350px;
+        overflow-y: auto;
+    }
+
+    .table {
         font-family: Poppins, sans-serif;
         border-collapse: collapse;
         width: 100%;
@@ -27,14 +32,15 @@
         font-family: Poppins, sans-serif;
         border: 1px solid #ddd;
         padding: 8px;
-        font-size: 14px;
+        font-size: 1vw;
         font-weight: 600px;
         text-align: center;
-        ;
+
     }
 
     .table td {
         font-weight: 500px;
+
     }
 
     table.table tbody tr.selected {
@@ -53,7 +59,11 @@
         padding-bottom: 12px;
         text-align: left;
         color: #7D7D7D;
+        position: sticky;
+        border: 1px solid #ddd;
     }
+
+    tbody {}
 
     input {
         border: none;
@@ -63,6 +73,7 @@
         background: none;
         width: 100%;
         border: none;
+        font-size: 0.95vw;
     }
 
     input:focus {
@@ -149,10 +160,51 @@
         display: flex;
         justify-content: center;
     }
+
+    .close-btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 15px;
+        height: 15px;
+        background: #17376e;
+        color: #ffffff;
+        text-align: center;
+        line-height: 15px;
+        border-radius: 15px;
+        cursor: pointer;
+    }
+
+    .btn-secondary {
+        width: 25%;
+        background: #17376e;
+        color: #ffffff;
+        height: 4vh;
+        padding: 5px 5px 5px 5px;
+        border-radius: 8px;
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        border: 1px solid;
+        margin-bottom: 10px;
+        margin-top: 20px;
+    }
+
+    .btn-secondary:hover {
+        color: #17376e;
+        background-color: white;
+        border: 1px solid #17376e;
+    }
+
+    .table-attendance-data {
+        height: 10px;
+        overflow: scroll;
+    }
 </style>
 
 <body>
     <div class="element-wraper">
+        <div class="close-btn" id="close-attendance-popup" onClick="closeAttendancePopup()">
+            &times;
+        </div>
         <form method="POST" id="examination-attendance">
             <div class="subject-dropdown">
                 <div class="input-attendance">
@@ -185,439 +237,132 @@
 
 
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Index Number</th>
-                        <th>Registration Number</th>
-                        <th>Attempt</th>
-                        <th>Subject Code</th>
-                        <th>Student Type</th>
-                        <th>
-                            <input type="checkbox" class="checkAll" name="checkAll" />
-                        </th>
-                    </tr>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- <?php foreach ($repeatStudents as $rStudent): ?>
-                <?php $json = json_encode($rStudent); ?> -->
+            <div class="table-body-container">
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td><input type="text" name="indexNo[]" value=" <?= $rStudent->indexNo ?>" readonly>
+                            <th>Index Number</th>
+                            <th>Registration Number</th>
+                            <th>Attempt</th>
+                            <th>Subject Code</th>
+                            <th>Student Type</th>
+                            <th>
+                                <input type="checkbox" class="checkAll" name="checkAll" />
+                            </th>
+                        </tr>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
                             </td>
                             <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                            <td><input type="text" name="attempt[]" value="  <?= $rStudent->attempt ?>" readonly>
+                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
                             </td>
-                            <td><input type="text" name="subjectCode[]" value=" <?= $rStudent->subjectCode ?>" readonly>
+                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
                             </td>
                             <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                            <td><input type="checkbox" name="item[]" value="<?= $rStudent->id ?>"
-                                    <?= isset($_SESSION['checked_RM_students'][$rStudent->id]) ? 'checked' : '' ?>></td>
+                            <td><input type="checkbox" name="item[]" value="gg"></td>
                         </tr>
-                        <!-- <?php endforeach; ?> -->
-
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                        </td>
-                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                        <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                        </td>
-                        <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                        </td>
-                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                        <td><input type="checkbox" name="item[]" value="gg"></td>
-                    </tr>
+                        <tr>
+                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
+                            </td>
+                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
+                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
+                            </td>
+                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
+                            </td>
+                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
+                            <td><input type="checkbox" name="item[]" value="gg"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
+                            </td>
+                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
+                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
+                            </td>
+                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
+                            </td>
+                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
+                            <td><input type="checkbox" name="item[]" value="gg"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
+                            </td>
+                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
+                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
+                            </td>
+                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
+                            </td>
+                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
+                            <td><input type="checkbox" name="item[]" value="gg"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
+                            </td>
+                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
+                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
+                            </td>
+                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
+                            </td>
+                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
+                            <td><input type="checkbox" name="item[]" value="gg"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
+                            </td>
+                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
+                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
+                            </td>
+                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
+                            </td>
+                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
+                            <td><input type="checkbox" name="item[]" value="gg"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
+                            </td>
+                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
+                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
+                            </td>
+                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
+                            </td>
+                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
+                            <td><input type="checkbox" name="item[]" value="gg"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
+                            </td>
+                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
+                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
+                            </td>
+                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
+                            </td>
+                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
+                            <td><input type="checkbox" name="item[]" value="gg"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
+                            </td>
+                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
+                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
+                            </td>
+                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
+                            </td>
+                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
+                            <td><input type="checkbox" name="item[]" value="gg"></td>
+                        </tr>
 
 
-                </tbody>
-            </table>
+
+                    </tbody>
+
+                </table>
+            </div>
             <div class="attendance-submit-button">
-                <button class="btn-primary" type="submit" name='attendance' value='attendance'>Next</button>
+                <button class="btn-secondary" type="submit" name='attendance' value='attendance'>Submit
+                    Attendance</button>
             </div>
         </form>
     </div>
@@ -653,4 +398,9 @@
                 );
         });
     });
+
+    function closeAttendancePopup() {
+        document.querySelector("#exam-attendance").classList.remove("active");
+        document.querySelector("#body").classList.remove("active");
+    }
 </script>

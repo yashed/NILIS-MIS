@@ -531,6 +531,7 @@ $data['role'] = $role;
         filter: blur(5px);
         pointer-events: none;
         user-select: none;
+        background: rgba(0, 0, 0, 0.30);
         overflow: hidden;
 
 
@@ -569,7 +570,7 @@ $data['role'] = $role;
         border: 1.5px solid rgba(00, 00, 00, 0.30);
         opacity: 0;
         background: #fff;
-        width: 80%;
+        width: 70%;
         /* height: 60vh; */
         padding: 40px;
         box-shadow: 9px 11px 60.9px 0px rgba(0, 0, 0, 0.60);
