@@ -561,6 +561,30 @@ $data['role'] = $role;
         z-index: 2000;
     }
 
+    .exam-popup {
+        position: fixed;
+        top: -150%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.25);
+        border: 1.5px solid rgba(00, 00, 00, 0.30);
+        opacity: 0;
+        background: #fff;
+        width: 80%;
+        /* height: 60vh; */
+        padding: 40px;
+        box-shadow: 9px 11px 60.9px 0px rgba(0, 0, 0, 0.60);
+        border-radius: 10px;
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+        z-index: 2000;
+    }
+
+    .exam-popup.active {
+        top: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+    }
+
     .close-btn {
         position: absolute;
         right: 10px;
@@ -667,7 +691,8 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                     <div class="participants-form-header">
                         <div class="temp2-sub-title2">Participants</div>
                         <div class="participant-form-btns">
-                            <button class="admission-button1" id="openModal">Exam Attendance Submit</button>
+                            <button class="admission-button1" id="openModal" onClick='showAttendancePopup()'>Exam
+                                Attendance Submit</button>
                             <form method="post">
 
                                 <button class="admission-button0">Download Attendance Sheet</button>
@@ -751,12 +776,7 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
 
             </div>
 
-            <div id="myModal" class="modal">
-                <div class="modal-content">
-                    <span class="close" id="closeModal">&times;</span>
-                    <?php $this->view('components/file-upload/exam-attendance-upload', $data) ?>
-                </div>
-            </div>
+
             <div class="user-create-footer">
                 <?php $this->view('components/footer/index', $data) ?>
             </div>
@@ -767,33 +787,35 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
     <div class="mail-popup" id="mail-popup">
         <?php $this->view('components/popup/sendMails', $data) ?>
     </div>
-
+    <div id="exam-attendance" class="exam-popup">
+        <?php $this->view('sar-interfaces/sar-exam-attendance-submit', $data) ?>
+    </div>
 </body>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var modal = document.getElementById('myModal');
-        var btn = document.getElementById('openModal');
-        var span = document.getElementById('closeModal');
-        var body = document.body;
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     var modal = document.getElementById('myModal');
+    //     var btn = document.getElementById('openModal');
+    //     var span = document.getElementById('closeModal');
+    //     var body = document.body;
 
-        btn.onclick = function () {
-            modal.style.display = "block";
-            body.classList.add('modal-open');
-        }
+    //     btn.onclick = function () {
+    //         modal.style.display = "block";
+    //         body.classList.add('modal-open');
+    //     }
 
-        span.onclick = function () {
-            modal.style.display = "none";
-            body.classList.remove('modal-open');
-        }
+    //     span.onclick = function () {
+    //         modal.style.display = "none";
+    //         body.classList.remove('modal-open');
+    //     }
 
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-                body.classList.remove('modal-open');
-            }
-        }
-    });
+    //     window.onclick = function (event) {
+    //         if (event.target == modal) {
+    //             modal.style.display = "none";
+    //             body.classList.remove('modal-open');
+    //         }
+    //     }
+    // });
 </script>
 <script>
     $(window).on("load", function () {
@@ -807,6 +829,14 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
         document.querySelector("#body").classList.add("active");
         console.log('run again');
     }
+
+    function showAttendancePopup() {
+        console.log("Click attendance");
+        document.querySelector("#exam-attendance").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+    }
+
+
 
 
 </script>

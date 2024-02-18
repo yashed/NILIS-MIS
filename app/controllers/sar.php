@@ -358,6 +358,9 @@ class SAR extends Controller
             //examid must pass through the session
             $examID = 43;
 
+            //get subjects in the exam
+            $ExamSubjects = $subjects->where(['degreeID' => $degreeID, 'semester' => $semester]);
+
             if ($method == 'participants') {
 
                 $admissionMail = new Mail();
@@ -385,6 +388,7 @@ class SAR extends Controller
                         $mailSubject = "Admission Card";
                         $name = $participant->name;
 
+                        //send mails 
                         // if ($admissionMail->send($to, $mailSubject, '', $name) == false) {
                         //     $mailSendCheck = false;
                         // }
@@ -398,6 +402,10 @@ class SAR extends Controller
                         message("Admission Cards Sent Failed", "error");
                     }
                 }
+
+                //create exam attendance submission file
+
+
 
                 $this->view('sar-interfaces/sar-examparticipants', $data);
 
@@ -448,8 +456,7 @@ class SAR extends Controller
                     //need to handel this error massage as display massage
                     echo "No participants found.";
                 }
-                //get subjects in the exam
-                $ExamSubjects = $subjects->where(['degreeID' => $degreeID, 'semester' => $semester]);
+
                 $data['examSubjects'] = $ExamSubjects;
                 //generate seperate CSV files for each subject
                 foreach ($ExamSubjects as $subject) {

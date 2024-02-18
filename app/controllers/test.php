@@ -17,7 +17,7 @@ class Test extends Controller
     public function t1()
     {
 
-        $this->view('components/calender/calender-2ndview');
+        $this->view('sar-interfaces/sar-exam-attendance-submit');
     }
 }
 ?>
