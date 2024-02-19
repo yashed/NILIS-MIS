@@ -1,8 +1,8 @@
 <?php
 $role = "SAR";
 $data['role'] = $role;
-
-?>
+$data['ExamSubjects'] = $ExamSubjects
+    ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -696,7 +696,7 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                                 Attendance Submit</button>
                             <form method="post">
 
-                                <button class="admission-button0">Download Attendance Sheet</button>
+                                <!-- <button class="admission-button0">Download Attendance Sheet</button> -->
                                 <button class="admission-button2" type="submit" name="admission" value="clicked"
                                     onClick="showMailPopup(event)">Send Admission Card</button>
 

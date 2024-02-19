@@ -1,3 +1,7 @@
+<?php
+
+?>
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
@@ -214,11 +218,11 @@
                         </div>
 
                         <select id="sub" name="subCode">
-                            <?php foreach ($subNames as $subject): ?>
+                            <?php foreach ($ExamSubjects as $subject): ?>
                                 <?php $json = json_encode($subject); ?>
 
-                                <option value=" <?= $subject->subjectCode ?>" name="subjectCode">
-                                    <?= $subject->subjectName ?>
+                                <option value=" <?= $subject->SubjectCode ?>" name="subjectCode">
+                                    <?= $subject->SubjectName ?>
                                 </option>
 
                             <?php endforeach; ?>

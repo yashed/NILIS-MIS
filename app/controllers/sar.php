@@ -379,6 +379,7 @@ class SAR extends Controller
                 $data['examParticipants'] = $participants;
                 $data['examID'] = $examID;
                 $data['degreeID'] = $degreeID;
+                $data['ExamSubjects'] = $ExamSubjects;
 
                 //run the mail sending function after click the button
                 if (isset($_POST['admission']) == 'clicked') {
