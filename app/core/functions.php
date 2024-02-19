@@ -47,7 +47,7 @@ function message($msg = '', $type = 'success', $erase = false)
 
 function createMarkSheet($inputCSV, $examID, $subCode, $type)
 {
-    var_dump('inside the function' . $inputCSV . 'exam id ' . $examID . 'subject code ' . $subCode . 'type = ' . $type);
+
     $examiner3 = false;
     $filePath = 'assets/csv/examsheets/final-marksheets';
     $markSheet = $filePath . '/' . $examID . '_' . $subCode . '.csv';
@@ -88,7 +88,7 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
         for ($i = 4; $i < count($lines); $i++) {
             // Split each line into an array of values
             $values = str_getcsv($lines[$i]);
-            // var_dump('values = ', $values);
+
 
             $inputIndex = $values[0];
             $inputRegNo = $values[1];
@@ -129,15 +129,13 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
                         $subjectValues[3] = $examiner2Mark;
 
 
-
-
                     } else if ($type == 'examiner3') {
                         $subjectValues[5] = $examiner3Mark;
 
                     }
 
                     // Update the line in the final mark sheet
-                    var_dump('subject values = ', $subjectValues);
+
                     $subjectLines[$j] = implode(",", $subjectValues);
 
                     // Break out of the inner loop once the entry is found and updated

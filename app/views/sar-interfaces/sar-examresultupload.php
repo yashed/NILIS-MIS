@@ -2,9 +2,6 @@
 $role = "SAR";
 $data['role'] = $role;
 $validateError = isset($errors['marks']) ? $errors['marks'] : null;
-$examiner3SubCode = isset($examiner3SubCode) ? $examiner3SubCode : null;
-$examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
-// show($examiner3 . "  " . $examiner3SubCode);
 ?>
 
 <?php $this->view('components/navside-bar/header', $data) ?>
@@ -408,18 +405,16 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
         color: var(--sidebar-color);
     }
 
-
     .btn-primary {
-        width: 14vw;
+        min-width: 25vh;
         color: #fff;
-        height: 2.5vw;
+        height: 5vh;
         padding: 5px 5px 5px 5px;
-        border-radius: 8px;
+        border-radius: 12px;
         background: #17376e;
         box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
         border: 0px;
         margin-bottom: 10px;
-        font-size: 0.9vw;
         /* margin-top: 25px; */
     }
 
@@ -616,10 +611,12 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
             <div class="row">
                 <div class="column1">
                     <div class="data1">Course Name<br>
+                        <!-- <div class="email"><?= $student->Email ?></div> -->
                         <div class="course" id="course">Diploma in School Librarianship</div>
                     </div>
                     <br>
                     <div class="data2">Examination:<br>
+                        <!-- <div class="regNum"> <?= $student->regNo ?></div> -->
                         <div class="exam" id="exam">2nd Semester Examination</div>
                     </div>
                 </div>
@@ -644,7 +641,7 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
                 <?php foreach ($examSubjects as $subject): ?>
                     <?php $json = json_encode($subject); ?>
 
-                    <div class="subject" id='<?= $subject->SubjectCode . '_results' ?>'>
+                    <div class="subject">
                         <div class="flex-container-top">
                             <div class="sub-name">
                                 <?= $subject->SubjectName ?>
@@ -779,18 +776,6 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
 
 </body>
 <script>
-
-    // var examiner3 = <?php echo $examiner3 ? 'true' : 'false'; ?>;
-    // var examiner3SubCode = '<?php echo $examiner3SubCode; ?>'
-    // console.log('examiner 3 = ', examiner3);
-    // console.log("subcode", examiner3SubCode)
-    // var elements = document.querySelectorAll('.dashed-container-3');
-
-    // // Loop each element and update the data-active attribute
-    // elements.forEach(function (element) {
-    //     element.dataset.active = examiner3;
-    // });
-
 
     // Fetch data from the controller
 
@@ -1054,25 +1039,25 @@ $examiner3 = isset($data['examiner3']) ? $data['examiner3'] : false;
 
     console.log("before fetch");
 
-
-    var targetURL = '<?php echo ROOT . "sar/examination/resultsupload"; ?>'
-
-    console.log("Url = ", targetURL);
+    var targetURL = '<?= ROOT ?>sar/examination/resultsupload';
+    // Fetch data from the controller
     fetch(targetURL)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.json();
+            return response.text(); // Directly return text
         })
         .then(data => {
-            console.log('data = ', data);
+            // console.log('data = ', data)
+
+            // Update the view with the received data
+            var examiner3 = data["examiner3"];
             console.log('examiner 3 = ', examiner3);
-            var examiner3 = data.status;
             var elements = document.querySelectorAll('.dashed-container-3');
-            // elements.forEach(function (element) {
-            //     element.dataset.active = examiner3;
-            // });
+            elements.forEach(function (element) {
+                element.dataset.active = examiner3;
+            });
 
         })
         .catch(error => {
