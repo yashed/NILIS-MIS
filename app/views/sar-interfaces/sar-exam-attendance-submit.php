@@ -217,11 +217,11 @@
                             <i class='bx bx-search' style="width:20px ; height : 20px;"></i>
                         </div>
 
-                        <select id="sub" name="subCode">
+                        <select id="sub" name="SelectedSubCode">
                             <?php foreach ($ExamSubjects as $subject): ?>
                                 <?php $json = json_encode($subject); ?>
 
-                                <option value=" <?= $subject->SubjectCode ?>" name="subjectCode">
+                                <option value=" <?= $subject->SubjectCode ?>" name="SelectedSubCode">
                                     <?= $subject->SubjectName ?>
                                 </option>
 
@@ -232,7 +232,7 @@
 
 
                     </div>
-                    <button class="btn-primary" type="submit" name="submit" value="selectSubject">
+                    <button class="btn-primary" type="submit" name="selectSubject" value="selectSubjectCode">
                         <div class="btn-primary-name">
                             Search
                         </div>
@@ -357,15 +357,11 @@
                             <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
                             <td><input type="checkbox" name="item[]" value="gg"></td>
                         </tr>
-
-
-
                     </tbody>
-
                 </table>
             </div>
             <div class="attendance-submit-button">
-                <button class="btn-secondary" type="submit" name='attendance' value='attendance'>Submit
+                <button class="btn-secondary" type="submit" name='submitAttendance' value='attendance'>Submit
                     Attendance</button>
             </div>
         </form>
@@ -407,4 +403,6 @@
         document.querySelector("#exam-attendance").classList.remove("active");
         document.querySelector("#body").classList.remove("active");
     }
+
+
 </script>

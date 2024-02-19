@@ -1,8 +1,9 @@
 <?php
 $role = "SAR";
 $data['role'] = $role;
-$data['ExamSubjects'] = $ExamSubjects
-    ?>
+$data['ExamSubjects'] = $ExamSubjects;
+$data['PopupStatus'] = $attendacePopupStatus;
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -640,7 +641,7 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
 ?>
 
 <body>
-    <div class=" loader-wraper">
+    <div class="loader-wraper">
         <div class="loader-css">
             <?php $this->view('components/loader/index') ?>
         </div>
@@ -838,6 +839,15 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
     }
 
 
+    //handel pop active according to clicked button
+    var popupStatus = <?php echo $attendacePopupStatus ? 'true' : 'false'; ?>;
+    if (popupStatus) {
+
+        // Adding 'active' class to the popup and body elements
+        document.querySelector("#exam-attendance").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+        $(".loader-wraper").fadeOut("slow");
+    }
 
 
 </script>

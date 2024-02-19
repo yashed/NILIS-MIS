@@ -364,6 +364,10 @@ class SAR extends Controller
             if ($method == 'participants') {
 
                 $admissionMail = new Mail();
+
+                //handle the attendance popup
+                $attetdancePopup = false;
+
                 $table = ['student'];
                 $columns = ['student.Email', 'student.name'];
                 $conditions0 = ['student.degreeID = exam_participants.DegreeID', 'student.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID];
@@ -376,10 +380,7 @@ class SAR extends Controller
 
                 $participants[] = $examParticipants->where(['examID' => $examID]);
                 // show($participants);
-                $data['examParticipants'] = $participants;
-                $data['examID'] = $examID;
-                $data['degreeID'] = $degreeID;
-                $data['ExamSubjects'] = $ExamSubjects;
+
 
                 //run the mail sending function after click the button
                 if (isset($_POST['admission']) == 'clicked') {
@@ -404,8 +405,28 @@ class SAR extends Controller
                     }
                 }
 
-                //create exam attendance submission file
+                //examination attendance handle
+                if (isset($_POST['selectSubject']) == 'selectSubjectCode') {
+                    $selectedSubject = $_POST['SelectedSubCode'];
 
+                    //set popup active after select subject
+                    if (!empty($selectedSubject)) {
+                        $attetdancePopup = true;
+                    }
+                }
+                if (isset($_POST['submitAttendance']) == 'attendance') {
+
+                    //close the popup
+                    $attetdancePopup = false;
+                }
+
+
+                //data that pass to view
+                $data['examParticipants'] = $participants;
+                $data['examID'] = $examID;
+                $data['degreeID'] = $degreeID;
+                $data['ExamSubjects'] = $ExamSubjects;
+                $data['attendacePopupStatus'] = $attetdancePopup;
 
 
                 $this->view('sar-interfaces/sar-examparticipants', $data);
