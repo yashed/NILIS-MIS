@@ -430,6 +430,10 @@ class SAR extends Controller
 
 
                 $this->view('sar-interfaces/sar-examparticipants', $data);
+                //send mails 
+                // if ($admissionMail->send($to, $mailSubject, '', $name) == false) {
+                //     $mailSendCheck = false;
+                // }
 
             } else if ($method == 'resultsupload') {
 
