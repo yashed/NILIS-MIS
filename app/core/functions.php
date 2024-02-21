@@ -45,6 +45,28 @@ function message($msg = '', $type = 'success', $erase = false)
     return false;
 }
 
+function groupByColumn($data, $columnName)
+{
+    $groupedData = [];
+
+    // Iterate through the input data
+    foreach ($data as $item) {
+        // Get the value of the specified column for grouping
+        $columnValue = $item->{$columnName};
+
+        // Check if the column value key exists in the grouped data array
+        if (!array_key_exists($columnValue, $groupedData)) {
+            // If not, initialize an empty array for that column value
+            $groupedData[$columnValue] = [];
+        }
+
+        // Add the item to the array under the respective column value key
+        $groupedData[$columnValue][] = $item;
+    }
+
+    return $groupedData;
+}
+
 function createMarkSheet($inputCSV, $examID, $subCode, $type)
 {
 

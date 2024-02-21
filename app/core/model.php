@@ -236,6 +236,33 @@ class Model extends Database
 
         return false;
     }
+    public function group($column, $conditions = [])
+    {
+        $query = "SELECT * FROM " . $this->table;
+
+        // Check if conditions are provided
+        if (!empty($conditions)) {
+            $query .= " WHERE ";
+            $conditionsString = "";
+            foreach ($conditions as $key => $value) {
+                $conditionsString .= $key . "=:" . $key . " AND ";
+            }
+            $conditionsString = rtrim($conditionsString, " AND ");
+            $query .= $conditionsString;
+        }
+
+        $query .= " GROUP BY " . $column;
+
+        // Execute the query
+        $res = $this->query($query, $conditions);
+
+        if (is_array($res)) {
+            return $res;
+        }
+
+        return false;
+    }
+
 
     //get the count that match the conditions
     public function count($data)

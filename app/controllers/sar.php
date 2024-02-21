@@ -358,6 +358,7 @@ class SAR extends Controller
             //examid must pass through the session
             $examID = 43;
 
+
             //get subjects in the exam
             $ExamSubjects = $subjects->where(['degreeID' => $degreeID, 'semester' => $semester]);
 
@@ -534,189 +535,198 @@ class SAR extends Controller
                         }
                         fclose($f);
                     }
-                    // save file in specific location
-                    // Check if the file was uploaded successfully
-                    if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
-
-                        // Specify the target directory
-                        $targetDirectory = 'assets/csv/examsheets/';
-
-                        // Get the original file name
-                        $originalFileName = basename($_FILES['file']['name']);
-
-                        // Generate a unique filename to avoid overwriting existing files
-                        $uniqueFileName = $_POST['formId'] . '_' . uniqid(1) . '.csv';
-
-                        // Set the target path
-                        $targetPath = $targetDirectory . $uniqueFileName;
-
-                        //catch data and save in variables
-                        $subCode = isset($_POST['subjectCode']) ? $_POST['subjectCode'] : '';
-                        $formID = isset($_POST['formId']) ? $_POST['formId'] : '';
-                        $marksType = isset($_POST['type']) ? $_POST['type'] : '';
+                }
+                // save file in specific location
+                // Check if the file was uploaded successfully
 
 
-                        // Move the uploaded file to the target directory
-                        if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
-
-                            // File uploaded successfully, now insert data into the database
-                            $examSheet = [];
-                            $examSheet['formId'] = $formID;
-                            $examSheet['subjectCode'] = $subCode;
-                            $examSheet['date'] = date("Y-m-d H:i:s");
-                            $examSheet['uploadName'] = $originalFileName;
-                            $examSheet['newName'] = $uniqueFileName;
-                            $examSheet['type'] = $marksType;
-                            $examSheet['examId'] = $examID;
+                //get uploaded marksheet details 
+                $submittedMarksheets = $resultSheet->where(['examId' => $examID]);
+                $groupedData = groupByColumn($submittedMarksheets, 'subjectCode');
+                $data['subjectData'] = json_encode($groupedData);
 
 
+                if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
 
-                            // $data['examiner3'] = false;
-                            $examiner3 = false;
-                            // Insert data into the database
-                            if ($resultSheet->examValidate($examSheet)) {
+                    // Specify the target directory
+                    $targetDirectory = 'assets/csv/examsheets/';
+
+                    // Get the original file name
+                    $originalFileName = basename($_FILES['file']['name']);
+
+                    // Generate a unique filename to avoid overwriting existing files
+                    $uniqueFileName = $_POST['formId'] . '_' . uniqid(1) . '.csv';
+
+                    // Set the target path
+                    $targetPath = $targetDirectory . $uniqueFileName;
+
+                    //catch data and save in variables
+                    $subCode = isset($_POST['subjectCode']) ? $_POST['subjectCode'] : '';
+                    $formID = isset($_POST['formId']) ? $_POST['formId'] : '';
+                    $marksType = isset($_POST['type']) ? $_POST['type'] : '';
 
 
-                                //add record to database table
-                                $resultSheet->insert($examSheet);
-                                $message = 'Upload ' . $marksType . ' Marksheet for ' . $subCode . ' in ExamId = ' . $examID . ' successfully.';
+                    // Move the uploaded file to the target directory
+                    if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
 
-
-                                //uncomment this to add activity log
-                                // activity($message);
+                        // File uploaded successfully, now insert data into the database
+                        $examSheet = [];
+                        $examSheet['formId'] = $formID;
+                        $examSheet['subjectCode'] = $subCode;
+                        $examSheet['date'] = date("Y-m-d H:i:s");
+                        $examSheet['uploadName'] = $originalFileName;
+                        $examSheet['newName'] = $uniqueFileName;
+                        $examSheet['type'] = $marksType;
+                        $examSheet['examId'] = $examID;
 
 
 
-                                //call crateMarkSheet function to update csv file
-                                createMarkSheet($uniqueFileName, $examID, $subCode, $marksType);
-
-                                echo json_encode(['success' => true, 'message' => 'File uploaded successfully.']);
-
-
-                                //enable examiner3 marks upload
-                                // $data['examiner3'] = true;
-                                foreach ($data['subjects'] as $subject) {
-                                    $uploadedRes = $resultSheet->where(['examId' => $examID, 'subjectCode' => $subject->SubjectCode]);
-                                    // show($uploadedRes);
-
-                                    if (is_array($uploadedRes)) {
-
-                                        if (count($uploadedRes) >= 2) {
-
-                                            $validate = false;
-                                            foreach ($uploadedRes as $res) {
-                                                if ($res->type == 'examiner1' || $res->type == 'examiner2') {
-                                                    $validate = true;
-                                                } else {
-                                                    $validate = false;
-                                                }
-                                            }
-                                            //check the marks gap between examiner1 and examiner2
-                                            if ($validate) {
-                                                $fileName = $examID . '_' . $subject->SubjectCode . '.csv';
-
-                                                //call the function to check the gap
-                                                if (checkGap($fileName, $examID, $subject->SubjectCode)) {
-                                                    // $data['examiner3'] = true;
-                                                    // $data['examiner3SubCode'] = $subject->SubjectCode;
-                                                    $examiner3 = true;
-                                                    $examiner3SubCode = $subject->SubjectCode;
-
-                                                    var_dump('examiner3 true');
-                                                } else {
-                                                    // $data['examiner3'] = false;
-                                                    $examiner3 = false;
-                                                    //check whether assestment marks are available
-                                                    $assignmentMarks = $resultSheet->where([
-                                                        'examId' => $examID,
-                                                        'subjectCode' => $subject->SubjectCode,
-                                                        'type' => 'assestment'
-                                                    ]);
-
-                                                    if (!empty($assignmentMarks)) {
-                                                        $data['assignment'] = true;
-                                                        //upload the student marks to database
-                                                        $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
-
-                                                        //call the function to upload marks to database
-                                                        echo 'call insertMarks function';
-                                                        insertMarks($resFileName, $examID, $subject->SubjectCode);
-                                                    } else {
-                                                        $data['assignment'] = false;
-                                                        echo 'Assignment marks are not available.';
-                                                    }
+                        // $data['examiner3'] = false;
+                        $examiner3 = false;
+                        // Insert data into the database
+                        if ($resultSheet->examValidate($examSheet)) {
 
 
-                                                    show('no examiner3');
-                                                }
-                                                /** The case in there is when we pass the data into view to show them it must reload 
-                                                 * but when using fetch it did't reload the file. must fix this  */
+                            //add record to database table
+                            $resultSheet->insert($examSheet);
+                            $message = 'Upload ' . $marksType . ' Marksheet for ' . $subCode . ' in ExamId = ' . $examID . ' successfully.';
 
 
-                                                /**when uploading marks get the least gap marks and calculate final marks and upload to database
-                                                 */
+                            //uncomment this to add activity log
+                            // activity($message);
 
-                                                // echo json_encode($data);
+
+
+                            //call crateMarkSheet function to update csv file
+                            createMarkSheet($uniqueFileName, $examID, $subCode, $marksType);
+
+                            echo json_encode(['success' => true, 'message' => 'File uploaded successfully.']);
+
+
+                            //enable examiner3 marks upload
+                            // $data['examiner3'] = true;
+                            foreach ($data['subjects'] as $subject) {
+                                $uploadedRes = $resultSheet->where(['examId' => $examID, 'subjectCode' => $subject->SubjectCode]);
+                                // show($uploadedRes);
+
+                                if (is_array($uploadedRes)) {
+
+                                    if (count($uploadedRes) >= 2) {
+
+                                        $validate = false;
+                                        foreach ($uploadedRes as $res) {
+                                            if ($res->type == 'examiner1' || $res->type == 'examiner2') {
+                                                $validate = true;
                                             } else {
-                                                if ($marksType == 'examiner3') {
-                                                    //check whether assestment marks are available
-                                                    $assignmentMarks = $resultSheet->where([
-                                                        'examId' => $examID,
-                                                        'subjectCode' => $subject->SubjectCode,
-                                                        'type' => 'assestment'
-                                                    ]);
-                                                    var_dump("assignment marks ", $assignmentMarks);
-                                                    if (!empty($assignmentMarks)) {
-                                                        $data['assignment'] = true;
-                                                        //upload the student marks to database
-                                                        $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
+                                                $validate = false;
+                                            }
+                                        }
+                                        //check the marks gap between examiner1 and examiner2
+                                        if ($validate) {
+                                            $fileName = $examID . '_' . $subject->SubjectCode . '.csv';
 
-                                                        //call the function to upload marks to database
-                                                        echo 'call insertMarks function';
-                                                        insertMarks($resFileName, $examID, $subject->SubjectCode);
-                                                    } else {
-                                                        $data['assignment'] = false;
-                                                        echo 'Assignment marks are not available.';
-                                                    }
+                                            //call the function to check the gap
+                                            if (checkGap($fileName, $examID, $subject->SubjectCode)) {
+                                                // $data['examiner3'] = true;
+                                                // $data['examiner3SubCode'] = $subject->SubjectCode;
+                                                $examiner3 = true;
+                                                $examiner3SubCode = $subject->SubjectCode;
 
+                                                var_dump('examiner3 true');
+                                            } else {
+                                                // $data['examiner3'] = false;
+                                                $examiner3 = false;
+                                                //check whether assestment marks are available
+                                                $assignmentMarks = $resultSheet->where([
+                                                    'examId' => $examID,
+                                                    'subjectCode' => $subject->SubjectCode,
+                                                    'type' => 'assestment'
+                                                ]);
+
+                                                if (!empty($assignmentMarks)) {
+                                                    $data['assignment'] = true;
+                                                    //upload the student marks to database
+                                                    $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
+
+                                                    //call the function to upload marks to database
+                                                    echo 'call insertMarks function';
+                                                    insertMarks($resFileName, $examID, $subject->SubjectCode);
                                                 } else {
-                                                    echo 'examiner1 or examiner2 marks are not available';
+                                                    $data['assignment'] = false;
+                                                    echo 'Assignment marks are not available.';
                                                 }
+
+
+                                                show('no examiner3');
+                                            }
+                                            /** The case in there is when we pass the data into view to show them it must reload 
+                                             * but when using fetch it did't reload the file. must fix this  */
+
+
+                                            /**when uploading marks get the least gap marks and calculate final marks and upload to database
+                                             */
+
+                                            // echo json_encode($data);
+                                        } else {
+                                            if ($marksType == 'examiner3') {
+                                                //check whether assestment marks are available
+                                                $assignmentMarks = $resultSheet->where([
+                                                    'examId' => $examID,
+                                                    'subjectCode' => $subject->SubjectCode,
+                                                    'type' => 'assestment'
+                                                ]);
+                                                var_dump("assignment marks ", $assignmentMarks);
+                                                if (!empty($assignmentMarks)) {
+                                                    $data['assignment'] = true;
+                                                    //upload the student marks to database
+                                                    $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
+
+                                                    //call the function to upload marks to database
+                                                    echo 'call insertMarks function';
+                                                    insertMarks($resFileName, $examID, $subject->SubjectCode);
+                                                } else {
+                                                    $data['assignment'] = false;
+                                                    echo 'Assignment marks are not available.';
+                                                }
+
+                                            } else {
+                                                echo 'examiner1 or examiner2 marks are not available';
                                             }
                                         }
                                     }
                                 }
-                            } else {
-                                // Error inserting data into the database
-                                $data['errors'] = $resultSheet->errors;
-                                // show($data['errors']);
-                                // var_dump('errors = ' . $resultSheet->errors['marks']);
-                                echo json_encode(['success' => false, 'message' => 'Error inserting data into the database.']);
                             }
-
                         } else {
-                            // Error moving the file
-                            echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
+                            // Error inserting data into the database
+                            $data['errors'] = $resultSheet->errors;
+                            // show($data['errors']);
+                            // var_dump('errors = ' . $resultSheet->errors['marks']);
+                            echo json_encode(['success' => false, 'message' => 'Error inserting data into the database.']);
                         }
-                        if ($examiner3) {
-                            echo (
-                                "<div id='status'>$examiner3</div>
-                              <div id='examiner3SubCode'>$examiner3SubCode</div>"
-
-                            );
-                        }
-
-
 
                     } else {
-                        // Handle file upload error
-                        message("File upload error", "error");
-                        // echo json_encode(['success' => false, 'message' => 'File upload error.']);
+                        // Error moving the file
+                        echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
+                    }
+                    if ($examiner3) {
+                        echo (
+                            "<div id='status'>$examiner3</div>
+                              <div id='examiner3SubCode'>$examiner3SubCode</div>"
+
+                        );
                     }
 
 
 
+                } else {
+                    // Handle file upload error
+                    message("File upload error", "error");
+                    // echo json_encode(['success' => false, 'message' => 'File upload error.']);
                 }
+
+
+
+
                 // 
 
 
