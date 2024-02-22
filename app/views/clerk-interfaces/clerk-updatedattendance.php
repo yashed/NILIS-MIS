@@ -1,11 +1,9 @@
 <?php
-$role = "Clerk";
+$role = "clerk";
 $data['role'] = $role;
 
 ?>
-
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
+<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
 
 
@@ -438,8 +436,7 @@ $data['role'] = $role;
         <div class="temp2-subsection-2">
             <div class="temp2-subsection-21">
                 <div class="row">
-                    <!-- Import link -->
-                    
+
 
                     <section class="table__body">
                         <table id="table_p">
@@ -452,25 +449,17 @@ $data['role'] = $role;
                                 </tr>
                             </thead>
                             <tbody>
+
+
                                 <?php
-                              
-
-                                $result = $db->query("SELECT * FROM student ");
-                                if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
-                                ?>
-                                        <tr>
-
-                                            <td><?php echo $row['indexNo']; ?></td>
-                                            <td><?php echo $row['name']; ?></td>
-                                            <td><?php echo $row['Attendance']; ?></td>
-                                        </tr>
-                                    <?php }
-                                } else { ?>
+                                 foreach ($students as $student) : ?>
                                     <tr>
-                                        <td colspan="3">No member(s) found...</td>
+                                        <td><?= $student->indexNo ?></td>
+                                        <td><?= $student->name ?></td>
+                                        <td><?= $student->attendance ?></td>
                                     </tr>
-                                <?php } ?>
+                                <?php endforeach; ?>
+
                             </tbody>
                         </table>
                     </section>
@@ -484,4 +473,3 @@ $data['role'] = $role;
 </body>
 
 </html>
-

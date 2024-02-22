@@ -17,6 +17,16 @@ class Clerk extends Controller
         $this->view('clerk-interfaces\clerk-notifications');
     }
 
+    public function updatedattendance()
+    {
+        $studentModel = new StudentModel();
+        $students = $studentModel->findAll(); // Assuming findAll() retrieves all students
+    
+        $data['students'] = $students;
+    
+        $this->view('clerk-interfaces\clerk-updatedattendance', $data);
+    }
+
     public function settings()
 {
     $user = new User();
@@ -55,54 +65,43 @@ class Clerk extends Controller
 }
     
 public function attendance()
-    {
-        $dbHost     = "localhost";
-        $dbUsername = "root";
-        $dbPassword = "";
-        $dbName     = "nilis_db";
+{
+   
+    if (isset($_POST['importSubmit'])) {
+        // Check if the uploaded file is present and no errors occurred during upload
+        if ($_FILES['csvFile']['error'] == 0 && !empty($_FILES['csvFile']['tmp_name'])) {
+            // Load StudentModel
+            $studentModel = new StudentModel();
 
+            // Process the CSV file
+            $csvFile = fopen($_FILES['csvFile']['tmp_name'], 'r');
 
-        $db = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+            // Skip the header row
+            fgetcsv($csvFile);
 
+            // Loop through each row in the CSV file
+            while (($line = fgetcsv($csvFile)) !== FALSE) {
+                $index = $line[0];
+                $name = $line[1];
+                $attendance = $line[2];
 
-        if ($db->connect_error) {
-            die("Connection failed: " . $db->connect_error);
-        }
-
-
-        $st = new StudentModel();
-
-        if (isset($_POST['importSubmit'])) {
-            if ($_FILES['csvFile']['error'] == 0) {
-                // Check if the uploaded file is a CSV file
-                $fileType = pathinfo($_FILES['csvFile']['name'], PATHINFO_EXTENSION);
-                if (strtolower($fileType) == 'csv') {
-                    // Process the CSV file
-                    $csvFile = fopen($_FILES['csvFile']['tmp_name'], 'r');
-                    // Skip the header row
-                    fgetcsv($csvFile);
-
-                    while (($line = fgetcsv($csvFile)) !== FALSE) {
-                        $index = $line[0];
-                        $name = $line[1];
-                        $attendance = $line[2];
-
-                        $prevQuery = "SELECT * FROM student WHERE indexNo = '$index' LIMIT 1;";
-                        $prevResult = $db->query($prevQuery);
-
-                        if ($prevResult->num_rows > 0) {
-                            $db->query("UPDATE student SET attendance = '$attendance', name='$name' WHERE indexNo = '$index'");
-                        }
-                    }
-                    fclose($csvFile);
-                } else {
-                    echo "Please upload a valid CSV file.";
-                }
-            } else {
-                echo "Error uploading the file.";
+                // Execute SQL query to update attendance directly
+                $updateQuery = "UPDATE student SET attendance = '$attendance', name = '$name' WHERE indexNo = '$index';";
+                $studentModel->query($updateQuery);
             }
-        }
 
-        $this->view('clerk-interfaces\clerk-attendance');
+            fclose($csvFile);
+        } else {
+            echo "Error uploading the file.";
+        }
     }
+
+    
+
+    // Load the view
+    $this->view('clerk-interfaces/clerk-attendance');
+}
+
+
+
 }

@@ -1,5 +1,5 @@
 <?php
-$role = "Clerk";
+$role = "clerk";
 $data['role'] = $role;
 
 ?>
@@ -352,14 +352,20 @@ $data['role'] = $role;
             }
 
             function checkPhoneNo() {
-                if (firstNameInput.value.trim() === '') {
-                    submitButton.disabled = true;
-                    errorMessage.style.display = 'block';
-                } else {
-                    submitButton.disabled = false;
-                    errorMessage.style.display = 'none';
-                }
-            }
+    var phoneNo = phoneNoInput.value.trim();
+    var phoneNoPattern = /^\d{10}$/; // Regex pattern to match exactly 10 digits
+    
+    if (!phoneNoPattern.test(phoneNo)) {
+        submitButton.disabled = true;
+        errorMessage.textContent = "Phone number is not valid. It should contain exactly 10 digits.";
+        errorMessage.style.display = 'block';
+    } else {
+        submitButton.disabled = false;
+        errorMessage.textContent = ""; // Clear error message
+        errorMessage.style.display = 'none';
+    }
+}
+
 
             checkFirstName();
             checkLastName();

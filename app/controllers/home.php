@@ -7,6 +7,8 @@ class Home extends Controller{
         
         $db = new Database();
         $db->create_tables();
+        $db->create_procedure();
+        $db->create_event();
        // $res= $db->query("select * from users");
 
        // show($res);
