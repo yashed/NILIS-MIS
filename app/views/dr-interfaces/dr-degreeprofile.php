@@ -1,55 +1,9 @@
 <?php
 $role = "DR";
 $data['role'] = $role;
-
-// Get the degree ID from the URL parameter
-$degreeId = isset($_GET['id']) ? $_GET['id'] : null;
-
-// Fetch the degree data based on the ID
-$degreeData = fetchDegreeDataById($degreeId);
-
-function fetchDegreeDataById($degreeId)
-{
-    // Replace these with your actual database connection details
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "nilis_db";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Sanitize the input to prevent SQL injection
-    $degreeId = $conn->real_escape_string($degreeId);
-
-    // Build and execute the SQL query
-    $sql = "SELECT * FROM degree WHERE DegreeID = '$degreeId'";
-    $result = $conn->query($sql);
-
-    if ($result && $result->num_rows > 0) {
-        // Fetch the degree data as an associative array
-        $degreeData = $result->fetch_assoc();
-
-        // Close the database connection
-        $conn->close();
-
-        return $degreeData;
-    } else {
-        // Handle the case where the degree with the given ID is not found
-        // You may want to display an error message or redirect the user
-        // to a different page.
-        $conn->close();
-        return null;
-    }
-}
 ?>
-<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
+<!-- <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?> -->
 
 <!DOCTYPE html>
 <html>
@@ -243,6 +197,7 @@ function fetchDegreeDataById($degreeId)
         color: gray;
         align-items: center;
         cursor: pointer;
+        display: none;
     }
 
     #save,
@@ -268,6 +223,17 @@ function fetchDegreeDataById($degreeId)
         border-width: 2px;
     }
 
+    #save:hover:disabled,
+    #update:hover:disabled {
+        color: rgba(16, 16, 16, 0.3);
+        border-radius: 7px;
+        width: 100%;
+        height: 35px;
+        border-color: var(--text-color);
+        font-weight: 500;
+        margin-top: 7px;
+    }
+
     .box_2 p,
     .box_3 p,
     .box_4 p {
@@ -288,30 +254,34 @@ function fetchDegreeDataById($degreeId)
     <div class="dr-large-box">
         <div class="large-box">
             <div class="box_1">
-                <p>Degree Name: <?= $degreeData['DegreeName'] ?></p>
+                <?php if (!empty($degrees)) : ?>
+                    <p><?= $degrees[0]->DegreeName ?></p>
+                <?php else : ?>
+                    <p>No data found for the specified degree ID.</p>
+                <?php endif; ?>
             </div>
             <div class="box_2">
                 <p>Overview</p>
-                <?php if ($degreeData) : ?>
+                <?php if ($degrees) : ?>
                     <table class="Overview_table">
                         <tr>
                             <td>
                                 <b>Diploma Name</b><br>
-                                <input type="text" name="type" id="type" value="<?= $degreeData['DegreeShortName'] ?>" readonly>
+                                <input type="text" name="type" id="type" value="<?= $degrees[0]->DegreeShortName ?>" readonly>
                             </td>
                             <td>
                                 <b>Academic Year</b><br>
-                                <input type="text" name="year" id="year" value="<?= $degreeData['AcademicYear'] ?>" readonly>
+                                <input type="text" name="year" id="year" value="<?= $degrees[0]->AcademicYear ?>" readonly>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <b>Diploma Type</b><br>
-                                <input type="text" name="type" id="type" value="<?= $degreeData['DegreeType'] ?>" readonly>
+                                <input type="text" name="type" id="type" value="<?= $degrees[0]->DegreeType ?>" readonly>
                             </td>
                             <td>
                                 <b>Participants</b><br>
-                                <input type="text" name="year" id="year" value="<?= $degreeData['AcademicYear'] ?>" readonly>
+                                <input type="text" name="year" id="year" value="<?= $degrees[0]->AcademicYear ?>" readonly>
                             </td>
                         </tr>
                         <td colspan="2">
@@ -324,29 +294,32 @@ function fetchDegreeDataById($degreeId)
             </div>
             <div class="box_3">
                 <div class="box_3_2" id="semester_subjects_credits">
-                    <div id="semester_container">
-                        <?php foreach ($degreeData['Semesters'] as $semester => $subjects) : ?>
-                            <table class="Subject_table">
-                                <p id="Semester" name="semester" class="semester<?= $semester ?>">Semester <?= $semester ?></p>
-                                <tr>
-                                    <th>Subject Name</th>
-                                    <th>Subject Code</th>
-                                    <th>Credits</th>
-                                </tr>
-                                <?php foreach ($subjects as $subject) : ?>
+                    <?php if ($subjects) : ?>
+                        <div id="semester_container">
+                            <?php foreach ($subjects as $semesterNumber => $semesterSubjects) : ?>
+                                <table class="Subject_table">
+                                    <p id="Semester" name="semester" class="semester<?= $semesterNumber ?>">Semester <?= $semesterNumber ?></p>
                                     <tr>
-                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= $subject['SubjectName'] ?>" type="text" name="SubjectName" class="SubjectName" placeholder="Subject" id="SubjectName<?= $semester ?>_<?= $subject['ID'] ?>" style="border: 1px solid #ccc;"></td>
-                                        <td><input style="width: 130px; margin-right: 14px;" value="<?= $subject['SubjectCode'] ?>" type="text" name="SubjectCode" class="SubjectCode" placeholder="Subject Code" id="SubjectCode<?= $semester ?>_<?= $subject['ID'] ?>" style="border: 1px solid #ccc;"></td>
-                                        <td><input style="width: 60px;" value="<?= $subject['NoCredits'] ?>" type="number" name="NoCredits" class="NoCredits" placeholder="Credits" id="NoCredits<?= $semester ?>_<?= $subject['ID'] ?>" style="border: 1px solid #ccc;"></td>
+                                        <th>Subject Name</th>
+                                        <th>Subject Code</th>
+                                        <th>Credits</th>
                                     </tr>
-                                <?php endforeach; ?>
-                            </table>
-                        <?php endforeach; ?>
-
-                    </div>
+                                    <?php foreach ($semesterSubjects as $subject) : ?>
+                                        <tr>
+                                            <td><input style="width: 130px; margin-right: 14px;" value="<?= $subject->SubjectName ?>" type="text" name="SubjectName" class="SubjectName" placeholder="Subject" id="SubjectName<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
+                                            <td><input style="width: 130px; margin-right: 14px;" value="<?= $subject->SubjectCode ?>" type="text" name="SubjectCode" class="SubjectCode" placeholder="Subject Code" id="SubjectCode<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
+                                            <td><input style="width: 60px;" value="<?= $subject->NoCredits ?>" type="number" name="NoCredits" class="NoCredits" placeholder="Credits" id="NoCredits<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </table>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else : ?>
+                        <p>No data found for the specified degree ID.</p>
+                    <?php endif; ?>
                 </div>
             </div>
-            <form class="box_4" method="post">
+            <form class="box_4" method="post" action="<?= ROOT ?>dr/degreeprofile/update?id=<?= $degrees[0]->$degreeID ?>">
                 <p>Define Degree Time Table</p>
                 <div class="box_4_1">
                     <table class="Time_table" id="Time_table">
@@ -354,54 +327,20 @@ function fetchDegreeDataById($degreeId)
                             <th align="left">Event</th>
                             <th colspan="2">Duration</th>
                         </tr>
-                        <tr>
-                            <td width="76%"><input type="text" value="" name="event_1" class="event" id="event_1" placeholder="Mid Semester Break"></td>
-                            <td width="14%"><select name="type_1" class="duration" id="type_1" style="padding: 0px 2px 0px 2px;">
-                                    <option value="" default hidden>Event Type</option>
-                                    <option value="Examination" <?= (set_value('type_1') === 'Examination') ? 'selected' : '' ?>>Examination</option>
-                                    <option value="Study Leave" <?= (set_value('type_1') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
-                                    <option value="Vacation" <?= (set_value('type_1') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
-                                    <option value="Other" <?= (set_value('type_1') === 'Other') ? 'selected' : '' ?>>Other</option>
-                                </select></td>
-                            <td width="12%"><input type="date" value="" name="start_1" class="duration" id="start_1" placeholder=""></td>
-                            <td width="12%"><input type="date" value="" name="end_1" class="duration" id="end_1" placeholder=""></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" value="" name="event_2" class="event" id="event_2" placeholder="Study Leave"></td>
-                            <td width="12%" padding-right="3px"><select name="type_1" class="duration" id="type_1">
-                                    <option value="" default hidden>Event Type</option>
-                                    <option value="Examination" <?= (set_value('type_2') === 'Examination') ? 'selected' : '' ?>>Examination</option>
-                                    <option value="Study Leave" <?= (set_value('type_2') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
-                                    <option value="Vacation" <?= (set_value('type_2') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
-                                    <option value="Other" <?= (set_value('type_2') === 'Other') ? 'selected' : '' ?>>Other</option>
-                                </select></td>
-                            <td><input type="date" value="" name="start_2" class="duration" id="start_2" placeholder=""></td>
-                            <td><input type="date" value="" name="end_2" class="duration" id="end_2" placeholder=""></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" value="" name="event_3" class="event" id="event_3" placeholder="First Semester Examination"></td>
-                            <td width="12%" padding-right="3px"><select name="type_1" class="duration" id="type_1">
-                                    <option value="" default hidden>Event Type</option>
-                                    <option value="Examination" <?= (set_value('type_3') === 'Examination') ? 'selected' : '' ?>>Examination</option>
-                                    <option value="Study Leave" <?= (set_value('type_3') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
-                                    <option value="Vacation" <?= (set_value('type_3') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
-                                    <option value="Other" <?= (set_value('type_3') === 'Other') ? 'selected' : '' ?>>Other</option>
-                                </select></td>
-                            <td><input type="date" value="" name="start_3" class="duration" id="start_3" placeholder=""></td>
-                            <td><input type="date" value="" name="end_3" class="duration" id="end_3" placeholder=""></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" value="" name="event_4" class="event" id="event_4" placeholder="Second Semester Examination"></td>
-                            <td width="12%" padding-right="3px"><select name="type_1" class="duration" id="type_1">
-                                    <option value="" default hidden>Event Type</option>
-                                    <option value="Examination" <?= (set_value('type_4') === 'Examination') ? 'selected' : '' ?>>Examination</option>
-                                    <option value="Study Leave" <?= (set_value('type_4') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
-                                    <option value="Vacation" <?= (set_value('type_4') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
-                                    <option value="Other" <?= (set_value('type_4') === 'Other') ? 'selected' : '' ?>>Other</option>
-                                </select></td>
-                            <td><input type="date" value="" name="start_4" class="duration" id="start_4" placeholder=""></td>
-                            <td><input type="date" value="" name="end_4" class="duration" id="end_4" placeholder=""></td>
-                        </tr>
+                        <?php foreach ($degreeTimeTable as $event) : ?>
+                            <tr>
+                                <td width="76%"><input type="text" value="<?= $event->EventName ?>" name="event_<?= $event->id ?>" class="event" id="event_<?= $event->id ?>" readonly></td>
+                                <td width="14%"><select name="type_<?= $event->id ?>" class="duration" id="type_<?= $event->id ?>">
+                                        <option value="" default hidden>Event Type</option>
+                                        <option value="Examination" <?= ($event->EventType === 'Examination') ? 'selected' : '' ?> disabled>Examination</option>
+                                        <option value="Study Leave" <?= ($event->EventType === 'Study Leave') ? 'selected' : '' ?> disabled>Study Leave</option>
+                                        <option value="Vacation" <?= ($event->EventType === 'Vacation') ? 'selected' : '' ?> disabled>Vacation</option>
+                                        <option value="Other" <?= ($event->EventType === 'Other') ? 'selected' : '' ?> disabled>Other</option>
+                                    </select></td>
+                                <td width="12%"><input type="date" value="<?= $event->StartingDate ?>" name="start_<?= $event->id ?>" class="duration" id="start_<?= $event->id ?>" readonly></td>
+                                <td width="12%"><input type="date" value="<?= $event->EndingDate ?>" name="end_<?= $event->id ?>" class="duration" id="end_<?= $event->id ?>" readonly></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </table>
                 </div>
                 <div class="box_4_2">
@@ -411,8 +350,8 @@ function fetchDegreeDataById($degreeId)
                         </tr>
                         <tr>
                             <td></td>
-                            <td width="12%"><button class="pin" type="submit" id="save">Update</button></td>
-                            <td width="12%"><button class="pin" type="submit" id="save">Save</button></td>
+                            <td width="12%"><button class="pin" type="submit" id="update">Update</button></td>
+                            <td width="12%"><button class="pin" type="submit" id="save" disabled>Save</button></td>
                         </tr>
                     </table>
                 </div>
@@ -424,28 +363,51 @@ function fetchDegreeDataById($degreeId)
     </div>
 </body>
 <script>
-    let add = document.querySelector("#add_new_event");
-    let table = document.querySelector(".Time_table");
-    let i = 5;
-    add.addEventListener("click", () => {
-        let template = `
+    document.addEventListener("DOMContentLoaded", function() {
+        let add = document.querySelector("#add_new_event");
+        let table = document.querySelector(".Time_table");
+        let i = 5;
+        add.addEventListener("click", () => {
+            let template = `
         <tr>
-                    <td><input type="text" value="" name="event_${i}" class="event" id="event_${i}" placeholder="New Event"></td>
-                    <td width="12%" padding-right="3px"><select name="type_${i}"  class="duration" id="type_${i}">
+                    <td><input type="text" value="" class="event" id="event_${i}" placeholder="New Event"></td>
+                    <td width="12%" padding-right="3px"><select  class="duration" id="type_${i}">
                                 <option value="" default hidden>Event Type</option>
                                 <option value="Examination" <?= (set_value('type_${i}') === 'Examination') ? 'selected' : '' ?>>Examination</option>
                                 <option value="Study Leave" <?= (set_value('type_${i}') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
                                 <option value="Vacation" <?= (set_value('type_${i}') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
                                 <option value="Other" <?= (set_value('type_${i}') === 'Other') ? 'selected' : '' ?>>Other</option>
                             </select></td>
-                    <td><input type="date" value="" name="start_${i}" class="duration" id="start_${i}" placeholder=""></td>
-                    <td><input type="date" value="" name="end_${i}" class="duration" id="end_${i}" placeholder=""></td>
+                    <td><input type="date" value="" class="duration" id="start_${i}" placeholder=""></td>
+                    <td><input type="date" value="" class="duration" id="end_${i}" placeholder=""></td>
                 </tr>
             `;
-        i++;
-        let newRow = document.createElement("tr");
-        newRow.innerHTML = template;
-        table.appendChild(newRow);
+            i++;
+            let newRow = document.createElement("tr");
+            newRow.innerHTML = template;
+            table.appendChild(newRow);
+        });
+        let updateButton = document.getElementById("update");
+        updateButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            let eventFields = document.querySelectorAll('.event');
+            let eventTypeFields = document.querySelectorAll('.duration');
+            add.style.display = "block";
+
+            eventFields.forEach((field) => {
+                field.removeAttribute('readonly');
+            });
+            eventTypeFields.forEach((field) => {
+                field.removeAttribute('readonly');
+                let options = field.querySelectorAll('option');
+                options.forEach(option => {
+                    option.removeAttribute('disabled');
+                });
+            });
+            let saveButton = document.getElementById("save");
+            saveButton.removeAttribute('disabled');
+            updateButton.setAttribute('disabled', 'true');
+        });
     });
 </script>
 

@@ -98,26 +98,39 @@ class DR extends Controller
         $this->view('dr-interfaces/dr-degreeprograms', $data);
     }
 
-    public function degreeprofile()
+    public function degreeprofile($action = null, $id = null)
     {
+        $data = [];
+        $data['action'] = $action;
+        $data['id'] = $id;
         $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
         // Check if degree ID is provided
         if ($degreeID !== null) {
             $degree = new Degree();
             $subject = new Subjects();
             $degreeTimeTable = new DegreeTimeTable();
-            $data['degrees'] = $degree->findAll();
-            $data['degreeTimeTable'] = $degreeTimeTable->findAll();
-            // Assuming you have a method to fetch subjects by degree ID
-            $subjectsByDegree = $subject->find($degreeID);
-            // Check if subjects were found
-            if ($subjectsByDegree !== null) {
-                // Populate $data['subjects'] correctly
-                $data['subjects'] = $subjectsByDegree;
-            } else {
-                // Handle case when no subjects were found for the degree ID
-                $data['subjects'] = []; // Set to an empty array
-                echo "Error: No subjects found for the specified degree ID.";
+            // Fetch the data based on the ID
+            $degreeData = $degree->find($degreeID);
+            $degreeTimeTableData = $degreeTimeTable->find($degreeID);
+            $subjectsData = $subject->find($degreeID);
+            $data['degrees'] = $degreeData;
+            $subjects = [];
+            foreach ($subjectsData as $subject) {
+                $semesterNumber = $subject->semester;
+                // Create semester array if not already exists
+                if (!isset($subjects[$semesterNumber])) {
+                    $subjects[$semesterNumber] = [];
+                }
+                // Add subject to semester array
+                $subjects[$semesterNumber][] = $subject;
+            }
+            $data['subjects'] = $subjects;
+            $data['degreeTimeTable'] = $degreeTimeTableData;
+
+            if ($action == "update") {
+                echo "POST request received";
+            } else if ($action == "add") {
+            } else if ($action == 'delete') {
             }
             // Load the view with the data
             $this->view('dr-interfaces/dr-degreeprofile', $data);
@@ -136,6 +149,10 @@ class DR extends Controller
         $data['action'] = $action;
         $data['id'] = $id;
         $degree_id = $degree->lastID('DegreeID');
+        $degree_info = (object)$degree->findByID($degree_id);
+        $degreeShortName =  $degree_info->DegreeShortName;
+        $currentYear = $degree_info->AcademicYear;
+        $currentYear = $currentYear % 100;
         if ($action == 'add') {
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 if (isset($_POST['timetableData'])) {
@@ -150,7 +167,6 @@ class DR extends Controller
                             'StartingDate' => $timetableData['eventStart'],
                             'EndingDate' => $timetableData['eventEnd'],
                         ];
-                        // Insert the subject's data into the database
                         $timeTable->insert($data1);
                     }
                 }
@@ -187,19 +203,25 @@ class DR extends Controller
                         fgetcsv($csvFile);
                         while (($rowData = fgetcsv($csvFile)) !== false) {
                             // Assuming the order of columns in the CSV matches the order in the $rowData array
-                            $data = [
-                                'Email' => $rowData[1],
-                                'country' => $rowData[2],
-                                'name' => $rowData[0],
-                                'nicNo' => $rowData[3],
-                                'birthdate' => $rowData[4],
-                                'whatsappNo' => $rowData[5],
-                                'address' => $rowData[6],
-                                'phoneNo' => $rowData[7],
-                                'degreeID' => $degree_id,
-                            ];
-                            // Insert data into the database
-                            $student->insert($data);
+                            $IndexNo = $student->generateIndexRegNumber($degree_id, $degreeShortName, $currentYear);
+                            if ($IndexNo !== false && $IndexNo['IndexNo'] != null && $IndexNo['RegistationNo'] != null) {
+                                $data = [
+                                    'Email' => $rowData[1],
+                                    'country' => $rowData[2],
+                                    'name' => $rowData[0],
+                                    'nicNo' => $rowData[3],
+                                    'birthdate' => $rowData[4],
+                                    'whatsappNo' => $rowData[5],
+                                    'address' => $rowData[6],
+                                    'phoneNo' => $rowData[7],
+                                    'degreeID' => $degree_id,
+                                    'indexNo' => $IndexNo['IndexNo'],
+                                    'regNo' => $IndexNo['RegistationNo'],
+                                ];
+                                $student->insert($data);
+                            } else {
+                                echo "Error: Failed to generate index and registration numbers.";
+                            }
                         }
                         fclose($csvFile);
                     } else {
@@ -212,20 +234,29 @@ class DR extends Controller
         }
         $this->view('dr-interfaces/dr-newdegree');
     }
-    public function userprofile()
+    public function userprofile($action = null, $id = null)
     {
+        $data = [];
+        $data['action'] = $action;
+        $data['id'] = $id;
         $degree = new Degree();
-        $data['degrees'] = $degree->findAll();
-
         // Fetch the specific student data using the ID from the URL
         $studentId = isset($_GET['studentId']) ? $_GET['studentId'] : null;
-        // show($studentId);
         // Check if the student ID is provided in the URL
         if ($studentId) {
             $studentModel = new StudentModel();
             $data['student'] = $studentModel->find($studentId);
-            // var_dump($data['student']);
-            // Check if the student data is retrieved
+            $student = [];
+            $degreeID = isset($student[0]->degreeID) ? $student[0]->degreeID : null;
+            $data['degree'] = $degree->find($degreeID);
+            if ($action == "update") {
+                echo "POST request received";
+                // echo $_POST
+            } else if ($action == "add") {
+            } else if ($action == 'delete') {
+                $studentModel->delete(['id' => $studentId]);
+                redirect("dr/participants");
+            }
             if ($data['student']) {
                 $this->view('dr-interfaces/dr-userprofile', $data);
             } else {
