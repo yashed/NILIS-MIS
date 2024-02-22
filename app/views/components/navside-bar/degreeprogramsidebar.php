@@ -64,13 +64,13 @@
                         <hr class="horizontal-line"><br>
                         <h6 class="topic1">MAIN</h6>
                         <li class="nav-link">
-                            <a href="<?= ROOT ?>dr/index">
+                            <a href="<?= ROOT ?>dr">
                                 <i class="bx bx-home icon"></i>
                                 <span class="text nav-text">Dashboard</span>
                             </a>
                         </li>
                         <li class="nav-link">
-                            <a href="<?= ROOT ?>dr/Notification">
+                            <a href="<?= ROOT ?>dr/notification">
                                 <i class="bx bx-bell icon"></i>
                                 <span class="text nav-text">Notification</span>
                             </a>
@@ -127,12 +127,12 @@
             <ul class="menu-links">
                 <h6 class="topic3">PROGRAMS</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/newDegree">
+                    <a href="<?= ROOT ?>sar/newDegree">
                         <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Name</span></a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/participants">
+                    <a href="<?= ROOT ?>sar/participants">
                         <i class="bx bx-group icon"></i>
                         <span class="text nav-text">Participants</span>
                     </a>
@@ -145,25 +145,27 @@
                     <?php
                     // Check if the URL contains any of the specified patterns
                     $url = $_SERVER['REQUEST_URI'];
-                    if (strpos($url, "examination/participants") !== false || 
-                        strpos($url, "examination/resultsupload") !== false || 
-                        strpos($url, "examination/results") !== false) {
+                    if (
+                        strpos($url, "examination/participants") !== false ||
+                        strpos($url, "examination/resultsupload") !== false ||
+                        strpos($url, "examination/results") !== false
+                    ) {
                         echo '<div class="dropdown">' .
-                            '<a href="' . ROOT . 'sar/results"><center>Examination Participants</center></a>' .
-                            '<a href="' . ROOT . 'sar/attendance"><center>Examination Submission</center></a>' .
                             '<a href="' . ROOT . 'sar/participants"><center>Examination Results</center></a>' .
+                            '<a href="' . ROOT . 'sar/resultsupload"><center>Examination Submission</center></a>' .
+                            '<a href="' . ROOT . 'sar/results"><center>Examination Participants</center></a>' .
                             '</div>';
                     }
                     ?>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/attendance">
+                    <a href="<?= ROOT ?>sar/attendance">
                         <i class="bx bx-check-square icon"></i>
                         <span class="text nav-text">Attendance</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/reports">
+                    <a href="<?= ROOT ?>sar/reports">
                         <i class="bx bx-file icon"></i>
                         <span class="text nav-text">Reports</span>
                     </a>
@@ -173,19 +175,19 @@
                 <hr class="horizontal-line"><br>
                 <h6 class="topic1">MAIN</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/index">
+                    <a href="<?= ROOT ?>sar">
                         <i class="bx bx-home icon"></i>
                         <span class="text nav-text">Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/Notification">
+                    <a href="<?= ROOT ?>sar/notification">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/degreeprograms">
+                    <a href="<?= ROOT ?>sar/degreeprograms">
                         <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Programs</span>
                     </a>
@@ -193,7 +195,7 @@
                 <hr class="horizontal-line">
                 <h6 class="topic2">SETTINGS</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/settings">
+                    <a href="<?= ROOT ?>sar/settings">
                         <i class="bx bx-cog icon"></i>
                         <span class="text nav-text">Settings</span>
                     </a>
@@ -206,7 +208,7 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+                <li class="hero-ul-li"><a href="<?= ROOT ?>sar/notification"><i class="bx bxs-bell icon"></i></a></li>
                 <li class="hero-ul-li"><img src="http://localhost\NILIS-MIS\app\views\components\navside-bar\MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
@@ -269,13 +271,13 @@
                 <hr class="horizontal-line"><br>
                 <h6 class="topic1">MAIN</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/index">
+                    <a href="<?= ROOT ?>dr">
                         <i class="bx bx-home icon"></i>
                         <span class="text nav-text">Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/Notification">
+                    <a href="<?= ROOT ?>dr/notification">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>
@@ -365,13 +367,13 @@
                 <hr class="horizontal-line"><br>
                 <h6 class="topic1">MAIN</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/index">
+                    <a href="<?= ROOT ?>dr">
                         <i class="bx bx-home icon"></i>
                         <span class="text nav-text">Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/Notification">
+                    <a href="<?= ROOT ?>dr/notification">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>
@@ -461,13 +463,13 @@
                 <hr class="horizontal-line"><br>
                 <h6 class="topic1">MAIN</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/index">
+                    <a href="<?= ROOT ?>dr">
                         <i class="bx bx-home icon"></i>
                         <span class="text nav-text">Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/Notification">
+                    <a href="<?= ROOT ?>dr/notification">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>
@@ -557,13 +559,13 @@
                 <hr class="horizontal-line"><br>
                 <h6 class="topic1">MAIN</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/index">
+                    <a href="<?= ROOT ?>dr">
                         <i class="bx bx-home icon"></i>
                         <span class="text nav-text">Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/Notification">
+                    <a href="<?= ROOT ?>dr/notification">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>
