@@ -101,8 +101,7 @@ class Database
             `MinMarks` int(10) NOT NULL,
             `GPV` varchar(20) NOT NULL,
             PRIMARY KEY (`GradeID`),
-            FOREIGN KEY (DegreeID) REFERENCES degree(DegreeID),
-            UNIQUE KEY `Grade` (`Grade`)
+            FOREIGN KEY (DegreeID) REFERENCES degree(DegreeID)
            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
         ";
 
