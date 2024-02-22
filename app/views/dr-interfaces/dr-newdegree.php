@@ -389,7 +389,7 @@ $data['role'] = $role;
         //Add new event
         let add = document.querySelector("#add_new_event");
         let table = document.querySelector(".Time_table");
-        let i = 2;
+        let i = 5;
         add.addEventListener("click", (event) => {
             let template = `
                 <tr>
@@ -416,7 +416,7 @@ $data['role'] = $role;
         save.onclick = function(event) {
             event.preventDefault();
             var timetableData = [];
-            i=2;
+            i=5;
             var timeTable = document.getElementById(`Time_table`);
             for (var k = 1; k < i; k++) { // loop through all rows except the header
                 var eventName = document.getElementById(`event_${k}`).value.trim();
