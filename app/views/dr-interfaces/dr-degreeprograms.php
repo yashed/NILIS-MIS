@@ -345,7 +345,10 @@ $data['role'] = $role;
         if (validateForm1()) {
             Form1.style.display = "none";
             Form2.style.display = "block";
-            progress2.style.width = "150px";
+            progress2.style.width = "15px";
+            setTimeout(function() {
+                progress2.style.width = "150px";
+            }, 10);
             myFunction();
         } else {
             alert(" Please fill out all the fields.");
@@ -354,14 +357,20 @@ $data['role'] = $role;
     Back1.onclick = function() {
         Form1.style.display = "block";
         Form2.style.display = "none";
-        progress1.style.width = "10px";
+        progress1.style.width = "150px";
+        setTimeout(function() {
+            progress1.style.width = "15px";
+        }, 10);
     }
     // Validate Form2 before proceeding
     Next2.onclick = function() {
         if (validateForm2(numSemesters)) {
             Form2.style.display = "none";
             Form3.style.display = "block";
-            progress3.style.width = "300px";
+            progress3.style.width = "150px";
+            setTimeout(function() {
+                progress3.style.width = "300px";
+            }, 10);
             myFunction();
             generateGrades();
         }
@@ -369,7 +378,10 @@ $data['role'] = $role;
     Back2.onclick = function() {
         Form2.style.display = "block";
         Form3.style.display = "none";
-        progress2.style.width = "150px";
+        progress2.style.width = "300px";
+        setTimeout(function() {
+            progress2.style.width = "150px";
+        }, 10);
     }
     Next3.onclick = function(event) {
         event.preventDefault();
