@@ -748,6 +748,8 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                             $containerId = 'container' . ($subject->SubjectID) . '_1';
                             $fileInputId = 'fileInput' . ($subject->SubjectID) . '_1';
                             $formID = 'form' . ($subject->SubjectID) . '_1';
+                            $submitViewIdAS = $subject->SubjectCode . "_S_assestment";
+                            $uploadedViewIdAS = $subject->SubjectCode . "_R_assestment";
 
                             ?>
                             <div class="file-input-wraper">
@@ -786,8 +788,8 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                                             <div class="button-container">
                                                 <button class="btn-secondary-download" name="sub1_exam-res"
                                                     type="button">Download</button>
-                                                <button class="btn-secondary-delete" name="sub1_exam-res"
-                                                    type="button">Delete</button>
+                                                <button class="btn-secondary-delete" name="sub1_exam-res" type="button"
+                                                    onclick="deleteSubmitFile(event,'<?= $submitViewIdAS ?>','<?= $uploadedViewIdAS ?>')">Delete</button>
                                             </div>
                                             <input id="fileInputId" type="file" style="display: none;">
                                             <label class="text1" style="display: none;"></label>
@@ -801,6 +803,8 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                             $containerId = 'container' . ($subject->SubjectID) . '_2';
                             $fileInputId = 'fileInput' . ($subject->SubjectID) . '_2';
                             $formID = 'form' . ($subject->SubjectID) . '_2';
+                            $submitViewId1 = $subject->SubjectCode . "_S_examiner1";
+                            $uploadedViewId1 = $subject->SubjectCode . "_R_examiner1";
                             ?>
                             <div class="file-input-wraper">
                                 <div class="dashed-container-2" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
@@ -838,8 +842,8 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                                             <div class="button-container">
                                                 <button class="btn-secondary-download" name="sub1_exam-res"
                                                     type="button">Download</button>
-                                                <button class="btn-secondary-delete" name="sub1_exam-res"
-                                                    type="button">Delete</button>
+                                                <button class="btn-secondary-delete" name="sub1_exam-res" type="button"
+                                                    onclick="deleteSubmitFile(event,'<?= $submitViewId1 ?>','<?= $uploadedViewId1 ?>')">Delete</button>
                                             </div>
                                             <input id="fileInputId" type="file" style="display: none;">
                                             <label class="text1" style="display: none;"></label>
@@ -851,6 +855,8 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                             $containerId = 'container' . ($subject->SubjectID) . '_3';
                             $fileInputId = 'fileInput' . ($subject->SubjectID) . '_3';
                             $formID = 'form' . ($subject->SubjectID) . '_3';
+                            $submitViewId2 = $subject->SubjectCode . "_S_examiner2";
+                            $uploadedViewId2 = $subject->SubjectCode . "_R_examiner2";
                             ?>
                             <div class="file-input-wraper">
                                 <div class="dashed-container-3" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
@@ -888,8 +894,8 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                                             <div class="button-container">
                                                 <button class="btn-secondary-download" name="sub1_exam-res"
                                                     type="button">Download</button>
-                                                <button class="btn-secondary-delete" name="sub1_exam-res"
-                                                    type="button">Delete</button>
+                                                <button class="btn-secondary-delete" name="sub1_exam-res" type="button"
+                                                    onclick="deleteSubmitFile(event,'<?= $submitViewId2 ?>','<?= $uploadedViewId2 ?>')">Delete</button>
                                             </div>
                                             <input id="fileInputId" type="file" style="display: none;">
                                             <label class="text1" style="display: none;"></label>
@@ -901,6 +907,8 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                             $containerId = 'container' . ($subject->SubjectID) . '_4';
                             $fileInputId = 'fileInput' . ($subject->SubjectID) . '_4';
                             $formID = 'form' . ($subject->SubjectID) . '_4';
+                            $submitViewId3 = $subject->SubjectCode . "_S_examiner3";
+                            $uploadedViewId3 = $subject->SubjectCode . "_R_examiner3";
                             ?>
                             <div class="file-input-wraper">
                                 <div class="dashed-container-4" id="<?= $containerId ?>" ondragover="handleDragOver(event)"
@@ -938,8 +946,8 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                                             <div class="button-container">
                                                 <button class="btn-secondary-download" name="sub1_exam-res"
                                                     type="button">Download</button>
-                                                <button class="btn-secondary-delete" name="sub1_exam-res"
-                                                    type="button">Delete</button>
+                                                <button class="btn-secondary-delete" name="sub1_exam-res" type="button"
+                                                    onclick="deleteSubmitFile(event,'<?= $submitViewId3 ?>','<?= $uploadedViewId3 ?>')">Delete</button>
                                             </div>
                                             <input id="fileInputId" type="file" style="display: none;">
                                             <label class="text1" style="display: none;"></label>
@@ -965,6 +973,22 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
 </body>
 <script>
+
+    //delete the uploaded file
+    function deleteSubmitFile(event, submitViewId, uploadedViewId) {
+        event.preventDefault();
+        var submitView = document.querySelector('#' + submitViewId);
+        var uploadedView = document.querySelector('#' + uploadedViewId);
+
+        //need to call popup instead of this
+        document.getElementById(submitViewId).classList.remove("remove");
+        document.getElementById(uploadedViewId).classList.add("remove");
+
+        console.log(submitViewId);
+        console.log(uploadedViewId);
+
+    }
+
 
     //get php data
     var examSheets = <?php echo $subjectData; ?>;
