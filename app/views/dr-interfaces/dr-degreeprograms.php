@@ -202,7 +202,6 @@ $data['role'] = $role;
                 <div class="button-btn">
                     <button onclick="myFunction()" type="button" class="bt-name" style="float: right; margin-right: 40px;">Create Degree Program</button>
                 </div>
-
                 <div class="dr-sub-title">Ongoing Degree Programs</div>
                 <div class="dr-degree-bar">
                     <?php if ($degrees) : ?>
