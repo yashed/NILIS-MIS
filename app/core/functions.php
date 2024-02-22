@@ -1,5 +1,17 @@
 <?php
 
+function reloadPageOnce()
+{
+
+    if (!isset($_SESSION['page_reloaded'])) {
+        // Set the session variable to indicate that the page has been reloaded
+        $_SESSION['page_reloaded'] = true;
+
+        // Reload the page using PHP
+        header("Refresh:0");
+        exit();
+    }
+}
 
 function show($stuff)
 {
@@ -47,6 +59,11 @@ function message($msg = '', $type = 'success', $erase = false)
 
 function groupByColumn($data, $columnName)
 {
+    // Check if $data is not an array or if it's empty
+    if (!is_array($data) || empty($data)) {
+        return [];
+    }
+
     $groupedData = [];
 
     // Iterate through the input data
@@ -66,6 +83,7 @@ function groupByColumn($data, $columnName)
 
     return $groupedData;
 }
+
 
 function createMarkSheet($inputCSV, $examID, $subCode, $type)
 {

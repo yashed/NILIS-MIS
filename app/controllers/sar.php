@@ -470,11 +470,6 @@ class SAR extends Controller
                     }
                 }
 
-                //show data
-                // show($NormalParticipants);
-                // show($RepeatStudents);
-                // show($MedicalStudents);
-
 
                 if ($NormalParticipants !== false) {
                     // $listOfIndexNo = array_column($NormalParticipants, 'indexNo');
@@ -536,6 +531,7 @@ class SAR extends Controller
                         fclose($f);
                     }
                 }
+
                 // save file in specific location
                 // Check if the file was uploaded successfully
 
@@ -544,6 +540,20 @@ class SAR extends Controller
                 $submittedMarksheets = $resultSheet->where(['examId' => $examID]);
                 $groupedData = groupByColumn($submittedMarksheets, 'subjectCode');
                 $data['subjectData'] = json_encode($groupedData);
+
+                //delete marksheet from the database
+                if (isset($_POST['submit']) == 'delete-rs') {
+
+                    $_POST['examid'] = $examID;
+
+                    //delete marksheet
+                    $resultSheet->delete2($_POST);
+
+                    //refresh the page
+                    header("Refresh:0");
+
+
+                }
 
 
                 if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
@@ -651,6 +661,8 @@ class SAR extends Controller
                                                     //call the function to upload marks to database
                                                     echo 'call insertMarks function';
                                                     insertMarks($resFileName, $examID, $subject->SubjectCode);
+
+
                                                 } else {
                                                     $data['assignment'] = false;
                                                     echo 'Assignment marks are not available.';
@@ -684,6 +696,8 @@ class SAR extends Controller
                                                     //call the function to upload marks to database
                                                     echo 'call insertMarks function';
                                                     insertMarks($resFileName, $examID, $subject->SubjectCode);
+
+
                                                 } else {
                                                     $data['assignment'] = false;
                                                     echo 'Assignment marks are not available.';
@@ -727,7 +741,7 @@ class SAR extends Controller
 
 
 
-                // 
+
 
 
 
