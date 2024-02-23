@@ -1209,19 +1209,29 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
         if (fileInput.files.length > 0) {
 
             // Check if the submit button is already present
-            var existingDeleteButton = container.querySelector('.btn-secondary-cancel');
+            var deleteButtonId = 'cancel' + formId;
+            var existingDeleteButton = document.getElementById(deleteButtonId);
             if (!existingDeleteButton) {
                 // Create a delete button dynamically
                 var deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Delete';
+                deleteButton.textContent = 'Cancel';
                 deleteButton.className = 'btn-secondary-cancel';
                 deleteButton.name = 'sub1_exam-res';
                 deleteButton.type = 'button';
+                deleteButton.id = 'cancel' + formId;
                 deleteButton.addEventListener('click', function () {
-                    deleteFile(container, fileInput);
+                    deleteFile(container, fileInput, type, subCode);
                 });
+
+                console.log('delete Buttondasda');
             }
-            var existingSubmitButton = container.querySelector('.btn-secondary');
+            else {
+                console.log('delete Button flex');
+                document.getElementById(deleteButtonId).style.display = 'flex';
+            }
+
+            var submitButtonId = 'button_' + formId;
+            var existingSubmitButton = document.getElementById(submitButtonId);
             if (!existingSubmitButton) {
                 // Create a submit button dynamically
                 var submitButton = document.createElement('button');
@@ -1234,41 +1244,69 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                     uploadFile(fileInputId, submitButton.id, formId, subCode, type, submitViewId, uploadedViewId);
                 });
             }
+            else {
+
+                document.getElementById(submitButtonId).style.display = 'flex';
+            }
 
             // Wrap the file icon and file name in a container
-            var fileInfoContainer = document.createElement('div');
-            fileInfoContainer.className = 'file-info-container';
-            fileInfoContainer.id = 'file-info-container-' + subCode + '-' + type;
+            var fileContainerId = 'file-info-container-' + subCode + '-' + type;
+            var exitingFileContainer = document.getElementById(fileContainerId);
+
+            if (!exitingFileContainer) {
+                var fileInfoContainer = document.createElement('div');
+                fileInfoContainer.className = 'file-info-container';
+                fileInfoContainer.id = fileContainerId;
+
+                // Create the file icon
+                var fileIcon = document.createElement('div');
+                fileIcon.className = 'file-uploded-icon ';
+                fileInfoContainer.appendChild(fileIcon);
+
+                // Create the file name
+                var fileName = document.createElement('span');
+                fileName.textContent = fileInput.files[0].name;
+                fileName.className = 'uploaded-file-name';
+                fileInfoContainer.appendChild(fileName);
+
+                // Append the container to the container
+                form.appendChild(fileInfoContainer);
+
+            }
+            else {
+                document.getElementById(fileContainerId).style.display = 'flex';
+
+            }
+
+
+
 
             //create container for buttons
-            var buttonContainer = document.createElement('div');
-            buttonContainer.className = 'button-container';
-            buttonContainer.id = 'button-container-' + subCode + '-' + type;
+            var btnContainerId = 'button-container-' + subCode + '-' + type;
+            var existingButtonContainer = document.getElementById(btnContainerId);
+
+            if (!existingButtonContainer) {
+                var buttonContainer = document.createElement('div');
+                buttonContainer.className = 'button-container';
+                buttonContainer.id = 'button-container-' + subCode + '-' + type;
+                form.appendChild(buttonContainer);
+                buttonContainer.appendChild(deleteButton);
+                buttonContainer.appendChild(submitButton);
+
+
+            }
+            else {
+                console.log('append buttonsdfasfsa');
+                document.getElementById(btnContainerId).style.display = 'flex';
+            }
 
             // Hide the file icon label
             container.querySelector('.file-input-icon').style.display = 'none';
+            container.querySelector('.file-submission-view').style.display = 'none';
 
 
-            // Create the file icon
-            var fileIcon = document.createElement('div');
-            fileIcon.className = 'file-uploded-icon ';
-            fileInfoContainer.appendChild(fileIcon);
 
-            // Create the file name
-            var fileName = document.createElement('span');
-            fileName.textContent = fileInput.files[0].name;
-            fileName.className = 'uploaded-file-name';
-            fileInfoContainer.appendChild(fileName);
 
-            // Append the container to the container
-            form.appendChild(fileInfoContainer);
-
-            // Append the buttonContainer to the form
-            form.appendChild(buttonContainer);
-
-            //add delete and submit button to container
-            buttonContainer.appendChild(deleteButton);
-            buttonContainer.appendChild(submitButton);
             // container.appendChild(buttonContainer);
 
             // Create the file icon image if not present
@@ -1368,34 +1406,24 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
     }
 
     //handle delete file
-    function deleteFile(container, fileInput) {
+    function deleteFile(container, fileInput, type, subCode) {
 
+        var fileContainerId = 'file-info-container-' + subCode + '-' + type;
+        var buttonContainerId = 'button-container-' + subCode + '-' + type;
+        var fileSubmitViewID = subCode + '_S_' + type;
 
-        // Remove the delete and submit buttons
-        container.querySelector('.btn-secondary-cancel').remove();
+        //show filde submission view
+        container.querySelector('.file-submission-view').style.display = 'flex';
 
-
-        // Remove the file info container
-        container.querySelector('.file-info-container').remove();
-
-        //Remove button container
-        container.querySelector('.button-container').remove();
+        //hide file container and button container
+        document.getElementById(fileContainerId).style.display = 'none';
+        document.getElementById(buttonContainerId).style.display = 'none';
 
         // Display the file icon image and associated text
         container.querySelector('.file-input-icon').style.display = 'flex';
 
         //Display type label
         container.querySelector('.marks-type').style.display = 'block';
-
-
-        // var fileIcon = document.createElement('img');
-        // fileIcon.src = '<?= ROOT ?>/assets/file-icon.png';
-        // fileIcon.className = 'file-input-icon';
-        // fileIcon.setAttribute('for', fileInput.id);
-        // fileIcon.addEventListener('click', function () {
-        //     triggerFileInput(fileInput.id);
-        // });
-        // container.appendChild(fileIcon);
 
         // Display the text
         container.querySelector('.text1').style.display = 'block';
