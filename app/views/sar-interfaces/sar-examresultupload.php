@@ -2,7 +2,7 @@
 $role = "SAR";
 $data['role'] = $role;
 $validateError = isset($errors['marks']) ? $errors['marks'] : null;
-show($examId);
+
 ?>
 
 
@@ -410,6 +410,15 @@ show($examId);
         padding: 10px;
     }
 
+    .file-info-container-temp {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        flex-direction: column;
+        padding: 10px;
+    }
+
     .uploaded-file-name {
         text-align: center;
 
@@ -462,6 +471,13 @@ show($examId);
     }
 
     .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 1vw;
+
+    }
+
+    .button-container-temp {
         display: flex;
         justify-content: center;
         gap: 1vw;
@@ -813,7 +829,7 @@ show($examId);
                                                 <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode'
                                                     hidden>
                                                 <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
-                                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','assestment')">
+                                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','assestment','<?= $submitViewIdAS ?>','<?= $uploadedViewIdAS ?>')">
                                                 <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                                         class="browse-label">browse</label></br> assignment results.</p>
                                                 <?php if (!empty($errors['marks'])): ?>
@@ -870,7 +886,7 @@ show($examId);
                                                 <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode'
                                                     hidden>
                                                 <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
-                                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner1')">
+                                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner1','<?= $submitViewId1 ?>','<?= $uploadedViewId1 ?>')">
                                                 <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                                         class="browse-label">browse</label></br> Examiner 01 results.</p>
                                                 <?php if (!empty($errors['marks'])): ?>
@@ -925,7 +941,7 @@ show($examId);
                                                 <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode'
                                                     hidden>
                                                 <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
-                                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner2')">
+                                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner2','<?= $submitViewId2 ?>','<?= $uploadedViewId2 ?>')">
                                                 <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                                         class="browse-label">browse</label></br> Examiner 02 results.</p>
                                                 <?php if (!empty($errors['marks'])): ?>
@@ -980,7 +996,7 @@ show($examId);
                                                 <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode'
                                                     hidden>
                                                 <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
-                                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner3')">
+                                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner3','<?= $submitViewId3 ?>','<?= $uploadedViewId3 ?>')">
                                                 <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
                                                         class="browse-label">browse</label></br> Examiner 03 results.</p>
                                                 <?php if (!empty($errors['marks'])): ?>
@@ -1097,7 +1113,7 @@ show($examId);
         a.href = fileUrl;
 
         // Set the download attribute with the desired file name
-        a.download = 'MarkSheet_' + subjectCode + '_' + type + '.csv';
+        a.download = 'ResultSheet_' + subjectCode + '_' + type + '.csv';
 
         // Append the anchor element to the document
         document.body.appendChild(a);
@@ -1169,7 +1185,7 @@ show($examId);
                 fileInput.files = files;
 
                 // Show submit button
-                showSubmitButton(containerId, fileInputId, formId, subCode, type);
+                showSubmitButton(containerId, fileInputId, formId, subCode, type, submitViewId, uploadedViewId);
             } else {
                 // not a CSV file, you can provide feedback to the user
                 alert('Please drop a CSV file.');
@@ -1179,7 +1195,7 @@ show($examId);
 
 
 
-    function showSubmitButton(containerId, fileInputId, formId, subCode, type) {
+    function showSubmitButton(containerId, fileInputId, formId, subCode, type, submitViewId, uploadedViewId) {
         var container = document.getElementById(containerId);
         var fileInput = document.getElementById(fileInputId);
         var form = document.getElementById(formId);
@@ -1215,23 +1231,23 @@ show($examId);
                 submitButton.type = 'button';
                 submitButton.id = 'button_' + formId;
                 submitButton.addEventListener('click', function () {
-                    uploadFile(fileInputId, submitButton.id, formId, subCode, type);
+                    uploadFile(fileInputId, submitButton.id, formId, subCode, type, submitViewId, uploadedViewId);
                 });
             }
 
             // Wrap the file icon and file name in a container
             var fileInfoContainer = document.createElement('div');
             fileInfoContainer.className = 'file-info-container';
+            fileInfoContainer.id = 'file-info-container-' + subCode + '-' + type;
 
             //create container for buttons
             var buttonContainer = document.createElement('div');
             buttonContainer.className = 'button-container';
+            buttonContainer.id = 'button-container-' + subCode + '-' + type;
 
             // Hide the file icon label
             container.querySelector('.file-input-icon').style.display = 'none';
 
-            //hide type labe
-            container.querySelector('.marks-type').style.display = 'none';
 
             // Create the file icon
             var fileIcon = document.createElement('div');
@@ -1279,7 +1295,7 @@ show($examId);
         fileInput.click();
     }
 
-    function uploadFile(fileInputId, buttonId, formId, subCode, type) {
+    function uploadFile(fileInputId, buttonId, formId, subCode, type, submitViewId, uploadedViewId) {
 
         var error = <?= json_encode($validateError) ?>;
         console.log('font end errrors =  ', error);
@@ -1315,7 +1331,28 @@ show($examId);
             .then(data => {
                 console.log(data);
                 alert('File uploaded successfully!');
-                removeSubmitButton(buttonId);
+
+                //show uploaded view
+                var fileContainerId = 'file-info-container-' + subCode + '-' + type;
+                var buttonContainerId = 'button-container-' + subCode + '-' + type;
+
+                console.log(fileContainerId);
+                console.log(buttonContainerId);
+
+                document.getElementById(fileContainerId).style.display = 'none';
+                document.getElementById(buttonContainerId).style.display = 'none';
+
+                //show uploaded view of the file
+                console.log(submitViewId);
+                console.log(uploadedViewId);
+
+                document.getElementById(submitViewId).classList.add("remove");
+                document.getElementById(uploadedViewId).classList.remove("remove");
+
+                //show marks type
+                document.querySelector('.marks-type').style.display = 'flex';
+
+                // removeSubmitButton(buttonId);
             })
             .catch(error => {
                 console.error('Error uploading file:', error);
@@ -1389,43 +1426,6 @@ show($examId);
         document.body.removeChild(a);
     }
 
-    console.log("before fetch");
-
-    var targetURL = '<?= ROOT ?>sar/examination/resultsupload';
-    // Fetch data from the controller
-    fetch(targetURL)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text();
-        })
-        .then(data => {
-
-
-
-            // Extract values from the parsed HTML
-            var status = document.querySelector('#status').textContent.trim();
-            examiner3 = false;
-            if (status == 1) {
-                examiner3 = true;
-            }
-            else {
-                examiner3 = false;
-            }
-            var examiner3SubCode = document.querySelector('#examiner3SubCode').textContent.trim();
-
-            console.log('examiner 3 = ', examiner3);
-            console.log('examiner3SubCode = ', examiner3SubCode);
-            elements.forEach(function (element) {
-                element.dataset.active = examiner3;
-            });
-
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
-
 
 </script>
 <script>
@@ -1433,13 +1433,13 @@ show($examId);
 
     // Extract values from the parsed HTML
 
-    var examiner3 = true;
+    // var examiner3 = true;
 
-    console.log('examiner 3 = ', examiner3);
-    console.log('examiner3SubCode = ', examiner3SubCode);
-    elements.forEach(function (element) {
-        element.dataset.active = examiner3;
-    });
+    // console.log('examiner 3 = ', examiner3);
+    // console.log('examiner3SubCode = ', examiner3SubCode);
+    // elements.forEach(function (element) {
+    //     element.dataset.active = examiner3;
+    // });
 </script>
 
 </html>
