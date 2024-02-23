@@ -565,7 +565,7 @@ class SAR extends Controller
                     $originalFileName = basename($_FILES['file']['name']);
 
                     // Generate a unique filename to avoid overwriting existing files
-                    $uniqueFileName = $_POST['formId'] . '_' . uniqid(1) . '.csv';
+                    $uniqueFileName = $_POST['subjectCode'] . '_' . $examID . '_' . $_POST['type'] . '.csv';
 
                     // Set the target path
                     $targetPath = $targetDirectory . $uniqueFileName;
@@ -743,8 +743,8 @@ class SAR extends Controller
 
 
 
-
-
+                //pass examid
+                $data['examId'] = $examID;
                 $this->view('sar-interfaces/sar-examresultupload', $data);
 
 
@@ -783,6 +783,7 @@ class SAR extends Controller
 
                 $data['subNames'] = $examSubjects;
                 $data['examResults'] = $examResults;
+
 
                 $this->view('sar-interfaces/sar-examresults', $data);
 

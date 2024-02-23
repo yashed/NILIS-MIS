@@ -2,6 +2,7 @@
 $role = "SAR";
 $data['role'] = $role;
 $validateError = isset($errors['marks']) ? $errors['marks'] : null;
+show($examId);
 ?>
 
 
@@ -831,7 +832,8 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                                                 </div>
                                                 <div class="button-container">
                                                     <button class="btn-secondary-download" name="sub1_exam-res"
-                                                        type="button">Download</button>
+                                                        type="button"
+                                                        onclick="downloadResultSheet('<?= $subject->SubjectCode ?>', '<?= $examId ?>' , 'assestment')">Download</button>
                                                     <button class="btn-secondary-delete" name="sub1_exam-res" type="button"
                                                         onclick="deleteSubmitFile(event,'<?= $submitViewIdAS ?>','<?= $uploadedViewIdAS ?>','<?= $subject->SubjectCode ?>','<?= $formID ?>','assestment')">Delete</button>
                                                 </div>
@@ -887,7 +889,8 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                                                 </div>
                                                 <div class="button-container">
                                                     <button class="btn-secondary-download" name="sub1_exam-res"
-                                                        type="button">Download</button>
+                                                        type="button"
+                                                        onclick="downloadResultSheet('<?= $subject->SubjectCode ?>', '<?= $examId ?>' , 'examiner1')">Download</button>
                                                     <button class="btn-secondary-delete" name="sub1_exam-res" type="button"
                                                         onclick="deleteSubmitFile(event,'<?= $submitViewIdAS ?>','<?= $uploadedViewIdAS ?>','<?= $subject->SubjectCode ?>','<?= $formID ?>','examiner1')">Delete</button>
                                                 </div>
@@ -941,7 +944,8 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                                                 </div>
                                                 <div class="button-container">
                                                     <button class="btn-secondary-download" name="sub1_exam-res"
-                                                        type="button">Download</button>
+                                                        type="button"
+                                                        onclick="downloadResultSheet('<?= $subject->SubjectCode ?>', '<?= $examId ?>' , 'examiner2')">Download</button>
                                                     <button class="btn-secondary-delete" name="sub1_exam-res" type="button"
                                                         onclick="deleteSubmitFile(event,'<?= $submitViewIdAS ?>','<?= $uploadedViewIdAS ?>','<?= $subject->SubjectCode ?>','<?= $formID ?>','examiner2')">Delete</button>
                                                 </div>
@@ -995,7 +999,8 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                                                 </div>
                                                 <div class="button-container">
                                                     <button class="btn-secondary-download" name="sub1_exam-res"
-                                                        type="button">Download</button>
+                                                        type="button"
+                                                        onclick="downloadResultSheet('<?= $subject->SubjectCode ?>', '<?= $examId ?>' , 'examiner3')">Download</button>
                                                     <button class="btn-secondary-delete" name="sub1_exam-res" type="button"
                                                         onclick="deleteSubmitFile(event,'<?= $submitViewIdAS ?>','<?= $uploadedViewIdAS ?>','<?= $subject->SubjectCode ?>','<?= $formID ?>','examiner3')">Delete</button>
                                                 </div>
@@ -1083,6 +1088,23 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
     }
 
+    function downloadResultSheet(subjectCode, examId, type) {
+
+        var fileUrl = '<?= ROOT ?>assets/csv/examsheets/' + subjectCode + '_' + examId + '_' + type + '.csv';
+
+        // Create an anchor element
+        var a = document.createElement('a');
+        a.href = fileUrl;
+
+        // Set the download attribute with the desired file name
+        a.download = 'MarkSheet_' + subjectCode + '_' + type + '.csv';
+
+        // Append the anchor element to the document
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
 
     //get php data
     var examSheets = <?php echo $subjectData; ?>;
@@ -1110,6 +1132,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
             }
         }
     }
+
     function handleDragOver(event) {
         event.preventDefault();
         var container = event.target;
