@@ -128,9 +128,29 @@ class DR extends Controller
             $data['degreeTimeTable'] = $degreeTimeTableData;
 
             if ($action == "update") {
-                echo "POST request received";
-            } else if ($action == "add") {
+                if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                    echo "POST request received";
+                    if (isset($_POST['timetableData'])) {
+                        $timetableData = json_decode($_POST['timetableData'], true);
+                        // Iterate over each subject's data and insert it into the database
+                        foreach ($timetableData as $timetableData) {
+                            echo "a";
+                            // Construct the data array for insertion
+                            $data1 = [
+                                'EventID' => $timetableData['eventID'],
+                                'DegreeID' => $degreeID,
+                                'EventName' => $timetableData['eventName'],
+                                'EventType' => $timetableData['eventType'],
+                                'StartingDate' => $timetableData['eventStart'],
+                                'EndingDate' => $timetableData['eventEnd'],
+                            ];
+                            $degreeTimeTable->update($degreeID ,$data1);
+                        }
+                    }
+                }
             } else if ($action == 'delete') {
+                $degree->delete(['id' => $degreeID]);
+                redirect("dr/degreeprograms");
             }
             // Load the view with the data
             $this->view('dr-interfaces/dr-degreeprofile', $data);
@@ -161,6 +181,7 @@ class DR extends Controller
                     foreach ($timetableData as $timetableData) {
                         // Construct the data array for insertion
                         $data1 = [
+                            'EventID' => $timetableData['eventID'],
                             'DegreeID' => $degree_id,
                             'EventName' => $timetableData['eventName'],
                             'EventType' => $timetableData['eventType'],
@@ -245,10 +266,15 @@ class DR extends Controller
         // Check if the student ID is provided in the URL
         if ($studentId) {
             $studentModel = new StudentModel();
-            $data['student'] = $studentModel->find($studentId);
+            $data['student'] = $studentModel->findstudentid($studentId);
             $student = [];
             $degreeID = isset($student[0]->degreeID) ? $student[0]->degreeID : null;
             $data['degree'] = $degree->find($degreeID);
+            if ($data['student']) {
+                $this->view('dr-interfaces/dr-userprofile', $data);
+            } else {
+                echo "Error: Student not found.";
+            }
             if ($action == "update") {
                 echo "POST request received";
                 // echo $_POST
@@ -256,11 +282,6 @@ class DR extends Controller
             } else if ($action == 'delete') {
                 $studentModel->delete(['id' => $studentId]);
                 redirect("dr/participants");
-            }
-            if ($data['student']) {
-                $this->view('dr-interfaces/dr-userprofile', $data);
-            } else {
-                echo "Error: Student not found.";
             }
         } else {
             echo "Error: Student ID not provided in the URL.";

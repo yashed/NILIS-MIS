@@ -67,7 +67,7 @@ $data['role'] = $role;
 <body>
     <div class="dr-userprofile">
         <div class="white-container1-1">
-            <div class="white-container1"><?= $degree[0]->DegreeName ?></div>
+            <div class="white-container1"><?= $degree->DegreeName ?></div>
             <div class="white-container1-core">Participants</div>
         </div>
         <div class="white-container2-1">
@@ -360,11 +360,7 @@ $data['role'] = $role;
         function toggleMenu() {
             document.getElementById("subMenu").classList.toggle("open-menu");
         }
-        // Add this code to target_page.php
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const studentId = urlParams.get('studentId');
-        });
+        
     </script>
 </body>
 
