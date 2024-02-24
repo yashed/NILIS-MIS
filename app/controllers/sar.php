@@ -413,9 +413,58 @@ class SAR extends Controller
                     //set popup active after select subject
                     if (!empty($selectedSubject)) {
                         $attetdancePopup = true;
+
+                        $setStudents = [];
+
+                        //get students data from exam participants table
+                        $tables = ['student'];
+                        $columns = ['*'];
+                        $conditions1 = ['student.degreeID = exam_participants.DegreeID', 'student.indexNo = exam_participants.indexNo', 'exam_participants.studentType="initial"', 'exam_participants.examID= ' . $examID];
+                        $Participants = $examParticipants->join($tables, $columns, $conditions1);
+
+                        //append data to setStudents array
+                        foreach ($Participants as $participant) {
+
+                            $setStudents[] = $participant;
+
+                        }
+
+                        //get repeat student details
+                        $tables = ['repeat_students', 'student'];
+                        $columns = ['*'];
+                        $condition2 = ['repeat_students.degreeID = exam_participants.DegreeID', 'repeat_students.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID, 'exam_participants.studentType = "repeate"', 'student.indexNo = repeat_students.indexNo'];
+                        $RepeatStudents = $examParticipants->join($tables, $columns, $condition2);
+
+
+                        //get selected subject repeate students
+                        foreach ($RepeatStudents as $Rparticipant) {
+
+                            if ($Rparticipant->subjectCode == $selectedSubject) {
+                                //append data to setStudents array
+                                $setStudents[] = $Rparticipant;
+                            }
+                        }
+                        //get medical student details
+                        $tables = ['medical_students', 'student'];
+                        $columns = ['*'];
+                        $condition3 = ['medical_students.degreeID = exam_participants.DegreeID', 'medical_students.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID, 'exam_participants.studentType = "medical"', 'student.indexNo = medical_students.indexNo'];
+                        $MedicalStudents = $examParticipants->join($tables, $columns, $condition3);
+
+                        //get selected subject medical students
+                        foreach ($MedicalStudents as $Mparticipant) {
+                            if ($Mparticipant->subjectCode == $selectedSubject) {
+                                //append data to setStudents array
+                                $setStudents[] = $Mparticipant;
+                            }
+                        }
+                        // show($setStudents);
+
+                        $data['setStudents'] = $setStudents;
+
                     }
                 }
                 if (isset($_POST['submitAttendance']) == 'attendance') {
+
 
                     //close the popup
                     $attetdancePopup = false;
@@ -423,6 +472,7 @@ class SAR extends Controller
 
 
                 //data that pass to view
+                $data['selectedSubject'] = $selectedSubject;
                 $data['examParticipants'] = $participants;
                 $data['examID'] = $examID;
                 $data['degreeID'] = $degreeID;

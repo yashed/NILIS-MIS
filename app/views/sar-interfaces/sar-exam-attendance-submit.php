@@ -221,7 +221,7 @@
                             <?php foreach ($ExamSubjects as $subject): ?>
                                 <?php $json = json_encode($subject); ?>
 
-                                <option value=" <?= $subject->SubjectCode ?>" name="SelectedSubCode">
+                                <option value="<?= $subject->SubjectCode ?>" name="SelectedSubCode">
                                     <?= $subject->SubjectName ?>
                                 </option>
 
@@ -258,105 +258,21 @@
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                            </td>
-                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                            </td>
-                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                            </td>
-                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                            <td><input type="checkbox" name="item[]" value="gg"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                            </td>
-                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                            </td>
-                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                            </td>
-                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                            <td><input type="checkbox" name="item[]" value="gg"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                            </td>
-                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                            </td>
-                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                            </td>
-                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                            <td><input type="checkbox" name="item[]" value="gg"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                            </td>
-                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                            </td>
-                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                            </td>
-                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                            <td><input type="checkbox" name="item[]" value="gg"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                            </td>
-                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                            </td>
-                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                            </td>
-                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                            <td><input type="checkbox" name="item[]" value="gg"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                            </td>
-                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                            </td>
-                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                            </td>
-                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                            <td><input type="checkbox" name="item[]" value="gg"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                            </td>
-                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                            </td>
-                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                            </td>
-                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                            <td><input type="checkbox" name="item[]" value="gg"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                            </td>
-                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                            </td>
-                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                            </td>
-                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                            <td><input type="checkbox" name="item[]" value="gg"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" name="indexNo[]" value="Yashed" readonly>
-                            </td>
-                            <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                            <td><input type="text" name="attempt[]" value="  Repeat" readonly>
-                            </td>
-                            <td><input type="text" name="subjectCode[]" value="ISS" readonly>
-                            </td>
-                            <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                            <td><input type="checkbox" name="item[]" value="gg"></td>
-                        </tr>
+                        <?php foreach ($ExamSetStudents as $student): ?>
+                            <?php $json = json_encode($student); ?>
+                            <tr>
+                                <td><input type="text" name="indexNo[]" value="<?= $student->indexNo ?>" readonly>
+                                </td>
+                                <td><input type="text" name="regNo[]" value="<?= $student->regNo ?>" readonly></td>
+                                <td><input type="text" name="attempt[]" value="<?= $student->attempt ?>" readonly>
+                                </td>
+                                <td><input type="text" name="subjectCode[]" value="<?= $SelectedSubCode ?>" readonly>
+                                </td>
+                                <td><input type="text" name="studentType[]" value="<?= $student->studentType ?>" readonly>
+                                </td>
+                                <td><input type="checkbox" name="item[]" value="eligible"></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

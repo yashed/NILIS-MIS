@@ -3,6 +3,8 @@ $role = "SAR";
 $data['role'] = $role;
 $data['ExamSubjects'] = $ExamSubjects;
 $data['PopupStatus'] = $attendacePopupStatus;
+$data['ExamSetStudents'] = $setStudents;
+$data['SelectedSubCode'] = $selectedSubject;
 ?>
 
 <!DOCTYPE html>
