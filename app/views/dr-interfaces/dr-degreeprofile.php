@@ -2,8 +2,8 @@
 $role = "DR";
 $data['role'] = $role;
 ?>
-<!-- <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?> -->
+<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?>
 
 <!DOCTYPE html>
 <html>
@@ -33,7 +33,7 @@ $data['role'] = $role;
     .large-box {
         display: grid;
         grid-template-columns: 50% 50%;
-        grid-template-rows: 10% 40% 50%;
+        grid-template-rows: 10% 45% 45%;
     }
 
     .dr-large-box {
@@ -84,8 +84,8 @@ $data['role'] = $role;
     }
 
     .Overview_table {
-        margin: 3%;
-        border-spacing: 10px;
+        margin: 20px 5px 5px 25px;
+        border-spacing: 16px;
     }
 
     .Overview_table input {
@@ -116,7 +116,7 @@ $data['role'] = $role;
     }
 
     .Subject_table {
-        margin: 5%;
+        margin: 10px 5px 5px 35px;
         border-spacing: 5px;
         text-align: left;
     }
@@ -137,7 +137,8 @@ $data['role'] = $role;
 
     .box_3_2 {
         overflow-y: auto;
-        max-height: 70%;
+        max-height: 90%;
+        margin: 25px 5px 10px 25px;
     }
 
     .time_table {
@@ -203,6 +204,7 @@ $data['role'] = $role;
     #save,
     #update {
         background-color: #A8A8A8;
+        color: var(--sidebar-color);
         border-radius: 7px;
         width: 100%;
         height: 35px;
@@ -306,8 +308,8 @@ $data['role'] = $role;
                                     </tr>
                                     <?php foreach ($semesterSubjects as $subject) : ?>
                                         <tr>
-                                            <td><input style="width: 130px; margin-right: 14px;" value="<?= $subject->SubjectName ?>" type="text" name="SubjectName" class="SubjectName" placeholder="Subject" id="SubjectName<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
-                                            <td><input style="width: 130px; margin-right: 14px;" value="<?= $subject->SubjectCode ?>" type="text" name="SubjectCode" class="SubjectCode" placeholder="Subject Code" id="SubjectCode<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
+                                            <td><input style="width: 140px; margin-right: 20px;" value="<?= $subject->SubjectName ?>" type="text" name="SubjectName" class="SubjectName" placeholder="Subject" id="SubjectName<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
+                                            <td><input style="width: 140px; margin-right: 20px;" value="<?= $subject->SubjectCode ?>" type="text" name="SubjectCode" class="SubjectCode" placeholder="Subject Code" id="SubjectCode<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
                                             <td><input style="width: 60px;" value="<?= $subject->NoCredits ?>" type="number" name="NoCredits" class="NoCredits" placeholder="Credits" id="NoCredits<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -367,9 +369,31 @@ $data['role'] = $role;
         let add = document.querySelector("#add_new_event");
         let table = document.querySelector(".Time_table");
         let i = <?= $event->EventID ?> + 1;
+        let count = 0;
+        // Define a function to handle the change event
+        function handleChange(eventIndex) {
+            return function(e) {
+                var eventValue = $('#event_' + eventIndex).val();
+                var typeValue = $('#type_' + eventIndex).val();
+                var startValue = $('#start_' + eventIndex).val();
+                var endValue = $('#end_' + eventIndex).val();
+
+                if (eventValue !== "" && typeValue !== "" && startValue !== "" && endValue !== "") {
+                    $('#event_' + (eventIndex + 1)).prop('readonly', false);
+                    $('#type_' + (eventIndex + 1)).prop('disabled', false);
+                    $('#start_' + (eventIndex + 1)).prop('readonly', false);
+                    $('#end_' + (eventIndex + 1)).prop('readonly', false);
+                    count = eventIndex + 1;
+                }
+                if (count == i) {
+                    add.removeAttribute("disabled");
+                }
+            };
+        }
+
         add.addEventListener("click", () => {
             let template = `
-        <tr>
+                <tr>
                     <td><input type="text" value="" class="event" id="event_${i}" placeholder="New Event"></td>
                     <td width="12%" padding-right="3px"><select  class="duration" id="type_${i}">
                                 <option value="" default hidden>Event Type</option>
@@ -382,10 +406,12 @@ $data['role'] = $role;
                     <td><input type="date" value="" class="duration" id="end_${i}" placeholder=""></td>
                 </tr>
             `;
-            i++;
             let newRow = document.createElement("tr");
             newRow.innerHTML = template;
             table.appendChild(newRow);
+            add.setAttribute("disabled", "true");
+            $('#event_' + i + ', #type_' + i + ', #start_' + i + ', #end_' + i).on("change", handleChange(i));
+            i++;
         });
         let updateButton = document.getElementById("update");
         let saveButton = document.getElementById("save");
@@ -406,18 +432,25 @@ $data['role'] = $role;
             });
             saveButton.removeAttribute('disabled');
             updateButton.setAttribute('disabled', 'true');
+
+            // Attach change event handlers to all sets of fields
+            for (var k = 1; k < i; k++) {
+                $('#event_' + k + ', #type_' + k + ', #start_' + k + ', #end_' + k).on("change", handleChange(k));
+            }
         });
         saveButton.onclick = function(event) {
             event.preventDefault();
             var timetableData = [];
             var timeTable = document.getElementById(`Time_table`);
             for (var k = 1; k < i; k++) { // loop through all rows except the header
+                var eventID = k;
                 var eventName = document.getElementById(`event_${k}`).value.trim();
                 var eventType = document.getElementById(`type_${k}`).value.trim();
                 var eventStart = document.getElementById(`start_${k}`).value.trim();
                 var eventEnd = document.getElementById(`end_${k}`).value.trim();
                 // Push data to timetableData array
                 timetableData.push({
+                    eventID: eventID,
                     eventName: eventName,
                     eventType: eventType,
                     eventStart: eventStart,
@@ -435,16 +468,16 @@ $data['role'] = $role;
             add.style.display = "none";
 
             eventFields.forEach((field) => {
-                field.setAttribute('readonly');
+                field.setAttribute('readonly', 'true');
             });
             eventTypeFields.forEach((field) => {
-                field.setAttributee('readonly');
+                field.setAttribute('readonly', 'true');
                 let options = field.querySelectorAll('option');
                 options.forEach(option => {
-                    option.setAttribute('disabled');
+                    option.setAttribute('disabled', 'true');
                 });
             });
-            saveButton.setAttribute('disabled');
+            saveButton.setAttribute('disabled', 'true');
             updateButton.removeAttribute('disabled', 'true');
         }
     });
