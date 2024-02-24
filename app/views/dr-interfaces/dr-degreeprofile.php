@@ -319,7 +319,7 @@ $data['role'] = $role;
                     <?php endif; ?>
                 </div>
             </div>
-            <form class="box_4" method="post" action="<?= ROOT ?>dr/degreeprofile/update?id=<?= $degrees[0]->$degreeID ?>">
+            <form class="box_4" id="form1" method="post" action="<?= ROOT ?>dr/degreeprofile/update?id=<?= $degrees[0]->$degreeID ?>">
                 <p>Define Degree Time Table</p>
                 <div class="box_4_1">
                     <table class="Time_table" id="Time_table">
@@ -329,16 +329,16 @@ $data['role'] = $role;
                         </tr>
                         <?php foreach ($degreeTimeTable as $event) : ?>
                             <tr>
-                                <td width="76%"><input type="text" value="<?= $event->EventName ?>" name="event_<?= $event->id ?>" class="event" id="event_<?= $event->id ?>" readonly></td>
-                                <td width="14%"><select name="type_<?= $event->id ?>" class="duration" id="type_<?= $event->id ?>">
+                                <td width="76%"><input type="text" value="<?= $event->EventName ?>" class="event" id="event_<?= $event->EventID ?>" readonly></td>
+                                <td width="14%"><select class="duration" id="type_<?= $event->EventID ?>">
                                         <option value="" default hidden>Event Type</option>
                                         <option value="Examination" <?= ($event->EventType === 'Examination') ? 'selected' : '' ?> disabled>Examination</option>
                                         <option value="Study Leave" <?= ($event->EventType === 'Study Leave') ? 'selected' : '' ?> disabled>Study Leave</option>
                                         <option value="Vacation" <?= ($event->EventType === 'Vacation') ? 'selected' : '' ?> disabled>Vacation</option>
                                         <option value="Other" <?= ($event->EventType === 'Other') ? 'selected' : '' ?> disabled>Other</option>
                                     </select></td>
-                                <td width="12%"><input type="date" value="<?= $event->StartingDate ?>" name="start_<?= $event->id ?>" class="duration" id="start_<?= $event->id ?>" readonly></td>
-                                <td width="12%"><input type="date" value="<?= $event->EndingDate ?>" name="end_<?= $event->id ?>" class="duration" id="end_<?= $event->id ?>" readonly></td>
+                                <td width="12%"><input type="date" value="<?= $event->StartingDate ?>" class="duration" id="start_<?= $event->EventID ?>" readonly></td>
+                                <td width="12%"><input type="date" value="<?= $event->EndingDate ?>" class="duration" id="end_<?= $event->EventID ?>" readonly></td>
                             </tr>
                         <?php endforeach; ?>
                     </table>
@@ -366,7 +366,7 @@ $data['role'] = $role;
     document.addEventListener("DOMContentLoaded", function() {
         let add = document.querySelector("#add_new_event");
         let table = document.querySelector(".Time_table");
-        let i = 5;
+        let i = <?= $event->EventID ?> + 1;
         add.addEventListener("click", () => {
             let template = `
         <tr>
@@ -388,12 +388,12 @@ $data['role'] = $role;
             table.appendChild(newRow);
         });
         let updateButton = document.getElementById("update");
+        let saveButton = document.getElementById("save");
+        let eventFields = document.querySelectorAll('.event');
+        let eventTypeFields = document.querySelectorAll('.duration');
         updateButton.addEventListener("click", (event) => {
             event.preventDefault();
-            let eventFields = document.querySelectorAll('.event');
-            let eventTypeFields = document.querySelectorAll('.duration');
             add.style.display = "block";
-
             eventFields.forEach((field) => {
                 field.removeAttribute('readonly');
             });
@@ -404,10 +404,49 @@ $data['role'] = $role;
                     option.removeAttribute('disabled');
                 });
             });
-            let saveButton = document.getElementById("save");
             saveButton.removeAttribute('disabled');
             updateButton.setAttribute('disabled', 'true');
         });
+        saveButton.onclick = function(event) {
+            event.preventDefault();
+            var timetableData = [];
+            var timeTable = document.getElementById(`Time_table`);
+            for (var k = 1; k < i; k++) { // loop through all rows except the header
+                var eventName = document.getElementById(`event_${k}`).value.trim();
+                var eventType = document.getElementById(`type_${k}`).value.trim();
+                var eventStart = document.getElementById(`start_${k}`).value.trim();
+                var eventEnd = document.getElementById(`end_${k}`).value.trim();
+                // Push data to timetableData array
+                timetableData.push({
+                    eventName: eventName,
+                    eventType: eventType,
+                    eventStart: eventStart,
+                    eventEnd: eventEnd
+                });
+                // console.log(timetableData); 
+                var timetableDataInput = document.createElement('input');
+                timetableDataInput.setAttribute('type', 'hidden');
+                timetableDataInput.setAttribute('name', `timetableData`);
+                timetableDataInput.setAttribute('value', JSON.stringify(timetableData));
+                document.getElementById('form1').appendChild(timetableDataInput);
+            }
+            document.getElementById("form1").submit();
+
+            add.style.display = "none";
+
+            eventFields.forEach((field) => {
+                field.setAttribute('readonly');
+            });
+            eventTypeFields.forEach((field) => {
+                field.setAttributee('readonly');
+                let options = field.querySelectorAll('option');
+                options.forEach(option => {
+                    option.setAttribute('disabled');
+                });
+            });
+            saveButton.setAttribute('disabled');
+            updateButton.removeAttribute('disabled', 'true');
+        }
     });
 </script>
 
