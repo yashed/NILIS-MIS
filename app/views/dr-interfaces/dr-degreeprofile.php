@@ -33,7 +33,7 @@ $data['role'] = $role;
     .large-box {
         display: grid;
         grid-template-columns: 50% 50%;
-        grid-template-rows: 10% 45% 45%;
+        grid-template-rows: 7% 45% 48%;
     }
 
     .dr-large-box {
@@ -89,16 +89,24 @@ $data['role'] = $role;
     }
 
     .Overview_table input {
-        width: 90%;
+        width: 100%;
         height: 35px;
         background: transparent;
         outline: none;
         border-radius: 5px;
         border: 1px solid gainsboro;
         padding: 0px 20px 0px 13px;
-        margin-right: 40px;
+        margin-right: 50px;
     }
 
+    .Overview_table .name {
+        width: 150%;
+        height: 35px;
+        background: transparent;
+        outline: none;
+        border-radius: 5px;
+        border: 1px solid gainsboro;
+    }
     #delete_degree {
         color: red;
         border-radius: 7px;
@@ -139,6 +147,8 @@ $data['role'] = $role;
         overflow-y: auto;
         max-height: 90%;
         margin: 25px 5px 10px 25px;
+        display: flex;
+        justify-content: center;
     }
 
     .time_table {
@@ -265,10 +275,16 @@ $data['role'] = $role;
             <div class="box_2">
                 <p>Overview</p>
                 <?php if ($degrees) : ?>
-                    <table class="Overview_table">
+                    <table class="Overview_table" colspan="2" style="display: flex; justify-content: center;">
                         <tr>
                             <td>
                                 <b>Diploma Name</b><br>
+                                <input type="text" name="name" id="name" class="name" value="<?= $degrees[0]->DegreeName ?>" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-right: 20px;">
+                                <b>Diploma Short Name</b><br>
                                 <input type="text" name="type" id="type" value="<?= $degrees[0]->DegreeShortName ?>" readonly>
                             </td>
                             <td>
@@ -277,7 +293,7 @@ $data['role'] = $role;
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td style="padding-right: 20px;">
                                 <b>Diploma Type</b><br>
                                 <input type="text" name="type" id="type" value="<?= $degrees[0]->DegreeType ?>" readonly>
                             </td>
@@ -308,8 +324,8 @@ $data['role'] = $role;
                                     </tr>
                                     <?php foreach ($semesterSubjects as $subject) : ?>
                                         <tr>
-                                            <td><input style="width: 140px; margin-right: 20px;" value="<?= $subject->SubjectName ?>" type="text" name="SubjectName" class="SubjectName" placeholder="Subject" id="SubjectName<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
-                                            <td><input style="width: 140px; margin-right: 20px;" value="<?= $subject->SubjectCode ?>" type="text" name="SubjectCode" class="SubjectCode" placeholder="Subject Code" id="SubjectCode<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
+                                            <td><input style="width: 140px; margin-right: 40px;" value="<?= $subject->SubjectName ?>" type="text" name="SubjectName" class="SubjectName" placeholder="Subject" id="SubjectName<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
+                                            <td><input style="width: 140px; margin-right: 40px;" value="<?= $subject->SubjectCode ?>" type="text" name="SubjectCode" class="SubjectCode" placeholder="Subject Code" id="SubjectCode<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
                                             <td><input style="width: 60px;" value="<?= $subject->NoCredits ?>" type="number" name="NoCredits" class="NoCredits" placeholder="Credits" id="NoCredits<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -329,20 +345,26 @@ $data['role'] = $role;
                             <th align="left">Event</th>
                             <th colspan="2">Duration</th>
                         </tr>
-                        <?php foreach ($degreeTimeTable as $event) : ?>
-                            <tr>
-                                <td width="76%"><input type="text" value="<?= $event->EventName ?>" class="event" id="event_<?= $event->EventID ?>" readonly></td>
-                                <td width="14%"><select class="duration" id="type_<?= $event->EventID ?>">
-                                        <option value="" default hidden>Event Type</option>
-                                        <option value="Examination" <?= ($event->EventType === 'Examination') ? 'selected' : '' ?> disabled>Examination</option>
-                                        <option value="Study Leave" <?= ($event->EventType === 'Study Leave') ? 'selected' : '' ?> disabled>Study Leave</option>
-                                        <option value="Vacation" <?= ($event->EventType === 'Vacation') ? 'selected' : '' ?> disabled>Vacation</option>
-                                        <option value="Other" <?= ($event->EventType === 'Other') ? 'selected' : '' ?> disabled>Other</option>
-                                    </select></td>
-                                <td width="12%"><input type="date" value="<?= $event->StartingDate ?>" class="duration" id="start_<?= $event->EventID ?>" readonly></td>
-                                <td width="12%"><input type="date" value="<?= $event->EndingDate ?>" class="duration" id="end_<?= $event->EventID ?>" readonly></td>
-                            </tr>
-                        <?php endforeach; ?>
+                        <?php $lastEventID = 0; ?>
+                        <?php if($degreeTimeTable): ?>
+                            <?php foreach ($degreeTimeTable as $event) : ?>
+                                <tr>
+                                    <td width="76%"><input type="text" value="<?= $event->EventName ?>" class="event" id="event_<?= $event->EventID ?>" readonly></td>
+                                    <td width="14%"><select class="duration" id="type_<?= $event->EventID ?>">
+                                            <option value="" default hidden>Event Type</option>
+                                            <option value="Examination" <?= ($event->EventType === 'Examination') ? 'selected' : '' ?> disabled>Examination</option>
+                                            <option value="Study Leave" <?= ($event->EventType === 'Study Leave') ? 'selected' : '' ?> disabled>Study Leave</option>
+                                            <option value="Vacation" <?= ($event->EventType === 'Vacation') ? 'selected' : '' ?> disabled>Vacation</option>
+                                            <option value="Other" <?= ($event->EventType === 'Other') ? 'selected' : '' ?> disabled>Other</option>
+                                        </select></td>
+                                    <td width="12%"><input type="date" value="<?= $event->StartingDate ?>" class="duration" id="start_<?= $event->EventID ?>" readonly></td>
+                                    <td width="12%"><input type="date" value="<?= $event->EndingDate ?>" class="duration" id="end_<?= $event->EventID ?>" readonly></td>
+                                </tr>
+                                <?php if ($event->EventID > $lastEventID) { $lastEventID = $event->EventID; }?>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <p>No data found for the specified degree ID.</p>
+                        <?php endif; ?>
                     </table>
                 </div>
                 <div class="box_4_2">
@@ -368,7 +390,7 @@ $data['role'] = $role;
     document.addEventListener("DOMContentLoaded", function() {
         let add = document.querySelector("#add_new_event");
         let table = document.querySelector(".Time_table");
-        let i = <?= $event->EventID ?> + 1;
+        let i = <?= $lastEventID ?> + 1;
         let count = 0;
         // Define a function to handle the change event
         function handleChange(eventIndex) {
