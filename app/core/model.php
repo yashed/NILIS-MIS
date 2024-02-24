@@ -84,6 +84,19 @@ class Model extends Database
             return null;
         }
     }
+
+    public function findstudentid($id)
+    {
+        $query = "select * from " . $this->table . " WHERE id = :id";
+        $params = [':id' => $id];
+        $result = $this->query($query, $params);
+        // Check if the query was successful
+        if (is_array($result) && !empty($result)) {
+            return $result; 
+        } else {
+            return null;
+        }
+    }
     public function setid($id)
     {
 
