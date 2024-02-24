@@ -89,7 +89,7 @@
         display: flex;
         align-items: center;
         background-color: #ffffff;
-        gap: 1%;
+        gap: 20%;
         justify-content: center;
     }
 
@@ -113,7 +113,7 @@
     }
 
     .custom-dropdown-attendance select {
-        width: calc(100% - 40px);
+        width: calc(130% - 0px);
         /* Adjusted width to leave space for the icon */
         padding: 10px;
         border: 1px solid #E2E2E2;
@@ -202,6 +202,19 @@
         height: 10px;
         overflow: scroll;
     }
+
+    .select-sub-msg {
+        font-size: 1.5vw;
+        font-weight: 500;
+        color: #17376e;
+        margin-top: 20px;
+        width: 100%;
+        height: 20vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
 </style>
 
 <body>
@@ -241,45 +254,49 @@
 
 
             </div>
-            <div class="table-body-container">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Index Number</th>
-                            <th>Registration Number</th>
-                            <th>Attempt</th>
-                            <th>Subject Code</th>
-                            <th>Student Type</th>
-                            <th>
-                                <input type="checkbox" class="checkAll" name="checkAll" />
-                            </th>
-                        </tr>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <?php foreach ($ExamSetStudents as $student): ?>
-                            <?php $json = json_encode($student); ?>
+            <?php if (!empty($ExamSetStudents)): ?>
+                <div class="table-body-container">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td><input type="text" name="indexNo[]" value="<?= $student->indexNo ?>" readonly>
-                                </td>
-                                <td><input type="text" name="regNo[]" value="<?= $student->regNo ?>" readonly></td>
-                                <td><input type="text" name="attempt[]" value="<?= $student->attempt ?>" readonly>
-                                </td>
-                                <td><input type="text" name="subjectCode[]" value="<?= $SelectedSubCode ?>" readonly>
-                                </td>
-                                <td><input type="text" name="studentType[]" value="<?= $student->studentType ?>" readonly>
-                                </td>
-                                <td><input type="checkbox" name="item[]" value="eligible"></td>
+                                <th>Index Number</th>
+                                <th>Registration Number</th>
+                                <th>Attempt</th>
+                                <th>Subject Code</th>
+                                <th>Student Type</th>
+                                <th>
+                                    <input type="checkbox" class="checkAll" name="checkAll" />
+                                </th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-            <div class="attendance-submit-button">
-                <button class="btn-secondary" type="submit" name='submitAttendance' value='attendance'>Submit
-                    Attendance</button>
-            </div>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php foreach ($ExamSetStudents as $student): ?>
+                                <?php $json = json_encode($student); ?>
+                                <tr>
+                                    <td><input type="text" name="indexNo[]" value="<?= $student->indexNo ?>" readonly>
+                                    </td>
+                                    <td><input type="text" name="regNo[]" value="<?= $student->regNo ?>" readonly></td>
+                                    <td><input type="text" name="attempt[]" value="<?= $student->attempt ?>" readonly>
+                                    </td>
+                                    <td><input type="text" name="subjectCode[]" value="<?= $SelectedSubCode ?>" readonly>
+                                    </td>
+                                    <td><input type="text" name="studentType[]" value="<?= $student->studentType ?>" readonly>
+                                    </td>
+                                    <td><input type="checkbox" name="item[]" value="eligible"></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="attendance-submit-button">
+                    <button class="btn-secondary" type="submit" name='submitAttendance' value='attendance'>Submit
+                        Attendance</button>
+                </div>
+            <?php else: ?>
+                <div class="select-sub-msg">Please Select a Subject to Mark Examination Attendance</div>
+            <?php endif; ?>
         </form>
     </div>
 </body>

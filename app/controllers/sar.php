@@ -409,7 +409,7 @@ class SAR extends Controller
                 //examination attendance handle
                 if (isset($_POST['selectSubject']) == 'selectSubjectCode') {
                     $selectedSubject = $_POST['SelectedSubCode'];
-
+                    $data['selectedSubject'] = $selectedSubject;
                     //set popup active after select subject
                     if (!empty($selectedSubject)) {
                         $attetdancePopup = true;
@@ -468,11 +468,12 @@ class SAR extends Controller
 
                     //close the popup
                     $attetdancePopup = false;
+
                 }
 
 
                 //data that pass to view
-                $data['selectedSubject'] = $selectedSubject;
+
                 $data['examParticipants'] = $participants;
                 $data['examID'] = $examID;
                 $data['degreeID'] = $degreeID;

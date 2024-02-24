@@ -1,10 +1,11 @@
 <?php
 $role = "SAR";
 $data['role'] = $role;
-$data['ExamSubjects'] = $ExamSubjects;
-$data['PopupStatus'] = $attendacePopupStatus;
-$data['ExamSetStudents'] = $setStudents;
-$data['SelectedSubCode'] = $selectedSubject;
+$data['ExamSubjects'] = isset($ExamSubjects) ? $ExamSubjects : '';
+$data['PopupStatus'] = isset($attendacePopupStatus) ? $attendacePopupStatus : '';
+$data['ExamSetStudents'] = isset($setStudents) ? $setStudents : '';
+$data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
+
 ?>
 
 <!DOCTYPE html>
