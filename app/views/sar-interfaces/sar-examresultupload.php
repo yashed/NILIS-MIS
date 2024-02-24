@@ -226,7 +226,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
     .sub-name {
         font-weight: 600;
         padding-left: 2%;
-        font-size: 20px;
+        font-size: 1.5vw;
     }
 
     .subject {
@@ -360,16 +360,16 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
     }
 
     .btn-primary {
-        min-width: 25vh;
+        min-width: 15vw;
         color: #fff;
         height: 5vh;
         padding: 5px 5px 5px 5px;
-        border-radius: 12px;
+        border-radius: 10px;
         background: #17376e;
         box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
         border: 0px;
         margin-bottom: 10px;
-        /* margin-top: 25px; */
+        font-size: 1vw;
     }
 
     .bt-name {
@@ -384,15 +384,19 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
     }
 
     .btn-secondary {
-        min-width: 50%;
-        color: #17376e;
-        background: white;
+        width: 40%;
+        color: #fff;
         height: 4vh;
-        padding: 5px 5px 5px 5px;
+        padding: 5px 10px 5px 10px;
         border-radius: 8px;
+        background: #ffffff;
         box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
-        border: 1px solid;
+        color: #17376e;
+        border: 0px;
         margin-bottom: 10px;
+        border: 1px solid #17376e;
+        text-align: center;
+        font-size: 0.8vw;
     }
 
     .btn-secondary:hover {
@@ -434,7 +438,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
     }
 
     .btn-secondary-cancel {
-        min-width: 50%;
+        width: 40%;
         color: #ff0000;
         background: white;
         height: 4vh;
@@ -443,6 +447,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
         box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
         border: 1px solid;
         margin-bottom: 10px;
+        font-size: 0.8vw;
     }
 
     .btn-secondary-delete {
@@ -474,7 +479,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
         display: flex;
         justify-content: center;
         gap: 1vw;
-
+        width: 100%;
     }
 
     .button-container-temp {
@@ -585,17 +590,18 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
     }
 
     .btn-secondary-2 {
-        min-width: 25vh;
+        width: 20vw;
         color: #fff;
         height: 5vh;
         padding: 5px 15px 5px 15px;
-        border-radius: 12px;
+        border-radius: 10px;
         background: #ffffff;
         box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
         color: #17376e;
         border: 0px;
         margin-bottom: 10px;
         border: 1px solid #17376e;
+        font-size: 1vw;
     }
 
     .btn-secondary-download {
@@ -793,12 +799,12 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                                     <?= $subject->SubjectName ?>
                                 </div>
                                 <div class="button-bar">
+                                    <button class="btn-secondary-2" name='download_marksheet'>Continue without
+                                        Examiner 03</button>
                                     <button class="btn-primary" name='download_marksheet'
                                         onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
                                         Marksheet</button>
-                                    <button class="btn-secondary-2" name='download_marksheet'
-                                        onclick="downloadFile('<?= $subject->SubjectCode ?>')" hidden>Download
-                                        Examiner 03 Marksheet</button>
+
                                 </div>
                             </div>
                             <div class="flex-container">
@@ -1023,6 +1029,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                                                 <input id="fileInputId" type="file" style="display: none;">
                                                 <label class="text1" style="display: none;"></label>
                                             </div>
+
                                         </form>
                                     </div>
                                 </div>
@@ -1056,6 +1063,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
 
 <script>
+
 
     //delete the uploaded file
     function deleteSubmitFile(event, submitViewId, uploadedViewId, subCode, formId, type) {
@@ -1367,7 +1375,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                 return response.text();
             })
             .then(data => {
-                console.log(data);
+                console.log('retun data =', data);
                 alert('File uploaded successfully!');
 
                 //show uploaded view
@@ -1391,6 +1399,19 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                 document.querySelector('.marks-type').style.display = 'flex';
 
                 // removeSubmitButton(buttonId);
+
+
+                //get the examiner 3 status
+                var examiner3Status = document.getElementById('examiner3-status');
+                var examiner3SubCode = document.getElementById('examiner3SubCode');
+
+                if (examiner3Status && examiner3SubCode) {
+                    console.log('Examiner 3 Status:', examiner3Status.textContent);
+                    console.log('Examiner 3 SubCode:', examiner3SubCode.textContent);
+                } else {
+                    console.error('Examiner 3  not found ');
+                }
+
             })
             .catch(error => {
                 console.error('Error uploading file:', error);

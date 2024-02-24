@@ -226,12 +226,13 @@ function finalMark($mark1, $mark2, $assigmnet)
     return $finalMark;
 }
 
-function insertMarks($file, $examID, $subCode)
+function insertMarks($file, $examID, $degreeID, $subCode)
 {
     //need to add condition to check the file is full of marks or not
     $mark = new Marks;
 
     $data['examID'] = $examID;
+    $data['degreeID'] = $degreeID;
     $data['subjectCode'] = $subCode;
 
 

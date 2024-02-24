@@ -583,6 +583,7 @@ class SAR extends Controller
                         $examSheet = [];
                         $examSheet['formId'] = $formID;
                         $examSheet['subjectCode'] = $subCode;
+                        $examSheet['degreeId'] = $degreeID;
                         $examSheet['date'] = date("Y-m-d H:i:s");
                         $examSheet['uploadName'] = $originalFileName;
                         $examSheet['newName'] = $uniqueFileName;
@@ -660,7 +661,7 @@ class SAR extends Controller
 
                                                     //call the function to upload marks to database
                                                     echo 'call insertMarks function';
-                                                    insertMarks($resFileName, $examID, $subject->SubjectCode);
+                                                    insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
 
 
                                                 } else {
@@ -695,7 +696,7 @@ class SAR extends Controller
 
                                                     //call the function to upload marks to database
                                                     echo 'call insertMarks function';
-                                                    insertMarks($resFileName, $examID, $subject->SubjectCode);
+                                                    insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
 
 
                                                 } else {
@@ -724,10 +725,11 @@ class SAR extends Controller
                     }
                     if ($examiner3) {
                         echo (
-                            "<div id='status'>$examiner3</div>
+                            "<div id='examiner3-status'>$examiner3</div>
                               <div id='examiner3SubCode'>$examiner3SubCode</div>"
 
                         );
+
                     }
 
 
