@@ -75,6 +75,7 @@ class SAR extends Controller
         $subjects = new Subjects();
         $exam = new Exam();
         $resultSheet = new ResultSheet();
+        $examAttendance = new Attendance();
 
         $data['errors'] = [];
         $data['degrees'] = $degree->findAll();
@@ -414,7 +415,7 @@ class SAR extends Controller
                     if (!empty($selectedSubject)) {
                         $attetdancePopup = true;
 
-                        $setStudents = [];
+                        $examStudents = [];
 
                         //get students data from exam participants table
                         $tables = ['student'];
@@ -422,10 +423,10 @@ class SAR extends Controller
                         $conditions1 = ['student.degreeID = exam_participants.DegreeID', 'student.indexNo = exam_participants.indexNo', 'exam_participants.studentType="initial"', 'exam_participants.examID= ' . $examID];
                         $Participants = $examParticipants->join($tables, $columns, $conditions1);
 
-                        //append data to setStudents array
+                        //append data to examStudents array
                         foreach ($Participants as $participant) {
 
-                            $setStudents[] = $participant;
+                            $examStudents[] = $participant;
 
                         }
 
@@ -440,8 +441,8 @@ class SAR extends Controller
                         foreach ($RepeatStudents as $Rparticipant) {
 
                             if ($Rparticipant->subjectCode == $selectedSubject) {
-                                //append data to setStudents array
-                                $setStudents[] = $Rparticipant;
+                                //append data to examStudents array
+                                $examStudents[] = $Rparticipant;
                             }
                         }
                         //get medical student details
@@ -453,21 +454,70 @@ class SAR extends Controller
                         //get selected subject medical students
                         foreach ($MedicalStudents as $Mparticipant) {
                             if ($Mparticipant->subjectCode == $selectedSubject) {
-                                //append data to setStudents array
-                                $setStudents[] = $Mparticipant;
+                                //append data to examStudents array
+                                $examStudents[] = $Mparticipant;
                             }
                         }
-                        // show($setStudents);
 
+                        //insert data into the exam attendance table
+                        foreach ($examStudents as $student) {
+
+                            $studentData = [];
+                            $studentData['examID'] = $student->examID;
+                            $studentData['degreeID'] = $student->degreeID;
+                            $studentData['semester'] = $student->semester;
+                            $studentData['subjectCode'] = $selectedSubject;
+                            $studentData['attempt'] = $student->attempt;
+                            $studentData['type'] = $student->studentType;
+                            $studentData['regNo'] = $student->regNo;
+                            $studentData['indexNo'] = $student->indexNo;
+
+                            if ($examAttendance->ValidateAttendance($studentData)) {
+                                $examAttendance->insert($studentData);
+                            }
+                        }
+
+
+                        //get data from exam attendance table and pass them to view
+                        $setStudents = $examAttendance->where(['examID' => $examID, 'subjectCode' => $selectedSubject]);
+                        // show($setStudents);
                         $data['setStudents'] = $setStudents;
 
                     }
                 }
                 if (isset($_POST['submitAttendance']) == 'attendance') {
 
+                    //get abset students data from post data
+                    $presendIds = $_POST['presentIds'];
+                    $allIds = $_POST['ids'];
+
+                    if (!empty($presendIds) && !empty($allIds)) {
+                        $absentIds = array_diff($allIds, $presendIds);
+
+                    }
+
+                    //update the attendance table with present students
+                    foreach ($presendIds as $id) {
+
+                        $examAttendance->updateRows(
+                            ['attendance' => 1],
+                            ['id' => $id]
+                        );
+                    }
+
+                    //update the attendance table with absent students
+                    foreach ($absentIds as $id) {
+                        $examAttendance->updateRows(
+                            ['attendance' => 0],
+                            ['id' => $id]
+                        );
+                    }
+
 
                     //close the popup
                     $attetdancePopup = false;
+                    message("Attendance Submitted Successfully", "success");
+                    activity("Attendance Submitted Successfully");
 
                 }
 

@@ -266,7 +266,7 @@ function insertMarks($file, $examID, $degreeID, $subCode)
 }
 function activity($message)
 {
-    show('$message');
+
     $activity = new Activity;
 
     // show($_SESSION['USER_DATA']);

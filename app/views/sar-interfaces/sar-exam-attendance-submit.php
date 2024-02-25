@@ -123,6 +123,7 @@
         cursor: pointer;
         font-size: 16px;
         font-size: 1vw;
+        height: 3vw;
 
     }
 
@@ -134,7 +135,7 @@
     .btn-primary {
         min-width: 10vh;
         color: #fff;
-        height: 5vh;
+        height: 3vw;
         padding: 5px 5px 5px 5px;
         border-radius: 8px;
         background: #17376e;
@@ -276,15 +277,19 @@
                                 <?php $json = json_encode($student); ?>
                                 <tr>
                                     <td><input type="text" name="indexNo[]" value="<?= $student->indexNo ?>" readonly>
+                                        <input type="text" name="ids[]" value="<?= $student->id ?>" hidden>
                                     </td>
                                     <td><input type="text" name="regNo[]" value="<?= $student->regNo ?>" readonly></td>
                                     <td><input type="text" name="attempt[]" value="<?= $student->attempt ?>" readonly>
                                     </td>
                                     <td><input type="text" name="subjectCode[]" value="<?= $SelectedSubCode ?>" readonly>
                                     </td>
-                                    <td><input type="text" name="studentType[]" value="<?= $student->studentType ?>" readonly>
+                                    <td><input type="text" name="studentType[]" value="<?= $student->type ?>" readonly>
                                     </td>
-                                    <td><input type="checkbox" name="item[]" value="eligible"></td>
+                                    <td>
+                                        <input type="checkbox" name="presentIds[]" value="<?= $student->id ?>"
+                                            <?= $student->attendance == 1 ? 'checked' : '' ?>>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -335,6 +340,8 @@
     function closeAttendancePopup() {
         document.querySelector("#exam-attendance").classList.remove("active");
         document.querySelector("#body").classList.remove("active");
+
+
     }
 
 

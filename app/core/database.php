@@ -367,5 +367,25 @@ class Database
         ";
 
         $this->query($query);
+
+        $query = "
+        CREATE TABLE IF NOT EXISTS `exam_attendance`(
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `examID` int(11) NOT NULL,
+            `degreeID` int(11) NOT NULL,
+            `semester` int(10) NOT NULL,
+            `subjectCode` varchar(50) NOT NULL,
+            `attempt` int(10) NOT NULL,
+            `type` varchar(40) NOT NULL,
+            `regNo` varchar(40) NOT NULL,
+            `indexNo` varchar(40) NOT NULL,
+            `attendance` boolean NOT NULL DEFAULT 0,
+            PRIMARY KEY (`id`),
+            FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`),
+            FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`),
+            FOREIGN KEY (`indexNo`) REFERENCES `student` (`indexNo`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ";
+        $this->query($query);
     }
 }

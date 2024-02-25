@@ -53,7 +53,7 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
     }
 
     .temp2-title {
-        font-size: 30px;
+        font-size: 2vw;
         font-weight: 600;
         color: black;
         padding: 10px 0px 10px 32px;
@@ -146,35 +146,45 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
     }
 
     .admission-button1 {
-        padding: 0.5% 0.5% 0.5% 1%;
-        background-color: #ffffff;
-        border: 1px solid #17376E;
-        color: #17376E;
-        text-decoration: none;
-        align-items: center;
-
-        border-radius: 5px;
-        cursor: pointer;
-        width: 13vw;
-        font-size: 0.9vw;
-        margin-right: 2vw;
-        height: 100%;
+        width: 16vw;
+        color: #fff;
+        height: 2.8vw;
+        padding: 5px 5px 5px 5px;
+        border-radius: 0.6vw;
+        background: #ffffff;
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        color: #17376e;
+        margin-bottom: 10px;
+        margin-top: 20px;
+        border: 1px solid #17376e;
+        font-size: 1vw;
     }
 
 
 
     .admission-button2 {
-        padding: 0.5% 1.8%;
-        background-color: #17376E;
-        color: #fff;
-        text-decoration: none;
-        align-items: center;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        width: 14vw;
-        font-size: 0.9vw;
-        height: 100%;
+        width: 16vw;
+        background: #17376e;
+        color: #ffffff;
+        height: 2.8vw;
+        padding: 5px 5px 5px 5px;
+        border-radius: 0.6vw;
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        border: 1px solid;
+        margin-bottom: 10px;
+        margin-top: 20px;
+        font-size: 1vw;
+    }
+
+    .admission-button2:hover {
+        background: #ffffff;
+        color: #17376e;
+    }
+
+    .admission-button1:hover {
+        color: black;
+        background-color: #E2E2E2;
+        border: 1px solid #17376e;
     }
 
 
@@ -503,6 +513,7 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
         padding: 0px 70px 0px 70px;
         width: 100%;
         text-align: center;
+        font-size: 1.5vw;
     }
 
     .loader-wraper {
@@ -851,6 +862,8 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
         document.querySelector("#body").classList.add("active");
         $(".loader-wraper").fadeOut("slow");
     }
+
+
 
 
 </script>
