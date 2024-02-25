@@ -1,28 +1,103 @@
-<div class="popup" id="send-mail-popup" style="width:30%;">
-    <div class="close-btn" id="close-send-mail-popup">
-        &times;
-    </div>
-    <div class="delete-card">
-        <div class="delete-img">
-            <svg xmlns="http://www.w3.org/2000/svg" width="67" height="66" viewBox="0 0 67 66" fill="none">
-                <path
-                    d="M33.5 63C50.0685 63 63.5 49.5685 63.5 33C63.5 16.4315 50.0685 3 33.5 3C16.9315 3 3.5 16.4315 3.5 33C3.5 49.5685 16.9315 63 33.5 63Z"
-                    stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M33.5 21V33" stroke="#E02424" stroke-width="6" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                <path d="M33.5 45H33.53" stroke="#E02424" stroke-width="6" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
+<style>
+    .loader-mail {
+        width: 50px;
+        height: 28px;
+        --_g: no-repeat radial-gradient(farthest-side, #17376E 94%, #0000);
+        background:
+            var(--_g) 50% 0,
+            var(--_g) 100% 0;
+        background-size: 12px 12px;
+        position: relative;
+        animation: l23-0 1.5s linear infinite;
+    }
+
+    .loader-mail:before {
+        content: "";
+        position: absolute;
+        height: 12px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: #9AD6FF;
+        left: 0;
+        top: 0;
+        animation:
+            l23-1 1.5s linear infinite,
+            l23-2 0.5s cubic-bezier(0, 200, .8, 200) infinite;
+    }
+
+    @keyframes l23-0 {
+
+        0%,
+        31% {
+            background-position: 50% 0, 100% 0
+        }
+
+        33% {
+            background-position: 50% 100%, 100% 0
+        }
+
+        43%,
+        64% {
+            background-position: 50% 0, 100% 0
+        }
+
+        66% {
+            background-position: 50% 0, 100% 100%
+        }
+
+        79% {
+            background-position: 50% 0, 100% 0
+        }
+
+        100% {
+            transform: translateX(calc(-100%/3))
+        }
+    }
+
+    @keyframes l23-1 {
+        100% {
+            left: calc(100% + 7px)
+        }
+    }
+
+    @keyframes l23-2 {
+        100% {
+            top: -0.1px
+        }
+    }
+
+    .mail-popup-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mail-popup-text {
+        margin-bottom: 30px;
+        font-size: 1.8vw;
+        font-weight: 600;
+        color: #17376E;
+    }
+
+    .mail-popup-text2 {
+        margin-top: 20px;
+        font-size: 0.7vw;
+        font-weight: 500;
+        color: #000;
+
+    }
+</style>
+
+<div class="popup-mail-component" id="send-mail-popup">
+    <div class="mail-popup-content">
+
+        <div class="mail-popup-text">
+            Sending Admission Cards
         </div>
-        <div class="delete-text">
-            <h2>Are you sure?</h2>
-            <p>Do you really want to delete this user? This process cannot be undone.</p>
+        <div class="loader-mail">
         </div>
 
-        <form class="button-fx" method="post">
-            <input type="text" name="id" hidden>
-            <button name='submit' value='delete' type="submit" class="delete-bt">Delete</button>
-        </form>
 
 
     </div>

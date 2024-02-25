@@ -7,11 +7,21 @@
 class Database
 {
 
+
     private function connect()
     {
-        $str = DBDRIVER . ":hostname=" . DBHOST . ";dbname=" . DBNAME;
-        return new PDO($str, DBUSER, DBPASS);
+        $str = DBDRIVER . ":host=" . DBHOST . ";dbname=" . DBNAME;
+        return new PDO(
+            $str,
+            DBUSER,
+            DBPASS,
+            array(
+                PDO::ATTR_PERSISTENT => true
+            )
+        );
+
     }
+
     public function query($query, $data = [], $type = 'object')
     {
         $con = $this->connect();
@@ -101,8 +111,7 @@ class Database
             `MinMarks` int(10) NOT NULL,
             `GPV` varchar(20) NOT NULL,
             PRIMARY KEY (`GradeID`),
-            FOREIGN KEY (DegreeID) REFERENCES degree(DegreeID),
-            UNIQUE KEY `Grade` (`Grade`)
+            FOREIGN KEY (DegreeID) REFERENCES degree(DegreeID)
            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
         ";
 
@@ -193,7 +202,7 @@ class Database
             FOREIGN KEY (indexNo) REFERENCES student(indexNo),
             FOREIGN KEY (examID) REFERENCES exam(examID),
             FOREIGN KEY (subjectCode) REFERENCES subject(SubjectCode)
-        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci; ";
+        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci ";
 
         $this->query($query);
 
@@ -240,14 +249,15 @@ class Database
             `uploadName` varchar(50) NOT NULL,
             `newName` varchar(50) NOT NULL,
             `formId` varchar(20) NOT NULL,
+            `degreeId` int(11) NOT NULL,
             `subjectCode` varchar(50) NOT NULL,
             `type` varchar(30) NOT NULL,
             `examId` int(11) NOT NULL,
             `date` date NOT NULL,
             PRIMARY KEY (`Id`),
             Foreign key (examId) references exam(examID),
-            FOREIGN KEY (subjectCode) REFERENCES subject(SubjectCode)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+            Foreign key (degreeId) references degree(DegreeID)
+        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
         ";
 
         $this->query($query);
@@ -257,6 +267,7 @@ class Database
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `studentIndexNo` varchar(40) NOT NULL,
             `subjectCode` varchar(50) NOT NULL,
+            `degreeID` int(11) NOT NULL,
             `examID` int(11) NOT NULL,
             `examiner1Marks` int(10) DEFAULT NULL,
             `examiner2Marks` int(10) DEFAULT NULL,
@@ -264,9 +275,9 @@ class Database
             `assessmentMarks` int(10) DEFAULT NULL,
             PRIMARY KEY (`id`),
             FOREIGN KEY (`studentIndexNo`) REFERENCES `student` (`indexNo`),
-            FOREIGN KEY (`subjectCode`) REFERENCES `subject` (`SubjectCode`),
+            FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`),
             FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
         ";
 
         $this->query($query);
@@ -277,11 +288,12 @@ class Database
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `studentIndexNo` varchar(40) NOT NULL,
             `subjectCode` varchar(50) NOT NULL,
+            `degreeID` int(11) NOT NULL,
             `examID` int(11) NOT NULL,
             `attempts` int(10) DEFAULT NULL,
             PRIMARY KEY (`id`),
             FOREIGN KEY (`studentIndexNo`) REFERENCES `student` (`indexNo`),
-            FOREIGN KEY (`subjectCode`) REFERENCES `subject` (`SubjectCode`),
+            FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`),
             FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         ";
@@ -334,6 +346,43 @@ class Database
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
             ";
 
+        $this->query($query);
+
+
+        $query = "
+        CREATE TABLE IF NOT EXISTS `examiner3_eligibility`(
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `subCode` varchar(50) NOT NULL,
+            `examID` int(11) NOT NULL,
+            `degreeID` int(11) NOT NULL,
+            `semester` int(10) NOT NULL,
+            `status` boolean NOT NULL,
+            PRIMARY KEY (`id`),
+            FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`),
+            FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ";
+
+        $this->query($query);
+
+        $query = "
+        CREATE TABLE IF NOT EXISTS `exam_attendance`(
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `examID` int(11) NOT NULL,
+            `degreeID` int(11) NOT NULL,
+            `semester` int(10) NOT NULL,
+            `subjectCode` varchar(50) NOT NULL,
+            `attempt` int(10) NOT NULL,
+            `type` varchar(40) NOT NULL,
+            `regNo` varchar(40) NOT NULL,
+            `indexNo` varchar(40) NOT NULL,
+            `attendance` boolean NOT NULL DEFAULT 0,
+            PRIMARY KEY (`id`),
+            FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`),
+            FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`),
+            FOREIGN KEY (`indexNo`) REFERENCES `student` (`indexNo`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ";
         $this->query($query);
     }
 }

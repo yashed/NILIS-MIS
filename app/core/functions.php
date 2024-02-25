@@ -1,5 +1,17 @@
 <?php
 
+function reloadPageOnce()
+{
+
+    if (!isset($_SESSION['page_reloaded'])) {
+        // Set the session variable to indicate that the page has been reloaded
+        $_SESSION['page_reloaded'] = true;
+
+        // Reload the page using PHP
+        header("Refresh:0");
+        exit();
+    }
+}
 
 function show($stuff)
 {
@@ -45,9 +57,37 @@ function message($msg = '', $type = 'success', $erase = false)
     return false;
 }
 
+function groupByColumn($data, $columnName)
+{
+    // Check if $data is not an array or if it's empty
+    if (!is_array($data) || empty($data)) {
+        return [];
+    }
+
+    $groupedData = [];
+
+    // Iterate through the input data
+    foreach ($data as $item) {
+        // Get the value of the specified column for grouping
+        $columnValue = $item->{$columnName};
+
+        // Check if the column value key exists in the grouped data array
+        if (!array_key_exists($columnValue, $groupedData)) {
+            // If not, initialize an empty array for that column value
+            $groupedData[$columnValue] = [];
+        }
+
+        // Add the item to the array under the respective column value key
+        $groupedData[$columnValue][] = $item;
+    }
+
+    return $groupedData;
+}
+
+
 function createMarkSheet($inputCSV, $examID, $subCode, $type)
 {
-    var_dump('inside the function' . $inputCSV . 'exam id ' . $examID . 'subject code ' . $subCode . 'type = ' . $type);
+
     $examiner3 = false;
     $filePath = 'assets/csv/examsheets/final-marksheets';
     $markSheet = $filePath . '/' . $examID . '_' . $subCode . '.csv';
@@ -88,7 +128,7 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
         for ($i = 4; $i < count($lines); $i++) {
             // Split each line into an array of values
             $values = str_getcsv($lines[$i]);
-            // var_dump('values = ', $values);
+
 
             $inputIndex = $values[0];
             $inputRegNo = $values[1];
@@ -129,15 +169,13 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
                         $subjectValues[3] = $examiner2Mark;
 
 
-
-
                     } else if ($type == 'examiner3') {
                         $subjectValues[5] = $examiner3Mark;
 
                     }
 
                     // Update the line in the final mark sheet
-                    var_dump('subject values = ', $subjectValues);
+
                     $subjectLines[$j] = implode(",", $subjectValues);
 
                     // Break out of the inner loop once the entry is found and updated
@@ -188,12 +226,13 @@ function finalMark($mark1, $mark2, $assigmnet)
     return $finalMark;
 }
 
-function insertMarks($file, $examID, $subCode)
+function insertMarks($file, $examID, $degreeID, $subCode)
 {
     //need to add condition to check the file is full of marks or not
     $mark = new Marks;
 
     $data['examID'] = $examID;
+    $data['degreeID'] = $degreeID;
     $data['subjectCode'] = $subCode;
 
 
@@ -227,7 +266,7 @@ function insertMarks($file, $examID, $subCode)
 }
 function activity($message)
 {
-    show('$message');
+
     $activity = new Activity;
 
     // show($_SESSION['USER_DATA']);

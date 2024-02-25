@@ -14,6 +14,7 @@ class Marks extends Model
         'id',
         'studentIndexNo',
         'subjectCode',
+        'degreeID',
         'examID',
         'examiner1Marks',
         'examiner2Marks',

@@ -31,13 +31,21 @@ class Model extends Database
         }
         // Get array keys from data
         $keys = array_keys($data);
-        // Define query to add user data
-        $query = "INSERT INTO " . $this->table;
-        // Add column names and values to the query
-        $query .= "(" . implode(",", $keys) . ") VALUES (:" . implode(",:", $keys) . ")";
-        // For debugging, show the data before executing the query
-        $this->query($query,$data);
+
+        //define query to add user data
+        $query = "insert into " . $this->table;
+
+        //add column names and values to the query (impolad function devide data by given character in array)
+        $query .= "(" . implode(",", $keys) . ") values (:" . implode(",:", $keys) . ")";
+        // show($query);
         // show($data);
+
+
+
+        //call query function to execute the query
+        $this->query($query, $data);
+
+        return true;
     }
 
     /* public function insert($data)
@@ -143,6 +151,7 @@ class Model extends Database
         }
 
         $query = trim($query, "&& ");
+        // show($query);
         $res = $this->query($query, $data);
 
         if (is_array($res)) {
@@ -226,6 +235,33 @@ class Model extends Database
 
         return false;
     }
+    public function group($column, $conditions = [])
+    {
+        $query = "SELECT * FROM " . $this->table;
+
+        // Check if conditions are provided
+        if (!empty($conditions)) {
+            $query .= " WHERE ";
+            $conditionsString = "";
+            foreach ($conditions as $key => $value) {
+                $conditionsString .= $key . "=:" . $key . " AND ";
+            }
+            $conditionsString = rtrim($conditionsString, " AND ");
+            $query .= $conditionsString;
+        }
+
+        $query .= " GROUP BY " . $column;
+
+        // Execute the query
+        $res = $this->query($query, $conditions);
+
+        if (is_array($res)) {
+            return $res;
+        }
+
+        return false;
+    }
+
 
     //get the count that match the conditions
     public function count($data)
@@ -312,9 +348,35 @@ class Model extends Database
         }
 
         $query = trim($query, "&& ");
-        $this->query($query, $data);
 
+        $this->query($query, $data);
+        // show($query);
         return true;
+    }
+    public function updateRows($setConditions, $whereConditions)
+    {
+        // Generate SET part of the query
+        $setPart = '';
+        foreach ($setConditions as $key => $value) {
+            $setPart .= "{$key}=:$key,";
+        }
+        $setPart = rtrim($setPart, ',');
+
+        // Generate WHERE part of the query
+        $wherePart = '';
+        foreach ($whereConditions as $key => $value) {
+            $wherePart .= "{$key}=:$key AND ";
+        }
+        $wherePart = rtrim($wherePart, 'AND ');
+
+        // Construct the final query
+        $query = "UPDATE {$this->table} SET {$setPart} WHERE {$wherePart}";
+
+        // Merge set and where conditions
+        $data = array_merge($setConditions, $whereConditions);
+
+        // Execute the query
+        $this->query($query, $data);
     }
 
     /*    public function update($id,$data)

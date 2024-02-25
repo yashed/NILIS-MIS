@@ -3,6 +3,14 @@
 class DIRECTOR extends Controller
 {
 
+    // function __construct()
+    // {
+    //     if (!Auth::is_director()) {
+    //         message('You are not authorized to view this page');
+    //         redirect('login');
+    //     }
+    // }
+
     public function index()
     {
         $degree = new Degree();
