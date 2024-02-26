@@ -260,16 +260,15 @@ class DR extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
-        $degree = new Degree();
         // Fetch the specific student data using the ID from the URL
         $studentId = isset($_GET['studentId']) ? $_GET['studentId'] : null;
         // Check if the student ID is provided in the URL
         if ($studentId) {
+            $degree = new Degree();
             $studentModel = new StudentModel();
             $data['student'] = $studentModel->findstudentid($studentId);
-            $student = [];
-            $degreeID = isset($student[0]->degreeID) ? $student[0]->degreeID : null;
-            $data['degree'] = $degree->find($degreeID);
+            $degree_id = $data['student'][0]->degreeID;
+            $data['degree'] = $degree->find($degree_id);
             if ($data['student']) {
                 $this->view('dr-interfaces/dr-userprofile', $data);
             } else {
@@ -277,7 +276,6 @@ class DR extends Controller
             }
             if ($action == "update") {
                 echo "POST request received";
-                // echo $_POST
             } else if ($action == "add") {
             } else if ($action == 'delete') {
                 $studentModel->delete(['id' => $studentId]);
