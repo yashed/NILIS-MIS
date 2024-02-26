@@ -33,7 +33,7 @@ $data['role'] = $role;
     .large-box {
         display: grid;
         grid-template-columns: 50% 50%;
-        grid-template-rows: 7% 45% 48%;
+        grid-template-rows: 9% 45% 46%;
     }
 
     .dr-large-box {
