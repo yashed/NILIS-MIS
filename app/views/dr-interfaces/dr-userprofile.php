@@ -2,8 +2,8 @@
 $role = "DR";
 $data['role'] = $role;
 ?>
-<!-- <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?> -->
+<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -67,7 +67,7 @@ $data['role'] = $role;
 <body>
     <div class="dr-userprofile">
         <div class="white-container1-1">
-            <div class="white-container1"><?= $degree->DegreeName ?></div>
+            <div class="white-container1"><?= $degree[0]->DegreeName ?></div>
             <div class="white-container1-core">Participants</div>
         </div>
         <div class="white-container2-1">
@@ -112,13 +112,13 @@ $data['role'] = $role;
                     <h1 style="font-size: 18px;">Change Degree Program</h1><br>
                     <div class="input-fields" style="margin: 20px 0px 10px 0px;">
                         <label for="degree type" class="drop-down">Current Diploma Program</label><br>
-                        <input name="degree type" id="degree_type" style="width: 430px; height: 34px; border-radius: 5px; margin: 9px; padding-left: 10px" placeholder="<?= $student[0]->degreeID ?>" disabled><br><br><br>
+                        <input name="degree type" id="degree_type" style="width: 430px; height: 34px; border-radius: 5px; margin: 9px; padding-left: 10px" placeholder="<?= $degree[0]->DegreeName ?>" disabled><br><br><br>
                         <label for="select degree type" class="drop-down">Select Degree Program:</label><br>
                         <select name="select degree type" id="select_degree_type" style="width: 430px; height: 34px; border-radius: 5px; margin: 9px;">
                             <option value="" default hidden>Select</option>
-                            <option value="DLMS" <?= (set_value('select_degree_type') === 'DLMS') ? 'selected' : '' ?>>DLMS</option>
-                            <option value="ENCM" <?= (set_value('select_degree_type') === 'ENCM') ? 'selected' : '' ?>>ENCM</option>
-                            <option value="DSL" <?= (set_value('select_degree_type') === 'DSL') ? 'selected' : '' ?>>DSL</option>
+                            <option value="DLMS" <?= (set_value('select_degree_type') === 'DLMS') ? 'selected' : '' ?>>Diploma in Library Management Studies</option>
+                            <option value="ENCM" <?= (set_value('select_degree_type') === 'ENCM') ? 'selected' : '' ?>>Executive National Certificate in Management</option>
+                            <option value="DSL" <?= (set_value('select_degree_type') === 'DSL') ? 'selected' : '' ?>>Diploma in Science Library</option>
                         </select><br><br>
                         <h3 style="font-size: 14px; font-weight: 200">Note - After submit all the information of this student may transfer to new degree program and student data will suspend from the current degree program</h3>
                     </div>
@@ -156,7 +156,7 @@ $data['role'] = $role;
                 </h2>
                 <div class="yesorno">
                     <button class="close-button-2" type="submit" value="delete">Yes,I'm Sure</button>
-                    <button class="close-button-3">No,Cancel</button>
+                    <button class="close-button-3" type="button" >No,Cancel</button>
                 </div>
             </div>
         </form>
@@ -285,7 +285,7 @@ $data['role'] = $role;
 
                             </div>
                             <div class="student-create-update">
-                                <button class="close-button">Close</button>
+                                <button class="close-button" type="button">Close</button>
                                 <button name='submit' value='update' id="submitbutton" type="submit">Update</button>
                             </div>
                         </div>
