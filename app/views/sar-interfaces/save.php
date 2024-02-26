@@ -767,7 +767,7 @@ $data['role'] = $role;
                 submitButton.type = 'button';
                 submitButton.id = 'button_' + formId;
                 submitButton.addEventListener('click', function () {
-                    uploadFile(fileInputId, submitButton.id, , subjectCode, formID);
+                    uploadFile(fileInputId, submitButton.id,  subjectCode, formID);
                 });
             }
 

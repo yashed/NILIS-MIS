@@ -38,6 +38,8 @@ class Model extends Database
         // For debugging, show the data before executing the query
         $this->query($query,$data);
         // show($data);
+        // show($query);
+        return true;
     }
 
     /* public function insert($data)

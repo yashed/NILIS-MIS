@@ -336,17 +336,16 @@ class Database
 
         $this->query($query);
 
-        $query="
+        $query = "
         CREATE TABLE IF NOT EXISTS `notifications` (
             `notify_id` int(11) NOT NULL,
             `description` varchar(255) NOT NULL,
             `type` varchar(50) NOT NULL,
             `msg_type` varchar(100) NOT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-           "; 
-           $this->query($query);
-
-            }
+           ";
+        $this->query($query);
+    }
 
     public function create_procedure()
     {
@@ -354,53 +353,53 @@ class Database
         $query = "
         CREATE PROCEDURE IF NOT EXISTS `InsertNotification`()
         BEGIN
-            DECLARE currentDate DATE;
-            DECLARE eventStartDate DATE;
-            DECLARE userId INT;
-            DECLARE daysRemaining INT;
-            DECLARE degreeName TEXT; -- Specify the length for VARCHAR
-    
-            DECLARE str1 VARCHAR(255); -- Declare variables for string concatenation
-            DECLARE str2 VARCHAR(255);
-    
-            DECLARE eventCursor CURSOR FOR
-                SELECT dt.StartingDate, d.DegreeName
-                FROM degree_timetable AS dt
-                JOIN degree AS d ON dt.DegreeID = d.DegreeID;
-    
-            -- Set the current date
-            SET currentDate = CURDATE();
-    
-            OPEN eventCursor;
-    
-            read_loop: LOOP
-                FETCH eventCursor INTO eventStartDate, degreeName;
-                IF eventStartDate IS NULL THEN
-                    LEAVE read_loop;
-                END IF;
-    
-                -- Calculate the days remaining
-                SET daysRemaining = DATEDIFF(eventStartDate, currentDate);
-    
-                -- Check if days remaining is less than or equal to 14 and greater than 0
-                IF (daysRemaining <= 14 AND daysRemaining > 0) THEN
-                   -- Construct notification message
-                    SET str1 = CONCAT('There will be an upcoming examination scheduled on ', eventStartDate);
-                    SET str2 = CONCAT(' for the diploma ', degreeName, ' examination');
-    
-                    -- Print concatenated strings to console (optional)
-                    -- SELECT CONCAT(str1, str2);
-    
-                    -- Insert record into notifications table
-                    INSERT INTO notifications (description, type, msg_type)
-                    VALUES (CONCAT(str1, str2), 'Examination', 'msg1');
-                END IF;
-            END LOOP;
-    
-            CLOSE eventCursor;
-        END;
+        DECLARE currentDate DATE;
+        DECLARE eventStartDate DATE;
+        DECLARE userId INT;
+        DECLARE daysRemaining INT;
+        DECLARE degreeName TEXT; -- Specify the length for VARCHAR
+
+        DECLARE str1 VARCHAR(255); -- Declare variables for string concatenation
+        DECLARE str2 VARCHAR(255);
+
+        DECLARE eventCursor CURSOR FOR
+            SELECT dt.StartingDate, d.DegreeName
+            FROM degree_timetable AS dt
+            JOIN degree AS d ON dt.DegreeID = d.DegreeID;
+
+        -- Set the current date
+        SET currentDate = CURDATE();
+
+        OPEN eventCursor;
+
+        read_loop: LOOP
+            FETCH eventCursor INTO eventStartDate, degreeName;
+            IF eventStartDate IS NULL THEN
+                LEAVE read_loop;
+            END IF;
+
+            -- Calculate the days remaining
+            SET daysRemaining = DATEDIFF(eventStartDate, currentDate);
+
+            -- Check if days remaining is less than or equal to 14 and greater than 0
+            IF (daysRemaining <= 14 AND daysRemaining > 0) THEN
+               -- Construct notification message
+                SET str1 = CONCAT('There will be an upcoming examination scheduled on ', eventStartDate);
+                SET str2 = CONCAT(' for the diploma ', degreeName, ' examination');
+
+                -- Print concatenated strings to console (optional)
+                -- SELECT CONCAT(str1, str2);
+
+                -- Insert record into notifications table
+                INSERT INTO notifications (description, type, msg_type,button_text,button_link)
+                VALUES (CONCAT(str1, str2), 'Examination', 'msg1', 'create examination','sar/examination');
+            END IF;
+        END LOOP;
+
+        CLOSE eventCursor;
+    END;
         ";
-    
+
         // Execute the procedure creation query
         $this->query($query);
     }
@@ -419,5 +418,4 @@ class Database
         // Execute the event creation query
         $this->query($query);
     }
-    
 }
