@@ -891,6 +891,7 @@ class SAR extends Controller
                 $this->view('sar-interfaces/sar-examresults', $data);
 
             } else {
+
                 $this->view('sar-interfaces/sar-examination', $data);
             }
         }
