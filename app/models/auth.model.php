@@ -74,6 +74,16 @@ class Auth
         }
     }
 
+    public static function is_clerk()
+    {
+        if (!empty($_SESSION['USER_DATA'])) {
+            if ($_SESSION['USER_DATA']->role == 'clerk') {
+                return true;
+            }
+            return false;
+        }
+    }
+
     public static function __callStatics($funcname, $args)
     {
         $key = str_replace("get", "", strtolower($funcname));

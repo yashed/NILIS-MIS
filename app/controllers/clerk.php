@@ -3,6 +3,13 @@
 class Clerk extends Controller
 {
 
+    // function __construct()
+    // {
+    //     if (!Auth::is_clerk()) {
+    //         message('You are not authorized to view this page');
+    //         redirect('login');
+    //     }
+    // }
     public function index()
     {
         $user=new User();

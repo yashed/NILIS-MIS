@@ -256,8 +256,6 @@ $data['role'] = $role;
         background: #17376e;
         box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
         border: 0px;
-
-
     }
 
     .bt-name {
@@ -324,6 +322,13 @@ $data['role'] = $role;
         padding-top: 20px;
         height: 15vw;
 
+    }
+
+    .subject-details {
+        display: flex;
+        font-size: 1vw;
+        flex-direction: column;
+        padding-left: 20px;
     }
 </style>
 
@@ -401,6 +406,10 @@ $data['role'] = $role;
 
                 <div class="result-table">
                     <?php if (!empty($examResults)): ?>
+                        <div class="subject-details">
+                            <div class="subject-name">Subject : </div>
+                            <div class="subject-credits">Credits :</div>
+                        </div>
                         <table>
                             <thead>
                                 <tr>

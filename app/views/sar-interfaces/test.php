@@ -1,153 +1,37 @@
-//Testing Checkbox Selection in table using jQuery
+console.log("before fetch");
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>Table Checkbox</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <style>
-        @media (min-width: 576px) {
-            .jumbotron {
-                padding: 1rem 2rem;
+    var targetURL = '<?= ROOT ?>sar/examination/resultsupload';
+    // Fetch data from the controller
+    fetch(targetURL)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        }
+            return response.text();
+        })
+        .then(data => {
 
-        .tdaction {
-            width: 15%;
-        }
 
-        .tdSr {
-            width: 7%;
-        }
 
-        strong {
-            font-size: 24px !important;
-        }
+            // Extract values from the parsed HTML
+            var status = document.querySelector('#status').textContent.trim();
+            examiner3 = false;
+            if (status == 1) {
+                examiner3 = true;
+            }
+            else {
+                examiner3 = false;
+            }
+            var examiner3SubCode = document.querySelector('#examiner3SubCode').textContent.trim();
 
-        input.largerCheckbox {
-            width: 20px;
-            height: 20px;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <div class="jumbotron text-center bg-success text-white">
-            <h2>Checkbox Selection in table using jQuery</h2>
-            <h4> Select All / De-Select All - Get Checked records ids</h4>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <h3>Selected Record ids: => </h3>
-            </div>
-            <div class="col-md-8 selectedDiv">
-            </div>
-        </div>
-        <div class="row pt-3">
-            <div class="col-md-12 col-sm-12 col-12 p-2 ">
-                <table id="tblData" class="table table-bordered table-hover table-striped">
-                    <thead>
-                        <tr>
-                            <th>
-                                <input type="checkbox" class="largerCheckbox" id="chkAll" />
-                            </th>
-                            <th>Name</th>
-                            <th>User Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Website</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="6" id="trLoader">
-                                <div class="text-center">
-                                    Loading
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <script>
-
-        $(document).ready(function () {
-            loadGridData();
-            $('#tblData').on('change', '.tblChk', function () {
-                debugger;
-                if ($('.tblChk:checked').length == $('.tblChk').length) {
-                    $('#chkAll').prop('checked', true);
-                } else {
-                    $('#chkAll').prop('checked', false);
-                }
-                getCheckRecords();
+            console.log('examiner 3 = ', examiner3);
+            console.log('examiner3SubCode = ', examiner3SubCode);
+            elements.forEach(function (element) {
+                element.dataset.active = examiner3;
             });
 
-            $("#chkAll").change(function () {
-                debugger;
-                if ($(this).prop('checked')) {
-                    $('.tblChk').not(this).prop('checked', true);
-                } else {
-                    $('.tblChk').not(this).prop('checked', false);
-                }
-                getCheckRecords();
-            })
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
         });
-        function getCheckRecords() {
-            debugger;
-            $(".selectedDiv").html("");
-            $('.tblChk:checked').each(function () {
-                debugger;
-                if ($(this).prop('checked')) {
-                    if ($(".selectedDiv").children().length == 0) {
-                        const rec = "<strong>" + $(this).attr("data-id") + " </strong>";
-                        $(".selectedDiv").append(rec);
-                    } else {
-                        const rec = ", <strong>" + $(this).attr("data-id") + " </strong>";
-                        $(".selectedDiv").append(rec);
-                    }
-                }
-                console.log(this.value);
-            });
-        }
 
-        function loadGridData() {
-            $.ajax({
-                type: "GET",
-                url: "https://jsonplaceholder.typicode.com/users",
-                contentType: false,
-                processData: false,
-                data: "",
-                beforeSend: function () {
-                    $("#trLoader").show();
-                },
-                success: function (results) {
-                    $("#trLoader").remove();
-                    let index = 0;
-                    results.forEach(element => {
-                        let dynamicTR = "<tr>";
-                        dynamicTR = dynamicTR + "<td> <input type='checkbox' data-id=" + element.id + " class='largerCheckbox tblChk chk" + index + "' /></td>";
-                        dynamicTR = dynamicTR + "<td>" + element.name + "</td>";
-                        dynamicTR = dynamicTR + "<td>" + element.username + "</td>";
-                        dynamicTR = dynamicTR + "<td>" + element.email + "</td>";
-                        dynamicTR = dynamicTR + "<td>" + element.phone + "</td>";
-                        dynamicTR = dynamicTR + "<td>" + element.website + "</td>";
-                        dynamicTR = dynamicTR + " </tr>";
-                        $("#tblData tbody").append(dynamicTR);
-                        index++;
-                    });
-                }
-            });
-        }
-
-    </script>
-</body>
-
-</html>

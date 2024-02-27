@@ -12,9 +12,8 @@ class Admission extends Controller
         $exam = new Exam();
         $degree = new Degree();
         $admissionToken = new AdmissionToken();
-
-
         $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
+        $indexNo = isset($_GET['indexNo']) ? $_GET['indexNo'] : null;
 
         //get exam details
         if ($examID != null) {
@@ -36,12 +35,14 @@ class Admission extends Controller
             }
 
             $data['degreeDetails'] = $degreeDetails;
+
         }
 
 
 
         //create data array
         $data['examDetails'] = $examDetails;
+        $data['indexNo'] = $indexNo;
 
 
         if (isset($_POST['submit'])) {
