@@ -313,7 +313,6 @@ class Database
             PRIMARY KEY (`id`),
             FOREIGN KEY (`studentIndexNo`) REFERENCES `student` (`indexNo`),
             FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`),
-            FOREIGN KEY (`subjectCode`) REFERENCES `subject` (`SubjectCode`),
             FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         ";
@@ -384,5 +383,64 @@ class Database
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         ";
         $this->query($query);
+
+
     }
+
+    public function createFinalMarksTrigger()
+    {
+        // Create the trigger creation query
+        $triggerQuery = "
+            IF NOT EXISTS (
+                SELECT * FROM information_schema.triggers
+                WHERE trigger_name = 'calculate_final_marks'
+                AND event_object_schema = DATABASE()
+            )
+            THEN
+                CREATE TRIGGER calculate_final_marks
+                AFTER INSERT ON marks FOR EACH ROW
+                BEGIN
+                    DECLARE final_marks_value DECIMAL(10, 2);
+                    DECLARE examiner1_marks_value INT;
+                    DECLARE examiner2_marks_value INT;
+                    DECLARE examiner3_marks_value INT;
+                    DECLARE assessment_marks_value INT;
+                    DECLARE min_gap INT;
+                    
+                   
+                    IF NEW.examiner3Marks IS NOT NULL AND NEW.examiner3Marks != -1 THEN
+                        -- Calculate the gap between each pair of marks
+                        SET examiner1_marks_value = NEW.examiner1Marks;
+                        SET examiner2_marks_value = NEW.examiner2Marks;
+                        SET examiner3_marks_value = NEW.examiner3Marks;
+                        SET min_gap = ABS(examiner1_marks_value - examiner2_marks_value);
+                        
+                        IF ABS(examiner1_marks_value - examiner3_marks_value) < min_gap THEN
+                            SET examiner2_marks_value = examiner3_marks_value;
+                            SET min_gap = ABS(examiner1_marks_value - examiner3_marks_value);
+                        END IF;
+                        
+                        IF ABS(examiner2_marks_value - examiner3_marks_value) < min_gap THEN
+                            SET examiner1_marks_value = examiner3_marks_value;
+                        END IF;
+                        
+                        SET final_marks_value = (examiner1_marks_value + examiner2_marks_value) / 2 * 0.5;
+                    ELSE
+                        SET final_marks_value = (NEW.examiner1Marks + NEW.examiner2Marks) / 2 * 0.5;
+                    END IF;
+                    
+                    SET final_marks_value = final_marks_value + NEW.assessmentMarks * 0.5;
+                    
+                   
+                    INSERT INTO final_marks (studentIndexNo, subjectCode, examID, degreeID, finalMarks)
+                    VALUES (NEW.studentIndexNo, NEW.subjectCode, NEW.examID, NEW.degreeID, final_marks_value);
+                END
+            END IF;
+        ";
+
+        // Execute the trigger creation query
+        $this->query($triggerQuery);
+    }
+
+
 }

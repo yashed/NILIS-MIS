@@ -1,26 +1,31 @@
 <?php
 
-class Home extends Controller{
+class Home extends Controller
+{
 
 
-    public function index(){
-        
+    public function index()
+    {
+
         $db = new Database();
         $db->create_tables();
-       // $res= $db->query("select * from users");
+        // $db->createFinalMarksTrigger();
+        // $res= $db->query("select * from users");
 
-       // show($res);
-       
-    //    $users = new User();
-    //    $users->insert($data);
+        // show($res);
 
-       $this->view('common/login/login');
+        //    $users = new User();
+        //    $users->insert($data);
+
+        $this->view('common/login/login');
     }
-    public function edit($id=null,$name=null){
-        echo "Home eddit ".$id;
-        echo "Home eddit ".$name;
+    public function edit($id = null, $name = null)
+    {
+        echo "Home eddit " . $id;
+        echo "Home eddit " . $name;
     }
-    public function delete(){
+    public function delete()
+    {
         echo "Home delete ";
     }
 
