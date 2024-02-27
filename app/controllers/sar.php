@@ -588,7 +588,7 @@ class SAR extends Controller
                     $head = 'Name of  Programme  : ' . $degreeID;
                     $title = 'Subject  : ' . $subject->SubjectName;
 
-                    $rowHeadings = ['Index No', 'Registration No', 'Examiner 01 Mark', 'Examiner 02 Marks', 'Assignment Marks'];
+                    $rowHeadings = ['Index No', 'Registration No', 'Examiner 01 Marks', 'Examiner 02 Marks', 'Assignment Marks', 'Examiner 03 Marks'];
                     $markSheet = 'assets/csv/output/MarkSheet_' . $subject->SubjectCode . '.csv';
                     $f = fopen($markSheet, 'w');
 
