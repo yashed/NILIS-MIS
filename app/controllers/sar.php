@@ -718,6 +718,7 @@ class SAR extends Controller
                             //enable examiner3 marks upload
                             // $data['examiner3'] = true;
                             foreach ($data['subjects'] as $subject) {
+                                var_dump('subject code = ' . $subject->SubjectCode);
                                 $uploadedRes = $resultSheet->where(['examId' => $examID, 'subjectCode' => $subject->SubjectCode]);
                                 // show($uploadedRes);
 
@@ -744,7 +745,7 @@ class SAR extends Controller
                                                 $examiner3 = true;
                                                 $examiner3SubCode = $subject->SubjectCode;
 
-                                                var_dump('examiner3 true');
+
                                             } else {
                                                 // $data['examiner3'] = false;
                                                 $examiner3 = false;
@@ -762,16 +763,17 @@ class SAR extends Controller
 
                                                     //call the function to upload marks to database
                                                     echo 'call insertMarks function';
+                                                    show($resFileName);
                                                     insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
 
 
                                                 } else {
                                                     $data['assignment'] = false;
-                                                    echo 'Assignment marks are not available.';
+
                                                 }
 
 
-                                                show('no examiner3');
+
                                             }
                                             /** The case in there is when we pass the data into view to show them it must reload 
                                              * but when using fetch it did't reload the file. must fix this  */
@@ -796,13 +798,14 @@ class SAR extends Controller
                                                     $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
 
                                                     //call the function to upload marks to database
-                                                    echo 'call insertMarks function';
+
+                                                    show($resFileName);
                                                     insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
 
 
                                                 } else {
                                                     $data['assignment'] = false;
-                                                    echo 'Assignment marks are not available.';
+
                                                 }
 
                                             } else {
@@ -870,7 +873,7 @@ class SAR extends Controller
                 }
 
                 $subjectDetails = $subjects->where(['SubjectCode' => $resultSubCode, 'DegreeID' => $degreeID]);
-                show($subjectDetails);
+                // show($subjectDetails);
                 // remove any leading or trailing spaces from the string
                 $resultSubCode = trim($resultSubCode);
 
