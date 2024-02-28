@@ -746,6 +746,28 @@ class SAR extends Controller
                                                 $examiner3SubCode = $subject->SubjectCode;
 
 
+                                                /*after upload the examiner 3 marks when we update examination mark 
+                                                sheet system has to handle that marksheet also. because if exminer 3 already uploaded 
+                                                then it didnt handle the mark sheet again and insert or update marks again*/
+
+                                                //check whether examiner3 marks are available
+                                                $examiner3Marks = $resultSheet->where([
+                                                    'examId' => $examID,
+                                                    'subjectCode' => $subject->SubjectCode,
+                                                    'type' => 'examiner3'
+                                                ]);
+
+                                                if (!empty($examiner3Marks)) {
+                                                    // $data['examiner3'] = true;
+                                                    //upload the student marks to database
+                                                    $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
+
+                                                    //call the function to upload marks to database
+                                                    insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
+                                                } else {
+                                                    // $data['examiner3'] = false;
+                                                }
+
                                             } else {
                                                 // $data['examiner3'] = false;
                                                 $examiner3 = false;
