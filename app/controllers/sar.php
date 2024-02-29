@@ -853,7 +853,6 @@ class SAR extends Controller
                         echo (
                             "<div id='examiner3-status'>$examiner3</div>
                               <div id='examiner3SubCode'>$examiner3SubCode</div>"
-
                         );
 
                     }

@@ -452,5 +452,62 @@ DELIMITER ;
         $this->query($triggerQuery);
     }
 
+    public function createFinalMarksUpdateTrigger()
+    {
+        $query = "
+        DELIMITER $$
+
+CREATE TRIGGER update_final_marks
+AFTER UPDATE ON marks FOR EACH ROW
+BEGIN
+    DECLARE final_marks_value DECIMAL(10, 2);
+    DECLARE examiner1_marks_value INT;
+    DECLARE examiner2_marks_value INT;
+    DECLARE examiner3_marks_value INT;
+    DECLARE assessment_marks_value INT;
+    DECLARE min_gap_marks INT;
+    
+    -- Calculate final marks based on the given conditions
+    IF NEW.examiner3Marks IS NOT NULL AND NEW.examiner3Marks != -1 THEN
+        -- Calculate the gap between each pair of marks
+        SET examiner1_marks_value = NEW.examiner1Marks;
+        SET examiner2_marks_value = NEW.examiner2Marks;
+        SET examiner3_marks_value = NEW.examiner3Marks;
+        
+        -- Get the minimum gap marks
+        SET min_gap_marks = LEAST(ABS(examiner1_marks_value - examiner2_marks_value),
+                                  ABS(examiner2_marks_value - examiner3_marks_value),
+                                  ABS(examiner1_marks_value - examiner3_marks_value));
+        
+        -- Determine which pair has the minimum gap marks and adjust accordingly
+        IF ABS(examiner1_marks_value - examiner3_marks_value) = min_gap_marks THEN
+            SET examiner2_marks_value = examiner3_marks_value;
+        ELSEIF ABS(examiner2_marks_value - examiner3_marks_value) = min_gap_marks THEN
+            SET examiner1_marks_value = examiner2_marks_value;
+        END IF;
+        
+        -- Calculate final marks
+        SET final_marks_value = (examiner1_marks_value + examiner2_marks_value) / 2 * 0.5;
+    ELSE
+        SET final_marks_value = (NEW.examiner1Marks + NEW.examiner2Marks) / 2 * 0.5;
+    END IF;
+    
+    SET final_marks_value = final_marks_value + NEW.assessmentMarks * 0.5;
+    
+    -- Update the final marks in the final_marks table if it exists
+    UPDATE final_marks 
+    SET finalMarks = final_marks_value 
+    WHERE studentIndexNo = NEW.studentIndexNo 
+    AND subjectCode = NEW.subjectCode 
+    AND examID = NEW.examID;
+    
+END$$
+
+DELIMITER ;
+";
+
+        $this->query($query);
+    }
+
 
 }
