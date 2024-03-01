@@ -65,6 +65,9 @@ class Admin extends Controller
         if ($user->validate($_POST)) {
           $popupCreate = false;
 
+          //unset submit value in POST data
+          unset($_POST['submit']);
+
           try {
             //set default passsword
             $password = $_POST['role'] . '123';
@@ -73,9 +76,14 @@ class Admin extends Controller
 
             //add password to the POST data
             $_POST['password'] = password_hash($password, PASSWORD_DEFAULT);
+            $_POST['status'] = 'initial';
 
             $user->insert($_POST);
             message("User profile was successfully created");
+
+            //refresh the page
+            header("Refresh:0");
+
           } catch (\Throwable $th) {
             var_dump($th);
           }

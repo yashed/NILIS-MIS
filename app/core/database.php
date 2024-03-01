@@ -60,6 +60,7 @@ class Database
             password varchar(255) NOT NULL,
             cpassword varchar(255) NOT NULL,
             newpassword varchar(255) NOT NULL,
+            status varchar(20) NOT NULL,
             date date DEFAULT NULL,
             PRIMARY KEY (id),
             KEY email (email),

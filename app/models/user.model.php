@@ -20,6 +20,7 @@ class User extends Model
           'date',
           'cpassword',
           'newpassword',
+          'status'
 
      ];
 
