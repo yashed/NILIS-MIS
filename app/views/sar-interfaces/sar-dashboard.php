@@ -320,9 +320,9 @@ $data['role'] = $role;
     }
 
     .sar-dash-card-subcard-img1 img {
-        max-width: 70px;
+        width: 5vw;
         min-width: 50px;
-        max-height: 80px;
+        height: 5vw;
         min-height: 50px;
     }
 
