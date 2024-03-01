@@ -5,8 +5,6 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
 ?>
 
-<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
 
 
 <html lang="en">
