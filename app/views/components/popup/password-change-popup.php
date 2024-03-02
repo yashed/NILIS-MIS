@@ -12,7 +12,8 @@
         z-index: 100;
         flex-direction: column;
         border-radius: 8px;
-        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+
+        box-shadow: 28px 30px 34px -1px rgba(0, 0, 0, 0.1);
     }
 
     .pw-popup-header {

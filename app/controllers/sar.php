@@ -2,14 +2,16 @@
 
 class SAR extends Controller
 {
-    // function __construct()
-    // {
-    //     if (!Auth::is_dr()) {
-    //         message('You are not authorized to view this page');
-    //         redirect('login');
-    //     }
-    // }
-    public function index()
+    function __construct()
+    {
+        // if (!Auth::is_dr()) {
+        //     message('You are not authorized to view this page');
+        //     redirect('login');
+        // }
+
+    }
+
+    public function index($checkUser = false)
     {
         //uncoment this to add autherization to sar
         // if (!Auth::is_sar()) {
@@ -20,6 +22,7 @@ class SAR extends Controller
         $degree = new Degree();
 
         $data['degrees'] = $degree->findAll();
+        $data['checkUser'] = $checkUser;
 
         $this->view('sar-interfaces/sar-dashboard', $data);
     }
