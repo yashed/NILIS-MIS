@@ -21,6 +21,7 @@
         height: 8vw;
         background-color: #17376e;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         border-radius: 8px 8px 0px 0px;
@@ -113,16 +114,29 @@
         align-items: center;
         justify-content: center;
     }
+
+    .pw-description {
+        font-family: "Poppins";
+        font-size: 0.9vw;
+        color: #fff;
+        font-weight: 400;
+        text-align: center;
+
+    }
 </style>
 
 <body>
     <div class="password-change-popup">
         <div class="pw-popup-header">
             <div class="pw-popup-title">
-                Update the password
+                Set New Password
+            </div>
+            <div class='pw-description'>
+                For security purposes, please set a new password for your account.
             </div>
         </div>
         <div class="pw-popup-body">
+
             <form method="post">
                 <div class="pw-change-form">
                     <div class="pw-form-inputs">
@@ -136,9 +150,8 @@
                         </div>
 
                         <div class="password-error">
-                            Passwords not match
+                            Passwords do not match
                         </div>
-
 
                     </div>
                     <button type="submit">
@@ -147,7 +160,5 @@
                 </div>
             </form>
         </div>
-    </div>
-
     </div>
 </body>
