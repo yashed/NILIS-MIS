@@ -146,13 +146,20 @@
 
                             <input value="" class="input-passwords" type="password" placeholder="Confirm Password"
                                 name="Cpassword" required />
-
+                            <input type='text' name='id' value='<?= $_SESSION['USER_DATA']->id ?>' hidden />
                         </div>
-
                         <div class="password-error">
-                            Passwords do not match
+                            <?php if (!empty($errors['newPassword'])): ?>
+                                <div>
+                                    <?= $errors['newPassword'] ?>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (!empty($errors['cpassword'])): ?>
+                                <div>
+                                    <?= $errors['cpassword'] ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
-
                     </div>
                     <button type="submit">
                         <div class="bt-name">Change Password</div>

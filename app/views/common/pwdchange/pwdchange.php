@@ -1,3 +1,7 @@
+<?
+$data['errors'] = $errors;
+?>
+
 <style>
     .pw-popup-wrapper {
         display: flex;
