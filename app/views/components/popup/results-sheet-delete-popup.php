@@ -6,7 +6,7 @@
         padding: 5px 5px 5px 5px;
         border-radius: 8px;
         background: #E02424;
-        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 6px 9px 0px rgba(0, 0, 0, 0.2);
         border: 0px;
         margin-bottom: 10px;
 
