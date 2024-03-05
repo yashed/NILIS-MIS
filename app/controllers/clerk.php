@@ -73,7 +73,6 @@ class Clerk extends Controller
     
 public function attendance()
 {
-   
     if (isset($_POST['importSubmit'])) {
         // Check if the uploaded file is present and no errors occurred during upload
         if ($_FILES['csvFile']['error'] == 0 && !empty($_FILES['csvFile']['tmp_name'])) {
@@ -83,18 +82,35 @@ public function attendance()
             // Process the CSV file
             $csvFile = fopen($_FILES['csvFile']['tmp_name'], 'r');
 
-            // Skip the header row
-            fgetcsv($csvFile);
+            // Skip the first three rows
+            for ($i = 0; $i < 3; $i++) {
+                fgetcsv($csvFile);
+            }
 
-            // Loop through each row in the CSV file
+            // Start reading from the 4th row and first column
+            $row = 3; // Initialize row number
             while (($line = fgetcsv($csvFile)) !== FALSE) {
+                $row++;
+
+                // Skip rows until reaching the 4th row
+                if ($row < 4) {
+                    continue;
+                }
+
+                // Read data from the first column (index 0)
                 $index = $line[0];
                 $name = $line[1];
                 $attendance = $line[2];
 
-                // Execute SQL query to update attendance directly
-                $updateQuery = "UPDATE student SET attendance = '$attendance', name = '$name' WHERE indexNo = '$index';";
-                $studentModel->query($updateQuery);
+                // Update attendance using updateRows function
+                $updateData = [
+                    'attendance' => $attendance,
+                    'name' => $name
+                ];
+                $whereConditions = [
+                    'indexNo' => $index
+                ];
+                $studentModel->updateRows($updateData, $whereConditions);
             }
 
             fclose($csvFile);
@@ -103,12 +119,9 @@ public function attendance()
         }
     }
 
-    
-
     // Load the view
     $this->view('clerk-interfaces/clerk-attendance');
 }
-
 
 
 }

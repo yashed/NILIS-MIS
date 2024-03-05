@@ -223,7 +223,7 @@ $data['role'] = $role;
 
 <body>
 <div class="temp2-home">
-        <div class="temp2-title">Examination</div>
+        <div class="temp2-title">Attendance</div>
 
         <div class="temp2-subsection-2">
             <div class="temp2-subsection-21">

@@ -146,6 +146,7 @@ class Database
             address varchar(100) NOT NULL,
             phoneNo int(20) NOT NULL,
             degreeID INT(11) NOT NULL,
+            Attendance varchar(40) NOT NULL,
             PRIMARY KEY (id),
             UNIQUE KEY `indexNo` (`indexNo`),
             FOREIGN KEY (degreeID) references degree(DegreeID)
@@ -449,7 +450,7 @@ class Database
     END;
         ";
 
-        // Execute the procedure creation query
+        
         $this->query($query);
     }
 
@@ -464,7 +465,7 @@ class Database
             CALL InsertNotification();
         ";
 
-        // Execute the event creation query
+        
         $this->query($query);
     }
 }
