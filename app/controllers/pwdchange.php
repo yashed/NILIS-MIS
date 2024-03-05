@@ -3,10 +3,18 @@
 class pwdchange extends Controller
 {
 
+    function __construct()
+    {
 
-
+        if ($_SESSION['USER_DATA']->status == 'active') {
+            // Redirect the user to the appropriate page
+            redirect($_SESSION['USER_DATA']->role);
+        }
+    }
     public function index()
     {
+        //prevent loding this page to password changed users
+
         $user = new User();
 
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -20,21 +28,14 @@ class pwdchange extends Controller
                 //hash the password
                 $password = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
 
-                //update the user table
-                // $userData['id'] = $_SESSION['USER_DATA']->id;
-                // $userData['password'] = $password;
-                // $userData['status'] = 'active';
-                // $userData['cpassword'] = $password;
-                // $userData['newpassword'] = $password;
-                // $userData['date']->$_SESSION['USER_DATA']->date;
-                // $userData['fname']->$_SESSION['USER_DATA']->fname;
-                // $userData['lname']->$_SESSION['USER_DATA']->lname;
-                // $userData['email']->$_SESSION['USER_DATA']->email;
-                // $userData['username']->$_SESSION['USER_DATA']->username;
-                // $userData['phoneNo']->$_SESSION['USER_DATA']->phoneNo;
-                // $userData['role']->$_SESSION['USER_DATA']->role;
-
+                //update the user password
                 $user->updateRows(['password' => $password, 'status' => 'active', 'cpassword' => $password, 'newpassword' => $password], ['id' => $_SESSION['USER_DATA']->id]);
+                $userData = $user->first([
+                    'id' => $_POST['id']
+                ]);
+                show($userData);
+                //authentication
+                Auth::authenticate($userData);
 
                 message("Password was successfully updated");
 
