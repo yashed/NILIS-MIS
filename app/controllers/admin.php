@@ -65,6 +65,9 @@ class Admin extends Controller
         if ($user->validate($_POST)) {
           $popupCreate = false;
 
+          //unset submit 
+          unset($_POST['submit']);
+
           try {
             //set default passsword
             $password = $_POST['role'] . '123';
