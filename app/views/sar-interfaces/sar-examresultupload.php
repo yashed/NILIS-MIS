@@ -744,8 +744,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
 <body>
     <div class="resultupload-body" id="rs-body">
-        <?php $this->view('components/navside-bar/header', $data) ?>
-        <?php $this->view('components/navside-bar/sidebar', $data) ?>
+        <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
         <?php $this->view('components/navside-bar/footer', $data) ?>
 
         <div class="temp2-home">
@@ -790,7 +789,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                     <div class="temp2-sub-title2">
                         Results Submission </br>
                     </div>
-                    <?php foreach ($examSubjects as $subject): ?>
+                    <?php foreach ($examSubjects as $subject) : ?>
                         <?php $json = json_encode($subject); ?>
 
                         <div class="subject">
@@ -801,8 +800,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                                 <div class="button-bar">
                                     <button class="btn-secondary-2" name='download_marksheet'>Continue without
                                         Examiner 03</button>
-                                    <button class="btn-primary" name='download_marksheet'
-                                        onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
+                                    <button class="btn-primary" name='download_marksheet' onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
                                         Marksheet</button>
 
                                 </div>
@@ -817,47 +815,32 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
                                 ?>
                                 <div class="file-input-wraper">
-                                    <div class="dashed-container-1" id="<?= $containerId ?>"
-                                        ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)"
-                                        ondragleave="handleDragLeave(event)"
-                                        ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','assestment')">
+                                    <div class="dashed-container-1" id="<?= $containerId ?>" ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','assestment')">
                                         <div class='marks-type'>Assestment Marks </div>
-                                        <form method="POST" class='csv-input-from' enctype="multipart/form-data"
-                                            id="<?= $formID ?>">
-                                            <div class="file-submission-view"
-                                                id="<?= $subject->SubjectCode ?>_S_assestment">
-                                                <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
-                                                    for="<?= $fileInputId ?>"
-                                                    onclick="triggerFileInput('<?= $fileInputId ?>')">
+                                        <form method="POST" class='csv-input-from' enctype="multipart/form-data" id="<?= $formID ?>">
+                                            <div class="file-submission-view" id="<?= $subject->SubjectCode ?>_S_assestment">
+                                                <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon" for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
                                                 <br>
                                                 <input type='text' value='<?= $formID ?>' name='formID' hidden>
                                                 <input type='text' value='assestment' name='type' hidden>
-                                                <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode'
-                                                    hidden>
-                                                <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
-                                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','assestment','<?= $submitViewIdAS ?>','<?= $uploadedViewIdAS ?>')">
-                                                <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
-                                                        class="browse-label">browse</label></br> assignment results.</p>
-                                                <?php if (!empty($errors['marks'])): ?>
+                                                <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode' hidden>
+                                                <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv" onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','assestment','<?= $submitViewIdAS ?>','<?= $uploadedViewIdAS ?>')">
+                                                <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>" class="browse-label">browse</label></br> assignment results.</p>
+                                                <?php if (!empty($errors['marks'])) : ?>
                                                     <div class="user-error" for="marks">
                                                         <?= $errors['marks'] ?>
                                                     </div>
                                                 <?php endif; ?>
                                             </div>
-                                            <div class="file-uploaded-view remove "
-                                                id="<?= $subject->SubjectCode ?>_R_assestment">
+                                            <div class="file-uploaded-view remove " id="<?= $subject->SubjectCode ?>_R_assestment">
                                                 <div class="file-info-container">
                                                     <div class="file-uploded-icon"></div>
-                                                    <span class="uploaded-file-name"
-                                                        id="<?= $subject->SubjectCode ?>_assestment_FN">[File
+                                                    <span class="uploaded-file-name" id="<?= $subject->SubjectCode ?>_assestment_FN">[File
                                                         Name]</span>
                                                 </div>
                                                 <div class="button-container">
-                                                    <button class="btn-secondary-download" name="sub1_exam-res"
-                                                        type="button"
-                                                        onclick="downloadResultSheet('<?= $subject->SubjectCode ?>', '<?= $examId ?>' , 'assestment')">Download</button>
-                                                    <button class="btn-secondary-delete" name="sub1_exam-res" type="button"
-                                                        onclick="deleteSubmitFile(event,'<?= $submitViewIdAS ?>','<?= $uploadedViewIdAS ?>','<?= $subject->SubjectCode ?>','<?= $formID ?>','assestment')">Delete</button>
+                                                    <button class="btn-secondary-download" name="sub1_exam-res" type="button" onclick="downloadResultSheet('<?= $subject->SubjectCode ?>', '<?= $examId ?>' , 'assestment')">Download</button>
+                                                    <button class="btn-secondary-delete" name="sub1_exam-res" type="button" onclick="deleteSubmitFile(event,'<?= $submitViewIdAS ?>','<?= $uploadedViewIdAS ?>','<?= $subject->SubjectCode ?>','<?= $formID ?>','assestment')">Delete</button>
                                                 </div>
                                                 <input id="fileInputId" type="file" style="display: none;">
                                                 <label class="text1" style="display: none;"></label>
@@ -875,46 +858,32 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                                 $uploadedViewId1 = $subject->SubjectCode . "_R_examiner1";
                                 ?>
                                 <div class="file-input-wraper">
-                                    <div class="dashed-container-2" id="<?= $containerId ?>"
-                                        ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)"
-                                        ondragleave="handleDragLeave(event)"
-                                        ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>', 'examiner1')">
+                                    <div class="dashed-container-2" id="<?= $containerId ?>" ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>', 'examiner1')">
                                         <div class='marks-type'>Examiner 01 Marks </div>
-                                        <form method="POST" class='csv-input-from' enctype="multipart/form-data"
-                                            id="<?= $formID ?>">
+                                        <form method="POST" class='csv-input-from' enctype="multipart/form-data" id="<?= $formID ?>">
                                             <div class="file-submission-view" id="<?= $subject->SubjectCode ?>_S_examiner1">
-                                                <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
-                                                    for="<?= $fileInputId ?>"
-                                                    onclick="triggerFileInput('<?= $fileInputId ?>')">
+                                                <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon" for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
                                                 <br>
                                                 <input type='text' value='<?= $formID ?>' name='formID' hidden>
                                                 <input type='text' value='examiner2' name='type' hidden>
-                                                <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode'
-                                                    hidden>
-                                                <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
-                                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner1','<?= $submitViewId1 ?>','<?= $uploadedViewId1 ?>')">
-                                                <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
-                                                        class="browse-label">browse</label></br> Examiner 01 results.</p>
-                                                <?php if (!empty($errors['marks'])): ?>
+                                                <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode' hidden>
+                                                <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv" onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner1','<?= $submitViewId1 ?>','<?= $uploadedViewId1 ?>')">
+                                                <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>" class="browse-label">browse</label></br> Examiner 01 results.</p>
+                                                <?php if (!empty($errors['marks'])) : ?>
                                                     <div class="user-error" for="marks">
                                                         <?= $errors['marks'] ?>
                                                     </div>
                                                 <?php endif; ?>
                                             </div>
-                                            <div class="file-uploaded-view remove "
-                                                id="<?= $subject->SubjectCode ?>_R_examiner1">
+                                            <div class="file-uploaded-view remove " id="<?= $subject->SubjectCode ?>_R_examiner1">
                                                 <div class="file-info-container">
                                                     <div class="file-uploded-icon"></div>
-                                                    <span class="uploaded-file-name"
-                                                        id="<?= $subject->SubjectCode ?>_examiner1_FN">[File
+                                                    <span class="uploaded-file-name" id="<?= $subject->SubjectCode ?>_examiner1_FN">[File
                                                         Name]</span>
                                                 </div>
                                                 <div class="button-container">
-                                                    <button class="btn-secondary-download" name="sub1_exam-res"
-                                                        type="button"
-                                                        onclick="downloadResultSheet('<?= $subject->SubjectCode ?>', '<?= $examId ?>' , 'examiner1')">Download</button>
-                                                    <button class="btn-secondary-delete" name="sub1_exam-res" type="button"
-                                                        onclick="deleteSubmitFile(event,'<?= $submitViewIdAS ?>','<?= $uploadedViewIdAS ?>','<?= $subject->SubjectCode ?>','<?= $formID ?>','examiner1')">Delete</button>
+                                                    <button class="btn-secondary-download" name="sub1_exam-res" type="button" onclick="downloadResultSheet('<?= $subject->SubjectCode ?>', '<?= $examId ?>' , 'examiner1')">Download</button>
+                                                    <button class="btn-secondary-delete" name="sub1_exam-res" type="button" onclick="deleteSubmitFile(event,'<?= $submitViewIdAS ?>','<?= $uploadedViewIdAS ?>','<?= $subject->SubjectCode ?>','<?= $formID ?>','examiner1')">Delete</button>
                                                 </div>
                                                 <input id="fileInputId" type="file" style="display: none;">
                                                 <label class="text1" style="display: none;"></label>
@@ -930,46 +899,32 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                                 $uploadedViewId2 = $subject->SubjectCode . "_R_examiner2";
                                 ?>
                                 <div class="file-input-wraper">
-                                    <div class="dashed-container-3" id="<?= $containerId ?>"
-                                        ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)"
-                                        ondragleave="handleDragLeave(event)"
-                                        ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>', 'examiner2')">
+                                    <div class="dashed-container-3" id="<?= $containerId ?>" ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>', 'examiner2')">
                                         <div class='marks-type'>Examiner 02 Marks </div>
-                                        <form method="POST" class='csv-input-from' enctype="multipart/form-data"
-                                            id="<?= $formID ?>">
+                                        <form method="POST" class='csv-input-from' enctype="multipart/form-data" id="<?= $formID ?>">
                                             <div class="file-submission-view" id="<?= $subject->SubjectCode ?>_S_examiner2">
-                                                <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
-                                                    for="<?= $fileInputId ?>"
-                                                    onclick="triggerFileInput('<?= $fileInputId ?>')">
+                                                <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon" for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
                                                 <br>
                                                 <input type='text' value='<?= $formID ?>' name='formID' hidden>
                                                 <input type='text' value='examiner2' name='type' hidden>
-                                                <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode'
-                                                    hidden>
-                                                <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
-                                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner2','<?= $submitViewId2 ?>','<?= $uploadedViewId2 ?>')">
-                                                <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
-                                                        class="browse-label">browse</label></br> Examiner 02 results.</p>
-                                                <?php if (!empty($errors['marks'])): ?>
+                                                <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode' hidden>
+                                                <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv" onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner2','<?= $submitViewId2 ?>','<?= $uploadedViewId2 ?>')">
+                                                <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>" class="browse-label">browse</label></br> Examiner 02 results.</p>
+                                                <?php if (!empty($errors['marks'])) : ?>
                                                     <div class="user-error" for="marks">
                                                         <?= $errors['marks'] ?>
                                                     </div>
                                                 <?php endif; ?>
                                             </div>
-                                            <div class="file-uploaded-view remove "
-                                                id="<?= $subject->SubjectCode ?>_R_examiner2">
+                                            <div class="file-uploaded-view remove " id="<?= $subject->SubjectCode ?>_R_examiner2">
                                                 <div class="file-info-container">
                                                     <div class="file-uploded-icon"></div>
-                                                    <span class="uploaded-file-name"
-                                                        id="<?= $subject->SubjectCode ?>_examiner2_FN">[File
+                                                    <span class="uploaded-file-name" id="<?= $subject->SubjectCode ?>_examiner2_FN">[File
                                                         Name]</span>
                                                 </div>
                                                 <div class="button-container">
-                                                    <button class="btn-secondary-download" name="sub1_exam-res"
-                                                        type="button"
-                                                        onclick="downloadResultSheet('<?= $subject->SubjectCode ?>', '<?= $examId ?>' , 'examiner2')">Download</button>
-                                                    <button class="btn-secondary-delete" name="sub1_exam-res" type="button"
-                                                        onclick="deleteSubmitFile(event,'<?= $submitViewIdAS ?>','<?= $uploadedViewIdAS ?>','<?= $subject->SubjectCode ?>','<?= $formID ?>','examiner2')">Delete</button>
+                                                    <button class="btn-secondary-download" name="sub1_exam-res" type="button" onclick="downloadResultSheet('<?= $subject->SubjectCode ?>', '<?= $examId ?>' , 'examiner2')">Download</button>
+                                                    <button class="btn-secondary-delete" name="sub1_exam-res" type="button" onclick="deleteSubmitFile(event,'<?= $submitViewIdAS ?>','<?= $uploadedViewIdAS ?>','<?= $subject->SubjectCode ?>','<?= $formID ?>','examiner2')">Delete</button>
                                                 </div>
                                                 <input id="fileInputId" type="file" style="display: none;">
                                                 <label class="text1" style="display: none;"></label>
@@ -985,46 +940,32 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                                 $uploadedViewId3 = $subject->SubjectCode . "_R_examiner3";
                                 ?>
                                 <div class="file-input-wraper">
-                                    <div class="dashed-container-4" id="<?= $containerId ?>"
-                                        ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)"
-                                        ondragleave="handleDragLeave(event)"
-                                        ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner3')">
+                                    <div class="dashed-container-4" id="<?= $containerId ?>" ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, '<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner3')">
                                         <div class='marks-type'>Examiner 03 Marks </div>
-                                        <form method="POST" class='csv-input-from' enctype="multipart/form-data"
-                                            id="<?= $formID ?>">
+                                        <form method="POST" class='csv-input-from' enctype="multipart/form-data" id="<?= $formID ?>">
                                             <div class="file-submission-view" id="<?= $subject->SubjectCode ?>_S_examiner3">
-                                                <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon"
-                                                    for="<?= $fileInputId ?>"
-                                                    onclick="triggerFileInput('<?= $fileInputId ?>')">
+                                                <img src='<?= ROOT ?>/assets/file-icon.png' class="file-input-icon" for="<?= $fileInputId ?>" onclick="triggerFileInput('<?= $fileInputId ?>')">
                                                 <br>
                                                 <input type='text' value='<?= $formID ?>' name='formID' hidden>
                                                 <input type='text' value='examiner3' name='type' hidden>
-                                                <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode'
-                                                    hidden>
-                                                <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv"
-                                                    onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner3','<?= $submitViewId3 ?>','<?= $uploadedViewId3 ?>')">
-                                                <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>"
-                                                        class="browse-label">browse</label></br> Examiner 03 results.</p>
-                                                <?php if (!empty($errors['marks'])): ?>
+                                                <input type='text' value='<?= $subject->SubjectCode ?>' name='subjectCode' hidden>
+                                                <input type="file" id="<?= $fileInputId ?>" name="file" accept=".csv" onchange="showSubmitButton('<?= $containerId ?>', '<?= $fileInputId ?>' , '<?= $formID ?>' , '<?= $subject->SubjectCode ?>','examiner3','<?= $submitViewId3 ?>','<?= $uploadedViewId3 ?>')">
+                                                <p class="text1">Drag and drop or <label for="<?= $fileInputId ?>" class="browse-label">browse</label></br> Examiner 03 results.</p>
+                                                <?php if (!empty($errors['marks'])) : ?>
                                                     <div class="user-error" for="marks">
                                                         <?= $errors['marks'] ?>
                                                     </div>
                                                 <?php endif; ?>
                                             </div>
-                                            <div class="file-uploaded-view remove "
-                                                id="<?= $subject->SubjectCode ?>_R_examiner3">
+                                            <div class="file-uploaded-view remove " id="<?= $subject->SubjectCode ?>_R_examiner3">
                                                 <div class="file-info-container">
                                                     <div class="file-uploded-icon"></div>
-                                                    <span class="uploaded-file-name"
-                                                        id="<?= $subject->SubjectCode ?>_examiner3_FN">[File
+                                                    <span class="uploaded-file-name" id="<?= $subject->SubjectCode ?>_examiner3_FN">[File
                                                         Name]</span>
                                                 </div>
                                                 <div class="button-container">
-                                                    <button class="btn-secondary-download" name="sub1_exam-res"
-                                                        type="button"
-                                                        onclick="downloadResultSheet('<?= $subject->SubjectCode ?>', '<?= $examId ?>' , 'examiner3')">Download</button>
-                                                    <button class="btn-secondary-delete" name="sub1_exam-res" type="button"
-                                                        onclick="deleteSubmitFile(event,'<?= $submitViewIdAS ?>','<?= $uploadedViewIdAS ?>','<?= $subject->SubjectCode ?>','<?= $formID ?>','examiner3')">Delete</button>
+                                                    <button class="btn-secondary-download" name="sub1_exam-res" type="button" onclick="downloadResultSheet('<?= $subject->SubjectCode ?>', '<?= $examId ?>' , 'examiner3')">Download</button>
+                                                    <button class="btn-secondary-delete" name="sub1_exam-res" type="button" onclick="deleteSubmitFile(event,'<?= $submitViewIdAS ?>','<?= $uploadedViewIdAS ?>','<?= $subject->SubjectCode ?>','<?= $formID ?>','examiner3')">Delete</button>
                                                 </div>
                                                 <input id="fileInputId" type="file" style="display: none;">
                                                 <label class="text1" style="display: none;"></label>
@@ -1063,8 +1004,6 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
 
 <script>
-
-
     //delete the uploaded file
     function deleteSubmitFile(event, submitViewId, uploadedViewId, subCode, formId, type) {
         event.preventDefault();
@@ -1227,13 +1166,12 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                 deleteButton.name = 'sub1_exam-res';
                 deleteButton.type = 'button';
                 deleteButton.id = 'cancel' + formId;
-                deleteButton.addEventListener('click', function () {
+                deleteButton.addEventListener('click', function() {
                     deleteFile(container, fileInput, type, subCode);
                 });
 
                 console.log('delete Buttondasda');
-            }
-            else {
+            } else {
                 console.log('delete Button flex');
                 document.getElementById(deleteButtonId).style.display = 'flex';
             }
@@ -1248,11 +1186,10 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                 submitButton.name = 'sub1_exam-res';
                 submitButton.type = 'button';
                 submitButton.id = 'button_' + formId;
-                submitButton.addEventListener('click', function () {
+                submitButton.addEventListener('click', function() {
                     uploadFile(fileInputId, submitButton.id, formId, subCode, type, submitViewId, uploadedViewId);
                 });
-            }
-            else {
+            } else {
 
                 document.getElementById(submitButtonId).style.display = 'flex';
             }
@@ -1280,8 +1217,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                 // Append the container to the container
                 form.appendChild(fileInfoContainer);
 
-            }
-            else {
+            } else {
                 document.getElementById(fileContainerId).style.display = 'flex';
 
             }
@@ -1302,8 +1238,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                 buttonContainer.appendChild(submitButton);
 
 
-            }
-            else {
+            } else {
                 console.log('append buttonsdfasfsa');
                 document.getElementById(btnContainerId).style.display = 'flex';
             }
@@ -1324,7 +1259,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                 fileIcon.src = '<?= ROOT ?>/assets/file-icon.png';
                 fileIcon.className = 'file-input-icon';
                 fileIcon.setAttribute('for', fileInputId);
-                fileIcon.addEventListener('click', function () {
+                fileIcon.addEventListener('click', function() {
                     triggerFileInput(fileInputId);
                 });
                 container.appendChild(fileIcon);
@@ -1364,9 +1299,9 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
         var targetURL = '<?= ROOT ?>sar/examination/resultsupload';
 
         fetch(targetURL, {
-            method: 'POST',
-            body: formData,
-        })
+                method: 'POST',
+                body: formData,
+            })
             .then(response => {
                 if (!response.ok) {
                     console.log('Res = '.response);
@@ -1474,12 +1409,8 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
         // Remove the anchor element from the document
         document.body.removeChild(a);
     }
-
-
 </script>
 <script>
-
-
     // Extract values from the parsed HTML
 
     // var examiner3 = true;
