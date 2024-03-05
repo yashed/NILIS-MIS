@@ -210,11 +210,11 @@ $data['role'] = $role;
 
 
 
-    .dropdown {
-        width: 200px;
+    .exam-create-dropdown {
+        width: 15vw;
     }
 
-    .dropdown-content {
+    .exam-create-dropdown-content {
 
         display: none;
         position: absolute;
@@ -222,14 +222,14 @@ $data['role'] = $role;
         border: 1px solid rgba(23, 55, 110, 0.46);
         box-shadow: 0px 8px 11px 0px rgba(0, 0, 0, 0.15);
         border-radius: 12px;
-        min-width: 200px;
+        width: 15vw;
         z-index: 1;
 
     }
 
-    .dropdown-content a {
+    .exam-create-dropdown-content a {
 
-        font-size: 14px;
+        font-size: 1vw;
         color: black;
         padding: 12px 16px;
         text-decoration: none;
@@ -238,12 +238,12 @@ $data['role'] = $role;
         text-align: center;
     }
 
-    .dropdown-content a:hover {
+    .exam-create-dropdown-content a:hover {
         background-color: #E0E0E0;
         border-radius: 12px;
     }
 
-    .dropdown:hover .dropdown-content {
+    .exam-create-dropdown:hover .exam-create-dropdown-content {
         display: block;
     }
 
@@ -261,7 +261,7 @@ $data['role'] = $role;
     }
 
     .bt-name {
-        font-size: 16px;
+        font-size: 1vw;
         font-weight: 500px;
     }
 
@@ -287,11 +287,11 @@ $data['role'] = $role;
                 <div class="exam-sub-title">
                     Upcoming Examination
                 </div>
-                <div class="dropdown">
+                <div class="exam-create-dropdown">
                     <button class="dropbtn">
                         <div class="bt-name">Create Examination</div>
                     </button>
-                    <div class="dropdown-content">
+                    <div class="exam-create-dropdown-content">
                         <a href="<?= ROOT ?>sar/examination/create/1">Normal Examination</a>
 
                         <a href="#">Special Examination</a>

@@ -12,12 +12,20 @@
         body {
             width: 100%;
             background-color: #17376e;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            /* align-items: center; */
+            /* margin: 0px; */
+            align-content: space-between;
+            justify-content: center;
         }
+
 
         .flex-container {
             display: flex;
-            min-height: 100%;
-            /* Use min-height to ensure it takes up at least the full viewport height */
+            flex-direction: row;
+            width: 100%;
             align-items: center;
             background-color: #17376e;
         }
@@ -29,12 +37,10 @@
             background-color: white;
             font-style: normal;
             border-radius: 50px 0 0 50px;
-            width: 100%;
-            /* Adjusted to full width */
+            width: 45%;
             max-width: 698px;
-            /* Set a maximum width */
             text-align: center;
-            height: 100vh;
+            height: 98%;
             /* line-height: 100%; */
             font-size: 28px;
             margin-left: auto;
@@ -54,17 +60,12 @@
         .body_01 {
             display: flex;
             flex-direction: column;
-            align-items: center;
             gap: 30px;
-            font-family: "Montserrat", sans-serif;
-            font-weight: 900;
-            font-size: 25px;
             color: white;
             justify-content: center;
-            min-height: 100%;
-            /* Use min-height to ensure it takes up at least the full viewport height */
-            width: 100%;
-            padding: 20px;
+            width: 50%;
+            align-items: center;
+            margin: 20px;
         }
 
         .title {
@@ -72,16 +73,17 @@
             font-family: "Montserrat", sans-serif;
             font-weight: 700;
             line-height: 1.2;
+            font-size: 3.7vw;
         }
 
         .img1 {
-            width: 100%;
+            width: 28vw;
             max-width: 350px;
             height: auto;
         }
 
         .img2 {
-            width: 100%;
+            width: 30vw;
             max-width: 360px;
             height: auto;
         }
@@ -95,14 +97,14 @@
         }
 
         .input {
-            width: 105%;
+            width: 35vw;
             height: 50px;
             margin-top: 20px;
             font-family: "Poppins";
             font-size: 16px;
             font-weight: 350;
             padding-left: 20px;
-            border-radius: 15px;
+            border-radius: 13px;
             border: 1px;
             border-color: rgba(255, 255, 255, 0.2);
             background-color: #f5f5f5;
@@ -145,10 +147,13 @@
 
         button {
             color: #fff;
-            width: 105%;
-            height: 6vh;
+
+            width: 35vw;
+            height: 3.5vw;
             padding: 8px 22px;
-            border-radius: 12px;
+            border-radius: 10px;
+            /* height: 6vh; */
+
             background: #17376e;
             box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
             border: 0px;
@@ -193,10 +198,10 @@
         </div>
         <div class="body_02">
             <div class="body_02_1">
-                <h1 class="login">
+                <div class="login">
                     Sign in to <br />
                     your account
-                </h1>
+                </div>
                 <form method="post">
                     <input value="<?= set_value('username') ?>" class="input" type="text" placeholder="Username"
                         name="username" required />

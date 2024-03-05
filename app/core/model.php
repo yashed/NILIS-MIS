@@ -11,8 +11,7 @@ class Model extends Database
     protected $allowedColumns = [];
 
     public function insert($data)
-    {
-        // Convert object to array if $data is an object
+    { // Convert object to array if $data is an object
         if (is_object($data)) {
             $data = (array) $data;
         }
@@ -21,26 +20,26 @@ class Model extends Database
         if (empty($data)) {
             return false;
         }
+
         // Check for allowed columns
         if (!empty($this->allowedColumns)) {
             foreach ($data as $key => $value) {
                 if (!in_array($key, $this->allowedColumns)) {
+
                     return false;
                 }
             }
         }
+
         // Get array keys from data
         $keys = array_keys($data);
 
         //define query to add user data
         $query = "insert into " . $this->table;
-
+        
         //add column names and values to the query (impolad function devide data by given character in array)
         $query .= "(" . implode(",", $keys) . ") values (:" . implode(",:", $keys) . ")";
-        // show($query);
-        // show($data);
-
-
+      
 
         //call query function to execute the query
         $this->query($query, $data);

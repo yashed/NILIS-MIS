@@ -20,6 +20,7 @@ class User extends Model
           'date',
           'cpassword',
           'newpassword',
+          'status'
 
      ];
 
@@ -144,13 +145,33 @@ class User extends Model
           return false;
 
      }
-    
+
+     public function validatePassword($data)
+     {
+
+          $this->errors = [];
+          if (!empty($data)) {
+               if (empty($data['newPassword'])) {
+                    $this->errors['newPassword'] = 'New Password is required';
+
+               }
+               if (empty($data['Cpassword'])) {
+                    $this->errors['cpassword'] = 'Confirm Password is required';
+
+               } else {
+                    if ($data['Cpassword'] != $data['newPassword']) {
+                         $this->errors['cpassword'] = 'Password do not match';
+
+                    }
+
+               }
+
+               if (empty($this->errors)) {
+
+                    return true;
+               }
+               return false;
+          }
+     }
 }
-
-     
-
-
-
-
-
 ?>

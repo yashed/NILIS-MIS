@@ -24,10 +24,13 @@ class Database
 
     public function query($query, $data = [], $type = 'object')
     {
+    
         $con = $this->connect();
         $stm = $con->prepare($query);
+      
         if ($stm) {
             $check = $stm->execute($data);
+            
             if ($check) {
 
                 if ($type == 'object') {
@@ -60,6 +63,7 @@ class Database
             password varchar(255) NOT NULL,
             cpassword varchar(255) NOT NULL,
             newpassword varchar(255) NOT NULL,
+            status varchar(20) NOT NULL,
             date date DEFAULT NULL,
             PRIMARY KEY (id),
             KEY email (email),
@@ -270,10 +274,10 @@ class Database
             `subjectCode` varchar(50) NOT NULL,
             `degreeID` int(11) NOT NULL,
             `examID` int(11) NOT NULL,
-            `examiner1Marks` int(10) DEFAULT NULL,
-            `examiner2Marks` int(10) DEFAULT NULL,
-            `examiner3Marks` int(10) DEFAULT NULL,
-            `assessmentMarks` int(10) DEFAULT NULL,
+            `examiner1Marks` float DEFAULT NULL,
+            `examiner2Marks` float DEFAULT NULL,
+            `examiner3Marks` float DEFAULT NULL,
+            `assessmentMarks` float DEFAULT NULL,
             PRIMARY KEY (`id`),
             FOREIGN KEY (`studentIndexNo`) REFERENCES `student` (`indexNo`),
             FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`),
@@ -309,12 +313,11 @@ class Database
             `subjectCode` varchar(50) NOT NULL,
             `examID` int(11) NOT NULL,
             `degreeID` int(11) NOT NULL,
-            `finalMarks` int(10) DEFAULT NULL,
+            `finalMarks` float  NOT NULL,
             `grade` varchar(10) DEFAULT NULL,
             PRIMARY KEY (`id`),
             FOREIGN KEY (`studentIndexNo`) REFERENCES `student` (`indexNo`),
             FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`),
-            FOREIGN KEY (`subjectCode`) REFERENCES `subject` (`SubjectCode`),
             FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         ";
@@ -386,86 +389,130 @@ class Database
         ";
         $this->query($query);
 
-        $query = "
-        CREATE TABLE IF NOT EXISTS `notifications` (
-            `notify_id` int(11) NOT NULL,
-            `description` varchar(255) NOT NULL,
-            `type` varchar(50) NOT NULL,
-            `msg_type` varchar(100) NOT NULL
-          ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-           ";
-        $this->query($query);
+
     }
 
-    public function create_procedure()
+    public function createFinalMarksTrigger()
     {
-        // Procedure creation query
-        $query = "
-        CREATE PROCEDURE IF NOT EXISTS `InsertNotification`()
-        BEGIN
-        DECLARE currentDate DATE;
-        DECLARE eventStartDate DATE;
-        DECLARE userId INT;
-        DECLARE daysRemaining INT;
-        DECLARE degreeName TEXT; -- Specify the length for VARCHAR
+        // Create the trigger creation query
+        $triggerQuery = "
+        DELIMITER $$
 
-        DECLARE str1 VARCHAR(255); -- Declare variables for string concatenation
-        DECLARE str2 VARCHAR(255);
+CREATE TRIGGER calculate_final_marks
+AFTER INSERT ON marks FOR EACH ROW
+BEGIN
+    DECLARE final_marks_value DECIMAL(10, 2);
+    DECLARE examiner1_marks_value INT;
+    DECLARE examiner2_marks_value INT;
+    DECLARE examiner3_marks_value INT;
+    DECLARE assessment_marks_value INT;
+    DECLARE min_gap_marks INT;
+    
+    -- Calculate final marks based on the given conditions
+    IF NEW.examiner3Marks IS NOT NULL AND NEW.examiner3Marks != -1 THEN
+        -- Calculate the gap between each pair of marks
+        SET examiner1_marks_value = NEW.examiner1Marks;
+        SET examiner2_marks_value = NEW.examiner2Marks;
+        SET examiner3_marks_value = NEW.examiner3Marks;
+        
+        -- Get the minimum gap marks
+        SET min_gap_marks = LEAST(ABS(examiner1_marks_value - examiner2_marks_value),
+                                  ABS(examiner2_marks_value - examiner3_marks_value),
+                                  ABS(examiner1_marks_value - examiner3_marks_value));
+        
+        -- Determine which pair has the minimum gap marks and adjust accordingly
+        IF ABS(examiner1_marks_value - examiner3_marks_value) = min_gap_marks THEN
+            SET examiner2_marks_value = examiner3_marks_value;
+        ELSEIF ABS(examiner2_marks_value - examiner3_marks_value) = min_gap_marks THEN
+            SET examiner1_marks_value = examiner2_marks_value;
+        
+        END IF;
+        
+        -- Calculate final marks
+        SET final_marks_value = (examiner1_marks_value + examiner2_marks_value) / 2 * 0.5;
+    ELSE
+        SET final_marks_value = (NEW.examiner1Marks + NEW.examiner2Marks) / 2 * 0.5;
+    END IF;
+    
+    SET final_marks_value = final_marks_value + NEW.assessmentMarks * 0.5;
+    
+    -- Insert the calculated final marks into the final_marks table if it does not already exist
+    IF NOT EXISTS (
+        SELECT 1 FROM final_marks 
+        WHERE studentIndexNo = NEW.studentIndexNo 
+        AND subjectCode = NEW.subjectCode 
+        AND examID = NEW.examID
+    ) THEN
+        INSERT INTO final_marks (studentIndexNo, subjectCode, examID, degreeID, finalMarks)
+        VALUES (NEW.studentIndexNo, NEW.subjectCode, NEW.examID, NEW.degreeID, final_marks_value);
+    END IF;
+END$$
 
-        DECLARE eventCursor CURSOR FOR
-            SELECT dt.StartingDate, d.DegreeName
-            FROM degree_timetable AS dt
-            JOIN degree AS d ON dt.DegreeID = d.DegreeID;
+DELIMITER ;
 
-        -- Set the current date
-        SET currentDate = CURDATE();
-
-        OPEN eventCursor;
-
-        read_loop: LOOP
-            FETCH eventCursor INTO eventStartDate, degreeName;
-            IF eventStartDate IS NULL THEN
-                LEAVE read_loop;
-            END IF;
-
-            -- Calculate the days remaining
-            SET daysRemaining = DATEDIFF(eventStartDate, currentDate);
-
-            -- Check if days remaining is less than or equal to 14 and greater than 0
-            IF (daysRemaining <= 14 AND daysRemaining > 0) THEN
-               -- Construct notification message
-                SET str1 = CONCAT('There will be an upcoming examination scheduled on ', eventStartDate);
-                SET str2 = CONCAT(' for the diploma ', degreeName, ' examination');
-
-                -- Print concatenated strings to console (optional)
-                -- SELECT CONCAT(str1, str2);
-
-                -- Insert record into notifications table
-                INSERT INTO notifications (description, type, msg_type,button_text,button_link)
-                VALUES (CONCAT(str1, str2), 'Examination', 'msg1', 'create examination','sar/examination');
-            END IF;
-        END LOOP;
-
-        CLOSE eventCursor;
-    END;
         ";
 
-        
-        $this->query($query);
+
+        // Execute the trigger creation query
+        $this->query($triggerQuery);
     }
 
-    public function create_event()
+    public function createFinalMarksUpdateTrigger()
     {
-        // Event creation query
         $query = "
-        CREATE EVENT IF NOT EXISTS `daily_event` 
-        ON SCHEDULE EVERY 30 MINUTE STARTS '2024-02-20 08:34:00' 
-        ON COMPLETION NOT PRESERVE ENABLE 
-        DO 
-            CALL InsertNotification();
-        ";
+        DELIMITER $$
 
+CREATE TRIGGER update_final_marks
+AFTER UPDATE ON marks FOR EACH ROW
+BEGIN
+    DECLARE final_marks_value DECIMAL(10, 2);
+    DECLARE examiner1_marks_value INT;
+    DECLARE examiner2_marks_value INT;
+    DECLARE examiner3_marks_value INT;
+    DECLARE assessment_marks_value INT;
+    DECLARE min_gap_marks INT;
+    
+    -- Calculate final marks based on the given conditions
+    IF NEW.examiner3Marks IS NOT NULL AND NEW.examiner3Marks != -1 THEN
+        -- Calculate the gap between each pair of marks
+        SET examiner1_marks_value = NEW.examiner1Marks;
+        SET examiner2_marks_value = NEW.examiner2Marks;
+        SET examiner3_marks_value = NEW.examiner3Marks;
         
+        -- Get the minimum gap marks
+        SET min_gap_marks = LEAST(ABS(examiner1_marks_value - examiner2_marks_value),
+                                  ABS(examiner2_marks_value - examiner3_marks_value),
+                                  ABS(examiner1_marks_value - examiner3_marks_value));
+        
+        -- Determine which pair has the minimum gap marks and adjust accordingly
+        IF ABS(examiner1_marks_value - examiner3_marks_value) = min_gap_marks THEN
+            SET examiner2_marks_value = examiner3_marks_value;
+        ELSEIF ABS(examiner2_marks_value - examiner3_marks_value) = min_gap_marks THEN
+            SET examiner1_marks_value = examiner2_marks_value;
+        END IF;
+        
+        -- Calculate final marks
+        SET final_marks_value = (examiner1_marks_value + examiner2_marks_value) / 2 * 0.5;
+    ELSE
+        SET final_marks_value = (NEW.examiner1Marks + NEW.examiner2Marks) / 2 * 0.5;
+    END IF;
+    
+    SET final_marks_value = final_marks_value + NEW.assessmentMarks * 0.5;
+    
+    -- Update the final marks in the final_marks table if it exists
+    UPDATE final_marks 
+    SET finalMarks = final_marks_value 
+    WHERE studentIndexNo = NEW.studentIndexNo 
+    AND subjectCode = NEW.subjectCode 
+    AND examID = NEW.examID;
+    
+END$$
+
+DELIMITER ;
+";
+
         $this->query($query);
     }
+
+
 }
