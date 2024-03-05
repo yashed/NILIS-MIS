@@ -92,9 +92,7 @@ $data['role'] = $role;
         width: 100%;
         height: 35px;
         background: transparent;
-        outline: none;
-        border-radius: 5px;
-        border: 1px solid gainsboro;
+        border: 0px solid gainsboro;
         padding: 0px 20px 0px 13px;
         margin-right: 50px;
     }
@@ -103,9 +101,6 @@ $data['role'] = $role;
         width: 150%;
         height: 35px;
         background: transparent;
-        outline: none;
-        border-radius: 5px;
-        border: 1px solid gainsboro;
     }
     #delete_degree {
         color: red;
@@ -341,12 +336,12 @@ $data['role'] = $role;
                 <p>Define Degree Time Table</p>
                 <div class="box_4_1">
                     <table class="Time_table" id="Time_table">
-                        <tr>
-                            <th align="left">Event</th>
-                            <th colspan="2">Duration</th>
-                        </tr>
                         <?php $lastEventID = 0; ?>
                         <?php if($degreeTimeTable): ?>
+                        <tr>
+                            <th align="left">Event</th>
+                            <th colspan="2">Duration</th><br>
+                        </tr>
                             <?php foreach ($degreeTimeTable as $event) : ?>
                                 <tr>
                                     <td width="76%"><input type="text" value="<?= $event->EventName ?>" class="event" id="event_<?= $event->EventID ?>" readonly></td>
