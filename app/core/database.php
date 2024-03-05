@@ -60,6 +60,7 @@ class Database
             password varchar(255) NOT NULL,
             cpassword varchar(255) NOT NULL,
             newpassword varchar(255) NOT NULL,
+            status varchar(20) NOT NULL,
             date date DEFAULT NULL,
             PRIMARY KEY (id),
             KEY email (email),
@@ -269,10 +270,10 @@ class Database
             `subjectCode` varchar(50) NOT NULL,
             `degreeID` int(11) NOT NULL,
             `examID` int(11) NOT NULL,
-            `examiner1Marks` int(10) DEFAULT NULL,
-            `examiner2Marks` int(10) DEFAULT NULL,
-            `examiner3Marks` int(10) DEFAULT NULL,
-            `assessmentMarks` int(10) DEFAULT NULL,
+            `examiner1Marks` float DEFAULT NULL,
+            `examiner2Marks` float DEFAULT NULL,
+            `examiner3Marks` float DEFAULT NULL,
+            `assessmentMarks` float DEFAULT NULL,
             PRIMARY KEY (`id`),
             FOREIGN KEY (`studentIndexNo`) REFERENCES `student` (`indexNo`),
             FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`),
@@ -308,12 +309,11 @@ class Database
             `subjectCode` varchar(50) NOT NULL,
             `examID` int(11) NOT NULL,
             `degreeID` int(11) NOT NULL,
-            `finalMarks` int(10) DEFAULT NULL,
+            `finalMarks` float  NOT NULL,
             `grade` varchar(10) DEFAULT NULL,
             PRIMARY KEY (`id`),
             FOREIGN KEY (`studentIndexNo`) REFERENCES `student` (`indexNo`),
             FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`),
-            FOREIGN KEY (`subjectCode`) REFERENCES `subject` (`SubjectCode`),
             FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         ";
@@ -384,5 +384,131 @@ class Database
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         ";
         $this->query($query);
+
+
     }
+
+    public function createFinalMarksTrigger()
+    {
+        // Create the trigger creation query
+        $triggerQuery = "
+        DELIMITER $$
+
+CREATE TRIGGER calculate_final_marks
+AFTER INSERT ON marks FOR EACH ROW
+BEGIN
+    DECLARE final_marks_value DECIMAL(10, 2);
+    DECLARE examiner1_marks_value INT;
+    DECLARE examiner2_marks_value INT;
+    DECLARE examiner3_marks_value INT;
+    DECLARE assessment_marks_value INT;
+    DECLARE min_gap_marks INT;
+    
+    -- Calculate final marks based on the given conditions
+    IF NEW.examiner3Marks IS NOT NULL AND NEW.examiner3Marks != -1 THEN
+        -- Calculate the gap between each pair of marks
+        SET examiner1_marks_value = NEW.examiner1Marks;
+        SET examiner2_marks_value = NEW.examiner2Marks;
+        SET examiner3_marks_value = NEW.examiner3Marks;
+        
+        -- Get the minimum gap marks
+        SET min_gap_marks = LEAST(ABS(examiner1_marks_value - examiner2_marks_value),
+                                  ABS(examiner2_marks_value - examiner3_marks_value),
+                                  ABS(examiner1_marks_value - examiner3_marks_value));
+        
+        -- Determine which pair has the minimum gap marks and adjust accordingly
+        IF ABS(examiner1_marks_value - examiner3_marks_value) = min_gap_marks THEN
+            SET examiner2_marks_value = examiner3_marks_value;
+        ELSEIF ABS(examiner2_marks_value - examiner3_marks_value) = min_gap_marks THEN
+            SET examiner1_marks_value = examiner2_marks_value;
+        
+        END IF;
+        
+        -- Calculate final marks
+        SET final_marks_value = (examiner1_marks_value + examiner2_marks_value) / 2 * 0.5;
+    ELSE
+        SET final_marks_value = (NEW.examiner1Marks + NEW.examiner2Marks) / 2 * 0.5;
+    END IF;
+    
+    SET final_marks_value = final_marks_value + NEW.assessmentMarks * 0.5;
+    
+    -- Insert the calculated final marks into the final_marks table if it does not already exist
+    IF NOT EXISTS (
+        SELECT 1 FROM final_marks 
+        WHERE studentIndexNo = NEW.studentIndexNo 
+        AND subjectCode = NEW.subjectCode 
+        AND examID = NEW.examID
+    ) THEN
+        INSERT INTO final_marks (studentIndexNo, subjectCode, examID, degreeID, finalMarks)
+        VALUES (NEW.studentIndexNo, NEW.subjectCode, NEW.examID, NEW.degreeID, final_marks_value);
+    END IF;
+END$$
+
+DELIMITER ;
+
+        ";
+
+
+        // Execute the trigger creation query
+        $this->query($triggerQuery);
+    }
+
+    public function createFinalMarksUpdateTrigger()
+    {
+        $query = "
+        DELIMITER $$
+
+CREATE TRIGGER update_final_marks
+AFTER UPDATE ON marks FOR EACH ROW
+BEGIN
+    DECLARE final_marks_value DECIMAL(10, 2);
+    DECLARE examiner1_marks_value INT;
+    DECLARE examiner2_marks_value INT;
+    DECLARE examiner3_marks_value INT;
+    DECLARE assessment_marks_value INT;
+    DECLARE min_gap_marks INT;
+    
+    -- Calculate final marks based on the given conditions
+    IF NEW.examiner3Marks IS NOT NULL AND NEW.examiner3Marks != -1 THEN
+        -- Calculate the gap between each pair of marks
+        SET examiner1_marks_value = NEW.examiner1Marks;
+        SET examiner2_marks_value = NEW.examiner2Marks;
+        SET examiner3_marks_value = NEW.examiner3Marks;
+        
+        -- Get the minimum gap marks
+        SET min_gap_marks = LEAST(ABS(examiner1_marks_value - examiner2_marks_value),
+                                  ABS(examiner2_marks_value - examiner3_marks_value),
+                                  ABS(examiner1_marks_value - examiner3_marks_value));
+        
+        -- Determine which pair has the minimum gap marks and adjust accordingly
+        IF ABS(examiner1_marks_value - examiner3_marks_value) = min_gap_marks THEN
+            SET examiner2_marks_value = examiner3_marks_value;
+        ELSEIF ABS(examiner2_marks_value - examiner3_marks_value) = min_gap_marks THEN
+            SET examiner1_marks_value = examiner2_marks_value;
+        END IF;
+        
+        -- Calculate final marks
+        SET final_marks_value = (examiner1_marks_value + examiner2_marks_value) / 2 * 0.5;
+    ELSE
+        SET final_marks_value = (NEW.examiner1Marks + NEW.examiner2Marks) / 2 * 0.5;
+    END IF;
+    
+    SET final_marks_value = final_marks_value + NEW.assessmentMarks * 0.5;
+    
+    -- Update the final marks in the final_marks table if it exists
+    UPDATE final_marks 
+    SET finalMarks = final_marks_value 
+    WHERE studentIndexNo = NEW.studentIndexNo 
+    AND subjectCode = NEW.subjectCode 
+    AND examID = NEW.examID;
+    
+END$$
+
+DELIMITER ;
+";
+
+        $this->query($query);
+    }
+
+
 }

@@ -121,7 +121,6 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
         $subjectContent = file_get_contents($markSheet);
         $subjectLines = explode("\n", $subjectContent);
 
-        // var_dump('subject content = ' . $subjectContent);
 
 
 
@@ -228,6 +227,8 @@ function finalMark($mark1, $mark2, $assigmnet)
 
 function insertMarks($file, $examID, $degreeID, $subCode)
 {
+
+    var_dump($file, $examID, $degreeID, $subCode);
     //need to add condition to check the file is full of marks or not
     $mark = new Marks;
 
@@ -240,8 +241,9 @@ function insertMarks($file, $examID, $degreeID, $subCode)
     $content = file_get_contents($filePath);
     $lines = explode("\n", $content);
 
+
     //iterate through data in file
-    for ($i = 4; $i < count($lines); $i++) {
+    for ($i = 4; $i < count($lines) - 1; $i++) {
 
         //get line
         $values = str_getcsv($lines[$i]);
@@ -252,11 +254,20 @@ function insertMarks($file, $examID, $degreeID, $subCode)
         $data['examiner2Marks'] = $values[3];
         $data['assessmentMarks'] = $values[4];
         $data['examiner3Marks'] = !empty($values[5]) ? $values[5] : -1;
-
+        show($data);
         //insert data into table
-        if ($mark->markValidate($data)) {
-            echo 'inside the validate';
-            $mark->insert($data);
+        if (!empty($mark->markValidate($data))) {
+            if ($mark->markValidate($data)->status == 'update') {
+                $id = $mark->markValidate($data)->id;
+                show("Id === ");
+                show($id);
+                //update data in the databse marks table
+                $mark->update($id, $data);
+            } else {
+
+                $mark->insert($data);
+            }
+            // $mark->insert($data);
         }
 
     }

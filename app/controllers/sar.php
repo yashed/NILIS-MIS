@@ -2,14 +2,16 @@
 
 class SAR extends Controller
 {
-    // function __construct()
-    // {
-    //     if (!Auth::is_dr()) {
-    //         message('You are not authorized to view this page');
-    //         redirect('login');
-    //     }
-    // }
-    public function index()
+    function __construct()
+    {
+        // if (!Auth::is_dr()) {
+        //     message('You are not authorized to view this page');
+        //     redirect('login');
+        // }
+
+    }
+
+    public function index($checkUser = false)
     {
         //uncoment this to add autherization to sar
         // if (!Auth::is_sar()) {
@@ -20,6 +22,7 @@ class SAR extends Controller
         $degree = new Degree();
 
         $data['degrees'] = $degree->findAll();
+        $data['checkUser'] = $checkUser;
 
         $this->view('sar-interfaces/sar-dashboard', $data);
     }
@@ -588,7 +591,7 @@ class SAR extends Controller
                     $head = 'Name of  Programme  : ' . $degreeID;
                     $title = 'Subject  : ' . $subject->SubjectName;
 
-                    $rowHeadings = ['Index No', 'Registration No', 'Examiner 01 Mark', 'Examiner 02 Marks', 'Assignment Marks'];
+                    $rowHeadings = ['Index No', 'Registration No', 'Examiner 01 Marks', 'Examiner 02 Marks', 'Assignment Marks', 'Examiner 03 Marks'];
                     $markSheet = 'assets/csv/output/MarkSheet_' . $subject->SubjectCode . '.csv';
                     $f = fopen($markSheet, 'w');
 
@@ -718,6 +721,7 @@ class SAR extends Controller
                             //enable examiner3 marks upload
                             // $data['examiner3'] = true;
                             foreach ($data['subjects'] as $subject) {
+                                var_dump('subject code = ' . $subject->SubjectCode);
                                 $uploadedRes = $resultSheet->where(['examId' => $examID, 'subjectCode' => $subject->SubjectCode]);
                                 // show($uploadedRes);
 
@@ -744,7 +748,29 @@ class SAR extends Controller
                                                 $examiner3 = true;
                                                 $examiner3SubCode = $subject->SubjectCode;
 
-                                                var_dump('examiner3 true');
+
+                                                /*after upload the examiner 3 marks when we update examination mark 
+                                                sheet system has to handle that marksheet also. because if exminer 3 already uploaded 
+                                                then it didnt handle the mark sheet again and insert or update marks again*/
+
+                                                //check whether examiner3 marks are available
+                                                $examiner3Marks = $resultSheet->where([
+                                                    'examId' => $examID,
+                                                    'subjectCode' => $subject->SubjectCode,
+                                                    'type' => 'examiner3'
+                                                ]);
+
+                                                if (!empty($examiner3Marks)) {
+                                                    // $data['examiner3'] = true;
+                                                    //upload the student marks to database
+                                                    $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
+
+                                                    //call the function to upload marks to database
+                                                    insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
+                                                } else {
+                                                    // $data['examiner3'] = false;
+                                                }
+
                                             } else {
                                                 // $data['examiner3'] = false;
                                                 $examiner3 = false;
@@ -762,16 +788,17 @@ class SAR extends Controller
 
                                                     //call the function to upload marks to database
                                                     echo 'call insertMarks function';
+                                                    show($resFileName);
                                                     insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
 
 
                                                 } else {
                                                     $data['assignment'] = false;
-                                                    echo 'Assignment marks are not available.';
+
                                                 }
 
 
-                                                show('no examiner3');
+
                                             }
                                             /** The case in there is when we pass the data into view to show them it must reload 
                                              * but when using fetch it did't reload the file. must fix this  */
@@ -796,13 +823,14 @@ class SAR extends Controller
                                                     $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
 
                                                     //call the function to upload marks to database
-                                                    echo 'call insertMarks function';
+
+                                                    show($resFileName);
                                                     insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
 
 
                                                 } else {
                                                     $data['assignment'] = false;
-                                                    echo 'Assignment marks are not available.';
+
                                                 }
 
                                             } else {
@@ -828,7 +856,6 @@ class SAR extends Controller
                         echo (
                             "<div id='examiner3-status'>$examiner3</div>
                               <div id='examiner3SubCode'>$examiner3SubCode</div>"
-
                         );
 
                     }
@@ -870,7 +897,7 @@ class SAR extends Controller
                 }
 
                 $subjectDetails = $subjects->where(['SubjectCode' => $resultSubCode, 'DegreeID' => $degreeID]);
-                show($subjectDetails);
+                // show($subjectDetails);
                 // remove any leading or trailing spaces from the string
                 $resultSubCode = trim($resultSubCode);
 
@@ -891,6 +918,7 @@ class SAR extends Controller
                 $this->view('sar-interfaces/sar-examresults', $data);
 
             } else {
+
                 $this->view('sar-interfaces/sar-examination', $data);
             }
         }
