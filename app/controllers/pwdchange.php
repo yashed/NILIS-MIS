@@ -5,7 +5,6 @@ class pwdchange extends Controller
 
     function __construct()
     {
-
         if ($_SESSION['USER_DATA']->status == 'active') {
             // Redirect the user to the appropriate page
             redirect($_SESSION['USER_DATA']->role);
@@ -18,9 +17,8 @@ class pwdchange extends Controller
         $user = new User();
 
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
             //validate
-
-
             // show($_POST);
             if ($user->validatePassword($_POST)) {
                 // $user->update($_SESSION['USER_DATA']->id, $_POST);
@@ -33,7 +31,7 @@ class pwdchange extends Controller
                 $userData = $user->first([
                     'id' => $_POST['id']
                 ]);
-                show($userData);
+
                 //authentication
                 Auth::authenticate($userData);
 

@@ -163,7 +163,11 @@ class User extends Model
                          $this->errors['cpassword'] = 'Password do not match';
 
                     }
+               }
 
+               //check if the password is existing password
+               if (password_verify($data['newPassword'], $_SESSION['USER_DATA']->password)) {
+                    $this->errors['newPassword'] = 'New Password is the same as the existing password';
                }
 
                if (empty($this->errors)) {

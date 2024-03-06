@@ -13,7 +13,7 @@ class SAR extends Controller
 
     public function index($checkUser = false)
     {
-        show($_SESSION['USER_DATA']);
+
         //uncoment this to add autherization to sar
         // if (!Auth::is_sar()) {
         //     message('You are not authorized to view this page', 'error');
