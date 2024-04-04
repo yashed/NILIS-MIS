@@ -17,7 +17,7 @@ class Test extends Controller
     public function t1()
     {
 
-        $this->view('components/popup/password-change-popup');
+        $this->view('common/error-page/403');
     }
 }
 ?>
