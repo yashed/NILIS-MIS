@@ -87,7 +87,6 @@ function groupByColumn($data, $columnName)
 
 function createMarkSheet($inputCSV, $examID, $subCode, $type)
 {
-
     $examiner3 = false;
     $filePath = 'assets/csv/examsheets/final-marksheets';
     $markSheet = $filePath . '/' . $examID . '_' . $subCode . '.csv';

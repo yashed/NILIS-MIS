@@ -744,8 +744,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
 <body>
     <div class="resultupload-body" id="rs-body">
-        <?php $this->view('components/navside-bar/header', $data) ?>
-        <?php $this->view('components/navside-bar/sidebar', $data) ?>
+        <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
         <?php $this->view('components/navside-bar/footer', $data) ?>
 
         <div class="temp2-home">
@@ -1063,8 +1062,6 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 
 
 <script>
-
-
     //delete the uploaded file
     function deleteSubmitFile(event, submitViewId, uploadedViewId, subCode, formId, type) {
         event.preventDefault();
@@ -1232,8 +1229,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                 });
 
                 console.log('delete Buttondasda');
-            }
-            else {
+            } else {
                 console.log('delete Button flex');
                 document.getElementById(deleteButtonId).style.display = 'flex';
             }
@@ -1251,8 +1247,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                 submitButton.addEventListener('click', function () {
                     uploadFile(fileInputId, submitButton.id, formId, subCode, type, submitViewId, uploadedViewId);
                 });
-            }
-            else {
+            } else {
 
                 document.getElementById(submitButtonId).style.display = 'flex';
             }
@@ -1280,8 +1275,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                 // Append the container to the container
                 form.appendChild(fileInfoContainer);
 
-            }
-            else {
+            } else {
                 document.getElementById(fileContainerId).style.display = 'flex';
 
             }
@@ -1302,8 +1296,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
                 buttonContainer.appendChild(submitButton);
 
 
-            }
-            else {
+            } else {
                 console.log('append buttonsdfasfsa');
                 document.getElementById(btnContainerId).style.display = 'flex';
             }
@@ -1338,6 +1331,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
     //function to trigger file input
     function triggerFileInput(fileInputId) {
         var fileInput = document.getElementById(fileInputId);
+        console.log('in trigger input', fileInput);
         fileInput.click();
     }
 
@@ -1474,12 +1468,8 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
         // Remove the anchor element from the document
         document.body.removeChild(a);
     }
-
-
 </script>
 <script>
-
-
     // Extract values from the parsed HTML
 
     // var examiner3 = true;
