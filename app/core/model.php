@@ -375,6 +375,7 @@ class Model extends Database
         $data = array_merge($setConditions, $whereConditions);
 
         // Execute the query
+        // show($query);
         $this->query($query, $data);
     }
 

@@ -160,8 +160,8 @@
         }
 
         .bt-name {
-            font-size: 16px;
-            font-weight: 500px;
+            font-size: 1.2vw;
+            font-weight: 500;
         }
 
         button:hover {
