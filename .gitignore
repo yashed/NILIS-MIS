@@ -1,1 +1,6 @@
 .DS_Store
+public/assets/csv/*.csv
+public/assets/csv/examsheets/*.csv
+public/assets/csv/examsheets/final-marksheets/*.csv
+public/assets/csv/examsheets/output/*.csv
+
