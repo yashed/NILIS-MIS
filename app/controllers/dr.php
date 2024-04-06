@@ -134,7 +134,6 @@ class DR extends Controller
             }
             $data['subjects'] = $subjects;
             $data['degreeTimeTable'] = $degreeTimeTableData;
-
             if ($action == "update") {
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     echo "POST request received";
