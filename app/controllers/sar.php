@@ -86,6 +86,12 @@ class SAR extends Controller
         $data['students'] = $student->findAll();
         $data['subjects'] = $subjects->where(['degreeID' => $degreeID, 'semester' => $semester]);
 
+        //get exam details with degree details
+        $dataTables = ['degree'];
+        $columns = ['*'];
+        $examConditions = ['exam.degreeID = degree.DegreeID', 'exam.degreeID= ' . $degreeID];
+        $data['examDetails'] = $exam->join($dataTables, $columns, $examConditions);
+
 
         //need complete filtering part of repeat and medical students data
         // $data['medicalStudents'] = $medicalStudents->where(['degreeID' => 1, 'semester' => 1, 'status' => 1]);
@@ -108,7 +114,31 @@ class SAR extends Controller
         //Get currect Degree short name
         $degreeShortName = [$degree->where(['DegreeID' => $degreeID])[0]->DegreeShortName];
 
-        if ($method == "create" && $id == 1) {
+
+        if ($method == "create" && $id == "0") {
+
+            if (isset($_POST['submit']) && !empty($_POST['exam-type'])) {
+
+                show($_POST);
+                if ($_POST['exam-type'] == 'normal') {
+                    redirect('sar/examination/create/1');
+                } else if ($_POST['exam-type'] == 'special') {
+                    redirect('sar/examination/special/1');
+                }
+            }
+
+            $this->view('sar-interfaces/sar-createexam-0', $data);
+
+        } else if ($method == "special" && $id == 1) {
+
+
+            $this->view('sar-interfaces/sar-createexam-special-1', $data);
+
+        } else if ($method == "special" && $id == 2) {
+
+            $this->view('sar-interfaces/sar-createexam-special-2', $data);
+
+        } else if ($method == "create" && $id == 1) {
             if (isset($_POST['submit'])) {
                 // // show($_POST);
                 // if ($_POST['submit'] == 'cancel') {

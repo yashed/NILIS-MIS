@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title></title>
+    <title>Examination</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -20,6 +20,7 @@
         margin-left: 10px;
         margin: 2px;
         cursor: pointer;
+        gap: 1.5vw;
     }
 
     .exam-card-body:hover {
@@ -31,14 +32,14 @@
     .container {
         display: flex;
         justify-content: space-evenly;
-        /* display: grid;
-        grid-template-columns: auto 1fr;
-        grid-gap: 8%; */
+        align-items: center;
+        width: 100%;
+
     }
 
     .exam-img {
-        width: 95px;
-        height: 115px;
+        width: 6.2vw;
+        height: 7.6vw;
         flex-shrink: 0;
         margin: 5% 0% 3% 0%;
     }
@@ -48,16 +49,20 @@
         flex-direction: column;
         align-items: flex-start;
         margin: 1% 2% 0% 1%;
+        width: 60%;
     }
 
     .content {
         font-family: "Poppins", sans-serif;
         margin-right: 0%;
         margin-left: 5%;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
     }
 
     .degree-name {
-        font-size: 45px;
+        font-size: 4vw;
         font-weight: 1000;
         color: #17376E;
         text-align: left;
@@ -65,7 +70,7 @@
 
     .sub-name {
         color: #9AD6FF;
-        font-size: 14px;
+        font-size: 1vw;
         font-weight: 600;
         text-align: left;
         margin-top: -3%;
@@ -87,10 +92,10 @@
     }
 
     @media (max-width:1100px) {
-        .exam-img {
+        /* .exam-img {
             width: 60px;
             height: 72px;
-        }
+        } */
 
         .degree-name {
             font-size: 30px;
@@ -109,11 +114,12 @@
     //root variable
     var rootUrl = "<?= ROOT ?>";
     var method = "participants";
-    var degreeID = "123";
-    var examID = "123";
+    var degreeID = "<?= $exam->degreeID ?>";
+    var examID = "<?= $exam->examID ?>";
+    var role = "<?= $role ?>";
 
     function redirectToURL() {
-        var desiredUrl = rootUrl + "sar/examination/" + method + "?degreeID=" + degreeID + "&examID=" + examID;
+        var desiredUrl = rootUrl + role.toLowerCase() + "/examination/" + method + "?degreeID=" + degreeID + "&examID=" + examID;
         console.log(desiredUrl);
         window.location.href = desiredUrl;
     }
@@ -125,14 +131,20 @@
         <div class="container" onclick="redirectToURL()">
             <div class="card">
                 <div class="content">
-                    <div class="degree-name"> DLIM </div>
-                    <div class="sub-name">Diploma in Library and<br>Information Management</div>
+                    <div class="degree-name">
+                        <?= $exam->DegreeShortName ?>
+                    </div>
+                    <div class="sub-name">
+                        <?= $exam->DegreeName ?>
+                    </div>
                 </div>
             </div>
             <img src="<?= ROOT ?>assets/exam-card/icon.png" alt="icon.png" class="exam-img">
         </div>
         <div class="exam-info">
-            <div class="exam-year">1st Semester Examination</div>
+            <div class="exam-year">
+                <?= $exam->semester ?> Semester Examination
+            </div>
         </div>
 
     </div>

@@ -17,10 +17,8 @@ $data['role'] = $role;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>exam-create</title>
+    <title>exam-create Dashboard</title>
 </head>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
@@ -43,6 +41,7 @@ $data['role'] = $role;
     }
 
     .exam-create-home {
+        height: 100vh;
         left: 250px;
         position: relative;
         width: calc(100% - 250px);
@@ -63,7 +62,6 @@ $data['role'] = $role;
     .sidebar.close~.exam-create-home {
         left: 88px;
         width: calc(100% - 88px);
-
     }
 
     .exam-create-subsection-0 {
@@ -229,7 +227,7 @@ $data['role'] = $role;
     }
 
     .progress-bar-active {
-        width: 0.6%;
+        width: 1%;
         height: 10px;
         background-color: #17376E;
         border-radius: 10px;
@@ -257,6 +255,7 @@ $data['role'] = $role;
         padding: 8px;
         font-size: 14px;
         font-weight: 600px;
+        text-align: center;;
     }
 
     .table td {
@@ -327,8 +326,8 @@ $data['role'] = $role;
 
     .btn-secondary:hover {
         color: black;
-        background-color: #F9D2D2;
-        border: 1px solid red;
+        background-color: #E0E0E0;
+        border: 1px solid #17376e;
     }
 
     input {
@@ -337,69 +336,22 @@ $data['role'] = $role;
         color: #17376E;
         font-weight: 500;
         background: none;
-        width: 100%
-    }
-
-    .examination-details {
-        display: flex;
-        flex-direction: column;
-        margin-top: 5vw;
-        gap: 3vw;
-        justify-content: center;
-        align-items: center;
-
-    }
-
-    select {
-        width: 80%;
-        padding: 10px;
-        border: 1px solid #E2E2E2;
-        border-radius: 5px;
-        background-color: #E2E2E2;
-        text-align: center;
-        cursor: pointer;
-        font-size: 16px;
-        font-size: 1vw;
-        height: 3vw;
-        margin-left: 10px;
-
-    }
-
-    select:hover {
-        background-color: #eeeeee;
-
-    }
-
-    .semester-dropdown {
-        display: flex;
-        flex-direction: column;
         width: 100%;
-        align-items: center;
-        gap: 3vw;
+        border: none;
     }
 
-    .exam-type-dropdown {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        align-items: center;
-        gap: 3vw;
+    input:focus {
+        background-color: none;
+        border: none;
+    }
+    .student-status{
+        color: #10344D;
+        font-weight: 600;
+      
+
+       
     }
 
-
-    .semester-select-lable {
-        width: 80%;
-        font-size: 1.2vw;
-        color: #000;
-        font-weight: 500;
-    }
-
-    .exam-type-lable {
-        width: 80%;
-        font-size: 1.2vw;
-        color: #000;
-        font-weight: 500;
-    }
 </style>
 
 <body>
@@ -407,49 +359,94 @@ $data['role'] = $role;
         <div class="exam-create-title">Create Examination</div>
         <div class="exam-create-subsection-1">
             <div class="exam-create-sub-title">
-                Select Exam Category
+                Add Participant
 
                 <div class="exam-create-steps">
-                    <form method="post" id='normal-studnet-select'>
-                        <div class="examination-details">
-                            <div class="semester-dropdown">
-                                <label class="semester-select-lable">Select the Semester</label>
-                                <select name="semester" class='select-semester'>
+                    <div class="progress">
+                        <lable class="form-subname">Select <span style="color:#17376E; font-weight:600">Repeated </span>
+                            and <span style="color:#17376E; font-weight:600">Medical Approved </span> Students add to
+                            the
+                            examination</lable>
+                        <lable class="form-subname">Step 1 of 2</lable>
 
-                                    <option value="1">Semester 01</option>
-                                    <option value="2">Semester 02 </option>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-active"></div>
+                    </div>
+                    <form method="post" id='repeat-medical-studnet-select'>
+                    <div class="degree-student-table">
 
-                                </select>
-                            </div>
-                            <div class="exam-type-dropdown">
-                                <label class="exam-type-lable">Select Examination Type</label>
-                                <select name="exam-type" class=select-exam-type>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" class="checkAll" name="checkAll" />
+                                    </th>
+                                    <th>Name</th>
+                                    <th>Index Number</th>
+                                    <th>Registration Number</th>
+                                    <th>Attempt</th>
+                                    <th>Subject Code</th>
+                                    <th>Student Type</th>
+                                    <th>Status</th>
+                                </tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($repeatStudents as $rStudent): ?>
+                                    <?php $json = json_encode($rStudent); ?>
+                                    <tr>
+                                        <td><input type="checkbox" name="item[]" value="<?= $rStudent->id ?>"
+                                        <?= isset($_SESSION['checked_RM_students'][$rStudent->id]) ? 'checked' : '' ?>></td>
+                                        <td><input type="text" name="name[]" value=" H.A.Yashed Thisra" readonly></td>
+                                        <td><input type="text" name="indexNo[]" value=" <?= $rStudent->indexNo ?>" readonly>
+                                        </td>
+                                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
+                                        <td><input type="text" name="attempt[]" value="  <?= $rStudent->attempt ?>"
+                                                readonly>
+                                        </td>
+                                        <td><input type="text" name="subjectCode[]" value=" <?= $rStudent->subjectCode ?>"
+                                                readonly>
+                                            </td>
+                                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
+                                        <td><input type="text" name="status[]" value="Paid" class ="student-status" readonly></td>
+                                    </tr>
+                                <?php endforeach; ?>
 
-                                    <option value="normal">Normal Examination</option>
-                                    <option value="special">Special Examination</option>
 
-                                </select>
-                            </div>
+                                <?php foreach ($medicalStudents as $mStudent): ?>
+                                    <?php $json = json_encode($mStudent); ?>
+                                    <tr>
+                                        <td><input type="checkbox" name="item[]" value="<?= $mStudent->id ?>"
+                                        <?= isset($_SESSION['checked_RM_students'][$mStudent->id]) ? 'checked' : '' ?>></td>
+                                        <td><input type="text" name="name[]" value=" H.A.Yashed Thisra" readonly></td>
+                                        <td><input type="text" name="indexNo[]" value=" <?= $mStudent->indexNo ?>" readonly>
+                                        </td>
+                                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
+                                        <td><input type="text" name="attempt[]" value="  <?= $mStudent->attempt ?>"
+                                                readonly>
+                                        </td>
+                                        <td><input type="text" name="subjectCode[]" value=" <?= $mStudent->subjectCode ?>"
+                                                readonly></td>
+                                        <td><input type="text" name="studentType[]" value="Medical" readonly></td>
+                                        <td><input type="text" name="status[]" value="Approved" class ="student-status" readonly></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class=" exam-buttons">
+                        <div class="cancel-button">
+                            <button class="btn-secondary" type="button"
+                                onClick="location.href='<?= ROOT ?>sar/examination/create/0'">Back</button>
                         </div>
-                        <div class="exam-buttons">
-                            <div class="cancel-button">
-                                <button class="btn-secondary" type="button" onClick="
-                                    location.href='<?= ROOT ?>sar/examination'" value='cancel'>Cancel</button>
-
-                            </div>
-                            <div class=" next-button">
-                                <div class="next-button">
-                                    <button class="btn-primary" type="submit" name='submit' value='next0'>Next</button>
-                                </div>
-
-                            </div>
+                        <div class="next-button">
+                            <button class="btn-primary" type="submit" name='submit' value='special-next2'>Next</button>
                         </div>
-                    </form>
+                    </div>
+                </form>
                 </div>
-
-
             </div>
-
         </div>
 
         <div class="exam-create-footer">
@@ -460,14 +457,13 @@ $data['role'] = $role;
                 $(".checkAll").on("click", function () {
                     $(this)
                         .closest("table")
-                        .find("tbody .itemCheckbox")
+                        .find("tbody :checkbox")
                         .prop("checked", this.checked)
                         .closest("tr")
                         .toggleClass("selected", this.checked);
-                    updateHiddenInputs(this);
                 });
 
-                $("tbody .itemCheckbox").on("click", function () {
+                $("tbody :checkbox").on("click", function () {
                     // toggle selected class to the checkbox in a row
                     $(this)
                         .closest("tr")
@@ -479,79 +475,14 @@ $data['role'] = $role;
                         .prop("checked",
                             $(this)
                                 .closest("table")
-                                .find("tbody .itemCheckbox:checked").length ==
+                                .find("tbody :checkbox:checked").length ==
                             $(this)
                                 .closest("table")
-                                .find("tbody .itemCheckbox").length
+                                .find("tbody :checkbox").length
                         );
                 });
             });
-
-            function redirectToPage() {
-                event.preventDefault();
-                location.href = '<?= ROOT ?>sar/examination/create/2';
-            }
-
-
-            var endpointUrl = '<?= ROOT ?>sar/examination/create/1';
-            console.log(endpointUrl);
-
-            function sendSelectedRows() {
-                var selectedRows = [];
-
-                // Iterate through each checkbox in the table
-                $('input[name="item[]"]:checked').each(function () {
-                    var row = $(this).closest('tr'); // Get the parent row
-                    var rowData = {
-                        name: row.find('td:nth-child(2)').text(),
-                        attempt: row.find('td:nth-child(3)').text(),
-                        indexNumber: row.find('td:nth-child(4)').text(),
-                        registrationNumber: row.find('td:nth-child(5)').text(),
-                        mail: row.find('td:nth-child(6)').text()
-                    };
-                    selectedRows.push(rowData);
-                });
-
-                // Send the selected rows to the backend using an AJAX POST request
-                $.ajax({
-                    type: 'POST',
-                    url: endpointUrl,
-                    data: JSON.stringify({ items: selectedRows }), // Wrap the data in an object
-                    contentType: 'application/json',
-                    dataType: 'json',
-                    success: function (response) {
-                        console.log(response);
-                    },
-                    error: function (error) {
-                        console.error(error);
-                    }
-                });
-            }
-
-            function updateCheckboxValues() {
-                var formData = new FormData();
-                var checkboxes = document.querySelectorAll('.itemCheckbox');
-
-                checkboxes.forEach(function (cb, index) {
-                    formData.append('item[]', cb.checked ? 1 : 0);
-                    // console.log('form=', formData.getAll('item[]'));
-                });
-
-
-                fetch(endpointUrl, {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(response => response.json())
-                    .then(data => console.log(data))
-                    .catch(error => console.error('Error:', error));
-            }
-
-
         </script>
-
-
-
 </body>
 
 
