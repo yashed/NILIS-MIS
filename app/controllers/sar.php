@@ -954,5 +954,13 @@ class SAR extends Controller
     {
         $this->view('sar-interfaces/sar-examresultshow');
     }
+    public function notifications()
+    {
+        $notification = new NotificationModel();
+
+        $data['notifications'] = $notification->findAll();
+
+        $this->view('sar-interfaces/sar-notification',$data);
+    }
 
 }

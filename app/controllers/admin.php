@@ -77,7 +77,7 @@ class Admin extends Controller
             //add password to the POST data
             $_POST['password'] = password_hash($password, PASSWORD_DEFAULT);
             $_POST['status'] = 'initial';
-
+show($_POST);
             $user->insert($_POST);
             message("User profile was successfully created");
 
@@ -85,7 +85,7 @@ class Admin extends Controller
             header("Refresh:0");
 
           } catch (\Throwable $th) {
-            var_dump($th);
+            // var_dump($th);
           }
         } else {
           $popupCreate = true;

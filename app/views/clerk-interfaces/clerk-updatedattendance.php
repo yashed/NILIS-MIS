@@ -1,12 +1,13 @@
 <?php
-$role = "Clerk";
+$role = "clerk";
 $data['role'] = $role;
 
 ?>
-
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
+<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -126,7 +127,7 @@ $data['role'] = $role;
         flex-direction: row;
         margin-top: 2%;
         width: 81vw;
-padding-right: 1vw;
+        padding-right: 1vw;
     }
 
     .admission-button {
@@ -136,7 +137,7 @@ padding-right: 1vw;
         color: #17376E;
         text-decoration: none;
         align-items: center;
-       
+
         border-radius: 5px;
         cursor: pointer;
         width: 12vw;
@@ -189,9 +190,9 @@ padding-right: 1vw;
         cursor: pointer;
     }
 
-    input[type="file"] {
-        display: none;
-    }
+    /* input[type="file"] {
+    display: none;
+} */
 
     .text1 {
         font-size: 15px;
@@ -294,8 +295,8 @@ padding-right: 1vw;
         margin: 1vw;
         border-radius: .6rem;
         /* overflow: auto;
-        overflow: overlay;
-        outline-style: groove; */
+    overflow: overlay;
+    outline-style: groove; */
         outline-width: 2px;
         outline-color: #ffffff;
     }
@@ -368,66 +369,7 @@ padding-right: 1vw;
         font-size: 0.8vw;
     }
 
-    /* tbody tr.hide {
-        opacity: 0;
-        transform: translateX(100%);
-    }
 
-    tbody tr:hover {
-        background-color: #eeeeee !important;
-    }
-
-    tbody tr td,
-    tbody tr td p,
-    tbody tr td img {
-        transition: .2s ease-in-out;
-    }
-
-    tbody tr.hide td,
-    tbody tr.hide td p {
-        padding: 0;
-        font: 0 / 0 sans-serif;
-        transition: .2s ease-in-out .5s;
-    }
-
-    tbody tr.hide td img {
-        width: 0;
-        height: 0;
-        transition: .2s ease-in-out .5s;
-    }
-
-
-    @media (max-width: 1000px) {
-        td:not(:first-of-type) {
-            min-width: 12.1rem;
-        }
-    }
-
-    thead th span.icon-arrow {
-        display: inline-block;
-        width: 1.3rem;
-        height: 1.3rem;
-        border-radius: 50%;
-        border: 1.4px solid transparent;
-
-        text-align: center;
-        font-size: 1rem;
-
-        margin-left: .5rem;
-        transition: .2s ease-in-out;
-    }
-
-    thead th:hover span.icon-arrow {
-        border: 1.4px solid;
-    }
-
-    thead th.active span.icon-arrow {
-        color: #ffffff;
-    }
-
-    thead th.asc span.icon-arrow {
-        transform: rotate(180deg);
-    } */
 
     .input-main-group {
         display: flex;
@@ -490,71 +432,44 @@ padding-right: 1vw;
 <body>
     <div class="temp2-home">
         <div class="temp2-title">Attendance</div>
-     
 
         <div class="temp2-subsection-2">
             <div class="temp2-subsection-21">
+                <div class="row">
 
 
-                
-                <section class="table__body">
-                    <table id="table_p">
-                        <thead>
-                            <tr>
-                                <th> Name </th>
-                                <th> Role </th>
-                                <th> Index Number </th>
-                                <th> Registration Number </th>
-                                <th> Attendance </th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <section class="table__body">
+                        <table id="table_p">
+                            <thead>
+                                <tr>
 
-                            <tr>
-                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt=""> Bimsara Anjana</td>
-                                <td> Student </td>
-                                <td> DLIM/001</td>
-                                <td> DLIM/01/01</td>
-                                <td> 80% </td>
-                            </tr>
-                            <tr>
-                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt=""> Yashed Thisara</td>
-                                <td> Student </td>
-                                <td> DLIM/002</td>
-                                <td> DLIM/01/02</td>
-                                <td> 90% </td>
-                            </tr>
-                            <tr>
-                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt=""> Senudi Disakya</td>
-                                <td> Student </td>
-                                <td> DLIM/003</td>
-                                <td> DLIM/01/03</td>
-                                <td> 90% </td>
-                            </tr>
-                            <tr>
-                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt=""> Sanduni Ekanayake</td>
-                                <td> Student </td>
-                                <td> DLIM/004</td>
-                                <td> DLIM/01/04</td>
-                                <td> 60% </td>
-                            </tr>
+                                    <th> Index </th>
+                                    <th> Name</th>
+                                    <th> Attendance </th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
 
-                        </tbody>
-                    </table>
-                </section>
+                                <?php
+                                 foreach ($students as $student) : ?>
+                                    <tr>
+                                        <td><?= $student->indexNo ?></td>
+                                        <td><?= $student->name ?></td>
+                                        <td><?= $student->attendance ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
 
-                <br>
-
-
+                            </tbody>
+                        </table>
+                    </section>
+                    <br>
+                </div>
             </div>
-
-
         </div>
         <div class="temp2-footer">
             <?php $this->view('components/footer/index', $data) ?>
         </div>
-       
 </body>
 
 </html>

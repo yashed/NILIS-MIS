@@ -5,6 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
 
         .banner {
             margin-left: 1%;
@@ -45,7 +54,7 @@
             color: #17376E;
             padding-top: 35px;
             flex: 99%;
-           
+
         }
 
         .development-message {
@@ -59,7 +68,7 @@
             color: #292929;
             margin-left: 45px;
             margin-bottom: 0.3%;
-margin-top: 1%;
+            margin-top: 1%;
         }
 
         .buttons-container {
@@ -107,12 +116,23 @@ margin-top: 1%;
             margin-right: 1%;
             flex: 1%;
         }
+
+        .close-symbol{
+            cursor: pointer;
+            
+        }
+
     </style>
 </head>
 
 <body>
+
+
+
+
     <div class="banner">
         <div class="color-strip"></div>
+        <div class="closing"><span class="close-symbol" onclick="closeComponent()">✖</span> </div>
         <div class="content-container">
 
             <div class="flex">
@@ -137,22 +157,26 @@ margin-top: 1%;
 
 
                 <div class="note">
-                    Note
+                    <?= $role ?>
                 </div>
             </div>
             <div class="development-message">
-                <!-- Development Message Content Goes Here -->
-                There is an upcoming examination in Diploma in Library and Information Management. Please go and Create examination.
+                <?= $notification->description ?>
             </div>
+            </br>
             <div class="buttons-container">
-                <div class="button1">
-                    Create Examination
-                </div>
-
+                <a href="<?= ROOT . $notification->button_link ?>" class="button1"><?= $notification->button_text ?></a>
+                
             </div>
 
         </div>
+
     </div>
+    
+
+
+
+    
 </body>
 
 </html>

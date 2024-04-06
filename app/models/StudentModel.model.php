@@ -18,7 +18,8 @@ class StudentModel extends Model
         'whatsappNo',
         'address',
         'phoneNo',
-        'degreeID'
+        'degreeID',
+        'attendance'
     ];
 
     public function validate($data)
@@ -91,4 +92,6 @@ class StudentModel extends Model
             $this->errors['degreeID'] = "degreeID can only have numbers]";
         }
     }
+
+   
 }

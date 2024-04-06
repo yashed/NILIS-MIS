@@ -10,18 +10,18 @@ class Login extends Controller
         $data['errors'] = [];
         $data['title'] = 'Login';
         $user = new User();
-
+        
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             //validate
             $row = $user->first([
                 'username' => $_POST['username']
             ]);
-
+            
             if ($row) {
                 if (password_verify($_POST['password'], $row->password)) {
                     //authentication
                     Auth::authenticate($row);
-
+                    show($_SESSION['USER_DATA']);
 
                     if ($_SESSION['USER_DATA']->role == 'admin') {
                         if ($_SESSION['USER_DATA']->status == 'initial') {
