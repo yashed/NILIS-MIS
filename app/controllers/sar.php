@@ -131,10 +131,32 @@ class SAR extends Controller
 
         } else if ($method == "special" && $id == 1) {
 
+            $tables = ['degree'];
+            $columns = ['*'];
+            $conditions1 = ['medical_students.degreeID = degree.DegreeID', 'medical_students.status=1', 'medical_students.semester= ' . $semester];
+            $joinStudnetData1 = $medicalStudents->join($tables, $columns, $conditions1);
+
+            //Get join data from repeat students and degree tables 
+            $conditions2 = ['repeat_students.degreeID = degree.DegreeID', 'repeat_students.paymentStatus=1', 'repeat_students.semester= ' . $semester];
+            $joinStudnetData2 = $repeatStudents->join($tables, $columns, $conditions2);
+
+            foreach ($joinStudnetData1 as $medicalStudent) {
+                if (in_array($medicalStudent->DegreeShortName, $degreeShortName)) {
+                    $data['medicalStudents'][] = $medicalStudent;
+                }
+            }
+
+            foreach ($joinStudnetData2 as $repeatStudent) {
+                if (in_array($repeatStudent->DegreeShortName, $degreeShortName)) {
+                    $data['repeatStudents'][] = $repeatStudent;
+                }
+            }
 
             $this->view('sar-interfaces/sar-createexam-special-1', $data);
 
         } else if ($method == "special" && $id == 2) {
+
+
 
             $this->view('sar-interfaces/sar-createexam-special-2', $data);
 
