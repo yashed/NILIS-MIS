@@ -29,7 +29,8 @@
                     }
                 });
 
-                var currentUrl = window.location.href;
+                var currentUrl = window.location.href;    // Get the current URL
+                currentUrl = currentUrl.split('?')[0];    // Remove any query strings from the URL
                 var navLinks = document.querySelectorAll('.menu-links .nav-link a'); // Get all navigation links
                 navLinks.forEach(function(link) {    // Loop through each navigation link
                     if (link.getAttribute('href') === currentUrl) {    // Compare the href attribute of the link with the current URL
@@ -38,10 +39,18 @@
                         // Change the color of the image within the selected navigation item
                         var icon = link.querySelector('.icon');
                         var text = link.querySelector('.text');
-                        if (icon) {
+                        if (icon && text) {
                             icon.style.color = 'var(--sidebar-color)';
+                            text.style.color = 'var(--sidebar-color)';
                         }
-                        if (text) {
+                    }
+                    else if (currentUrl == 'http://localhost/NILIS-MIS/public/dr/userprofile') {
+                        link1 = document.querySelector('.menu-links .nav-link a[href="http://localhost/NILIS-MIS/public/dr/participants"]');
+                        link1.parentNode.classList.add('selected');
+                        var icon = link1.querySelector('.icon');
+                        var text = link1.querySelector('.text');
+                        if (icon && text) {
+                            icon.style.color = 'var(--sidebar-color)';
                             text.style.color = 'var(--sidebar-color)';
                         }
                     }
