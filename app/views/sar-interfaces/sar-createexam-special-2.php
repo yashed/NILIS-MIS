@@ -514,7 +514,8 @@ $data['role'] = $role;
 
                     </div>
                     <div class="next-button">
-                        <button class="btn-primary" type="submit" value='timetable' name='submit'>Submit</button>
+                        <button class="btn-primary" type="submit" value='timetable-special'
+                            name='submit'>Submit</button>
                     </div>
                 </div>
             </form>

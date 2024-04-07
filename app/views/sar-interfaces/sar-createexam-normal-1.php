@@ -400,8 +400,7 @@ $data['role'] = $role;
                         <div class="exam-buttons">
 
                             <div class="cancel-button">
-                                <button class="btn-secondary" type="button" onClick="
-                                    location.href='<?= ROOT ?>sar/examination/create/0'" value='cancel'>Back</button>
+                                <button class="btn-secondary" type="submit" name='cancel' value='cancel'>Back</button>
 
                             </div>
                             <div class=" next-button">
