@@ -30,6 +30,7 @@ class DR extends Controller
         // show($_POST);
         $degree_name = "";
         $duration = 0;
+        $status = "";
         $degree = new Degree();
         $subject = new Subjects();
         $grade = new Grades();
@@ -41,6 +42,7 @@ class DR extends Controller
         if ($action == 'add') {
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $currentYear = date('Y');
+                $status = "ongoing";
                 if ($_POST['degree_type'] === "1 Year") {
                     $duration = 1;
                 } else if ($_POST['degree_type'] === "2 Year") {
@@ -59,6 +61,7 @@ class DR extends Controller
                     'DegreeName' => $degree_name,
                     'Duration' => $duration,
                     'AcademicYear' => $currentYear,
+                    'Status' => $status,
                 ];
                 $degree->insert($data);
                 $degree_id = $degree->lastID('DegreeID');
