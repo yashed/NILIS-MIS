@@ -173,16 +173,16 @@ class Database
         //exam participation table
         $query = "
         CREATE TABLE IF NOT EXISTS exam_participants (
-            id INT AUTO_INCREMENT PRIMARY KEY,
+            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
             examID int(11) NOT NULL,
             degreeID INT(11) NOT NULL,
             semester INT(10) NOT NULL,
             indexNo VARCHAR(40) NOT NULL,
             attempt INT(10) NOT NULL,
             studentType VARCHAR(40) NOT NULL,
-            FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
-            FOREIGN KEY (indexNo) REFERENCES student(indexNo),
-            FOREIGN KEY (examID) REFERENCES exam(examID),
+            FOREIGN KEY (degreeID) REFERENCES degree(DegreeID) ON DELETE CASCADE ON UPDATE CASCADE ,
+            FOREIGN KEY (indexNo) REFERENCES student(indexNo) ON DELETE CASCADE ON UPDATE CASCADE,
+            FOREIGN KEY (examID) REFERENCES exam(examID) ON DELETE CASCADE ON UPDATE CASCADE,
             UNIQUE KEY unique_participant (degreeID, semester, indexNo)
         ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4; 
         ";
@@ -237,7 +237,6 @@ class Database
     semester int(10) NOT NULL,
     FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
     Foreign key (examID) references exam(examID),
-    FOREIGN KEY (subjectCode) REFERENCES subject(SubjectCode),
     primary key (subjectCode, degreeID, semester)
  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
  ";

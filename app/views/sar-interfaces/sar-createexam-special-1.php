@@ -407,7 +407,7 @@ $data['role'] = $role;
                                         </td>
                                         <td><input type="text" name="subjectCode[]" value=" <?= $rStudent->subjectCode ?>"
                                                 readonly>
-                                            </td>
+                                        </td>
                                         <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
                                         <td><input type="text" name="status[]" value="Paid" class ="student-status" readonly></td>
                                     </tr>
@@ -437,8 +437,7 @@ $data['role'] = $role;
                     </div>
                     <div class=" exam-buttons">
                         <div class="cancel-button">
-                            <button class="btn-secondary" type="button"
-                                onClick="location.href='<?= ROOT ?>sar/examination/create/0'">Back</button>
+                            <button class="btn-secondary" type="submit" name='cancel' value="cancel-special">Back</button>
                         </div>
                         <div class="next-button">
                             <button class="btn-primary" type="submit" name='submit' value='special-next2'>Next</button>
