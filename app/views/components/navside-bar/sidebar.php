@@ -39,14 +39,14 @@
         <nav>
             <ul class="hero-ul">
                 <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost\NILIS-MIS\app\views\components\navside-bar\MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost\NILIS-MIS\public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
                     <div class="user-info">
-                        <img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg">
-                        <h3>Bimsara Anjana</h3>
+                        <img src="http://localhost\NILIS-MIS\public/assets/user_img.jpg">
+                        <h3><?=$_SESSION['USER_DATA']->username?></h3>
                     </div>
                     <hr>
                     <a href="<?= ROOT ?>logout" class="sub-menu-link">
@@ -103,13 +103,13 @@
         <nav>
             <ul class="hero-ul">
             <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost\NILIS-MIS\public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
                     <div class="user-info">
-                        <img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg">
+                        <img src="http://localhost\NILIS-MIS\public/assets/user_img.jpg">
                         <h3>Bimsara Anjana</h3>
                     </div>
                     <hr>
@@ -165,13 +165,13 @@
         <nav>
             <ul class="hero-ul">
             <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost\NILIS-MIS\public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
                     <div class="user-info">
-                        <img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg">
+                        <img src="http://localhost\NILIS-MIS\public/assets/user_img.jpg">
                         <h3>Bimsara Anjana</h3>
                     </div>
                     <hr>
@@ -233,13 +233,13 @@
         <nav>
             <ul class="hero-ul">
             <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost\NILIS-MIS\public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
                     <div class="user-info">
-                        <img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg">
+                        <img src="http://localhost\NILIS-MIS\public/assets/user_img.jpg">
                         <h3>Bimsara Anjana</h3>
                     </div>
                     <hr>
@@ -295,13 +295,13 @@
         <nav>
             <ul class="hero-ul">
             <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost\NILIS-MIS\public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
                     <div class="user-info">
-                        <img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg">
+                        <img src="http://localhost\NILIS-MIS\public/assets/user_img.jpg">
                         <h3>Bimsara Anjana</h3>
                     </div>
                     <hr>
@@ -357,13 +357,13 @@
         <nav>
             <ul class="hero-ul">
             <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost\NILIS-MIS\public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
                     <div class="user-info">
-                        <img src="<?= ROOT ?>components/navside-bar/MyOriginalPhoto.jpg">
+                        <img src="http://localhost\NILIS-MIS\public/assets/user_img.jpg">
                         <h3>Bimsara Anjana</h3>
                     </div>
                     <hr>
