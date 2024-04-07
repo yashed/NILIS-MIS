@@ -11,9 +11,7 @@ class Model extends Database
     protected $allowedColumns = [];
 
     public function insert($data)
-    {
-
-        // Convert object to array if $data is an object
+    { // Convert object to array if $data is an object
         if (is_object($data)) {
             $data = (array) $data;
         }
@@ -38,7 +36,7 @@ class Model extends Database
 
         //define query to add user data
         $query = "insert into " . $this->table;
-
+        
         //add column names and values to the query (impolad function devide data by given character in array)
         $query .= "(" . implode(",", $keys) . ") values (:" . implode(",:", $keys) . ")";
         // show($query);
@@ -389,6 +387,7 @@ class Model extends Database
         $data = array_merge($setConditions, $whereConditions);
 
         // Execute the query
+        // show($query);
         $this->query($query, $data);
     }
 
@@ -472,4 +471,6 @@ class Model extends Database
      // show($query);
      // show($data);
  } */
+
+ 
 }

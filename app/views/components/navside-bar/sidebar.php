@@ -254,7 +254,7 @@
     </div>
 <?php endif ?>
 
-<?php if ($role == "Director") : ?>
+<?php if ($role == "director") : ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">

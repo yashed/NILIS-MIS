@@ -422,7 +422,7 @@
     </div>
 
 <?php endif ?>
-<?php if ($role == "Director") : ?>
+<?php if ($role == "director") : ?>
 
     <div class="menu-bar">
         <hr>
@@ -483,7 +483,7 @@
                 <hr class="horizontal-line">
                 <h6 class="topic2">SETTINGS</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/settings">
+                    <a href="<?= ROOT ?>director/settings">
                         <i class="bx bx-cog icon"></i>
                         <span class="text nav-text">Settings</span>
                     </a>
@@ -518,7 +518,8 @@
     </div>
 
 <?php endif ?>
-<?php if ($role == "Clerk") : ?>
+
+<?php if ($role == "clerk") : ?>
 
     <div class="menu-bar">
         <hr>
@@ -531,25 +532,25 @@
                         <span class="text nav-text">Degree Name</span></a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/participants">
+                    <a href="<?= ROOT ?>clerk/participants">
                         <i class="bx bx-group icon"></i>
                         <span class="text nav-text">Participants</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/examination">
+                    <a href="<?= ROOT ?>clerk/examination">
                         <i class="bx bx-book icon"></i>
                         <span class="text nav-text">Examination</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/attendance">
+                    <a href="<?= ROOT ?>clerk/attendance">
                         <i class="bx bx-check-square icon"></i>
                         <span class="text nav-text">Attendance</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/reports">
+                    <a href="<?= ROOT ?>clerk/reports">
                         <i class="bx bx-file icon"></i>
                         <span class="text nav-text">Reports</span>
                     </a>
@@ -571,7 +572,7 @@
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/degreeprograms">
+                    <a href="<?= ROOT ?>clerk/degreeprograms">
                         <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Programs</span>
                     </a>
@@ -579,7 +580,7 @@
                 <hr class="horizontal-line">
                 <h6 class="topic2">SETTINGS</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/settings">
+                    <a href="<?= ROOT ?>clerk/settings">
                         <i class="bx bx-cog icon"></i>
                         <span class="text nav-text">Settings</span>
                     </a>
