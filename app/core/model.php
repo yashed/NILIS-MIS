@@ -28,7 +28,7 @@ class Model extends Database
             foreach ($data as $key => $value) {
                 if (!in_array($key, $this->allowedColumns)) {
 
-                    return false;
+                    unset($data[$key]);
                 }
             }
         }
@@ -41,7 +41,8 @@ class Model extends Database
 
         //add column names and values to the query (impolad function devide data by given character in array)
         $query .= "(" . implode(",", $keys) . ") values (:" . implode(",:", $keys) . ")";
-
+        // show($query);
+        // show($data);
         //call query function to execute the query
         $this->query($query, $data);
 
