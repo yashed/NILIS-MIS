@@ -599,7 +599,7 @@ DELIMITER ;
             SET daysRemaining = DATEDIFF(eventStartDate, currentDate);
 
             -- Check if days remaining is less than or equal to 14 and greater than 0
-            IF (daysRemaining <= 14 AND daysRemaining > 0) THEN
+            IF (daysRemaining = 14 ) THEN
                -- Construct notification message
                 SET str1 = CONCAT('There will be an upcoming examination scheduled on ', eventStartDate);
                 SET str2 = CONCAT(' for the diploma ', degreeName, ' examination');
@@ -609,7 +609,7 @@ DELIMITER ;
 
                 -- Insert record into notifications table
                 INSERT INTO notifications (description, type, msg_type)
-                VALUES (CONCAT(str1, str2), 'Examination', 'msg1');
+                VALUES (CONCAT(str1, str2), 'Examination', 'Exam-start-alert');
             END IF;
         END LOOP;
 
