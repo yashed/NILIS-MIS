@@ -67,7 +67,7 @@ class SAR extends Controller
         //need to get these values form the session
         $degreeID = 2;
         $semester = 1;
-        $examID = 43;
+        $examID = 63;
 
         $model = new Model();
         $degree = new Degree();
@@ -83,7 +83,7 @@ class SAR extends Controller
 
         $data['errors'] = [];
         $data['degrees'] = $degree->findAll();
-        $data['students'] = $student->findAll();
+        $data['students'] = $student->where(['degreeID' => $degreeID]);
         $data['subjects'] = $subjects->where(['degreeID' => $degreeID, 'semester' => $semester]);
 
         //get exam details with degree details
@@ -122,6 +122,9 @@ class SAR extends Controller
 
             if (isset($_POST['submit']) && !empty($_POST['exam-type'])) {
 
+                //add examination creation data to session
+                $_SESSION['exam-creation-details'] = $_POST;
+
                 if ($_POST['exam-type'] == 'normal') {
                     redirect('sar/examination/create/1');
                 } else if ($_POST['exam-type'] == 'special') {
@@ -133,14 +136,27 @@ class SAR extends Controller
 
         } else if ($method == "special" && $id == 1) {
 
+            $selectedSemester = $_SESSION['exam-creation-details']['semester'];
+            show($selectedSemester);
+
+
+
+            //get the current degree short name
+            $degreeShortName = [$degree->where(['DegreeID' => $degreeID])[0]->DegreeShortName];
+            //Get join data from medical students and degree tables
             $tables = ['degree'];
             $columns = ['*'];
-            $conditions1 = ['medical_students.degreeID = degree.DegreeID', 'medical_students.status=1', 'medical_students.semester= ' . $semester];
-            $joinStudnetData1 = $medicalStudents->join($tables, $columns, $conditions1);
+            $conditions1 = ['medical_students.degreeID = degree.degreeID', 'medical_students.status=1', 'medical_students.semester= ' . $selectedSemester];
+            $whereConditions1 = ['medical_students.degreeShortName =' . "'" . $degreeShortName[0] . "'"];
+            $joinStudnetData1 = $medicalStudents->joinWhere($tables, $columns, $conditions1, $whereConditions1);
+
+            // show($degreeShortName);
+            // show($joinStudnetData1);
 
             //Get join data from repeat students and degree tables 
-            $conditions2 = ['repeat_students.degreeID = degree.DegreeID', 'repeat_students.paymentStatus=1', 'repeat_students.semester= ' . $semester];
-            $joinStudnetData2 = $repeatStudents->join($tables, $columns, $conditions2);
+            $conditions2 = ['repeat_students.degreeID = degree.degreeID', 'repeat_students.paymentStatus=1', 'repeat_students.semester= ' . $selectedSemester];
+            $whereConditions2 = ['repeat_students.degreeShortName=' . "'" . $degreeShortName[0] . "'"];
+            $joinStudnetData2 = $repeatStudents->joinWhere($tables, $columns, $conditions2, $whereConditions2);
 
             foreach ($joinStudnetData1 as $medicalStudent) {
                 if (in_array($medicalStudent->DegreeShortName, $degreeShortName)) {
@@ -170,6 +186,12 @@ class SAR extends Controller
                     }
                     if (!empty($_SESSION['Selected_RM_Students'])) {
                         unset($_SESSION['Selected_RM_Students']);
+                    }
+                    if (!empty($_SESSION['Special-Exam-Participants'])) {
+                        unset($_SESSION['Special-Exam-Participants']);
+                    }
+                    if (!empty($_SESSION['exam-creation-details'])) {
+                        unset($_SESSION['exam-creation-details']);
                     }
 
                     redirect('sar/examination/create/0');
@@ -237,11 +259,17 @@ class SAR extends Controller
                                 }
                                 //add checked students id to session
                                 $_SESSION['checked_RM_students'][$repeatStudent->id] = true;
+
                             }
                         }
 
                         // show($selectedRMStudents);
+                        //create null array to pass as argument
+                        $nullArray = [];
                         $_SESSION['Selected_RM_Students'] = $selectedRMStudents;
+
+                        $distinctDataSpecial = $examParticipants->getDistinctElements($nullArray, $_SESSION['Selected_RM_Students'], 'indexNo');
+                        $_SESSION['Special-Exam-Participants'] = $distinctDataSpecial;
                         redirect('sar/examination/special/2');
 
                     }
@@ -264,11 +292,19 @@ class SAR extends Controller
                 if ($_POST['submit'] == "timetable-special") {
 
                     //exam creation
-                    $ExamData['examType'] = 'Normal';
+                    $ExamData['examType'] = 'Special';
                     $ExamData['degreeID'] = $degreeID;
                     $ExamData['semester'] = $semester;
                     $ExamData['status'] = 'ongoing';
 
+                    //insert data to exam table
+                    if ($exam->examValidate($ExamData)) {
+                        $exam->insert($ExamData);
+                        $examID = $exam->lastID('examID');
+
+                    } else {
+                        $data['errors'] = $exam->errors;
+                    }
 
                     $subCount = count($_POST['subName']);
 
@@ -281,52 +317,63 @@ class SAR extends Controller
                         $timeTableRow['semester'] = 01;
                         $timeTableRow['examID'] = $examID;
 
-                        if ($examtimetable->examTimetableValidate($timeTableRow)) {
+                        $timeTableData[] = $timeTableRow;
 
-                            $timeTableData[] = $timeTableRow;
-                            // $examtimetable->insert($timeTableRow);
-                            // redirect('sar/examination');
-                        }
                     }
-
+                    $examCreation = true;
                     if (empty($data['errors'])) {
                         $selectedRMStudents = $_SESSION['Selected_RM_Students'];
-                        $selectedNormalStudents = $_SESSION['Selected_Normal_Students'];
-                        echo ("Repeat Students");
-                        // show($selectedRMStudents);
-                        echo ("Students");
-                        // show($selectedNormalStudents);
-                        echo ("Time table");
-                        show($timeTableData);
+                        $examParticipantsData = $_SESSION['Special-Exam-Participants'];
 
 
-                        foreach ($selectedNormalStudents as $student) {
+
+
+                        // foreach ($selectedNormalStudents as $student) {
+                        //     //unset the student id
+                        //     unset($student->id);
+                        //     $student->examID = $examID;
+                        //     show($student);
+                        //     $examParticipants->insert($student);
+                        // }
+                        // foreach ($selectedRMStudents as $student) {
+                        //     //unset the student id  
+                        //     unset($student->id);
+                        //     $student->examID = $examID;
+                        //     show($student);
+                        //     $examParticipants->insert($student);
+                        // }
+
+
+                        foreach ($examParticipantsData as $student) {
+                            //convert object to array
+                            $student = (object) $student;
+                            //unset the student id
+                            if (!empty($student->id)) {
+                                unset($student->id);
+                            }
                             $student->examID = $examID;
-                            show($student);
                             $examParticipants->insert($student);
                         }
-                        foreach ($selectedRMStudents as $student) {
-                            $student->examID = $examID;
-                            show($student);
-                            $examParticipants->insert($student);
-                        }
+
                         //need to add actucal data to add data to tables
                         foreach ($timeTableData as $timeTableRow) {
-                            $examtimetable->insert($timeTableRow);
+                            show($timeTableRow);
+                            //validate the exam timetable data
+                            if ($examtimetable->examTimetableValidate($timeTableRow)) {
+
+                                $examtimetable->insert($timeTableRow);
+                            } else {
+                                $examCreation = false;
+                                $data['errors'] = $examtimetable->errors;
+                            }
                         }
 
 
-                        //insert data to exam table
-                        if ($exam->examValidate($ExamData)) {
-                            $exam->insert($ExamData);
-                            $examID = $exam->lastID('examID');
 
-                        } else {
-                            $data['errors'] = $exam->errors;
+                        if ($examCreation) {
+                            message("Exam Was Created Successfully", "success");
+                            redirect('sar/examination');
                         }
-
-                        message("Exam Was Created Successfully", "success");
-                        // redirect('sar/examination');
 
                     }
                 }
@@ -356,9 +403,19 @@ class SAR extends Controller
                     if (!empty($_SESSION['Selected_RM_Students'])) {
                         unset($_SESSION['Selected_RM_Students']);
                     }
+                    if (!empty($_SESSION['Normal-Exam-Participants'])) {
+                        unset($_SESSION['Normal-Exam-Participants']);
+                    }
+                    if (!empty($_SESSION['Special-Exam-Participants'])) {
+                        unset($_SESSION['Special-Exam-Participants']);
+                    }
+                    if (!empty($_SESSION['exam-creation-details'])) {
+                        unset($_SESSION['exam-creation-details']);
+                    }
 
                     redirect('sar/examination/create/0');
                 }
+
                 if ($_POST['submit'] == "next1") {
 
                     //remove session data about checked students
@@ -366,7 +423,8 @@ class SAR extends Controller
 
                     $selectedIds = $_POST['item'];
 
-
+                    //get semster from session
+                    $selectedSemester = $_SESSION['exam-creation-details']['semester'];
 
                     //Select only selected student's data
                     //Handel Selected students data
@@ -377,7 +435,7 @@ class SAR extends Controller
                             if (in_array($student->id, $selectedIds)) {
                                 if (!in_array($student->id, $processedStudentID)) {
                                     $student->degreeID = $degreeID;
-                                    $student->semester = $semester;
+                                    $student->semester = $selectedSemester;
                                     $student->attempt = 1;
                                     $student->studentType = 'initial';
 
@@ -409,19 +467,27 @@ class SAR extends Controller
             $this->view('sar-interfaces/sar-createexam-normal-1', $data);
         } else if ($method == "create" && $id == 2) {
 
+            //get semster from session
+            $selectedSemester = $_SESSION['exam-creation-details']['semester'];
 
+
+
+            //get the current degree short name
+            $degreeShortName = [$degree->where(['DegreeID' => $degreeID])[0]->DegreeShortName];
             //Get join data from medical students and degree tables
             $tables = ['degree'];
             $columns = ['*'];
-            $conditions1 = ['medical_students.degreeID = degree.DegreeID', 'medical_students.status=1', 'medical_students.semester= ' . $semester];
-            $joinStudnetData1 = $medicalStudents->join($tables, $columns, $conditions1);
+            $conditions1 = ['medical_students.degreeID = degree.degreeID', 'medical_students.status=1', 'medical_students.semester= ' . $selectedSemester];
+            $whereConditions1 = ['medical_students.degreeShortName =' . "'" . $degreeShortName[0] . "'"];
+            $joinStudnetData1 = $medicalStudents->joinWhere($tables, $columns, $conditions1, $whereConditions1);
 
             // show($degreeShortName);
             // show($joinStudnetData1);
 
             //Get join data from repeat students and degree tables 
-            $conditions2 = ['repeat_students.degreeID = degree.DegreeID', 'repeat_students.paymentStatus=1', 'repeat_students.semester= ' . $semester];
-            $joinStudnetData2 = $repeatStudents->join($tables, $columns, $conditions2);
+            $conditions2 = ['repeat_students.degreeID = degree.degreeID', 'repeat_students.paymentStatus=1', 'repeat_students.semester= ' . $selectedSemester];
+            $whereConditions2 = ['repeat_students.degreeShortName=' . "'" . $degreeShortName[0] . "'"];
+            $joinStudnetData2 = $repeatStudents->joinWhere($tables, $columns, $conditions2, $whereConditions2);
 
 
             //filter medical students data according to degree short name
@@ -447,6 +513,8 @@ class SAR extends Controller
 
                     $selectedIds = $_POST['item'];
 
+
+
                     if (empty($selectedIds)) {
                         redirect('sar/examination/create/3');
                     } else {
@@ -456,7 +524,7 @@ class SAR extends Controller
                             if (in_array($medicalStudent->id, $selectedIds)) {
                                 if (!in_array($medicalStudent->id, $processedStudentID2)) {
                                     $medicalStudent->degreeID = $degreeID;
-                                    $medicalStudent->semester = $semester;
+                                    $medicalStudent->semester = $selectedSemester;
                                     $medicalStudent->attempt = $medicalStudent->attempt;
                                     $medicalStudent->studentType = 'medical';
                                     $medicalStudent->status = 1;
@@ -484,7 +552,7 @@ class SAR extends Controller
 
                                     //need to slove this issue
                                     $repeatStudent->degreeID = $degreeID;
-                                    $repeatStudent->semester = $semester;
+                                    $repeatStudent->semester = $selectedSemester;
                                     $repeatStudent->attempt = intval($repeatStudent->attempt) + 1;
                                     $repeatStudent->studentType = 'repeate';
                                     $repeatStudent->paymentStatus = 1;
@@ -507,11 +575,14 @@ class SAR extends Controller
 
                         // show($selectedRMStudents);
                         $_SESSION['Selected_RM_Students'] = $selectedRMStudents;
+
+                        $distinctData = $examParticipants->getDistinctElements($_SESSION['Selected_Normal_Students'], $_SESSION['Selected_RM_Students'], 'indexNo');
+                        $_SESSION['Normal-Exam-Participants'] = $distinctData;
                         redirect('sar/examination/create/3');
 
                     }
 
-                    if ($examParticipants->examParticipantValidation($student)) {
+                    if ($examParticipants->examParticipantValidation($distinctData)) {
                         // $examParticipants->insert($student);
 
                         // redirect('sar/examination/create/3');
@@ -524,17 +595,16 @@ class SAR extends Controller
             $this->view('sar-interfaces/sar-createexam-normal-2', $data);
         } else if ($method == "create" && $id == 3) {
 
-
+            //get semster from session
+            $selectedSemester = $_SESSION['exam-creation-details']['semester'];
 
             if (isset($_POST['submit'])) {
                 if ($_POST['submit'] == "timetable") {
 
-
-
                     //exam creation
                     $ExamData['examType'] = 'Normal';
                     $ExamData['degreeID'] = $degreeID;
-                    $ExamData['semester'] = $semester;
+                    $ExamData['semester'] = $selectedSemester;
                     $ExamData['status'] = 'ongoing';
 
                     //insert data to exam table
@@ -554,50 +624,65 @@ class SAR extends Controller
                         $timeTableRow['date'] = $_POST['examDate'][$x];
                         $timeTableRow['time'] = $_POST['examTime'][$x];
                         $timeTableRow['degreeID'] = '01';
-                        $timeTableRow['semester'] = 01;
+                        $timeTableRow['semester'] = $selectedSemester;
                         $timeTableRow['examID'] = $examID;
 
-                        if ($examtimetable->examTimetableValidate($timeTableRow)) {
+                        $timeTableData[] = $timeTableRow;
 
-                            $timeTableData[] = $timeTableRow;
-                            // $examtimetable->insert($timeTableRow);
-                            // redirect('sar/examination');
-                        }
                     }
 
                     if (empty($data['errors'])) {
                         $selectedRMStudents = $_SESSION['Selected_RM_Students'];
                         $selectedNormalStudents = $_SESSION['Selected_Normal_Students'];
-                        echo ("Repeat Students");
-                        show($selectedRMStudents);
-                        echo ("Students");
-                        show($selectedNormalStudents);
-                        echo ("Time table");
-                        show($timeTableData);
+                        $examParticipantsData = $_SESSION['Normal-Exam-Participants'];
 
 
-                        foreach ($selectedNormalStudents as $student) {
+
+                        foreach ($examParticipantsData as $student) {
+
+                            //comvert object to array
+                            $student = (object) $student;
                             //unset the student id
-                            unset($student->id);
+                            if (!empty($student->id)) {
+
+                                unset($student->id);
+                            }
+
                             $student->examID = $examID;
                             $examParticipants->insert($student);
                         }
-                        foreach ($selectedRMStudents as $student) {
-                            //unset the student id
-                            unset($student->id);
-                            $student->examID = $examID;
-                            $examParticipants->insert($student);
-                        }
+
+
+                        // foreach ($selectedNormalStudents as $student) {
+                        //     //unset the student id
+                        //     unset($student->id);
+                        //     $student->examID = $examID;
+                        //     $examParticipants->insert($student);
+                        // }
+                        // foreach ($selectedRMStudents as $student) {
+                        //     //unset the student id
+                        //     unset($student->id);
+                        //     $student->examID = $examID;
+                        //     $examParticipants->insert($student);
+                        // }
+
+
                         //need to add actucal data to add data to tables
+                        $createExam = true;
                         foreach ($timeTableData as $timeTableRow) {
-                            $examtimetable->insert($timeTableRow);
+                            //validate the exam timetable data
+                            if ($examtimetable->examTimetableValidate($timeTableRow)) {
+                                $examtimetable->insert($timeTableRow);
+                            } else {
+                                $createExam = false;
+                                $data['errors'] = $examtimetable->errors;
+                            }
                         }
 
-
-
-
-                        message("Exam Was Created Successfully", "success");
-                        // redirect('sar/examination');
+                        if ($createExam) {
+                            message("Exam Was Created Successfully", "success");
+                            redirect('sar/examination');
+                        }
 
                     }
                 }

@@ -190,6 +190,39 @@ class Model extends Database
         return $this->query($query);
     }
 
+    public function joinWhere($tables, $columns, $conditions, $whereConditions, $order = null, $limit = null)
+    {
+        // Build the query
+        $query = "SELECT " . implode(", ", $columns) . " FROM " . $this->table;
+
+        foreach ($tables as $table) {
+            $query .= " JOIN $table";
+        }
+
+        // Add conditions
+        if (!empty($conditions)) {
+            $query .= " ON " . implode(" AND ", $conditions);
+        }
+
+        // Add where conditions
+        if (!empty($whereConditions)) {
+            $query .= " WHERE " . implode(" AND ", $whereConditions);
+        }
+
+        // Add order and limit clauses if provided
+        if ($order) {
+            $query .= " ORDER BY $order";
+        }
+
+        if ($limit) {
+            $query .= " LIMIT $limit";
+        }
+        // show($query);
+        // Execute the query
+        return $this->query($query);
+    }
+
+
     public function first($data, $order = 'desc')
     {
 
@@ -236,6 +269,40 @@ class Model extends Database
 
         return false;
     }
+
+    public function whereSpecificColumn($data, $columns = '*')
+    {
+        // Ensure $columns is a valid string or array
+        if (!is_string($columns) && !is_array($columns)) {
+            return false;
+        }
+
+        // If $columns is an array, convert it to a comma-separated string
+        if (is_array($columns)) {
+            $columns = implode(',', $columns);
+        }
+
+        $keys = array_keys($data);
+
+        $query = "SELECT $columns FROM " . $this->table . " WHERE ";
+        foreach ($keys as $key) {
+            $query .= "$key = :$key AND ";
+        }
+
+        // Trim last AND and space if they exist
+        $query = rtrim($query, 'AND ');
+
+        // Define query to add user data
+        $res = $this->query($query, $data);
+
+        if (is_array($res)) {
+            return $res;
+        }
+
+        return false;
+    }
+
+
     public function group($column, $conditions = [])
     {
         $query = "SELECT * FROM " . $this->table;
@@ -380,6 +447,53 @@ class Model extends Database
         // show($query);
         $this->query($query, $data);
     }
+
+
+    //this function is used to get distict values in gives arrays
+    function getDistinctElements($array1, $array2, $key)
+    {
+
+        // Combine arrays (even if one is null)
+        $data = array_merge((array) $array1, (array) $array2);
+
+        // show($data);
+
+        // Ensure $data is an array
+        if (!is_array($data)) {
+            return [];
+        }
+
+        // Initialize empty result array
+        $result = [];
+
+        // Iterate through each object in the combined data
+        foreach ($data as $object) {
+            // Check if key exists and is allowed
+            if (isset($object->$key) && in_array($key, $this->allowedColumns)) {
+                // Extract value of the key
+                $value = $object->$key;
+
+                // Check if value is already present using efficient isset and === comparison
+                if (!isset($result[$value])) {
+                    // Extract only allowed properties and create a new array
+                    $allowedItem = [];
+                    foreach ($this->allowedColumns as $column) {
+                        if (isset($object->$column)) {
+                            $allowedItem[$column] = $object->$column;
+                        }
+                    }
+                    $result[$value] = $allowedItem;
+                }
+            }
+        }
+
+        // Return the result as an array of arrays
+        // return array_values($result);
+        return $result;
+    }
+
+
+
 
     /*    public function update($id,$data)
     {
