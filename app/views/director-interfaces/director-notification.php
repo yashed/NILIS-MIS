@@ -61,20 +61,20 @@ $data['role'] = $role;
             width: calc(100% - 88px);
         }
 
-        .temp3-subsection-0 {
+        /* .temp3-subsection-0 {
             display: flex;
             flex-direction: row;
             justify-content: space-around;
             align-items: center;
             /* background-color: var(--text-color); */
-            padding: 15px 10px 15px 35px;
+            /* padding: 15px 10px 15px 35px;
             border-radius: 6px;
             margin: 7px 4px 7px 4px;
             flex-wrap: wrap;
 
-        }
+        } */
 
-        .temp3-subsection-01 {
+        /* .temp3-subsection-01 {
             display: flex;
             padding: 15px 30px 14px 30px;
             justify-content: center;
@@ -106,7 +106,7 @@ $data['role'] = $role;
             font-size: 18px;
             font-weight: 600;
             color: #17376E;
-        }
+        } */ 
 
         .temp3-subsection-1 {
             background-color: var(--text-color);
