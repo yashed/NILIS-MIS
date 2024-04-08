@@ -619,6 +619,60 @@ DELIMITER ;
 
         // Execute the procedure creation query
         $this->query($query);
+
+        $query = "
+        CREATE PROCEDURE IF NOT EXISTS `Exam_End`()
+        BEGIN
+        DECLARE currentDate DATE;
+        DECLARE eventEndDate DATE;
+        DECLARE userId INT;
+        DECLARE daysAfterExam INT;
+        DECLARE degreeName TEXT; -- Specify the length for VARCHAR
+
+        DECLARE str1 VARCHAR(255); -- Declare variables for string concatenation
+        DECLARE str2 VARCHAR(255);
+
+        DECLARE eventCursor CURSOR FOR
+            SELECT dt.EndingDate, d.DegreeName
+            FROM degree_timetable AS dt
+            JOIN degree AS d ON dt.DegreeID = d.DegreeID;
+
+        -- Set the current date
+        SET currentDate = CURDATE();
+
+        OPEN eventCursor;
+
+        read_loop: LOOP
+            FETCH eventCursor INTO eventEndDate, degreeName;
+            IF eventEndDate IS NULL THEN
+                LEAVE read_loop;
+            END IF;
+
+            -- Calculate the days remaining
+            SET daysAfterExam = DATEDIFF(currentDate,eventEndDate);
+
+            -- Check if days remaining is less than or equal to 14 and greater than 0
+            IF (daysAfterExam = 1) THEN
+               -- Construct notification message
+                SET str1 = CONCAT('The examination for the diploma ', degreeName ,' has ended. If required, please proceed with any necessary actions post-examination.');
+                
+
+                -- Print concatenated strings to console (optional)
+                -- SELECT CONCAT(str1, str2);
+
+                -- Insert record into notifications table
+                INSERT INTO notifications (description, type, msg_type)
+                VALUES (CONCAT(str1), 'Examination', 'Exam-end-alert');
+            END IF;
+        END LOOP;
+
+        CLOSE eventCursor;
+    
+END;
+        ";
+
+        // Execute the procedure creation query
+        $this->query($query);
     }
 
     public function create_event()
@@ -645,5 +699,7 @@ DELIMITER ;
 
         // Execute the event creation query
         $this->query($query);
+
+        
     }
 }
