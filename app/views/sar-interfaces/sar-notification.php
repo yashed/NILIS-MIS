@@ -137,7 +137,17 @@ $data['role'] = $role;
         <div class="temp3-subsection-1">
         <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'All') : ?>
+                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-start-alert') : ?>
+                        <?php 
+                             $data['role'] = "SAR";
+                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
+            <?php if (!empty($notifications)) : ?>
+                <?php foreach ($notifications as $notification) : ?>
+                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert') : ?>
                         <?php 
                              $data['role'] = "SAR";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
