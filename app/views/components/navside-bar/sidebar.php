@@ -82,7 +82,7 @@
                 </li>
                 <li class="nav-link">
                     <a href="<?= ROOT ?>sar/degreeprograms">
-                        <i class="bx bx-home icon"></i>
+                        <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Programs</span>
                     </a>
                 </li>

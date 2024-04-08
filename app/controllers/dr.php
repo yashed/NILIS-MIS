@@ -30,7 +30,6 @@ class DR extends Controller
         // show($_POST);
         $degree_name = "";
         $duration = 0;
-        $status = "";
         $degree = new Degree();
         $subject = new Subjects();
         $grade = new Grades();
@@ -42,7 +41,6 @@ class DR extends Controller
         if ($action == 'add') {
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $currentYear = date('Y');
-                $status = "ongoing";
                 if ($_POST['degree_type'] === "1 Year") {
                     $duration = 1;
                 } else if ($_POST['degree_type'] === "2 Year") {
@@ -61,7 +59,6 @@ class DR extends Controller
                     'DegreeName' => $degree_name,
                     'Duration' => $duration,
                     'AcademicYear' => $currentYear,
-                    'Status' => $status,
                 ];
                 $degree->insert($data);
                 $degree_id = $degree->lastID('DegreeID');
@@ -139,9 +136,9 @@ class DR extends Controller
             $data['degreeTimeTable'] = $degreeTimeTableData;
             echo "whutto";
             if ($action == "update") {
-                echo "update";
+                echo "update ";
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-                    echo "POST request received";
+                    echo "POST request received ";
                     if (isset($_POST['timetableData'])) {
                         $timetableData = json_decode($_POST['timetableData'], true);
                         // Iterate over each subject's data and insert it into the database
@@ -161,6 +158,7 @@ class DR extends Controller
                     }
                 }
             } else if ($action == 'delete') {
+                echo "delete";
                 $degree->delete(['id' => $degreeID]);
                 redirect("dr/degreeprograms");
             }
@@ -287,7 +285,7 @@ class DR extends Controller
                 echo "Error: Student not found.";
             }
             if ($action == "update") {
-                $studentModel->update($studentId,$data['student']);
+                $studentModel->update($studentId, $data['student']);
                 redirect("dr/userprofile?studentId=$studentId");
             } else if ($action == "add") {
             } else if ($action == 'delete') {
