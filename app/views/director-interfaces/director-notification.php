@@ -127,7 +127,7 @@ $data['role'] = $role;
 
         }
 
-        .banner {
+        /* .banner {
             margin-left: 1%;
             display: flex;
             width: 80%;
@@ -227,7 +227,7 @@ $data['role'] = $role;
             margin-top: 30px;
             margin-right: 1%;
             flex: 1%;
-        }
+        } */
     </style>
 </head>
 

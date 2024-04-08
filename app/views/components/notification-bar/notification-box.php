@@ -24,10 +24,11 @@
             border: 1px solid rgba(0, 0, 0, 0.1);
             box-shadow: 0px 7px 4px rgba(0, 0, 0, 0.02), 0px 3px 3px rgba(0, 0, 0, 0.03), 0px 1px 2px rgba(0, 0, 0, 0.03), 0px 0px 0px rgba(0, 0, 0, 0.03);
             border-radius: 8px;
+            margin-bottom: 20px;
         }
 
         .color-strip {
-            width: 5px;
+            width: 10px;
             height: 100%;
             background: #17376E;
             margin-right: 1%;

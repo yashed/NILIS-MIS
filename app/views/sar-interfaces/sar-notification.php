@@ -61,20 +61,20 @@ $data['role'] = $role;
             width: calc(100% - 88px);
         }
 
-        .temp3-subsection-0 {
+        /* .temp3-subsection-0 {
             display: flex;
             flex-direction: row;
             justify-content: space-around;
-            align-items: center;
+            align-items: center; */
             /* background-color: var(--text-color); */
-            padding: 15px 10px 15px 35px;
+            /* padding: 15px 10px 15px 35px;
             border-radius: 6px;
             margin: 7px 4px 7px 4px;
             flex-wrap: wrap;
 
-        }
+        } */
 
-        .temp3-subsection-01 {
+        /* .temp3-subsection-01 {
             display: flex;
             padding: 15px 30px 14px 30px;
             justify-content: center;
@@ -87,9 +87,9 @@ $data['role'] = $role;
             height: 150px;
             flex-direction: row;
             gap: 60px;
-        }
+        } */
 
-        .temp3-subcard-data {
+        /* .temp3-subcard-data {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -106,7 +106,7 @@ $data['role'] = $role;
             font-size: 18px;
             font-weight: 600;
             color: #17376E;
-        }
+        } */
 
         .temp3-subsection-1 {
             background-color: var(--text-color);
@@ -127,7 +127,7 @@ $data['role'] = $role;
 
         }
 
-        .banner {
+        /* .banner {
             margin-left: 1%;
             display: flex;
             width: 80%;
@@ -136,6 +136,7 @@ $data['role'] = $role;
             border: 1px solid rgba(0, 0, 0, 0.1);
             box-shadow: 0px 7px 4px rgba(0, 0, 0, 0.02), 0px 3px 3px rgba(0, 0, 0, 0.03), 0px 1px 2px rgba(0, 0, 0, 0.03), 0px 0px 0px rgba(0, 0, 0, 0.03);
             border-radius: 8px;
+            margin-bottom: 20px;
         }
 
         .color-strip {
@@ -227,7 +228,7 @@ $data['role'] = $role;
             margin-top: 30px;
             margin-right: 1%;
             flex: 1%;
-        }
+        } */
     </style>
 </head>
 
@@ -245,18 +246,11 @@ $data['role'] = $role;
                 <?php endforeach; ?>
             <?php endif; ?>
 
-            <?php if (!empty($notifications)) : ?>
-                <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'msg2') : ?>
-                        <?php 
-                             $data['role'] = "SAR";
-                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) 
-                             ?>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            <?php endif; ?> 
+           
         </div>
     </div>
+
+    
 
     <div class="temp3-footer">
         <?php $this->view('components/footer/index', $data) ?>
