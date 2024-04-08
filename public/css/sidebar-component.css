@@ -262,8 +262,8 @@ header .image-text .headder-text {
   padding: 20px;
   margin: 12px;
   border-radius: 6px;
-  top: 40px;
-  left: 35%;
+  top: 20%;
+  left: 40%;
 }
 
 .user-info {
@@ -280,7 +280,7 @@ header .image-text .headder-text {
   width: 100px;
   height: auto;
   border-radius: 50%;
-  margin-right: 15px;
+  margin-right: 10px;
 }
 
 .sub-menu hr {
@@ -329,6 +329,11 @@ header .image-text .headder-text {
   font-weight: 600;
 }
 
+.menu-links .nav-link.selected {
+  background-color: var(--text-color);
+  text-decoration: none;
+  border-radius: 6px;
+}
 /* body.submenu-open {
     backdrop-filter: blur(5px);
 } */

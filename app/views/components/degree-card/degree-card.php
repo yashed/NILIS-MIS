@@ -77,7 +77,7 @@
 </head>
 
 <body>
-    <a href="<?= ROOT ?>dr/degreeprofile?id=<?= $degree->DegreeID ?>" style="text-decoration: none;">
+    <a href="<?= ROOT ?><?= $_SESSION['USER_DATA']->role?>/degreeprofile?id=<?= $degree->DegreeID ?>" style="text-decoration: none;">
         <div class="degree-body">
             <div class="degree-card">
                 <img src="<?= ROOT ?>/assets/degree-card/icon.png" alt="icon.png" class="degree-img">
