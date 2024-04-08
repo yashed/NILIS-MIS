@@ -108,10 +108,14 @@ show($_POST);
   }
 
 
-  public function notification()
+  public function notifications()
   {
-    $this->view('admin-interfaces/admin-notification');
+    $notification = new NotificationModel();
+
+    $data['notifications'] = $notification->findAll();
+    $this->view('admin-interfaces/admin-notifications',$data);
   }
+
   public function degreeprograms()
   {
     $degree = new Degree();
