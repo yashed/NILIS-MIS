@@ -204,16 +204,23 @@ $data['role'] = $role;
                 </div>
                 <div class="dr-sub-title">Ongoing Degree Programs</div>
                 <div class="dr-degree-bar">
-                    <?php if ($degrees) : ?>
+                    <?php if (!empty($degrees)) : ?>
                         <?php $count = 0; ?>
+                        <?php $ongoing_degrees_exist = false; ?>
                         <?php foreach ($degrees as $degree) : ?>
-                            <div class="dr-card1">
-                                <a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
-                                    <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
-                                </a>
-                            </div>
-                            <?php $count++; ?>
+                            <?php if ($degree->Status == "ongoing") : ?>
+                                <?php $ongoing_degrees_exist = true; ?>
+                                <div class="dr-card1">
+                                    <a href="<?= ROOT ?>dr/degreeprofile?id=<?= $degree->DegreeID ?>" style="text-decoration: none;">
+                                        <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                                    </a>
+                                </div>
+                                <?php $count++; ?>
+                            <?php endif; ?>
                         <?php endforeach; ?>
+                        <?php if (!$ongoing_degrees_exist) : ?>
+                            <p>No data found under the ongoing diploma program.</p>
+                        <?php endif; ?>
                     <?php else : ?>
                         <p>No data found for the diploma program.</p>
                     <?php endif; ?>
@@ -222,19 +229,26 @@ $data['role'] = $role;
             <div class="dr-subsection-1">
                 <div class="dr-sub-title">Completed Degree Programs</div>
                 <div class="dr-degree-bar">
-                    <?php if ($degrees) : ?>
-                        <?php $count = 0; ?>
-                        <?php foreach ($degrees as $degree) : ?>
-                            <div class="dr-card1">
-                                <a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
-                                    <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
-                                </a>
-                            </div>
-                            <?php $count++; ?>
-                        <?php endforeach; ?>
-                    <?php else : ?>
-                        <p>No data found under the completed diploma program.</p>
-                    <?php endif; ?>
+                <?php if (!empty($degrees)) : ?>
+                                <?php $count = 0; ?>
+                                <?php $completed_degrees_exist = false; ?>
+                                <?php foreach ($degrees as $degree) : ?>
+                                    <?php if ($degree->Status == "completed") : ?>
+                                        <?php $completed_degrees_exist = true; ?>
+                                        <div class="dr-card1">
+                                            <a href="<?= ROOT ?>dr/degreeprofile?id=<?= $degree->DegreeID ?>" style="text-decoration: none;">
+                                                <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                                            </a>
+                                        </div>
+                                        <?php $count++; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                                <?php if (!$completed_degrees_exist) : ?>
+                                    <p>No data found under the completed diploma program.</p>
+                                <?php endif; ?>
+                            <?php else : ?>
+                                <p>No data found for the diploma program.</p>
+                            <?php endif; ?>
                 </div>
             </div>
             <div class="dr-footer">

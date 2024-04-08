@@ -638,22 +638,30 @@ $data['role'] = $role;
                             Ongoing Degree Programs
                         </div>
                         <div class="degree-cards">
-                            <?php if ($degrees) : ?>
+                            <?php if (!empty($degrees)) : ?>
                                 <?php $count = 0; ?>
+                                <?php $ongoing_degrees_exist = false; ?>
                                 <?php foreach ($degrees as $degree) : ?>
-                                    <div class="dr-card1">
-                                        <a href="<?= ROOT ?>dr/degreeprofile?id=<?= $degree->DegreeID ?>" style="text-decoration: none;">
-                                            <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
-                                        </a>
-                                    </div>
-                                    <?php $count++; ?>
+                                    <?php if ($degree->Status == "ongoing") : ?>
+                                        <?php $ongoing_degrees_exist = true; ?>
+                                        <div class="dr-card1">
+                                            <a href="<?= ROOT ?>dr/degreeprofile?id=<?= $degree->DegreeID ?>" style="text-decoration: none;">
+                                                <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                                            </a>
+                                        </div>
+                                        <?php $count++; ?>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
+                                <?php if (!$ongoing_degrees_exist) : ?>
+                                    <p>No data found under the ongoing diploma program.</p>
+                                <?php endif; ?>
                             <?php else : ?>
-                                <p>No data found for the Ongoing diploma program.</p>
+                                <p>No data found for the diploma program.</p>
                             <?php endif; ?>
                         </div>
                     </div>
                 </div>
+
             </div>
             <div class="dr-dash-subsection-1-2">
                 <div class="dr-dash-subsection-1-2-1">
