@@ -171,6 +171,7 @@ $data['role'] = $role;
         border-radius: 6px;
         margin: 4px 4px 4px 4px;
         width: 100%;
+        min-height: 300px;
     }
 
     .dr-dash-subsection-1-1-1-5 {
@@ -637,15 +638,19 @@ $data['role'] = $role;
                             Ongoing Degree Programs
                         </div>
                         <div class="degree-cards">
-                            <?php $count = 0; ?>
-                            <?php foreach ($degrees as $degree) : ?>
-                                <div class="dr-card1">
-                                    <a href="<?= ROOT ?>dr/degreeprofile?id=<?= $degree->DegreeID ?>" style="text-decoration: none;">
-                                        <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
-                                    </a>
-                                </div>
-                                <?php $count++; ?>
-                            <?php endforeach; ?>
+                            <?php if ($degrees) : ?>
+                                <?php $count = 0; ?>
+                                <?php foreach ($degrees as $degree) : ?>
+                                    <div class="dr-card1">
+                                        <a href="<?= ROOT ?>dr/degreeprofile?id=<?= $degree->DegreeID ?>" style="text-decoration: none;">
+                                            <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                                        </a>
+                                    </div>
+                                    <?php $count++; ?>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <p>No data found for the Ongoing diploma program.</p>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -671,23 +676,6 @@ $data['role'] = $role;
                     </div>
                 </div>
             </div>
-            <!-- <div class="dr-dash-subsection-2">
-                <div class="dr-dash-subsection-21">
-                    <div class="dr-dash-sub-title">
-                        Sub title 2 </br>
-
-
-                    </div>
-
-                </div>
-                <div class="dr-dash-subsection-22">
-                    <div class="dr-dash-sub-title">
-                        Sub title 3</br>
-
-                    </div>
-
-                </div>
-            </div> -->
         </div>
 
         <div class="dr-dash-footer">

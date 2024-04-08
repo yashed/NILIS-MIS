@@ -331,47 +331,47 @@ $data['role'] = $role;
                             <td width="12%"><input type="date" value="" name="end_1" class="duration" id="end_1" placeholder=""></td>
                         </tr>
                         <tr>
-                            <td><input type="text" value="" name="event_2" class="event" id="event_2" placeholder="Study Leave"></td>
-                            <td width="12%" padding-right="3px"><select name="type_1" class="duration" id="type_1">
+                            <td><input type="text" value="" name="event_2" class="event" id="event_2" placeholder="Study Leave" readonly></td>
+                            <td width="12%" padding-right="3px"><select name="type_2" class="duration" id="type_2" disabled>
                                     <option value="" default hidden>Event Type</option>
                                     <option value="Examination" <?= (set_value('type_2') === 'Examination') ? 'selected' : '' ?>>Examination</option>
                                     <option value="Study Leave" <?= (set_value('type_2') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
                                     <option value="Vacation" <?= (set_value('type_2') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
                                     <option value="Other" <?= (set_value('type_2') === 'Other') ? 'selected' : '' ?>>Other</option>
                                 </select></td>
-                            <td><input type="date" value="" name="start_2" class="duration" id="start_2" placeholder=""></td>
-                            <td><input type="date" value="" name="end_2" class="duration" id="end_2" placeholder=""></td>
+                            <td><input type="date" value="" name="start_2" class="duration" id="start_2" placeholder="" readonly></td>
+                            <td><input type="date" value="" name="end_2" class="duration" id="end_2" placeholder="" readonly></td>
                         </tr>
                         <tr>
-                            <td><input type="text" value="" name="event_3" class="event" id="event_3" placeholder="First Semester Examination"></td>
-                            <td width="12%" padding-right="3px"><select name="type_1" class="duration" id="type_1">
+                            <td><input type="text" value="" name="event_3" class="event" id="event_3" placeholder="First Semester Examination" readonly></td>
+                            <td width="12%" padding-right="3px"><select name="type_3" class="duration" id="type_3" disabled>
                                     <option value="" default hidden>Event Type</option>
                                     <option value="Examination" <?= (set_value('type_3') === 'Examination') ? 'selected' : '' ?>>Examination</option>
                                     <option value="Study Leave" <?= (set_value('type_3') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
                                     <option value="Vacation" <?= (set_value('type_3') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
                                     <option value="Other" <?= (set_value('type_3') === 'Other') ? 'selected' : '' ?>>Other</option>
                                 </select></td>
-                            <td><input type="date" value="" name="start_3" class="duration" id="start_3" placeholder=""></td>
-                            <td><input type="date" value="" name="end_3" class="duration" id="end_3" placeholder=""></td>
+                            <td><input type="date" value="" name="start_3" class="duration" id="start_3" placeholder="" readonly></td>
+                            <td><input type="date" value="" name="end_3" class="duration" id="end_3" placeholder="" readonly></td>
                         </tr>
                         <tr>
-                            <td><input type="text" value="" name="event_4" class="event" id="event_4" placeholder="Second Semester Examination"></td>
-                            <td width="12%" padding-right="3px"><select name="type_1" class="duration" id="type_1">
+                            <td><input type="text" value="" name="event_4" class="event" id="event_4" placeholder="Second Semester Examination" readonly></td>
+                            <td width="12%" padding-right="3px"><select name="type_4" class="duration" id="type_4" disabled>
                                     <option value="" default hidden>Event Type</option>
                                     <option value="Examination" <?= (set_value('type_4') === 'Examination') ? 'selected' : '' ?>>Examination</option>
                                     <option value="Study Leave" <?= (set_value('type_4') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
                                     <option value="Vacation" <?= (set_value('type_4') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
                                     <option value="Other" <?= (set_value('type_4') === 'Other') ? 'selected' : '' ?>>Other</option>
                                 </select></td>
-                            <td><input type="date" value="" name="start_4" class="duration" id="start_4" placeholder=""></td>
-                            <td><input type="date" value="" name="end_4" class="duration" id="end_4" placeholder=""></td>
+                            <td><input type="date" value="" name="start_4" class="duration" id="start_4" placeholder="" readonly></td>
+                            <td><input type="date" value="" name="end_4" class="duration" id="end_4" placeholder="" readonly></td>
                         </tr>
                     </table>
                 </div>
                 <div class="box_4_2">
                     <table class="create_time_table_raw">
                         <tr>
-                            <th colspan="3"><button type="button" class="add-new-event" id="add_new_event">&#128198 Add New Event</button></th>
+                            <th colspan="3"><button type="button" class="add-new-event" id="add_new_event" disabled>&#128198 Add New Event</button></th>
                         </tr>
                         <tr>
                             <td></td>
@@ -385,11 +385,37 @@ $data['role'] = $role;
             <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        //Add new event
         let add = document.querySelector("#add_new_event");
         let table = document.querySelector(".Time_table");
-        let i = 2;
+        let count = 0;
+        let i = 5;
+        // Define a function to handle the change event
+        function handleChange(eventIndex) {
+            return function(e) {
+                var eventValue = $('#event_' + eventIndex).val();
+                var typeValue = $('#type_' + eventIndex).val();
+                var startValue = $('#start_' + eventIndex).val();
+                var endValue = $('#end_' + eventIndex).val();
+
+                if (eventValue !== "" && typeValue !== "" && startValue !== "" && endValue !== "") {
+                    $('#event_' + (eventIndex + 1)).prop('readonly', false);
+                    $('#type_' + (eventIndex + 1)).prop('disabled', false);
+                    $('#start_' + (eventIndex + 1)).prop('readonly', false);
+                    $('#end_' + (eventIndex + 1)).prop('readonly', false);
+                    count = eventIndex + 1;
+                }
+                if (count == i) {
+                    add.removeAttribute("disabled");
+                }
+            };
+        }
+        // Attach change event handlers to all four sets of fields
+        for (var k = 1; k < i; k++) {
+            $('#event_' + k + ', #type_' + k + ', #start_' + k + ', #end_' + k).on("change", handleChange(k));
+        }
+        //Add new event
         add.addEventListener("click", (event) => {
             let template = `
                 <tr>
@@ -405,10 +431,12 @@ $data['role'] = $role;
                     <td><input type="date" value="" name="end_${i}" class="duration" id="end_${i}" placeholder=""></td>
                 </tr>
             `;
-            i++;
             let newRow = document.createElement("tr");
             newRow.innerHTML = template;
             table.appendChild(newRow);
+            add.setAttribute("disabled", "true");
+            $('#event_' + i + ', #type_' + i + ', #start_' + i + ', #end_' + i).on("change", handleChange(i));
+            i++;
         });
 
 
@@ -416,15 +444,16 @@ $data['role'] = $role;
         save.onclick = function(event) {
             event.preventDefault();
             var timetableData = [];
-            i=2;
             var timeTable = document.getElementById(`Time_table`);
-            for (var k = 1; k < i; k++) { // loop through all rows except the header
+            for (var k = 1; k < count; k++) { // loop through all rows except the header
+                var eventID = k;
                 var eventName = document.getElementById(`event_${k}`).value.trim();
                 var eventType = document.getElementById(`type_${k}`).value.trim();
                 var eventStart = document.getElementById(`start_${k}`).value.trim();
                 var eventEnd = document.getElementById(`end_${k}`).value.trim();
                 // Push data to timetableData array
                 timetableData.push({
+                    eventID: eventID,
                     eventName: eventName,
                     eventType: eventType,
                     eventStart: eventStart,

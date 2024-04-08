@@ -26,7 +26,7 @@ class Model extends Database
             foreach ($data as $key => $value) {
                 if (!in_array($key, $this->allowedColumns)) {
 
-                    return false;
+                    unset($data[$key]);
                 }
             }
         }
@@ -39,8 +39,8 @@ class Model extends Database
         
         //add column names and values to the query (impolad function devide data by given character in array)
         $query .= "(" . implode(",", $keys) . ") values (:" . implode(",:", $keys) . ")";
-      
-
+        // show($query);
+        // show($data);
         //call query function to execute the query
         $this->query($query, $data);
 
@@ -81,16 +81,27 @@ class Model extends Database
 
     public function find($id)
     {
-        // $db = new Database(); // Replace with your database connection logic
-        // Modify the query to include the 'name' field
-        $query = "select * from " . $this->table . " WHERE id = :id";
+        $query = "select * from " . $this->table . " WHERE DegreeID = :id";
         $params = [':id' => $id];
-        $result = $this->query($query, $params); // Replace with your database query logic
+        $result = $this->query($query, $params);
         // Check if the query was successful
         if (is_array($result) && !empty($result)) {
-            return $result; // Assuming you want to return the first result
+            return $result; 
         } else {
-            return null; // Return null if the student is not found or an error occurs
+            return null;
+        }
+    }
+
+    public function findstudentid($id)
+    {
+        $query = "select * from " . $this->table . " WHERE id = :id";
+        $params = [':id' => $id];
+        $result = $this->query($query, $params);
+        // Check if the query was successful
+        if (is_array($result) && !empty($result)) {
+            return $result; 
+        } else {
+            return null;
         }
     }
     public function setid($id)
@@ -352,6 +363,7 @@ class Model extends Database
         // show($query);
         return true;
     }
+
     public function updateRows($setConditions, $whereConditions)
     {
         // Generate SET part of the query
@@ -379,6 +391,43 @@ class Model extends Database
         $this->query($query, $data);
     }
 
+    public function generateIndexRegNumber($degree_id, $degreeShortName, $currentYear)
+    {
+        $query = "SELECT MAX(CAST(SUBSTRING_INDEX(indexNo, '/', -1) AS UNSIGNED)) AS max_index_number 
+              FROM student 
+              WHERE DegreeID = ?";
+        $data = [$degree_id]; // Data to be bound to the query
+        $result = $this->query($query, $data);
+
+        if ($result && isset($result[0]->max_index_number)) {
+            $maxIndexNumber = $result[0]->max_index_number;
+        } else {
+            $maxIndexNumber = 0;
+        }
+        // Increment the last number and generate index and registration numbers
+        $nextNumber = $maxIndexNumber + 1;
+        $IndexNo = $degreeShortName . '/' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+        $RegistationNo = $degreeShortName . '/' . $currentYear . '/' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+        // Return the generated numbers
+        $data = [
+            'IndexNo' => $IndexNo,
+            'RegistationNo' => $RegistationNo
+        ];
+        return $data;
+    }
+
+    public function findByID($id)
+    {
+        $query = "SELECT * FROM " . $this->table . " WHERE DegreeID = :id";
+        $params = array(':id' => $id);
+        $res = $this->query($query, $params);
+
+        if ($res && count($res) > 0) {
+            return $res[0]; // Return the first row if there is a result
+        } else {
+            return false;
+        }
+    }
     /*    public function update($id,$data)
     {
 

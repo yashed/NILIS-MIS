@@ -71,21 +71,20 @@ class Database
         ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
         ";
 
-        //remove SubjectID and GradeID
         $this->query($query);
         //Degree Table
         $query = "
-    CREATE TABLE IF NOT EXISTS `degree` (
-        `DegreeID` int(11) NOT NULL AUTO_INCREMENT,
-        `DegreeType` varchar(50) NOT NULL,
-        `DegreeShortName` varchar(50) NOT NULL,
-        `DegreeName` text NOT NULL,
-        `Duration` int(20) NULL,
-        `AcademicYear` int(20) NOT NULL,
-        PRIMARY KEY (`DegreeID`),
-        UNIQUE KEY `DegreeID` (`DegreeID`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
-    ";
+        CREATE TABLE IF NOT EXISTS `degree` (
+            `DegreeID` int(11) NOT NULL AUTO_INCREMENT,
+            `DegreeType` varchar(50) NOT NULL,
+            `DegreeShortName` varchar(50) NOT NULL,
+            `DegreeName` text NOT NULL,
+            `Duration` int(20) NULL,
+            `AcademicYear` int(20) NOT NULL,
+            PRIMARY KEY (`DegreeID`),
+            UNIQUE KEY `DegreeID` (`DegreeID`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+        ";
 
         $this->query($query);
         //Subject Table
@@ -97,7 +96,7 @@ class Database
             `NoCredits` int(10) NOT NULL,
             `DegreeID` int(11) NOT NULL,
             `semester` int(10) NOT NULL,
-            FOREIGN KEY (DegreeID) REFERENCES degree(DegreeID),
+            CONSTRAINT `FK_DegreeID` FOREIGN KEY (`DegreeID`) REFERENCES `degree` (`DegreeID`) ON DELETE CASCADE 
             PRIMARY KEY (`SubjectID`),
             UNIQUE KEY `SubjectCode` (`SubjectCode`) 
            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci

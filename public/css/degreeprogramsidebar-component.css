@@ -336,6 +336,11 @@ header .image-text .headder-text {
   font-weight: 600;
 }
 
+.menu-links .nav-link.selected {
+  background-color: var(--text-color);
+  text-decoration: none;
+  border-radius: 6px;
+}
 /* body.submenu-open {
     backdrop-filter: blur(5px);
 } */
