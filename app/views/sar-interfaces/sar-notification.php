@@ -237,10 +237,10 @@ $data['role'] = $role;
         <div class="temp3-subsection-1">
         <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'msg1') : ?>
+                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'All') : ?>
                         <?php 
                              $data['role'] = "SAR";
-                             $this->view('components/notification-bar/notification-sar', ["notification" => $notification, "role" => $data['role']]) ?>
+                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -250,7 +250,7 @@ $data['role'] = $role;
                     <?php if ($notification->type == 'Examination' && $notification->msg_type == 'msg2') : ?>
                         <?php 
                              $data['role'] = "SAR";
-                             $this->view('components/notification-bar/notification-sar', ["notification" => $notification, "role" => $data['role']]) 
+                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) 
                              ?>
                     <?php endif; ?>
                 <?php endforeach; ?>

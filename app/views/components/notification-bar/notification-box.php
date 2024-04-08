@@ -164,10 +164,10 @@
                 <?= $notification->description ?>
             </div>
             </br>
-            <div class="buttons-container">
+            <!-- <div class="buttons-container">
                 <a href="<?= ROOT . $notification->button_link ?>" class="button1"><?= $notification->button_text ?></a>
                 
-            </div>
+            </div> -->
 
         </div>
 
