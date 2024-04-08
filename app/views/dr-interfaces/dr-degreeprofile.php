@@ -2,8 +2,8 @@
 $role = "DR";
 $data['role'] = $role;
 ?>
-<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
+<!-- <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?> -->
 
 <!DOCTYPE html>
 <html>
@@ -190,7 +190,7 @@ $data['role'] = $role;
     }
 
     .box_4_2 {
-        padding-bottom: 60px;
+        padding-bottom: 100px;
     }
 
     #add_new_event {
@@ -369,7 +369,7 @@ $data['role'] = $role;
                         </tr>
                         <tr>
                             <td></td>
-                            <td width="12%"><button class="pin" type="submit" id="update">Update</button></td>
+                            <td width="12%"><button class="pin" type="" id="update">Update</button></td>
                             <td width="12%"><button class="pin" type="submit" id="save" disabled>Save</button></td>
                         </tr>
                     </table>

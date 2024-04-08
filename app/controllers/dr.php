@@ -137,7 +137,9 @@ class DR extends Controller
             }
             $data['subjects'] = $subjects;
             $data['degreeTimeTable'] = $degreeTimeTableData;
+            echo "whutto";
             if ($action == "update") {
+                echo "update";
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     echo "POST request received";
                     if (isset($_POST['timetableData'])) {
@@ -285,7 +287,8 @@ class DR extends Controller
                 echo "Error: Student not found.";
             }
             if ($action == "update") {
-                echo "POST request received";
+                $studentModel->update($studentId,$data['student']);
+                redirect("dr/userprofile?studentId=$studentId");
             } else if ($action == "add") {
             } else if ($action == 'delete') {
                 $studentModel->delete(['id' => $studentId]);
