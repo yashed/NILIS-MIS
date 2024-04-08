@@ -21,7 +21,10 @@ class Clerk extends Controller
 
     public function notifications()
     {
-        $this->view('clerk-interfaces\clerk-notifications');
+        $notification = new NotificationModel();
+
+        $data['notifications'] = $notification->findAll();
+        $this->view('clerk-interfaces\clerk-notifications',$data);
     }
 
     public function updatedattendance()
