@@ -102,15 +102,33 @@ $data['role'] = $role;
         height: 35px;
         background: transparent;
     }
+
+    #complete_degree {
+        color: var(--text-color);
+        background-color: var(--sidebar-color);
+        border-radius: 7px;
+        width: 30%;
+        height: 35px;
+        border: 2px solid var(--sidebar-color);
+        padding: 5px 3px 3px 5px;
+        cursor: pointer;
+        margin: 0px 25px;
+    }
+
+    #complete_degree:hover {
+        color: var(--sidebar-color);
+        background-color: var(--text-color);
+    }
+
     #delete_degree {
         color: red;
         border-radius: 7px;
         width: 30%;
-        height: auto;
+        height: 35px;
         border: 2px solid red;
         padding: 5px 3px 3px 5px;
         cursor: pointer;
-        margin-top: 25px;
+        margin: 0px 25px;
     }
 
     #delete_degree:hover {
@@ -267,7 +285,7 @@ $data['role'] = $role;
                     <p>No data found for the specified degree ID.</p>
                 <?php endif; ?>
             </div>
-            <div class="box_2">
+            <form class="box_2" id="form2" method="post" action="<?= ROOT ?>dr/degreeprofile/delete?id=<?= $degrees[0]->$degreeID ?>" 
                 <p>Overview</p>
                 <?php if ($degrees) : ?>
                     <table class="Overview_table" colspan="2" style="display: flex; justify-content: center;">
@@ -298,13 +316,14 @@ $data['role'] = $role;
                             </td>
                         </tr>
                         <td colspan="2">
-                            <center><button class="pin" id="delete_degree">Delete Degree</button></center>
+                            <button class="pin" type="button" id="complete_degree">Completed</button>
+                            <button class="pin" type="submit" id="delete_degree"  value="delete">Delete Degree</button>
                         </td>
                     </table>
                 <?php else : ?>
                     <p>No data found for the specified degree ID.</p>
                 <?php endif; ?>
-            </div>
+            </form>
             <div class="box_3">
                 <div class="box_3_2" id="semester_subjects_credits">
                     <?php if ($subjects) : ?>
@@ -337,11 +356,11 @@ $data['role'] = $role;
                 <div class="box_4_1">
                     <table class="Time_table" id="Time_table">
                         <?php $lastEventID = 0; ?>
-                        <?php if($degreeTimeTable): ?>
-                        <tr>
-                            <th align="left">Event</th>
-                            <th colspan="2">Duration</th><br>
-                        </tr>
+                        <?php if ($degreeTimeTable) : ?>
+                            <tr>
+                                <th align="left">Event</th>
+                                <th colspan="2">Duration</th><br>
+                            </tr>
                             <?php foreach ($degreeTimeTable as $event) : ?>
                                 <tr>
                                     <td width="76%"><input type="text" value="<?= $event->EventName ?>" class="event" id="event_<?= $event->EventID ?>" readonly></td>
@@ -355,7 +374,9 @@ $data['role'] = $role;
                                     <td width="12%"><input type="date" value="<?= $event->StartingDate ?>" class="duration" id="start_<?= $event->EventID ?>" readonly></td>
                                     <td width="12%"><input type="date" value="<?= $event->EndingDate ?>" class="duration" id="end_<?= $event->EventID ?>" readonly></td>
                                 </tr>
-                                <?php if ($event->EventID > $lastEventID) { $lastEventID = $event->EventID; }?>
+                                <?php if ($event->EventID > $lastEventID) {
+                                    $lastEventID = $event->EventID;
+                                } ?>
                             <?php endforeach; ?>
                         <?php else : ?>
                             <p>No data found for the specified degree ID.</p>
@@ -369,7 +390,7 @@ $data['role'] = $role;
                         </tr>
                         <tr>
                             <td></td>
-                            <td width="12%"><button class="pin" type="" id="update">Update</button></td>
+                            <td width="12%"><button class="pin" type="button" id="update">Update</button></td>
                             <td width="12%"><button class="pin" type="submit" id="save" disabled>Save</button></td>
                         </tr>
                     </table>
@@ -432,6 +453,7 @@ $data['role'] = $role;
         });
         let updateButton = document.getElementById("update");
         let saveButton = document.getElementById("save");
+        let deletebutton = document.getElementById("delete_degree");
         let eventFields = document.querySelectorAll('.event');
         let eventTypeFields = document.querySelectorAll('.duration');
         updateButton.addEventListener("click", (event) => {
@@ -473,7 +495,7 @@ $data['role'] = $role;
                     eventStart: eventStart,
                     eventEnd: eventEnd
                 });
-                // console.log(timetableData); 
+                console.log(timetableData); 
                 var timetableDataInput = document.createElement('input');
                 timetableDataInput.setAttribute('type', 'hidden');
                 timetableDataInput.setAttribute('name', `timetableData`);
@@ -496,6 +518,13 @@ $data['role'] = $role;
             });
             saveButton.setAttribute('disabled', 'true');
             updateButton.removeAttribute('disabled', 'true');
+        }
+        deletebutton.onclick = function(event) {
+            event.preventDefault();
+            var confirmDelete = confirm("Are you sure you want to delete this degree?");
+            if (confirmDelete) {
+                document.getElementById("form2").submit();
+            }
         }
     });
 </script>
