@@ -309,4 +309,76 @@ $data['role'] = $role;
         <?php $this->view('components/footer/index', $data) ?>
     </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var firstNameInput = document.getElementById('fname');
+            var lastNameInput = document.getElementById('lname');
+            var emailInput = document.getElementById('email');
+            var phoneNoInput = document.getElementById('phoneNo');
+            var submitButton = document.getElementById('submitBtn');
+            var errorMessage = document.getElementById('fname-error');
+            var errorMessage = document.getElementById('lname-error');
+            var errorMessage = document.getElementById('email-error');
+            var errorMessage = document.getElementById('phoneNo-error');
+
+
+            function checkFirstName() {
+                if (firstNameInput.value.trim() === '') {
+                    submitButton.disabled = true;
+                    errorMessage.style.display = 'block';
+                } else {
+                    submitButton.disabled = false;
+                    errorMessage.style.display = 'none';
+                }
+            }
+
+            function checkLastName() {
+                if (firstNameInput.value.trim() === '') {
+                    submitButton.disabled = true;
+                    errorMessage.style.display = 'block';
+                } else {
+                    submitButton.disabled = false;
+                    errorMessage.style.display = 'none';
+                }
+            }
+
+            function checkEmail() {
+                if (firstNameInput.value.trim() === '') {
+                    submitButton.disabled = true;
+                    errorMessage.style.display = 'block';
+                } else {
+                    submitButton.disabled = false;
+                    errorMessage.style.display = 'none';
+                }
+            }
+
+            function checkPhoneNo() {
+    var phoneNo = phoneNoInput.value.trim();
+    var phoneNoPattern = /^\d{10}$/; // Regex pattern to match exactly 10 digits
     
+    if (!phoneNoPattern.test(phoneNo)) {
+        submitButton.disabled = true;
+        errorMessage.textContent = "Phone number is not valid. It should contain exactly 10 digits.";
+        errorMessage.style.display = 'block';
+    } else {
+        submitButton.disabled = false;
+        errorMessage.textContent = ""; // Clear error message
+        errorMessage.style.display = 'none';
+    }
+}
+
+
+            checkFirstName();
+            checkLastName();
+            checkEmail();
+            checkPhoneNo();
+
+            firstNameInput.addEventListener('input', checkFirstName);
+            lastNameInput.addEventListener('input', checkLastName);
+            emailInput.addEventListener('input', checkEmail);
+            phoneNoInput.addEventListener('input', checkPhoneNo);
+        });
+    </script>
+</body>
+
+</html>
