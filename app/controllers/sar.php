@@ -795,7 +795,6 @@ class SAR extends Controller
 
                                 if ($Rparticipant->subjectCode == $selectedSubject) {
                                     //append data to examStudents array
-
                                     $examStudents[] = $Rparticipant;
                                 }
                             }
@@ -911,20 +910,22 @@ class SAR extends Controller
                 $conditions1 = ['student.indexNo = exam_participants.indexNo'];
                 $whereCondition1 = ['exam_participants.examID= ' . $examID];
                 $Participants = $examParticipants->joinWhere($tables, $columns, $conditions1, $whereCondition1);
-                show($Participants);
 
                 //get repeat student details
                 $tables = ['repeat_students', 'student'];
                 $columns = ['*'];
-                $condition2 = ['repeat_students.degreeID = exam_participants.DegreeID', 'repeat_students.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID, 'exam_participants.studentType = "repeate"', 'student.indexNo = repeat_students.indexNo'];
-                $RepeatStudents = $examParticipants->join($tables, $columns, $condition2);
-                // show($RepeatStudents);
+                $condition2 = ['repeat_students.indexNo = exam_participants.indexNo', 'student.indexNo = repeat_students.indexNo'];
+                $whereCondition2 = ['exam_participants.examID= ' . $examID, 'exam_participants.studentType = "repeate"', 'repeat_students.semester = ' . $semester, 'repeat_students.paymentStatus = 1'];
+                $RepeatStudents = $examParticipants->joinWhere($tables, $columns, $condition2, $whereCondition2);
+
 
                 //get medical student details
                 $tables = ['medical_students', 'student'];
                 $columns = ['*'];
-                $condition3 = ['medical_students.degreeID = exam_participants.DegreeID', 'medical_students.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID, 'exam_participants.studentType = "medical"', 'student.indexNo = medical_students.indexNo'];
-                $MedicalStudents = $examParticipants->join($tables, $columns, $condition3);
+                $condition3 = ['medical_students.indexNo = exam_participants.indexNo', 'student.indexNo = medical_students.indexNo'];
+                $whereCondition3 = ['medical_students.semester = ' . $semester, 'medical_students.status = 1', 'exam_participants.examID= ' . $examID, 'exam_participants.studentType = "medical"'];
+                $MedicalStudents = $examParticipants->joinWhere($tables, $columns, $condition3, $whereCondition3);
+
 
                 // show($MedicalStudents);
                 $NormalParticipants = [];
@@ -968,18 +969,20 @@ class SAR extends Controller
                             fputcsv($f, array());
                             fputcsv($f, $rowHeadings);
 
+
+                            $sortedData = sortArray($NormalParticipants, 'indexNo');
+
                             //add indexNo and regNo to marksheet
-                            if (!empty($NormalParticipants)) {
-                                foreach ($NormalParticipants as $participant) {
+                            if (!empty($sortedData)) {
+                                foreach ($sortedData as $participant) {
                                     $rowData = [$participant->indexNo, $participant->regNo];
                                     fputcsv($f, $rowData);
                                 }
                             }
+
                             //add repeate students details to marksheet
-                            if (!empty($Rparticipant)) {
+                            if (!empty($RepeatStudents)) {
                                 foreach ($RepeatStudents as $Rparticipant) {
-
-
                                     if ($Rparticipant->subjectCode == $subject->SubjectCode) {
                                         // echo $Rparticipant->subjectCode . " " . $subject->SubjectCode;
                                         // show($Rparticipant);
@@ -990,7 +993,7 @@ class SAR extends Controller
                             }
 
                             //add medical students details to mark sheets
-                            if (!empty($Mparticipant)) {
+                            if (!empty($MedicalStudents)) {
                                 foreach ($MedicalStudents as $Mparticipant) {
                                     if ($Mparticipant->subjectCode == $subject->SubjectCode) {
                                         // echo $Rparticipant->subjectCode . " " . $subject->SubjectCode;
@@ -1013,6 +1016,7 @@ class SAR extends Controller
                 $submittedMarksheets = $resultSheet->where(['examId' => $examID]);
                 $groupedData = groupByColumn($submittedMarksheets, 'subjectCode');
                 $data['subjectData'] = json_encode($groupedData);
+
 
                 //delete marksheet from the database
                 if (isset($_POST['submit']) == 'delete-rs') {
