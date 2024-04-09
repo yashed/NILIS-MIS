@@ -16,9 +16,10 @@ class ResultSheet extends Model
         'newName',
         'formId',
         'subjectCode',
+        'degreeId',
         'date',
         'type',
-        'examId'
+        'examId',
 
     ];
 
@@ -44,7 +45,7 @@ class ResultSheet extends Model
                 $mark = $values[3];
             }
             if ($data['type'] == 'examiner3') {
-                // $mark = $values[4];
+                $mark = $values[5];
             }
             if ($data['type'] == 'assestment') {
                 $mark = $values[4];

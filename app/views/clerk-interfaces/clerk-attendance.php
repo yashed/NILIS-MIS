@@ -1,29 +1,13 @@
 <?php
-$role = "Clerk";
+$role = "clerk";
 $data['role'] = $role;
 
 ?>
 
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
+<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
 
-<?php
-// Database configuration
-$dbHost     = "localhost";
-$dbUsername = "root";
-$dbPassword = "";
-$dbName     = "nilis_db";
 
-// Create database connection
-$db = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
-
-// Check connection
-if ($db->connect_error) {
-    die("Connection failed: " . $db->connect_error);
-}
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -201,6 +185,8 @@ if ($db->connect_error) {
         justify-content: center;
     }
 
+    
+
     .admission-button2 {
         padding: 1% 1% 1% 1%;
         background-color: #E2E2E2;
@@ -218,80 +204,109 @@ if ($db->connect_error) {
     .admission-button2:hover {
         background-color: #909090;
     }
+
+    .popup-form {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        z-index: 9999;
+    }
+    
+    
+    
 </style>
 
 <body>
-    <div class="temp2-home">
-        <div class="temp2-title">Examination</div>
-
+<div class="temp2-home">
+        <div class="temp2-title">Attendance</div>
 
         <div class="temp2-subsection-2">
             <div class="temp2-subsection-21">
-               
                 <div class="record-file">Add Attendance Record File</div>
                 <div class="dashed-container1">
+                    
                     <label for="fileInput" class="file-input-icon"></label>
                     <br>
-
                     <div class="col-md-12 head">
                         <div class="float-right">
                             <p class="text1">Drag and drop or
-                                <a href="javascript:void(0);" class="btn btn-success" onclick="formToggle('importFrm');"><i class="plus"></i> browse </a>
+                                <a href="javascript:toggleForm('importFrm');" class="btn btn-success"><i class="plus"></i> browse </a>
                                 attendance file.
                             </p>
                         </div>
                     </div>
-                    <!-- CSV file upload form -->
-                    <div class="col-md-12" id="importFrm" style="display: none;">
-                        <form action="" method="post" enctype="multipart/form-data">
-                            <input type="file" class="btn btn-primary" name="csvFile" />
-                            <input type="submit" class="btn btn-primary" name="importSubmit" value="Submit">
-                        </form>
-                    </div>
+                   
                 </div>
                 <button class="admission-button2" onclick="redirectToUpdatedAttendance()">Record Attendance</button>
-
             </div>
         </div>
 
-        <div class="temp2-footer">
-            <?php $this->view('components/footer/index', $data) ?>
+        <div id="importFrm" class="popup-form" style="display: none;">
+            <form action="" method="post" enctype="multipart/form-data">
+                <label for="csvFile">Upload CSV File:</label>
+                <input type="file" name="csvFile" id="csvFile" accept=".csv" required>
+                <button type="submit" name="importSubmit">Import</button>
+            </form>
+            <button onclick="toggleForm('importFrm')">Close</button>
         </div>
 
-        <?php
-                if (isset($_POST['importSubmit'])) {
-                    // Allowed mime types
-                    $csvMimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain');
-
-                    // Validate whether the selected file is a CSV file
-                    if (!empty($_FILES['csvFile']['name']) && in_array($_FILES['csvFile']['type'], $csvMimes)) {
-                        // If the file is uploaded
-                        if (is_uploaded_file($_FILES['csvFile']['tmp_name'])) {
-                            // Your existing code for processing attendance
-                            echo '<script>alert("File submitted successfully!");</script>';
-                        } else {
-                            echo '<script>alert("Error: File upload failed!");</script>';
-                        }
-                    } else {
-                        echo '<script>alert("Error: Please select a valid CSV file!");</script>';
-                    }
-                }
-                ?>
+        <div class="temp2-footer">
+        <?php $this->view('components/footer/index', $data) ?>
+        </div>
 
         <script>
-            function formToggle(ID) {
-                var element = document.getElementById(ID);
-                if (element.style.display === "none") {
-                    element.style.display = "block";
+           
+            function toggleForm(formId) {
+                var form = document.getElementById(formId);
+                if (form.style.display === "none") {
+                    form.style.display = "block";
                 } else {
-                    element.style.display = "none";
+                    form.style.display = "none";
                 }
             }
 
+          
             function redirectToUpdatedAttendance() {
-                window.location.href = "updatedattendance";
+                window.location.href = "<?= ROOT ?>clerk/updatedattendance";
             }
+
+            function handleFileSelect(event) {
+    event.preventDefault();
+    var files = event.target.files;
+    handleFiles(files);
+}
+
+function handleFiles(files) {
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (file.type === 'text/csv') {
+            // Process the CSV file
+            console.log('CSV file selected:', file.name);
+            // You can handle further processing here
+        } else {
+            console.log('Invalid file type. Please select a CSV file.');
+        }
+    }
+}
+
+function handleDragOver(event) {
+    event.preventDefault();
+}
+
+function handleDrop(event) {
+    event.preventDefault();
+    var files = event.dataTransfer.files;
+    handleFiles(files);
+}
+
         </script>
+        
+    </div>
 </body>
 
 </html>

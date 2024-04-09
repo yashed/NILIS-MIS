@@ -14,6 +14,7 @@ class Marks extends Model
         'id',
         'studentIndexNo',
         'subjectCode',
+        'degreeID',
         'examID',
         'examiner1Marks',
         'examiner2Marks',
@@ -25,7 +26,24 @@ class Marks extends Model
 
     public function markValidate($data)
     {
-        return true;
+        // show($data);
+        if ($this->where2(['studentIndexNo' => $data['studentIndexNo'], 'subjectCode' => $data['subjectCode'], 'degreeID' => $data['degreeID'], 'examID' => $data['examID']])) {
+            $this->errors['marks'] = 'Data is already submitted';
+            $row = $this->where2(['studentIndexNo' => $data['studentIndexNo'], 'subjectCode' => $data['subjectCode'], 'degreeID' => $data['degreeID'], 'examID' => $data['examID']]);
+            $row = (object) $row[0];
+            $row->status = 'update';
+
+            return $row;
+
+        } else {
+
+            // show($data);
+            $data = (object) $data;
+            $data->status = 'insert';
+
+            return $data;
+        }
+
     }
 }
 

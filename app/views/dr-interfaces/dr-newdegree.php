@@ -135,9 +135,7 @@ $data['role'] = $role;
         margin: 7px 4px 7px 4px;
     }
 
-    input[type=event],
-    select,
-    textarea {
+    input[type=event] {
         width: 50%;
         padding: 12px;
         border: 1px solid #ccc;
@@ -233,13 +231,17 @@ $data['role'] = $role;
     }
 
     .box_4 .event {
-        width: 85%;
+        width: 90%;
         padding-left: 10px;
     }
 
     .time_table .duration {
         text-align: center;
         width: 100%;
+        height: 35px;
+        outline: none;
+        border-radius: 5px;
+        border: 1px solid gainsboro;
     }
 
     .box_4_1 {
@@ -297,103 +299,175 @@ $data['role'] = $role;
         <div class="white-container1-1">
             <div class="white-container2">
                 <p class="left-top-text">Add Student Details</p>
-                <a href="<?= ROOT ?>assets/csv/output/student-data-input.csv"" class=" download-button" download>Download
+                <a href="<?= ROOT ?>assets/csv/output/student-data-input.csv" class=" download-button" download>Download
                     File</a><br><br>
                 <form method="post" enctype="multipart/form-data">
                     <div class="dashed-container">
                         <label for="student-data" class="file-input-icon"></label>
                         <input type="file" id="student-data" name="student-data">
-                        <p class="text1">Drag and drop or <label for="student-data" class="browse-label">browse</label>
-
-                        </p>
+                        <p class="text1">Drag and drop or <label for="student-data" class="browse-label">browser</label> your files</p>
                         <button type="submit" class="download-button" name="student-data" value="upload-csv">Upload</button>
                     </div>
                 </form>
             </div>
-            <div class="box_4">
+            <form class="box_4" method="post" action="<?= ROOT ?>dr/newDegree/add" id="form1">
                 <p>Define Degree Time Table</p>
                 <div class="box_4_1">
-                    <table class="Time_table">
+                    <table class="Time_table" id="Time_table">
                         <tr>
                             <th align="left">Event</th>
                             <th colspan="2">Duration</th>
                         </tr>
                         <tr>
-                            <td width="76%"><input type="text" name="event_1" class="event" placeholder="Mid Semester Break"></td>
-                            <td width="12%"><input type="date" name="start_1" class="duration" placeholder=""></td>
-                            <td width="12%"><input type="date" name="end_1" class="duration" placeholder=""></td>
+                            <td width="76%"><input type="text" value="" name="event_1" class="event" id="event_1" placeholder="Mid Semester Break"></td>
+                            <td width="14%"><select name="type_1" class="duration" id="type_1" style="padding: 0px 2px 0px 2px;">
+                                    <option value="" default hidden>Event Type</option>
+                                    <option value="Examination" <?= (set_value('type_1') === 'Examination') ? 'selected' : '' ?>>Examination</option>
+                                    <option value="Study Leave" <?= (set_value('type_1') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
+                                    <option value="Vacation" <?= (set_value('type_1') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
+                                    <option value="Other" <?= (set_value('type_1') === 'Other') ? 'selected' : '' ?>>Other</option>
+                                </select></td>
+                            <td width="12%"><input type="date" value="" name="start_1" class="duration" id="start_1" placeholder=""></td>
+                            <td width="12%"><input type="date" value="" name="end_1" class="duration" id="end_1" placeholder=""></td>
                         </tr>
                         <tr>
-                            <td><input type="text" name="event_2" class="event" placeholder="Study Leave"></td>
-                            <td><input type="date" name="start_2" class="duration" placeholder=""></td>
-                            <td><input type="date" name="end_2" class="duration" placeholder=""></td>
+                            <td><input type="text" value="" name="event_2" class="event" id="event_2" placeholder="Study Leave" readonly></td>
+                            <td width="12%" padding-right="3px"><select name="type_2" class="duration" id="type_2" disabled>
+                                    <option value="" default hidden>Event Type</option>
+                                    <option value="Examination" <?= (set_value('type_2') === 'Examination') ? 'selected' : '' ?>>Examination</option>
+                                    <option value="Study Leave" <?= (set_value('type_2') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
+                                    <option value="Vacation" <?= (set_value('type_2') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
+                                    <option value="Other" <?= (set_value('type_2') === 'Other') ? 'selected' : '' ?>>Other</option>
+                                </select></td>
+                            <td><input type="date" value="" name="start_2" class="duration" id="start_2" placeholder="" readonly></td>
+                            <td><input type="date" value="" name="end_2" class="duration" id="end_2" placeholder="" readonly></td>
                         </tr>
                         <tr>
-                            <td><input type="text" name="event_3" class="event" placeholder="First Semester Examination"></td>
-                            <td><input type="date" name="start_3" class="duration" placeholder=""></td>
-                            <td><input type="date" name="end_3" class="duration" placeholder=""></td>
+                            <td><input type="text" value="" name="event_3" class="event" id="event_3" placeholder="First Semester Examination" readonly></td>
+                            <td width="12%" padding-right="3px"><select name="type_3" class="duration" id="type_3" disabled>
+                                    <option value="" default hidden>Event Type</option>
+                                    <option value="Examination" <?= (set_value('type_3') === 'Examination') ? 'selected' : '' ?>>Examination</option>
+                                    <option value="Study Leave" <?= (set_value('type_3') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
+                                    <option value="Vacation" <?= (set_value('type_3') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
+                                    <option value="Other" <?= (set_value('type_3') === 'Other') ? 'selected' : '' ?>>Other</option>
+                                </select></td>
+                            <td><input type="date" value="" name="start_3" class="duration" id="start_3" placeholder="" readonly></td>
+                            <td><input type="date" value="" name="end_3" class="duration" id="end_3" placeholder="" readonly></td>
                         </tr>
                         <tr>
-                            <td><input type="text" name="event_4" class="event" placeholder="Second Semester Examination"></td>
-                            <td><input type="date" name="start_4" class="duration" placeholder=""></td>
-                            <td><input type="date" name="end_4" class="duration" placeholder=""></td>
+                            <td><input type="text" value="" name="event_4" class="event" id="event_4" placeholder="Second Semester Examination" readonly></td>
+                            <td width="12%" padding-right="3px"><select name="type_4" class="duration" id="type_4" disabled>
+                                    <option value="" default hidden>Event Type</option>
+                                    <option value="Examination" <?= (set_value('type_4') === 'Examination') ? 'selected' : '' ?>>Examination</option>
+                                    <option value="Study Leave" <?= (set_value('type_4') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
+                                    <option value="Vacation" <?= (set_value('type_4') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
+                                    <option value="Other" <?= (set_value('type_4') === 'Other') ? 'selected' : '' ?>>Other</option>
+                                </select></td>
+                            <td><input type="date" value="" name="start_4" class="duration" id="start_4" placeholder="" readonly></td>
+                            <td><input type="date" value="" name="end_4" class="duration" id="end_4" placeholder="" readonly></td>
                         </tr>
                     </table>
                 </div>
                 <div class="box_4_2">
                     <table class="create_time_table_raw">
                         <tr>
-                            <th colspan="3"><button class="add-new-event" id="add_new_event">&#128198 Add New Event</button></th>
+                            <th colspan="3"><button type="button" class="add-new-event" id="add_new_event" disabled>&#128198 Add New Event</button></th>
                         </tr>
                         <tr>
                             <td></td>
-                            <td width="12%"><button class="pin" id="save">Save</button></td>
+                            <td width="12%"><button class="pin" type="" id="save">Save</button></td>
                         </tr>
                     </table>
                 </div>
-            </div>
+            </form>
         </div>
         <div class="dr-footer">
             <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const body = document.querySelector("body");
-            const sidebar = body.querySelector(".sidebar");
-            const toggle = body.querySelector(".toggle");
-            const whitecontainer1 = body.querySelector(".white-container1");
-            const whitecontainer2 = body.querySelector(".white-container2");
-            const whitecontainer3 = body.querySelector(".white-container3");
+        let add = document.querySelector("#add_new_event");
+        let table = document.querySelector(".Time_table");
+        let count = 0;
+        let i = 5;
+        // Define a function to handle the change event
+        function handleChange(eventIndex) {
+            return function(e) {
+                var eventValue = $('#event_' + eventIndex).val();
+                var typeValue = $('#type_' + eventIndex).val();
+                var startValue = $('#start_' + eventIndex).val();
+                var endValue = $('#end_' + eventIndex).val();
 
-            toggle.addEventListener("click", () => {
-                sidebar.classList.toggle("close");
-                whitecontainer1.classList.toggle("close");
-                whitecontainer2.classList.toggle("close");
-                whitecontainer3.classList.toggle("close");
-            });
-
-            let subMenu = document.getElementById("subMenu");
-            function toggleMenu() {
-                subMenu.classList.toggle("open-menu");
-            }
-            //Add new event
-            let add = document.querySelector("#add_new_event");
-            let table = document.querySelector(".Time_table");
-
-            add.addEventListener("click", () => {
-                let template = `
+                if (eventValue !== "" && typeValue !== "" && startValue !== "" && endValue !== "") {
+                    $('#event_' + (eventIndex + 1)).prop('readonly', false);
+                    $('#type_' + (eventIndex + 1)).prop('disabled', false);
+                    $('#start_' + (eventIndex + 1)).prop('readonly', false);
+                    $('#end_' + (eventIndex + 1)).prop('readonly', false);
+                    count = eventIndex + 1;
+                }
+                if (count == i) {
+                    add.removeAttribute("disabled");
+                }
+            };
+        }
+        // Attach change event handlers to all four sets of fields
+        for (var k = 1; k < i; k++) {
+            $('#event_' + k + ', #type_' + k + ', #start_' + k + ', #end_' + k).on("change", handleChange(k));
+        }
+        //Add new event
+        add.addEventListener("click", (event) => {
+            let template = `
                 <tr>
-                    <td><input type="text" name="event_3" class="event" placeholder="New Event"></td>
-                    <td><input type="date" name="start_3" class="duration"  placeholder=""></td>
-                    <td><input type="date" name="end_3" class="duration" placeholder=""></td>
+                    <td><input type="text" value="" name="event_${i}" class="event" id="event_${i}" placeholder="New Event"></td>
+                    <td width="12%" padding-right="3px"><select name="type_${i}"  class="duration" id="type_${i}">
+                                <option value="" default hidden>Event Type</option>
+                                <option value="Examination" <?= (set_value('type_${i}') === 'Examination') ? 'selected' : '' ?>>Examination</option>
+                                <option value="Study Leave" <?= (set_value('type_${i}') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
+                                <option value="Vacation" <?= (set_value('type_${i}') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
+                                <option value="Other" <?= (set_value('type_${i}') === 'Other') ? 'selected' : '' ?>>Other</option>
+                            </select></td>
+                    <td><input type="date" value="" name="start_${i}" class="duration" id="start_${i}" placeholder=""></td>
+                    <td><input type="date" value="" name="end_${i}" class="duration" id="end_${i}" placeholder=""></td>
                 </tr>
             `;
-                let newRow = document.createElement("tr");
-                newRow.innerHTML = template;
-                table.appendChild(newRow);
-            });
+            let newRow = document.createElement("tr");
+            newRow.innerHTML = template;
+            table.appendChild(newRow);
+            add.setAttribute("disabled", "true");
+            $('#event_' + i + ', #type_' + i + ', #start_' + i + ', #end_' + i).on("change", handleChange(i));
+            i++;
         });
+
+
+        var save = document.getElementById("save");
+        save.onclick = function(event) {
+            event.preventDefault();
+            var timetableData = [];
+            var timeTable = document.getElementById(`Time_table`);
+            for (var k = 1; k < count; k++) { // loop through all rows except the header
+                var eventID = k;
+                var eventName = document.getElementById(`event_${k}`).value.trim();
+                var eventType = document.getElementById(`type_${k}`).value.trim();
+                var eventStart = document.getElementById(`start_${k}`).value.trim();
+                var eventEnd = document.getElementById(`end_${k}`).value.trim();
+                // Push data to timetableData array
+                timetableData.push({
+                    eventID: eventID,
+                    eventName: eventName,
+                    eventType: eventType,
+                    eventStart: eventStart,
+                    eventEnd: eventEnd
+                });
+                // console.log(timetableData); 
+                var timetableDataInput = document.createElement('input');
+                timetableDataInput.setAttribute('type', 'hidden');
+                timetableDataInput.setAttribute('name', `timetableData`);
+                timetableDataInput.setAttribute('value', JSON.stringify(timetableData));
+                document.getElementById('form1').appendChild(timetableDataInput);
+            }
+            document.getElementById("form1").submit();
+        }
     </script>
 </body>
 

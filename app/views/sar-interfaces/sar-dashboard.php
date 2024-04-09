@@ -1,15 +1,10 @@
 <?php
 
-
-
 $role = "SAR";
 $data['role'] = $role;
 
 ?>
 
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -203,7 +198,6 @@ $data['role'] = $role;
 
     .sar-dash-subsection-1-1-2-1 {
         background-color: var(--text-color);
-        padding: 10px 10px 30px 35px;
         border-radius: 6px;
         margin: 4px 4px 4px 4px;
         height: 50%;
@@ -320,9 +314,9 @@ $data['role'] = $role;
     }
 
     .sar-dash-card-subcard-img1 img {
-        max-width: 70px;
+        width: 5vw;
         min-width: 50px;
-        max-height: 80px;
+        height: 5vw;
         min-height: 50px;
     }
 
@@ -479,6 +473,46 @@ $data['role'] = $role;
 
     }
 
+    .dashboard-body {
+        width: 100%;
+    }
+
+    .dashboard-body.active {
+        filter: blur(5px);
+        pointer-events: none;
+        user-select: none;
+        background: rgba(0, 0, 0, 0.30);
+        overflow: hidden;
+
+
+    }
+
+    .password-change-popup {
+        position: fixed;
+        top: -150%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.25);
+        border: 1.5px solid rgba(00, 00, 00, 0.30);
+        opacity: 0;
+        background: #fff;
+        width: 70%;
+        padding: 40px;
+        box-shadow: 9px 11px 60.9px 0px rgba(0, 0, 0, 0.60);
+        border-radius: 10px;
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+        z-index: 2000;
+    }
+
+    .password-change-popup.active {
+        top: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+    }
+
+
+
+
     @media (max-width: 1100px) {
         .up-exam-cards {
             display: flex;
@@ -533,176 +567,181 @@ $data['role'] = $role;
 </style>
 
 <body>
-    <div class="sar-dash-home">
-        <div class="sar-dash-title">Dashboard</div>
-        <div class="sar-dash-card-subsection-0">
+    <div class="dashboard-body" id="dash-body">
+        <?php $this->view('components/navside-bar/header', $data) ?>
+        <?php $this->view('components/navside-bar/sidebar', $data) ?>
+        <?php $this->view('components/navside-bar/footer', $data) ?>
 
-            <div class="sar-dash-card-subsection-01">
-                <div class="sar-dash-sucard-out">
-                    <div class="sar-dash-card-subcard-img1">
-                        <img src="<?= ROOT ?>assets/dashboard-icons/student.png" alt="degree.icon" />
+        <div class="sar-dash-home">
+            <div class="sar-dash-title">Dashboard</div>
+            <div class="sar-dash-card-subsection-0">
+
+                <div class="sar-dash-card-subsection-01">
+                    <div class="sar-dash-sucard-out">
+                        <div class="sar-dash-card-subcard-img1">
+                            <img src="<?= ROOT ?>assets/dashboard-icons/student.png" alt="degree.icon" />
+                        </div>
+                        <div class="sar-dash-card-subcard-data">
+                            <div class="sar-dash-card-subcard-data-title">Students</div>
+                            <div class="sar-dash-card-subcard-data-value">200</div>
+                        </div>
                     </div>
-                    <div class="sar-dash-card-subcard-data">
-                        <div class="sar-dash-card-subcard-data-title">Students</div>
-                        <div class="sar-dash-card-subcard-data-value">200</div>
+                </div>
+
+                <div class="sar-dash-card-subsection-01">
+                    <div class="sar-dash-sucard-out">
+                        <div class="sar-dash-card-subcard-img1">
+                            <img src="<?= ROOT ?>assets/dashboard-icons/degree.png" alt="exam.icon" />
+                        </div>
+                        <div class="sar-dash-card-subcard-data">
+                            <div class="sar-dash-card-subcard-data-title">Ongoing</br>Degrees</div>
+                            <div class="sar-dash-card-subcard-data-value">04</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sar-dash-card-subsection-01">
+                    <div class="sar-dash-sucard-out">
+                        <div class="sar-dash-card-subcard-img1">
+                            <img src="<?= ROOT ?>assets/dashboard-icons/examination2.png" alt="exam.icon" />
+                        </div>
+                        <div class="sar-dash-card-subcard-data">
+                            <div class="sar-dash-card-subcard-data-title">Ongoing</br>Examination</div>
+                            <div class="sar-dash-card-subcard-data-value">04</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sar-dash-card-subsection-01">
+                    <div class="sar-dash-sucard-out">
+                        <div class="sar-dash-card-subcard-img1">
+                            <img src="<?= ROOT ?>assets/dashboard-icons/examination.png" alt="user.icon" />
+                        </div>
+                        <div class="sar-dash-card-subcard-data">
+                            <div class="sar-dash-card-subcard-data-title">Results Published </br>Exminations</div>
+                            <div class="sar-dash-card-subcard-data-value">04</div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="sar-dash-main">
+                <div class="sar-dash-subsection-1-1">
+                    <div class="sar-dash-subsection-1-1-1">
 
-            <div class="sar-dash-card-subsection-01">
-                <div class="sar-dash-sucard-out">
-                    <div class="sar-dash-card-subcard-img1">
-                        <img src="<?= ROOT ?>assets/dashboard-icons/degree.png" alt="exam.icon" />
-                    </div>
-                    <div class="sar-dash-card-subcard-data">
-                        <div class="sar-dash-card-subcard-data-title">Ongoing</br>Degrees</div>
-                        <div class="sar-dash-card-subcard-data-value">04</div>
-                    </div>
-                </div>
-            </div>
-            <div class="sar-dash-card-subsection-01">
-                <div class="sar-dash-sucard-out">
-                    <div class="sar-dash-card-subcard-img1">
-                        <img src="<?= ROOT ?>assets/dashboard-icons/examination2.png" alt="exam.icon" />
-                    </div>
-                    <div class="sar-dash-card-subcard-data">
-                        <div class="sar-dash-card-subcard-data-title">Ongoing</br>Examination</div>
-                        <div class="sar-dash-card-subcard-data-value">04</div>
-                    </div>
-                </div>
-            </div>
-            <div class="sar-dash-card-subsection-01">
-                <div class="sar-dash-sucard-out">
-                    <div class="sar-dash-card-subcard-img1">
-                        <img src="<?= ROOT ?>assets/dashboard-icons/examination.png" alt="user.icon" />
-                    </div>
-                    <div class="sar-dash-card-subcard-data">
-                        <div class="sar-dash-card-subcard-data-title">Results Published </br>Exminations</div>
-                        <div class="sar-dash-card-subcard-data-value">04</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="sar-dash-main">
-            <div class="sar-dash-subsection-1-1">
-                <div class="sar-dash-subsection-1-1-1">
+                        <div class="sar-dash-subsection-1-1-1-1">
+                            <div class="graph01-sub-title">
+                                Statistics
+                            </div>
+                            <div class="graph01-title">
+                                Course Participants
+                            </div>
 
-                    <div class="sar-dash-subsection-1-1-1-1">
-                        <div class="graph01-sub-title">
-                            Statistics
+                            <div class="graph01">
+                                <?php $this->view('components/graphs/bargraph-student-participation', $data) ?>
+                            </div>
                         </div>
-                        <div class="graph01-title">
-                            Course Participants
+                        <div class="sar-dash-subsection-1-1-1-2">
+                            <div class="graph02-title">
+                                Participants
+                            </div>
+                            <div class="graph02-sub-title">
+                                Gender
+                            </div>
+                            <div class="graph02">
+                                <?php $this->view('components/graphs/piechart-gender', $data) ?>
+                            </div>
                         </div>
+                    </div>
+                    <div class="sar-dash-subsection-1-1-1">
+                        <div class="sar-dash-subsection-1-1-1-3">
 
-                        <div class="graph01">
-                            <?php $this->view('components/graphs/bargraph-student-participation', $data) ?>
+                            <div class="graph03-title">
+                                Students Performances
+                            </div>
+                            <div class="graph03">
+                                <?php $this->view('components/graphs/bargraph-pass-students', $data) ?>
+                            </div>
                         </div>
                     </div>
-                    <div class="sar-dash-subsection-1-1-1-2">
-                        <div class="graph02-title">
-                            Participants
+                    <div class="sar-dash-subsection-1-1-1">
+                        <div class="sar-dash-subsection-1-1-1-4">
+                            <div class="graph04-Exam-title">
+                                Exam Name
+                            </div>
+                            <div class="graph04-title">
+                                Student Performance
+                            </div>
+                            <div class="graph04-sub-title">
+                                Degree Name
+                            </div>
+                            <div class="graph04">
+                                <?php $this->view('components/graphs/piechart-student-results', $data) ?>
+                            </div>
                         </div>
-                        <div class="graph02-sub-title">
-                            Gender
-                        </div>
-                        <div class="graph02">
-                            <?php $this->view('components/graphs/piechart-gender', $data) ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="sar-dash-subsection-1-1-1">
-                    <div class="sar-dash-subsection-1-1-1-3">
+                        <div class="sar-dash-subsection-1-1-1-5">
+                            <div class="sar-dash-sub-title">
+                                Upcomming Examinations
+                            </div>
 
-                        <div class="graph03-title">
-                            Students Performances
-                        </div>
-                        <div class="graph03">
-                            <?php $this->view('components/graphs/bargraph-pass-students', $data) ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="sar-dash-subsection-1-1-1">
-                    <div class="sar-dash-subsection-1-1-1-4">
-                        <div class="graph04-Exam-title">
-                            Exam Name
-                        </div>
-                        <div class="graph04-title">
-                            Student Performance
-                        </div>
-                        <div class="graph04-sub-title">
-                            Degree Name
-                        </div>
-                        <div class="graph04">
-                            <?php $this->view('components/graphs/piechart-student-results', $data) ?>
-                        </div>
-                    </div>
-                    <div class="sar-dash-subsection-1-1-1-5">
-                        <div class="sar-dash-sub-title">
-                            Upcomming Examinations
-                        </div>
-
-                        <div class="up-exam-cards">
-                            <div class="upcomming-exam-card">
-                                <div class="up-exam-degree-name">
-                                    Diploma in School Librarianship
-                                </div>
-                                <div class="up-exam-semester">
-                                    1<sup>st</sup> Semester Examination
-                                </div>
-                                <div class="up-exam-dates">
-                                    <div class="up-exam-stdate">
-                                        Starting Date : <span> 2023/05/21 </span>
+                            <div class="up-exam-cards">
+                                <div class="upcomming-exam-card">
+                                    <div class="up-exam-degree-name">
+                                        Diploma in School Librarianship
                                     </div>
-                                    <div class="up-exam-enddate">
-                                        End Date : <span> 2023/05/21 </span>
+                                    <div class="up-exam-semester">
+                                        1<sup>st</sup> Semester Examination
+                                    </div>
+                                    <div class="up-exam-dates">
+                                        <div class="up-exam-stdate">
+                                            Starting Date : <span> 2023/05/21 </span>
+                                        </div>
+                                        <div class="up-exam-enddate">
+                                            End Date : <span> 2023/05/21 </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="upcomming-exam-card">
+                                    <div class="up-exam-degree-name">
+                                        Diploma in School Librarianship
+                                    </div>
+                                    <div class="up-exam-semester">
+                                        1<sup>st</sup> Semester Examination
+                                    </div>
+                                    <div class="up-exam-dates">
+                                        <div class="up-exam-stdate">
+                                            Starting Date : <span> 2023/05/21 </span>
+                                        </div>
+                                        <div class="up-exam-enddate">
+                                            End Date : <span> 2023/05/21 </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="upcomming-exam-card">
-                                <div class="up-exam-degree-name">
-                                    Diploma in School Librarianship
-                                </div>
-                                <div class="up-exam-semester">
-                                    1<sup>st</sup> Semester Examination
-                                </div>
-                                <div class="up-exam-dates">
-                                    <div class="up-exam-stdate">
-                                        Starting Date : <span> 2023/05/21 </span>
-                                    </div>
-                                    <div class="up-exam-enddate">
-                                        End Date : <span> 2023/05/21 </span>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sar-dash-subsection-1-2">
+                    <div class="sar-dash-subsection-1-2-1">
+                        <div class="sar-dash-subsection-1-1-2-1">
+                            <div class="calender-title">
+                                Academic Calender
+                            </div>
+                            <div class="calender-comp">
+                                <?php $this->view('components/calender/calender', $data) ?>
                             </div>
                         </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="sar-dash-subsection-1-2">
-                <div class="sar-dash-subsection-1-2-1">
-                    <div class="sar-dash-subsection-1-1-2-1">
-                        <div class="calender-title">
-                            Academic Calender
-                        </div>
-                        <div class="calender-comp">
-                            <?php $this->view('components/calender/calender', $data) ?>
-                        </div>
-                    </div>
-                    <div class="sar-dash-subsection-1-1-2-2">
-                        <div class="sar-dash-sub-title">
-                            Recently Published Examination Results
-                        </div>
-                        <div class="exam-cards">
-                            <?php $this->view('components/exam-card/exam-card', $data) ?>
-                            <?php $this->view('components/exam-card/exam-card', $data) ?>
+                        <div class="sar-dash-subsection-1-1-2-2">
+                            <div class="sar-dash-sub-title">
+                                Recently Published Examination Results
+                            </div>
+                            <div class="exam-cards">
+                                <?php $this->view('components/exam-card/exam-card', $data) ?>
+                                <?php $this->view('components/exam-card/exam-card', $data) ?>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- <div class="sar-dash-subsection-2">
+                <!-- <div class="sar-dash-subsection-2">
                 <div class="sar-dash-subsection-21">
                     <div class="sar-dash-sub-title">
                         Sub title 2 </br>
@@ -719,14 +758,23 @@ $data['role'] = $role;
 
                 </div>
             </div> -->
-        </div>
+            </div>
 
-        <div class="sar-dash-footer">
-            <?php $this->view('components/footer/index', $data) ?>
+            <div class="sar-dash-footer">
+                <?php $this->view('components/footer/index', $data) ?>
+            </div>
         </div>
     </div>
 
+    //create another Controller and call in there
+    <div class="password-change-popup" id="password-change-popup">
+        <?php $this->view('components/popup/password-change-popup', $data) ?>
+    </div>
 
 </body>
 
 </html>
+
+<script>
+
+</script>

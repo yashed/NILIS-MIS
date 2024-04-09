@@ -1,3 +1,9 @@
+<head>
+    <title>Admission Card</title>
+    <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+</head>
+
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
     @import url('https://fonts.cdnfonts.com/css/times-new-roman');
@@ -53,15 +59,6 @@
         height: 29.7cm;
     }
 
-    @media print {
-
-        body,
-        page {
-            background: white;
-            margin: 0;
-            box-shadow: 0;
-        }
-    }
 
     .admission-content {
         margin: 10px;
@@ -163,7 +160,7 @@
 
     .admission-table tr {
         border: 1px solid #ddd;
-        border-radius: 10px;
+
 
     }
 
@@ -230,7 +227,27 @@
         border: 1px solid #F00;
     }
 
+    .admission-detail {
+        margin-top: 40px;
+    }
+
     @media print {
+
+        #print {
+            display: none;
+        }
+
+        title {
+            display: none;
+        }
+
+        body,
+        page {
+            background: white;
+            margin: 0;
+            box-shadow: 0;
+        }
+
         .print-btn {
             display: none;
         }
@@ -243,10 +260,19 @@
     }
 </style>
 
+
+<head>
+    <title>Admission Card</title>
+</head>
+
+
+
 <body>
     <div class="admisssion-card">
         <div class="print-btn">
-            <button class="print-btn-primary" type="submit" onclick="window.print()">Print Admission</button>
+            <!-- <button class="print-btn-primary" type="submit" onclick="window.print()">Print Admission</button> -->
+            <button class="print-btn-primary" type="submit" onclick="generatePDF()" id="downloadAdmisiionButton">Print
+                Admission</button>
         </div>
         <page size="A4">
             <div class="admission-content">
@@ -262,8 +288,13 @@
                     <div class="admission-exam">Second Semester Examination - 2022 December</div>
                     <div class="admission-card">Admission Card</div>
                     <div class="admission-name-index">
-                        <div class="admission-name">Name of the Candidate: <b>Dombagolla H.D.D.M.</b></div>
-                        <div class="admission-index">Index Number: <b>DLIM/296</b></div>
+                        <div class="admission-name">Name of the Candidate: <b>
+                                <?= $studentData[0]->name ?>
+                            </b></div>
+                        <div class="admission-index">Index Number: <b>
+                                <?= $studentData[0]->indexNo;
+                                ?>
+                            </b></div>
                     </div>
 
                 </div>
@@ -278,74 +309,41 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <?php foreach ($timeTableData as $ttdata): ?>
+                                <?php $json = json_encode($ttdata);
+                                // show($ttdata); ?>
+                                <tr>
 
-                                <td>2022.12.17
-                                    </br>9.00a.m-12.00noon</td>
-                                <td>2.4 Information Management</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-
-                                <td>2022.12.17
-                                    </br>9.00a.m-12.00noon</td>
-                                <td>2.5 Information Management</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-
-                                <td>2022.12.17
-                                    </br>9.00a.m-12.00noon</td>
-                                <td>2.6 Information Management</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-
-                                <td>2022.12.17
-                                    </br>9.00a.m-12.00noon</td>
-                                <td>2.7 Information Management</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-
-                                <td>2022.12.17
-                                    </br>9.00a.m-12.00noon</td>
-                                <td>2.7 Information Management</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-
-                                <td>2022.12.17
-                                    </br>9.00a.m-12.00noon</td>
-                                <td>2.7 Information Management</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-
-                                <td>2022.12.17
-                                    </br>9.00a.m-12.00noon</td>
-                                <td>2.7 Information Management</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-
-                                <td>2022.12.17
-                                    </br>9.00a.m-12.00noon</td>
-                                <td>2.7 Information Management</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                                    <td>
+                                        <?= $ttdata[0]->date ?>
+                                        </br>9.00a.m-12.00noon
+                                    </td>
+                                    <td>
+                                        <?= $ttdata[0]->subjectName ?>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
 
 
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
+
+                </div>
+                <div class='admission-detail'>
+                    <div class="admission-details-signature">.........................................
+                    </div>
+                    <div class="admission-details-name">
+                        Yashed Thisara
+                    </div>
+                    <div class="admission-details-possision">
+                        Senior Assistant Registrar
+                    </div>
+                    <div class="admission-details-date">
+                        <?= date("Y-m-d") ?>
+                    </div>
+
                 </div>
             </div>
 
@@ -354,5 +352,27 @@
 
 </body>
 
+<script>
+
+
+    function generatePDF() {
+        const element = document.querySelector('.admisssion-card');
+        html2pdf(element, {
+            margin: 0,
+            filename: 'admission_card.pdf',
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        });
+
+        // Hide the download button 
+        const downloadButton = document.getElementById('downloadAdmisiionButton');
+        downloadButton.style.display = 'none';
+
+        // Show the download button after a delay
+        setTimeout(function () {
+            downloadButton.style.display = 'block';
+        }, 3000);
+    }
+</script>
 
 </html>

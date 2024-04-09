@@ -1,9 +1,5 @@
 <?php
 
-/**
- * repeat students model
- */
-
 class Subjects extends Model
 {
 
@@ -17,7 +13,6 @@ class Subjects extends Model
         'NoCredits',
         'DegreeID',
         'semester',
-
     ];
     public function validate($data)
 	{
@@ -65,8 +60,4 @@ class Subjects extends Model
 		return false;
 	}
 
-    public function repeatStudentValidation($data)
-    {
-        return true;
-    }
 }

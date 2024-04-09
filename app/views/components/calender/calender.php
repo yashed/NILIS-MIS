@@ -1,12 +1,10 @@
-<?php
-?>
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -114,8 +112,8 @@
         content: "";
         left: 50%;
         top: 50%;
-        height: 30px;
-        width: 30px;
+        height: 25px;
+        width: 25px;
         z-index: -1;
         border-radius: 50%;
         transform: translate(-50%, -50%);
@@ -172,6 +170,10 @@
         align-items: center;
         margin: 0;
     }
+
+    .days li.highlighted::before {
+        background: #9AD6FF;
+    }
 </style>
 
 <body>
@@ -184,7 +186,7 @@
                     <span id="next" class="material-symbols-rounded">chevron_right</span>
                 </div>
             </header>
-            <div class="calendar">
+            <div class="calendar" onclick="loadNextView()">
                 <ul class="weeks">
                     <li>Sun</li>
                     <li>Mon</li>
@@ -199,7 +201,80 @@
             </div>
         </div>
     </div>
-    <script src="<?= ROOT ?>js/calender-component.js" defer></script>
+    <script>
+        const daysTag = document.querySelector(".days"),
+            currentDate = document.querySelector(".current-date"),
+            prevNextIcon = document.querySelectorAll(".icons span");
+        let date = new Date(),
+            currYear = date.getFullYear(),
+            currMonth = date.getMonth();
+        const months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ];
+
+        // Define custom highlighted dates
+        const customHighlightedDates = ["2024-2-25", "2024-2-27", "2024-2-24", "2025-3-23", "2024-2-22"];
+
+        const renderCalendar = () => {
+            let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(),
+                lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(),
+                lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(),
+                lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate();
+            let liTag = "";
+            for (let i = firstDayofMonth; i > 0; i--) {
+                liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
+            }
+            for (let i = 1; i <= lastDateofMonth; i++) {
+                let isToday =
+                    i === date.getDate() &&
+                        currMonth === new Date().getMonth() &&
+                        currYear === new Date().getFullYear()
+                        ? "active"
+                        : "";
+                let isHighlighted = customHighlightedDates.includes(`${currYear}-${currMonth + 1}-${i}`);
+                let className = isToday ? `${isToday}` : `${isHighlighted ? "highlighted" : ""}`;
+                liTag += `<li class="${className}">${i}</li>`;
+            }
+            for (let i = lastDayofMonth; i < 6; i++) {
+                liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`;
+            }
+            currentDate.innerText = `${months[currMonth]} ${currYear}`;
+            daysTag.innerHTML = liTag;
+        };
+
+        renderCalendar();
+
+        prevNextIcon.forEach((icon) => {
+            icon.addEventListener("click", () => {
+                currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
+                if (currMonth < 0 || currMonth > 11) {
+                    date = new Date(currYear, currMonth, new Date().getDate());
+                    currYear = date.getFullYear();
+                    currMonth = date.getMonth();
+                } else {
+                    date = new Date();
+                }
+                renderCalendar();
+            });
+        });
+
+        //go to second view of the calendar
+        function loadNextView() {
+            console.log("click");
+            window.location.href = 'http://localhost/NILIS-MIS/public/calendar';
+        }
+    </script>
 </body>
 
 </html>

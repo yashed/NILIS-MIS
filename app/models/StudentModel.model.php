@@ -1,9 +1,5 @@
 <?php
 
-/**
- * users model
- */
-
 class StudentModel extends Model
 {
 
@@ -19,10 +15,11 @@ class StudentModel extends Model
         'name',
         'nicNo',
         'birthdate',
-        'whatsapp_number',
+        'whatsappNo',
         'address',
         'phoneNo',
-        'degreeID'
+        'degreeID',
+        'attendance'
     ];
 
     public function validate($data)
@@ -70,11 +67,11 @@ class StudentModel extends Model
         } else if (!preg_match("/^[0-9\/\-]+$/", trim($data['birthdate']))) {
             $this->errors['birthdate'] = "birthdate can only have numbers, and [/-]";
         }
-        //fax
-        if (empty($data['whatsapp_number'])) {
-            $this->errors['whatsapp_number'] = 'A whatsapp number is required';
-        } else if (!preg_match("/^\+?[0-9\- ]+$/", $data['fax'])) {
-            $this->errors['whatsapp_number'] = "whatsapp number can only have numbers";
+        //whatsapp number
+        if (empty($data['whatsappNo'])) {
+            $this->errors['whatsappNo'] = 'A whatsappNo is required';
+        } else if (!preg_match("/^\+?[0-9\- ]+$/", $data['whatsappNo'])) {
+            $this->errors['whatsappNo'] = "whatsapp number can only have numbers";
         }
         //address
         if (empty($data['address'])) {
@@ -95,4 +92,6 @@ class StudentModel extends Model
             $this->errors['degreeID'] = "degreeID can only have numbers]";
         }
     }
+
+   
 }

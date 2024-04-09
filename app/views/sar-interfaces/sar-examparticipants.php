@@ -1,12 +1,12 @@
 <?php
 $role = "SAR";
 $data['role'] = $role;
+$data['ExamSubjects'] = isset($ExamSubjects) ? $ExamSubjects : '';
+$data['PopupStatus'] = isset($attendacePopupStatus) ? $attendacePopupStatus : '';
+$data['ExamSetStudents'] = isset($setStudents) ? $setStudents : '';
+$data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
 
 ?>
-
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +14,7 @@ $data['role'] = $role;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>temp2 Dashboard</title>
+    <title>Exam Participants</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -53,7 +53,7 @@ $data['role'] = $role;
     }
 
     .temp2-title {
-        font-size: 30px;
+        font-size: 2vw;
         font-weight: 600;
         color: black;
         padding: 10px 0px 10px 32px;
@@ -118,6 +118,7 @@ $data['role'] = $role;
         width: 100%;
         height: auto;
         padding: 1vw 2vw 1vw 2vw;
+        align-items: center;
     }
 
     .flex-container-top {
@@ -141,38 +142,51 @@ $data['role'] = $role;
         width: 15vw;
         font-size: 0.9vw;
         margin-right: 2vw;
+        height: 100%;
     }
 
     .admission-button1 {
-        padding: 0.5% 0.5% 0.5% 1%;
-        background-color: #ffffff;
-        border: 1px solid #17376E;
-        color: #17376E;
-        text-decoration: none;
-        align-items: center;
-
-        border-radius: 5px;
-        cursor: pointer;
-        width: 13vw;
-        font-size: 0.9vw;
-        margin-right: 2vw;
+        width: 16vw;
+        color: #fff;
+        height: 2.8vw;
+        padding: 5px 5px 5px 5px;
+        border-radius: 0.6vw;
+        background: #ffffff;
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        color: #17376e;
+        margin-bottom: 10px;
+        margin-top: 20px;
+        border: 1px solid #17376e;
+        font-size: 1vw;
     }
 
-   
+
 
     .admission-button2 {
-        padding: 0.5% 1.8%;
-        background-color: #17376E;
-        color: #fff;
-        text-decoration: none;
-        align-items: center;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        width: 14vw;
-        font-size: 0.9vw;
+        width: 16vw;
+        background: #17376e;
+        color: #ffffff;
+        height: 2.8vw;
+        padding: 5px 5px 5px 5px;
+        border-radius: 0.6vw;
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        border: 1px solid;
+        margin-bottom: 10px;
+        margin-top: 20px;
+        font-size: 1vw;
     }
-    
+
+    .admission-button2:hover {
+        background: #ffffff;
+        color: #17376e;
+    }
+
+    .admission-button1:hover {
+        color: black;
+        background-color: #E2E2E2;
+        border: 1px solid #17376e;
+    }
+
 
     .temp2-sub-title2 {
         color: #17376E;
@@ -303,7 +317,7 @@ $data['role'] = $role;
     }
 
     .table__body {
-        width: 95%;
+        width: 100%;
         max-height: calc(89% - 1.6rem);
         /* background-color: var(--body-color); */
         margin: 1vw;
@@ -340,8 +354,8 @@ $data['role'] = $role;
     }
 
     td img {
-        width: 36px;
-        height: 36px;
+        width: 40px;
+        height: 40px;
         margin: .5rem;
         border-radius: 50%;
         vertical-align: middle;
@@ -382,66 +396,7 @@ $data['role'] = $role;
         font-size: 0.8vw;
     }
 
-    /* tbody tr.hide {
-        opacity: 0;
-        transform: translateX(100%);
-    }
 
-    tbody tr:hover {
-        background-color: #eeeeee !important;
-    }
-
-    tbody tr td,
-    tbody tr td p,
-    tbody tr td img {
-        transition: .2s ease-in-out;
-    }
-
-    tbody tr.hide td,
-    tbody tr.hide td p {
-        padding: 0;
-        font: 0 / 0 sans-serif;
-        transition: .2s ease-in-out .5s;
-    }
-
-    tbody tr.hide td img {
-        width: 0;
-        height: 0;
-        transition: .2s ease-in-out .5s;
-    }
-
-
-    @media (max-width: 1000px) {
-        td:not(:first-of-type) {
-            min-width: 12.1rem;
-        }
-    }
-
-    thead th span.icon-arrow {
-        display: inline-block;
-        width: 1.3rem;
-        height: 1.3rem;
-        border-radius: 50%;
-        border: 1.4px solid transparent;
-
-        text-align: center;
-        font-size: 1rem;
-
-        margin-left: .5rem;
-        transition: .2s ease-in-out;
-    }
-
-    thead th:hover span.icon-arrow {
-        border: 1.4px solid;
-    }
-
-    thead th.active span.icon-arrow {
-        color: #ffffff;
-    }
-
-    thead th.asc span.icon-arrow {
-        transform: rotate(180deg);
-    } */
 
     .input-main-group {
         display: flex;
@@ -500,7 +455,7 @@ $data['role'] = $role;
         color: var(--sidebar-color);
     }
 
-    
+
     .modal {
         display: none;
         position: fixed;
@@ -519,7 +474,8 @@ $data['role'] = $role;
         margin: 15% auto;
         padding: 20px;
         border: 1px solid #888;
-        width: 80%;
+        width: 70vw;
+        border-radius: 10px;
     }
 
     .close {
@@ -536,133 +492,375 @@ $data['role'] = $role;
         cursor: pointer;
     }
 
+    .profile-message {
+        color: #10344D;
+        font-family: Poppins;
+        font-size: 22px;
+        border-radius: 10px;
+        font-style: normal;
+        font-weight: 600;
+        margin: 40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        background-color: #f8d7da;
+        height: 5vh;
+    }
 
+    .error-message-profile {
+        padding: 0px 70px 0px 70px;
+        width: 100%;
+        text-align: center;
+        font-size: 1.5vw;
+    }
+
+    .loader-wraper {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.70);
+        display: flex;
+        justify-content: center;
+        z-index: 1000;
+        align-items: center;
+    }
+
+    .loader-css {
+        width: 10%;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+
+    }
+
+    .participants-body {
+        width: 100%;
+    }
+
+    .participants-body.active {
+        filter: blur(5px);
+        pointer-events: none;
+        user-select: none;
+        background: rgba(0, 0, 0, 0.30);
+        overflow: hidden;
+
+
+    }
+
+    .mail-popup.active {
+
+        top: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+    }
+
+    .mail-popup {
+        position: fixed;
+        top: -150%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.25);
+        border: 1.5px solid rgba(00, 00, 00, 0.30);
+        opacity: 0;
+        background: #fff;
+        width: 40%;
+        /* height: 60vh; */
+        padding: 40px;
+        box-shadow: 9px 11px 60.9px 0px rgba(0, 0, 0, 0.60);
+        border-radius: 10px;
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+        z-index: 2000;
+    }
+
+    .exam-popup {
+        position: fixed;
+        top: -150%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.25);
+        border: 1.5px solid rgba(00, 00, 00, 0.30);
+        opacity: 0;
+        background: #fff;
+        width: 70%;
+        /* height: 60vh; */
+        padding: 40px;
+        box-shadow: 9px 11px 60.9px 0px rgba(0, 0, 0, 0.60);
+        border-radius: 10px;
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+        z-index: 2000;
+    }
+
+    .exam-popup.active {
+        top: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+    }
+
+    .close-btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 15px;
+        height: 15px;
+        background: #17376e;
+        color: #ffffff;
+        text-align: center;
+        line-height: 15px;
+        border-radius: 15px;
+        cursor: pointer;
+    }
+
+    .display-message {
+        width: 70%;
+    }
+
+    .participants-form-header {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 10px;
+        margin-bottom: 20px;
+
+    }
+
+    .participant-form-btns {
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+
+    }
 </style>
+<?php
+// Assuming $examParticipants is an array containing all participants
+$perPage = 5; // Number of records per page
+$totalRecords = count($examParticipants); // Total number of records
+$totalPages = ceil($totalRecords / $perPage); // Total number of pages
+
+// Get current page from URL parameter, default to page 1
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+// Calculate starting index and ending index for pagination
+$start = ($page - 1) * $perPage;
+$end = $start + $perPage;
+
+// Slice the array to get records for the current page
+$currentRecords = array_slice($examParticipants, $start, $perPage);
+
+
+?>
 
 <body>
-    <div class="temp2-home">
-        <div class="temp2-title">Examination</div>
-        <div class="temp2-subsection-1">
-            <div class="temp2-sub-title1">
-                Overview
-            </div>
-
-            <div class="row">
-
-
-
-                <div class="column1">
-                    <div class="data1">Course Name<br>
-                        <!-- <div class="email"><?= $student->Email ?></div> -->
-                        <div class="course" id="course">Diploma in School Librarianship</div>
-                    </div>
-                    <br>
-                    <div class="data2">Examination:<br>
-                        <!-- <div class="regNum"> <?= $student->regNo ?></div> -->
-                        <div class="exam" id="exam">2nd Semester Examination</div>
-                    </div>
-                </div>
-
-                <div class="column2">
-                    <div class="data3">Participation:<br>
-                        <div class="count" id="count"> 216</div>
-                    </div>
-                    <br>
-                    <div class="data4">Academic Year:<br>
-                        <div class="year" id="year"> 2023/2024</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="temp2-subsection-2">
-            <div class="temp2-subsection-21">
-
-
-                <div class="flex-container-top">
-                    <div class="temp2-sub-title2">Participants</div>
-                    <button class="admission-button0">Download Attendance Sheet</button>
-                    <button class="admission-button1" id="openModal">Exam Attendance Submit</button>
-                    <button class="admission-button2">Send Admission Card</button>
-                </div>
-                <section class="table__body">
-                    <table id="table_p">
-                        <thead>
-                            <tr>
-                                <th> Name </th>
-                                <th> Attempt </th>
-                                <th> Index Number </th>
-                                <th> Registration Number </th>
-                                <th> Admission Card </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <tr>
-                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt=""> Bimsara Anjana</td>
-                                <td> 3 </td>
-                                <td> DLIM/001</td>
-                                <td> DLIM/01/01</td>
-                                <td> tap to see Admission card </td>
-                            </tr>
-                            <tr>
-                                <td class="table__body-td-name"><img src="<?= ROOT ?>assets/MyOriginalPhoto.jpg" alt=""> Yashed Thisara</td>
-                                <td> 3 </td>
-                                <td> DLIM/001</td>
-                                <td> DLIM/01/01</td>
-                                <td> tap to see Admission card </td>
-                            </tr>
-
-
-                        </tbody>
-                    </table>
-                </section>
-
-                <br>
-
-
-            </div>
-
-
-        </div>
-        <div class="temp2-footer">
-            <?php $this->view('components/footer/index', $data) ?>
-        </div>
-
-        <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeModal">&times;</span>
-            <?php $this->view('components/file-upload/exam-attendance-upload', $data) ?>
+    <div class="loader-wraper">
+        <div class="loader-css">
+            <?php $this->view('components/loader/index') ?>
         </div>
     </div>
+    <div class="participants-body" id="body">
+        <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
+        <?php $this->view('components/navside-bar/footer', $data) ?>
+
+        <div class="temp2-home">
+
+            <div class="temp2-title">Examination</div>
+            <div class="temp2-subsection-1">
+                <div class="temp2-sub-title1">
+                    Overview
+                </div>
+
+                <div class="row">
+
+
+
+                    <div class="column1">
+                        <div class="data1">Course Name<br>
+                            <!-- <div class="email"><?= $student->Email ?></div> -->
+                            <div class="course" id="course">Diploma in School Librarianship</div>
+                        </div>
+                        <br>
+                        <div class="data2">Examination:<br>
+                            <!-- <div class="regNum"> <?= $student->regNo ?></div> -->
+                            <div class="exam" id="exam">2nd Semester Examination</div>
+                        </div>
+                    </div>
+
+                    <div class="column2">
+                        <div class="data3">Participation:<br>
+                            <div class="count" id="count"> 216</div>
+                        </div>
+                        <br>
+                        <div class="data4">Academic Year:<br>
+                            <div class="year" id="year"> 2023/2024</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="temp2-subsection-2">
+                <div class="temp2-subsection-21">
+
+                    <div class="participants-form-header">
+                        <div class="temp2-sub-title2">Participants</div>
+                        <div class="participant-form-btns">
+                            <button class="admission-button1" id="openModal" onClick='showAttendancePopup()'>Exam
+                                Attendance Submit</button>
+                            <form method="post">
+
+                                <!-- <button class="admission-button0">Download Attendance Sheet</button> -->
+                                <button class="admission-button2" type="submit" name="admission" value="clicked" onClick="showMailPopup(event)">Send Admission Card</button>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="display-message">
+                        <?php
+                        if (message()) {
+                            echo '<div class="profile-message">';
+                            if ($_SESSION['message_type'] == 'success') {
+                                echo "<div class='error-message-profile' >" . message('', '', true) . "</div>";
+                            } else {
+                                echo "<div class='error-message-profile' style='color:red;'>" . message('', '', true) . "</div>";
+                            }
+                            echo '</div>';
+                        }
+                        ?>
+                    </div>
+                    <section class="table__body">
+                        <table id="table_p">
+                            <thead>
+                                <tr>
+                                    <th> Name </th>
+                                    <th> Attempt </th>
+                                    <th> Index Number </th>
+                                    <th> Registration Number </th>
+                                    <th> Student Type </th>
+                                    <th> Admission Card </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($currentRecords as $students) : ?>
+                                    <?php foreach ($students as $student) : ?>
+                                        <?php $json = json_encode($student); ?>
+                                        <tr>
+                                            <td class="table__body-td-name"><img src="<?= ROOT ?>assets/student.png" alt="">
+                                                Bimsara Anjana</td>
+                                            <td>
+                                                <?= $student->attempt ?>
+                                            </td>
+                                            <td>
+                                                <?= $student->indexNo ?>
+                                            </td>
+                                            <td> DLIM/01/01</td>
+                                            <td>
+                                                <?= $student->studentType ?>
+                                            </td>
+                                            <td> <a href="http://localhost/NILIS-MIS/public/admission/login?degreeID=10&examID=43&indexNo=<?= $student->indexNo ?>" target="_blank">tap
+                                                    to see Admission card </a></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </section>
+
+
+                    <br>
+                    <div class="pagination">
+                        <?php if ($page > 1) : ?>
+                            <a href="?page=<?= $page - 1 ?>">Previous</a>
+                        <?php endif; ?>
+                        <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+                            <a href="?page=<?= $i ?>" <?= $page === $i ? 'class="active"' : '' ?>>
+                                <?= $i ?>
+                            </a>
+                        <?php endfor; ?>
+                        <?php if ($page < $totalPages) : ?>
+                            <a href="?page=<?= $page + 1 ?>">Next</a>
+                        <?php endif; ?>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <div class="user-create-footer">
+                <?php $this->view('components/footer/index', $data) ?>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mail-popup" id="mail-popup">
+        <?php $this->view('components/popup/sendMails', $data) ?>
+    </div>
+    <div id="exam-attendance" class="exam-popup">
+        <?php $this->view('sar-interfaces/sar-exam-attendance-submit', $data) ?>
+    </div>
+</body>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var modal = document.getElementById('myModal');
-        var btn = document.getElementById('openModal');
-        var span = document.getElementById('closeModal');
-        var body = document.body;
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     var modal = document.getElementById('myModal');
+    //     var btn = document.getElementById('openModal');
+    //     var span = document.getElementById('closeModal');
+    //     var body = document.body;
 
-        btn.onclick = function () {
-            modal.style.display = "block";
-            body.classList.add('modal-open'); 
-        }
+    //     btn.onclick = function () {
+    //         modal.style.display = "block";
+    //         body.classList.add('modal-open');
+    //     }
 
-        span.onclick = function () {
-            modal.style.display = "none";
-            body.classList.remove('modal-open');
-        }
+    //     span.onclick = function () {
+    //         modal.style.display = "none";
+    //         body.classList.remove('modal-open');
+    //     }
 
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-                body.classList.remove('modal-open');
-            }
-        }
+    //     window.onclick = function (event) {
+    //         if (event.target == modal) {
+    //             modal.style.display = "none";
+    //             body.classList.remove('modal-open');
+    //         }
+    //     }
+    // });
+</script>
+<script>
+    $(window).on("load", function() {
+        $(".loader-wraper").fadeOut("slow");
     });
+
+    function showMailPopup() {
+
+        console.log('run');
+        document.querySelector("#mail-popup").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+        console.log('run again');
+    }
+
+    function showAttendancePopup() {
+        console.log("Click attendance");
+        document.querySelector("#exam-attendance").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+    }
+
+
+    //handel pop active according to clicked button
+    var popupStatus = <?php echo $attendacePopupStatus ? 'true' : 'false'; ?>;
+    if (popupStatus) {
+
+        // Adding 'active' class to the popup and body elements
+        document.querySelector("#exam-attendance").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+        $(".loader-wraper").fadeOut("slow");
+    }
 </script>
 
 
-</body>
 
 </html>

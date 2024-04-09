@@ -20,6 +20,7 @@ class User extends Model
           'date',
           'cpassword',
           'newpassword',
+          'status'
 
      ];
 
@@ -42,6 +43,15 @@ class User extends Model
                $this->errors['phoneNo'] = 'Phone number is required';
 
           }
+          //validate phone number
+          // Validate phone number
+          if (empty($data['phoneNo'])) {
+               $this->errors['phoneNo'] = 'Phone number is required';
+          } elseif (!preg_match('/^\d{10}$/', $data['phoneNo'])) {
+               $this->errors['phoneNo'] = 'Phone number must be exactly 10 digits';
+          }
+
+
           //check confirm password
           if (empty($data['cpassword']) && !empty($data['newpassword'])) {
                $this->errors['cpassword'] = 'Confirm Password is required';
@@ -103,6 +113,12 @@ class User extends Model
                $this->errors['phoneNo'] = 'Phone number is required';
 
           }
+          // Validate phone number
+          if (empty($data['phoneNo'])) {
+               $this->errors['phoneNo'] = 'Phone number is required';
+          } elseif (!preg_match('/^\d{10}$/', $data['phoneNo'])) {
+               $this->errors['phoneNo'] = 'Phone number must be exactly 10 digits';
+          }
 
           //check confirm password
           if (empty($data['cpassword']) && !empty($data['newpassword'])) {
@@ -128,6 +144,38 @@ class User extends Model
           }
           return false;
 
+     }
+
+     public function validatePassword($data)
+     {
+
+          $this->errors = [];
+          if (!empty($data)) {
+               if (empty($data['newPassword'])) {
+                    $this->errors['newPassword'] = 'New Password is required';
+
+               }
+               if (empty($data['Cpassword'])) {
+                    $this->errors['cpassword'] = 'Confirm Password is required';
+
+               } else {
+                    if ($data['Cpassword'] != $data['newPassword']) {
+                         $this->errors['cpassword'] = 'Password do not match';
+
+                    }
+               }
+
+               //check if the password is existing password
+               if (password_verify($data['newPassword'], $_SESSION['USER_DATA']->password)) {
+                    $this->errors['newPassword'] = 'New Password is the same as the existing password';
+               }
+
+               if (empty($this->errors)) {
+
+                    return true;
+               }
+               return false;
+          }
      }
 }
 ?>

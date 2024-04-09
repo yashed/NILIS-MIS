@@ -35,14 +35,13 @@
   border-radius: 5px;
 }
 h3 {
-  text-align: center;
   margin: 30px 30px;
   color: #000000;
 }
 .container form {
   width: 280px;
   position: absolute;
-  top: 150px;
+  top: 90px;
   left: 70px;
   transition: 0.5s;
 }
@@ -63,10 +62,11 @@ form input {
   margin: 30px 10px 20px 10px;
   text-align: center;
 }
-/* .btn-box .bt-name1:hover{
-    background-color: #222d76;
-    color: #fff;
-} */
+.btn-box1 {
+  width: 100%;
+  margin: 60px 10px 20px 10px;
+  text-align: center;
+}
 form button {
   width: 110px;
   height: 35px;
@@ -79,23 +79,25 @@ form button {
   cursor: pointer;
 }
 #Form2 {
-  left: 550px;
   width: 400px;
+  display: none;
 }
 #Form3 {
-  left: 550px;
+  display: none;
 }
 .step-row {
   width: 450px;
   height: 8px;
-  margin: 10px 0 50px 40px;
+  margin: 10px 0 30px -20px;
   display: flex;
   align-items: center;
   position: relative;
   background-color: var(--primary-color);
   border-radius: 10px;
 }
-#progress {
+#progress1,
+#progress2,
+#progress3 {
   position: absolute;
   height: 140%;
   width: 15px;
@@ -103,18 +105,8 @@ form button {
   transition: 1s;
   margin: 10px 0 10px 0;
   border-radius: 10px;
+  /* transition: width 1s ease; */
 }
-/* #progress::after{
-    content: "";
-    height: 0;
-    width: 0;
-    border-top: 20px solid transparent;
-    border-bottom: 20px solid transparent;
-    position: absolute;
-    right: -20px;
-    top: 0;
-    border-left: 20px solid #ffad06;
-} */
 .input-field label {
   font-size: 12px;
   font-weight: 500;
@@ -142,8 +134,7 @@ form button {
 
 #form2_p {
   float: left;
-  margin-bottom: 5px;
-  left: -5px;
+  margin: 0px 0px 25px -40px;
 }
 .box_3 {
   border-radius: 5px;
@@ -155,7 +146,7 @@ form button {
   width: 344px;
 }
 .Subject_table {
-  margin: 5% 6% 5% 5%;
+  margin: 5% 6% 1% 5%;
   border-spacing: 5px;
   text-align: left;
 }
@@ -173,9 +164,9 @@ form button {
 }
 .box_3_2 {
   overflow-y: auto;
-  max-height: 80%;
+  max-height: 100%;
   width: 450px;
-  right: 50px;
+  margin: 0px 0px 0px 35px;
 }
 .box_3 p {
   font-size: 18px;
@@ -197,4 +188,23 @@ form button {
 .Subject_table .SubjectName {
   margin-left: 0px;
 }
-/*close and open buttons*/
+.Grade_table .grade {
+  border: 1px black solid;
+  border-radius: 5px;
+  padding-left: 20px;
+}
+.Grade_table .maxvalue {
+  border: 1px black solid;
+  border-radius: 5px;
+  padding-left: 14px;
+}
+.Grade_table .minvalue {
+  border: 1px black solid;
+  border-radius: 5px;
+  padding-left: 14px;
+}
+.Grade_table .gpa {
+  border: 1px black solid;
+  border-radius: 5px;
+  padding-left: 15px;
+}

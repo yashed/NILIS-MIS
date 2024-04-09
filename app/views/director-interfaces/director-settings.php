@@ -1,11 +1,10 @@
 <?php
-$role = "Director";
+$role = "director";
 $data['role'] = $role;
 
 ?>
 
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
+<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
 
 <!DOCTYPE html>
@@ -15,6 +14,7 @@ $data['role'] = $role;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>temp3 Dashboard</title>
+   
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -80,8 +80,8 @@ $data['role'] = $role;
         font-style: normal;
         font-weight: 600;
         padding-top: 1vw;
-padding-bottom: 1vw;
-padding-left: 5vw;
+        padding-bottom: 1vw;
+        padding-left: 5vw;
     }
 
     .flex {
@@ -139,7 +139,7 @@ padding-left: 5vw;
     }
 
     .admission-button2 {
-        /* padding: 0.5% 0.5% 0.5% 1%; */
+        padding: 0.5% 0.5% 0.5% 1%;
         background-color: #17376E;
         color: #fff;
         text-decoration: none;
@@ -151,7 +151,7 @@ padding-left: 5vw;
         cursor: pointer;
 
         font-size: 0.8vw;
-        /* width: 12vw; */
+        width: 12vw;
         flex: 10%;
     }
 
@@ -174,7 +174,7 @@ padding-left: 5vw;
         gap: 30px;
         flex-direction: row;
         padding-right: 11vw;
-        padding-left: 5vw;
+
 
 
     }
@@ -182,13 +182,13 @@ padding-left: 5vw;
     .column-01 {
         display: flex;
         flex-direction: column;
-        width: 37vw;
+        width: 50vw;
     }
 
     .column-02 {
         display: flex;
         flex-direction: column;
-        width: 37vw;
+        width: 50vw;
     }
 
     .form-element1 {
@@ -231,55 +231,75 @@ padding-left: 5vw;
 
             </div>
 
+            <form action="" method="POST">
 
-            <div class=name>
-                <img src="<?= ROOT ?>assets/dr/imgano.png">
-                <!-- <p><h2><?= $student->name ?></h2></p> -->
-                <div class="flex">
-                    <div class="student-name">
-                        <p>
-                            Senudi Disakya Muthugala
-                        </p>
+
+                <div class=name>
+                    <img src="<?= ROOT ?>assets/dr/imgano.png">
+                    <!-- <p><h2><?= $student->name ?></h2></p> -->
+                    <div class="flex">
+                        <div class="student-name">
+                            <p>
+                                Senudi Disakya Muthugala
+                            </p>
+                        </div>
+                        <a href="" class="admission-button" download>Cancel</a>
+                        <div class="form-element">
+                            <button type="submit"  name="update_user_data" class="admission-button2">Save Data</button>
+                        </div>
                     </div>
-                    <a href="your_file_path_here.pdf" class="admission-button" download>Cancel</a>
-                    <a href="your_file_path_here.pdf" class="admission-button2" download>Save</a>
+
                 </div>
 
-            </div>
-            
-            
-            <div class="user-data">
-                <div class="column-01">
-                    <div class="form-element1">
-                        <label for="fname">
-                            <div class="label-name">First Name</div>
-                        </label>
-                        <input type="text" placeholder="Enter" id="fname">
+                <div class="user-data">
+
+                    <div class="column-01">
+
+                        <div class="form-element">
+                            <label for="fname">
+                                <div class="label-name">First Name</div>
+                            </label>
+                            <input type="text" placeholder="<?= $user->fname ?>" id="fname" name="fname" class="form-control" value="<?= $user->fname ?>">
+                            <?php if (isset($_POST['update_user_data']) && empty($_POST['fname'])) : ?>
+                                <span class="error">First name is required.</span>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="column-02">
+                        <div class="form-element">
+                            <label for="lname">
+                                <div class="label-name">Last Name</div>
+                            </label>
+                            <input type="text" placeholder="<?= $user->lname ?>" id="lname" name="lname" class="form-control" value="<?= $user->lname ?>">
+
+                            <?php if (isset($_POST['update_user_data']) && empty($_POST['lname'])) : ?>
+                                <span class="error">Last name is required.</span>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
-                <div class="column-02">
-                    <div class="form-element2">
-                        <label for="lname">
-                            <div class="label-name">Last Name</div>
-                        </label>
-                        <input type="text" placeholder="Enter" id="fname">
-                    </div>
+
+                <div class="form-element">
+                    <label for="email">
+                        <div class="label-name">Email</div>
+                    </label>
+                    <input type="text" placeholder="<?= $user->email ?>" id="email" name="email" class="form-control" value="<?= $user->email ?>">
+                    <?php if (isset($_POST['update_user_data']) && empty($_POST['email'])) : ?>
+                        <span class="error">Email is required.</span>
+                    <?php endif; ?>
                 </div>
-            </div>
-            <div class="form-element3">
-                <label for="email">
-                    <div class="label-name">Email</div>
-                </label>
-                <input type="text" placeholder="Enter" id="email">
-            </div>
-            <div class="form-element4">
-                <label for="role">
-                    <div class="label-name">Role</div>
-                </label>
-                <input type="text" placeholder="Enter" id="role">
+                <div class="form-element">
+                    <label for="role">
+                        <div class="label-name">Phone Number</div>
+                    </label>
+                    <input type="text" placeholder="<?= $user->phoneNo ?>" id="phoneNo" name="phoneNo" class="form-control" value="<?= $user->phoneNo ?>">
+                    <?php if (isset($_POST['update_user_data']) && empty($_POST['phoneNo'])) : ?>
+                        <span class="error">Phone Number is required.</span>
+                    <?php endif; ?>
 
-            </div>
+                </div>
 
+            </form>
 
         </div>
 
@@ -288,7 +308,76 @@ padding-left: 5vw;
     <div class="temp3-footer">
         <?php $this->view('components/footer/index', $data) ?>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var firstNameInput = document.getElementById('fname');
+            var lastNameInput = document.getElementById('lname');
+            var emailInput = document.getElementById('email');
+            var phoneNoInput = document.getElementById('phoneNo');
+            var submitButton = document.getElementById('submitBtn');
+            var errorMessage = document.getElementById('fname-error');
+            var errorMessage = document.getElementById('lname-error');
+            var errorMessage = document.getElementById('email-error');
+            var errorMessage = document.getElementById('phoneNo-error');
 
+
+            function checkFirstName() {
+                if (firstNameInput.value.trim() === '') {
+                    submitButton.disabled = true;
+                    errorMessage.style.display = 'block';
+                } else {
+                    submitButton.disabled = false;
+                    errorMessage.style.display = 'none';
+                }
+            }
+
+            function checkLastName() {
+                if (firstNameInput.value.trim() === '') {
+                    submitButton.disabled = true;
+                    errorMessage.style.display = 'block';
+                } else {
+                    submitButton.disabled = false;
+                    errorMessage.style.display = 'none';
+                }
+            }
+
+            function checkEmail() {
+                if (firstNameInput.value.trim() === '') {
+                    submitButton.disabled = true;
+                    errorMessage.style.display = 'block';
+                } else {
+                    submitButton.disabled = false;
+                    errorMessage.style.display = 'none';
+                }
+            }
+
+            function checkPhoneNo() {
+    var phoneNo = phoneNoInput.value.trim();
+    var phoneNoPattern = /^\d{10}$/; // Regex pattern to match exactly 10 digits
+    
+    if (!phoneNoPattern.test(phoneNo)) {
+        submitButton.disabled = true;
+        errorMessage.textContent = "Phone number is not valid. It should contain exactly 10 digits.";
+        errorMessage.style.display = 'block';
+    } else {
+        submitButton.disabled = false;
+        errorMessage.textContent = ""; // Clear error message
+        errorMessage.style.display = 'none';
+    }
+}
+
+
+            checkFirstName();
+            checkLastName();
+            checkEmail();
+            checkPhoneNo();
+
+            firstNameInput.addEventListener('input', checkFirstName);
+            lastNameInput.addEventListener('input', checkLastName);
+            emailInput.addEventListener('input', checkEmail);
+            phoneNoInput.addEventListener('input', checkPhoneNo);
+        });
+    </script>
 </body>
 
 </html>

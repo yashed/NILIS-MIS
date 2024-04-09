@@ -11,42 +11,42 @@ class Model extends Database
     protected $allowedColumns = [];
 
     public function insert($data)
-    {
-
-        // Convert object to array if $data is an object
+    { // Convert object to array if $data is an object
         if (is_object($data)) {
             $data = (array) $data;
         }
+        // show($data);
+        // Check if $data is empty
+        if (empty($data)) {
+            return false;
+        }
 
-
-        //remove unwanted column 
-        //this is not a serious error , the code is working with this
-        //secho "No error";
-
+        // Check for allowed columns
         if (!empty($this->allowedColumns)) {
-
             foreach ($data as $key => $value) {
                 if (!in_array($key, $this->allowedColumns)) {
+
                     unset($data[$key]);
                 }
             }
         }
 
-        //get array keys from data
+        // Get array keys from data
         $keys = array_keys($data);
 
         //define query to add user data
         $query = "insert into " . $this->table;
-
+        
         //add column names and values to the query (impolad function devide data by given character in array)
         $query .= "(" . implode(",", $keys) . ") values (:" . implode(",:", $keys) . ")";
-        show($query);
-
+        // show($query);
+        // show($data);
         //call query function to execute the query
         $this->query($query, $data);
 
         return true;
     }
+
     /* public function insert($data)
     {
         //remove unwanted columns
@@ -59,12 +59,9 @@ class Model extends Database
                 }
             }
         }
-
         $keys = array_keys($data);
-
         $query = "insert into " . $this->table;
         $query .= " (".implode(",", $keys) .") values (:".implode(",:", $keys) .")";
-
         $this->query($query,$data);
 
     } */
@@ -84,16 +81,27 @@ class Model extends Database
 
     public function find($id)
     {
-        // $db = new Database(); // Replace with your database connection logic
-        // Modify the query to include the 'name' field
-        $query = "select * from " . $this->table . " WHERE id = :id";
+        $query = "select * from " . $this->table . " WHERE DegreeID = :id";
         $params = [':id' => $id];
-        $result = $this->query($query, $params); // Replace with your database query logic
+        $result = $this->query($query, $params);
         // Check if the query was successful
         if (is_array($result) && !empty($result)) {
-            return $result; // Assuming you want to return the first result
+            return $result; 
         } else {
-            return null; // Return null if the student is not found or an error occurs
+            return null;
+        }
+    }
+
+    public function findstudentid($id)
+    {
+        $query = "select * from " . $this->table . " WHERE id = :id";
+        $params = [':id' => $id];
+        $result = $this->query($query, $params);
+        // Check if the query was successful
+        if (is_array($result) && !empty($result)) {
+            return $result; 
+        } else {
+            return null;
         }
     }
     public function setid($id)
@@ -153,6 +161,7 @@ class Model extends Database
         }
 
         $query = trim($query, "&& ");
+        // show($query);
         $res = $this->query($query, $data);
 
         if (is_array($res)) {
@@ -186,6 +195,7 @@ class Model extends Database
         }
 
         // Execute the query
+        // show($query);
         return $this->query($query);
     }
 
@@ -211,17 +221,92 @@ class Model extends Database
 
         return false;
     }
+    public function where($data)
+    {
+
+        $keys = array_keys($data);
+
+        $query = "select * from " . $this->table . " where ";
+        foreach ($keys as $key) {
+
+            $query .= $key . "=:" . $key . " && ";
+        }
+
+        //trim lasf && and space if there exists
+        $query = trim($query, '&& ');
+        //define query to add user data
+        $res = $this->query($query, $data);
+        // show($query);
+        // show($data);
+
+        if (is_array($res)) {
+            return $res;
+        }
+
+        return false;
+    }
+    public function group($column, $conditions = [])
+    {
+        $query = "SELECT * FROM " . $this->table;
+
+        // Check if conditions are provided
+        if (!empty($conditions)) {
+            $query .= " WHERE ";
+            $conditionsString = "";
+            foreach ($conditions as $key => $value) {
+                $conditionsString .= $key . "=:" . $key . " AND ";
+            }
+            $conditionsString = rtrim($conditionsString, " AND ");
+            $query .= $conditionsString;
+        }
+
+        $query .= " GROUP BY " . $column;
+
+        // Execute the query
+        $res = $this->query($query, $conditions);
+
+        if (is_array($res)) {
+            return $res;
+        }
+
+        return false;
+    }
+
+
+    //get the count that match the conditions
+    public function count($data)
+    {
+        $keys = array_keys($data);
+
+        $query = "SELECT COUNT(*) AS ExamParticipants FROM " . $this->table . " WHERE ";
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . " && ";
+        }
+
+        // Trim last AND and space if there exist
+        $query = trim($query, '&& ');
+
+        // Execute the query
+        $result = $this->query($query, $data);
+
+        // If the query executed successfully and returned a result
+        if ($result !== false) {
+            return $result;
+        }
+
+        return 0; // Return 0 if there are no records or an error occurred
+    }
 
     //get newly added column id 
     public function lastID($primaryKey = 'id')
     {
         $query = "SELECT MAX($primaryKey) AS lastID FROM " . $this->table;
-        show($query);
+        // show($query);
         $result = $this->query($query);
-        show($result);
+        // show($result);
         if ($result !== false) {
             // Check if the result is an array or object
-            show($result);
+            // show($result);
             if (is_array($result)) {
                 return $result[0]->lastID;
             }
@@ -259,27 +344,6 @@ class Model extends Database
     }
 
 
-    public function where($data)
-    {
-
-        $keys = array_keys($data);
-
-        $query = "select * from " . $this->table . " where ";
-        foreach ($keys as $key) {
-
-            $query .= $key . "=:" . $key . " && ";
-        }
-
-        //trim lasf && and space if there exists
-        $query = trim($query, '&& ');
-        //define query to add user data
-        $res = $this->query($query, $data);
-        if (is_array($res)) {
-            return $res;
-        }
-
-        return false;
-    }
 
     public function delete2($data)
     {
@@ -294,11 +358,76 @@ class Model extends Database
         }
 
         $query = trim($query, "&& ");
-        $this->query($query, $data);
 
+        $this->query($query, $data);
+        // show($query);
         return true;
     }
 
+    public function updateRows($setConditions, $whereConditions)
+    {
+        // Generate SET part of the query
+        $setPart = '';
+        foreach ($setConditions as $key => $value) {
+            $setPart .= "{$key}=:$key,";
+        }
+        $setPart = rtrim($setPart, ',');
+
+        // Generate WHERE part of the query
+        $wherePart = '';
+        foreach ($whereConditions as $key => $value) {
+            $wherePart .= "{$key}=:$key AND ";
+        }
+        $wherePart = rtrim($wherePart, 'AND ');
+
+        // Construct the final query
+        $query = "UPDATE {$this->table} SET {$setPart} WHERE {$wherePart}";
+
+        // Merge set and where conditions
+        $data = array_merge($setConditions, $whereConditions);
+
+        // Execute the query
+        // show($query);
+        $this->query($query, $data);
+    }
+
+    public function generateIndexRegNumber($degree_id, $degreeShortName, $currentYear)
+    {
+        $query = "SELECT MAX(CAST(SUBSTRING_INDEX(indexNo, '/', -1) AS UNSIGNED)) AS max_index_number 
+              FROM student 
+              WHERE DegreeID = ?";
+        $data = [$degree_id]; // Data to be bound to the query
+        $result = $this->query($query, $data);
+
+        if ($result && isset($result[0]->max_index_number)) {
+            $maxIndexNumber = $result[0]->max_index_number;
+        } else {
+            $maxIndexNumber = 0;
+        }
+        // Increment the last number and generate index and registration numbers
+        $nextNumber = $maxIndexNumber + 1;
+        $IndexNo = $degreeShortName . '/' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+        $RegistationNo = $degreeShortName . '/' . $currentYear . '/' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+        // Return the generated numbers
+        $data = [
+            'IndexNo' => $IndexNo,
+            'RegistationNo' => $RegistationNo
+        ];
+        return $data;
+    }
+
+    public function findByID($id)
+    {
+        $query = "SELECT * FROM " . $this->table . " WHERE DegreeID = :id";
+        $params = array(':id' => $id);
+        $res = $this->query($query, $params);
+
+        if ($res && count($res) > 0) {
+            return $res[0]; // Return the first row if there is a result
+        } else {
+            return false;
+        }
+    }
     /*    public function update($id,$data)
     {
 
@@ -342,4 +471,6 @@ class Model extends Database
      // show($query);
      // show($data);
  } */
+
+ 
 }

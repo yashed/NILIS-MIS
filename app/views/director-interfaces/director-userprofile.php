@@ -1,5 +1,5 @@
 <?php
-$role = "DR";
+$role = "director";
 $data['role'] = $role;
 ?>
 <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>

@@ -5,6 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
         .banner {
             margin-left: 1%;
             display: flex;
@@ -106,12 +116,23 @@
             margin-right: 1%;
             flex: 1%;
         }
+
+        .close-symbol{
+            cursor: pointer;
+            
+        }
+
     </style>
 </head>
 
 <body>
+
+
+
+
     <div class="banner">
         <div class="color-strip"></div>
+        <div class="closing"><span class="close-symbol" onclick="closeComponent()">✖</span> </div>
         <div class="content-container">
 
             <div class="flex">
@@ -136,68 +157,26 @@
 
 
                 <div class="note">
-                    USER-SAR
+                    <?= $role ?>
                 </div>
             </div>
             <div class="development-message">
-
-                <?php
-                $con = mysqli_connect("localhost", "root", "", "nilis_db");
-                ?>
-                There will be an upcoming examination scheduled on <date> for the diploma <degree_name>  
+                <?= $notification->description ?>
+            </div>
+            </br>
+            <div class="buttons-container">
+                <a href="<?= ROOT . $notification->button_link ?>" class="button1"><?= $notification->button_text ?></a>
                 
-<?php
-                if ($con) {
-                    $query = "SELECT degree_timetable.*,degree.*FROM degree_timetable INNER JOIN degree ON degree_timetable.DegreeID=degree.DegreeID WHERE EventID = ?";
+            </div>
 
-                    $stmt = mysqli_stmt_init($con);
+        </div>
 
-                    if (mysqli_stmt_prepare($stmt, $query)) {
-                        $eventID = 1;
-                        mysqli_stmt_bind_param($stmt, "i", $eventID);
-                        mysqli_stmt_execute($stmt);
-                        $result = mysqli_stmt_get_result($stmt);
-
-                        if ($row = mysqli_fetch_assoc($result)) {
-                ?>
-                            <?= $row['DegreeName']; ?>
-                            .Needs to Create examination.
-                            </br>
-                            StartingDate: <?= $row['StartingDate']; ?>
-                            </br>
-                            EndingDate: <?= $row['EndingDate']; ?>
-
-
-</body>
-
-</html>
-<?php
-                        } else {
-                            echo "No Record Found";
-                        }
-
-                        mysqli_stmt_close($stmt);
-                    } else {
-                        echo "Error in preparing the statement";
-                    }
-
-                    mysqli_close($con);
-                } else {
-                    echo "Connection error: " . mysqli_connect_error();
-                }
-?>
-
-</div>
-</br>
-<div class="buttons-container">
-    <div class="button1">
-        Create Examination
     </div>
+    
 
-</div>
 
-</div>
-</div>
+
+    
 </body>
 
 </html>

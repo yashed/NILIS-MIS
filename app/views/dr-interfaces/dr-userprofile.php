@@ -24,7 +24,7 @@ $data['role'] = $role;
         }
 
         .button-container {
-            margin-top: 35px;
+            margin-top: 45px;
             display: flex;
             flex-direction: row;
             float: right;
@@ -36,17 +36,6 @@ $data['role'] = $role;
             display: flex;
             flex-direction: row;
             column-gap: 20px;
-        }
-
-        .pop-up {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 20px;
-            z-index: 2;
         }
 
         .pop-up1 {
@@ -78,7 +67,7 @@ $data['role'] = $role;
 <body>
     <div class="dr-userprofile">
         <div class="white-container1-1">
-            <div class="white-container1">Diploma in Library and Information Management</div>
+            <div class="white-container1"><?= $degree[0]->DegreeName ?></div>
             <div class="white-container1-core">Participants</div>
         </div>
         <div class="white-container2-1">
@@ -100,7 +89,7 @@ $data['role'] = $role;
                 </div>
                 <div class="column3">
                     <div class="data3"><b>Country:</b><br>
-                        <div class="country"> Sri Lanka</div>
+                        <div class="country"> <?= $student[0]->country ?></div>
                     </div><br>
                     <div class="data4"><b>Index number:</b><br>
                         <div class="indexNum"> <?= $student[0]->indexNo ?></div>
@@ -123,13 +112,13 @@ $data['role'] = $role;
                     <h1 style="font-size: 18px;">Change Degree Program</h1><br>
                     <div class="input-fields" style="margin: 20px 0px 10px 0px;">
                         <label for="degree type" class="drop-down">Current Diploma Program</label><br>
-                        <input name="degree type" id="degree_type" style="width: 430px; height: 34px; border-radius: 5px; margin: 9px; padding-left: 10px" placeholder="<?= $student[0]->degreeID ?>" disabled><br><br><br>
+                        <input name="degree type" id="degree_type" style="width: 430px; height: 34px; border-radius: 5px; margin: 9px; padding-left: 10px" placeholder="<?= $degree[0]->DegreeName ?>" disabled><br><br><br>
                         <label for="select degree type" class="drop-down">Select Degree Program:</label><br>
                         <select name="select degree type" id="select_degree_type" style="width: 430px; height: 34px; border-radius: 5px; margin: 9px;">
                             <option value="" default hidden>Select</option>
-                            <option value="DLMS" <?= (set_value('select_degree_type') === 'DLMS') ? 'selected' : '' ?>>DLMS</option>
-                            <option value="ENCM" <?= (set_value('select_degree_type') === 'ENCM') ? 'selected' : '' ?>>ENCM</option>
-                            <option value="DSL" <?= (set_value('select_degree_type') === 'DSL') ? 'selected' : '' ?>>DSL</option>
+                            <option value="DLMS" <?= (set_value('select_degree_type') === 'DLMS') ? 'selected' : '' ?>>Diploma in Library Management Studies</option>
+                            <option value="ENCM" <?= (set_value('select_degree_type') === 'ENCM') ? 'selected' : '' ?>>Executive National Certificate in Management</option>
+                            <option value="DSL" <?= (set_value('select_degree_type') === 'DSL') ? 'selected' : '' ?>>Diploma in Science Library</option>
                         </select><br><br>
                         <h3 style="font-size: 14px; font-weight: 200">Note - After submit all the information of this student may transfer to new degree program and student data will suspend from the current degree program</h3>
                     </div>
@@ -143,7 +132,6 @@ $data['role'] = $role;
                 </form>
             </div>
         </div>
-        <div id="overlay"></div>
         <div class="pop-up1-1">
             <div class="popupForm1-1">
                 <svg onclick="crossForDiplomaChange()" id="crossForDiplomaChange" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -156,7 +144,7 @@ $data['role'] = $role;
             </div>
         </div>
         <div id="overlay"></div>
-        <div class="pop-up2">
+        <form class="pop-up2" id="deleteForm" method="post" action="<?= ROOT ?>dr/userprofile/delete?studentId=<?= $student[0]->id ?>">
             <div class="popupForm">
                 <center><svg id="userDeletePopupImg" xmlns="http://www.w3.org/2000/svg" width="67" height="66" viewBox="0 0 67 66" fill="none">
                         <path d="M33.5 63C50.0685 63 63.5 49.5685 63.5 33C63.5 16.4315 50.0685 3 33.5 3C16.9315 3 3.5 16.4315 3.5 33C3.5 49.5685 16.9315 63 33.5 63Z" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
@@ -167,12 +155,11 @@ $data['role'] = $role;
                     <center>Are you sure want to delete this student data?</center>
                 </h2>
                 <div class="yesorno">
-                    <a href="<?= ROOT ?>Student/<?= $student[0]->indexNo ?>/delete/<?= $student[0]->id ?>"><button class="close-button-2">Yes,I'm Sure</button></a>
-                    <button class="close-button-3">No,Cancel</button>
+                    <button class="close-button-2" type="submit" value="delete">Yes,I'm Sure</button>
+                    <button class="close-button-3" type="button" >No,Cancel</button>
                 </div>
             </div>
-            <div id="overlay"></div>
-        </div>
+        </form>
         <div class="flex-container">
             <div class="white-container3-1">
                 <p class="left-top-text2">Examination Results</p>
@@ -229,21 +216,21 @@ $data['role'] = $role;
                     <div class="column2-1">
                         <div class="data1"><b>Date Of Birth:</b><br>
                             <div class="bday"><?= $student[0]->birthdate ?></div>
-                        </div><br>
+                        </div>
                         <div class="data2"><b>N.I.C. No:</b><br>
                             <div class="nic"> <?= $student[0]->nicNo ?></div>
-                        </div><br>
-                        <div class="data2"><b>Phone Number:</b><br>
-                            <div class="phoneNum"> <?= $student[0]->phoneNo ?></div>
+                        </div>
+                        <div class="data2"><b>WhatsApp Number:</b><br>
+                            <div class="Fax"><?= $student[0]->whatsappNo ?></div>
                         </div>
                     </div>
                     <div class="column2-2">
-                        <div class="data1"><b>WhatsApp Number:</b><br>
-                            <div class="Fax"><?= $student[0]->whatsapp_number ?></div>
-                        </div><br>
-                        <div class="data2"><b>Address:</b><br>
+                        <div class="data3"><b>Address:</b><br>
                             <div class="adr"> <?= $student[0]->address ?></div>
                         </div>
+                        <div class="data4"><b>Phone Number:</b><br>
+                            <div class="phoneNum"> <?= $student[0]->phoneNo ?></div>
+                        </div><br>
                     </div>
                 </div>
                 <div class="buttonx">
@@ -252,54 +239,53 @@ $data['role'] = $role;
             </div>
         </div>
         <div class="popup" id="update-popup">
-            <form method="post">
+            <form method="post" action="<?= ROOT ?>dr/userprofile/update?studentId=<?= $student[0]->id ?>">
                 <div class="popup-card">
                     <div class="form">
                         <h2>Update User Details</h2>
                         <div class="form-input-fields">
                             <div class="user-data">
                                 <input type="text" name="id" hidden>
-                                <div class="coloum-01">
+                                <div class="column-01">
                                     <div class="form-element">
-                                        <label for="fname">First Name</label>
-                                        <input type="text" placeholder="Enter" id="up-fname" name="fname" value="<?= set_value('fname') ?>">
+                                        <label for="fname">Name</label>
+                                        <input type="text" placeholder="Enter" id="up-name" name="name" value="<?= $student[0]->name ?>">
                                     </div>
                                     <div class="form-element">
                                         <label for="email">Email</label>
-                                        <input type="text" placeholder="Enter" id="up-email" name="email" value="<?= set_value('email') ?>">
+                                        <input type="text" placeholder="Enter" id="up-email" name="Email" value="<?= $student[0]->Email ?>">
                                     </div>
                                     <div class="form-element">
                                         <label for="nicNo">NIC</label>
-                                        <input type="text" placeholder="Enter" id="up-nicNo" name="nicNo" value="<?= set_value('nicNo') ?>">
+                                        <input type="text" placeholder="Enter" id="up-nicNo" name="nicNo" value="<?= $student[0]->nicNo ?>">
                                     </div>
                                     <div class="form-element">
-                                        <label for="whatsapp_number">Whatsapp Number</label>
-                                        <input type="text" placeholder="Enter" id="up-whatsapp_number" name="whatsapp_number" value="<?= set_value('whatsapp_number') ?>">
+                                        <label for="whatsappNo">Whatsapp Number</label>
+                                        <input type="text" placeholder="Enter" id="up-whatsappNo" name="whatsappNo" value="<?= $student[0]->whatsappNo ?>">
                                     </div>
                                 </div>
-
-                                <div class="coloum-02">
+                                <div class="column-02">
                                     <div class="form-element">
-                                        <label for="lname">Last Name</label>
-                                        <input type="text" placeholder="Enter" id="up-lname" name="lname" value="<?= set_value('lname') ?>">
+                                        <label for="indexNo">Index Number</label>
+                                        <input type="text" placeholder="Enter" id="up-country" name="country" value="<?= $student[0]->country ?>">
                                     </div>
                                     <div class="form-element">
                                         <label for="phoneNo">Phone Number</label>
-                                        <input type="text" placeholder="Enter" id="up-phoneNo" name="phoneNo" value="<?= set_value('phoneNo') ?>">
+                                        <input type="text" placeholder="Enter" id="up-phoneNo" name="phoneNo" value="<?= $student[0]->phoneNo ?>">
                                     </div>
                                     <div class="form-element">
                                         <label for="address">Address</label>
-                                        <input type="text" placeholder="Enter" id="up-address" name="address" value="<?= set_value('address') ?>">
+                                        <input type="text" placeholder="Enter" id="up-address" name="address" value="<?= $student[0]->address ?>">
                                     </div>
                                     <div class="form-element">
                                         <label for="birthdate">Birthdate</label>
-                                        <input type="text" placeholder="Enter" id="up-birthdate" name="birthdate" value="<?= set_value('birthdate') ?>">
+                                        <input type="text" placeholder="Enter" id="up-birthdate" name="birthdate" value="<?= $student[0]->birthdate ?>">
                                     </div>
                                 </div>
 
                             </div>
-                            <div class="user-create-update">
-                                <button class="close-button">Close</button>
+                            <div class="student-create-update">
+                                <button class="close-button" type="button">Close</button>
                                 <button name='submit' value='update' id="submitbutton" type="submit">Update</button>
                             </div>
                         </div>
@@ -308,11 +294,11 @@ $data['role'] = $role;
                 </div>
             </form>
         </div>
-        <div id="overlay"></div>
         <div class="dr-footer">
             <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         //Change Degree and Delete button
         function updateData() {
@@ -332,7 +318,7 @@ $data['role'] = $role;
             // Show the overlay and pop-up
             $('#overlay').css('display', 'block');
             $('.popup').css('display', 'block');
-
+            
             $('.close-button').click(function(e) {
                 // Hide the pop-up and overlay when the close button is clicked
                 $('.popup').css('display', 'none');
@@ -365,121 +351,17 @@ $data['role'] = $role;
                 e.stopPropagation();
             });
         }
+
         function crossForDiplomaChange() {
             $('.pop-up1-1').css('display', 'none');
             $('#overlay').css('display', 'none');
         }
-        (() => {
-            const body = document.querySelector("body"),
-                sidebar = body.querySelector(".sidebar"),
-                toggle = body.querySelector(".toggle")
-            whitecontainer11 = body.querySelector(".white-container1-1");
-            whitecontainer21 = body.querySelector(".white-container2-1");
-            whitecontainer31 = body.querySelector(".white-container3-1");
-
-            toggle.addEventListener("click", () => {
-                //sidebar.classList.toggle("close");
-                whitecontainer11.classList.toggle("close");
-                whitecontainer21.classList.toggle("close");
-                whitecontainer31.classList.toggle("close");
-
-            });
-        })()
 
         function toggleMenu() {
             document.getElementById("subMenu").classList.toggle("open-menu");
         }
-
-
-        // Add this code to target_page.php
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const studentId = urlParams.get('studentId');
-
-            // Now you can use the `studentId` to fetch and display the corresponding student's data.
-        });
+        
     </script>
 </body>
 
 </html>
-<!-- <form method="post">
-                    <h2>Change Student Details</h2>
-                    <input type="hidden" id="id" name="id" value="<?= $student[0]->id ?>">
-                    <label for="fname">Name</label>
-                    <input type="text" id="fname" placeholder="Full Name" name="name">
-                    <label for="mail">Email</label>
-                    <input type="text" id="mail" placeholder="Email Address" name="Email">
-                    <label for="country">Country</label>
-                    <input type="text" id="country" placeholder="Currently living country" name="country">
-                    <label for="nicno">N.I.C</label>
-                    <input type="text" id="nicno" placeholder="N.I.C Number" name="nicNo">
-                    <label for="bday">Birthdate</label>
-                    <input type="text" id="bday" placeholder="Birthdate" name="birthdate">
-                    <label for="whatsapp_number">WhatsApp Number</label>
-                    <input type="text" id="whatsapp_number" placeholder="whatsapp_number" name="whatsapp_number">
-                    <label for="addr">Address</label>
-                    <input type="text" id="addr" placeholder="Adress" name="address">
-                    <label for="phoneno">Phone Number</label>
-                    <input type="text" id="phoneno" placeholder="Fax" name="phoneNo">
-
-                    <input type="submit" id="submitbutton" value="Submit">
-                    <button class="close-button">Close</button>
-                </form> -->
-<!-- <div class="pop-up">
-            <div class="popupForm2">
-                <form method="post">
-                    <div class="popup-card">
-                        <div class="form">
-                            <h2>Change Student Details</h2>
-                            <div class="form-input-fields">
-                                <div class="user-data">
-                                    <input type="text" name="id" hidden>
-                                    <div class="coloum-01">
-                                        <div class="form-element">
-                                            <label for="fname">First Name</label>
-                                            <input type="text" placeholder="Enter" id="up-fname" name="fname" value="<?= set_value('fname') ?>">
-                                        </div>
-                                        <div class="form-element">
-                                            <label for="email">Email</label>
-                                            <input type="text" placeholder="Enter" id="up-email" name="email" value="<?= set_value('email') ?>">
-                                        </div>
-                                        <div class="form-element">
-                                            <label for="nicNo">N.I.C</label>
-                                            <input type="text" placeholder="Enter" id="up-nicNo" name="nicNo" value="<?= set_value('nicNo') ?>">
-                                        </div>
-                                        <div class="form-element">
-                                            <label for="whatsapp_number">WhatsApp Number</label>
-                                            <input type="text" placeholder="Enter" id="whatsapp_number" name="whatsapp_number" value="<?= set_value('whatsapp_number') ?>">
-                                        </div>
-                                    </div>
-                                    <div class="coloum-02">
-                                        <div class="form-element">
-                                            <label for="lname">Last Name</label>
-                                            <input type="text" placeholder="Enter" id="up-lname" name="lname" value="<?= set_value('lname') ?>">
-                                        </div>
-                                        <div class="form-element">
-                                            <label for="phoneNo">Phone Number</label>
-                                            <input type="text" placeholder="Enter" id="up-phoneNo" name="phoneNo" value="<?= set_value('phoneNo') ?>">
-                                        </div>
-                                        <div class="form-element">
-                                            <label for="cpassword">Birthdate</label>
-                                            <input type="date" placeholder="Enter" id="up-birthdate" name="Birthdate">
-                                        </div>
-                                        <div class="form-element">
-                                            <label for="address">Address</label>
-                                            <input type="text" placeholder="Enter" id="up-Address" name="address" value="<?= set_value('address') ?>">
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="user-create-update">
-                                    <button class="close-button">Close</button>
-                                    <button name='submit' value='update' id="submitbutton" type="submit">Update</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div> -->
