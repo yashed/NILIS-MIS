@@ -414,6 +414,7 @@ $data['role'] = $role;
                             <thead>
                                 <tr>
                                     <th>Index No</th>
+                                    <th>Sutudent Type</th>
                                     <th>Subject Code</th>
                                     <th>Examiner 01 Marks</th>
                                     <th>Examiner 02 Marks</th>
