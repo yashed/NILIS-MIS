@@ -502,6 +502,7 @@ $data['role'] = $role;
                 timetableDataInput.setAttribute('value', JSON.stringify(timetableData));
                 document.getElementById('form1').appendChild(timetableDataInput);
             }
+            console.log(timetableDataInput);
             document.getElementById("form1").submit();
 
             add.style.display = "none";

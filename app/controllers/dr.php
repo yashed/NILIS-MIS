@@ -138,22 +138,25 @@ class DR extends Controller
             if ($action == "update") {
                 echo "update ";
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                    show($_POST);
                     echo "POST request received ";
                     if (isset($_POST['timetableData'])) {
                         $timetableData = json_decode($_POST['timetableData'], true);
                         // Iterate over each subject's data and insert it into the database
-                        foreach ($timetableData as $timetableData) {
+                        foreach ($timetableData as $timetableDataItem) {
                             echo "a";
                             // Construct the data array for insertion
                             $data1 = [
-                                'EventID' => $timetableData['eventID'],
+                                'EventID' => $timetableDataItem['eventID'],
                                 'DegreeID' => $degreeID,
-                                'EventName' => $timetableData['eventName'],
-                                'EventType' => $timetableData['eventType'],
-                                'StartingDate' => $timetableData['eventStart'],
-                                'EndingDate' => $timetableData['eventEnd'],
+                                'EventName' => $timetableDataItem['eventName'],
+                                'EventType' => $timetableDataItem['eventType'],
+                                'StartingDate' => $timetableDataItem['eventStart'],
+                                'EndingDate' => $timetableDataItem['eventEnd'],
                             ];
+                            echo json_encode($data1);
                             $degreeTimeTable->update($degreeID ,$data1);
+                            redirect("dr/degreeprofile?id=" . $degreeID);
                         }
                     }
                 }
@@ -168,6 +171,7 @@ class DR extends Controller
             echo "Error: Degree ID not provided in the URL.";
         }
     }
+
 
 
     public function newDegree($action = null, $id = null)
