@@ -108,11 +108,10 @@ class SAR extends Controller
         $ExamData = [];
 
 
-        // show($_SESSION['Selected_RM_Students']);
-
-
-
-
+        //remove session data
+        if (!empty($_SESSION['examDetails'])) {
+            unset($_SESSION['examDetails']);
+        }
 
         //Get currect Degree short name
         $degreeShortName = [$degree->where(['DegreeID' => $degreeID])[0]->DegreeShortName];
@@ -523,7 +522,7 @@ class SAR extends Controller
                         foreach ($data['medicalStudents'] as $medicalStudent) {
                             if (in_array($medicalStudent->id, $selectedIds)) {
                                 if (!in_array($medicalStudent->id, $processedStudentID2)) {
-                                    $medicalStudent->degreeID = $degreeID;
+
                                     $medicalStudent->semester = $selectedSemester;
                                     $medicalStudent->attempt = $medicalStudent->attempt;
                                     $medicalStudent->studentType = 'medical';
@@ -551,7 +550,6 @@ class SAR extends Controller
                                 if (!in_array($repeatStudent->id, $processedStudentID2)) {
 
                                     //need to slove this issue
-                                    $repeatStudent->degreeID = $degreeID;
                                     $repeatStudent->semester = $selectedSemester;
                                     $repeatStudent->attempt = intval($repeatStudent->attempt) + 1;
                                     $repeatStudent->studentType = 'repeate';
@@ -693,9 +691,20 @@ class SAR extends Controller
             $this->view('sar-interfaces/sar-createexam-normal-3', $data);
         } else {
 
-            //examid must pass through the session
-            $examID = 43;
 
+
+            //get examid and degree id from link
+            $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
+            $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
+
+            //add examination details to the session
+            $_SESSION['examDetails'] = $exam->where(['examID' => $examID]);
+
+            //set examination id
+            if (!empty($_SESSION['examDetails'])) {
+                $examID = $_SESSION['examDetails'][0]->examID;
+
+            }
 
             //get subjects in the exam
             $ExamSubjects = $subjects->where(['degreeID' => $degreeID, 'semester' => $semester]);
@@ -754,11 +763,15 @@ class SAR extends Controller
 
                         $examStudents = [];
 
+                        //get semester from session
+                        $semester = $_SESSION['examDetails'][0]->semester;
+
                         //get students data from exam participants table
                         $tables = ['student'];
                         $columns = ['*'];
                         $conditions1 = ['student.degreeID = exam_participants.DegreeID', 'student.indexNo = exam_participants.indexNo', 'exam_participants.studentType="initial"', 'exam_participants.examID= ' . $examID];
                         $Participants = $examParticipants->join($tables, $columns, $conditions1);
+
 
                         //append data to examStudents array
                         foreach ($Participants as $participant) {
@@ -770,37 +783,48 @@ class SAR extends Controller
                         //get repeat student details
                         $tables = ['repeat_students', 'student'];
                         $columns = ['*'];
-                        $condition2 = ['repeat_students.degreeID = exam_participants.DegreeID', 'repeat_students.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID, 'exam_participants.studentType = "repeate"', 'student.indexNo = repeat_students.indexNo'];
-                        $RepeatStudents = $examParticipants->join($tables, $columns, $condition2);
+                        $condition2 = ['repeat_students.indexNo = exam_participants.indexNo', 'student.indexNo = repeat_students.indexNo'];
+                        $whereCondition2 = ['exam_participants.examID= ' . $examID, 'exam_participants.studentType = "repeate"', 'repeat_students.semester = ' . $semester, 'repeat_students.paymentStatus = 1'];
+                        $RepeatStudents = $examParticipants->joinWhere($tables, $columns, $condition2, $whereCondition2);
+
 
 
                         //get selected subject repeate students
-                        foreach ($RepeatStudents as $Rparticipant) {
+                        if (!empty($RepeatStudents)) {
+                            foreach ($RepeatStudents as $Rparticipant) {
 
-                            if ($Rparticipant->subjectCode == $selectedSubject) {
-                                //append data to examStudents array
-                                $examStudents[] = $Rparticipant;
+                                if ($Rparticipant->subjectCode == $selectedSubject) {
+                                    //append data to examStudents array
+
+                                    $examStudents[] = $Rparticipant;
+                                }
                             }
                         }
                         //get medical student details
                         $tables = ['medical_students', 'student'];
                         $columns = ['*'];
-                        $condition3 = ['medical_students.degreeID = exam_participants.DegreeID', 'medical_students.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID, 'exam_participants.studentType = "medical"', 'student.indexNo = medical_students.indexNo'];
-                        $MedicalStudents = $examParticipants->join($tables, $columns, $condition3);
+                        $condition3 = ['medical_students.indexNo = exam_participants.indexNo', 'student.indexNo = medical_students.indexNo'];
+                        $whereCondition3 = ['medical_students.semester = ' . $semester, 'medical_students.status = 1', 'exam_participants.examID= ' . $examID, 'exam_participants.studentType = "medical"'];
+                        $MedicalStudents = $examParticipants->joinWhere($tables, $columns, $condition3, $whereCondition3);
+
 
                         //get selected subject medical students
-                        foreach ($MedicalStudents as $Mparticipant) {
-                            if ($Mparticipant->subjectCode == $selectedSubject) {
-                                //append data to examStudents array
-                                $examStudents[] = $Mparticipant;
+                        if (!empty($MedicalStudents)) {
+                            foreach ($MedicalStudents as $Mparticipant) {
+                                if ($Mparticipant->subjectCode == $selectedSubject) {
+
+                                    //append data to examStudents array
+                                    $examStudents[] = $Mparticipant;
+                                }
                             }
                         }
+
 
                         //insert data into the exam attendance table
                         foreach ($examStudents as $student) {
 
                             $studentData = [];
-                            $studentData['examID'] = $student->examID;
+                            $studentData['examID'] = $_SESSION['examDetails'][0]->examID;
                             $studentData['degreeID'] = $student->degreeID;
                             $studentData['semester'] = $student->semester;
                             $studentData['subjectCode'] = $selectedSubject;
@@ -876,18 +900,25 @@ class SAR extends Controller
 
             } else if ($method == 'resultsupload') {
 
+                //redirect ro examination page if examID null
+                if (empty($examID)) {
+                    redirect('sar/examination');
+                }
+
                 //get students data from exam participants table
                 $tables = ['student'];
                 $columns = ['*'];
-                $conditions1 = ['student.degreeID = exam_participants.DegreeID', 'student.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID];
-                $Participants = $examParticipants->join($tables, $columns, $conditions1);
+                $conditions1 = ['student.indexNo = exam_participants.indexNo'];
+                $whereCondition1 = ['exam_participants.examID= ' . $examID];
+                $Participants = $examParticipants->joinWhere($tables, $columns, $conditions1, $whereCondition1);
+                show($Participants);
 
                 //get repeat student details
                 $tables = ['repeat_students', 'student'];
                 $columns = ['*'];
                 $condition2 = ['repeat_students.degreeID = exam_participants.DegreeID', 'repeat_students.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID, 'exam_participants.studentType = "repeate"', 'student.indexNo = repeat_students.indexNo'];
                 $RepeatStudents = $examParticipants->join($tables, $columns, $condition2);
-
+                // show($RepeatStudents);
 
                 //get medical student details
                 $tables = ['medical_students', 'student'];
@@ -895,78 +926,82 @@ class SAR extends Controller
                 $condition3 = ['medical_students.degreeID = exam_participants.DegreeID', 'medical_students.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID, 'exam_participants.studentType = "medical"', 'student.indexNo = medical_students.indexNo'];
                 $MedicalStudents = $examParticipants->join($tables, $columns, $condition3);
 
-
+                // show($MedicalStudents);
                 $NormalParticipants = [];
 
 
                 //repeat students subject code == subject code in loop
 
                 //Catogaries participants and store these data in array
-                foreach ($Participants as $participant) {
-                    if ($participant->studentType == 'initial') {
-                        $NormalParticipants[] = $participant;
+                if (!empty($Participants)) {
+                    foreach ($Participants as $participant) {
+                        if ($participant->studentType == 'initial') {
+                            $NormalParticipants[] = $participant;
+                        }
                     }
+
                 }
 
-
-                if ($NormalParticipants !== false) {
-                    // $listOfIndexNo = array_column($NormalParticipants, 'indexNo');
-
-                } else {
-                    //need to handel this error massage as display massage
-                    echo "No participants found.";
-                }
 
                 $data['examSubjects'] = $ExamSubjects;
                 //generate seperate CSV files for each subject
-                foreach ($ExamSubjects as $subject) {
+                if (!empty($ExamSubjects)) {
+                    foreach ($ExamSubjects as $subject) {
 
-                    //generate marksheet as csv file 
-                    $head = 'Name of  Programme  : ' . $degreeID;
-                    $title = 'Subject  : ' . $subject->SubjectName;
+                        //generate marksheet as csv file 
+                        $head = 'Name of  Programme  : ' . $degreeID;
+                        $title = 'Subject  : ' . $subject->SubjectName;
 
-                    $rowHeadings = ['Index No', 'Registration No', 'Examiner 01 Marks', 'Examiner 02 Marks', 'Assignment Marks', 'Examiner 03 Marks'];
-                    $markSheet = 'assets/csv/output/MarkSheet_' . $subject->SubjectCode . '.csv';
-                    $f = fopen($markSheet, 'w');
-
-
-                    if ($f == false) {
-                        echo 'file is not open successfully';
-                    } else {
+                        $rowHeadings = ['Index No', 'Registration No', 'Examiner 01 Marks', 'Examiner 02 Marks', 'Assignment Marks', 'Examiner 03 Marks'];
+                        $markSheet = 'assets/csv/output/MarkSheet_' . $subject->SubjectCode . '.csv';
+                        $f = fopen($markSheet, 'w');
 
 
-                        // Write the header row to the CSV file
-                        fputcsv($f, [$head]);
-                        fputcsv($f, [$title]);
-                        fputcsv($f, array());
-                        fputcsv($f, $rowHeadings);
-
-                        //add indexNo and regNo to marksheet
-                        foreach ($NormalParticipants as $participant) {
-                            $rowData = [$participant->indexNo, $participant->regNo];
-                            fputcsv($f, $rowData);
-                        }
-                        //add repeate students details to marksheet
-                        foreach ($RepeatStudents as $Rparticipant) {
+                        if ($f == false) {
+                            echo 'file is not open successfully';
+                        } else {
 
 
-                            if ($Rparticipant->subjectCode == $subject->SubjectCode) {
-                                // echo $Rparticipant->subjectCode . " " . $subject->SubjectCode;
-                                // show($Rparticipant);
-                                $rowData = [$Rparticipant->indexNo, $Rparticipant->regNo];
-                                fputcsv($f, $rowData);
+                            // Write the header row to the CSV file
+                            fputcsv($f, [$head]);
+                            fputcsv($f, [$title]);
+                            fputcsv($f, array());
+                            fputcsv($f, $rowHeadings);
+
+                            //add indexNo and regNo to marksheet
+                            if (!empty($NormalParticipants)) {
+                                foreach ($NormalParticipants as $participant) {
+                                    $rowData = [$participant->indexNo, $participant->regNo];
+                                    fputcsv($f, $rowData);
+                                }
                             }
-                        }
-                        //add medical students details to mark sheets
-                        foreach ($MedicalStudents as $Mparticipant) {
-                            if ($Mparticipant->subjectCode == $subject->SubjectCode) {
-                                // echo $Rparticipant->subjectCode . " " . $subject->SubjectCode;
-                                // show($Rparticipant);
-                                $rowData = [$Mparticipant->indexNo, $Mparticipant->regNo];
-                                fputcsv($f, $rowData);
+                            //add repeate students details to marksheet
+                            if (!empty($Rparticipant)) {
+                                foreach ($RepeatStudents as $Rparticipant) {
+
+
+                                    if ($Rparticipant->subjectCode == $subject->SubjectCode) {
+                                        // echo $Rparticipant->subjectCode . " " . $subject->SubjectCode;
+                                        // show($Rparticipant);
+                                        $rowData = [$Rparticipant->indexNo, $Rparticipant->regNo];
+                                        fputcsv($f, $rowData);
+                                    }
+                                }
                             }
+
+                            //add medical students details to mark sheets
+                            if (!empty($Mparticipant)) {
+                                foreach ($MedicalStudents as $Mparticipant) {
+                                    if ($Mparticipant->subjectCode == $subject->SubjectCode) {
+                                        // echo $Rparticipant->subjectCode . " " . $subject->SubjectCode;
+                                        // show($Rparticipant);
+                                        $rowData = [$Mparticipant->indexNo, $Mparticipant->regNo];
+                                        fputcsv($f, $rowData);
+                                    }
+                                }
+                            }
+                            fclose($f);
                         }
-                        fclose($f);
                     }
                 }
 

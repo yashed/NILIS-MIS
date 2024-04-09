@@ -114,21 +114,19 @@
     //root variable
     var rootUrl = "<?= ROOT ?>";
     var method = "participants";
-    var degreeID = "<?= $exam->degreeID ?>";
-    var examID = "<?= $exam->examID ?>";
-    var role = "<?= $role ?>";
 
-    function redirectToURL() {
+
+    function redirectToURL(examID, degreeID, role) {
+
         var desiredUrl = rootUrl + role.toLowerCase() + "/examination/" + method + "?degreeID=" + degreeID + "&examID=" + examID;
-        console.log(desiredUrl);
         window.location.href = desiredUrl;
     }
 </script>
 
 <body>
     <div class="exam-card-body">
-
-        <div class="container" onclick="redirectToURL()">
+        <!-- <?php show($role); ?> -->
+        <div class="container" onclick="redirectToURL(<?= $exam->examID ?>,<?= $exam->degreeID ?>,'<?= $role ?>')">
             <div class="card">
                 <div class="content">
                     <div class="degree-name">
@@ -136,6 +134,7 @@
                     </div>
                     <div class="sub-name">
                         <?= $exam->DegreeName ?>
+
                     </div>
                 </div>
             </div>
