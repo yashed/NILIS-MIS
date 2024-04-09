@@ -7,7 +7,7 @@ class Notification extends Controller
         $notification = new NotificationModel();
         $data['notifications'] = $notification->findAll();
         $this->view('components/notification-bar/notification-box', $data);
-    }
+ }
     
     
 }

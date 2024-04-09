@@ -131,7 +131,7 @@
 
 
 
-    <div class="banner">
+    <div class="banner" >
         <div class="color-strip"></div>
         <div class="closing"><span class="close-symbol" onclick="closeComponent()">✖</span> </div>
         <div class="content-container">

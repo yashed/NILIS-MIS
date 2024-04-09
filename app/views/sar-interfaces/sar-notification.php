@@ -164,6 +164,7 @@ $data['role'] = $role;
     <div class="temp3-footer">
         <?php $this->view('components/footer/index', $data) ?>
     </div>
+   
 </body>
 
 </html>
