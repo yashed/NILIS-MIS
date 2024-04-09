@@ -87,21 +87,21 @@ class Database
 
         $this->query($query);
         //Subject Table
-        $query = "
-        CREATE TABLE IF NOT EXISTS `subject` (
-            `SubjectID` int(11) NOT NULL AUTO_INCREMENT,
-            `SubjectCode` varchar(50) NOT NULL,
-            `SubjectName` text NOT NULL,
-            `NoCredits` int(10) NOT NULL,
-            `DegreeID` int(11) NOT NULL,
-            `semester` int(10) NOT NULL,
-            CONSTRAINT `FK_DegreeID` FOREIGN KEY (`DegreeID`) REFERENCES `degree` (`DegreeID`) ON DELETE CASCADE 
-            PRIMARY KEY (`SubjectID`),
-            UNIQUE KEY `SubjectCode` (`SubjectCode`) 
-           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
-        ";
+        // $query = "
+        // CREATE TABLE IF NOT EXISTS `subject` (
+        //     `SubjectID` int(11) NOT NULL AUTO_INCREMENT,
+        //     `SubjectCode` varchar(50) NOT NULL,
+        //     `SubjectName` text NOT NULL,
+        //     `NoCredits` int(10) NOT NULL,
+        //     `DegreeID` int(11) NOT NULL,
+        //     `semester` int(10) NOT NULL,
+        //     CONSTRAINT `FK_DegreeID` FOREIGN KEY (`DegreeID`) REFERENCES `degree` (`DegreeID`) ON DELETE CASCADE 
+        //     PRIMARY KEY (`SubjectID`),
+        //     UNIQUE KEY `SubjectCode` (`SubjectCode`) 
+        //    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+        // ";
 
-        $this->query($query);
+        // $this->query($query);
 
         //Grading Values Table
         $query = "
@@ -383,6 +383,17 @@ class Database
             FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`),
             FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`),
             FOREIGN KEY (`indexNo`) REFERENCES `student` (`indexNo`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ";
+        $this->query($query);
+
+        $query = "
+        CREATE TABLE IF NOT EXISTS `notifications`(
+            `notify_id` int(11) NOT NULL,
+            `description` varchar(255) NOT NULL,
+            `type` varchar(50) NOT NULL,
+            `msg_type` varchar(100) NOT NULL,
+            `issuing_date` datetime NOT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         ";
         $this->query($query);
