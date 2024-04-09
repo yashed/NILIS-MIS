@@ -35,7 +35,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
 
     //root path (localhost)
     //root path 
-    define('ROOT', 'http://localhost/NILIS-MIS/public/');
+    define('ROOT', 'https://nilis-examination.azurewebsites.net');
 } else {
     //database config for live server
     define('DBHOST', 'sql6.freesqldatabase.com');
