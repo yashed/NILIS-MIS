@@ -264,6 +264,17 @@ $data['role'] = $role;
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
+
+            <?php if (!empty($notifications)) : ?>
+                <?php foreach ($notifications as $notification) : ?>
+                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert') : ?>
+                        <?php 
+                             $data['role'] = "Clerk";
+                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
         </div>
     </div>
 
