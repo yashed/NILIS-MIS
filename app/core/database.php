@@ -776,7 +776,7 @@ END;
    
                    -- Insert record into notifications table
                    INSERT INTO notifications (description, type, msg_type,issuing_date)
-                   VALUES (CONCAT(str1), 'Examination', 'Exam-end-alert',NOW());
+                   VALUES (CONCAT(str1), 'Vacation', 'Vacation-end-alert',NOW());
                END IF;
            END LOOP;
    
