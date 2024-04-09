@@ -318,4 +318,22 @@ function checkGap($file, $examId, $subCode)
     return false;
 
 }
+
+function sortArray($array, $key, $order = 'asc')
+{
+    // Define a custom comparison function
+    $compare = function ($a, $b) use ($key, $order) {
+        if ($order === 'asc') {
+            return $a->$key > $b->$key ? 1 : -1;
+        } else {
+            return $a->$key < $b->$key ? 1 : -1;
+        }
+    };
+
+    // Sort the array using the custom comparison function
+    usort($array, $compare);
+
+    return $array;
+}
+
 ?>
