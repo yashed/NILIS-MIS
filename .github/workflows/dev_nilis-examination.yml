@@ -62,5 +62,5 @@ jobs:
         with:
           app-name: 'nilis-examination'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_99B1AD0313184E03BF504C9CD4740442 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_73A3564C32BB44179A87D24AE3962CCE }}
           package: .
