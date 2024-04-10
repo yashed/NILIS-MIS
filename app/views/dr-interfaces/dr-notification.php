@@ -1,62 +1,172 @@
 <?php
-    $role = "DR";
-    $data['role'] = $role;
+
+$role = "DR";
+$data['role'] = $role;
+
 ?>
 
-<?php $this->view('components/navside-bar/header',$data) ?>
-<?php $this->view('components/navside-bar/sidebar',$data) ?>
-<?php $this->view('components/navside-bar/footer',$data) ?>
+<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>DR Notifications</title>
-    </head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        *{
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+        * {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        :root{
+
+        :root {
             --body-color: #E2E2E2;
             --sidebar-color: #17376E;
             --primary-color: #9AD6FF;
             --text-color: #ffffff;
-
             --tran-02: all 0.2s ease;
-            --tran-03: all 0.3s ease; 
+            --tran-03: all 0.3s ease;
             --tran-04: all 0.4s ease;
             --tran-05: all 0.5s ease;
         }
-        .dr-home{
-            height: 100vh;
+
+        .temp3-home {
+
             left: 250px;
             position: relative;
             width: calc(100% - 250px);
             transition: var(--tran-05);
             background: var(--body-color);
         }
-        .dr-title{
+
+        .temp3-title {
             font-size: 30px;
-            font-weight: 500;
+            font-weight: 600;
             color: black;
-            padding: 4px 0px 4px 35px;
+            padding: 10px 0px 10px 32px;
             background-color: var(--text-color);
             border-radius: 6px;
             margin: 7px 4px 7px 4px;
         }
-        .sidebar.close ~ .dr-home{
+
+        .sidebar.close~.temp3-home {
             left: 88px;
             width: calc(100% - 88px);
         }
+
+       
+
+        .temp3-subsection-1 {
+            background-color: var(--text-color);
+            padding: 10px 10px 30px 35px;
+            border-radius: 6px;
+            margin: 7px 4px 7px 4px;
+
+        }
+
+        .temp3-sub-title {
+
+            color: #17376E;
+            font-family: Poppins;
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 600;
+            margin: 40px;
+
+        }
+
     </style>
-    <body>
-    <div class="dr-home">
-            <div class="dr-title">Notifications</div> 
+</head>
+
+<body>
+    <div class="temp3-home">
+        <div class="temp3-title">Notifications</div>
+        <div class="temp3-subsection-1">
+        <?php if (!empty($notifications)) : ?>
+                <?php foreach ($notifications as $notification) : ?>
+                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'All') : ?>
+                        <?php 
+                             $data['role'] = "DR";
+                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
+            <?php if (!empty($notifications)) : ?>
+                <?php foreach ($notifications as $notification) : ?>
+                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert') : ?>
+                        <?php 
+                             $data['role'] = "DR";
+                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
+            <?php if (!empty($notifications)) : ?>
+                <?php foreach ($notifications as $notification) : ?>
+                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert') : ?>
+                        <?php 
+                             $data['role'] = "DR";
+                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
+            <?php if (!empty($notifications)) : ?>
+                <?php foreach ($notifications as $notification) : ?>
+                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert') : ?>
+                        <?php 
+                             $data['role'] = "DR";
+                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
+            <?php if (!empty($notifications)) : ?>
+                <?php foreach ($notifications as $notification) : ?>
+                    <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-start-alert') : ?>
+                        <?php 
+                             $data['role'] = "DR";
+                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
+            <?php if (!empty($notifications)) : ?>
+                <?php foreach ($notifications as $notification) : ?>
+                    <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-end-alert') : ?>
+                        <?php 
+                             $data['role'] = "DR";
+                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+         
+            <?php if (!empty($notifications)) : ?>
+                <?php foreach ($notifications as $notification) : ?>
+                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'payment_check_alert') : ?>
+                        <?php 
+                             $data['role'] = "DR";
+                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            
+
+
         </div>
-    </body>
+    </div>
+
+    <div class="temp3-footer">
+        <?php $this->view('components/footer/index', $data) ?>
+    </div>
+</body>
+
 </html>

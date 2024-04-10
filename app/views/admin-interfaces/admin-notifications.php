@@ -1,6 +1,6 @@
 <?php
 
-$role = "director";
+$role = "Admin";
 $data['role'] = $role;
 
 ?>
@@ -61,20 +61,20 @@ $data['role'] = $role;
             width: calc(100% - 88px);
         }
 
-        /* .temp3-subsection-0 {
+        .temp3-subsection-0 {
             display: flex;
             flex-direction: row;
             justify-content: space-around;
             align-items: center;
             /* background-color: var(--text-color); */
-            /* padding: 15px 10px 15px 35px;
+            padding: 15px 10px 15px 35px;
             border-radius: 6px;
             margin: 7px 4px 7px 4px;
             flex-wrap: wrap;
 
-        } */
+        }
 
-        /* .temp3-subsection-01 {
+        .temp3-subsection-01 {
             display: flex;
             padding: 15px 30px 14px 30px;
             justify-content: center;
@@ -106,7 +106,7 @@ $data['role'] = $role;
             font-size: 18px;
             font-weight: 600;
             color: #17376E;
-        } */ 
+        }
 
         .temp3-subsection-1 {
             background-color: var(--text-color);
@@ -239,18 +239,17 @@ $data['role'] = $role;
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Examination' && $notification->msg_type == 'All') : ?>
                         <?php 
-                             $data['role'] = "Director";
+                             $data['role'] = "Admin";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
-            
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert') : ?>
                         <?php 
-                             $data['role'] = "Director";
+                             $data['role'] = "Admin";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -260,7 +259,7 @@ $data['role'] = $role;
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert') : ?>
                         <?php 
-                             $data['role'] = "Director";
+                             $data['role'] = "Admin";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -270,17 +269,17 @@ $data['role'] = $role;
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert') : ?>
                         <?php 
-                             $data['role'] = "Director";
+                             $data['role'] = "Admin";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
-
+            
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-start-alert') : ?>
                         <?php 
-                             $data['role'] = "Director";
+                             $data['role'] = "Admin";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -290,7 +289,7 @@ $data['role'] = $role;
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-end-alert') : ?>
                         <?php 
-                             $data['role'] = "Director";
+                             $data['role'] = "Admin";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
