@@ -577,7 +577,7 @@ $data['role'] = $role;
                     </div>
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Ongoing</br>Examination</div>
-                        <div class="dr-dash-card-subcard-data-value">04</div>
+                        <div class="dr-dash-card-subcard-data-value"></div>
                     </div>
                 </div>
             </div>
