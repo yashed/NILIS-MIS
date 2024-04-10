@@ -45,10 +45,8 @@ class App
 
    private function getURL()
    {
-      print_r($_GET);
+      
       $url = $_GET['url'] ?? 'Home';
-      show($url);
-      print_r($url);
 
       $url = filter_var($url, FILTER_SANITIZE_URL);
       $arr = explode("/", $url);
