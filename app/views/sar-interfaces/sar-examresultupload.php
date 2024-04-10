@@ -1273,6 +1273,7 @@ $validateError = isset($errors['marks']) ? $errors['marks'] : null;
     //function to trigger file input
     function triggerFileInput(fileInputId) {
         var fileInput = document.getElementById(fileInputId);
+        console.log('in trigger input', fileInput);
         fileInput.click();
     }
 
