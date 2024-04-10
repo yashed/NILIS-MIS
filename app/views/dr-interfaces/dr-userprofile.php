@@ -115,9 +115,9 @@ $data['role'] = $role;
                         <label for="select degree type" class="drop-down">Select Degree Program:</label><br>
                         <select name="select degree type" id="select_degree_type" style="width: 430px; height: 34px; border-radius: 5px; margin: 9px;">
                             <option value="" default hidden>Select</option>
-                            <option value="DLMS" <?= (set_value('select_degree_type') === 'DLMS') ? 'selected' : '' ?>>Diploma in Library Management Studies</option>
-                            <option value="ENCM" <?= (set_value('select_degree_type') === 'ENCM') ? 'selected' : '' ?>>Executive National Certificate in Management</option>
-                            <option value="DSL" <?= (set_value('select_degree_type') === 'DSL') ? 'selected' : '' ?>>Diploma in Science Library</option>
+                            <option value="DLIM" <?= (set_value('select_degree_type') === 'DLIM') ? 'selected' : '' ?>>Diploma in Library Information Management</option>
+                            <option value="DPL" <?= (set_value('select_degree_type') === 'DPL') ? 'selected' : '' ?>>Diploma in Public Librarianship</option>
+                            <option value="DSL" <?= (set_value('select_degree_type') === 'DSL') ? 'selected' : '' ?>>Diploma in School Librarianship</option>
                         </select><br><br>
                         <h3 style="font-size: 14px; font-weight: 200">Note - After submit all the information of this student may transfer to new degree program and student data will suspend from the current degree program</h3>
                     </div>
