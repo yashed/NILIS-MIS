@@ -87,7 +87,6 @@ function groupByColumn($data, $columnName)
 
 function createMarkSheet($inputCSV, $examID, $subCode, $type)
 {
-
     $examiner3 = false;
     $filePath = 'assets/csv/examsheets/final-marksheets';
     $markSheet = $filePath . '/' . $examID . '_' . $subCode . '.csv';
@@ -217,6 +216,24 @@ function leastGap($mark1, $mark2, $mark3)
             return $marks;
         }
     }
+}
+
+function getRepeatedSubjects($indexNo, $semester)
+{
+    $repeatStudents = new RepeatStudents;
+
+    //get repeated subjects
+    $repeatedSubjects = $repeatStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester,], 'subjectCode');
+    return $repeatedSubjects;
+}
+
+function getMedicalSubjects($indexNo, $semester)
+{
+    $medicalStudents = new MedicalStudents;
+
+    //get repeated subjects
+    $medicalSubjects = $medicalStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester], 'subjectCode');
+    return $medicalSubjects;
 }
 
 function finalMark($mark1, $mark2, $assigmnet)

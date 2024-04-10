@@ -23,9 +23,12 @@ class DIRECTOR extends Controller
 
         $this->view('director-interfaces/director-dashboard', $data);
     }
-    public function notification()
+    public function notifications()
     {
-        $this->view('director-interfaces/director-notification');
+        $notification = new NotificationModel();
+        $data['notifications'] = $notification->findAll();
+
+        $this->view('director-interfaces/director-notification', $data);
     }
     public function degreeprograms()
     {
@@ -51,7 +54,7 @@ class DIRECTOR extends Controller
 
         $this->view('director-interfaces/director-degreeprofile', $data);
     }
-    
+
     public function participants($id = null, $action = null, $id2 = null)
     {
 
@@ -96,42 +99,42 @@ class DIRECTOR extends Controller
     //     $this->view('director-interfaces/director-userprofile', $data);
     // }
     public function settings()
-{
-    $user = new User();
-    
-    
-    if (isset($_POST['update_user_data'])) {
-        $id = $_SESSION['USER_DATA']->id;
-        $dataToUpdate = [
-            'fname' => $_POST['fname'],
-            'lname' => $_POST['lname'],
-            'email' => $_POST['email'],
-            'phoneNo' => $_POST['phoneNo']
-        ];
+    {
+        $user = new User();
 
-        $user->update($id, $dataToUpdate);
 
-        $updatedUserData = $user->first(['id' => $id]);
+        if (isset($_POST['update_user_data'])) {
+            $id = $_SESSION['USER_DATA']->id;
+            $dataToUpdate = [
+                'fname' => $_POST['fname'],
+                'lname' => $_POST['lname'],
+                'email' => $_POST['email'],
+                'phoneNo' => $_POST['phoneNo']
+            ];
 
-        if ($updatedUserData === null) {
-            echo 'No user data found after update.';
-            exit();
+            $user->update($id, $dataToUpdate);
+
+            $updatedUserData = $user->first(['id' => $id]);
+
+            if ($updatedUserData === null) {
+                echo 'No user data found after update.';
+                exit();
+            }
+
+            $data['user'] = $updatedUserData;
+        } else {
+            $id = $_SESSION['USER_DATA']->id;
+            $data['user'] = $user->first(['id' => $id]);
+
+            if ($data['user'] === null) {
+                echo 'No user data found.';
+                exit();
+            }
         }
 
-        $data['user'] = $updatedUserData;
-    } else {
-        $id = $_SESSION['USER_DATA']->id;
-        $data['user'] = $user->first(['id' => $id]);
-
-        if ($data['user'] === null) {
-            echo 'No user data found.';
-            exit();
-        }
+        $this->view('director-interfaces/director-settings', $data);
     }
 
-    $this->view('director-interfaces/director-settings', $data);
-}
-    
     public function userprofile()
     {
         $degree = new Degree();
@@ -159,7 +162,4 @@ class DIRECTOR extends Controller
     {
         $this->view('common/login/login.view');
     }
-
 }
-
-?>

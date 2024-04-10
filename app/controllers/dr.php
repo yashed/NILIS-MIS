@@ -20,9 +20,14 @@ class DR extends Controller
         $this->view('dr-interfaces/dr-dashboard', $data);
     }
 
-    public function notification()
+    public function notifications()
     {
-        $this->view('dr-interfaces/dr-notification');
+        $notification = new NotificationModel();
+
+        $data['notifications'] = $notification->findAll();
+
+       
+        $this->view('dr-interfaces/dr-notification',$data);
     }
 
     public function degreeprograms($action = null, $id = null)
@@ -349,4 +354,10 @@ class DR extends Controller
     {
         $this->view('login/login.view');
     }
+
+    public function dr_notifications()
+    {
+        $this->view('dr-interfaces/dr-notification');
+    }
+
 }

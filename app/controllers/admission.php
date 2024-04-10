@@ -38,8 +38,6 @@ class Admission extends Controller
 
         }
 
-
-
         //create data array
         $data['examDetails'] = $examDetails;
         $data['indexNo'] = $indexNo;
@@ -94,7 +92,7 @@ class Admission extends Controller
 
         //get exam data
         $examData = $examTimeTable->where(['examID' => $examID]);
-
+        // show($examData);
 
 
 
@@ -103,8 +101,7 @@ class Admission extends Controller
             $examTimeTableData = [];
 
             //get time table data 
-            $TimeTableData[] = $examTimeTable->where(['examID' => $examID, 'degreeID' => $studentExamData[0]->degreeID, 'semester' => $semester]);
-
+            $TimeTableData[] = $examTimeTable->where(['examID' => $examID, 'semester' => $semester]);
             //convert array data to single array
             //in there it include multiple data inside one index so we need to get each data to seperate index that is why add this code
             foreach ($TimeTableData as $ttdata) {
@@ -124,25 +121,25 @@ class Admission extends Controller
             $subjects = $repeateStudent->where(['indexNo' => $indexNo, 'semester' => $semester, 'attempt' => $attempt[0]->attempt]);
 
 
-            // show($subjects);
+
             //get time table data
             $examTimeTableData = [];
 
             // $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'degreeID' => $studentExamData[0]->degreeID, 'semester' => $semester]);
             // show($examTimeTableData);
-
             //get subject data from timetable for each subject
             foreach ($subjects as $subject) {
 
-                $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'degreeID' => $studentExamData[0]->degreeID, 'semester' => $semester, 'subjectCode' => $subject->subjectCode]);
+                $subjectCode = $subject->subjectCode;
+
+                $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'semester' => $semester, 'subjectCode' => $subjectCode]);
 
             }
 
-
+            // show($examTimeTableData);
 
         } else if (($studentExamData[0]->studentType == 'medical')) {
 
-            show($studentExamData[0]->studentType);
             //get student details from medical student table
             $attempt = $medicalStudent->where(['indexNo' => $indexNo, 'semester' => $semester]);
 
@@ -154,10 +151,10 @@ class Admission extends Controller
             //get subject data from timetable for each subject
             foreach ($subjects as $subject) {
 
-                $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'degreeID' => $studentExamData[0]->degreeID, 'semester' => $semester, 'subjectCode' => $subject->subjectCode]);
+                $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'semester' => $semester, 'subjectCode' => $subject->subjectCode]);
             }
 
-
+            // show($examTimeTableData);
         }
 
 

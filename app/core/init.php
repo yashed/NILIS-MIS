@@ -8,9 +8,6 @@
 
 spl_autoload_register(function ($class_name) {
 
-
-
-
     // Check if the class is in the models directory
     $model_path = "../app/models/" . $class_name . ".model.php";
     if (file_exists($model_path)) {
