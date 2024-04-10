@@ -22,7 +22,7 @@ define('DBDRIVER', 'mysql');
 
 
 // // root path 
-define('ROOT', 'http://localhost/NILIS-MIS/public/');
+define('ROOT', 'https://nilis-examination.azurewebsites.net/');
 define('ROOTDIR', 'http://localhost/NILIS-MIS/');
 
 // if ($_SERVER['SERVER_NAME'] == 'localhost') {
