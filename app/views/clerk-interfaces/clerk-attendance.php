@@ -1,5 +1,5 @@
 <?php
-$role = "clerk";
+$role = "Clerk";
 $data['role'] = $role;
 
 ?>
@@ -216,6 +216,27 @@ $data['role'] = $role;
         border-radius: 5px;
         z-index: 9999;
     }
+
+    .btn-secondary-2 {
+        width: 20vw;
+        /* color: #fff; */
+        height: 5vh;
+        padding: 5px 15px 5px 15px;
+        border-radius: 10px;
+        background: #ffffff;
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        /* color: #17376e; */
+        border: 0px;
+        margin-bottom: 10px;
+        border: 1px solid #17376e;
+        font-size: 1vw;
+    }
+
+    .btn-secondary-2:hover {
+        color: black;
+        background-color: #E2E2E2;
+        border: 1px solid #17376e;
+    }
     
     
     
@@ -228,6 +249,7 @@ $data['role'] = $role;
         <div class="temp2-subsection-2">
             <div class="temp2-subsection-21">
                 <div class="record-file">Add Attendance Record File</div>
+                <button class="btn-secondary-2" name='download_marksheet' onclick="downloadcsvFile()">Download Attendance Sheet</button>
                 <div class="dashed-container1">
                     
                     <label for="fileInput" class="file-input-icon"></label>
@@ -303,6 +325,27 @@ function handleDrop(event) {
     var files = event.dataTransfer.files;
     handleFiles(files);
 }
+
+function downloadcsvFile() {
+        // Modify the file URL dynamically based on the subjectCode
+        var fileUrl = '<?= ROOT ?>assets/csv/output/Student_Attendance.csv';
+
+        // Create an anchor element
+        var a = document.createElement('a');
+        a.href = fileUrl;
+
+        // Set the download attribute with the desired file name
+        a.download = 'Student_Attedance.csv';
+
+        // Append the anchor element to the document
+        document.body.appendChild(a);
+
+        // Trigger a click event on the anchor element
+        a.click();
+
+        // Remove the anchor element from the document
+        document.body.removeChild(a);
+    }
 
         </script>
         
