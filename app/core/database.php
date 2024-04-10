@@ -87,21 +87,21 @@ class Database
 
         $this->query($query);
         //Subject Table
-        $query = "
-        CREATE TABLE IF NOT EXISTS `subject` (
-            `SubjectID` int(11) NOT NULL AUTO_INCREMENT,
-            `SubjectCode` varchar(50) NOT NULL,
-            `SubjectName` text NOT NULL,
-            `NoCredits` int(10) NOT NULL,
-            `DegreeID` int(11) NOT NULL,
-            `semester` int(10) NOT NULL,
-            CONSTRAINT `FK_DegreeID` FOREIGN KEY (`DegreeID`) REFERENCES `degree` (`DegreeID`) ON DELETE CASCADE 
-            PRIMARY KEY (`SubjectID`),
-            UNIQUE KEY `SubjectCode` (`SubjectCode`) 
-           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
-        ";
+        // $query = "
+        // CREATE TABLE IF NOT EXISTS `subject` (
+        //     `SubjectID` int(11) NOT NULL AUTO_INCREMENT,
+        //     `SubjectCode` varchar(50) NOT NULL,
+        //     `SubjectName` text NOT NULL,
+        //     `NoCredits` int(10) NOT NULL,
+        //     `DegreeID` int(11) NOT NULL,
+        //     `semester` int(10) NOT NULL,
+        //     CONSTRAINT `FK_DegreeID` FOREIGN KEY (`DegreeID`) REFERENCES `degree` (`DegreeID`) ON DELETE CASCADE 
+        //     PRIMARY KEY (`SubjectID`),
+        //     UNIQUE KEY `SubjectCode` (`SubjectCode`) 
+        //    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+        // ";
 
-        $this->query($query);
+        // $this->query($query);
 
         //Grading Values Table
         $query = "
@@ -826,7 +826,7 @@ END;
         $this->query($query);
 
         $query = "
-        CREATE EVENT IF NOT EXISTS `Vacation_Begin` 
+        CREATE EVENT IF NOT EXISTS `Vacation-Begin` 
         ON SCHEDULE EVERY 1 DAY STARTS '2024-02-21 21:41:00'
         ON COMPLETION NOT PRESERVE ENABLE 
         DO 
@@ -837,7 +837,7 @@ END;
         $this->query($query);
 
         $query = "
-        CREATE EVENT IF NOT EXISTS `Vacation_End` 
+        CREATE EVENT IF NOT EXISTS `Vacation-End` 
         ON SCHEDULE EVERY 1 DAY STARTS '2024-02-21 21:41:00'
         ON COMPLETION NOT PRESERVE ENABLE 
         DO 
