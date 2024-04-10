@@ -65,7 +65,7 @@ class SAR extends Controller
         // show($degreeID);
 
         //need to get these values form the session
-        $degreeID = 2;
+        $degreeID = 4;
         $semester = 1;
         $examID = 63;
 
@@ -308,7 +308,7 @@ class SAR extends Controller
                     $subCount = count($_POST['subName']);
 
                     for ($x = 0; $x < $subCount; $x++) {
-                        $timeTableRow['subjectCode'] = strval($x + 1);
+                        $timeTableRow['subjectCode'] = $_POST['subCode'][$x];
                         $timeTableRow['subjectName'] = $_POST['subName'][$x];
                         $timeTableRow['date'] = $_POST['examDate'][$x];
                         $timeTableRow['time'] = $_POST['examTime'][$x];
@@ -481,12 +481,13 @@ class SAR extends Controller
             $joinStudnetData1 = $medicalStudents->joinWhere($tables, $columns, $conditions1, $whereConditions1);
 
             // show($degreeShortName);
-            // show($joinStudnetData1);
+
 
             //Get join data from repeat students and degree tables 
             $conditions2 = ['repeat_students.degreeID = degree.degreeID', 'repeat_students.paymentStatus=1', 'repeat_students.semester= ' . $selectedSemester];
             $whereConditions2 = ['repeat_students.degreeShortName=' . "'" . $degreeShortName[0] . "'"];
             $joinStudnetData2 = $repeatStudents->joinWhere($tables, $columns, $conditions2, $whereConditions2);
+
 
 
             //filter medical students data according to degree short name
@@ -504,9 +505,9 @@ class SAR extends Controller
             }
 
 
-            if (isset($_POST['submit'])) {
-                if ($_POST['submit'] == 'next2') {
-
+            // show($_POST);
+            if (isset($_POST['submit']) || isset($_POST['back2'])) {
+                if ($_POST['submit'] == 'next2' || $_POST['back2'] == 'back2') {
                     //remove checked students ids to session
                     unset($_SESSION['checked_RM_students']);
 
@@ -517,6 +518,13 @@ class SAR extends Controller
                     if (empty($selectedIds)) {
                         redirect('sar/examination/create/3');
                     } else {
+
+                        // show($data['medicalStudents']);
+                        // show($data['repeatStudents']);
+
+                        $rmStudentData = $data['medicalStudents'] + $data['repeatStudents'];
+                        // show($rmStudentData);
+
 
                         //Handel Selected Medical submitted students data
                         foreach ($data['medicalStudents'] as $medicalStudent) {
@@ -576,7 +584,14 @@ class SAR extends Controller
 
                         $distinctData = $examParticipants->getDistinctElements($_SESSION['Selected_Normal_Students'], $_SESSION['Selected_RM_Students'], 'indexNo');
                         $_SESSION['Normal-Exam-Participants'] = $distinctData;
-                        redirect('sar/examination/create/3');
+
+                        if (!empty($_POST['back2'])) {
+                            if ($_POST['back2'] == 'back2') {
+                                redirect('sar/examination/create/1');
+                            }
+
+                        }
+                        // redirect('sar/examination/create/3');
 
                     }
 
@@ -617,7 +632,7 @@ class SAR extends Controller
                     $subCount = count($_POST['subName']);
 
                     for ($x = 0; $x < $subCount; $x++) {
-                        $timeTableRow['subjectCode'] = strval($x + 1);
+                        $timeTableRow['subjectCode'] = $_POST['subCode'][$x];
                         $timeTableRow['subjectName'] = $_POST['subName'][$x];
                         $timeTableRow['date'] = $_POST['examDate'][$x];
                         $timeTableRow['time'] = $_POST['examTime'][$x];
@@ -911,7 +926,7 @@ class SAR extends Controller
                 $conditions1 = ['student.indexNo = exam_participants.indexNo'];
                 $whereCondition1 = ['exam_participants.examID= ' . $examID];
                 $Participants = $examParticipants->joinWhere($tables, $columns, $conditions1, $whereCondition1);
-                show($Participants);
+                // show($Participants);
 
                 //get repeat student details
                 $tables = ['repeat_students', 'student'];
@@ -949,7 +964,7 @@ class SAR extends Controller
                     foreach ($ExamSubjects as $subject) {
 
                         //generate marksheet as csv file 
-                        $head = 'Name of  Programme  : ' . $degreeID;
+                        $head = 'Name of  Programme  : ' . $degreeID; //must change to degree name
                         $title = 'Subject  : ' . $subject->SubjectName;
 
                         $rowHeadings = ['Index No', 'Registration No', 'Examiner 01 Marks', 'Examiner 02 Marks', 'Assignment Marks', 'Examiner 03 Marks'];
@@ -1157,7 +1172,7 @@ class SAR extends Controller
 
                                                     //call the function to upload marks to database
                                                     echo 'call insertMarks function';
-                                                    show($resFileName);
+                                                    // show($resFileName);
                                                     insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
 
 
@@ -1193,7 +1208,7 @@ class SAR extends Controller
 
                                                     //call the function to upload marks to database
 
-                                                    show($resFileName);
+                                                    // show($resFileName);
                                                     insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
 
 

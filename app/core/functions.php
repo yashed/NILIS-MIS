@@ -218,6 +218,24 @@ function leastGap($mark1, $mark2, $mark3)
     }
 }
 
+function getRepeatedSubjects($indexNo, $semester)
+{
+    $repeatStudents = new RepeatStudents;
+
+    //get repeated subjects
+    $repeatedSubjects = $repeatStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester,], 'subjectCode');
+    return $repeatedSubjects;
+}
+
+function getMedicalSubjects($indexNo, $semester)
+{
+    $medicalStudents = new MedicalStudents;
+
+    //get repeated subjects
+    $medicalSubjects = $medicalStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester], 'subjectCode');
+    return $medicalSubjects;
+}
+
 function finalMark($mark1, $mark2, $assigmnet)
 {
     $finalMark = ($mark1 + $mark2) / 2 + $assigmnet / 2;
