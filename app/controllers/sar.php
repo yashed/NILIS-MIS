@@ -262,10 +262,13 @@ class SAR extends Controller
                             }
                         }
 
+                        //check if there both repete and medical students
+                        $rmStudents = processStudents($selectedRMStudents);
+
                         // show($selectedRMStudents);
                         //create null array to pass as argument
                         $nullArray = [];
-                        $_SESSION['Selected_RM_Students'] = $selectedRMStudents;
+                        $_SESSION['Selected_RM_Students'] = $rmStudents;
 
                         $distinctDataSpecial = $examParticipants->getDistinctElements($nullArray, $_SESSION['Selected_RM_Students'], 'indexNo');
                         $_SESSION['Special-Exam-Participants'] = $distinctDataSpecial;
@@ -522,8 +525,7 @@ class SAR extends Controller
                         // show($data['medicalStudents']);
                         // show($data['repeatStudents']);
 
-                        $rmStudentData = $data['medicalStudents'] + $data['repeatStudents'];
-                        // show($rmStudentData);
+
 
 
                         //Handel Selected Medical submitted students data
@@ -579,11 +581,44 @@ class SAR extends Controller
                             }
                         }
 
+
+                        //get length of the array
+                        // $length = count($selectedRMStudents);
+                        // $index = null;
+
+                        // //check each student data and identify both medical and repeated students
+                        // for ($i = 0; $i < $length; $i++) {
+                        //     foreach ($selectedRMStudents as $rmStudent) {
+
+                        //         //check if the student is a medical student and the repeated student
+                        //         if ($selectedRMStudents[$i]->indexNo == $rmStudent->indexNo) {
+                        //             if ($selectedRMStudents[$i]->indexNo == $index) {
+                        //                 //remove the student from the array
+                        //                 unset($selectedRMStudents[$i]);
+                        //             }
+                        //             if (
+                        //                 ($selectedRMStudents[$i]->studentType == 'medical' && $rmStudent->studentType == 'repeate')
+                        //                 || ($selectedRMStudents[$i]->studentType == 'repeate' && $rmStudent->studentType == 'medical')
+                        //             ) {
+                        //                 //get index of the student
+                        //                 $index = $rmStudent->indexNo;
+                        //                 //change student type 
+                        //                 $selectedRMStudents[$i]->studentType = 'medical/repeat';
+                        //             }
+                        //         }
+                        //     }
+                        // }
+
+                        $rmStudents = processStudents($selectedRMStudents);
+
+
+
                         // show($selectedRMStudents);
-                        $_SESSION['Selected_RM_Students'] = $selectedRMStudents;
+                        $_SESSION['Selected_RM_Students'] = $rmStudents;
 
                         $distinctData = $examParticipants->getDistinctElements($_SESSION['Selected_Normal_Students'], $_SESSION['Selected_RM_Students'], 'indexNo');
                         $_SESSION['Normal-Exam-Participants'] = $distinctData;
+                        show($distinctData);
 
                         if (!empty($_POST['back2'])) {
                             if ($_POST['back2'] == 'back2') {
@@ -1343,7 +1378,7 @@ class SAR extends Controller
 
         $data['notifications'] = $notification->findAll();
 
-        $this->view('sar-interfaces/sar-notification',$data);
+        $this->view('sar-interfaces/sar-notification', $data);
     }
 
 }

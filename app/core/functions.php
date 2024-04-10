@@ -236,6 +236,39 @@ function getMedicalSubjects($indexNo, $semester)
     return $medicalSubjects;
 }
 
+function processStudents(&$selectedRMStudents)
+{
+    $processedStudents = [];
+    $uindex = null;
+    foreach ($selectedRMStudents as $student) {
+        $index = $student->indexNo;
+        if (isset($student) && $student->studentType === 'medical' && isset($student->indexNo)) {
+
+            $foundRepeat = false;
+            foreach ($selectedRMStudents as $otherStudent) {
+                if (isset($otherStudent) && $otherStudent->indexNo === $index && $otherStudent->studentType === 'repeate') {
+                    $student->studentType = 'medical/repeat';
+                    $processedStudents[] = $student;
+                    $uindex = $index;
+                    break;
+                }
+            }
+            if ($uindex !== $index) {
+                $processedStudents[] = $student;
+            }
+        } else {
+
+            if ($uindex !== $index) {
+                $processedStudents[] = $student;
+            }
+        }
+    }
+
+    $selectedRMStudents = $processedStudents;
+    return $selectedRMStudents;
+}
+
+
 function finalMark($mark1, $mark2, $assigmnet)
 {
     $finalMark = ($mark1 + $mark2) / 2 + $assigmnet / 2;

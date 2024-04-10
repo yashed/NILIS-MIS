@@ -537,5 +537,44 @@ class Model extends Database
      // show($query);
      // show($data);
  } */
+    function getDistinctElements($array1, $array2, $key)
+    {
+        // Combine arrays (even if one is null)
+        $data = array_merge((array) $array1, (array) $array2);
+
+        // Ensure $data is an array
+        if (!is_array($data)) {
+            return [];
+        }
+
+        // Initialize empty result array
+        $result = [];
+
+        // Iterate through each object in the combined data
+        foreach ($data as $object) {
+            // Check if key exists and is allowed
+            if (isset($object->$key) && in_array($key, $this->allowedColumns)) {
+                // Extract value of the key
+                $value = $object->$key;
+
+                // Check if value is already present using efficient isset and === comparison
+                if (!isset($result[$value])) {
+                    // Extract only allowed properties and create a new array
+                    $allowedItem = [];
+                    foreach ($this->allowedColumns as $column) {
+                        if (isset($object->$column)) {
+                            $allowedItem[$column] = $object->$column;
+                        }
+                    }
+                    $result[$value] = $allowedItem;
+                }
+            }
+        }
+
+        // Return the result as an array of arrays
+        return array_values($result);
+    }
+
+
 
 }
