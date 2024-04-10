@@ -176,17 +176,17 @@ class Database
         $query = "
         CREATE TABLE IF NOT EXISTS exam_participants (
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            examID int(11) NOT NULL,
+            examID INT(11) NOT NULL,
             degreeID INT(11) NOT NULL,
             semester INT(10) NOT NULL,
             indexNo VARCHAR(40) NOT NULL,
             attempt INT(10) NOT NULL,
             studentType VARCHAR(40) NOT NULL,
-            FOREIGN KEY (degreeID) REFERENCES degree(DegreeID) ON DELETE CASCADE ON UPDATE CASCADE ,
-            FOREIGN KEY (indexNo) REFERENCES student(indexNo) ON DELETE CASCADE ON UPDATE CASCADE,
+            FOREIGN KEY (degreeID) REFERENCES degree(DegreeID) ON DELETE CASCADE ON UPDATE CASCADE,
             FOREIGN KEY (examID) REFERENCES exam(examID) ON DELETE CASCADE ON UPDATE CASCADE,
             UNIQUE KEY unique_participant (degreeID, semester, indexNo)
-        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4; 
+        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+        
         ";
 
         $this->query($query);
@@ -196,16 +196,17 @@ class Database
             id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
             examID int(11) NOT NULL,
             degreeID int(11) NOT NULL,
+            degreeShortName varchar(50) NOT NULL,
             semester int(10) NOT NULL,
             indexNo varchar(40) NOT NULL,
             subjectCode varchar(50) NOT NULL,
             attempt int(10) NOT NULL,
             status boolean NOT NULL DEFAULT 0,
-            FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
-            FOREIGN KEY (indexNo) REFERENCES student(indexNo),
             FOREIGN KEY (examID) REFERENCES exam(examID),
-            FOREIGN KEY (subjectCode) REFERENCES subject(SubjectCode)
-        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci ";
+            FOREIGN KEY (degreeID) REFERENCES degree(degreeID),
+            FOREIGN KEY (indexNo) REFERENCES student(indexNo)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+        ";
 
         $this->query($query);
 
@@ -213,6 +214,7 @@ class Database
      CREATE TABLE IF NOT EXISTS repeat_students(
         id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
         degreeID int(11) NOT NULL,
+        degreeShortName varchar(50) NOT NULL,
         examID int(11) NOT NULL,
         semester int(10) NOT NULL,
         indexNo varchar(40) NOT NULL,
@@ -221,7 +223,6 @@ class Database
         paymentStatus boolean NOT NULL DEFAULT 0,
         FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
         FOREIGN KEY (indexNo) REFERENCES student(indexNo),
-        FOREIGN KEY (subjectCode) REFERENCES subject(SubjectCode),
         FOREIGN KEY (examID) REFERENCES exam(examID)
      ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
      ";
@@ -342,7 +343,7 @@ class Database
             `examID` int(11) NOT NULL,
             `token` varchar(255) NOT NULL,
             PRIMARY KEY (`id`),
-            FOREIGN KEY (`indexNo`) REFERENCES `exam_participants` (`indexNo`),
+            FOREIGN KEY (`indexNo`) REFERENCES `student` (`indexNo`),
             FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
             ";

@@ -41,7 +41,6 @@ $data['role'] = $role;
     }
 
     .exam-create-home {
-        height: 100vh;
         left: 250px;
         position: relative;
         width: calc(100% - 250px);

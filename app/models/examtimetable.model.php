@@ -24,26 +24,26 @@ class ExamTimeTable extends Model
         $this->errors = [];
 
 
-        return true;
-        // $now = new DateTime();
+        // return true;
+        $now = new DateTime();
 
-        // if ($data['date'] < $now) {
-        //     if (empty($errors['date'])) {
-        //         $this->errors['date'] = '* Invalid Date ';
-        //     }
-        // }
-        // if (empty($data['subjectName'])) {
-        //     if (empty($errors['subjectName'])) {
-        //         $this->errors['subjectName'] = '* Subject Name is required';
-        //     }
-        // }
+        if ($data['date'] > $now) {
+            if (empty($errors['date'])) {
+                $this->errors['date'] = '* Invalid Date ';
+            }
+        }
+        if (empty($data['subjectName'])) {
+            if (empty($errors['subjectName'])) {
+                $this->errors['subjectName'] = '* Subject Name is required';
+            }
+        }
 
 
-        // if (empty($this->errors)) {
+        if (empty($this->errors)) {
 
-        //     return true;
-        // }
-        // return false;
+            return true;
+        }
+        return false;
     }
 
 
