@@ -15,7 +15,7 @@ class App
    {
       $arr = $this->getURL();
 
-      $filename = "../app/controllers/" . ucfirst($arr[0]) . ".php";
+      $filename = "app/controllers/" . ucfirst($arr[0]) . ".php";
       if (file_exists($filename)) {
          require $filename;
          $this->controller = $arr[0];
@@ -24,7 +24,7 @@ class App
          //remove $arr[0]
          unset($arr[0]);
       } else {
-         require "../app/controllers/" . $this->controller . ".php";
+         require "app/controllers/" . $this->controller . ".php";
       }
 
       //  show($arr);
@@ -46,7 +46,7 @@ class App
    private function getURL()
    {
       $url = $_GET['url'] ?? 'Home';
-
+      show($url);
       $url = filter_var($url, FILTER_SANITIZE_URL);
       $arr = explode("/", $url);
       return $arr;

@@ -14,15 +14,16 @@ define('APP_DESC', 'Examination Managment System');
 
 //connect to live server
 //database config for live server
-// define('DBHOST', 'sql6.freesqldatabase.com');
-// define('DBNAME', 'sql6683375');
-// define('DBUSER', 'sql6683375');
-// define('DBPASS', '9d2kNaSuiA');
+// define('DBHOST', 'fit.mysql.database.azure.com');
+// define('DBNAME', 'nilis_db');
+// define('DBUSER', 'fitadmin');
+// define('DBPASS', 'password@123');
 // define('DBDRIVER', 'mysql');
 
 
 // // root path 
 // define('ROOT', 'http://localhost/NILIS-MIS/public/');
+// define('ROOTDIR', 'http://localhost/NILIS-MIS/');
 
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
 
@@ -36,6 +37,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     //root path (localhost)
     //root path 
     define('ROOT', 'http://localhost/NILIS-MIS/public/');
+    define('ROOTDIR', 'http://localhost/NILIS-MIS/');
 } else {
     //database config for live server
     define('DBHOST', 'sql6.freesqldatabase.com');
