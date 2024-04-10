@@ -12,7 +12,7 @@ spl_autoload_register(function ($class_name) {
 
 
     // Check if the class is in the models directory
-    $model_path = "../app/models/" . $class_name . ".model.php";
+    $model_path = "app/models/" . $class_name . ".model.php";
     if (file_exists($model_path)) {
         require_once $model_path;
         return;
@@ -20,7 +20,7 @@ spl_autoload_register(function ($class_name) {
 
 
     // Check if the class is in the thirdparty directory
-    $thirdparty_path = "../app/thirdparty/" . $class_name . ".php";
+    $thirdparty_path = "app/thirdparty/" . $class_name . ".php";
     if (file_exists($thirdparty_path)) {
         require_once $thirdparty_path;
         return;
