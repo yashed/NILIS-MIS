@@ -45,6 +45,7 @@ class App
 
    private function getURL()
    {
+      print_r($_GET);
       $url = $_GET['url'] ?? 'Home';
       show($url);
       print_r($url);
