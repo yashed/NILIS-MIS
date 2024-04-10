@@ -733,7 +733,7 @@ END;
         // Execute the procedure creation query
         $this->query($query);
 
-          $query = "
+        $query = "
            CREATE PROCEDURE IF NOT EXISTS `Vacation_End`()
            BEGIN
            DECLARE currentDate DATE;
@@ -784,11 +784,11 @@ END;
        
    END;
            ";
-   
-           // Execute the procedure creation query
-           $this->query($query);
 
-           $query = "
+        // Execute the procedure creation query
+        $this->query($query);
+
+        $query = "
            CREATE PROCEDURE IF NOT EXISTS `Studyleave_Begin`()
            BEGIN
            DECLARE currentDate DATE;
@@ -837,11 +837,11 @@ END;
            CLOSE eventCursor;
        END;
            ";
-   
-           // Execute the procedure creation query
-           $this->query($query);
 
-           $query = "
+        // Execute the procedure creation query
+        $this->query($query);
+
+        $query = "
            CREATE PROCEDURE IF NOT EXISTS `Studyleave_End`()
            BEGIN
            DECLARE currentDate DATE;
@@ -889,11 +889,11 @@ END;
        
    END;
            ";
-   
-           // Execute the procedure creation query
-           $this->query($query);
 
-           $query = "
+        // Execute the procedure creation query
+        $this->query($query);
+
+        $query = "
            CREATE PROCEDURE IF NOT EXISTS `Payment_Check`()
            BEGIN
            DECLARE currentDate DATE;
@@ -937,11 +937,11 @@ END;
            CLOSE eventCursor;
        END;
            ";
-   
-           // Execute the procedure creation query
-           $this->query($query);
 
-           $query = "
+        // Execute the procedure creation query
+        $this->query($query);
+
+        $query = "
            CREATE PROCEDURE IF NOT EXISTS `Exam-Attendance`()
            BEGIN
            DECLARE currentDate DATE;
@@ -992,9 +992,57 @@ END;
        
    END;
            ";
-   
-           // Execute the procedure creation query
-           $this->query($query);
+
+        // Execute the procedure creation query
+        $this->query($query);
+
+        $query = "
+           CREATE PROCEDURE IF NOT EXISTS `Student-Attendance`()
+           BEGIN
+        DECLARE currentDate DATE;
+        DECLARE eventStartDate DATE;
+        DECLARE userId INT;
+        DECLARE daysRemaining INT;
+        DECLARE degreeName TEXT; -- Specify the length for VARCHAR
+
+        DECLARE str1 VARCHAR(255); -- Declare variables for string concatenation
+        DECLARE str2 VARCHAR(255);
+
+        DECLARE eventCursor CURSOR FOR
+            SELECT dt.StartingDate, d.DegreeName
+            FROM degree_timetable AS dt
+            JOIN degree AS d ON dt.DegreeID = d.DegreeID WHERE dt.EventType = 'Examination';
+
+        -- Set the current date
+        SET currentDate = CURDATE();
+
+        OPEN eventCursor;
+
+        read_loop: LOOP
+            FETCH eventCursor INTO eventStartDate, degreeName;
+            IF eventStartDate IS NULL THEN
+                LEAVE read_loop;
+            END IF;
+
+            -- Calculate the days remaining
+            SET daysRemaining = DATEDIFF(eventStartDate, currentDate);
+
+            -- Check if days remaining is less than or equal to 14 and greater than 0
+            IF (daysRemaining = 7 ) THEN
+               -- Construct notification message
+                SET str1 = CONCAT('There will be an upcoming examination scheduled on ', eventStartDate,' for the diploma ', degreeName, ' examination.Please review the payment details of all students before the exams commence.');
+                -- Insert record into notifications table
+                INSERT INTO notifications (description, type, msg_type,issuing_date)
+                VALUES (CONCAT(str1), 'Examination', 'payement_check_alert',NOW());
+            END IF;
+        END LOOP;
+
+        CLOSE eventCursor;
+    END;
+           ";
+
+        // Execute the procedure creation query
+        $this->query($query);
     }
 
     public function create_event()
@@ -1076,7 +1124,7 @@ END;
 
         // Execute the event creation query
         $this->query($query);
-        
+
         $query = "
         CREATE EVENT IF NOT EXISTS `Payment-Check` 
         ON SCHEDULE EVERY 1 DAY STARTS '2024-02-21 21:41:00'
@@ -1098,6 +1146,7 @@ END;
 
         // Execute the event creation query
         $this->query($query);
-        
+
+       
     }
 }
