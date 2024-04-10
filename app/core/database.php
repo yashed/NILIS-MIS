@@ -840,6 +840,58 @@ END;
    
            // Execute the procedure creation query
            $this->query($query);
+
+           $query = "
+           CREATE PROCEDURE IF NOT EXISTS `Studyleave_End`()
+           BEGIN
+           DECLARE currentDate DATE;
+           DECLARE eventEndDate DATE;
+           DECLARE userId INT;
+           DECLARE daysAfterEvent INT;
+           DECLARE degreeName TEXT; -- Specify the length for VARCHAR
+   
+           DECLARE str1 VARCHAR(255); -- Declare variables for string concatenation
+           DECLARE str2 VARCHAR(255);
+   
+           DECLARE eventCursor CURSOR FOR
+               SELECT dt.EndingDate, d.DegreeName
+               FROM degree_timetable AS dt
+               JOIN degree AS d ON dt.DegreeID = d.DegreeID
+               WHERE dt.EventType = 'Study leave';
+   
+           -- Set the current date
+           SET currentDate = CURDATE();
+   
+           OPEN eventCursor;
+   
+           read_loop: LOOP
+               FETCH eventCursor INTO eventEndDate, degreeName;
+               IF eventEndDate IS NULL THEN
+                   LEAVE read_loop;
+               END IF;
+   
+               -- Calculate the days remaining
+               SET daysAfterEvent = DATEDIFF(currentDate,eventEndDate);
+   
+               -- Check if days remaining is less than or equal to 14 and greater than 0
+               IF (daysAfterEvent = 0) THEN
+                  -- Construct notification message
+                   SET str1 = CONCAT('The Study leave for the diploma ', degreeName ,' has ended.');
+                   
+   
+                   -- Insert record into notifications table
+                   INSERT INTO notifications (description, type, msg_type,issuing_date)
+                   VALUES (CONCAT(str1), 'Study leave', 'Studyleave-end-alert',NOW());
+               END IF;
+           END LOOP;
+   
+           CLOSE eventCursor;
+       
+   END;
+           ";
+   
+           // Execute the procedure creation query
+           $this->query($query);
     }
 
     public function create_event()
@@ -906,6 +958,17 @@ END;
         ON COMPLETION NOT PRESERVE ENABLE 
         DO 
         CALL Studyleave_Begin()
+        ";
+
+        // Execute the event creation query
+        $this->query($query);
+
+        $query = "
+        CREATE EVENT IF NOT EXISTS `Studyleave-End` 
+        ON SCHEDULE EVERY 1 DAY STARTS '2024-02-21 21:41:00'
+        ON COMPLETION NOT PRESERVE ENABLE 
+        DO 
+        CALL Studyleave_End()
         ";
 
         // Execute the event creation query
