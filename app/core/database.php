@@ -899,5 +899,16 @@ END;
 
         // Execute the event creation query
         $this->query($query);
+
+        $query = "
+        CREATE EVENT IF NOT EXISTS `Studyleave-Begin` 
+        ON SCHEDULE EVERY 1 DAY STARTS '2024-02-21 21:41:00'
+        ON COMPLETION NOT PRESERVE ENABLE 
+        DO 
+        CALL Studyleave_Begin()
+        ";
+
+        // Execute the event creation query
+        $this->query($query);
     }
 }
