@@ -205,7 +205,6 @@ $data['role'] = $role;
                 <div class="dr-sub-title">Ongoing Degree Programs</div>
                 <div class="dr-degree-bar">
                     <?php if (!empty($degrees)) : ?>
-                        <?php $count = 0; ?>
                         <?php $ongoing_degrees_exist = false; ?>
                         <?php foreach ($degrees as $degree) : ?>
                             <?php if ($degree->Status == "ongoing") : ?>
@@ -215,7 +214,6 @@ $data['role'] = $role;
                                         <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
                                     </a>
                                 </div>
-                                <?php $count++; ?>
                             <?php endif; ?>
                         <?php endforeach; ?>
                         <?php if (!$ongoing_degrees_exist) : ?>
@@ -230,7 +228,6 @@ $data['role'] = $role;
                 <div class="dr-sub-title">Completed Degree Programs</div>
                 <div class="dr-degree-bar">
                 <?php if (!empty($degrees)) : ?>
-                                <?php $count = 0; ?>
                                 <?php $completed_degrees_exist = false; ?>
                                 <?php foreach ($degrees as $degree) : ?>
                                     <?php if ($degree->Status == "completed") : ?>
@@ -240,7 +237,6 @@ $data['role'] = $role;
                                                 <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
                                             </a>
                                         </div>
-                                        <?php $count++; ?>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                                 <?php if (!$completed_degrees_exist) : ?>
@@ -275,8 +271,8 @@ $data['role'] = $role;
                                 <label for="select degree type" class="drop-down">Select Degree Program:</label><br>
                                 <select name="select degree type" id="select_degree_type" style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;">
                                     <option value="" default hidden>Select</option>
-                                    <option value="DLMS" <?= (set_value('select_degree_type') === 'DLMS') ? 'selected' : '' ?>>DLMS</option>
-                                    <option value="ENCM" <?= (set_value('select_degree_type') === 'ENCM') ? 'selected' : '' ?>>ENCM</option>
+                                    <option value="DLIM" <?= (set_value('select_degree_type') === 'DLIM') ? 'selected' : '' ?>>DLIM</option>
+                                    <option value="DPL" <?= (set_value('select_degree_type') === 'DPL') ? 'selected' : '' ?>>DPL</option>
                                     <option value="DSL" <?= (set_value('select_degree_type') === 'DSL') ? 'selected' : '' ?>>DSL</option>
                                 </select><br><br><br>
                             </div>
