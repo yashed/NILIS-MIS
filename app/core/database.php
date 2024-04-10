@@ -203,8 +203,12 @@ class Database
             FOREIGN KEY (examID) REFERENCES exam(examID),
             FOREIGN KEY (degreeID) REFERENCES degree(degreeID),
             FOREIGN KEY (indexNo) REFERENCES student(indexNo)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+                ON UPDATE CASCADE ON DELETE CASCADE,
+            CONSTRAINT fk_indexNo FOREIGN KEY (indexNo) REFERENCES student(indexNo)
+                ON UPDATE CASCADE ON DELETE CASCADE
+        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
         ";
+
 
         $this->query($query);
 
@@ -278,7 +282,7 @@ class Database
             FOREIGN KEY (`studentIndexNo`) REFERENCES `student` (`indexNo`),
             FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`),
             FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
         ";
 
         $this->query($query);
@@ -296,7 +300,7 @@ class Database
             FOREIGN KEY (`studentIndexNo`) REFERENCES `student` (`indexNo`),
             FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`),
             FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
         ";
 
         $this->query($query);
@@ -315,7 +319,7 @@ class Database
             FOREIGN KEY (`studentIndexNo`) REFERENCES `student` (`indexNo`),
             FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`),
             FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
         ";
 
         $this->query($query);
@@ -328,7 +332,7 @@ class Database
             `date` date NOT NULL,
             `time` TIME NOT NULL,
             PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
         ";
 
         $this->query($query);
@@ -341,9 +345,8 @@ class Database
             `examID` int(11) NOT NULL,
             `token` varchar(255) NOT NULL,
             PRIMARY KEY (`id`),
-            FOREIGN KEY (`indexNo`) REFERENCES `student` (`indexNo`),
-            FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            FOREIGN KEY (`indexNo`) REFERENCES `student` (`indexNo`)
+            ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
             ";
 
         $this->query($query);
@@ -360,7 +363,7 @@ class Database
             PRIMARY KEY (`id`),
             FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`),
             FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
         ";
 
         $this->query($query);
@@ -381,7 +384,7 @@ class Database
             FOREIGN KEY (`examID`) REFERENCES `exam` (`examID`),
             FOREIGN KEY (`degreeID`) REFERENCES `degree` (`DegreeID`),
             FOREIGN KEY (`indexNo`) REFERENCES `student` (`indexNo`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
         ";
         $this->query($query);
 

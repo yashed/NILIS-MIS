@@ -738,13 +738,25 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                                     <th> Name </th>
                                     <th> Attempt </th>
                                     <th> Index Number </th>
-                                    <th> Registration Number </th>
+
                                     <th> Student Type </th>
                                     <th> Admission Card </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($currentRecords as $students): ?>
+                                <?php foreach ($currentRecords as $students):
+                                    if (!empty($_SESSION['examDetails'])) {
+
+                                        $examID = $_SESSION['examDetails'][0]->examID;
+                                    }
+
+                                    $degreeID = 4;
+                                    if (!empty($_SESSION['degreeDetails'])) {
+
+                                        $degreeID = $_SESSION['degreeDetails'][0]->degreeID;
+                                    }
+
+                                    ?>
                                     <?php foreach ($students as $student): ?>
                                         <?php $json = json_encode($student); ?>
                                         <tr>
@@ -756,11 +768,11 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                                             <td>
                                                 <?= $student->indexNo ?>
                                             </td>
-                                            <td> DLIM/01/01</td>
+
                                             <td>
                                                 <?= $student->studentType ?>
                                             </td>
-                                            <td> <a href="http://localhost/NILIS-MIS/public/admission/login?degreeID=10&examID=43&indexNo=<?= $student->indexNo ?>"
+                                            <td> <a href="http://localhost/NILIS-MIS/public/admission/login?degreeID=<?= $degreeID ?>&examID=<?= $examID ?>&indexNo=<?= $student->indexNo ?>"
                                                     target="_blank">tap
                                                     to see Admission card </a></td>
                                         </tr>

@@ -492,9 +492,6 @@ class Model extends Database
         return $result;
     }
 
-
-
-
     /*    public function update($id,$data)
     {
 
