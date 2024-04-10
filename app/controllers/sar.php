@@ -136,7 +136,7 @@ class SAR extends Controller
         } else if ($method == "special" && $id == 1) {
 
             $selectedSemester = $_SESSION['exam-creation-details']['semester'];
-            show($selectedSemester);
+            // show($selectedSemester);
 
 
 
