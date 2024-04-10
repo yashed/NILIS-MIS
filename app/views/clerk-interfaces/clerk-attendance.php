@@ -230,6 +230,8 @@ $data['role'] = $role;
         margin-bottom: 10px;
         border: 1px solid #17376e;
         font-size: 1vw;
+        margin-top: 2%;
+        margin-left: 39%;
     }
 
     .btn-secondary-2:hover {
