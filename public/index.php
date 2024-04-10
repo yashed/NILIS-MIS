@@ -1,5 +1,5 @@
 <?php
-echo('Hello World');
+echo('Hello World i m milinda');
 session_start();
 
 require "../app/core/init.php";
