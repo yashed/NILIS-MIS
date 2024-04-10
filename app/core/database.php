@@ -1078,11 +1078,22 @@ END;
         $this->query($query);
         
         $query = "
-        CREATE EVENT IF NOT EXISTS `payment-check` 
+        CREATE EVENT IF NOT EXISTS `Payment-Check` 
         ON SCHEDULE EVERY 1 DAY STARTS '2024-02-21 21:41:00'
         ON COMPLETION NOT PRESERVE ENABLE 
         DO 
         CALL Payment_Check()
+        ";
+
+        // Execute the event creation query
+        $this->query($query);
+
+        $query = "
+        CREATE EVENT IF NOT EXISTS `Exam-Attendance` 
+        ON SCHEDULE EVERY 1 DAY STARTS '2024-02-21 21:41:00'
+        ON COMPLETION NOT PRESERVE ENABLE 
+        DO 
+        CALL Exam_Attendance()
         ";
 
         // Execute the event creation query
