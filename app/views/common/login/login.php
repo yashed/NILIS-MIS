@@ -150,7 +150,7 @@
             color: #fff;
 
             width: 35vw;
-            height: 3.5vw;
+            height: 3.2vw;
             padding: 8px 22px;
             border-radius: 10px;
             /* height: 6vh; */
@@ -184,6 +184,23 @@
                 max-width: 260px;
             }
         }
+
+        .show-pass {
+            display: flex;
+            font-family: "Poppins";
+            font-size: 12px;
+            color: #6193b5;
+            font-weight: 400;
+            text-align: left;
+            margin-left: 10px;
+            align-items: center;
+            margin-top: 10px;
+            gap: 5px;
+        }
+
+        .pass-text {
+            margin-left: 5px;
+        }
     </style>
 </head>
 
@@ -208,8 +225,11 @@
                         name="username" required />
 
                     <input value="<?= set_value('password') ?>" class="input" type="password" placeholder="Password"
-                        name="password" required />
-
+                        name="password" id="password" required />
+                    <div class="show-pass">
+                        <input type="checkbox" onclick="showPassword()">
+                        <div classs='pass-text'>Show Password</div>
+                    </div>
                     <div class="error_block">
                         <?php if (!empty($errors['username'])): ?>
                             <div class="error">
@@ -226,5 +246,17 @@
         </div>
     </div>
 </body>
+
+<script>
+    function showPassword() {
+        console.log('show password');
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
 
 </html>

@@ -582,6 +582,7 @@ class SAR extends Controller
                             }
                         }
 
+                        //check if there both repete and medical students
                         $rmStudents = processStudents($selectedRMStudents);
 
 
