@@ -102,13 +102,13 @@ public function attendance()
 
                 // Read data from the first column (index 0)
                 $index = $line[0];
-                $name = $line[1];
-                $attendance = $line[2];
+                
+                $attendance = $line[1];
 
                 // Update attendance using updateRows function
                 $updateData = [
                     'attendance' => $attendance,
-                    'name' => $name
+                    
                 ];
                 $whereConditions = [
                     'indexNo' => $index
