@@ -400,7 +400,6 @@ class Database
 
         $query = "
         CREATE TABLE IF NOT EXISTS `student_attendance`(
-        CREATE TABLE `student_attendance` (
             `id` int(11) NOT NULL,
             `index_no` varchar(40) NOT NULL,
             `attendance` varchar(10) NOT NULL

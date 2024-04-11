@@ -1,5 +1,5 @@
 <?php
-$role = "clerk";
+$role = "Clerk";
 $data['role'] = $role;
 
 ?>
@@ -438,31 +438,28 @@ $data['role'] = $role;
                 <div class="row">
 
 
-                    <section class="table__body">
-                        <table id="table_p">
-                            <thead>
-                                <tr>
-
-                                    <th> Index </th>
-                                    <th> Name</th>
-                                    <th> Attendance </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-
-                                <?php
-                                 foreach ($students as $student) : ?>
-                                    <tr>
-                                        <td><?= $student->indexNo ?></td>
-                                        <td><?= $student->name ?></td>
-                                        <td><?= $student->attendance ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-
-                            </tbody>
-                        </table>
-                    </section>
+                <section class="table__body">
+    <?php if (empty($attendances)) : ?>
+        <p><b><h4>No attendance data available yet.</h4></b></p>
+    <?php else : ?>
+        <table id="table_p">
+            <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Attendance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($attendances as $attendance) : ?>
+                    <tr>
+                        <td><?= $attendance->index_no ?></td>
+                        <td><?= $attendance->attendance ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+</section>
                     <br>
                 </div>
             </div>

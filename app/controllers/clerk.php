@@ -29,10 +29,8 @@ class Clerk extends Controller
 
     public function updatedattendance()
     {
-        $studentModel = new StudentModel();
-        $students = $studentModel->findAll(); // Assuming findAll() retrieves all students
-    
-        $data['students'] = $students;
+        $attendance = new studentAttendance();
+        $data['attendances'] = $attendance->findAll();
     
         $this->view('clerk-interfaces\clerk-updatedattendance', $data);
     }
