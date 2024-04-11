@@ -119,9 +119,6 @@ class Admin extends Controller
   {
     $degree = new Degree();
 
-    // $degree->insert($_POST);
-
-
     $data['degrees'] = $degree->findAll();
 
 

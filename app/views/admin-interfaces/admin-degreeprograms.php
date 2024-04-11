@@ -1,10 +1,6 @@
 <?php
-
-
-
 $role = "Admin";
 $data['role'] = $role;
-
 ?>
 
 <?php $this->view('components/navside-bar/header', $data) ?>
@@ -17,7 +13,9 @@ $data['role'] = $role;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Logs</title>
+    <link rel="stylesheet" href="<?= ROOT ?>css/button.css">
+    <link rel="stylesheet" href="<?= ROOT ?>css/create-degree.css">
+    <title>DR Dashboard</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -40,7 +38,7 @@ $data['role'] = $role;
         --tran-05: all 0.5s ease;
     }
 
-    .temp3-home {
+    .dr-home {
         height: 100vh;
         left: 250px;
         position: relative;
@@ -49,7 +47,7 @@ $data['role'] = $role;
         background: var(--body-color);
     }
 
-    .temp3-title {
+    .dr-title {
         font-size: 30px;
         font-weight: 600;
         color: black;
@@ -59,12 +57,12 @@ $data['role'] = $role;
         margin: 7px 4px 7px 4px;
     }
 
-    .sidebar.close~.temp3-home {
+    .sidebar.close~.dr-home {
         left: 88px;
         width: calc(100% - 88px);
     }
 
-    .temp3-subsection-0 {
+    .dr-subsection-0 {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -77,7 +75,7 @@ $data['role'] = $role;
 
     }
 
-    .temp3-subsection-01 {
+    .dr-subsection-01 {
         display: flex;
         padding: 15px 30px 14px 30px;
         justify-content: center;
@@ -92,33 +90,33 @@ $data['role'] = $role;
         gap: 60px;
     }
 
-    .temp3-subcard-data {
+    .dr-subcard-data {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
     }
 
-    .temp3-subcard-data-value {
+    .dr-subcard-data-value {
         font-size: 38px;
         font-weight: 600;
         color: #17376E;
     }
 
-    .temp3-subcard-data-title {
+    .dr-subcard-data-title {
         font-size: 18px;
         font-weight: 600;
         color: #17376E;
     }
 
-    .temp3-subsection-1 {
+    .dr-subsection-1 {
         background-color: var(--text-color);
         padding: 10px 10px 30px 35px;
         border-radius: 6px;
         margin: 7px 4px 7px 4px;
     }
 
-    .temp3-sub-title {
+    .dr-sub-title {
 
         color: #17376E;
         font-family: Poppins;
@@ -129,7 +127,7 @@ $data['role'] = $role;
 
     }
 
-    .temp3-subsection-2 {
+    .dr-subsection-2 {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -139,17 +137,17 @@ $data['role'] = $role;
         /* margin: 7px 4px 7px 4px; */
     }
 
-    .temp3-subsection-21 {
+    .dr-subsection-21 {
         display: flex;
         flex-direction: column;
         background-color: var(--text-color);
         padding: 10px 10px 30px 35px;
         border-radius: 6px;
         margin: 3px 4px 7px 4px;
-        width: 100%;
+        width: 50%;
     }
 
-    .temp3-subsection-22 {
+    .dr-subsection-22 {
         background-color: var(--text-color);
         padding: 10px 10px 31px 35px;
         border-radius: 6px;
@@ -157,32 +155,37 @@ $data['role'] = $role;
         width: 50%;
     }
 
-    .temp3-calender {
+    .dr-calender {
         display: flex;
         align-items: center;
         justify-content: center;
 
     }
 
-    .temp3-degree-bar {
+    .dr-degree-bar {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         flex-wrap: wrap;
         margin-bottom: 20px;
+        justify-content: center;
     }
 
-    .temp3-card1 {
+    .dr-card1 {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dr-card2 {
         display: flex;
         flex-direction: column;
     }
 
-    .temp3-card2 {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .temp3-exam-bar {
+    .dr-exam-bar {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -191,106 +194,89 @@ $data['role'] = $role;
         gap: 30px;
     }
 
-    .temp3-exam-card1 {
+    .dr-exam-card1 {
         display: flex;
         flex-direction: column;
     }
 
-    .temp3-exam-card2 {
+    .dr-exam-card2 {
         display: flex;
         flex-direction: column;
     }
 
-    .result-table {
-        margin-top: 20px;
-        margin: 20px
+    .dr-button {
+        float: right;
+        margin-right: 10vh;
     }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-        font-size: 0.8vw;
-
+    .model-box {
+        display: none;
+        position: fixed;
+        top: 10%;
+        left: 35%;
     }
 
-    th {
-        border: 1px solid #ddd;
-        padding: 10px;
-        text-align: center;
-
+    .danger {
+        border-color: red;
+        border-width: 5px;
+        border-style: groove;
+        border-radius: 5px;
     }
 
-    td {
-        border: 1px solid #ddd;
-        padding: 5px;
-        text-align: center;
+    .degree-msg {
+        font-size: 1.5vw;
+        font-weight: 500;
+        color: #17376E;
+        margin: 20px;
 
-    }
-
-    th {
-        background-color: #f2f2f2;
     }
 </style>
 
 <body>
-    <div class="temp3-home">
-        <div class="temp3-title"> User Activity Log</div>
-        <div class="temp3-subsection-1">
-            <div class="temp3-sub-title">
-                Logs
+    <div class="dr-home">
+        <div class="dr-title">Degree Program</div>
+        <div class="dr-subsection-1">
+
+            <div class="dr-sub-title">Ongoing Degree Programs</div>
+            <div class="dr-degree-bar">
+
+                <div class="dr-card1">
+                    <?php foreach ($degrees as $degree): ?>
+                        <?php if (!empty($degree->Status == "ongoing")): ?>
+
+                            <div>
+                                <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
             </div>
-
-
-            <div class="result-table">
-                <?php if (!empty($activities)): ?>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>User Name</th>
-                                <th>Discription</th>
-                                <th>Date</th>
-                                <th>Time</th>
-
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($activities as $activity): ?>
-                                <tr>
-                                    <td>
-                                        <?= $activity->id ?>
-                                    </td>
-                                    <td>
-                                        <?= $activity->user ?>
-                                    </td>
-                                    <td>
-                                        <?= $activity->discription ?>
-                                    </td>
-                                    <td>
-                                        <?= $activity->date ?>
-                                    </td>
-                                    <td>
-                                        <?= $activity->time ?>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-
-                        </tbody>
-                    </table>
-                <?php else: ?>
-                    <div class="result-message">No Activity to Show</div>
+        </div>
+        <div class="dr-subsection-1">
+            <div class="dr-sub-title">Completed Degree Programs</div>
+            <div class="dr-degree-bar">
+                <div class="dr-card1">
+                    <?php $degreeStatus = False; ?>
+                    <?php foreach ($degrees as $degree): ?>
+                        <div>
+                            <?php if ((!empty($degree->Status == "completed"))): ?>
+                                <?php
+                                $this->view('components/degree-card/degree-card', ["degree" => $degree]);
+                                $degreeStatus = True;
+                                ?>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <?php if ($degreeStatus == False): ?>
+                    <div class="degree-msg">No completed degree programs</div>
                 <?php endif; ?>
             </div>
-
         </div>
-
-        <div class="temp3-footer">
+        <div class="dr-footer">
             <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>
-
 </body>
 
 </html>

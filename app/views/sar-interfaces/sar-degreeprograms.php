@@ -168,12 +168,16 @@ $data['role'] = $role;
         justify-content: space-around;
         flex-wrap: wrap;
         margin-bottom: 20px;
+        justify-content: center;
     }
 
     .dr-card1 {
         display: flex;
         flex-direction: row;
         gap: 20px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
     }
 
     .dr-card2 {
@@ -218,6 +222,14 @@ $data['role'] = $role;
         border-style: groove;
         border-radius: 5px;
     }
+
+    .degree-msg {
+        font-size: 1.5vw;
+        font-weight: 500;
+        color: #17376E;
+        margin: 20px;
+
+    }
 </style>
 
 <body>
@@ -230,9 +242,12 @@ $data['role'] = $role;
 
                 <div class="dr-card1">
                     <?php foreach ($degrees as $degree): ?>
-                        <div>
-                            <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
-                        </div>
+                        <?php if (!empty($degree->Status == "ongoing")): ?>
+
+                            <div>
+                                <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                            </div>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -244,7 +259,7 @@ $data['role'] = $role;
                     <?php $degreeStatus = False; ?>
                     <?php foreach ($degrees as $degree): ?>
                         <div>
-                            <?php if ($degree->status == "completed"): ?>
+                            <?php if ((!empty($degree->Status == "completed"))): ?>
                                 <?php
                                 $this->view('components/degree-card/degree-card', ["degree" => $degree]);
                                 $degreeStatus = True;
@@ -254,253 +269,14 @@ $data['role'] = $role;
                     <?php endforeach; ?>
                 </div>
                 <?php if ($degreeStatus == False): ?>
-                    <p class="degree-msg">No completed degree programs</p>
+                    <div class="degree-msg">No completed degree programs</div>
                 <?php endif; ?>
             </div>
-            <div class="dr-footer">
-                <?php $this->view('components/footer/index', $data) ?>
-            </div>
-
-            <div class="model-box">
-
-                <div class="container">
-                    <h3>Create New Degree Program</h3>
-                    <form id="Form1" method="post">
-                        <div class="input-fields">
-
-                            <label for="Degree" class="drop-down">Degree Type:</label><br>
-                            <select name="degree type" id="degree type" style="width: 360px;">
-                                <option value="" default hidden>Select</option>
-                                <option value="">1 Year Degree</option>
-                                <option value="">2 Year Degree</option>
-                            </select><br><br><br>
-
-                            <label for="Degree" class="drop-down">Select Degree Program:</label><br>
-                            <select name="select degree type" id="select degree type" style="width: 360px;">
-                                <option value="" default hidden>Select</option>
-                                <option value="">DLMS</option>
-                                <option value="">ENCM</option>
-                            </select><br><br><br>
-                        </div>
-
-                        <div class="btn-box">
-                            <div class="button-btn">
-
-                                <button onclick="myFunction2()" type="button" class="bt-name"
-                                    style="text-decoration: none; margin-right: 25px; background-color: #fff; color: #222d76;"
-                                    id="Cancel1">Cancel</button>
-
-                                <a type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;"
-                                    id="Next1">Continue</a>
-                            </div>
-                        </div>
-                    </form>
-
-                    <form id="Form2" method="post">
-                        <p>Define Subjects and Credits</p>
-
-                        <div class="box_3">
-                            <div class="box_3_1">
-                                <p>Subject</p>
-                            </div>
-                            <div class="box_3_2">
-                                <table class="Subject_table">
-                                    <tr>
-                                        <th>Semester 1</th>
-                                        <th>Credits</th>
-                                    </tr>
-                                    <tr>
-                                        <td width="80%"><input type="text" name="subject_1" class="subject"
-                                                placeholder="Subject 1">
-                                            <?php if (!empty($errors['SubjectName'])): ?>
-                                                <small class="danger">
-                                                    <?= $errors['SubjectName'] ?>
-                                                </small>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td><input type="text" name="cedits_1" class="credits" placeholder="2">
-                                            <?php if (!empty($errors['NoCredit'])): ?>
-                                                <small class="danger">
-                                                    <?= $errors['NoCredit'] ?>
-                                                </small>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" name="subject_2" class="subject" placeholder="Subject 2">
-                                        </td>
-                                        <td><input type="text" name="cedits_2" class="credits" placeholder="2"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" name="subject_3" class="subject" placeholder="Subject 3">
-                                        </td>
-                                        <td><input type="text" name="cedits_3" class="credits" placeholder="2"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" name="subject_4" class="subject" placeholder="Subject 4">
-                                        </td>
-                                        <td><input type="text" name="cedits_4" class="credits" placeholder="2"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Semester 2</th>
-                                        <th>Credits</th>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" name="subject_5" class="subject" placeholder="Subject 5">
-                                        </td>
-                                        <td><input type="text" name="cedits_5" class="credits" placeholder="2"></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="btn-box">
-                            <div class="button-btn">
-                                <a type="button" class="bt-name"
-                                    style="text-decoration: none; margin-right: 25px; background-color: #fff; color: #222d76;"
-                                    id="Back1">Back</a>
-
-                                <a type="button" class="bt-name" style="text-decoration: none; margin-right: -53px;"
-                                    id="Next2">Continue</a>
-                            </div>
-                        </div>
-                    </form>
-
-                    <form id="Form3" method="post">
-                        <h5>Define Scheme of Assignment</h5>
-                        <div class="box_3">
-                            <div class="box_3_1">
-                                <p>Subject</p>
-                            </div>
-                            <div class="box_3_2">
-                                <table class="Subject_table">
-                                    <tr>
-                                        <th>Grade</th>
-                                        <th>Max Mark</th>
-                                        <th>Min Mark</th>
-                                        <th>GPV</th>
-                                    </tr>
-                                    <tr>
-                                        <td width="20%"><input type="text" name="subject_1" class="subject"
-                                                placeholder="A+"></td>
-                                        <td width="40%"><input type="text" name="cedits_1" class="credits"
-                                                placeholder="100"></td>
-                                        <td width="40%"><input type="text" name="cedits_1" class="credits"
-                                                placeholder="90">
-                                        </td>
-                                        <td width="60%"><input type="text" name="cedits_1" class="credits"
-                                                placeholder="4.00"></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="40%"><input type="text" name="subject_1" class="subject"
-                                                placeholder="A">
-                                        </td>
-                                        <td width="40%"><input type="text" name="cedits_1" class="credits"
-                                                placeholder="89">
-                                        </td>
-                                        <td width="40%"><input type="text" name="cedits_1" class="credits"
-                                                placeholder="80">
-                                        </td>
-                                        <td width="60%"><input type="text" name="cedits_1" class="credits"
-                                                placeholder="4.00"></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="40%"><input type="text" name="subject_1" class="subject"
-                                                placeholder="A-"></td>
-                                        <td><input type="text" name="cedits_1" class="credits" placeholder="79"></td>
-                                        <td><input type="text" name="cedits_1" class="credits" placeholder="75"></td>
-                                        <td width="60%"><input type="text" name="cedits_1" class="credits"
-                                                placeholder="3.70"></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="40%"><input type="text" name="subject_1" class="subject"
-                                                placeholder="B+"></td>
-                                        <td><input type="text" name="cedits_1" class="credits" placeholder="74"></td>
-                                        <td><input type="text" name="cedits_1" class="credits" placeholder="70"></td>
-                                        <td width="60%"><input type="text" name="cedits_1" class="credits"
-                                                placeholder="3.40"></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="40%"><input type="text" name="subject_1" class="subject"
-                                                placeholder="B">
-                                        </td>
-                                        <td><input type="text" name="cedits_1" class="credits" placeholder="69"></td>
-                                        <td><input type="text" name="cedits_1" class="credits" placeholder="65"></td>
-                                        <td width="60%"><input type="text" name="cedits_1" class="credits"
-                                                placeholder="3.00"></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="40%"><input type="text" name="subject_1" class="subject"
-                                                placeholder="B-"></td>
-                                        <td><input type="text" name="cedits_1" class="credits" placeholder="64"></td>
-                                        <td><input type="text" name="cedits_1" class="credits" placeholder="60"></td>
-                                        <td width="60%"><input type="text" name="cedits_1" class="credits"
-                                                placeholder="2.70"></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="btn-box">
-                            <div class="button-btn">
-                                <a type="button" class="bt-name"
-                                    style="text-decoration: none; margin-right: 25px; background-color: #fff; color: #222d76;"
-                                    id="Back2">Back</a>
-
-                                <button type="Submit" class="bt-name"
-                                    style="text-decoration: none; margin-right: -53px;">Create</button>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="step-row">
-                        <div id="progress"></div>
-                    </div>
-                </div>
-            </div>
+        </div>
+        <div class="dr-footer">
+            <?php $this->view('components/footer/index', $data) ?>
+        </div>
+    </div>
 </body>
-<script>
-
-    function myFunction() {
-        const lb = document.querySelector(".model-box");
-        lb.style.display = "block";
-    }
-
-    function myFunction2() {
-        const lb = document.querySelector(".model-box");
-        lb.style.display = "none";
-    }
-
-    //original
-    var Form1 = document.getElementById("Form1");
-    var Form2 = document.getElementById("Form2");
-    var Form3 = document.getElementById("Form3");
-
-    var Next1 = document.getElementById("Next1");
-    var Next2 = document.getElementById("Next2");
-    var Back1 = document.getElementById("Back1");
-    var Back2 = document.getElementById("Back2");
-
-    var progress = document.getElementById("progress");
-
-    Next1.onclick = function () {
-        Form1.style.left = "-450px";
-        Form2.style.left = "40px";
-        progress.style.width = "120px";
-    }
-    Back1.onclick = function () {
-        Form1.style.left = "40px";
-        Form2.style.left = "450px";
-        progress.style.width = "10px";
-    }
-    Next2.onclick = function () {
-        Form2.style.left = "-450px";
-        Form3.style.left = "40px";
-        progress.style.width = "240px";
-    }
-    Back2.onclick = function () {
-        Form2.style.left = "40px";
-        Form3.style.left = "450px";
-        progress.style.width = "120px";
-    }
-</script>
 
 </html>
