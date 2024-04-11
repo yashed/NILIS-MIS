@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<title>Login</title>
 
 <head>
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
