@@ -354,4 +354,10 @@ class DR extends Controller
     {
         $this->view('login/login.view');
     }
+
+    public function dr_notifications()
+    {
+        $this->view('dr-interfaces/dr-notification');
+    }
+
 }

@@ -327,8 +327,9 @@ $data['role'] = $role;
 
     .btn-secondary:hover {
         color: black;
-        background-color: #F9D2D2;
-        border: 1px solid red;
+        background-color: #E0E0E0;
+        border: 1px solid #17376e;
+
     }
 
     input {
@@ -373,7 +374,7 @@ $data['role'] = $role;
                                         <th>Mail</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class='table-body'>
                                     <?php foreach ($students as $student): ?>
                                         <?php $json = json_encode($student); ?>
                                         <tr>
@@ -399,8 +400,7 @@ $data['role'] = $role;
                         <div class="exam-buttons">
 
                             <div class="cancel-button">
-                                <button class="btn-secondary" type="button" onClick="
-                                    location.href='<?= ROOT ?>sar/examination'" value='cancel'>Cancel</button>
+                                <button class="btn-secondary" type="submit" name='cancel' value='cancel'>Back</button>
 
                             </div>
                             <div class=" next-button">
