@@ -1042,7 +1042,7 @@ END;
             
             IF (daysRemaining = 0 ) THEN
                -- Construct notification message
-                SET str1 = CONCAT('The study leave has commenced. Ensure to update student attendance before the examination');
+                SET str1 = CONCAT('Study leave has been scheduled for the ', degreeName ,' diploma program ,starting on ', eventStartDate,'. Ensure to update student attendance before the examination');
                 -- Insert record into notifications table
                 INSERT INTO notifications (description, type, msg_type,issuing_date)
                 VALUES (CONCAT(str1), 'Study leave', 'Student_attendance_alert',NOW());
@@ -1091,7 +1091,7 @@ END;
                -- Check if days remaining is less than or equal to 14 and greater than 0
                IF (daysRemaining = 0 ) THEN
                   -- Construct notification message
-                   SET str1 = CONCAT('The study leave has commenced.Send warnings to students with low attendance and those who haven\'t paid the repeat examination charges.');
+                   SET str1 = CONCAT('Study leave has been scheduled for the ', degreeName ,' diploma program ,starting on ', eventStartDate,'.Send warnings to students with low attendance and those who haven\'t paid the repeat examination charges.');
                    
                    INSERT INTO notifications (description, type, msg_type,issuing_date)
                    VALUES (CONCAT(str1), 'Study leave', 'Send-warnings-alert',NOW());
@@ -1198,6 +1198,60 @@ END;
         CLOSE notificationCursor;
     END;
   ";
+
+     // Execute the procedure creation query
+     $this->query($query);
+
+     $query = "
+     CREATE PROCEDURE IF NOT EXISTS `reminder_director`()
+     BEGIN
+     DECLARE currentDate DATE;
+     DECLARE eventEndDate DATE;
+     DECLARE userId INT;
+     DECLARE daysAfterExam INT;
+     DECLARE degreeName TEXT; -- Specify the length for VARCHAR
+
+     DECLARE str1 VARCHAR(255); -- Declare variables for string concatenation
+     DECLARE str2 VARCHAR(255);
+
+     DECLARE eventCursor CURSOR FOR
+         SELECT dt.EndingDate, d.DegreeName
+         FROM degree_timetable AS dt
+         JOIN degree AS d ON dt.DegreeID = d.DegreeID;
+
+     -- Set the current date
+     SET currentDate = CURDATE();
+
+     OPEN eventCursor;
+
+     read_loop: LOOP
+         FETCH eventCursor INTO eventEndDate, degreeName;
+         IF eventEndDate IS NULL THEN
+             LEAVE read_loop;
+         END IF;
+
+         -- Calculate the days remaining
+         SET daysAfterExam = DATEDIFF(currentDate,eventEndDate);
+
+         -- Check if days remaining is less than or equal to 14 and greater than 0
+         IF (daysAfterExam = 1) THEN
+            -- Construct notification message
+             SET str1 = CONCAT('The examination for the diploma ', degreeName ,' has ended.After the marking period, please review the GPA reports and grades of the students.');
+             
+
+             -- Print concatenated strings to console (optional)
+             -- SELECT CONCAT(str1, str2);
+
+             -- Insert record into notifications table
+             INSERT INTO notifications (description, type, msg_type)
+             VALUES (CONCAT(str1), 'Examination', 'Exam-end-alert');
+         END IF;
+     END LOOP;
+
+     CLOSE eventCursor;
+ 
+END;
+     ";
 
      // Execute the procedure creation query
      $this->query($query);
@@ -1344,6 +1398,17 @@ END;
         ON COMPLETION NOT PRESERVE ENABLE 
         DO 
         CALL Remove_Old_Notifications()
+        ";
+
+        // Execute the event creation query
+        $this->query($query);
+
+        $query = "
+        CREATE EVENT IF NOT EXISTS `reminder-director` 
+        ON SCHEDULE EVERY 1 DAY STARTS '2024-02-21 21:41:00'
+        ON COMPLETION NOT PRESERVE ENABLE 
+        DO 
+        CALL reminder_director()
         ";
 
         // Execute the event creation query
