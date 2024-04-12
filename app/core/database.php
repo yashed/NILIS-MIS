@@ -392,7 +392,7 @@ class Database
 
         $query = "
         CREATE TABLE IF NOT EXISTS `notifications`(
-            `notify_id` int(11) NOT NULL,
+            `notify_id` int(11) NOT NULL AUTO_INCREMENT,
             `description` varchar(255) NOT NULL,
             `type` varchar(50) NOT NULL,
             `msg_type` varchar(100) NOT NULL,
@@ -403,7 +403,7 @@ class Database
 
         $query = "
         CREATE TABLE IF NOT EXISTS `student_attendance`(
-            `id` int(11) NOT NULL,
+            `id` int(11) NOT NULL AUTO_INCREMENT,
             `index_no` varchar(40) NOT NULL,
             `attendance` varchar(10) NOT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -1055,6 +1055,55 @@ END;
 
         // Execute the procedure creation query
         $this->query($query);
+
+        $query = "
+           CREATE PROCEDURE IF NOT EXISTS `Send_Warnings`()
+           BEGIN
+           DECLARE currentDate DATE;
+           DECLARE eventStartDate DATE;
+           DECLARE userId INT;
+           DECLARE daysRemaining INT;
+           DECLARE degreeName TEXT; -- Specify the length for VARCHAR
+   
+           DECLARE str1 VARCHAR(255); -- Declare variables for string concatenation
+           DECLARE str2 VARCHAR(255);
+   
+           DECLARE eventCursor CURSOR FOR
+               SELECT dt.StartingDate, d.DegreeName
+               FROM degree_timetable AS dt
+                JOIN degree AS d ON dt.DegreeID = d.DegreeID
+                WHERE dt.EventType = 'Study leave';
+   
+           -- Set the current date
+           SET currentDate = CURDATE();
+   
+           OPEN eventCursor;
+   
+           read_loop: LOOP
+               FETCH eventCursor INTO eventStartDate, degreeName;
+               IF eventStartDate IS NULL THEN
+                   LEAVE read_loop;
+               END IF;
+   
+               -- Calculate the days remaining
+               SET daysRemaining = DATEDIFF(eventStartDate, currentDate);
+   
+               -- Check if days remaining is less than or equal to 14 and greater than 0
+               IF (daysRemaining = 0 ) THEN
+                  -- Construct notification message
+                   SET str1 = CONCAT('The study leave has commenced.Send warnings to students with low attendance and those who haven\'t paid the repeat examination charges.');
+                   
+                   INSERT INTO notifications (description, type, msg_type,issuing_date)
+                   VALUES (CONCAT(str1), 'Study leave', 'Send-warnings-alert',NOW());
+               END IF;
+           END LOOP;
+   
+           CLOSE eventCursor;
+       END;
+           ";
+
+        // Execute the procedure creation query
+        $this->query($query);
     }
 
     public function create_event()
@@ -1165,6 +1214,17 @@ END;
         ON COMPLETION NOT PRESERVE ENABLE 
         DO 
         CALL Exam_Attendance()
+        ";
+
+        // Execute the event creation query
+        $this->query($query);
+
+        $query = "
+        CREATE EVENT IF NOT EXISTS `Send-Warnings` 
+        ON SCHEDULE EVERY 1 DAY STARTS '2024-02-21 21:41:00'
+        ON COMPLETION NOT PRESERVE ENABLE 
+        DO 
+        CALL Send_Warnings()
         ";
 
         // Execute the event creation query
