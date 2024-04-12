@@ -1023,7 +1023,7 @@ END;
         DECLARE eventCursor CURSOR FOR
             SELECT dt.StartingDate, d.DegreeName
             FROM degree_timetable AS dt
-            JOIN degree AS d ON dt.DegreeID = d.DegreeID WHERE dt.EventType = 'Examination';
+            JOIN degree AS d ON dt.DegreeID = d.DegreeID WHERE dt.EventType = 'Study leave';
 
         -- Set the current date
         SET currentDate = CURDATE();
@@ -1039,13 +1039,13 @@ END;
             -- Calculate the days remaining
             SET daysRemaining = DATEDIFF(eventStartDate, currentDate);
 
-            -- Check if days remaining is less than or equal to 14 and greater than 0
-            IF (daysRemaining = 7 ) THEN
+            
+            IF (daysRemaining = 0 ) THEN
                -- Construct notification message
-                SET str1 = CONCAT('There will be an upcoming examination scheduled on ', eventStartDate,' for the diploma ', degreeName, ' examination.Please review the payment details of all students before the exams commence.');
+                SET str1 = CONCAT('The study leave has commenced. Ensure to update student attendance before the examination');
                 -- Insert record into notifications table
                 INSERT INTO notifications (description, type, msg_type,issuing_date)
-                VALUES (CONCAT(str1), 'Examination', 'payement_check_alert',NOW());
+                VALUES (CONCAT(str1), 'Study leave', 'Student_attendance_alert',NOW());
             END IF;
         END LOOP;
 

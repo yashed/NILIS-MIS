@@ -316,6 +316,16 @@ $this->view('components/navside-bar/degreeprogramsidebar', $data)
                 <?php endforeach; ?>
             <?php endif; ?>
 
+            <?php if (!empty($notifications)) : ?>
+                <?php foreach ($notifications as $notification) : ?>
+                    <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'Student_attendance_alert') : ?>
+                        <?php
+                        $data['role'] = "Clerk";
+                        $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
 
         </div>
     </div>
