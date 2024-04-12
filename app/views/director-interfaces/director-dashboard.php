@@ -318,6 +318,7 @@ $data['role'] = $role;
         gap: 10px;
     }
 
+    .graph05,
     .graph04,
     .graph01,
     .graph02,
@@ -387,6 +388,30 @@ $data['role'] = $role;
     }
 
     .graph04-sub-title {
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        color: var(--Gray, #4F4F4F);
+        margin: 10px 0px 10px 20px;
+    }
+
+    .graph05-title {
+        color: #17376E;
+        font-family: Poppins;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 600;
+        margin: 20px 0px 0px 20px;
+    }
+
+    .graph05-Exam-title {
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        margin: 20px 0px 0px 20px;
+    }
+
+    .graph05-sub-title {
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -569,9 +594,14 @@ $data['role'] = $role;
                         </div>
                     </div>
                     <div class="sar-dash-subsection-1-1-1-5">
-                        <div class="sar-dash-sub-title">
-                            Upcoming Examinations
-
+                    <div class="graph04-title">
+                            Student Attendance
+                        </div>
+                        <div class="graph04-sub-title">
+                            Degree Name
+                        </div>
+                        <div class="graph05">
+                            <?php $this->view('components/graphs/bargraph-student-attendance', $data) ?>
                         </div>
 
                     </div>
