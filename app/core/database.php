@@ -1158,6 +1158,49 @@ END;
 
         // Execute the procedure creation query
         $this->query($query);
+
+        $query = "
+        CREATE PROCEDURE IF NOT EXISTS `Remove_Old_Notifications`()
+        BEGIN
+        DECLARE currentTime DATETIME;
+        DECLARE notificationTime DATETIME;
+        DECLARE notificationId INT;
+    
+        -- Declare a cursor to select notification IDs and issuing dates
+        DECLARE notificationCursor CURSOR FOR
+            SELECT notify_id, issuing_date
+            FROM notifications;
+    
+        -- Set the current time
+        SET currentTime = NOW();
+    
+        -- Open the cursor
+        OPEN notificationCursor;
+    
+        -- Start reading rows from the cursor
+        read_loop: LOOP
+            -- Fetch the next row from the cursor into variables
+            FETCH notificationCursor INTO notificationId, notificationTime;
+            
+            -- If no more rows to fetch, exit the loop
+            IF notificationTime IS NULL THEN
+                LEAVE read_loop;
+            END IF;
+    
+            -- Calculate the difference in minutes between current time and notification time
+            IF TIMESTAMPDIFF(MONTH, notificationTime, currentTime) >= 1 THEN
+                -- Remove notification from the table
+                DELETE FROM notifications WHERE notify_id = notificationId;
+            END IF;
+        END LOOP;
+    
+        -- Close the cursor
+        CLOSE notificationCursor;
+    END;
+  ";
+
+     // Execute the procedure creation query
+     $this->query($query);
     }
 
     public function create_event()
@@ -1290,6 +1333,17 @@ END;
         ON COMPLETION NOT PRESERVE ENABLE 
         DO 
         CALL Medical_Repeat()
+        ";
+
+        // Execute the event creation query
+        $this->query($query);
+
+        $query = "
+        CREATE EVENT IF NOT EXISTS `Remove-Old` 
+        ON SCHEDULE EVERY 1 DAY STARTS '2024-02-21 21:41:00'
+        ON COMPLETION NOT PRESERVE ENABLE 
+        DO 
+        CALL Remove_Old_Notifications()
         ";
 
         // Execute the event creation query
