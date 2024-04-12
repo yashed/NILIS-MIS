@@ -16,6 +16,10 @@ class Clerk extends Controller
         
         $data['title'] = 'Dashboard';
         $data['user'] = $user->findAll();
+        $degree = new Degree();
+        // show( $_POST );
+
+        $data['degrees'] = $degree->findAll();
         $this->view('clerk-interfaces/clerk-dashboard', $data);
     }
 
