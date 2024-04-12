@@ -9,7 +9,7 @@ $data['role'] = $role;
 $notificationCount = 0;
 foreach ($notifications as $notification) {
     // Check if the notification is relevant to the clerk role
-    if (($notification->type == 'Examination' && $notification->msg_type == 'All') ||
+    if (($notification->type == 'Examination' && $notification->msg_type == 'Exam-start-alert') ||
         ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert') ||
         ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert') ||
         ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert') ||
@@ -79,53 +79,7 @@ $this->view('components/navside-bar/degreeprogramsidebar', $data)
             width: calc(100% - 88px);
         }
 
-        /* .temp3-subsection-0 {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center;
-            /* background-color: var(--text-color); */
-            /* padding: 15px 10px 15px 35px;
-            border-radius: 6px;
-            margin: 7px 4px 7px 4px;
-            flex-wrap: wrap;
-
-        } */
-
-        /* .temp3-subsection-01 {
-            display: flex;
-            padding: 15px 30px 14px 30px;
-            justify-content: center;
-            align-items: center;
-            border-radius: 10px;
-            border: 1px solid rgba(0, 0, 0, 0.12);
-            background-color: var(--text-color);
-            box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.12);
-            width: 25%;
-            height: 150px;
-            flex-direction: row;
-            gap: 60px;
-        }
-
-        .temp3-subcard-data {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .temp3-subcard-data-value {
-            font-size: 38px;
-            font-weight: 600;
-            color: #17376E;
-        }
-
-        .temp3-subcard-data-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #17376E;
-        } */ 
-
+       
         .temp3-subsection-1 {
             background-color: var(--text-color);
             padding: 10px 10px 30px 35px;
@@ -145,107 +99,7 @@ $this->view('components/navside-bar/degreeprogramsidebar', $data)
 
         }
 
-        /* .banner {
-            margin-left: 1%;
-            display: flex;
-            width: 80%;
-            height: 200px;
-            background: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0px 7px 4px rgba(0, 0, 0, 0.02), 0px 3px 3px rgba(0, 0, 0, 0.03), 0px 1px 2px rgba(0, 0, 0, 0.03), 0px 0px 0px rgba(0, 0, 0, 0.03);
-            border-radius: 8px;
-        }
-
-        .color-strip {
-            width: 5px;
-            height: 100%;
-            background: #17376E;
-            margin-right: 1%;
-        }
-
-
-        .content-container {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            width: 100%;
-            height: 95%;
-            padding-left: 1%;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .note {
-            width: 100%;
-            height: 10px;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 25px;
-            line-height: 24px;
-            color: #17376E;
-            padding-top: 35px;
-            flex: 99%;
-
-        }
-
-        .development-message {
-            width: 90%;
-            height: 36px;
-            font-family: 'Poppins', sans-serif;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 0.8vw;
-            line-height: 18px;
-            color: #292929;
-            margin-left: 45px;
-            margin-bottom: 0.3%;
-            margin-top: 1%;
-        }
-
-        .buttons-container {
-            display: flex;
-            align-items: center;
-            width: 100%;
-
-        }
-
-        .button1 {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0.5vw 1vw 0.5vw 1vw;
-            width: 15%;
-            height: 2vw;
-            min-height: 20px;
-            background: #FFFFFF;
-            border: 1px solid #DCDEE4;
-            border-radius: 8px;
-            color: #333;
-            font-size: 0.8vw;
-            margin-left: 45px;
-        }
-
-        .button2 {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 8px 16px;
-            gap: 12px;
-            display: none;
-            width: 113px;
-            height: 40px;
-            min-height: 40px;
-            border-radius: 8px;
-        }
-
-        .flex {
-            display: flex;
-        }
-
-        .image {
-            margin-top: 30px;
-            margin-right: 1%;
-            flex: 1%;
-        } */
+       
     </style>
 </head>
 
@@ -255,7 +109,7 @@ $this->view('components/navside-bar/degreeprogramsidebar', $data)
         <div class="temp3-subsection-1">
         <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'All') : ?>
+                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-start alert') : ?>
                         <?php 
                              $data['role'] = "Director";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>

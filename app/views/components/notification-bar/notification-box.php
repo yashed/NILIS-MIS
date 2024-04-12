@@ -130,6 +130,8 @@
 <div class="banner" >
         <div class="color-strip"></div>
         <div class="closing"><span class="close-symbol" onclick="closeComponent()">✖</span> </div>
+        <!-- <div class="closing"><span class="close-symbol" onclick="deleteNotification(<?= $notification->notify_id ?>)">✖</span> </div> -->
+
         <div class="content-container">
 
             <div class="flex">
@@ -169,7 +171,23 @@
         </div>
 
     </div>
-  
+    <!-- <script>
+    function deleteNotification(notifyId) {
+    // Make an AJAX request to the delete_notification.php file
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "delete_notification.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Handle the response from the server
+            alert(xhr.responseText); // You can customize this part to display a message or perform other actions
+            // Optionally, you can remove the notification from the DOM if deletion was successful
+            // e.g., document.getElementById("notification-" + notifyId).remove();
+        }
+    };
+    xhr.send("notify_id=" + notifyId);
+}
+</script> -->
 </body>
 
 </html>
