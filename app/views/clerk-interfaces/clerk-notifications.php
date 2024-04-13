@@ -5,6 +5,10 @@ $data['role'] = $role;
 
 ?>
 
+<?php $this->view('components/navside-bar/header', $data) ?>
+<?php $this->view('components/navside-bar/sidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?>
+
 <?php 
 $notificationCount = 0;
 foreach ($notifications as $notification) {
@@ -23,9 +27,7 @@ foreach ($notifications as $notification) {
 // Pass the notification count to the degreeprogramsidebar component
 $_SESSION['notificationCount'] = $notificationCount;
 
-$this->view('components/navside-bar/degreeprogramsidebar', $data) 
 ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
 
 
 

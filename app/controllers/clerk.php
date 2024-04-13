@@ -39,6 +39,14 @@ class Clerk extends Controller
         $this->view('clerk-interfaces\clerk-updatedattendance', $data);
     }
 
+    public function degreeprograms()
+    {
+        
+    $degree=new Degree();
+    $data['degrees'] = $degree->findAll();
+    $this->view('clerk-interfaces\clerk-degreeprograms', $data);
+    }
+
     public function settings()
 {
     $user = new User();
