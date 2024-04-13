@@ -127,7 +127,6 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
             // Split each line into an array of values
             $values = str_getcsv($lines[$i]);
 
-
             $inputIndex = $values[0];
             $inputRegNo = $values[1];
             $examiner1Mark = $values[2];
@@ -368,5 +367,22 @@ function checkGap($file, $examId, $subCode)
     }
     return false;
 
+}
+
+function sortArray($array, $key, $order = 'asc')
+{
+    // Define a custom comparison function
+    $compare = function ($a, $b) use ($key, $order) {
+        if ($order === 'asc') {
+            return $a->$key > $b->$key ? 1 : -1;
+        } else {
+            return $a->$key < $b->$key ? 1 : -1;
+        }
+    };
+
+    // Sort the array using the custom comparison function
+    usort($array, $compare);
+
+    return $array;
 }
 ?>

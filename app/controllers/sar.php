@@ -763,9 +763,9 @@ class SAR extends Controller
                         $name = $participant->name;
 
                         //send mails 
-                        // if ($admissionMail->send($to, $mailSubject, '', $name) == false) {
-                        //     $mailSendCheck = false;
-                        // }
+                        if ($admissionMail->send($to, $mailSubject, '', $name) == false) {
+                            $mailSendCheck = false;
+                        }
                     }
 
                     //need to add a message to show the result of the mail sending
@@ -808,7 +808,7 @@ class SAR extends Controller
                         $tables = ['repeat_students', 'student'];
                         $columns = ['*'];
                         $condition2 = ['repeat_students.indexNo = exam_participants.indexNo', 'student.indexNo = repeat_students.indexNo'];
-                        $whereCondition2 = ['exam_participants.examID= ' . $examID, 'exam_participants.studentType = "repeate"', 'repeat_students.semester = ' . $semester, 'repeat_students.paymentStatus = 1'];
+                        $whereCondition2 = ['exam_participants.examID= ' . $examID, '(exam_participants.studentType = "repeate") OR (exam_participants.studentType = "medical/repeat")', 'repeat_students.semester = ' . $semester, 'repeat_students.paymentStatus = 1'];
                         $RepeatStudents = $examParticipants->joinWhere($tables, $columns, $condition2, $whereCondition2);
 
 
@@ -828,9 +828,9 @@ class SAR extends Controller
                         $tables = ['medical_students', 'student'];
                         $columns = ['*'];
                         $condition3 = ['medical_students.indexNo = exam_participants.indexNo', 'student.indexNo = medical_students.indexNo'];
-                        $whereCondition3 = ['medical_students.semester = ' . $semester, 'medical_students.status = 1', 'exam_participants.examID= ' . $examID, 'exam_participants.studentType = "medical"'];
+                        $whereCondition3 = ['medical_students.semester = ' . $semester, 'medical_students.status = 1', 'exam_participants.examID= ' . $examID, '(exam_participants.studentType = "medical") OR (exam_participants.studentType = "medical/repeat")'];
                         $MedicalStudents = $examParticipants->joinWhere($tables, $columns, $condition3, $whereCondition3);
-
+                        // show($MedicalStudents);
 
                         //get selected subject medical students
                         if (!empty($MedicalStudents)) {
@@ -842,7 +842,6 @@ class SAR extends Controller
                                 }
                             }
                         }
-
 
                         //insert data into the exam attendance table
                         foreach ($examStudents as $student) {
@@ -906,7 +905,6 @@ class SAR extends Controller
 
                 }
 
-
                 //data that pass to view
 
                 $data['examParticipants'] = $participants;
@@ -940,15 +938,17 @@ class SAR extends Controller
                 //get repeat student details
                 $tables = ['repeat_students', 'student'];
                 $columns = ['*'];
-                $condition2 = ['repeat_students.degreeID = exam_participants.DegreeID', 'repeat_students.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID, 'exam_participants.studentType = "repeate"', 'student.indexNo = repeat_students.indexNo'];
-                $RepeatStudents = $examParticipants->join($tables, $columns, $condition2);
-                // show($RepeatStudents);
+                $condition2 = ['repeat_students.indexNo = exam_participants.indexNo', 'student.indexNo = repeat_students.indexNo'];
+                $whereCondition2 = ['exam_participants.examID= ' . $examID, '(exam_participants.studentType = "repeate") OR (exam_participants.studentType = "medical/repeat")', 'repeat_students.semester = ' . $semester, 'repeat_students.paymentStatus = 1'];
+                $RepeatStudents = $examParticipants->joinWhere($tables, $columns, $condition2, $whereCondition2);
+
 
                 //get medical student details
                 $tables = ['medical_students', 'student'];
                 $columns = ['*'];
-                $condition3 = ['medical_students.degreeID = exam_participants.DegreeID', 'medical_students.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID, 'exam_participants.studentType = "medical"', 'student.indexNo = medical_students.indexNo'];
-                $MedicalStudents = $examParticipants->join($tables, $columns, $condition3);
+                $condition3 = ['medical_students.indexNo = exam_participants.indexNo', 'student.indexNo = medical_students.indexNo'];
+                $whereCondition3 = ['medical_students.semester = ' . $semester, 'medical_students.status = 1', 'exam_participants.examID= ' . $examID, '(exam_participants.studentType = "medical") OR (exam_participants.studentType = "medical/repeat")'];
+                $MedicalStudents = $examParticipants->joinWhere($tables, $columns, $condition3, $whereCondition3);
 
                 // show($MedicalStudents);
                 $NormalParticipants = [];
@@ -993,20 +993,20 @@ class SAR extends Controller
                             fputcsv($f, $rowHeadings);
 
                             //add indexNo and regNo to marksheet
-                            if (!empty($NormalParticipants)) {
-                                foreach ($NormalParticipants as $participant) {
+                            $sortedData = sortArray($NormalParticipants, 'indexNo');
+
+                            //add indexNo and regNo to marksheet
+                            if (!empty($sortedData)) {
+                                foreach ($sortedData as $participant) {
                                     $rowData = [$participant->indexNo, $participant->regNo];
                                     fputcsv($f, $rowData);
                                 }
                             }
                             //add repeate students details to marksheet
-                            if (!empty($Rparticipant)) {
+                            if (!empty($RepeatStudents)) {
                                 foreach ($RepeatStudents as $Rparticipant) {
-
-
                                     if ($Rparticipant->subjectCode == $subject->SubjectCode) {
-                                        // echo $Rparticipant->subjectCode . " " . $subject->SubjectCode;
-                                        // show($Rparticipant);
+
                                         $rowData = [$Rparticipant->indexNo, $Rparticipant->regNo];
                                         fputcsv($f, $rowData);
                                     }
@@ -1014,7 +1014,7 @@ class SAR extends Controller
                             }
 
                             //add medical students details to mark sheets
-                            if (!empty($Mparticipant)) {
+                            if (!empty($MedicalStudents)) {
                                 foreach ($MedicalStudents as $Mparticipant) {
                                     if ($Mparticipant->subjectCode == $subject->SubjectCode) {
                                         // echo $Rparticipant->subjectCode . " " . $subject->SubjectCode;
@@ -1052,8 +1052,8 @@ class SAR extends Controller
 
                 }
 
-
                 if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+
 
                     // Specify the target directory
                     $targetDirectory = 'assets/csv/examsheets/';
@@ -1091,6 +1091,7 @@ class SAR extends Controller
 
                         // $data['examiner3'] = false;
                         $examiner3 = false;
+                        $subjectIDExaminer3 = null;
                         // Insert data into the database
                         if ($resultSheet->examValidate($examSheet)) {
 
@@ -1138,8 +1139,10 @@ class SAR extends Controller
                                             if (checkGap($fileName, $examID, $subject->SubjectCode)) {
                                                 // $data['examiner3'] = true;
                                                 // $data['examiner3SubCode'] = $subject->SubjectCode;
+                                                show('examiner3 marks are available');
                                                 $examiner3 = true;
                                                 $examiner3SubCode = $subject->SubjectCode;
+                                                $subjectIDExaminer3 = $subject->SubjectID;
 
 
                                                 /*after upload the examiner 3 marks when we update examination mark 
@@ -1246,10 +1249,10 @@ class SAR extends Controller
                         echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
                     }
                     if ($examiner3) {
-                        echo (
-                            "<div id='examiner3-status'>$examiner3</div>
-                              <div id='examiner3SubCode'>$examiner3SubCode</div>"
-                        );
+                        echo "<div id='examiner3-status'>$examiner3</div>";
+                        echo "<div id='examiner3SubCode'>$examiner3SubCode</div>";
+                        echo "<div id='examiner3SubID'>$subjectIDExaminer3</div>";
+
 
                     }
 

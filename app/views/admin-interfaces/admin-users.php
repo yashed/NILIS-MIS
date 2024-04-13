@@ -468,6 +468,27 @@ $data['role'] = $role;
         overflow: hidden;
 
     }
+
+    .update-title-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        justify-content: space-between
+    }
+
+    #rest-pw {
+        width: 25%;
+        padding: 0.5em 1em 0.5em 1em;
+        border-radius: 8px;
+        background: #fff;
+        border: 1px solid #E02424;
+        color: #E02424;
+    }
+
+    #rest-pw:hover {
+        color: #fff;
+        background-color: #E91401;
+    }
 </style>
 <!--Add new User-->
 
