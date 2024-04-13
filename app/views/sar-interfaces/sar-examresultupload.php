@@ -431,8 +431,8 @@ $degreeId = $_GET['degreeID'];
     }
 
     .file-uploded-icon {
-        width: 60px;
-        height: 60px;
+        width: 4vw;
+        height: 4vw;
         background-image: url('<?= ROOT ?>/assets/result-upload/csv-upload.svg');
         background-size: cover;
         background-repeat: no-repeat;
@@ -844,7 +844,7 @@ $degreeId = $_GET['degreeID'];
                             </div>
                             <div class="flex-container">
                                 <?php
-                                $containerId = 'container' . ($subject->SubjectID) . '_1';
+                                $containerId = 'container' . ($subject->SubjectCode) . '_1';
                                 $fileInputId = 'fileInput' . ($subject->SubjectID) . '_1';
                                 $formID = 'form' . ($subject->SubjectID) . '_1';
                                 $submitViewIdAS = $subject->SubjectCode . "_S_assestment";
@@ -899,7 +899,7 @@ $degreeId = $_GET['degreeID'];
 
 
                                 <?php
-                                $containerId = 'container' . ($subject->SubjectID) . '_2';
+                                $containerId = 'container' . ($subject->SubjectCode) . '_2';
                                 $fileInputId = 'fileInput' . ($subject->SubjectID) . '_2';
                                 $formID = 'form' . ($subject->SubjectID) . '_2';
                                 $submitViewId1 = $subject->SubjectCode . "_S_examiner1";
@@ -951,7 +951,7 @@ $degreeId = $_GET['degreeID'];
                                 </div>
 
                                 <?php
-                                $containerId = 'container' . ($subject->SubjectID) . '_3';
+                                $containerId = 'container' . ($subject->SubjectCode) . '_3';
                                 $fileInputId = 'fileInput' . ($subject->SubjectID) . '_3';
                                 $formID = 'form' . ($subject->SubjectID) . '_3';
                                 $submitViewId2 = $subject->SubjectCode . "_S_examiner2";
@@ -1003,7 +1003,7 @@ $degreeId = $_GET['degreeID'];
                                 </div>
 
                                 <?php
-                                $containerId = 'container' . ($subject->SubjectID) . '_4';
+                                $containerId = 'container' . ($subject->SubjectCode) . '_4';
                                 $fileInputId = 'fileInput' . ($subject->SubjectID) . '_4';
                                 $formID = 'form' . ($subject->SubjectID) . '_4';
                                 $submitViewId3 = $subject->SubjectCode . "_S_examiner3";
@@ -1153,7 +1153,7 @@ $degreeId = $_GET['degreeID'];
 
     //get php data
     var examSheets = <?php echo $subjectData; ?>;
-    // console.log(examSheets);
+    var examiner3Data = <?php echo $examiner3Data; ?>;
 
     for (var subjectCode in examSheets) {
         if (examSheets.hasOwnProperty(subjectCode)) {
@@ -1170,6 +1170,22 @@ $degreeId = $_GET['degreeID'];
                 document.getElementById(submitViewId).classList.add("remove");
                 document.getElementById(uploadedViewId).classList.remove("remove");
                 document.getElementById(fileNameId).textContent = data.uploadName;
+
+
+
+            }
+        }
+    }
+
+    for (var subCode in examiner3Data) {
+        if (examiner3Data.hasOwnProperty(subCode)) {
+            for (var i = 0; i < examiner3Data[subCode].length; i++) {
+
+                var data = examiner3Data[subCode][i];
+                // console.log("Data:", data);
+
+                // var Examiner3containerId = 'container' + examiner3SubID + '_4';
+                // var Examiner3Btn = 'Examiner3_btn_' + examiner3SubCode;
 
 
 
@@ -1421,7 +1437,7 @@ $degreeId = $_GET['degreeID'];
                 //show uploaded view
                 var Examiner3fileContainerId = 'file-info-container-' + subCode + '-' + type;
                 var Examiner3buttonContainerId = 'button-container-' + subCode + '-' + type;
-                var Examiner3containerId = 'container' + examiner3SubID + '_4';
+                var Examiner3containerId = 'container' + examiner3SubCode + '_4';
                 var Examiner3Btn = 'Examiner3_btn_' + examiner3SubCode;
 
 

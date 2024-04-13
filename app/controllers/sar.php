@@ -80,6 +80,7 @@ class SAR extends Controller
         $exam = new Exam();
         $resultSheet = new ResultSheet();
         $examAttendance = new Attendance();
+        $examiner3Eligibility = new Examiner3Subject();
 
         $data['errors'] = [];
         $data['degrees'] = $degree->findAll();
@@ -1035,8 +1036,13 @@ class SAR extends Controller
 
                 //get uploaded marksheet details 
                 $submittedMarksheets = $resultSheet->where(['examId' => $examID]);
+                //get examiner3 eligibility data
+                $examina3EligibilityData = $examiner3Eligibility->where(['examID' => $examID, 'status' => 1]);
+
+
                 $groupedData = groupByColumn($submittedMarksheets, 'subjectCode');
                 $data['subjectData'] = json_encode($groupedData);
+                $data['examiner3Data'] = json_encode($examina3EligibilityData);
 
                 //delete marksheet from the database
                 if (isset($_POST['submit']) == 'delete-rs') {
@@ -1048,7 +1054,6 @@ class SAR extends Controller
 
                     //refresh the page
                     header("Refresh:0");
-
 
                 }
 
@@ -1144,6 +1149,17 @@ class SAR extends Controller
                                                 $examiner3SubCode = $subject->SubjectCode;
                                                 $subjectIDExaminer3 = $subject->SubjectID;
 
+                                                $examiner3SubData['subCode'] = $subject->SubjectCode;
+                                                $examiner3SubData['examID'] = $examID;
+                                                $examiner3SubData['degreeID'] = $degreeID;
+                                                $examiner3SubData['semester'] = $semester;
+                                                $examiner3SubData['status'] = 1;
+
+                                                //validate the data and insert into the database
+                                                if ($examiner3Eligibility->DataValidate($examiner3SubData)) {
+                                                    $examiner3Eligibility->insert($examiner3SubData);
+                                                }
+
 
                                                 /*after upload the examiner 3 marks when we update examination mark 
                                                 sheet system has to handle that marksheet also. because if exminer 3 already uploaded 
@@ -1163,6 +1179,10 @@ class SAR extends Controller
 
                                                     //call the function to upload marks to database
                                                     insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
+
+                                                    $msg = 'Uploaded Examiner 3 marks for ' . $subject->SubjectCode . ' successfully , ExamID = ' . $examID;
+                                                    activity($msg);
+
                                                 } else {
                                                     // $data['examiner3'] = false;
                                                 }
@@ -1187,6 +1207,8 @@ class SAR extends Controller
                                                     // show($resFileName);
                                                     insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
 
+                                                    $msg = 'Uploaded ' . $res->type . ' marks for ' . $subject->SubjectCode . ' successfully , ExamID = ' . $examID;
+                                                    activity($msg);
 
                                                 } else {
                                                     $data['assignment'] = false;
@@ -1203,7 +1225,14 @@ class SAR extends Controller
                                             /**when uploading marks get the least gap marks and calculate final marks and upload to database
                                              */
 
-                                            // echo json_encode($data);
+                                            if ($examiner3) {
+                                                echo "<div id='examiner3-status'>$examiner3</div>";
+                                                echo "<div id='examiner3SubCode'>$examiner3SubCode</div>";
+                                                echo "<div id='examiner3SubID'>$subjectIDExaminer3</div>";
+
+
+                                            }
+
                                         } else {
                                             if ($marksType == 'examiner3') {
                                                 //check whether assestment marks are available
@@ -1212,7 +1241,7 @@ class SAR extends Controller
                                                     'subjectCode' => $subject->SubjectCode,
                                                     'type' => 'assestment'
                                                 ]);
-                                                var_dump("assignment marks ", $assignmentMarks);
+
                                                 if (!empty($assignmentMarks)) {
                                                     $data['assignment'] = true;
                                                     //upload the student marks to database
@@ -1222,7 +1251,8 @@ class SAR extends Controller
 
                                                     // show($resFileName);
                                                     insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
-
+                                                    $msg = 'Uploaded Examiner 3 marks for ' . $subject->SubjectCode . ' successfully , ExamID = ' . $examID;
+                                                    activity($msg);
 
                                                 } else {
                                                     $data['assignment'] = false;
@@ -1248,25 +1278,12 @@ class SAR extends Controller
                         // Error moving the file
                         echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
                     }
-                    if ($examiner3) {
-                        echo "<div id='examiner3-status'>$examiner3</div>";
-                        echo "<div id='examiner3SubCode'>$examiner3SubCode</div>";
-                        echo "<div id='examiner3SubID'>$subjectIDExaminer3</div>";
-
-
-                    }
-
-
 
                 } else {
                     // Handle file upload error
                     message("File upload error", "error");
                     // echo json_encode(['success' => false, 'message' => 'File upload error.']);
                 }
-
-
-
-
 
 
                 //pass examid

@@ -358,7 +358,7 @@ function checkGap($file, $examId, $subCode)
         $values = str_getcsv($lines[$i]);
 
         //check the gap
-        var_dump('values = ' . $values[2] . ' ' . $values[3]);
+        var_dump('values = ' . $values);
         $gap = abs($values[2] - $values[3]);
         if ($gap > 10) {
             var_dump('gap is greater than 10');
