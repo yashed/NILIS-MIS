@@ -29,7 +29,7 @@
     --tran-04: all 0.4s ease;
     --tran-05: all 0.5s ease;
 }
-.attendance-home {
+.dr-attendance-home {
     height: 100vh;
     left: 250px;
     position: relative;
@@ -37,7 +37,7 @@
     transition: var(--tran-05);
     background: var(--body-color);
 }
-.attendance-title {
+.dr-attendance-title {
     font-size: 30px;
     font-weight: 600;
     color: black;
@@ -46,11 +46,11 @@
     border-radius: 6px;
     margin: 7px 4px 7px 4px;
 }
-.sidebar.close~.attendance-home {
+.sidebar.close~.dr-attendance-home {
     left: 88px;
     width: calc(100% - 88px);
 }
-.attendance-subsection-1 {
+.dr-attendance-subsection-1 {
     background-color: var(--text-color);
     padding: 10px 10px 30px 35px;
     border-radius: 6px;
@@ -58,11 +58,11 @@
 }
 </style>
 <body>
-    <div class="attendance-home">
-        <div class="attendance-title">Attendance</div>
-        <div class="attendance-subsection-1"></div>
+    <div class="dr-attendance-home">
+        <div class="dr-attendance-title">Attendance</div>
+        <div class="dr-attendance-subsection-1"></div>
 
-        <div class="temp3-footer">
+        <div class="dr-attendance-temp3-footer">
             <?php $this->view('components/footer/index',$data) ?>
         </div>
 </body>
