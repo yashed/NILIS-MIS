@@ -12,9 +12,10 @@ class DR extends Controller
 
     public function index()
     {
-
         $degree = new Degree();
         // show( $_POST );
+        $_SESSION['DegreeID'] = null;
+        unset($_SESSION['DegreeID']);
 
         $data['degrees'] = $degree->findAll();
         $this->view('dr-interfaces/dr-dashboard', $data);
@@ -33,7 +34,7 @@ class DR extends Controller
         $degree = new Degree();
         $subject = new Subjects();
         $grade = new Grades();
-
+        unset($_SESSION['DegreeID']);
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
@@ -46,12 +47,12 @@ class DR extends Controller
                 } else if ($_POST['degree_type'] === "2 Year") {
                     $duration = 2;
                 }
-                if (($_POST['select_degree_type']) === 'DLMS') {
-                    $degree_name = "Diploma in Library Management Studies";
-                } else if (($_POST['select_degree_type']) === 'ENCM') {
-                    $degree_name = "Executive National Certificate in Management";
+                if (($_POST['select_degree_type']) === 'DLIM') {
+                    $degree_name = "Diploma in Library Information Management";
+                } else if (($_POST['select_degree_type']) === 'DPL') {
+                    $degree_name = "Diploma in Public Librarianship";
                 } else if (($_POST['select_degree_type']) === 'DSL') {
-                    $degree_name = "Diploma in Science Library";
+                    $degree_name = "Diploma in School Librarianship";
                 }
                 $data = [
                     'DegreeType' => $_POST['degree_type'],
@@ -111,7 +112,18 @@ class DR extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
-        $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
+        if (isset($_GET['id'])) {
+            $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
+            $_SESSION['DegreeID'] = $degreeID;
+            redirect("dr/degreeprofile");
+        }
+        // $url = $_SERVER['REQUEST_URI'];
+        // $parts = parse_url($url);
+        // $path_parts = explode('/', $parts['path']);
+        // $degreeID = end($path_parts);
+        $degreeID = $_SESSION['DegreeID'];
+        $_SESSION['DegreeID'] = $degreeID; 
+        // echo $degreeID;
         // Check if degree ID is provided
         if ($degreeID !== null) {
             $degree = new Degree();
@@ -123,18 +135,19 @@ class DR extends Controller
             $subjectsData = $subject->find($degreeID);
             $data['degrees'] = $degreeData;
             $subjects = [];
-            foreach ($subjectsData as $subject) {
-                $semesterNumber = $subject->semester;
-                // Create semester array if not already exists
-                if (!isset($subjects[$semesterNumber])) {
-                    $subjects[$semesterNumber] = [];
+            if($subjectsData) {
+                foreach ($subjectsData as $subject) {
+                    $semesterNumber = $subject->semester;
+                    // Create semester array if not already exists
+                    if (!isset($subjects[$semesterNumber])) {
+                        $subjects[$semesterNumber] = [];
+                    }
+                    // Add subject to semester array
+                    $subjects[$semesterNumber][] = $subject;
                 }
-                // Add subject to semester array
-                $subjects[$semesterNumber][] = $subject;
             }
             $data['subjects'] = $subjects;
             $data['degreeTimeTable'] = $degreeTimeTableData;
-            echo "whutto";
             if ($action == "update") {
                 echo "update ";
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -155,14 +168,14 @@ class DR extends Controller
                                 'EndingDate' => $timetableDataItem['eventEnd'],
                             ];
                             echo json_encode($data1);
-                            $degreeTimeTable->update($degreeID ,$data1);
-                            redirect("dr/degreeprofile?id=" . $degreeID);
+                            $degreeTimeTable->update($degreeID, $data1);
+                            redirect("dr/degreeprofile");
                         }
                     }
                 }
             } else if ($action == 'delete') {
                 echo "delete";
-                $degree->delete(['id' => $degreeID]);
+                $degree->delete($degreeID);
                 redirect("dr/degreeprograms");
             }
             // Load the view with the data
@@ -182,7 +195,13 @@ class DR extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
-        $degree_id = $degree->lastID('DegreeID');
+        if ($_SESSION['DegreeID'] == null) {
+            $degree_id = $degree->lastID('DegreeID');
+            $_SESSION['DegreeID'] = $degree_id;
+        } else {
+            $degree_id = $_SESSION['DegreeID'];
+        }
+        // echo $degree_id;
         $degree_info = (object)$degree->findByID($degree_id);
         $degreeShortName =  $degree_info->DegreeShortName;
         $currentYear = $degree_info->AcademicYear;
@@ -192,20 +211,20 @@ class DR extends Controller
                 if (isset($_POST['timetableData'])) {
                     $timetableData = json_decode($_POST['timetableData'], true);
                     // Iterate over each subject's data and insert it into the database
-                    foreach ($timetableData as $timetableData) {
+                    foreach ($timetableData as $timetablesData) {
                         // Construct the data array for insertion
                         $data1 = [
-                            'EventID' => $timetableData['eventID'],
+                            'EventID' => $timetablesData['eventID'],
                             'DegreeID' => $degree_id,
-                            'EventName' => $timetableData['eventName'],
-                            'EventType' => $timetableData['eventType'],
-                            'StartingDate' => $timetableData['eventStart'],
-                            'EndingDate' => $timetableData['eventEnd'],
+                            'EventName' => $timetablesData['eventName'],
+                            'EventType' => $timetablesData['eventType'],
+                            'StartingDate' => $timetablesData['eventStart'],
+                            'EndingDate' => $timetablesData['eventEnd'],
                         ];
                         $timeTable->insert($data1);
                     }
                 }
-                redirect("dr/degreeprofile?id=$degree_id");
+                redirect("dr/degreeprofile");
             }
         } else {
             // Write the header row to the CSV file
@@ -220,6 +239,7 @@ class DR extends Controller
             }
             fclose($f);
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['student-data']) && $_POST['student-data'] == 'upload-csv') {
+                echo "pakaya";
                 if (isset($_FILES['student-data']) && $_FILES['student-data']['error'] === UPLOAD_ERR_OK) {
                     $uploadDirectory = 'assets/csv/input/';
                     // Ensure the directory exists and set proper permissions
@@ -274,10 +294,18 @@ class DR extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
-        // Fetch the specific student data using the ID from the URL
-        $studentId = isset($_GET['studentId']) ? $_GET['studentId'] : null;
+        if (isset($_GET['id'])) {
+            $studentId = isset($_GET['id']) ? $_GET['id'] : null;
+            $_SESSION['studentId'] = $studentId;
+            redirect("dr/userprofile");
+        } else {
+            $studentId = null;
+        }
+        $studentId = $_SESSION['studentId'];
+        $_SESSION['studentId'] = $studentId;
         // Check if the student ID is provided in the URL
         if ($studentId) {
+            echo "student";
             $degree = new Degree();
             $studentModel = new StudentModel();
             $data['student'] = $studentModel->findstudentid($studentId);
@@ -290,9 +318,9 @@ class DR extends Controller
             }
             if ($action == "update") {
                 $studentModel->update($studentId, $data['student']);
-                redirect("dr/userprofile?studentId=$studentId");
-            } else if ($action == "add") {
+                redirect("dr/userprofile");
             } else if ($action == 'delete') {
+                echo "delete";
                 $studentModel->delete(['id' => $studentId]);
                 redirect("dr/participants");
             }
@@ -303,34 +331,24 @@ class DR extends Controller
 
 
 
-    public function participants($id = null, $action = null, $id2 = null)
+    public function participants($id = null, $action = null)
     {
-
         $st = new StudentModel();
-        if (!empty($id)) {
-            if (!empty($action)) {
-                if ($action === 'delete' && !empty($id2)) {
-                    $st->delete(['id' => $id2]);
+        $data = [];
+        $data['action'] = $action;
+        $data['id'] = $id;
+        unset($_SESSION['studentId']);
+        if (isset($_SESSION['DegreeID'])) {
+            $degreeID = $_SESSION['DegreeID'];
+            // Iterate through students to find those with the given DegreeID
+            foreach ($st->findAll() as $student) {
+                if (is_object($student) && $student->degreeID == $degreeID) {
+                    $data['students'][] = $student; // Add student to data array
                 }
-            } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                // print_r( $_POST );
-                // die;
-                $st->update($_POST['id'], $_POST);
-                // redirect( 'student/'.$id );
-                $data['student'] = $st->where(['indexNo' => $id])[0];
-
-                $this->view('common/student/student.view', $data);
-                return;
-            } else {
-                $data['student'] = $st->where(['indexNo' => $id])[0];
-
-                $this->view('common/student/student.view', $data);
-                return;
             }
+        } else {
+            echo "Error: DegreeID not provided in the session."; // If DegreeID is not set in the session
         }
-        $data['students'] = $st->findAll();
-        //print_r( $data );
-        // die;
         $this->view('dr-interfaces/dr-participants', $data);
     }
 
@@ -354,4 +372,4 @@ class DR extends Controller
     {
         $this->view('login/login.view');
     }
-}
+}   
