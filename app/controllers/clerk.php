@@ -13,12 +13,10 @@ class Clerk extends Controller
     public function index()
     {
         $user=new User();
-        
+        $degree = new Degree();
+
         $data['title'] = 'Dashboard';
         $data['user'] = $user->findAll();
-        $degree = new Degree();
-        // show( $_POST );
-
         $data['degrees'] = $degree->findAll();
         $this->view('clerk-interfaces/clerk-dashboard', $data);
     }
@@ -275,4 +273,39 @@ public function attendance()
     $this->view('clerk-interfaces/clerk-attendance');
 }
 
+public function degreeprofile($action = null, $id = null)
+{
+    $data = [];
+    $data['action'] = $action;
+    $data['id'] = $id;
+    $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
+    // Check if degree ID is provided
+    if ($degreeID !== null) {
+        $degree = new Degree();
+        $subject = new Subjects();
+        $degreeTimeTable = new DegreeTimeTable();
+        // Fetch the data based on the ID
+        $degreeData = $degree->find($degreeID);
+        $degreeTimeTableData = $degreeTimeTable->find($degreeID);
+        $subjectsData = $subject->find($degreeID);
+        $data['degrees'] = $degreeData;
+        $subjects = [];
+        foreach ($subjectsData as $subject) {
+            $semesterNumber = $subject->semester;
+            // Create semester array if not already exists
+            if (!isset($subjects[$semesterNumber])) {
+                $subjects[$semesterNumber] = [];
+            }
+            // Add subject to semester array
+            $subjects[$semesterNumber][] = $subject;
+        }
+        $data['subjects'] = $subjects;
+        $data['degreeTimeTable'] = $degreeTimeTableData;
+
+        // Load the view with the data
+        $this->view('clerk-interfaces/clerk-degreeprofile', $data);
+    } else {
+        echo "Error: Degree ID not provided in the URL.";
+    }
+}
 }
