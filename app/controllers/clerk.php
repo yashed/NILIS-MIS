@@ -214,12 +214,18 @@ class Clerk extends Controller
 
 public function attendance()
 {
+    $degree = new Degree();
+    $notification = new NotificationModel();
+    $data['notifications'] = $notification->findAll();
+ 
+    $data['degrees'] = $degree->findAll();
+
     if (isset($_POST['importSubmit'])) {
         // Check if the uploaded file is present and no errors occurred during upload
         if ($_FILES['csvFile']['error'] == 0 && !empty($_FILES['csvFile']['tmp_name'])) {
             // Load StudentModel
             $studentAttendance = new studentAttendance();
-
+            $degree_name = $_POST['selectDegree'];
             // Process the CSV file
             $csvFile = fopen($_FILES['csvFile']['tmp_name'], 'r');
 
@@ -241,13 +247,15 @@ public function attendance()
                 // Read data from the first column (index 0)
                 $index_no = $line[0];
                 $attendance = $line[1];
+               
 
                 // Check if the record already exists
                 $existingData = $studentAttendance->where(['index_no' => $index_no]);
                 if ($existingData) {
                     // If record exists, update it
                     $updateData = [
-                        'attendance' => $attendance
+                        'attendance' => $attendance,
+                        'degree_name' => $degree_name
                     ];
                     $whereConditions = [
                         'index_no' => $index_no
@@ -257,8 +265,9 @@ public function attendance()
                     // If record doesn't exist, insert it
                     $insertData = [
                         'index_no' => $index_no,
-                        'attendance' => $attendance
-                    ];
+                        'attendance' => $attendance,
+                        'degree_name' => $degree_name
+                        ];
                     $studentAttendance->insert($insertData);
                 }
             }
@@ -270,7 +279,8 @@ public function attendance()
     }
 
     // Load the view
-    $this->view('clerk-interfaces/clerk-attendance');
+    $this->view('clerk-interfaces/clerk-attendance',$data);
+    
 }
 
 public function degreeprofile($action = null, $id = null)

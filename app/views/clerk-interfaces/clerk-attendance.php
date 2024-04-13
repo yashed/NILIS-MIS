@@ -11,6 +11,7 @@ $data['role'] = $role;
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -201,8 +202,8 @@ $data['role'] = $role;
             position: fixed;
             top: 50%;
             left: 50%;
-            height: 30%;
-            width: 30%;
+            height: 43%;
+            width: 35%;
             transform: translate(-50%, -50%);
             background-color: #fff;
             padding-left: 70px;
@@ -244,6 +245,7 @@ $data['role'] = $role;
         .close-button {
             margin-top: 10px;
             margin-left: 70%;
+            width: 10%;
         }
 
         .btn-secondary-2:hover {
@@ -256,19 +258,54 @@ $data['role'] = $role;
         .blur-background {
             filter: blur(5px);
         }
+
+        #form-element-dropdown {
+            width: 80%;
+            outline: none;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        #form-element-dropdown option {
+            width: 80%;
+            outline: none;
+            border: 1px solid #aaa;
+            border-radius: 10px;
+        }
+
+        .download-button{
+            color: #17376e;
+            text-decoration: none;
+            background-color: #ffffff;
+        }
+
+        .download-button:hover{
+            color: black;
+            background-color: #E2E2E2;
+        }
+
     </style>
 </head>
+
 <body>
-<div class="temp2-home" id="blur-background">
-        <div class="temp2-title">Attendance</div>
+
+    <div class="temp2-home" id="blur-background">
+        <div class="temp2-title">Attendance </div>
+
 
         <div class="temp2-subsection-2">
             <div class="temp2-subsection-21">
-                <div class="record-file">Add Attendance Record File</div>
-                <button class="btn-secondary-2" name='download_marksheet' onclick="downloadcsvFile()">Download Attendance Sheet</button>
-                <div class="dashed-container1" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
-                    
-                <a href="javascript:toggleForm('importFrm');"><div class="file-input-icon"></div></a>
+
+               
+                <button class="btn-secondary-2" onclick="downloadAttendanceSheet()">Download Attendance Sheet</button>
+                             <div class="dashed-container1">
+                
+
+
+                    <a href="javascript:toggleForm('importFrm');">
+                        <div class="file-input-icon"></div>
+                    </a>
                     <br>
                     <div class="col-md-12 head">
                         <div class="float-right">
@@ -277,92 +314,112 @@ $data['role'] = $role;
                             </p>
                         </div>
                     </div>
-                   
+
                 </div>
                 <button class="admission-button2" onclick="redirectToUpdatedAttendance()">Record Attendance</button>
             </div>
         </div>
-</div>
-        <div id="importFrm" class="popup-form" style="display: none;">
-            <form action="" method="post" enctype="multipart/form-data">
-                <label for="csvFile">Upload CSV File:</label>
-                <input type="file" name="csvFile" id="csvFile" accept=".csv" required>
-                <button type="submit" name="importSubmit" class="import-button">Import</button>
-            </form>
-            <button class="close-button" onclick="toggleForm('importFrm')">Close</button>
-        </div>
+    </div>
+    <div id="importFrm" class="popup-form" style="display: none;">
+        <form action="" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <label for="csvFile">Upload CSV File:</label>
+            <div class="form-element">
+                <label for="selectDegree">Choose the degree name</label>
+                <select name="selectDegree" id="form-element-dropdown" required>
+                    <option value="" disabled selected>Select Degree</option>
+                    <?php foreach ($degrees as $degree) : ?>
+                        <option value="<?= $degree->DegreeShortName ?>" class="form-element-dropdown-op"><?= $degree->DegreeShortName ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <input type="file" name="csvFile" id="csvFile" accept=".csv" required>
+            <button type="submit" name="importSubmit" class="import-button">Import</button>
+        </form>
+        <button class="close-button" onclick="toggleForm('importFrm')">Close</button>
+    </div>
 
-        <div class="temp2-footer">
+    <div class="temp2-footer">
         <!-- Footer content -->
-        </div>
+    </div>
 
-        <script>
-            function toggleForm(formId) {
-                var form = document.getElementById(formId);
-                var blurBackground = document.getElementById("blur-background");
-                if (form.style.display === "none") {
-                    form.style.display = "block";
-                    blurBackground.classList.add("blur-background"); // Apply blur effect
+    <script>
+        function toggleForm(formId) {
+            var form = document.getElementById(formId);
+            var blurBackground = document.getElementById("blur-background");
+            if (form.style.display === "none") {
+                form.style.display = "block";
+                blurBackground.classList.add("blur-background"); // Apply blur effect
+            } else {
+                form.style.display = "none";
+                blurBackground.classList.remove("blur-background"); // Remove blur effect
+            }
+        }
+
+        function redirectToUpdatedAttendance() {
+            // Replace ROOT with your actual root URL
+            window.location.href = "<?= ROOT ?>clerk/updatedattendance";
+        }
+
+        function handleFileSelect(event) {
+            event.preventDefault();
+            var files = event.target.files;
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                if (file.type === 'text/csv') {
+                    // Process the CSV file
+                    console.log('CSV file selected:', file.name);
+                    // You can handle further processing here
                 } else {
-                    form.style.display = "none";
-                    blurBackground.classList.remove("blur-background"); // Remove blur effect
+                    console.log('Invalid file type. Please select a CSV file.');
                 }
             }
+        }
 
-            function redirectToUpdatedAttendance() {
-                // Replace ROOT with your actual root URL
-                window.location.href = "<?= ROOT ?>clerk/updatedattendance";
+        function handleDragOver(event) {
+            event.preventDefault();
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            var files = event.dataTransfer.files;
+            handleFiles(files);
+        }
+
+       
+        function downloadAttendanceSheet() {
+        // Modify the file URL dynamically based on the desired file location
+        var fileUrl = '<?= ROOT ?>assets/csv/output/Student_Attendance.csv';
+
+        // Create an anchor element
+        var a = document.createElement('a');
+        a.href = fileUrl;
+
+        // Set the download attribute with the desired file name
+        a.download = 'Student_Attendance.csv';
+
+        // Append the anchor element to the document
+        document.body.appendChild(a);
+
+        // Trigger a click event on the anchor element
+        a.click();
+
+        // Remove the anchor element from the document
+        document.body.removeChild(a);
+    }
+
+        function validateForm() {
+            var selectedDegree = document.getElementById("form-element-dropdown").value;
+            if (selectedDegree === "") {
+                document.getElementById("degreeError").style.display = "inline";
+                return false; // Prevent form submission
             }
-
-            function handleFileSelect(event) {
-                event.preventDefault();
-                var files = event.target.files;
-                handleFiles(files);
-            }
-
-            function handleFiles(files) {
-                for (var i = 0; i < files.length; i++) {
-                    var file = files[i];
-                    if (file.type === 'text/csv') {
-                        // Process the CSV file
-                        console.log('CSV file selected:', file.name);
-                        // You can handle further processing here
-                    } else {
-                        console.log('Invalid file type. Please select a CSV file.');
-                    }
-                }
-            }
-
-            function handleDragOver(event) {
-                event.preventDefault();
-            }
-
-            function handleDrop(event) {
-                event.preventDefault();
-                var files = event.dataTransfer.files;
-                handleFiles(files);
-            }
-
-            function downloadcsvFile() {
-                // Modify the file URL dynamically based on the subjectCode
-                var fileUrl = '<?= ROOT ?>assets/csv/output/Student_Attendance.csv';
-
-                // Create an anchor element
-                var a = document.createElement('a');
-                a.href = fileUrl;
-
-                // Set the download attribute with the desired file name
-                a.download = 'Student_Attendance.csv';
-
-                // Append the anchor element to the document
-                document.body.appendChild(a);
-
-                // Trigger a click event on the anchor element
-                a.click();
-
-                // Remove the anchor element from the document
-                document.body.removeChild(a);
-            }
-        </script>
+            return true; // Allow form submission
+        }
+    </script>
 </body>
+
 </html>

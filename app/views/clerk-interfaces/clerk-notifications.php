@@ -9,7 +9,7 @@ $data['role'] = $role;
 <?php $this->view('components/navside-bar/sidebar', $data) ?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
 
-<?php 
+<!-- <?php 
 $notificationCount = 0;
 foreach ($notifications as $notification) {
     // Check if the notification is relevant to the clerk role
@@ -27,7 +27,7 @@ foreach ($notifications as $notification) {
 // Pass the notification count to the degreeprogramsidebar component
 $_SESSION['notificationCount'] = $notificationCount;
 
-?>
+?> -->
 
 
 

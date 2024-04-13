@@ -5,26 +5,7 @@ $data['role'] = $role;
 
 ?>
 
-<?php 
-$notificationCount = 0;
-foreach ($notifications as $notification) {
-    // Check if the notification is relevant to the clerk role
-    if (($notification->type == 'Examination' && $notification->msg_type == 'Exam-start-alert') ||
-        ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert') ||
-        ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert') ||
-        ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert') ||
-        ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-start-alert') ||
-        ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-end-alert')
-    ) {
-        $notificationCount++;
-    }
-}
 
-// Pass the notification count to the degreeprogramsidebar component
-$_SESSION['notificationCount'] = $notificationCount;
-
-$this->view('components/navside-bar/degreeprogramsidebar', $data) 
-?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
 
 
