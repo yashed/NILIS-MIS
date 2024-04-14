@@ -90,37 +90,67 @@ class DIRECTOR extends Controller
     public function settings()
     {
         $user = new User();
-
-
+        $data = [];
+    
         if (isset($_POST['update_user_data'])) {
-            $id = $_SESSION['USER_DATA']->id;
-            $dataToUpdate = [
-                'fname' => $_POST['fname'],
-                'lname' => $_POST['lname'],
-                'email' => $_POST['email'],
-                'phoneNo' => $_POST['phoneNo']
-            ];
-
-            $user->update($id, $dataToUpdate);
-
-            $updatedUserData = $user->first(['id' => $id]);
-
-            if ($updatedUserData === null) {
-                echo 'No user data found after update.';
-                exit();
+            // Validate input fields
+            $fname = isset($_POST['fname']) ? trim($_POST['fname']) : '';
+            $lname = isset($_POST['lname']) ? trim($_POST['lname']) : '';
+            $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+            $phoneNo = isset($_POST['phoneNo']) ? trim($_POST['phoneNo']) : '';
+    
+            $errorMessage = '';
+    
+            if (empty($fname) || empty($lname) || empty($email) || empty($phoneNo)) {
+                $errorMessage = '*All fields are required.';
+            } else {
+                // Additional validation for phone number
+                $phoneNoPattern = '/^\d{10}$/'; // Regex pattern to match exactly 10 digits
+                if (!preg_match($phoneNoPattern, $phoneNo)) {
+                    $errorMessage = 'Phone number is not valid. It should contain exactly 10 digits.';
+                } else {
+                    // Update user data
+                    $id = $_SESSION['USER_DATA']->id;
+                    $dataToUpdate = [
+                        'fname' => $fname,
+                        'lname' => $lname,
+                        'email' => $email,
+                        'phoneNo' => $phoneNo
+                    ];
+    
+                    $user->update($id, $dataToUpdate);
+    
+                    // Fetch updated user data
+                    $updatedUserData = $user->first(['id' => $id]);
+    
+                    if ($updatedUserData === null) {
+                        $errorMessage = 'No user data found after update.';
+                    } else {
+                        $data['user'] = $updatedUserData;
+                    }
+                }
             }
-
-            $data['user'] = $updatedUserData;
+    
+            if (!empty($errorMessage)) {
+                // Display error message and retain user input
+                $data['error'] = $errorMessage;
+                $data['user'] = (object)[
+                    'fname' => $fname,
+                    'lname' => $lname,
+                    'email' => $email,
+                    'phoneNo' => $phoneNo
+                ];
+            }
         } else {
+            // Fetch user data for display
             $id = $_SESSION['USER_DATA']->id;
             $data['user'] = $user->first(['id' => $id]);
-
+    
             if ($data['user'] === null) {
-                echo 'No user data found.';
-                exit();
+                $data['error'] = 'No user data found.';
             }
         }
-
+    
         $this->view('director-interfaces/director-settings', $data);
     }
 
