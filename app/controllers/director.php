@@ -154,30 +154,37 @@ class DIRECTOR extends Controller
         $this->view('director-interfaces/director-settings', $data);
     }
 
-    public function userprofile()
+    public function userprofile($action = null, $id = null)
     {
-        $degree = new Degree();
-        $data['degrees'] = $degree->findAll();
-
+        $data = [];
+        $data['action'] = $action;
+        $data['id'] = $id;
         // Fetch the specific student data using the ID from the URL
         $studentId = isset($_GET['studentId']) ? $_GET['studentId'] : null;
-        // show($studentId);
         // Check if the student ID is provided in the URL
         if ($studentId) {
+            $degree = new Degree();
             $studentModel = new StudentModel();
-            $data['student'] = $studentModel->find($studentId);
-            // var_dump($data['student']);
-            // Check if the student data is retrieved
+            $data['student'] = $studentModel->findstudentid($studentId);
+            $degree_id = $data['student'][0]->degreeID;
+            $data['degree'] = $degree->find($degree_id);
             if ($data['student']) {
                 $this->view('director-interfaces/director-userprofile', $data);
             } else {
                 echo "Error: Student not found.";
             }
+            if ($action == "update") {
+                echo "POST request received";
+            } else if ($action == "add") {
+            } else if ($action == 'delete') {
+                $studentModel->delete(['id' => $studentId]);
+                redirect("dr/participants");
+            }
         } else {
             echo "Error: Student ID not provided in the URL.";
         }
-        $this->view('director-interfaces/director-userprofile', $data);
     }
+
 
     public function login()
     {
