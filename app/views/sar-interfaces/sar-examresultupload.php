@@ -1155,6 +1155,8 @@ $degreeId = $_GET['degreeID'];
     var examSheets = <?php echo $subjectData; ?>;
     var examiner3Data = <?php echo $examiner3Data; ?>;
 
+    console.log(examiner3Data);
+
     for (var subjectCode in examSheets) {
         if (examSheets.hasOwnProperty(subjectCode)) {
             for (var i = 0; i < examSheets[subjectCode].length; i++) {
@@ -1177,21 +1179,23 @@ $degreeId = $_GET['degreeID'];
         }
     }
 
-    for (var subCode in examiner3Data) {
-        if (examiner3Data.hasOwnProperty(subCode)) {
-            for (var i = 0; i < examiner3Data[subCode].length; i++) {
 
-                var data = examiner3Data[subCode][i];
-                // console.log("Data:", data);
+    for (var i = 0; i < examiner3Data.length; i++) {
 
-                // var Examiner3containerId = 'container' + examiner3SubID + '_4';
-                // var Examiner3Btn = 'Examiner3_btn_' + examiner3SubCode;
+        var Examiner3data = examiner3Data[i];
+        // console.log('data = ', Examiner3data);
+        var examiner3SubCode = Examiner3data.subCode
 
+        var Examiner3containerId = 'container' + examiner3SubCode + '_4';
+        var Examiner3Btn = 'Examiner3_btn_' + examiner3SubCode;
 
+        //show examiner3 results upload container and continue without button
+        document.getElementById(Examiner3containerId).style.display = 'flex';
+        document.getElementById(Examiner3Btn).style.display = 'flex';
 
-            }
-        }
     }
+
+
 
     function handleDragOver(event) {
         event.preventDefault();
