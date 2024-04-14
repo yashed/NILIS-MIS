@@ -37,7 +37,15 @@ $data['role'] = $role;
                     </div>
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Students</div>
-                        <div class="dr-dash-card-subcard-data-value">200</div>
+                        <div class="dr-dash-card-subcard-data-value">
+                            <?php if (!empty($students)) : ?>
+                                <?php $count = 0; ?>
+                                <?php foreach ($students as $student) : ?>
+                                        <?php $count++; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <?=$count?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -49,7 +57,17 @@ $data['role'] = $role;
                     </div>
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Ongoing</br>Degrees</div>
-                        <div class="dr-dash-card-subcard-data-value">04</div>
+                        <div class="dr-dash-card-subcard-data-value">
+                            <?php if (!empty($degrees)) : ?>
+                                <?php $count = 0; ?>
+                                <?php foreach ($degrees as $degree) : ?>
+                                    <?php if ($degree->Status == "ongoing") : ?>
+                                        <?php $count++; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <?=$count?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -60,7 +78,17 @@ $data['role'] = $role;
                     </div>
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Ongoing</br>Examination</div>
-                        <div class="dr-dash-card-subcard-data-value"></div>
+                        <div class="dr-dash-card-subcard-data-value">
+                        <?php if (!empty($degrees)) : ?>
+                                <?php $count = 0; ?>
+                                <?php foreach ($degrees as $degree) : ?>
+                                    <?php if ($degree->Status == "ongoing") : ?>
+                                        <?php $count++; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <?=$count?>
+                        </div>
                     </div>
                 </div>
             </div>
