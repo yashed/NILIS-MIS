@@ -323,27 +323,27 @@
             <ul class="menu-links">
                 <h6 class="topic1">MAIN</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/">
+                    <a href="<?= ROOT ?>clerk">
                         <i class="bx bx-home icon"></i>
                         <span class="text nav-text">Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/">">
+                    <a href="<?= ROOT ?>clerk/notification">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/degreeprograms">">
-                        <i class="bx bx-home icon"></i>
+                    <a href="<?= ROOT ?>clerk/degreeprograms">
+                        <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Programs</span>
                     </a>
                 </li>
                 <hr class="horizontal-line">
                 <h6 class="topic2">SETTINGS</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/settings">">
+                    <a href="<?= ROOT ?>clerk/settings">
                         <i class="bx bx-cog icon"></i>
                         <span class="text nav-text">Settings</span>
                     </a>
@@ -356,18 +356,18 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+                <li class="hero-ul-li"><a href="<?= ROOT ?>clerk/notification"><i class="bx bxs-bell icon"></i></a></li>
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
-            <div class="sub-menu-wrap" id="subMenu"/
+            <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
                     <div class="user-info">
                         <img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg">
                         <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
                     </div>
                     <hr>
-                    <a href="http://localhost/NILIS-MIS/public/login" class="sub-menu-link">
+                    <a href="<?= ROOT ?>logout" class="sub-menu-link">
                         <i class="bx bx-log-out icon"></i>
                         <p>Logout</p>
                         <span>></span>
@@ -376,4 +376,5 @@
             </div>
         </nav>
     </div>
+
 <?php endif ?>

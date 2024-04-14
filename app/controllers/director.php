@@ -176,7 +176,9 @@ class DIRECTOR extends Controller
         } else {
             echo "Error: Student ID not provided in the URL.";
         }
+        $this->view('director-interfaces/director-userprofile', $data);
     }
+
     public function login()
     {
         $this->view('common/login/login.view');

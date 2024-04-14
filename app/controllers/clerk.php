@@ -348,4 +348,37 @@ public function degreeprofile($action = null, $id = null)
         echo "Error: Degree ID not provided in the URL.";
     }
 }
+
+public function participants($id = null, $action = null, $id2 = null)
+{
+
+    $st = new StudentModel();
+    if (!empty($id)) {
+        if (!empty($action)) {
+            if ($action === 'delete' && !empty($id2)) {
+                $st->delete(['id' => $id2]);
+            }
+        } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // print_r( $_POST );
+            // die;
+            $st->update($_POST['id'], $_POST);
+            // redirect( 'student/'.$id );
+            $data['student'] = $st->where(['indexNo' => $id])[0];
+
+            $this->view('common/student/student.view', $data);
+            return;
+        } else {
+            $data['student'] = $st->where(['indexNo' => $id])[0];
+
+            $this->view('common/student/student.view', $data);
+            return;
+        }
+    }
+    $data['students'] = $st->findAll();
+    //print_r( $data );
+    // die;
+    $this->view('clerk-interfaces/clerk-participants', $data);
+}
+
+// 
 }
