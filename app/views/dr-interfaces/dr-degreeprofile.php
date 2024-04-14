@@ -23,7 +23,7 @@ $data['role'] = $role;
                     <p>No data found for the specified degree ID.</p>
                 <?php endif; ?>
             </div>
-            <form class="degreeprofile-box_2" id="degreeprofile-form2" method="post" action="<?= ROOT ?>dr/degreeprofile/delete" <p>Overview</p>
+            <form class="degreeprofile-box_2" id="degreeprofile-form2" method="" action=""><p>Overview</p>
                 <?php if ($degrees) : ?>
                     <table class="degreeprofile-Overview_table" colspan="2" style="display: flex; justify-content: center;">
                         <tr>
@@ -53,8 +53,8 @@ $data['role'] = $role;
                             </td>
                         </tr>
                         <td colspan="2">
-                            <button class="degreeprofile-pin" type="button" id="degreeprofile-complete_degree">Completed</button>
-                            <button class="degreeprofile-pin" type="button" id="degreeprofile-delete_degree" value="delete">Delete Degree</button>
+                            <button class="degreeprofile-pin" type="button" id="degreeprofile-complete_degree" onclick="completedDegree()">Completed</button>
+                            <button class="degreeprofile-pin" type="button" id="degreeprofile-delete_degree" onclick="deleteDegree()">Delete Degree</button>
                         </td>
                     </table>
                 <?php else : ?>
@@ -138,8 +138,59 @@ $data['role'] = $role;
             <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>
+    <form method="post" id="degreeprofile-form3" class="degreeprofile-form3" action="<?= ROOT ?>dr/degreeprofile/status">
+        <div class="degreeprofile-popupForm">
+            <center><svg id="degreeprofile-userDeletePopupImg" xmlns="http://www.w3.org/2000/svg" width="67" height="66" viewBox="0 0 67 66" fill="none">
+                    <path d="M33.5 63C50.0685 63 63.5 49.5685 63.5 33C63.5 16.4315 50.0685 3 33.5 3C16.9315 3 3.5 16.4315 3.5 33C3.5 49.5685 16.9315 63 33.5 63Z" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M33.5 21V33" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M33.5 45H33.53" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg></center>
+            <input type="hidden" name="degreeStatus" value="completed">
+            <h2 id="degreeprofile-userDeletePopupH2">
+                <center>Are you want to complete this Diploma?</center>
+            </h2>
+            <div class="degreeprofile-yesorno">
+                <button class="degreeprofile-close-button-2" type="submit" value="delete">Yes,I'm Sure</button>
+                <button class="degreeprofile-close-button-3" type="button" >No,Cancel</button>
+            </div>
+        </div>
+    </form>
+    <form method="post" id="degreeprofile-form4" class="degreeprofile-form4" action="<?= ROOT ?>dr/degreeprofile/delete">
+        <div class="degreeprofile-popupForm">
+            <center><svg id="degreeprofile-userDeletePopupImg" xmlns="http://www.w3.org/2000/svg" width="67" height="66" viewBox="0 0 67 66" fill="none">
+                    <path d="M33.5 63C50.0685 63 63.5 49.5685 63.5 33C63.5 16.4315 50.0685 3 33.5 3C16.9315 3 3.5 16.4315 3.5 33C3.5 49.5685 16.9315 63 33.5 63Z" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M33.5 21V33" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M33.5 45H33.53" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg></center>
+            <h2 id="degreeprofile-userDeletePopupH2">
+                <center>Are you want to delete this Diploma?</center>
+            </h2>
+            <div class="degreeprofile-yesorno">
+                <button class="degreeprofile-close-button-2" type="submit" value="delete">Yes,I'm Sure</button>
+                <button class="degreeprofile-close-button-3" type="button" >No,Cancel</button>
+            </div>
+        </div>
+    </form>
 </body>
 <script>
+    function completedDegree() {
+        // Show the overlay and pop-up
+        $('#degreeprofile-form3').css('display', 'block');
+        $('.degreeprofile-close-button-3').click(function(e) {
+            // Hide the pop-up when the close button is clicked
+            $('#degreeprofile-form3').css('display', 'none');
+            e.stopPropagation();
+        });
+    }
+    function deleteDegree() {
+        // Show the overlay and pop-up
+        $('#degreeprofile-form4').css('display', 'block');
+        $('.degreeprofile-close-button-3').click(function(e) {
+            // Hide the pop-up when the close button is clicked
+            $('#degreeprofile-form4').css('display', 'none');
+            e.stopPropagation();
+        });
+    }
     document.addEventListener("DOMContentLoaded", function() {
         let add = document.querySelector("#degreeprofile-add_new_event");
         let table = document.querySelector(".degreeprofile-Time_table");
@@ -190,7 +241,6 @@ $data['role'] = $role;
         });
         let updateButton = document.getElementById("degreeprofile-update");
         let saveButton = document.getElementById("degreeprofile-save");
-        let deletebutton = document.getElementById("degreeprofile-delete_degree");
         let completeDegreeButton = document.getElementById("degreeprofile-complete_degree");
         let eventFields = document.querySelectorAll('.degreeprofile-event');
         let eventTypeFields = document.querySelectorAll('.degreeprofile-duration');
@@ -258,17 +308,6 @@ $data['role'] = $role;
             saveButton.setAttribute('disabled', 'true');
             updateButton.removeAttribute('disabled', 'true');
         }
-        // deletebutton.onclick = function(event) {
-        //     event.preventDefault();
-        //     var confirmDelete = confirm("Are you sure you want to delete this degree?");
-        //     if (confirmDelete) {
-        //         document.getElementById("form2").submit();
-        //     }
-        // }
-        // completeDegreeButton.onclick = function(event) {
-        //     event.preventDefault();
-
-        // }
     });
 </script>
 
