@@ -380,5 +380,34 @@ public function participants($id = null, $action = null, $id2 = null)
     $this->view('clerk-interfaces/clerk-participants', $data);
 }
 
-// 
+public function userprofile($action = null, $id = null)
+{
+    $data = [];
+    $data['action'] = $action;
+    $data['id'] = $id;
+    // Fetch the specific student data using the ID from the URL
+    $studentId = isset($_GET['studentId']) ? $_GET['studentId'] : null;
+    // Check if the student ID is provided in the URL
+    if ($studentId) {
+        $degree = new Degree();
+        $studentModel = new StudentModel();
+        $data['student'] = $studentModel->findstudentid($studentId);
+        $degree_id = $data['student'][0]->degreeID;
+        $data['degree'] = $degree->find($degree_id);
+        if ($data['student']) {
+            $this->view('clerk-interfaces/clerk-userprofile', $data);
+        } else {
+            echo "Error: Student not found.";
+        }
+        if ($action == "update") {
+            echo "POST request received";
+        } else if ($action == "add") {
+        } else if ($action == 'delete') {
+            $studentModel->delete(['id' => $studentId]);
+            redirect("clerk/participants");
+        }
+    } else {
+        echo "Error: Student ID not provided in the URL.";
+    }
+}
 }

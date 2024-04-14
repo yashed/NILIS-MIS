@@ -178,7 +178,7 @@ class DIRECTOR extends Controller
             } else if ($action == "add") {
             } else if ($action == 'delete') {
                 $studentModel->delete(['id' => $studentId]);
-                redirect("dr/participants");
+                redirect("director/participants");
             }
         } else {
             echo "Error: Student ID not provided in the URL.";
