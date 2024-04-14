@@ -4,10 +4,6 @@ $data['role'] = $role;
 
 ?>
 
-<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -489,6 +485,9 @@ $data['role'] = $role;
 </style>
 
 <body>
+<?php $this->view('components/navside-bar/header', $data) ?>
+<?php $this->view('components/navside-bar/sidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?>
     <div class="sar-dash-home">
         <div class="sar-dash-title">Dashboard</div>
         <div class="sar-dash-card-subsection-0">

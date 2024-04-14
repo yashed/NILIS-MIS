@@ -28,7 +28,7 @@ class DIRECTOR extends Controller
         $notification = new NotificationModel();
         $data['notifications'] = $notification->findAll();
 
-        $this->view('director-interfaces/director-notification', $data);
+        $this->view('director-interfaces/director-notifications', $data);
     }
     public function degreeprograms()
     {
