@@ -720,7 +720,7 @@ $data['role'] = $role;
                 const studentId = row.getAttribute('data-id');
 
                 // Navigate to the target page with the data as a query parameter
-                window.location.href = '<?= ROOT ?>director/userprofile' + studentId;
+                window.location.href = '<?= ROOT ?>dr/userprofile' + studentId;
             });
         });
     });
@@ -737,7 +737,7 @@ $data['role'] = $role;
                 const studentId = row.getAttribute('data-id');
 
                 // Navigate to the target page with the data as a query parameter
-                window.location.href = '<?= ROOT ?>director/userprofile?studentId=' + studentId;
+                window.location.href = '<?= ROOT ?>dr/userprofile?studentId=' + studentId;
             });
         });
     });

@@ -4,8 +4,6 @@
 
 ?>
 
-<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -193,6 +191,9 @@
 
     </style>
     <body>
+    <?php $this->view('components/navside-bar/header', $data) ?>
+<?php $this->view('components/navside-bar/sidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?>
         <div class="dr-home">
             <div class="dr-title">Dashboard</div>
             <div class="dr-subsection-1">
