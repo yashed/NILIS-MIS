@@ -65,7 +65,9 @@ th {
             </div><br>
             <div class="dr-userprofile-button-container">
                 <div class="dr-userprofile-buttony">
-                    <input type="button" id="dr-userprofile-changedegreebutton" class="dr-userprofile-button" value="Change Degree Program" onclick="updateData()">
+                    <?php if ((time() - strtotime($degree[0]->createdDate)) < (3 * 30 * 24 * 60 * 60)) : ?>
+                        <input type="button" id="dr-userprofile-changedegreebutton" class="dr-userprofile-button" value="Change Diploma Program" onclick="updateData()">
+                    <?php endif; ?>
                 </div>
                 <div class="dr-userprofile-buttony">
                     <input type="button" id="dr-userprofile-deletebutton" class="dr-userprofile-button" value="Delete" onclick="updateData2()">
@@ -75,25 +77,31 @@ th {
 
         <div class="dr-userprofile-pop-up1">
             <div class="dr-userprofile-popupForm1">
-                <form id="dr-userprofile-Form1" method="post" action="">
-                    <h1 style="font-size: 18px;">Change Degree Program</h1><br>
+                <form id="dr-userprofile-Form1" method="post" action="<?= ROOT ?>dr/userprofile/add">
+                    <h1 style="font-size: 18px;">Change Diploma Program</h1><br>
                     <div class="dr-userprofile-input-fields" style="margin: 20px 0px 10px 0px;">
                         <label for="degree type" class="dr-userprofile-drop-down">Current Diploma Program</label><br>
                         <input name="degree type" id="dr-userprofile-degree_type" style="width: 430px; height: 34px; border-radius: 5px; margin: 9px; padding-left: 10px" placeholder="<?= $degree[0]->DegreeName ?>" disabled><br><br><br>
                         <label for="select degree type" class="dr-userprofile-drop-down">Select Degree Program:</label><br>
                         <select name="select degree type" id="dr-userprofile-select_degree_type" style="width: 430px; height: 34px; border-radius: 5px; margin: 9px;">
                             <option value="" default hidden>Select</option>
-                            <option value="DLIM" <?= (set_value('select_degree_type') === 'DLIM') ? 'selected' : '' ?>>Diploma in Library Information Management</option>
-                            <option value="DPL" <?= (set_value('select_degree_type') === 'DPL') ? 'selected' : '' ?>>Diploma in Public Librarianship</option>
-                            <option value="DSL" <?= (set_value('select_degree_type') === 'DSL') ? 'selected' : '' ?>>Diploma in School Librarianship</option>
+                            <?php if (!empty($degree)) : ?>
+                                <?php foreach ($degree as $degrees) : ?>
+                                    <!-- <?php if ($degrees->degreeID == $degree[0]->DegreeID || $degrees->Status == "completed") : ?>
+                                        continue;
+                                    <?php endif; ?> -->
+                                    <?php if ((time() - strtotime($degrees->createdDate)) < (5 * 30 * 24 * 60 * 60)) : ?>
+                                        <option value="<?= $degrees->DegreeShortName ?>" <?= (set_value('select_degree_type') === $degrees->DegreeShortName) ? 'selected' : '' ?>><?= $degrees->DegreeName ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </select><br><br>
-                        <h3 style="font-size: 14px; font-weight: 200">Note - After submit all the information of this student may transfer to new degree program and student data will suspend from the current degree program</h3>
+                        <h3 style="font-size: 14px; font-weight: 200">Note - After submit all the information of this student may transfer to new diploma program and student data will suspend from the current diploma program</h3>
                     </div>
                     <div class="dr-userprofile-btn-box">
                         <div class="dr-userprofile-button-btn">
-
-                            <button type="button" class="dr-userprofile-bt-name-white close-button" id="dr-userprofile-Cancel1">Cancel</button>
-                            <button type="button" class="dr-userprofile-bt-name" style="text-decoration: none; margin-right: -53px;" id="dr-userprofile-Next1" onclick="myFunction()">Submit</button>
+                            <button type="button" class="dr-userprofile-bt-name-white close-button" id="dr-userprofile-close-button">Cancel</button>
+                            <button type="submit" class="dr-userprofile-bt-name" style="text-decoration: none; margin-right: -53px;" id="dr-userprofile-Next1" onclick="myFunction()">Submit</button>
                         </div>
                     </div>
                 </form>
@@ -273,7 +281,7 @@ th {
             $('#dr-userprofile-overlay').css('display', 'block');
             $('.dr-userprofile-pop-up1').css('display', 'block');
 
-            $('.dr-userprofile-close-button').click(function(e) {
+            $('#dr-userprofile-close-button').click(function(e) {
                 // Hide the pop-up and overlay when the close button is clicked
                 $('.dr-userprofile-pop-up1').css('display', 'none');
                 $('#dr-userprofile-overlay').css('display', 'none');
