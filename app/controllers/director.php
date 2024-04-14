@@ -226,4 +226,9 @@ class DIRECTOR extends Controller
         echo "Error: Degree ID not provided in the URL.";
     }
 }
+
+public function reports()
+    {
+        $this->view('director-interfaces/director-reports');
+    }
 }

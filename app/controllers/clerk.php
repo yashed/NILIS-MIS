@@ -410,4 +410,9 @@ public function userprofile($action = null, $id = null)
         echo "Error: Student ID not provided in the URL.";
     }
 }
+
+public function reports()
+    {
+        $this->view('clerk-interfaces/clerk-reports');
+    }
 }
