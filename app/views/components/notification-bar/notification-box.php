@@ -88,24 +88,17 @@
             height: 2vw;
             min-height: 20px;
             background: #FFFFFF;
-            border: 1px solid #DCDEE4;
+            border: 2px solid #DCDEE4;
             border-radius: 8px;
             color: #333;
             font-size: 0.8vw;
             margin-left: 45px;
+            text-decoration: none;
+            cursor: pointer;
         }
 
-        .button2 {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 8px 16px;
-            gap: 12px;
-            display: none;
-            width: 113px;
-            height: 40px;
-            min-height: 40px;
-            border-radius: 8px;
+        .button1:hover{
+            background-color:#D0D0D0;
         }
 
         .flex {
@@ -118,19 +111,23 @@
             flex: 1%;
         }
 
-        .close-symbol{
+        .close-symbol {
+            margin-right: 15px;
+            margin-top: 10px;
+            background-color: transparent;
+            border: none;
+            color: #17376E;
+            font-size: 20px;
             cursor: pointer;
-            
+
         }
     </style>
 </head>
 
 <body>
 
-<div class="banner" >
+    <div class="banner">
         <div class="color-strip"></div>
-        <div class="closing"><span class="close-symbol" onclick="closeComponent()">✖</span> </div>
-        <!-- <div class="closing"><span class="close-symbol" onclick="deleteNotification(<?= $notification->notify_id ?>)">✖</span> </div> -->
 
         <div class="content-container">
 
@@ -163,31 +160,28 @@
                 <?= $notification->description ?>
             </div>
             </br>
-            <!-- <div class="buttons-container">
-                <a href="<?= ROOT . $notification->button_link ?>" class="button1"><?= $notification->button_text ?></a>
-                
-            </div> -->
+         
+            <?php if (!empty($link)) : ?>
+            <div class="buttons-container">
+                <a href="<?= $link ?>" class="button1" id="notificationButton">Go to Notification</a>
+            </div>
+        <?php endif; ?>
+      
 
         </div>
-
+        <form action="<?= ROOT ?>notification/delete" method="post">
+            <input type="hidden" name="notify_id" value="<?= $notification->notify_id ?>">
+            <button type="submit" name="delete_notification" class="close-symbol">✖</button>
+        </form>
     </div>
-    <!-- <script>
-    function deleteNotification(notifyId) {
-    // Make an AJAX request to the delete_notification.php file
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "delete_notification.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            // Handle the response from the server
-            alert(xhr.responseText); // You can customize this part to display a message or perform other actions
-            // Optionally, you can remove the notification from the DOM if deletion was successful
-            // e.g., document.getElementById("notification-" + notifyId).remove();
-        }
-    };
-    xhr.send("notify_id=" + notifyId);
-}
-</script> -->
+    <script>
+    document.getElementById('notificationButton').addEventListener('click', function(event) {
+        // Prevent the default action (following the link)
+        event.preventDefault();
+        // Redirect to the button link
+        window.location.href = '<?= ROOT ?>' + '<?= $link ?>';
+    });
+    </script>
 </body>
 
 </html>

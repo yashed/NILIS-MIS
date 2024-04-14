@@ -274,17 +274,16 @@ $data['role'] = $role;
             border-radius: 10px;
         }
 
-        .download-button{
+        .download-button {
             color: #17376e;
             text-decoration: none;
             background-color: #ffffff;
         }
 
-        .download-button:hover{
+        .download-button:hover {
             color: black;
             background-color: #E2E2E2;
         }
-
     </style>
 </head>
 
@@ -296,13 +295,8 @@ $data['role'] = $role;
 
         <div class="temp2-subsection-2">
             <div class="temp2-subsection-21">
-
-               
                 <button class="btn-secondary-2" onclick="downloadAttendanceSheet()">Download Attendance Sheet</button>
-                             <div class="dashed-container1">
-                
-
-
+                <div class="dashed-container1">
                     <a href="javascript:toggleForm('importFrm');">
                         <div class="file-input-icon"></div>
                     </a>
@@ -327,9 +321,8 @@ $data['role'] = $role;
                 <label for="selectDegree">Choose the degree name</label>
                 <select name="selectDegree" id="form-element-dropdown" required>
                     <option value="" disabled selected>Select Degree</option>
-                    <?php foreach ($degrees as $degree) : ?>
-                        <option value="<?= $degree->DegreeShortName ?>" class="form-element-dropdown-op"><?= $degree->DegreeShortName ?></option>
-                    <?php endforeach; ?>
+                    <option value="DLIM" class="form-element-dropdown-op">DLIM</option>
+                    <option value="DSL" class="form-element-dropdown-op">DSL</option>
                 </select>
             </div>
             <input type="file" name="csvFile" id="csvFile" accept=".csv" required>
@@ -389,27 +382,27 @@ $data['role'] = $role;
             handleFiles(files);
         }
 
-       
+
         function downloadAttendanceSheet() {
-        // Modify the file URL dynamically based on the desired file location
-        var fileUrl = '<?= ROOT ?>assets/csv/output/Student_Attendance.csv';
+            // Modify the file URL dynamically based on the desired file location
+            var fileUrl = '<?= ROOT ?>assets/csv/output/Student_Attendance.csv';
 
-        // Create an anchor element
-        var a = document.createElement('a');
-        a.href = fileUrl;
+            // Create an anchor element
+            var a = document.createElement('a');
+            a.href = fileUrl;
 
-        // Set the download attribute with the desired file name
-        a.download = 'Student_Attendance.csv';
+            // Set the download attribute with the desired file name
+            a.download = 'Student_Attendance.csv';
 
-        // Append the anchor element to the document
-        document.body.appendChild(a);
+            // Append the anchor element to the document
+            document.body.appendChild(a);
 
-        // Trigger a click event on the anchor element
-        a.click();
+            // Trigger a click event on the anchor element
+            a.click();
 
-        // Remove the anchor element from the document
-        document.body.removeChild(a);
-    }
+            // Remove the anchor element from the document
+            document.body.removeChild(a);
+        }
 
         function validateForm() {
             var selectedDegree = document.getElementById("form-element-dropdown").value;

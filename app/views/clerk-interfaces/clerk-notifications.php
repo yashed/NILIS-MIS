@@ -9,25 +9,25 @@ $data['role'] = $role;
 <?php $this->view('components/navside-bar/sidebar', $data) ?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
 
-<!-- <?php 
-$notificationCount = 0;
-foreach ($notifications as $notification) {
-    // Check if the notification is relevant to the clerk role
-    if (($notification->type == 'Examination' && $notification->msg_type == 'Exam-start-alert') ||
-        ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert') ||
-        ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert') ||
-        ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert') ||
-        ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-start-alert') ||
-        ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-end-alert')
-    ) {
-        $notificationCount++;
-    }
-}
+<!-- <?php
+        $notificationCount = 0;
+        foreach ($notifications as $notification) {
+            // Check if the notification is relevant to the clerk role
+            if (($notification->type == 'Examination' && $notification->msg_type == 'Exam-start-alert') ||
+                ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert') ||
+                ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert') ||
+                ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert') ||
+                ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-start-alert') ||
+                ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-end-alert')
+            ) {
+                $notificationCount++;
+            }
+        }
 
-// Pass the notification count to the degreeprogramsidebar component
-$_SESSION['notificationCount'] = $notificationCount;
+        // Pass the notification count to the degreeprogramsidebar component
+        $_SESSION['notificationCount'] = $notificationCount;
 
-?> -->
+        ?> -->
 
 
 
@@ -250,7 +250,7 @@ $_SESSION['notificationCount'] = $notificationCount;
             margin-top: 30px;
             margin-right: 1%;
             flex: 1%;
-        } */
+        /* }  */
     </style>
 </head>
 
@@ -263,7 +263,14 @@ $_SESSION['notificationCount'] = $notificationCount;
                     <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-start-alert') : ?>
                         <?php
                         $data['role'] = "Clerk";
-                        $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+
+                        $link = "clerk"; 
+                        $this->view('components/notification-bar/notification-box', [
+                            "notification" => $notification,
+                            "role" => $data['role'],
+                            "notify_id" => $notification->notify_id,
+                            "link" =>$link  // Pass the notify_id here
+                        ]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -273,7 +280,11 @@ $_SESSION['notificationCount'] = $notificationCount;
                     <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert') : ?>
                         <?php
                         $data['role'] = "Clerk";
-                        $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+                        $this->view('components/notification-bar/notification-box', [
+                            "notification" => $notification,
+                            "role" => $data['role'],
+                            "notify_id" => $notification->notify_id // Pass the notify_id here
+                        ]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -283,8 +294,12 @@ $_SESSION['notificationCount'] = $notificationCount;
                     <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert') : ?>
                         <?php
                         $data['role'] = "Clerk";
-                        $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
-                    <?php endif; ?>
+                        $this->view('components/notification-bar/notification-box', [
+                            "notification" => $notification,
+                            "role" => $data['role'],
+                            "notify_id" => $notification->notify_id // Pass the notify_id here
+                        ]) ?> 
+                        <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
@@ -293,8 +308,12 @@ $_SESSION['notificationCount'] = $notificationCount;
                     <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert') : ?>
                         <?php
                         $data['role'] = "Clerk";
-                        $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
-                    <?php endif; ?>
+                        $this->view('components/notification-bar/notification-box', [
+                            "notification" => $notification,
+                            "role" => $data['role'],
+                            "notify_id" => $notification->notify_id // Pass the notify_id here
+                        ]) ?> 
+                        <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
@@ -303,8 +322,12 @@ $_SESSION['notificationCount'] = $notificationCount;
                     <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-start-alert') : ?>
                         <?php
                         $data['role'] = "Clerk";
-                        $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
-                    <?php endif; ?>
+                        $this->view('components/notification-bar/notification-box', [
+                            "notification" => $notification,
+                            "role" => $data['role'],
+                            "notify_id" => $notification->notify_id // Pass the notify_id here
+                        ]) ?> 
+                        <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
@@ -313,8 +336,12 @@ $_SESSION['notificationCount'] = $notificationCount;
                     <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-end-alert') : ?>
                         <?php
                         $data['role'] = "Clerk";
-                        $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
-                    <?php endif; ?>
+                        $this->view('components/notification-bar/notification-box', [
+                            "notification" => $notification,
+                            "role" => $data['role'],
+                            "notify_id" => $notification->notify_id // Pass the notify_id here
+                        ]) ?> 
+                        <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
@@ -323,15 +350,19 @@ $_SESSION['notificationCount'] = $notificationCount;
                     <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'Student_attendance_alert') : ?>
                         <?php
                         $data['role'] = "Clerk";
-                        $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
-                    <?php endif; ?>
+                        $this->view('components/notification-bar/notification-box', [
+                            "notification" => $notification,
+                            "role" => $data['role'],
+                            "notify_id" => $notification->notify_id // Pass the notify_id here
+                        ]) ?> 
+                        <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
 
         </div>
     </div>
-    
+
     <div class="temp3-footer">
         <?php $this->view('components/footer/index', $data) ?>
     </div>
