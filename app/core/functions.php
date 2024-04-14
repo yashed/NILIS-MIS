@@ -385,4 +385,72 @@ function sortArray($array, $key, $order = 'asc')
 
     return $array;
 }
+
+function updateMarksheet($csvFileName, $dataArray, $newFileName)
+{
+    $csvFilePath = 'assets/csv/examsheets/final-marksheets/' . $csvFileName;
+    $newFilePath = 'assets/csv/examsheets/output/final-marksheets/' . $newFileName;
+
+    // Ensure the output directory exists
+    $newFileDir = dirname($newFilePath);
+    if (!is_dir($newFileDir)) {
+        mkdir($newFileDir, 0777, true); // recursive creation
+    }
+
+    // Read the existing CSV file
+    $rows = [];
+    $headerData = [];
+    if (($handle = fopen($csvFilePath, "r")) !== FALSE) {
+        $lineCount = 0;
+        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            $lineCount++;
+            if ($lineCount <= 3) {
+                // Collect program and subject lines
+                $headerData[] = $data;
+                continue;
+            } else if ($lineCount == 4) {
+                // Skip the redundant header line
+                continue;
+            }
+            $rows[] = $data;
+        }
+        fclose($handle);
+    }
+
+    // Open a new file to write the updated data
+    $newFile = fopen($newFilePath, 'w');
+
+    // Write the program name and subject headers first
+    foreach ($headerData as $headerRow) {
+        fputcsv($newFile, $headerRow);
+    }
+
+    // Write the correct column headers
+    $correctHeader = ['Index No', 'Registration No', 'Examiner 01 Marks', 'Examiner 02 Marks', 'Assignment Marks', 'Examiner 03 Marks', 'Final Marks', 'Grade'];
+    fputcsv($newFile, $correctHeader);
+
+    // Process each row and add new data from $dataArray
+    foreach ($rows as $row) {
+        if (count($row) < 2)
+            continue; // Skip empty rows
+        $indexNo = $row[0]; // Assuming 'Index No' is the first column
+        if (!empty($dataArray)) {
+            foreach ($dataArray as $data) {
+                if ($data->indexNo == $indexNo) {
+                    // Update existing row with final marks and grade
+                    $row[5] = $data->examiner3Marks != -1 ? $data->examiner3Marks : "N/A";
+                    $row[6] = $data->finalMarks;
+                    $row[7] = $data->grade ? $data->grade : "N/A";
+                    break;
+                }
+            }
+        }
+        fputcsv($newFile, $row);
+    }
+
+    fclose($newFile);
+}
+
+
+
 ?>

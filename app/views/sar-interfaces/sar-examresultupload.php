@@ -775,6 +775,12 @@ $degreeId = $_GET['degreeID'];
         transform: translate(-50%, -50%) scale(1);
         transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
     }
+
+    .examresults-footer {
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
 </style>
 
 <body>
@@ -832,15 +838,17 @@ $degreeId = $_GET['degreeID'];
                                 <div class="sub-name">
                                     <?= $subject->SubjectName ?>
                                 </div>
-                                <div class="button-bar">
-                                    <button class="btn-secondary-2-examiner3" name='download_marksheet'
-                                        id='Examiner3_btn_<?= $subject->SubjectCode ?>'>Continue without
-                                        Examiner 03</button>
-                                    <button class="btn-primary" name='download_marksheet'
-                                        onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
-                                        Marksheet</button>
-
-                                </div>
+                                <form method="POST">
+                                    <div class="button-bar">
+                                        <button class="btn-secondary-2-examiner3" name='cw-E3'
+                                            value="<?= $subject->SubjectCode ?>" type='submit'
+                                            id='Examiner3_btn_<?= $subject->SubjectCode ?>'>Continue without
+                                            Examiner 03</button>
+                                        <button class="btn-primary" name='download_marksheet'
+                                            onclick="downloadFile('<?= $subject->SubjectCode ?>')">Download
+                                            Marksheet</button>
+                                    </div>
+                                </form>
                             </div>
                             <div class="flex-container">
                                 <?php
@@ -1066,7 +1074,7 @@ $degreeId = $_GET['degreeID'];
 
             </div>
 
-            <div class="user-create-footer">
+            <div class="examresults-footer">
                 <?php $this->view('components/footer/index', $data) ?>
             </div>
         </div>

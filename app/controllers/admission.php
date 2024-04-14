@@ -76,7 +76,7 @@ class Admission extends Controller
             $examID = $tokenData[0]->examID;
         } else {
 
-            message('Invalid Token', 'danger');
+            message('Invalid Token', 'error', true);
         }
 
         //get student data

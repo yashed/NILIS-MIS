@@ -55,11 +55,11 @@ class Admin extends Controller
           $popupUpdate = false;
 
           $user->update($_POST['id'], $_POST);
-          message("User profile was successfully updated");
+          message("User profile was successfully updated", 'success', true);
         } else {
 
           $popupUpdate = true;
-          message("User profile was not updated Corectly", 'error');
+          message("User profile was not updated Corectly", 'error', true);
         }
       } else if ($_POST['submit'] == "add") {
         if ($user->validate($_POST)) {
@@ -78,7 +78,7 @@ class Admin extends Controller
             $_POST['status'] = 'initial';
 
             $user->insert($_POST);
-            message("User profile was successfully created");
+            message("User profile was successfully created", 'success', true);
 
             //refresh the page
             // header("Refresh:0");
@@ -88,12 +88,12 @@ class Admin extends Controller
           }
         } else {
           $popupCreate = true;
-          message("User profile was not created Corectly", 'error');
+          message("User profile was not created Corectly", 'error', true);
         }
       } else if ($_POST['submit'] == "delete") {
 
         $user->delete2($_POST);
-        message("User profile was successfully Deleted");
+        message("User profile was successfully Deleted", 'success', true);
       }
     }
     //get all data from database

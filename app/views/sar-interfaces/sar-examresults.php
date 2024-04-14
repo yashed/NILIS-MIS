@@ -247,7 +247,7 @@ $data['role'] = $role;
     }
 
     .btn-primary {
-        min-width: 10vh;
+        min-width: 8vw;
         color: #fff;
         height: 5vh;
         padding: 5px 5px 5px 5px;
@@ -275,7 +275,8 @@ $data['role'] = $role;
 
     .result-table {
         margin-top: 20px;
-        margin: 20px
+        margin: 20px;
+        margin-bottom: 100px;
     }
 
     table {
@@ -317,7 +318,9 @@ $data['role'] = $role;
         font-size: 2vw;
         font-weight: 500px;
         color: #17376E;
-
+        display: flex;
+        align-items: center;
+        justify-content: center;
         padding-top: 20px;
         height: 15vw;
 
@@ -328,6 +331,53 @@ $data['role'] = $role;
         font-size: 1vw;
         flex-direction: column;
         padding-left: 20px;
+    }
+
+    .subject-heading {
+        font-weight: 600;
+
+    }
+
+    .sub-details {
+        font-weight: 400;
+    }
+
+    .sub-details-wrapper {
+        margin: 5vw 0 4vw 0;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+
+    }
+
+    .btn-marksheet {
+        width: 15vw;
+        color: #fff;
+        height: 5vh;
+        padding: 5px 15px 5px 15px;
+        border-radius: 10px;
+        background: #ffffff;
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        color: #17376e;
+        border: 0px;
+        margin-bottom: 10px;
+        border: 1px solid #17376e;
+        font-size: 1vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-marksheet:hover {
+        color: black;
+        background-color: #E2E2E2;
+        border: 1px solid #17376e;
+    }
+
+    .btn-marksheet-name {
+        font-size: 1vw;
+        font-weight: 500px;
+
     }
 </style>
 
@@ -380,6 +430,7 @@ $data['role'] = $role;
                             </div>
 
                             <select id="sub" name="subCode">
+                                <option value=''> </option>
                                 <?php foreach ($subNames as $subject): ?>
                                     <?php $json = json_encode($subject); ?>
 
@@ -404,10 +455,35 @@ $data['role'] = $role;
                 </form>
 
                 <div class="result-table">
+
                     <?php if (!empty($examResults)): ?>
-                        <div class="subject-details">
-                            <div class="subject-name">Subject : </div>
-                            <div class="subject-credits">Credits :</div>
+                        <?php
+                        $examId = $_SESSION['examDetails'][0]->examID;
+                        $subjectCode = $subjectDetails[0]->SubjectCode;
+
+                        ?>
+                        <div class='sub-details-wrapper'>
+                            <div class="subject-details">
+                                <div class="subject-heading">Subject : <span class='sub-details'> <?php if (!empty($subjectDetails)) {
+                                    echo $subjectDetails[0]->SubjectName;
+                                } ?>
+                                    </span>
+                                </div>
+                                <div class="subject-heading">Credits : <span class='sub-details'>
+                                        <?php if (!empty($subjectDetails)) {
+                                            echo $subjectDetails[0]->NoCredits;
+                                        } ?>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class='mark-sheet-btn'>
+                                <button class="btn-marksheet" name="submit" value="selectSubject"
+                                    onclick="downloadMarkSheet('<?= $subjectCode ?>','<?= $examId ?>')">
+                                    <div class="btn-marksheet-name">
+                                        Download Mark Sheet
+                                    </div>
+                                </button>
+                            </div>
                         </div>
                         <table>
                             <thead>
@@ -430,6 +506,8 @@ $data['role'] = $role;
                                             <?= $result->studentIndexNo ?>
                                         </td>
                                         <td>
+                                            <?= $result->studentType ?>
+                                        <td>
                                             <?= $result->subjectCode ?>
                                         </td>
                                         <td>
@@ -439,7 +517,13 @@ $data['role'] = $role;
                                             <?= $result->examiner2Marks ?>
                                         </td>
                                         <td>
-                                            <?= $result->examiner3Marks ?>
+                                            <?php
+                                            if ($result->examiner3Marks == -1) {
+                                                echo "N/A";
+                                            } else {
+                                                echo $result->examiner3Marks;
+                                            }
+                                            ?>
                                         </td>
                                         <td>
                                             <?= $result->assessmentMarks ?>
@@ -466,5 +550,29 @@ $data['role'] = $role;
         </div>
 
 </body>
+<script>
+    function downloadMarkSheet(subjectCode, examId) {
+
+
+        // Modify the file URL dynamically based on the subjectCode
+        var fileUrl = '<?= ROOT ?>assets/csv/examsheets/output/final-marksheets/' + examId + '_' + subjectCode + '_' + 'new.csv';
+        console.log(subjectCode, examId, " ", fileUrl);
+        // Create an anchor element
+        var a = document.createElement('a');
+        a.href = fileUrl;
+
+        // Set the download attribute with the desired file name
+        a.download = 'Final_MarkSheet_' + subjectCode + '.csv';
+
+        // Append the anchor element to the document
+        document.body.appendChild(a);
+
+        // Trigger a click event on the anchor element
+        a.click();
+
+        // Remove the anchor element from the document
+        document.body.removeChild(a);
+    }
+</script>
 
 </html>

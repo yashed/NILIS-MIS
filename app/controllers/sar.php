@@ -16,7 +16,7 @@ class SAR extends Controller
 
         //uncoment this to add autherization to sar
         // if (!Auth::is_sar()) {
-        //     message('You are not authorized to view this page', 'error');
+        //     message('You are not authorized to view this page', 'error',true);
         //     header('Location: login');
         // }
 
@@ -374,7 +374,7 @@ class SAR extends Controller
 
 
                         if ($examCreation) {
-                            message("Exam Was Created Successfully", "success");
+                            message("Exam Was Created Successfully", "success", true);
                             redirect('sar/examination');
                         }
 
@@ -703,7 +703,7 @@ class SAR extends Controller
                         }
 
                         if ($createExam) {
-                            message("Exam Was Created Successfully", "success");
+                            message("Exam Was Created Successfully", "success", true);
                             redirect('sar/examination');
                         }
 
@@ -771,10 +771,10 @@ class SAR extends Controller
 
                     //need to add a message to show the result of the mail sending
                     if ($mailSendCheck) {
-                        message("Admission Cards Sent Successfully", "success");
+                        message("Admission Cards Sent Successfully", "success", true);
                         $_POST['admission'] = '';
                     } else {
-                        message("Admission Cards Sent Failed", "error");
+                        message("Admission Cards Sent Failed", "error", true);
                     }
                 }
 
@@ -901,7 +901,7 @@ class SAR extends Controller
 
                     //close the popup
                     $attetdancePopup = false;
-                    message("Attendance Submitted Successfully", "success");
+                    message("Attendance Submitted Successfully", "success", true);
                     activity("Attendance Submitted Successfully");
 
                 }
@@ -1033,6 +1033,17 @@ class SAR extends Controller
                 // save file in specific location
                 // Check if the file was uploaded successfully
 
+                //handle continue without examiner3
+
+                if (isset($_POST['cw-E3'])) {
+                    $e3SubCode = $_POST['cw-E3'];
+
+                    //update the status of the examiner 3 eligibility
+                    $examiner3Eligibility->updateRows(
+                        ['status' => 0],
+                        ['examID' => $examID, 'subCode' => $e3SubCode]
+                    );
+                }
 
                 //get uploaded marksheet details 
                 $submittedMarksheets = $resultSheet->where(['examId' => $examID]);
@@ -1107,7 +1118,7 @@ class SAR extends Controller
 
 
                             //uncomment this to add activity log
-                            // activity($message);
+                            activity($message);
 
 
 
@@ -1281,7 +1292,7 @@ class SAR extends Controller
 
                 } else {
                     // Handle file upload error
-                    message("File upload error", "error");
+                    message("File upload error", "error", true);
                     // echo json_encode(['success' => false, 'message' => 'File upload error.']);
                 }
 
@@ -1295,12 +1306,18 @@ class SAR extends Controller
             } else if ($method == 'results') {
 
                 $examMarks = new Marks();
+                $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
 
+                //get examID from session
+                if (!empty($_SESSION['examDetails'])) {
+                    $examID = $_SESSION['examDetails'][0]->examID;
+                }
+
+                //get subjects in the exam
                 $examSubjects = $examtimetable->where(['examID' => $examID]);
 
+                //get subject code from post data
                 if (isset($_POST['submit'])) {
-
-
                     $resultSubCode = isset($_POST['subCode']) ? $_POST['subCode'] : '';
                     // show($resultSubCode);
 
@@ -1309,21 +1326,33 @@ class SAR extends Controller
                     $resultSubCode = '';
                 }
 
-                $subjectDetails = $subjects->where(['SubjectCode' => $resultSubCode, 'DegreeID' => $degreeID]);
-                // show($subjectDetails);
                 // remove any leading or trailing spaces from the string
                 $resultSubCode = trim($resultSubCode);
 
+                //get subject details
+                $subjectDetails = $subjects->where(['SubjectCode' => $resultSubCode, 'DegreeID' => $degreeID]);
+
+
+
 
                 //get examination results using marks and final marks
-                $tables = ['final_marks'];
+                $tables = ['final_marks', 'exam_participants'];
                 $columns = ['*'];
-                $conditions = ['marks.examID = final_marks.examID', 'marks.studentIndexNo = final_marks.studentIndexNo', 'marks.subjectCode = final_marks.subjectCode', 'marks.examID = ' . $examID, 'marks.subjectCode =  "' . $resultSubCode . '"'];
-                $examResults = $examMarks->join($tables, $columns, $conditions);
-                // show($examResults);
+                $conditions = ['marks.examID = final_marks.examID', 'marks.studentIndexNo = exam_participants.indexNo', 'marks.studentIndexNo = final_marks.studentIndexNo', 'marks.subjectCode = final_marks.subjectCode'];
+                $whereConditions = ['marks.examID = ' . $examID, 'marks.subjectCode =  "' . $resultSubCode . '"', 'exam_participants.examID = ' . $examID];
+                $examResults = $examMarks->joinWhere($tables, $columns, $conditions, $whereConditions);
 
 
+                //generate csv file name
+                $fileName = $examID . '_' . $resultSubCode . '.csv';
+                $newFileName = $examID . '_' . $resultSubCode . '_new.csv';
 
+                //generate updated marksheet as csv file
+                if (!empty($resultSubCode)) {
+                    updateMarksheet($fileName, $examResults, $newFileName);
+                }
+
+                $data['subjectDetails'] = $subjectDetails;
                 $data['subNames'] = $examSubjects;
                 $data['examResults'] = $examResults;
 

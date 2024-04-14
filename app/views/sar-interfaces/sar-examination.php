@@ -286,6 +286,18 @@ $data['role'] = $role;
         padding: 10px;
 
     }
+
+    .btn-marksheet-name {
+        font-size: 1vw;
+        font-weight: 500px;
+        height: 80px;
+    }
+
+    .exam-footer {
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
 </style>
 
 <body>
