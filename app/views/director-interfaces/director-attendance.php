@@ -1,5 +1,5 @@
 <?php
-$role = "Clerk";
+$role = "director";
 $data['role'] = $role;
 
 ?>

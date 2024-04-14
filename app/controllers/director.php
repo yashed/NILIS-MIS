@@ -42,7 +42,7 @@ class DIRECTOR extends Controller
 
         $this->view('director-interfaces/director-degreeprograms', $data);
     }
-    
+
 
     public function participants($id = null, $action = null, $id2 = null)
     {
@@ -91,16 +91,16 @@ class DIRECTOR extends Controller
     {
         $user = new User();
         $data = [];
-    
+
         if (isset($_POST['update_user_data'])) {
             // Validate input fields
             $fname = isset($_POST['fname']) ? trim($_POST['fname']) : '';
             $lname = isset($_POST['lname']) ? trim($_POST['lname']) : '';
             $email = isset($_POST['email']) ? trim($_POST['email']) : '';
             $phoneNo = isset($_POST['phoneNo']) ? trim($_POST['phoneNo']) : '';
-    
+
             $errorMessage = '';
-    
+
             if (empty($fname) || empty($lname) || empty($email) || empty($phoneNo)) {
                 $errorMessage = '*All fields are required.';
             } else {
@@ -117,12 +117,12 @@ class DIRECTOR extends Controller
                         'email' => $email,
                         'phoneNo' => $phoneNo
                     ];
-    
+
                     $user->update($id, $dataToUpdate);
-    
+
                     // Fetch updated user data
                     $updatedUserData = $user->first(['id' => $id]);
-    
+
                     if ($updatedUserData === null) {
                         $errorMessage = 'No user data found after update.';
                     } else {
@@ -130,7 +130,7 @@ class DIRECTOR extends Controller
                     }
                 }
             }
-    
+
             if (!empty($errorMessage)) {
                 // Display error message and retain user input
                 $data['error'] = $errorMessage;
@@ -145,12 +145,12 @@ class DIRECTOR extends Controller
             // Fetch user data for display
             $id = $_SESSION['USER_DATA']->id;
             $data['user'] = $user->first(['id' => $id]);
-    
+
             if ($data['user'] === null) {
                 $data['error'] = 'No user data found.';
             }
         }
-    
+
         $this->view('director-interfaces/director-settings', $data);
     }
 
@@ -192,43 +192,51 @@ class DIRECTOR extends Controller
     }
 
     public function degreeprofile($action = null, $id = null)
-{
-    $data = [];
-    $data['action'] = $action;
-    $data['id'] = $id;
-    $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
-    // Check if degree ID is provided
-    if ($degreeID !== null) {
-        $degree = new Degree();
-        $subject = new Subjects();
-        $degreeTimeTable = new DegreeTimeTable();
-        // Fetch the data based on the ID
-        $degreeData = $degree->find($degreeID);
-        $degreeTimeTableData = $degreeTimeTable->find($degreeID);
-        $subjectsData = $subject->find($degreeID);
-        $data['degrees'] = $degreeData;
-        $subjects = [];
-        foreach ($subjectsData as $subject) {
-            $semesterNumber = $subject->semester;
-            // Create semester array if not already exists
-            if (!isset($subjects[$semesterNumber])) {
-                $subjects[$semesterNumber] = [];
+    {
+        $data = [];
+        $data['action'] = $action;
+        $data['id'] = $id;
+        $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
+        // Check if degree ID is provided
+        if ($degreeID !== null) {
+            $degree = new Degree();
+            $subject = new Subjects();
+            $degreeTimeTable = new DegreeTimeTable();
+            // Fetch the data based on the ID
+            $degreeData = $degree->find($degreeID);
+            $degreeTimeTableData = $degreeTimeTable->find($degreeID);
+            $subjectsData = $subject->find($degreeID);
+            $data['degrees'] = $degreeData;
+            $subjects = [];
+            foreach ($subjectsData as $subject) {
+                $semesterNumber = $subject->semester;
+                // Create semester array if not already exists
+                if (!isset($subjects[$semesterNumber])) {
+                    $subjects[$semesterNumber] = [];
+                }
+                // Add subject to semester array
+                $subjects[$semesterNumber][] = $subject;
             }
-            // Add subject to semester array
-            $subjects[$semesterNumber][] = $subject;
+            $data['subjects'] = $subjects;
+            $data['degreeTimeTable'] = $degreeTimeTableData;
+
+            // Load the view with the data
+            $this->view('director-interfaces/director-degreeprofile', $data);
+        } else {
+            echo "Error: Degree ID not provided in the URL.";
         }
-        $data['subjects'] = $subjects;
-        $data['degreeTimeTable'] = $degreeTimeTableData;
-
-        // Load the view with the data
-        $this->view('director-interfaces/director-degreeprofile', $data);
-    } else {
-        echo "Error: Degree ID not provided in the URL.";
     }
-}
 
-public function reports()
+    public function reports()
     {
         $this->view('director-interfaces/director-reports');
+    }
+
+    public function attendance()
+    {
+        $attendance = new studentAttendance();
+        $data['attendances'] = $attendance->findAll();
+
+        $this->view('director-interfaces\director-attendance', $data);
     }
 }
