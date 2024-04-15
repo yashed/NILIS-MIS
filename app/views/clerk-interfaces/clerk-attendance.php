@@ -315,7 +315,7 @@ $data['role'] = $role;
         </div>
     </div>
     <div id="importFrm" class="popup-form" style="display: none;">
-        <form action="" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <form action="" method="post" enctype="multipart/form-data" onsubmit="validateForm()">
             <label for="csvFile">Upload CSV File:</label>
             <div class="form-element">
                 <label for="selectDegree">Choose the degree name</label>
@@ -326,7 +326,7 @@ $data['role'] = $role;
                 </select>
             </div>
             <input type="file" name="csvFile" id="csvFile" accept=".csv" required>
-            <button type="submit" name="importSubmit" class="import-button">Import</button>
+            <button type="submit" name="importSubmit" class="import-button">Submit file</button>
         </form>
         <button class="close-button" onclick="toggleForm('importFrm')">Close</button>
     </div>
@@ -410,7 +410,8 @@ $data['role'] = $role;
                 document.getElementById("degreeError").style.display = "inline";
                 return false; // Prevent form submission
             }
-            return true; // Allow form submission
+            return true;
+            // Allow form submission
         }
     </script>
 </body>

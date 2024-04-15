@@ -13,7 +13,8 @@ class studentAttendance extends Model
 
         'id',
         'index_no',
-        'attendance'
+        'attendance',
+        'degree_name'
      ];
 
     

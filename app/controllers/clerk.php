@@ -250,7 +250,7 @@ public function attendance()
  
     $data['degrees'] = $degree->findAll();
 
-    if (isset($_POST['importSubmit'])) {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['importSubmit'])) {
         // Check if the uploaded file is present and no errors occurred during upload
         if ($_FILES['csvFile']['error'] == 0 && !empty($_FILES['csvFile']['tmp_name'])) {
             // Load StudentModel
@@ -265,20 +265,20 @@ public function attendance()
             }
 
             // Start reading from the 4th row and first column
-            $row = 3; // Initialize row number
+            // $row = 3; 
             while (($line = fgetcsv($csvFile)) !== FALSE) {
-                $row++;
+                // $row++;
 
-                // Skip rows until reaching the 4th row
-                if ($row < 4) {
-                    continue;
-                }
+                // // Skip rows until reaching the 4th row
+                // if ($row < 4) {
+                //     continue;
+                // }
 
                 // Read data from the first column (index 0)
                 $index_no = $line[0];
                 $attendance = $line[1];
                
-
+                
                 // Check if the record already exists
                 $existingData = $studentAttendance->where(['index_no' => $index_no]);
                 if ($existingData) {
@@ -292,12 +292,14 @@ public function attendance()
                     ];
                     $studentAttendance->updateRows($updateData, $whereConditions);
                 } else {
+                    // show($_POST);
                     // If record doesn't exist, insert it
                     $insertData = [
                         'index_no' => $index_no,
-                        'attendance' => $attendance,
-                        'degree_name' => $degree_name
-                        ];
+                        'degree_name' => $degree_name,
+                        'attendance' => $attendance
+                    ];
+                    // show($insertData);
                     $studentAttendance->insert($insertData);
                 }
             }
