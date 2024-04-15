@@ -173,14 +173,7 @@ class DIRECTOR extends Controller
             } else {
                 echo "Error: Student not found.";
             }
-            if ($action == "update") {
-                echo "POST request received";
-            } else if ($action == "add") {
-            } else if ($action == 'delete') {
-                $studentModel->delete(['id' => $studentId]);
-                redirect("director/participants");
-            }
-        } else {
+} else {
             echo "Error: Student ID not provided in the URL.";
         }
     }
