@@ -49,51 +49,70 @@ class Admin extends Controller
       // $user->insert($_POST);
 
       // header('Location: users');
-      if ($_POST['submit'] == "update") {
+      if (!empty($_POST['reset-pw'])) {
+        if ($_POST['reset-pw'] == "reset-pw") {
 
-        if ($user->validateUpdate($_POST)) {
-          $popupUpdate = false;
-
-          $user->update($_POST['id'], $_POST);
-          message("User profile was successfully updated", 'success', true);
-        } else {
-
-          $popupUpdate = true;
-          message("User profile was not updated Corectly", 'error', true);
-        }
-      } else if ($_POST['submit'] == "add") {
-        if ($user->validate($_POST)) {
-          $popupCreate = false;
-
-          //unset submit value in POST data
-          unset($_POST['submit']);
-
-          try {
-            //set default passsword
+          if (!empty($_POST['role'])) {
             $password = $_POST['role'] . '123';
-            //add date to the POST data
-            $_POST['date'] = date("Y-m-d H:i:s");
-            //add password to the POST data
-            $_POST['password'] = password_hash($password, PASSWORD_DEFAULT);
-            $_POST['status'] = 'initial';
-
-            $user->insert($_POST);
-            message("User profile was successfully created", 'success', true);
-
-            //refresh the page
-            // header("Refresh:0");
-
-          } catch (\Throwable $th) {
-            // var_dump($th);
           }
-        } else {
-          $popupCreate = true;
-          message("User profile was not created Corectly", 'error', true);
-        }
-      } else if ($_POST['submit'] == "delete") {
 
-        $user->delete2($_POST);
-        message("User profile was successfully Deleted", 'success', true);
+          $dataToUpdate = [
+            'password' => password_hash($password, PASSWORD_DEFAULT),
+            'status' => 'initial'
+          ];
+
+          $user->update($_POST['id'], $dataToUpdate);
+          message("User password was successfully reset", 'success', true);
+        }
+      }
+      if (!empty($_POST['submit'])) {
+        if ($_POST['submit'] == "update") {
+
+
+          if ($user->validateUpdate($_POST)) {
+            $popupUpdate = false;
+
+            $user->update($_POST['id'], $_POST);
+            message("User profile was successfully updated", 'success', true);
+          } else {
+
+            $popupUpdate = true;
+            message("User profile was not updated Corectly", 'error', true);
+          }
+        } else if ($_POST['submit'] == "add") {
+          if ($user->validate($_POST)) {
+            $popupCreate = false;
+
+            //unset submit value in POST data
+            unset($_POST['submit']);
+
+            try {
+              //set default passsword
+              $password = $_POST['role'] . '123';
+              //add date to the POST data
+              $_POST['date'] = date("Y-m-d H:i:s");
+              //add password to the POST data
+              $_POST['password'] = password_hash($password, PASSWORD_DEFAULT);
+              $_POST['status'] = 'initial';
+
+              $user->insert($_POST);
+              message("User profile was successfully created", 'success', true);
+
+              //refresh the page
+              // header("Refresh:0");
+
+            } catch (\Throwable $th) {
+              // var_dump($th);
+            }
+          } else {
+            $popupCreate = true;
+            message("User profile was not created Corectly", 'error', true);
+          }
+        } else if ($_POST['submit'] == "delete") {
+
+          $user->delete2($_POST);
+          message("User profile was successfully Deleted", 'success', true);
+        }
       }
     }
     //get all data from database

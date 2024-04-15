@@ -352,16 +352,15 @@ $data['role'] = $role;
 
     .btn-marksheet {
         width: 15vw;
-        color: #fff;
+        color: #17376e;
         height: 5vh;
-        padding: 5px 15px 5px 15px;
+        padding: 5px 15px;
         border-radius: 10px;
         background: #ffffff;
         box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
-        color: #17376e;
-        border: 0px;
-        margin-bottom: 10px;
         border: 1px solid #17376e;
+        margin-bottom: 0;
+        /* Adjusted to remove the gap */
         font-size: 1vw;
         display: flex;
         align-items: center;
@@ -371,13 +370,50 @@ $data['role'] = $role;
     .btn-marksheet:hover {
         color: black;
         background-color: #E2E2E2;
-        border: 1px solid #17376e;
     }
 
     .btn-marksheet-name {
         font-size: 1vw;
-        font-weight: 500px;
+        font-weight: 400;
+    }
 
+    .exam-create-dropdown {
+        width: 15vw;
+        position: relative;
+        /* Ensure the dropdown is positioned relative to this */
+    }
+
+    .exam-create-dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid rgba(23, 55, 110, 0.46);
+        box-shadow: 0px 8px 11px 0px rgba(0, 0, 0, 0.15);
+        border-radius: 12px;
+        width: 15vw;
+        z-index: 1;
+        top: 100%;
+        /* Positions right below the button */
+        left: 0;
+    }
+
+    .exam-create-dropdown-content a {
+        font-size: 1vw;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+    }
+
+    .exam-create-dropdown-content a:hover {
+        background-color: #E0E0E0;
+        border-radius: 12px;
+    }
+
+    .exam-create-dropdown:hover .exam-create-dropdown-content {
+        margin-top: 1px;
+        display: block;
     }
 </style>
 
@@ -477,12 +513,22 @@ $data['role'] = $role;
                                 </div>
                             </div>
                             <div class='mark-sheet-btn'>
-                                <button class="btn-marksheet" name="submit" value="selectSubject"
+                                <div class="exam-create-dropdown">
+                                    <button class="btn-marksheet">
+                                        <div class="btn-marksheet-name"> Download Mark Sheet</div>
+                                    </button>
+                                    <div class="exam-create-dropdown-content">
+                                        <a onclick="downloadMarkSheet('<?= $subjectCode ?>','<?= $examId ?>')">.CSV</a>
+                                        <a href="#">.PDF</a>
+                                    </div>
+                                </div>
+
+                                <!-- <button class="btn-marksheet" name="submit" value="selectSubject"
                                     onclick="downloadMarkSheet('<?= $subjectCode ?>','<?= $examId ?>')">
                                     <div class="btn-marksheet-name">
                                         Download Mark Sheet
                                     </div>
-                                </button>
+                                </button> -->
                             </div>
                         </div>
                         <table>

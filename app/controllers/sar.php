@@ -1291,9 +1291,9 @@ class SAR extends Controller
                     }
 
                 } else {
-                    // Handle file upload error
-                    message("File upload error", "error", true);
-                    // echo json_encode(['success' => false, 'message' => 'File upload error.']);
+                    // // Handle file upload error
+                    // message("File upload error", "error", true);
+                    // // echo json_encode(['success' => false, 'message' => 'File upload error.']);
                 }
 
 
@@ -1341,7 +1341,6 @@ class SAR extends Controller
                 $conditions = ['marks.examID = final_marks.examID', 'marks.studentIndexNo = exam_participants.indexNo', 'marks.studentIndexNo = final_marks.studentIndexNo', 'marks.subjectCode = final_marks.subjectCode'];
                 $whereConditions = ['marks.examID = ' . $examID, 'marks.subjectCode =  "' . $resultSubCode . '"', 'exam_participants.examID = ' . $examID];
                 $examResults = $examMarks->joinWhere($tables, $columns, $conditions, $whereConditions);
-
 
                 //generate csv file name
                 $fileName = $examID . '_' . $resultSubCode . '.csv';

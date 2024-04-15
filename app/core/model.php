@@ -443,9 +443,9 @@ class Model extends Database
         // Generate WHERE part of the query
         $wherePart = '';
         foreach ($whereConditions as $key => $value) {
-            $wherePart .= "{$key}=:$key AND ";
+            $wherePart .= " {$key}=:$key AND";
         }
-        $wherePart = rtrim($wherePart, 'AND ');
+        $wherePart = rtrim($wherePart, 'AND');
 
         // Construct the final query
         $query = "UPDATE {$this->table} SET {$setPart} WHERE {$wherePart}";

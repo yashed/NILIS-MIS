@@ -7,12 +7,13 @@
             <div class="form">
                 <div class="update-title-btn">
                     <h2>Update User Profile</h2>
-                    <button calss='pw-rest-btn' type="submit" id="rest-pw" name="rest-pw" value="rest-pw">Reset
+                    <button calss='pw-rest-btn' type="submit" id="rest-pw" name="reset-pw" value="reset-pw">Reset
                         Password</button>
                 </div>
                 <div class="form-input-fields">
                     <div class="user-data">
                         <input type="text" name="id" hidden>
+                        <input type="text" name="role" value="<?= set_value('role') ?>" hidden>
                         <div class="coloum-01">
                             <div class="form-element">
                                 <label for="fname">First Name</label>

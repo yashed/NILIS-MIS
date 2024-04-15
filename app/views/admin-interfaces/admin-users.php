@@ -663,7 +663,7 @@ $data['role'] = $role;
                                                     stroke-linejoin="round" />
                                             </svg>
                                         </div>
-                                        <div onclick="onUpdateUserClick('<?= $user->id ?>', '<?= $user->fname ?>', '<?= $user->lname ?>', '<?= $user->email ?>', '<?= $user->phoneNo ?>')"
+                                        <div onclick="onUpdateUserClick('<?= $user->id ?>', '<?= $user->fname ?>', '<?= $user->lname ?>', '<?= $user->email ?>', '<?= $user->phoneNo ?>', '<?= $user->role ?>')"
                                             class="user-update" id="show-update">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                 viewBox="0 0 20 20" fill="none">
@@ -693,7 +693,7 @@ $data['role'] = $role;
 
 
             <script>
-                function onUpdateUserClick(userId, fname, lname, email, phoneNo) {
+                function onUpdateUserClick(userId, fname, lname, email, phoneNo, role) {
                     // Your existing code for onUpdateUserClick
                     onDataPopup('update-popup', {
                         id: userId,
@@ -701,6 +701,7 @@ $data['role'] = $role;
                         lname: lname,
                         email: email,
                         phoneNo: phoneNo,
+                        role: role
                     });
 
                     // Add the following line to change the CSS class
