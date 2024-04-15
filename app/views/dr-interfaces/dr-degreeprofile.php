@@ -53,7 +53,9 @@ $data['role'] = $role;
                             </td>
                         </tr>
                         <td colspan="2">
-                            <button class="degreeprofile-pin" type="button" id="degreeprofile-complete_degree" onclick="completedDegree()">Completed</button>
+                            <?php if ($degrees[0]->Status == "ongoing") : ?>
+                                <button class="degreeprofile-pin" type="button" id="degreeprofile-complete_degree" onclick="completedDegree()">Completed</button>
+                            <?php endif; ?>
                             <button class="degreeprofile-pin" type="button" id="degreeprofile-delete_degree" onclick="deleteDegree()">Delete Degree</button>
                         </td>
                     </table>
