@@ -81,6 +81,7 @@ class SAR extends Controller
         $resultSheet = new ResultSheet();
         $examAttendance = new Attendance();
         $examiner3Eligibility = new Examiner3Subject();
+        $finalMarks = new FinalMarks();
 
         $data['errors'] = [];
         $data['degrees'] = $degree->findAll();
@@ -117,6 +118,18 @@ class SAR extends Controller
         //Get currect Degree short name
         $degreeShortName = [$degree->where(['DegreeID' => $degreeID])[0]->DegreeShortName];
 
+        //get the grades of the students join with exam participants table
+        $tablesJoin = ['exam_participants'];
+        $columnsJoin = ['final_marks.id', 'final_marks.studentIndexNo', 'final_marks.examID', 'final_marks.degreeID', 'final_marks.finalMarks', 'final_marks.grade', 'final_marks.subjectCode', 'exam_participants.studentType', 'exam_participants.semester'];
+        $conditionsJoin = ['final_marks.studentIndexNo = exam_participants.indexNo', 'final_marks.examID = exam_participants.examID'];
+        $whereConditionsJoin = ['final_marks.grade IS NULL'];
+        $marksToGrade = $finalMarks->joinWhere($tablesJoin, $columnsJoin, $conditionsJoin, $whereConditionsJoin);
+
+
+        //update grades of marks
+        if (!empty($marksToGrade)) {
+            $finalMarks->updateGrades($marksToGrade);
+        }
 
         if ($method == "create" && $id == "0") {
 
