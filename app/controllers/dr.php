@@ -123,7 +123,7 @@ class DR extends Controller
         }
         $degreeID = $_SESSION['DegreeID'];
         $_SESSION['DegreeID'] = $degreeID; 
-        echo $degreeID;
+        // echo $degreeID;
         // Check if degree ID is provided
         if ($degreeID !== null) {
             $degree = new Degree();
@@ -149,28 +149,28 @@ class DR extends Controller
             $data['subjects'] = $subjects;
             $data['degreeTimeTable'] = $degreeTimeTableData;
             if ($action == "update") {
-                // echo "update ";
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-                    show($_POST);
-                    // echo "POST request received ";
+                    // show($_POST);
                     if (isset($_POST['timetableData'])) {
                         $timetableData = json_decode($_POST['timetableData'], true);
                         // Iterate over each subject's data and insert it into the database
                         foreach ($timetableData as $timetableDataItem) {
-                            // echo "a";
                             // Construct the data array for insertion
-                            $data1 = [
-                                'EventID' => $timetableDataItem['eventID'],
-                                'DegreeID' => $degreeID,
+                            // show($timetableDataItem);
+                            $dataSet1 = [
                                 'EventName' => $timetableDataItem['eventName'],
                                 'EventType' => $timetableDataItem['eventType'],
                                 'StartingDate' => $timetableDataItem['eventStart'],
-                                'EndingDate' => $timetableDataItem['eventEnd'],
+                                'EndingDate' => $timetableDataItem['eventEnd']
                             ];
-                            echo json_encode($data1);
-                            $degreeTimeTable->update($degreeID, $data1);
-                            redirect("dr/degreeprofile");
+                            $dataGet1 = [
+                                'EventID' => $timetableDataItem['eventID'],
+                                'DegreeID' => $degreeID
+                            ];
+                            // echo json_encode($data1);
+                            $degreeTimeTable->updateRows($dataSet1, $dataGet1);
                         }
+                        redirect("dr/degreeprofile");
                     }
                 }
             } else if ($action == "delete") {
@@ -186,9 +186,15 @@ class DR extends Controller
                     if(isset($_POST['degreeStatus'])) {
                         // Retrieve the value of the "degreeStatus" parameter
                         $Status = $_POST['degreeStatus'];
-                        echo $Status;
-                        $degree->update($degreeID, ['Status' => $Status]);
-                        // redirect("dr/degreeprofile");
+                        // echo $Status;
+                        $dataset = [
+                            'Status' => $Status
+                        ];
+                        $dataget = [
+                            'DegreeID' => $degreeID
+                        ];
+                        $degree->updateRows($dataset, $dataget);
+                        redirect("dr/degreeprofile");
                     }
                 }
             }
@@ -198,8 +204,6 @@ class DR extends Controller
             echo "Error: Degree ID not provided in the URL.";
         }
     }
-
-
 
     public function newDegree($action = null, $id = null)
     {
@@ -240,7 +244,8 @@ class DR extends Controller
                 }
                 redirect("dr/degreeprofile");
             }
-        } else {
+        } else if ($action == 'file') {
+            // echo $_POST['student-data'];
             // Write the header row to the CSV file
             $rowData = ['Full-Name', 'Email', 'Country', 'NIC-No', 'Date-Of-Birth', 'whatsappNo', 'Address', 'Phone-No'];
             // get uploaded csv fill
@@ -252,52 +257,53 @@ class DR extends Controller
                 echo "<script>console.log('file is not open successfully');</script>";
             }
             fclose($f);
-            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['student-data']) && $_POST['student-data'] == 'upload-csv') {
-                echo "pakaya";
-                if (isset($_FILES['student-data']) && $_FILES['student-data']['error'] === UPLOAD_ERR_OK) {
-                    $uploadDirectory = 'assets/csv/input/';
-                    // Ensure the directory exists and set proper permissions
-                    if (!is_dir($uploadDirectory)) {
-                        mkdir($uploadDirectory, 0777, true);
-                        chmod($uploadDirectory, 0777);
-                    }
-                    $fileName = $_FILES['student-data']['name'];
-                    $fileTmpName = $_FILES['student-data']['tmp_name'];
-                    $targetPath = $uploadDirectory . basename($fileName);
-                    if (move_uploaded_file($fileTmpName, $targetPath)) {
-                        echo "<script>console.log('File uploaded successfully.');</script>";
-                        // Inside your newDegree function after successful file upload
-                        $csvFile = fopen($targetPath, 'r');
-                        // Skip the header row
-                        fgetcsv($csvFile);
-                        while (($rowData = fgetcsv($csvFile)) !== false) {
-                            // Assuming the order of columns in the CSV matches the order in the $rowData array
-                            $IndexNo = $student->generateIndexRegNumber($degree_id, $degreeShortName, $currentYear);
-                            if ($IndexNo !== false && $IndexNo['IndexNo'] != null && $IndexNo['RegistationNo'] != null) {
-                                $data = [
-                                    'Email' => $rowData[1],
-                                    'country' => $rowData[2],
-                                    'name' => $rowData[0],
-                                    'nicNo' => $rowData[3],
-                                    'birthdate' => $rowData[4],
-                                    'whatsappNo' => $rowData[5],
-                                    'address' => $rowData[6],
-                                    'phoneNo' => $rowData[7],
-                                    'degreeID' => $degree_id,
-                                    'indexNo' => $IndexNo['IndexNo'],
-                                    'regNo' => $IndexNo['RegistationNo'],
-                                ];
-                                $student->insert($data);
-                            } else {
-                                echo "Error: Failed to generate index and registration numbers.";
-                            }
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                if (isset($_POST['submit']) && $_POST['submit'] == 'upload-csv') {
+                    if (isset($_FILES['student-data']) && $_FILES['student-data']['error'] === UPLOAD_ERR_OK) {
+                        $uploadDirectory = 'assets/csv/input/';
+                        // Ensure the directory exists and set proper permissions
+                        if (!is_dir($uploadDirectory)) {
+                            mkdir($uploadDirectory, 0777, true);
+                            chmod($uploadDirectory, 0777);
                         }
-                        fclose($csvFile);
+                        $fileName = $_FILES['student-data']['name'];
+                        $fileTmpName = $_FILES['student-data']['tmp_name'];
+                        $targetPath = $uploadDirectory . basename($fileName);
+                        if (move_uploaded_file($fileTmpName, $targetPath)) {
+                            echo "<script>console.log('File uploaded successfully.');</script>";
+                            // Inside your newDegree function after successful file upload
+                            $csvFile = fopen($targetPath, 'r');
+                            // Skip the header row
+                            fgetcsv($csvFile);
+                            while (($rowData = fgetcsv($csvFile)) !== false) {
+                                // Assuming the order of columns in the CSV matches the order in the $rowData array
+                                $IndexNo = $student->generateIndexRegNumber($degree_id, $degreeShortName, $currentYear);
+                                if ($IndexNo !== false && $IndexNo['IndexNo'] != null && $IndexNo['RegistationNo'] != null) {
+                                    $data = [
+                                        'Email' => $rowData[1],
+                                        'country' => $rowData[2],
+                                        'name' => $rowData[0],
+                                        'nicNo' => $rowData[3],
+                                        'birthdate' => $rowData[4],
+                                        'whatsappNo' => $rowData[5],
+                                        'address' => $rowData[6],
+                                        'phoneNo' => $rowData[7],
+                                        'degreeID' => $degree_id,
+                                        'indexNo' => $IndexNo['IndexNo'],
+                                        'regNo' => $IndexNo['RegistationNo'],
+                                    ];
+                                    $student->insert($data);
+                                } else {
+                                    echo "Error: Failed to generate index and registration numbers.";
+                                }
+                            }
+                            fclose($csvFile);
+                        } else {
+                            echo "<script>console.log('Failed to upload file.');</script>";
+                        }
                     } else {
-                        echo "<script>console.log('Failed to upload file.');</script>";
+                        echo "<script>console.log('Error uploading file.');</script>";
                     }
-                } else {
-                    echo "<script>console.log('Error uploading file.');</script>";
                 }
             }
         }
@@ -326,7 +332,8 @@ class DR extends Controller
             // $data['$degreeId'] = $degreeId;
             // $degree_id = $data['student'][0]->degreeID;
             $data['student'] = $studentModel->findstudentid($studentId);
-            $data['degree'] = $degree->find($degreeId);
+            $data['degrees'] = $degree->find($degreeId);
+            $data['Degree'] = $degree->findAll();
             if ($action == "update") {
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (isset($_POST['submit']) && $_POST['submit'] === 'update') {
@@ -351,15 +358,42 @@ class DR extends Controller
                 redirect("dr/participants");
             } else if ($action == 'add') {
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-                     $newDegreeType = $_POST['select_degree_type'];
-                    $oldDegreeType = $data['degree']->DegreeShortName;
-                    // Update student to suspend
-                    $suspendSTU = [
-                        'status' => $data['student']->status,
+                    $newDegreeID = $_POST['select_degree_id'];
+                    $oldDegreeID = $data['degrees'][0]->DegreeID;
+                    // echo $newDegreeID;
+                    // echo $oldDegreeID;
+                    $newDegreeType = $degree->find($newDegreeID)[0]->DegreeShortName;
+                    $newDegreeYear = $degree->find($newDegreeID)[0]->AcademicYear;
+                    $newDegreeYear = $newDegreeYear % 100;
+                    $status = "continue";
+                    // echo $newDegreeType;
+                    // echo $newDegreeYear;
+                    $suspendSTU = [   // Update student to suspend
+                        'status' => "suspended",
                     ];
                     $studentModel->update($studentId, $suspendSTU);
                     // Generate new index and registration numbers
-                    $IndexNo = $studentModel->generateIndexRegNumber($degreeId, $newDegreeType, $data['degree']->AcademicYear);
+                    $IndexNo = $studentModel->generateIndexRegNumber($newDegreeID, $newDegreeType, $newDegreeYear);
+                    if ($IndexNo !== false && $IndexNo['IndexNo'] != null && $IndexNo['RegistationNo'] != null) {
+                        $data = [
+                            'Email' => $data['student'][0]->Email,
+                            'regNo' => $IndexNo['RegistationNo'],
+                            'country' => $data['student'][0]->country,
+                            'indexNo' => $IndexNo['IndexNo'],
+                            'name' => $data['student'][0]->name,
+                            'nicNo' => $data['student'][0]->nicNo,
+                            'birthdate' => $data['student'][0]->birthdate,
+                            'whatsappNo' => $data['student'][0]->whatsappNo,
+                            'address' => $data['student'][0]->address,
+                            'phoneNo' => $data['student'][0]->phoneNo,
+                            'degreeID' => $newDegreeID,
+                            'status' => $status,
+                        ];
+                        $studentModel->insert($data);
+                        redirect("dr/participants");
+                    } else {
+                        echo "Error: Failed to generate index and registration numbers.";
+                    }
                 }
             }
             $this->view('dr-interfaces/dr-userprofile', $data);
