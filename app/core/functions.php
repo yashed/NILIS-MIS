@@ -304,7 +304,8 @@ function insertMarks($file, $examID, $degreeID, $subCode)
         $data['assessmentMarks'] = $values[4];
         $data['examiner3Marks'] = !empty($values[5]) ? $values[5] : -1;
         show($data);
-        //insert data into table
+
+        //insert or update data into table
         if (!empty($mark->markValidate($data))) {
             if ($mark->markValidate($data)->status == 'update') {
                 $id = $mark->markValidate($data)->id;
@@ -312,11 +313,11 @@ function insertMarks($file, $examID, $degreeID, $subCode)
                 show($id);
                 //update data in the databse marks table
                 $mark->update($id, $data);
-            } else {
+            } else if ($mark->markValidate($data)->status == 'insert') {
 
                 $mark->insert($data);
             }
-            // $mark->insert($data);
+
         }
 
     }
@@ -358,7 +359,7 @@ function checkGap($file, $examId, $subCode)
         $values = str_getcsv($lines[$i]);
 
         //check the gap
-        var_dump('values = ' . $values);
+        // var_dump('values = ' . $values);
         $gap = abs($values[2] - $values[3]);
         if ($gap > 10) {
             var_dump('gap is greater than 10');

@@ -381,6 +381,9 @@ $data['role'] = $role;
                     <div class="degree-student-table">
 
                         <table class="table">
+                        <?php if (empty($repeatStudents) && empty($medicalStudents)): ?>
+                                    <div class="not-found-stu">No students found</div>
+                        <?php else: ?>
                             <thead>
                                 <tr>
                                     <th>
@@ -438,9 +441,7 @@ $data['role'] = $role;
                                 <?php endforeach; ?>
                                 <?php endif; ?>
 
-                                <?php if (empty($repeatStudents) && empty($medicalStudents)): ?>
-                                    <div class="not-found-stu">No students found</div>
-                                <?php endif; ?>
+                             <?php endif; ?>
                                    
                             </tbody>
                         </table>

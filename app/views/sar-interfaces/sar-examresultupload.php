@@ -1163,7 +1163,7 @@ $degreeId = $_GET['degreeID'];
     var examSheets = <?php echo $subjectData; ?>;
     var examiner3Data = <?php echo $examiner3Data; ?>;
 
-    console.log(examiner3Data);
+
 
     for (var subjectCode in examSheets) {
         if (examSheets.hasOwnProperty(subjectCode)) {
@@ -1432,25 +1432,55 @@ $degreeId = $_GET['degreeID'];
                 var tempDiv = document.createElement('div');
                 tempDiv.innerHTML = data;
 
-                var examiner3Status = tempDiv.querySelector('#examiner3-status').textContent;
-                var examiner3SubCode = tempDiv.querySelector('#examiner3SubCode').textContent;
-                var examiner3SubID = tempDiv.querySelector('#examiner3SubID').textContent;
+                // var examiner3Status = tempDiv.querySelector('#examiner3-status').textContent;
+                // var examiner3SubCode = tempDiv.querySelector('#examiner3SubCode').textContent;
+                // var examiner3SubID = tempDiv.querySelector('#examiner3SubID').textContent;
 
-                console.log('Examiner 3 SubID:', examiner3SubID);
+                var examiner3StatusElements = tempDiv.querySelectorAll('.examiner3-status');
+                var statusArray = [];
 
-                if (examiner3Status && examiner3SubCode) {
-                    console.log('Examiner 3 Status:', examiner3Status);
-                    console.log('Examiner 3 SubCode:', examiner3SubCode);
-                } else {
-                    console.error('Examiner 3 not found');
-                }
+                examiner3StatusElements.forEach(function (element) {
+                    statusArray.push(element.textContent);
+                });
+                console.log('Examiner 3 Status:', statusArray);
 
+                var examiner3SubCodeElements = tempDiv.querySelectorAll('.examiner3subCode');
+                var subCodeArray = [];
+
+                examiner3SubCodeElements.forEach(function (element) {
+                    subCodeArray.push(element.textContent);
+                });
+                console.log('Examiner 3 SubCode:', subCodeArray);
+
+                var examiner3SubIDElements = tempDiv.querySelectorAll('.examiner3subID');
+                var subIDArray = [];
+
+                examiner3SubIDElements.forEach(function (element) {
+                    subIDArray.push(element.textContent);
+                });
+                console.log('Examiner 3 SubID:', subIDArray);
+
+
+                subCodeArray.forEach(function (subCode) {
+                    var Examiner3containerId = 'container' + subCode + '_4';
+                    var Examiner3Btn = 'Examiner3_btn_' + subCode;
+
+                    var containerElement = document.getElementById(Examiner3containerId);
+                    var btnElement = document.getElementById(Examiner3Btn);
+
+                    if (containerElement && btnElement) {
+                        containerElement.style.display = 'flex';
+                        btnElement.style.display = 'flex';
+                    } else {
+                        console.error('Elements not found for SubCode:', subCode);
+                    }
+                });
 
                 //show uploaded view
-                var Examiner3fileContainerId = 'file-info-container-' + subCode + '-' + type;
-                var Examiner3buttonContainerId = 'button-container-' + subCode + '-' + type;
-                var Examiner3containerId = 'container' + examiner3SubCode + '_4';
-                var Examiner3Btn = 'Examiner3_btn_' + examiner3SubCode;
+                // var Examiner3fileContainerId = 'file-info-container-' + subCode + '-' + type;
+                // var Examiner3buttonContainerId = 'button-container-' + subCode + '-' + type;
+                // var Examiner3containerId = 'container' + examiner3SubCode + '_4';
+                // var Examiner3Btn = 'Examiner3_btn_' + examiner3SubCode;
 
 
                 //henadel examiner 3 marks upload sesction
@@ -1459,17 +1489,17 @@ $degreeId = $_GET['degreeID'];
 
                 // element.setAttribute('data-active', examiner3Status ? 'true' : 'false');
 
-                if (examiner3Status == '1') {
-                    document.getElementById(Examiner3containerId).style.display = 'flex';
-                    document.getElementById(Examiner3Btn).style.display = 'flex';
-                }
+                // if (examiner3Status == '1') {
+                //     document.getElementById(Examiner3containerId).style.display = 'flex';
+                //     document.getElementById(Examiner3Btn).style.display = 'flex';
+                // }
 
                 //show uploaded view
                 var fileContainerId = 'file-info-container-' + subCode + '-' + type;
                 var buttonContainerId = 'button-container-' + subCode + '-' + type;
 
-                console.log(Examiner3containerId);
-                console.log(Examiner3Btn);
+                // console.log(Examiner3containerId);
+                // console.log(Examiner3Btn);
 
                 document.getElementById(fileContainerId).style.display = 'none';
                 document.getElementById(buttonContainerId).style.display = 'none';

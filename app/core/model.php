@@ -171,6 +171,49 @@ class Model extends Database
         return false;
     }
 
+    public function whereOr($data)
+    {
+        $query = "SELECT * FROM " . $this->table . " WHERE ";
+
+        $conditions = [];
+
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+
+                $orConditions = [];
+                foreach ($value['values'] as $item) {
+                    $orConditions[] = $key . "=:" . $key . count($orConditions);
+                }
+                $conditions[] = "(" . implode(" OR ", $orConditions) . ")";
+            } else {
+                // Normal conditions, key = value
+                $conditions[] = $key . "=:" . $key;
+            }
+        }
+
+        $query .= implode(" AND ", $conditions);
+
+        // Binding values
+        $bindValues = [];
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                foreach ($value['values'] as $index => $item) {
+                    $bindValues[$key . $index] = $item;
+                }
+            } else {
+                $bindValues[$key] = $value;
+            }
+        }
+
+        show($query);
+        show($bindValues);
+        // Execute the query
+        $res = $this->query($query, $bindValues);
+
+        return is_array($res) ? $res : false;
+    }
+
+
     public function join($tables, $columns, $conditions, $order = null, $limit = null)
     {
         // Build the query

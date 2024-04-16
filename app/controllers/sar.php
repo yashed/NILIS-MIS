@@ -33,6 +33,7 @@ class SAR extends Controller
     }
     public function degreeprograms()
     {
+
         $degree = new Degree();
 
 
@@ -45,7 +46,14 @@ class SAR extends Controller
     {
         $degree = new Degree();
 
+        $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
 
+        //get all degree data and put it on session
+        if ($degreeID != null) {
+            $degreeData = $degree->where(['DegreeID' => $degreeID]);
+            $_SESSION['degreeData'] = $degreeData;
+
+        }
         $data['degrees'] = $degree->findAll();
 
 
@@ -55,19 +63,26 @@ class SAR extends Controller
     {
 
         //get the degree id from the url
-        $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
         $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
 
-        //need to get the semster to handel the two yaer exam
-        $semester = isset($_GET['semester']) ? $_GET['semester'] : null;
-
-        // show($degreeID);
-        // show($degreeID);
+        //set semester usign session data
+        if (!empty($_SESSION['exam-creation-details'])) {
+            $selectedSemester = $_SESSION['exam-creation-details']['semester'];
+        }
 
         //need to get these values form the session
-        $degreeID = 4;
-        $semester = 1;
-        $examID = 63;
+        if (!empty($_SESSION['degreeData'])) {
+            $degreeID = $_SESSION['degreeData'][0]->DegreeID;
+
+        } else {
+            $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
+        }
+
+        //unset session message data
+        if (!empty($_SESSION['message'])) {
+            unset($_SESSION['message']);
+        }
+
 
         $model = new Model();
         $degree = new Degree();
@@ -86,7 +101,7 @@ class SAR extends Controller
         $data['errors'] = [];
         $data['degrees'] = $degree->findAll();
         $data['students'] = $student->where(['degreeID' => $degreeID]);
-        $data['subjects'] = $subjects->where(['degreeID' => $degreeID, 'semester' => $semester]);
+
 
         //get exam details with degree details
         $dataTables = ['degree'];
@@ -131,6 +146,23 @@ class SAR extends Controller
             $finalMarks->updateGrades($marksToGrade);
         }
 
+        //add repete students to repete student table
+        //get repete students details(students who has marks less than 50)
+
+        $rtables = ['degree', 'exam_participants'];
+        $rcolumns = ['exam_participants.indexNo', 'exam_participants.examID', 'exam_participants.degreeID', 'exam_participants.studentType', 'exam_participants.semester', 'exam_participants.attempt', 'final_marks.subjectCode', 'final_marks.finalMarks', 'final_marks.grade', 'degree.DegreeShortName'];
+        $rconditions = ['final_marks.studentIndexNo = exam_participants.indexNo', 'exam_participants.degreeID = degree.DegreeID', 'final_marks.examID = exam_participants.examID'];
+        $rwhereConditions = ['final_marks.finalMarks <' . 49.5];
+        $repeateStudentsData = $finalMarks->joinWhere($rtables, $rcolumns, $rconditions, $rwhereConditions);
+
+
+        //add repete students to repete student table
+        if (!empty($repeateStudentsData)) {
+            $finalMarks->addRepeteStudents($repeateStudentsData);
+        }
+
+
+
         if ($method == "create" && $id == "0") {
 
             if (isset($_POST['submit']) && !empty($_POST['exam-type'])) {
@@ -171,18 +203,21 @@ class SAR extends Controller
             $whereConditions2 = ['repeat_students.degreeShortName=' . "'" . $degreeShortName[0] . "'"];
             $joinStudnetData2 = $repeatStudents->joinWhere($tables, $columns, $conditions2, $whereConditions2);
 
-            foreach ($joinStudnetData1 as $medicalStudent) {
-                if (in_array($medicalStudent->DegreeShortName, $degreeShortName)) {
-                    $data['medicalStudents'][] = $medicalStudent;
+            if (!empty($joinStudnetData1)) {
+                foreach ($joinStudnetData1 as $medicalStudent) {
+                    if (in_array($medicalStudent->DegreeShortName, $degreeShortName)) {
+                        $data['medicalStudents'][] = $medicalStudent;
+                    }
                 }
             }
 
-            foreach ($joinStudnetData2 as $repeatStudent) {
-                if (in_array($repeatStudent->DegreeShortName, $degreeShortName)) {
-                    $data['repeatStudents'][] = $repeatStudent;
+            if (!empty($joinStudnetData2)) {
+                foreach ($joinStudnetData2 as $repeatStudent) {
+                    if (in_array($repeatStudent->DegreeShortName, $degreeShortName)) {
+                        $data['repeatStudents'][] = $repeatStudent;
+                    }
                 }
             }
-
 
             if (isset($_POST['submit']) || isset($_POST['cancel'])) {
 
@@ -218,7 +253,7 @@ class SAR extends Controller
                     $selectedIds = $_POST['item'];
 
                     if (empty($selectedIds)) {
-                        redirect('sar/examination/create/3');
+                        redirect('sar/examination/special/2');
                     } else {
 
                         //Handel Selected Medical submitted students data
@@ -226,7 +261,7 @@ class SAR extends Controller
                             if (in_array($medicalStudent->id, $selectedIds)) {
                                 if (!in_array($medicalStudent->id, $processedStudentID2)) {
                                     $medicalStudent->degreeID = $degreeID;
-                                    $medicalStudent->semester = $semester;
+                                    $medicalStudent->semester = $selectedSemester;
                                     $medicalStudent->attempt = $medicalStudent->attempt;
                                     $medicalStudent->studentType = 'medical';
                                     $medicalStudent->status = 1;
@@ -254,7 +289,7 @@ class SAR extends Controller
 
                                     //need to slove this issue
                                     $repeatStudent->degreeID = $degreeID;
-                                    $repeatStudent->semester = $semester;
+                                    $repeatStudent->semester = $selectedSemester;
                                     $repeatStudent->attempt = intval($repeatStudent->attempt) + 1;
                                     $repeatStudent->studentType = 'repeate';
                                     $repeatStudent->paymentStatus = 1;
@@ -304,13 +339,19 @@ class SAR extends Controller
 
         } else if ($method == "special" && $id == 2) {
 
+            //get semster from session
+            $selectedSemester = $_SESSION['exam-creation-details']['semester'];
+
+            //subject data
+            $data['subjects'] = $subjects->where(['degreeID' => $degreeID, 'semester' => $selectedSemester]);
+
             if (isset($_POST['submit'])) {
                 if ($_POST['submit'] == "timetable-special") {
 
                     //exam creation
                     $ExamData['examType'] = 'Special';
                     $ExamData['degreeID'] = $degreeID;
-                    $ExamData['semester'] = $semester;
+                    $ExamData['semester'] = $_SESSION['exam-creation-details']['semester'];
                     $ExamData['status'] = 'ongoing';
 
                     //insert data to exam table
@@ -340,24 +381,6 @@ class SAR extends Controller
                     if (empty($data['errors'])) {
                         $selectedRMStudents = $_SESSION['Selected_RM_Students'];
                         $examParticipantsData = $_SESSION['Special-Exam-Participants'];
-
-
-
-
-                        // foreach ($selectedNormalStudents as $student) {
-                        //     //unset the student id
-                        //     unset($student->id);
-                        //     $student->examID = $examID;
-                        //     show($student);
-                        //     $examParticipants->insert($student);
-                        // }
-                        // foreach ($selectedRMStudents as $student) {
-                        //     //unset the student id  
-                        //     unset($student->id);
-                        //     $student->examID = $examID;
-                        //     show($student);
-                        //     $examParticipants->insert($student);
-                        // }
 
 
                         foreach ($examParticipantsData as $student) {
@@ -510,18 +533,22 @@ class SAR extends Controller
 
             //filter medical students data according to degree short name
             //students are repeate the exam with next batch and they have different degree id that is why it checks the desgree short name
-            foreach ($joinStudnetData1 as $medicalStudent) {
-                if (in_array($medicalStudent->DegreeShortName, $degreeShortName)) {
-                    $data['medicalStudents'][] = $medicalStudent;
+
+            if (!empty($joinStudnetData1)) {
+                foreach ($joinStudnetData1 as $medicalStudent) {
+                    if (in_array($medicalStudent->DegreeShortName, $degreeShortName)) {
+                        $data['medicalStudents'][] = $medicalStudent;
+                    }
                 }
             }
 
-            foreach ($joinStudnetData2 as $repeatStudent) {
-                if (in_array($repeatStudent->DegreeShortName, $degreeShortName)) {
-                    $data['repeatStudents'][] = $repeatStudent;
+            if (!empty($joinStudnetData2)) {
+                foreach ($joinStudnetData2 as $repeatStudent) {
+                    if (in_array($repeatStudent->DegreeShortName, $degreeShortName)) {
+                        $data['repeatStudents'][] = $repeatStudent;
+                    }
                 }
             }
-
 
             // show($_POST);
             if (isset($_POST['submit']) || isset($_POST['back2'])) {
@@ -531,17 +558,17 @@ class SAR extends Controller
 
                     $selectedIds = $_POST['item'];
 
-
-
                     if (empty($selectedIds)) {
-                        redirect('sar/examination/create/3');
+                        if ($_POST['submit'] == 'next2') {
+                            redirect('sar/examination/create/3');
+                        } else if ($_POST['back2'] == 'back2') {
+                            redirect('sar/examination/create/1');
+                        }
+
                     } else {
 
                         // show($data['medicalStudents']);
                         // show($data['repeatStudents']);
-
-
-
 
                         //Handel Selected Medical submitted students data
                         foreach ($data['medicalStudents'] as $medicalStudent) {
@@ -631,8 +658,15 @@ class SAR extends Controller
             $this->view('sar-interfaces/sar-createexam-normal-2', $data);
         } else if ($method == "create" && $id == 3) {
 
+
+
+
             //get semster from session
             $selectedSemester = $_SESSION['exam-creation-details']['semester'];
+
+            //subject data
+            $data['subjects'] = $subjects->where(['degreeID' => $degreeID, 'semester' => $selectedSemester]);
+
 
             if (isset($_POST['submit'])) {
                 if ($_POST['submit'] == "timetable") {
@@ -688,21 +722,6 @@ class SAR extends Controller
                             $examParticipants->insert($student);
                         }
 
-
-                        // foreach ($selectedNormalStudents as $student) {
-                        //     //unset the student id
-                        //     unset($student->id);
-                        //     $student->examID = $examID;
-                        //     $examParticipants->insert($student);
-                        // }
-                        // foreach ($selectedRMStudents as $student) {
-                        //     //unset the student id
-                        //     unset($student->id);
-                        //     $student->examID = $examID;
-                        //     $examParticipants->insert($student);
-                        // }
-
-
                         //need to add actucal data to add data to tables
                         $createExam = true;
                         foreach ($timeTableData as $timeTableRow) {
@@ -729,8 +748,6 @@ class SAR extends Controller
             $this->view('sar-interfaces/sar-createexam-normal-3', $data);
         } else {
 
-
-
             //get examid and degree id from link
             $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
             $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
@@ -741,8 +758,14 @@ class SAR extends Controller
             //set examination id
             if (!empty($_SESSION['examDetails'])) {
                 $examID = $_SESSION['examDetails'][0]->examID;
-
+                $semester = $_SESSION['examDetails'][0]->semester;
+            } else {
+                $examID = null;
+                $semester = null;
             }
+
+            //get subject details
+            $data['subjects'] = $subjects->where(['degreeID' => $degreeID, 'semester' => $semester]);
 
             //get subjects in the exam
             $ExamSubjects = $subjects->where(['degreeID' => $degreeID, 'semester' => $semester]);
@@ -936,6 +959,8 @@ class SAR extends Controller
 
             } else if ($method == 'resultsupload') {
 
+                //examiner3 variable (this is added for use of reload page)
+                $examiner3 = false;
                 //redirect ro examination page if examID null
                 if (empty($examID)) {
                     redirect('sar/examination');
@@ -1116,176 +1141,146 @@ class SAR extends Controller
                         $examSheet['type'] = $marksType;
                         $examSheet['examId'] = $examID;
 
-
-
+                        //define examiner 3 data array
+                        $eligibilityData = [];
                         // $data['examiner3'] = false;
                         $examiner3 = false;
                         $subjectIDExaminer3 = null;
                         // Insert data into the database
                         if ($resultSheet->examValidate($examSheet)) {
 
-
                             //add record to database table
                             $resultSheet->insert($examSheet);
                             $message = 'Upload ' . $marksType . ' Marksheet for ' . $subCode . ' in ExamId = ' . $examID . ' successfully.';
 
-
                             //uncomment this to add activity log
                             activity($message);
-
-
 
                             //call crateMarkSheet function to update csv file
                             createMarkSheet($uniqueFileName, $examID, $subCode, $marksType);
 
                             echo json_encode(['success' => true, 'message' => 'File uploaded successfully.']);
 
-
-                            //enable examiner3 marks upload
-                            // $data['examiner3'] = true;
                             foreach ($data['subjects'] as $subject) {
                                 var_dump('subject code = ' . $subject->SubjectCode);
-                                $uploadedRes = $resultSheet->where(['examId' => $examID, 'subjectCode' => $subject->SubjectCode]);
-                                // show($uploadedRes);
+                                $uploadedRes = $resultSheet->whereOr([
+                                    'examId' => $examID,
+                                    'subjectCode' => $subject->SubjectCode,
+                                    'type' => ['type' => 'OR', 'values' => ['examiner1', 'examiner2']]
+                                ]);
 
                                 if (is_array($uploadedRes)) {
 
+                                    var_dump('Result sheets = ', $uploadedRes, 'count = ' . count($uploadedRes));
+                                }
+
+                                if (is_array($uploadedRes)) {
                                     if (count($uploadedRes) >= 2) {
 
-                                        $validate = false;
-                                        foreach ($uploadedRes as $res) {
-                                            if ($res->type == 'examiner1' || $res->type == 'examiner2') {
-                                                $validate = true;
-                                            } else {
-                                                $validate = false;
-                                            }
-                                        }
-                                        //check the marks gap between examiner1 and examiner2
-                                        if ($validate) {
-                                            $fileName = $examID . '_' . $subject->SubjectCode . '.csv';
+                                        //generate file name 
+                                        $fileName = $examID . '_' . $subject->SubjectCode . '.csv';
 
-                                            //call the function to check the gap
-                                            if (checkGap($fileName, $examID, $subject->SubjectCode)) {
-                                                // $data['examiner3'] = true;
-                                                // $data['examiner3SubCode'] = $subject->SubjectCode;
-                                                show('examiner3 marks are available');
+                                        //call the function to check the gap
+                                        if (checkGap($fileName, $examID, $subject->SubjectCode)) {
+
+                                            show('examiner3 are available');
+                                            // $data = [
+                                            //     'examiner3' => true,
+                                            //     'examiner3SubCode' => $subject->SubjectCode,
+                                            //     'subjectIDExaminer3' => $subject->SubjectID
+                                            // ];
+
+                                            //add examiner 3 eligible data to array
+                                            // $eligibilityData[] = $object;
+
+                                            $examiner3 = true;
+                                            $examiner3SubCode = $subject->SubjectCode;
+                                            $subjectIDExaminer3 = $subject->SubjectID;
+
+                                            $examiner3SubData['subCode'] = $subject->SubjectCode;
+                                            $examiner3SubData['examID'] = $examID;
+                                            $examiner3SubData['degreeID'] = $degreeID;
+                                            $examiner3SubData['semester'] = $semester;
+                                            $examiner3SubData['status'] = 1;
+
+                                            //validate the data and insert into the database
+                                            if ($examiner3Eligibility->DataValidate($examiner3SubData)) {
+                                                show('Insert Examiner 3 data to database');
                                                 $examiner3 = true;
-                                                $examiner3SubCode = $subject->SubjectCode;
-                                                $subjectIDExaminer3 = $subject->SubjectID;
+                                                $examiner3Eligibility->insert($examiner3SubData);
+                                            }
 
-                                                $examiner3SubData['subCode'] = $subject->SubjectCode;
-                                                $examiner3SubData['examID'] = $examID;
-                                                $examiner3SubData['degreeID'] = $degreeID;
-                                                $examiner3SubData['semester'] = $semester;
-                                                $examiner3SubData['status'] = 1;
+                                            // //refresh the page
+                                            // header("Refresh:0");
 
-                                                //validate the data and insert into the database
-                                                if ($examiner3Eligibility->DataValidate($examiner3SubData)) {
-                                                    $examiner3Eligibility->insert($examiner3SubData);
-                                                }
+                                            /*after upload the examiner 3 marks when we update examination mark 
+                                            sheet system has to handle that marksheet also. because if exminer 3 already uploaded 
+                                            then it didnt handle the mark sheet again and insert or update marks again*/
 
+                                            //check whether examiner3 marks are available
+                                            $examiner3Marks = $resultSheet->whereOr([
+                                                'examId' => $examID,
+                                                'subjectCode' => $subject->SubjectCode,
+                                                'type' => ['type' => 'OR', 'values' => ['examiner3', 'assestment']]
+                                            ]);
 
-                                                /*after upload the examiner 3 marks when we update examination mark 
-                                                sheet system has to handle that marksheet also. because if exminer 3 already uploaded 
-                                                then it didnt handle the mark sheet again and insert or update marks again*/
+                                            if (count($examiner3Marks) == 2) {
 
-                                                //check whether examiner3 marks are available
-                                                $examiner3Marks = $resultSheet->where([
-                                                    'examId' => $examID,
-                                                    'subjectCode' => $subject->SubjectCode,
-                                                    'type' => 'examiner3'
-                                                ]);
+                                                //upload the student marks to database
+                                                $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
 
-                                                if (!empty($examiner3Marks)) {
-                                                    // $data['examiner3'] = true;
-                                                    //upload the student marks to database
-                                                    $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
+                                                //call the function to upload marks to database
+                                                insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
 
-                                                    //call the function to upload marks to database
-                                                    insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
-
-                                                    $msg = 'Uploaded Examiner 3 marks for ' . $subject->SubjectCode . ' successfully , ExamID = ' . $examID;
-                                                    activity($msg);
-
-                                                } else {
-                                                    // $data['examiner3'] = false;
-                                                }
+                                                $msg = 'Uploaded Examination Results with Examiner 3 marks for ' . $subject->SubjectCode . ' successfully , ExamID = ' . $examID;
+                                                activity($msg);
 
                                             } else {
-                                                // $data['examiner3'] = false;
-                                                $examiner3 = false;
-                                                //check whether assestment marks are available
-                                                $assignmentMarks = $resultSheet->where([
-                                                    'examId' => $examID,
-                                                    'subjectCode' => $subject->SubjectCode,
-                                                    'type' => 'assestment'
-                                                ]);
-
-                                                if (!empty($assignmentMarks)) {
-                                                    $data['assignment'] = true;
-                                                    //upload the student marks to database
-                                                    $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
-
-                                                    //call the function to upload marks to database
-                                                    echo 'call insertMarks function';
-                                                    // show($resFileName);
-                                                    insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
-
-                                                    $msg = 'Uploaded ' . $res->type . ' marks for ' . $subject->SubjectCode . ' successfully , ExamID = ' . $examID;
-                                                    activity($msg);
-
-                                                } else {
-                                                    $data['assignment'] = false;
-
-                                                }
-
-
-
-                                            }
-                                            /** The case in there is when we pass the data into view to show them it must reload 
-                                             * but when using fetch it did't reload the file. must fix this  */
-
-
-                                            /**when uploading marks get the least gap marks and calculate final marks and upload to database
-                                             */
-
-                                            if ($examiner3) {
-                                                echo "<div id='examiner3-status'>$examiner3</div>";
-                                                echo "<div id='examiner3SubCode'>$examiner3SubCode</div>";
-                                                echo "<div id='examiner3SubID'>$subjectIDExaminer3</div>";
-
-
+                                                echo 'Examiner 3 marks or Assestment marks are not available';
                                             }
 
                                         } else {
-                                            if ($marksType == 'examiner3') {
-                                                //check whether assestment marks are available
-                                                $assignmentMarks = $resultSheet->where([
-                                                    'examId' => $examID,
-                                                    'subjectCode' => $subject->SubjectCode,
-                                                    'type' => 'assestment'
-                                                ]);
+                                            // $data['examiner3'] = false;
+                                            $examiner3 = false;
+                                            //check whether assestment marks are available
+                                            $assignmentMarks = $resultSheet->where([
+                                                'examId' => $examID,
+                                                'subjectCode' => $subject->SubjectCode,
+                                                'type' => 'assestment'
+                                            ]);
 
-                                                if (!empty($assignmentMarks)) {
-                                                    $data['assignment'] = true;
-                                                    //upload the student marks to database
-                                                    $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
+                                            if (!empty($assignmentMarks)) {
+                                                $data['assignment'] = true;
+                                                //upload the student marks to database
+                                                $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
 
-                                                    //call the function to upload marks to database
+                                                //call the function to upload marks to database
+                                                insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
 
-                                                    // show($resFileName);
-                                                    insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
-                                                    $msg = 'Uploaded Examiner 3 marks for ' . $subject->SubjectCode . ' successfully , ExamID = ' . $examID;
-                                                    activity($msg);
-
-                                                } else {
-                                                    $data['assignment'] = false;
-
-                                                }
+                                                $msg = 'Uploaded Examination Results for ' . $subject->SubjectCode . ' successfully , ExamID = ' . $examID;
+                                                activity($msg);
 
                                             } else {
-                                                echo 'examiner1 or examiner2 marks are not available';
+                                                echo 'Assestment marks are not available';
+                                                $data['assignment'] = false;
+
                                             }
+
+
+
+                                        }
+                                        /** The case in there is when we pass the data into view to show them it must reload 
+                                         * but when using fetch it did't reload the file. must fix this  */
+
+
+                                        /**when uploading marks get the least gap marks and calculate final marks and upload to database
+                                         */
+
+                                        if ($examiner3) {
+                                            echo "<div class='examiner3-status'>$examiner3</div>";
+                                            echo "<div class='examiner3SubCode'>$examiner3SubCode</div>";
+                                            echo "<div class='examiner3SubID'>$subjectIDExaminer3</div>";
+
                                         }
                                     }
                                 }
@@ -1303,6 +1298,7 @@ class SAR extends Controller
                         echo json_encode(['success' => false, 'message' => 'Error moving the uploaded file.']);
                     }
 
+
                 } else {
                     // // Handle file upload error
                     // message("File upload error", "error", true);
@@ -1310,7 +1306,6 @@ class SAR extends Controller
                 }
 
 
-                //pass examid
                 $data['examId'] = $examID;
                 $this->view('sar-interfaces/sar-examresultupload', $data);
 
@@ -1324,6 +1319,7 @@ class SAR extends Controller
                 //get examID from session
                 if (!empty($_SESSION['examDetails'])) {
                     $examID = $_SESSION['examDetails'][0]->examID;
+                    $semester = $_SESSION['examDetails'][0]->semester;
                 }
 
                 //get subjects in the exam
@@ -1407,6 +1403,71 @@ class SAR extends Controller
     {
         $this->view('sar-interfaces/sar-examresultshow');
     }
+
+    public function participants($id = null, $action = null, $id2 = null)
+    {
+        if (!empty($_SESSION['degreeData'])) {
+            $degreeID = $_SESSION['degreeData'][0]->DegreeID;
+        }
+
+        $st = new StudentModel();
+        if (!empty($id)) {
+            if (!empty($action)) {
+                if ($action === 'delete' && !empty($id2)) {
+                    $st->delete(['id' => $id2]);
+                }
+            } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                // print_r( $_POST );
+                // die;
+                $st->update($_POST['id'], $_POST);
+                // redirect( 'student/'.$id );
+                $data['student'] = $st->where(['indexNo' => $id])[0];
+
+                $this->view('common/student/student.view', $data);
+                return;
+            } else {
+                $data['student'] = $st->where(['indexNo' => $id])[0];
+
+                $this->view('common/student/student.view', $data);
+                return;
+            }
+        }
+        $data['students'] = $st->where(['degreeID' => $degreeID]);
+
+        $this->view('sar-interfaces/sar-degreeparticipants', $data);
+    }
+
+    public function userprofile($action = null, $id = null)
+    {
+        $data = [];
+        $data['action'] = $action;
+        $data['id'] = $id;
+        // Fetch the specific student data using the ID from the URL
+        $studentId = isset($_GET['studentId']) ? $_GET['studentId'] : null;
+        // Check if the student ID is provided in the URL
+        if ($studentId) {
+            $degree = new Degree();
+            $studentModel = new StudentModel();
+            $data['student'] = $studentModel->findstudentid($studentId);
+            $degree_id = $data['student'][0]->degreeID;
+            $data['degree'] = $degree->find($degree_id);
+            if ($data['student']) {
+                $this->view('sar-interfaces/sar-student-profile', $data);
+            } else {
+                echo "Error: Student not found.";
+            }
+            if ($action == "update") {
+                echo "POST request received";
+            } else if ($action == "add") {
+            } else if ($action == 'delete') {
+                $studentModel->delete(['id' => $studentId]);
+                redirect("sar/participants");
+            }
+        } else {
+            echo "Error: Student ID not provided in the URL.";
+        }
+    }
+
     public function notifications()
     {
         $notification = new NotificationModel();

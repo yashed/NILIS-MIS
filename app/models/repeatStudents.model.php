@@ -12,6 +12,8 @@ class RepeatStudents extends Model
     protected $allowedColumns = [
 
         'degreeID',
+        'degreeShortName',
+        'examID',
         'semester',
         'indexNo',
         'subjectCode',
@@ -20,8 +22,13 @@ class RepeatStudents extends Model
 
     ];
 
-    public function repeatStudentValidation($data)
+    public function repeatStudentDataValidation($data)
     {
+        if ($this->where2(['indexNo' => $data->indexNo, 'subjectCode' => $data->subjectCode, 'attempt' => $data->attempt])) {
+            $this->errors['exist'] = 'data already exists';
+            return false;
+        }
+
         return true;
     }
 }

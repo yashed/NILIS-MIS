@@ -29,12 +29,12 @@ class FinalMarks extends Model
 
             //get grading values
             $grades = new Grades();
-            show($record);
+
             $gradingRules = $grades->where(['DegreeID' => $record->degreeID]);
 
             // Determine the grade based on finalMarks and grading rules
             $grade = $this->determineGrade($record, $gradingRules);
-            show($record->finalMarks);
+
 
             // Update the grade
             $this->updateRows(
@@ -47,7 +47,7 @@ class FinalMarks extends Model
     // Helper function to determine the grade
     private function determineGrade($record, $gradingRules)
     {
-        $finalMarks = $record->finalMarks;
+        $finalMarks = round($record->finalMarks);
         $studentType = $record->studentType;
         $semester = $record->semester;
         $indexNo = $record->studentIndexNo;
@@ -55,8 +55,10 @@ class FinalMarks extends Model
 
         // show($gradingRules);
         foreach ($gradingRules as $rule) {
+
             if ($finalMarks >= $rule->MinMarks && $finalMarks <= $rule->MaxMarks) {
                 //get main grade (remove + and - from the grade)
+
                 $mainGrade = substr($rule->Grade, 0, 1);
                 if ($studentType == 'repeate' && $mainGrade < 'C') {
 
@@ -80,6 +82,35 @@ class FinalMarks extends Model
         return NULL;
     }
 
+
+    public function addRepeteStudents($data)
+    {
+
+        $repeteStudent = new RepeatStudents();
+
+        foreach ($data as $repeteData) {
+
+            if ($repeteStudent->repeatStudentDataValidation($repeteData)) {
+
+                //set repete student data to insert
+                $studentData['degreeID'] = $repeteData->degreeID;
+                $studentData['semester'] = $repeteData->semester;
+                $studentData['degreeShortName'] = $repeteData->DegreeShortName;
+                $studentData['examID'] = $repeteData->examID;
+                $studentData['indexNo'] = $repeteData->indexNo;
+                $studentData['subjectCode'] = $repeteData->subjectCode;
+                $studentData['attempt'] = $repeteData->attempt;
+
+                $repeteStudent->insert($studentData);
+
+            }
+        }
+    }
+
+    public function addMedicalStudents($data)
+    {
+
+    }
 
     public function finalMarkValidate($data)
     {

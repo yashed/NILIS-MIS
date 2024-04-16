@@ -22,12 +22,15 @@ class Examiner3Subject extends Model
 
     public function DataValidate($data)
     {
+        show($data);
         if ($this->where2(['subCode' => $data['subCode'], 'examID' => $data['examID'], 'degreeID' => $data['degreeID']])) {
             $this->errors['exist'] = 'This data is already exists';
 
+            show('return false');
             return false;
 
         } else {
+            show('return true');
             return true;
         }
     }
