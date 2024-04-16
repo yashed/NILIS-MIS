@@ -98,7 +98,7 @@
         <nav>
             <ul class="hero-ul">
                 <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -209,7 +209,7 @@
         <nav>
             <ul class="hero-ul">
                 <li class="hero-ul-li"><a href="<?= ROOT ?>sar/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -305,7 +305,7 @@
         <nav>
             <ul class="hero-ul">
                 <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -401,7 +401,7 @@
         <nav>
             <ul class="hero-ul">
                 <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -497,7 +497,7 @@
         <nav>
             <ul class="hero-ul">
                 <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -594,7 +594,7 @@
         <nav>
             <ul class="hero-ul">
                 <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
