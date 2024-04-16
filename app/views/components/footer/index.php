@@ -2,20 +2,19 @@
     .footer-body {
         margin: 0;
         min-height: 100vh;
+        position: relative;
     }
 
     .footer {
-        position: sticky;
-        top: 100%;
-        display: flex;
-        flex-direction: column;
+        position: fixed;
+        left: 0;
+        bottom: 0;
         width: 100%;
         height: 80px;
-        /* padding: 34px 270px 33px 271px; */
-        justify-content: center;
-        align-items: center;
         background-color: #17376E;
-        gap: 10px;
+        color: #fff;
+        text-align: center;
+        padding: 20px 0;
     }
 
     .footer-nilis {
