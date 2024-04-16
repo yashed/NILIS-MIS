@@ -409,7 +409,7 @@ $data['role'] = $role;
                     <th>Credits</th>
                 </tr>
                 <tr>
-                    <td><input style="width: 130px; margin-right: 14px;" value="" type="text" name="SubjectName" class="dr-degreeprograms-SubjectName" placeholder="Subject 1" id="dr-degreeprograms-SubjectName${i}_1" style="border: 1px solid #ccc;"></td>
+                    <td><input style="width: 215px; margin-right: 14px;" value="" type="text" name="SubjectName" class="dr-degreeprograms-SubjectName" placeholder="Subject 1" id="dr-degreeprograms-SubjectName${i}_1" style="border: 1px solid #ccc;"></td>
                     <td><input style="width: 130px; margin-right: 14px;" value="" type="text" name="SubjectCode" class="dr-degreeprograms-SubjectCode" placeholder="SubjectCode" id="dr-degreeprograms-SubjectCode${i}_1" style="border: 1px solid #ccc;"></td>
                     <td><input style="width: 60px;" value="" type="number" name="NoCredits" class="dr-degreeprograms-NoCredits" placeholder="2" id="dr-degreeprograms-NoCredits${i}_1" style="border: 1px solid #ccc;"></td>
                 </tr>
@@ -428,7 +428,7 @@ $data['role'] = $role;
             let subjectCount = document.querySelectorAll(`#dr-degreeprograms-Subject_table${semesterNumber} tr`).length;
             let template = `
             <tr>
-                <td><input style="width: 130px; margin-right: 14px;" value="" type="text" name="SubjectName" class="dr-degreeprograms-SubjectName" placeholder="Subject ${subjectCount}" id="dr-degreeprograms-SubjectName${semesterNumber}_${subjectCount}" style="border: 1px solid #ccc;"></td>
+                <td><input style="width: 215px; margin-right: 14px;" value="" type="text" name="SubjectName" class="dr-degreeprograms-SubjectName" placeholder="Subject ${subjectCount}" id="dr-degreeprograms-SubjectName${semesterNumber}_${subjectCount}" style="border: 1px solid #ccc;"></td>
                 <td><input style="width: 130px; margin-right: 14px;" value="" type="text" name="SubjectCode" class="dr-degreeprograms-SubjectCode" placeholder="SubjectCode" id="dr-degreeprograms-SubjectCode${semesterNumber}_${subjectCount}" style="border: 1px solid #ccc;"></td>
                 <td><input style="width: 60px;" value="" type="number" name="NoCredits" class="dr-degreeprograms-NoCredits" placeholder="2" id="dr-degreeprograms-NoCredits${semesterNumber}_${subjectCount}" style="border: 1px solid #ccc;"></td>
             </tr>

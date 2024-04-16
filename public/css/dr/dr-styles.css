@@ -674,7 +674,7 @@
   width: 344px;
 }
 .dr-degreeprograms-Subject_table {
-  margin: 5% 6% 1% 5%;
+  margin: 5% 0% 1% 0%;
   border-spacing: 5px;
   text-align: left;
 }
@@ -693,8 +693,8 @@
 .dr-degreeprograms-box_3_2 {
   overflow-y: auto;
   max-height: 100%;
-  width: 450px;
-  margin: 0px 0px 0px 35px;
+  width: 465px;
+  margin: 0px 0px 0px 6px;
 }
 .dr-degreeprograms-box_3 p {
   font-size: 18px;
