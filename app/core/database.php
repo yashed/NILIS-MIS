@@ -73,16 +73,18 @@ class Database
         $this->query($query);
         //Degree Table
         $query = "
-        CREATE TABLE IF NOT EXISTS `degree` (
-            `DegreeID` int(11) NOT NULL AUTO_INCREMENT,
-            `DegreeType` varchar(50) NOT NULL,
-            `DegreeShortName` varchar(50) NOT NULL,
-            `DegreeName` text NOT NULL,
-            `Duration` int(20) NULL,
-            `AcademicYear` int(20) NOT NULL,
-            PRIMARY KEY (`DegreeID`),
-            UNIQUE KEY `DegreeID` (`DegreeID`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+        CREATE TABLE degree (
+            DegreeID ⁠ int(11) NOT NULL AUTO_INCREMENT,
+            DegreeType ⁠ varchar(50) NOT NULL,
+            DegreeShortName ⁠ varchar(50) NOT NULL,
+            DegreeName ⁠ text NOT NULL,
+            Duration ⁠ int(20) DEFAULT NULL,
+            AcademicYear ⁠ int(20) NOT NULL,
+            Status ⁠ varchar(50) NOT NULL DEFAULT 'ongoing',
+            createdDate ⁠ date NOT NULL,
+            PRIMARY KEY (⁠ DegreeID ⁠),
+            UNIQUE KEY ⁠ DegreeID ⁠ (⁠ DegreeID ⁠)
+          ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
         ";
 
         $this->query($query);
@@ -135,24 +137,24 @@ class Database
         $this->query($query);
         //student Table
         $query = "
-        CREATE TABLE IF NOT EXISTS student(
-            id int(11) NOT NULL AUTO_INCREMENT,
-            Email varchar(40) NOT NULL,
-            regNo varchar(40) NOT NULL,
-            country varchar(40) NOT NULL,
-            indexNo varchar(40) NOT NULL,
-            name text NOT NULL,
-            nicNo varchar(40) NOT NULL,
-            birthdate varchar(40) NOT NULL,
-            whatsappNo int(12) NOT NULL,
-            address varchar(100) NOT NULL,
-            phoneNo int(20) NOT NULL,
-            degreeID INT(11) NOT NULL,
-            Attendance varchar(40) NOT NULL,
-            PRIMARY KEY (id),
-            UNIQUE KEY `indexNo` (`indexNo`),
-            FOREIGN KEY (degreeID) references degree(DegreeID)
-        ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
+        CREATE TABLE ⁠ student ⁠ (
+            ⁠ id ⁠ int(11) NOT NULL AUTO_INCREMENT,
+            ⁠ Email ⁠ varchar(40) NOT NULL,
+            ⁠ regNo ⁠ varchar(40) NOT NULL,
+            ⁠ country ⁠ varchar(40) NOT NULL,
+            ⁠ indexNo ⁠ varchar(40) NOT NULL,
+            ⁠ name ⁠ text NOT NULL,
+            ⁠ nicNo ⁠ varchar(40) NOT NULL,
+            ⁠ birthdate ⁠ varchar(40) NOT NULL,
+            ⁠ whatsappNo ⁠ int(12) NOT NULL,
+            ⁠ address ⁠ varchar(100) NOT NULL,
+            ⁠ phoneNo ⁠ int(20) NOT NULL,
+            ⁠ degreeID ⁠ int(11) NOT NULL,
+            ⁠ status ⁠ varchar(50) NOT NULL DEFAULT 'continue',
+            PRIMARY KEY (⁠ id ⁠),
+            UNIQUE KEY ⁠ indexNo ⁠ (⁠ indexNo ⁠),
+            KEY ⁠ fk_student_degree ⁠ (⁠ degreeID ⁠)
+          ) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
         ";
         $this->query($query);
 
