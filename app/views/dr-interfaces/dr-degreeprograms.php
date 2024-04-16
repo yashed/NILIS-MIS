@@ -54,9 +54,9 @@ $data['role'] = $role;
 
 <body>
     <div class="dr-degreeprograms-main" id="dr-degreeprograms-body">
-        <!-- <?php $this->view('components/navside-bar/header', $data) ?>
+        <?php $this->view('components/navside-bar/header', $data) ?>
         <?php $this->view('components/navside-bar/sidebar', $data) ?>
-        <?php $this->view('components/navside-bar/footer', $data) ?> -->
+        <?php $this->view('components/navside-bar/footer', $data) ?>
         <div class="dr-degreeprograms-home">
             <div class="dr-degreeprograms-title">Degree Program</div>
             <div class="dr-degreeprograms-subsection-1">
