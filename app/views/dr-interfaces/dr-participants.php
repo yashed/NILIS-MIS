@@ -128,7 +128,7 @@ $data['role'] = $role;
 <body>
     <div class="dr-participants-home">
         <div class="dr-participants-title">
-            <div class="dr-participants-title1">Diploma in Library and Information Management</div>
+            <div class="dr-participants-title1"><?=$degrees[0]->DegreeName?></div>
             <div class="dr-participants-title1-core">Participants</div>
         </div>
         <div class="dr-participants-home-1">

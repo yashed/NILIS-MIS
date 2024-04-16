@@ -1598,6 +1598,14 @@ input[type=event] {
   color: #000000;
   margin-bottom: 5px;
 }
+.dr-userprofile-left-top-text4 {
+  text-align: left;
+  margin: 0;
+  padding: 10px 0px 0px 32px;
+  color: #000000;
+  margin-bottom: 5px;
+  font-size: medium;
+}
 .dr-userprofile-table {
   border-collapse: collapse;
   width: 300px;
