@@ -79,10 +79,10 @@ $data['role'] = $role;
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Ongoing</br>Examination</div>
                         <div class="dr-dash-card-subcard-data-value">
-                        <?php if (!empty($degrees)) : ?>
+                            <?php if (!empty($exams)) : ?>
                                 <?php $count = 0; ?>
-                                <?php foreach ($degrees as $degree) : ?>
-                                    <?php if ($degree->Status == "ongoing") : ?>
+                                <?php foreach ($exams as $exam) : ?>
+                                    <?php if ($exam->status == "ongoing") : ?>
                                         <?php $count++; ?>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
@@ -99,7 +99,17 @@ $data['role'] = $role;
                     </div>
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Results Published </br>Exminations</div>
-                        <div class="dr-dash-card-subcard-data-value">04</div>
+                        <div class="dr-dash-card-subcard-data-value">
+                            <?php if (!empty($exams)) : ?>
+                                <?php $count = 0; ?>
+                                <?php foreach ($exams as $exam) : ?>
+                                    <?php if ($exam->status == "completed") : ?>
+                                        <?php $count++; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <?=$count?>
+                        </div>
                     </div>
                 </div>
             </div>
