@@ -38,14 +38,11 @@ $data['role'] = $role;
             <div class="dr-newdegree-white-container2">
                 <p class="dr-newdegree-left-top-text">Add Student Details</p>
                 <a href="<?= ROOT ?>assets/csv/output/student-data-input.csv" class=" dr-newdegree-download-button" download>Download File</a><br><br>
-                <form method="post" enctype="multipart/form-data">
-                    <div class="dr-newdegree-dashed-container">
-                        <!-- File input field -->
-                        <input type="file" id="dr-newdegree-student-data" name="student-data">
-                        <!-- Label for browsing files -->
-                        <label for="dr-newdegree-student-data" class="dr-newdegree-file-input-icon"></label>
-                        <!-- Text and button -->
-                        <p class="dr-newdegree-text1">Drag and drop or <label for="dr-newdegree-student-data" class="dr-newdegree-browse-label">browse</label> your files</p>
+                <form method="post" enctype="multipart/form-data" action="<?=ROOT?>dr/newdegree/file">
+                    <div class="dr-newdegree-dashed-container">  <!-- File input field -->
+                        <input type="file" id="student-data" name="student-data"> <!-- Label for browsing files -->
+                        <label for="student-data" class="dr-newdegree-file-input-icon"></label> <!-- Text and button -->
+                        <p class="dr-newdegree-text1">Drag and drop or <label for="student-data" class="dr-newdegree-browse-label">browse</label> your files</p>
                         <button type="submit" class="dr-newdegree-download-button" name="submit" value="upload-csv">Upload</button>
                     </div>
                 </form>
