@@ -30,7 +30,7 @@
     --tran-05: all 0.5s ease;
 }
 .dr-attendance-home {
-    height: 100vh;
+    /* height: 100vh; */
     left: 250px;
     position: relative;
     width: calc(100% - 250px);
@@ -55,6 +55,7 @@
     padding: 10px 10px 30px 35px;
     border-radius: 6px;
     margin: 7px 4px 7px 4px;
+    min-height: 72vh;
 }
 </style>
 <body>

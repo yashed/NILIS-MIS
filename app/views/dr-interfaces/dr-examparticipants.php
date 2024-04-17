@@ -1,5 +1,5 @@
 <?php
-$role = "SAR";
+$role = "DR";
 $data['role'] = $role;
 $data['ExamSubjects'] = isset($ExamSubjects) ? $ExamSubjects : '';
 $data['PopupStatus'] = isset($attendacePopupStatus) ? $attendacePopupStatus : '';
