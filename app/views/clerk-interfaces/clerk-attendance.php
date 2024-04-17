@@ -177,6 +177,7 @@ $data['role'] = $role;
             width: 12vw;
             font-size: 0.8vw;
             margin-left: 40vw;
+          
         }
 
         .admission-button2:hover {
@@ -291,7 +292,9 @@ $data['role'] = $role;
 
     <div class="temp2-home" id="blur-background">
         <div class="temp2-title">Attendance </div>
-
+        <?php foreach ($degrees as $degree) : ?>
+               <?= $degree-> DegreeShortName ?>
+            <?php endforeach; ?>
 
         <div class="temp2-subsection-2">
             <div class="temp2-subsection-21">
@@ -310,7 +313,7 @@ $data['role'] = $role;
                     </div>
 
                 </div>
-                <button class="admission-button2" onclick="redirectToUpdatedAttendance()">Record Attendance</button>
+                <button class="admission-button2" onclick="redirectToUpdatedAttendance()">Student Attendance</button>
             </div>
         </div>
     </div>
