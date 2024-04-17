@@ -66,5 +66,6 @@
         <div class="dr-attendance-temp3-footer">
             <?php $this->view('components/footer/index',$data) ?>
         </div>
+    </div>
 </body>
 </html>

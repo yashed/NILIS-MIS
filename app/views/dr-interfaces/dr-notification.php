@@ -53,10 +53,21 @@
             left: 88px;
             width: calc(100% - 88px);
         }
+        .dr-notification-subsection-1{
+            background-color: var(--text-color);
+            padding: 10px 10px 30px 35px;
+            border-radius: 6px;
+            margin: 7px 4px 7px 4px;
+            min-height: 74vh;
+        }
     </style>
     <body>
-    <div class="dr-home">
+        <div class="dr-home">
             <div class="dr-title">Notifications</div> 
+            <div class="dr-notification-subsection-1"></div>
+            <div class="dr-notification-temp3-footer">
+                <?php $this->view('components/footer/index',$data) ?>
+            </div>
         </div>
     </body>
 </html>
