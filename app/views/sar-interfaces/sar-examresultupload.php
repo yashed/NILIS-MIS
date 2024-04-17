@@ -398,6 +398,8 @@ $degreeId = $_GET['degreeID'];
         border: 1px solid #17376e;
         text-align: center;
         font-size: 0.8vw;
+        align-items: center;
+        justify-content: center;
     }
 
     .btn-secondary:hover {
@@ -450,6 +452,8 @@ $degreeId = $_GET['degreeID'];
         border: 1px solid;
         margin-bottom: 10px;
         font-size: 0.8vw;
+        align-items: center;
+        justify-content: center;
     }
 
     .btn-secondary-delete {
@@ -463,6 +467,8 @@ $degreeId = $_GET['degreeID'];
         border: 1px solid;
         margin-bottom: 10px;
         font-size: 0.8vw;
+        align-items: center;
+        justify-content: center;
     }
 
     .btn-secondary-delete:hover {
@@ -655,6 +661,8 @@ $degreeId = $_GET['degreeID'];
     }
 
     .btn-secondary-2-examiner3[data-active="true"] {
+        justify-content: center;
+        align-items: center;
         display: flex;
     }
 
@@ -1475,11 +1483,22 @@ $degreeId = $_GET['degreeID'];
 
 
                 console.log('Returned HTML data =', data);
-                alert('File uploaded successfully!');
+                // alert('File uploaded successfully!');
 
                 // Now you can manipulate the HTML content as needed
                 var tempDiv = document.createElement('div');
                 tempDiv.innerHTML = data;
+
+                var error = tempDiv.querySelector('.marksheet-errors').textContent;
+                console.log('Error:', error);
+                //if there is an eror it show error message
+                if (error !== 'NULL') {
+                    alert('Error : ' + error);
+                    return;
+                }
+                else {
+                    alert('File uploaded successfully!');
+                }
 
                 // var examiner3Status = tempDiv.querySelector('#examiner3-status').textContent;
                 // var examiner3SubCode = tempDiv.querySelector('#examiner3SubCode').textContent;

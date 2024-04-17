@@ -43,7 +43,7 @@ $data['role'] = $role;
     }
 
     .exam-create-home {
-        height: 100vh;
+
         left: 250px;
         position: relative;
         width: calc(100% - 250px);
@@ -340,6 +340,18 @@ $data['role'] = $role;
         background: none;
         width: 100%
     }
+
+    .not-found-stu {
+        font-size: 1.5vw;
+        font-weight: 600;
+        color: #17376E;
+        margin: 20px;
+        display: flex;
+        padding: 4vw;
+        justify-content: center;
+        align-items: center;
+
+    }
 </style>
 
 <body>
@@ -362,38 +374,41 @@ $data['role'] = $role;
                         <div class="degree-student-table">
 
                             <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <input type="checkbox" class="checkAll" name="checkAll" />
-                                        </th>
-                                        <th>Name</th>
-                                        <th>Attempt</th>
-                                        <th>Index Number</th>
-                                        <th>Registration Number</th>
-                                        <th>Mail</th>
-                                    </tr>
-                                </thead>
-                                <tbody class='table-body'>
-                                    <?php foreach ($students as $student): ?>
-                                        <?php $json = json_encode($student); ?>
+                                <?php if (empty($students)): ?>
+                                    <div class="not-found-stu">No students found</div>
+                                <?php else: ?>
+                                    <thead>
                                         <tr>
-                                            <td><input type="checkbox" name="item[]" value=" <?= $student->id ?>"
-                                                    class="itemCheckbox" onclick="updateCheckboxValues()"
-                                                    <?= isset($_SESSION['checked_normal_students'][$student->id]) ? 'checked' : '' ?>></td>
-                                            <td><input type="text" name="name[]" value=" <?= $student->name ?>" readonly>
-                                            </td>
-                                            <td><input type="text" name="attempt[]" value="01" readonly></td>
-                                            <td><input type="text" name="index_number[]" value=" <?= $student->indexNo ?>"
-                                                    readonly></td>
-                                            <td><input type="text" name="reg_num[]" value="<?= $student->regNo ?>" readonly>
-                                            </td>
-                                            <td><input type="text" name="mail[]" value=" <?= $student->Email ?>" readonly>
-                                            </td>
+                                            <th>
+                                                <input type="checkbox" class="checkAll" name="checkAll" />
+                                            </th>
+                                            <th>Name</th>
+                                            <th>Attempt</th>
+                                            <th>Index Number</th>
+                                            <th>Registration Number</th>
+                                            <th>Mail</th>
                                         </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-
+                                    </thead>
+                                    <tbody class='table-body'>
+                                        <?php foreach ($students as $student): ?>
+                                            <?php $json = json_encode($student); ?>
+                                            <tr>
+                                                <td><input type="checkbox" name="item[]" value=" <?= $student->id ?>"
+                                                        class="itemCheckbox" onclick="updateCheckboxValues()"
+                                                        <?= isset($_SESSION['checked_normal_students'][$student->id]) ? 'checked' : '' ?>></td>
+                                                <td><input type="text" name="name[]" value=" <?= $student->name ?>" readonly>
+                                                </td>
+                                                <td><input type="text" name="attempt[]" value="01" readonly></td>
+                                                <td><input type="text" name="index_number[]" value=" <?= $student->indexNo ?>"
+                                                        readonly></td>
+                                                <td><input type="text" name="reg_num[]" value="<?= $student->regNo ?>" readonly>
+                                                </td>
+                                                <td><input type="text" name="mail[]" value=" <?= $student->Email ?>" readonly>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                <?php endif; ?>
                             </table>
 
                         </div>

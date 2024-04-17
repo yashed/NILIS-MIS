@@ -1,9 +1,11 @@
 <?php
 $role = "SAR";
 $data['role'] = $role;
+$data['rmStudents'] = isset($rmstudents) ? $rmstudents : '';
+$data['option'] = isset($selectedOption) ? $selectedOption : '';
+$data['popupStatus'] = isset($RMpopupStatus) ? $RMpopupStatus : '';
+
 ?>
-<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -93,7 +95,7 @@ $data['role'] = $role;
             justify-content: space-between;
             align-items: center;
             border-radius: 8px;
-            font-size: 30px;
+            font-size: 2vw;
             font-weight: 500;
         }
 
@@ -394,73 +396,167 @@ $data['role'] = $role;
             bottom: 0;
             width: 100%;
         }
+
+        .header-btn {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 30px;
+        }
+
+        .btn-secondary-rm {
+            width: 25vw;
+            color: #fff;
+            height: 2.8vw;
+            padding: 5px 5px 5px 5px;
+            border-radius: 0.6vw;
+            background: #ffffff;
+            box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+            color: #17376e;
+            margin-bottom: 10px;
+            margin-top: 20px;
+            border: 1px solid #17376e;
+            font-size: 1vw;
+        }
+
+        .btn-secondary-rm:hover {
+            color: black;
+            background-color: #E2E2E2;
+            border: 1px solid #17376e;
+        }
+
+        .RM-popup {
+            position: fixed;
+            top: -150%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.25);
+            border: 1.5px solid rgba(00, 00, 00, 0.30);
+            opacity: 0;
+            background: #fff;
+            width: 70%;
+            /* height: 60vh; */
+            padding: 40px;
+            box-shadow: 9px 11px 60.9px 0px rgba(0, 0, 0, 0.60);
+            border-radius: 10px;
+            transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+            z-index: 2000;
+        }
+
+        .RM-popup.active {
+            top: 50%;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+        }
+
+        .degree-participant-body {
+            width: 100%;
+        }
+
+        .degree-participant-body.active {
+            filter: blur(5px);
+            pointer-events: none;
+            user-select: none;
+            background: rgba(0, 0, 0, 0.30);
+            overflow: hidden;
+
+
+        }
     </style>
 </head>
 
 <body>
-    <div class="dr-degree-programs-home">
-        <div class="dr-degree-programs-title">
-            <div class="dr-degree-programs-title1"><?= $_SESSION['degreeData'][0]->DegreeName ?></div>
-        </div>
-        <div class="dr-degree-programs-home-1">
-            <div class="table">
-                <section class="table__header">
-                    <p>Participants</p>
-                    <div class="input-main-group">
-                        <div class="input-group">
-                            <i class='bx bx-search icon'></i>
-                            <input type="search" placeholder="Search Data...">
-                        </div>
+    <div class="degree-participant-body" id='body'>
+        <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
+        <?php $this->view('components/navside-bar/footer', $data) ?>
 
-                        <button class="dr-degree-programs-button">Search</button>
-                    </div>
-                    <div class="export__file">
-                        <label for="export-file" class="export__file-btn" title="Export File"></label><br><br>
-                        <input type="checkbox" id="export-file">
-                        <div class="export__file-options">
-                            <label>Export As</label>
-                            <label for="export-file" id="toPDF">PDF <img
-                                    src="<?= ROOT ?>assets/dr-participant-table/pdf.png" alt=""></label>
-                            <label for="export-file" id="toJSON">JSON <img
-                                    src="<?= ROOT ?>assets/dr-participant-table/json.png" alt=""></label>
-                            <label for="export-file" id="toCSV">CSV <img
-                                    src="<?= ROOT ?>assets/dr-participant-table/csv.png" alt=""></label>
-                            <label for="export-file" id="toEXCEL">EXCEL <img
-                                    src="<?= ROOT ?>assets/dr-participant-table/excel.png" alt=""></label>
+        <div class="dr-degree-programs-home">
+            <div class="dr-degree-programs-title">
+                <div class="dr-degree-programs-title1"><?= $_SESSION['degreeData'][0]->DegreeName ?></div>
+            </div>
+            <div class="dr-degree-programs-home-1">
+                <div class="table">
+                    <section class="table__header">
+                        <div class="header-btn">
+                            <p>Participants</p>
+                            <button class="btn-secondary-rm" onclick='showRMPopup()'>Verify Students</button>
                         </div>
-                    </div>
-                </section>
-                <section class="table__body">
-                    <table id="table_p">
-                        <thead>
-                            <tr>
-                                <th> Name </th>
-                                <th> Index Number </th>
-                                <th> Registration Number </th>
-                                <th> Mail </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($students as $student): ?>
-                                <tr data-id="<?= $student->id ?>" class="clickable-row">
-                                    <td class="table__body-td-name"><?= $student->name ?> </td>
-                                    <td> <?= $student->indexNo ?> </td>
-                                    <td> <?= $student->regNo ?> </td>
-                                    <td> <?= $student->Email ?> </td>
+                        <div class="input-main-group">
+                            <div class="input-group">
+                                <i class='bx bx-search icon'></i>
+                                <input type="search" placeholder="Search Data...">
+                            </div>
+
+                            <button class="dr-degree-programs-button">Search</button>
+                        </div>
+                        <div class="export__file">
+                            <label for="export-file" class="export__file-btn" title="Export File"></label><br><br>
+                            <input type="checkbox" id="export-file">
+                            <div class="export__file-options">
+                                <label>Export As</label>
+                                <label for="export-file" id="toPDF">PDF <img
+                                        src="<?= ROOT ?>assets/dr-participant-table/pdf.png" alt=""></label>
+                                <label for="export-file" id="toJSON">JSON <img
+                                        src="<?= ROOT ?>assets/dr-participant-table/json.png" alt=""></label>
+                                <label for="export-file" id="toCSV">CSV <img
+                                        src="<?= ROOT ?>assets/dr-participant-table/csv.png" alt=""></label>
+                                <label for="export-file" id="toEXCEL">EXCEL <img
+                                        src="<?= ROOT ?>assets/dr-participant-table/excel.png" alt=""></label>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="table__body">
+                        <table id="table_p">
+                            <thead>
+                                <tr>
+                                    <th> Name </th>
+                                    <th> Index Number </th>
+                                    <th> Registration Number </th>
+                                    <th> Mail </th>
                                 </tr>
-                            <?php endforeach; ?>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($students as $student): ?>
+                                    <tr data-id="<?= $student->id ?>" class="clickable-row">
+                                        <td class="table__body-td-name"><?= $student->name ?> </td>
+                                        <td> <?= $student->indexNo ?> </td>
+                                        <td> <?= $student->regNo ?> </td>
+                                        <td> <?= $student->Email ?> </td>
+                                    </tr>
+                                <?php endforeach; ?>
 
-                        </tbody>
-                    </table>
-                </section>
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
             </div>
         </div>
         <div class="degree-footer">
             <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>
+
+    <div class='RM-popup' id='RM-popup'>
+        <?php $this->view('components/popup/rm-verification-popup', $data) ?>
+    </div>
 </body>
 <script>
+
+    var popupStatus = <?php echo $RMpopupStatus ? 'true' : 'false'; ?>;
+    if (popupStatus) {
+
+        // Adding 'active' class to the popup and body elements
+        document.querySelector("#RM-popup").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+        $(".loader-wraper").fadeOut("slow");
+    }
+
+    function showRMPopup() {
+        console.log("Click attendance");
+        document.querySelector("#RM-popup").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+    }
+
+
     const search = document.querySelector('.input-group input'),
         table_rows = document.querySelectorAll('tbody tr'),
         table_headings = document.querySelectorAll('thead th');

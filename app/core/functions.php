@@ -277,7 +277,7 @@ function finalMark($mark1, $mark2, $assigmnet)
 function insertMarks($file, $examID, $degreeID, $subCode)
 {
 
-    var_dump($file, $examID, $degreeID, $subCode);
+    // var_dump($file, $examID, $degreeID, $subCode);
     //need to add condition to check the file is full of marks or not
     $mark = new Marks;
 
@@ -303,14 +303,14 @@ function insertMarks($file, $examID, $degreeID, $subCode)
         $data['examiner2Marks'] = $values[3];
         $data['assessmentMarks'] = $values[4];
         $data['examiner3Marks'] = !empty($values[5]) ? $values[5] : -1;
-        show($data);
+        // show($data);
 
         //insert or update data into table
         if (!empty($mark->markValidate($data))) {
             if ($mark->markValidate($data)->status == 'update') {
                 $id = $mark->markValidate($data)->id;
-                show("Id === ");
-                show($id);
+                // show("Id === ");
+                // show($id);
                 //update data in the databse marks table
                 $mark->update($id, $data);
             } else if ($mark->markValidate($data)->status == 'insert') {

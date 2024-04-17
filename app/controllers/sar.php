@@ -14,11 +14,22 @@ class SAR extends Controller
     public function index($checkUser = false)
     {
 
+        $exam = new Exam();
+        $finalMarks = new FinalMarks();
         //uncoment this to add autherization to sar
         // if (!Auth::is_sar()) {
         //     message('You are not authorized to view this page', 'error',true);
         //     header('Location: login');
         // }
+
+        //get last results submitted examination id
+        $recentExamId = $finalMarks->lastID('examID');
+
+        //join exam and degree tables
+        $dataTables = ['degree'];
+        $columns = ['*'];
+        $examConditions = ['exam.degreeID = degree.DegreeID', 'exam.examID = ' . $recentExamId];
+        $data['RecentResultExam'] = $exam->join($dataTables, $columns, $examConditions);
 
         $degree = new Degree();
 
@@ -44,10 +55,18 @@ class SAR extends Controller
     }
     public function degreeprofile($action = null, $id = null)
     {
+        $degree = new Degree();
+
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
         $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
+
+        //update session degree data
+        if (!empty($degreeID)) {
+            $_SESSION['degreeData'] = $degree->where(['DegreeID' => $degreeID]);
+        }
+
         // Check if degree ID is provided
         if ($degreeID !== null) {
             $degree = new Degree();
@@ -604,7 +623,11 @@ class SAR extends Controller
 
                     if (empty($selectedIds)) {
                         if ($_POST['submit'] == 'next2') {
+
+                            //set session data to null
+                            $_SESSION['Selected_RM_Students'] = null;
                             redirect('sar/examination/create/3');
+
                         } else if ($_POST['back2'] == 'back2') {
                             redirect('sar/examination/create/1');
                         }
@@ -667,16 +690,12 @@ class SAR extends Controller
                             }
                         }
 
-                        //check if there both repete and medical students
+                        //check if there both repete and medical students (consider student type repete, medical , medical/repeate)
                         $rmStudents = processStudents($selectedRMStudents);
 
-
-
-                        // show($selectedRMStudents);
+                        //add processed students to session
                         $_SESSION['Selected_RM_Students'] = $rmStudents;
 
-                        $distinctData = $examParticipants->getDistinctElements($_SESSION['Selected_Normal_Students'], $_SESSION['Selected_RM_Students'], 'indexNo');
-                        $_SESSION['Normal-Exam-Participants'] = $distinctData;
 
 
                         if (!empty($_POST['back2'])) {
@@ -685,25 +704,18 @@ class SAR extends Controller
                             }
 
                         }
-                        // redirect('sar/examination/create/3');
 
-                    }
-
-                    if ($examParticipants->examParticipantValidation($distinctData)) {
-                        // $examParticipants->insert($student);
-
-                        // redirect('sar/examination/create/3');
-                    } else {
-                        $data['errors'] = $examParticipants->errors;
                     }
                 }
             }
 
             $this->view('sar-interfaces/sar-createexam-normal-2', $data);
+
         } else if ($method == "create" && $id == 3) {
 
-
-
+            //get RM students and generate distinct student data list
+            $distinctData = $examParticipants->getDistinctElements($_SESSION['Selected_Normal_Students'], $_SESSION['Selected_RM_Students'], 'indexNo');
+            $_SESSION['Normal-Exam-Participants'] = $distinctData;
 
             //get semster from session
             $selectedSemester = $_SESSION['exam-creation-details']['semester'];
@@ -829,7 +841,7 @@ class SAR extends Controller
 
 
                 //get the count of exam participants
-                $numberOfStudnets = $examParticipants->count(['examID' => $examID]);
+                $data['examCount'] = $examParticipants->count(['examID' => $examID]);
 
                 $participants[] = $examParticipants->where(['examID' => $examID]);
                 // show($participants);
@@ -1125,6 +1137,27 @@ class SAR extends Controller
                         ['status' => 0],
                         ['examID' => $examID, 'subCode' => $e3SubCode]
                     );
+
+                    //check if all 3 marksheet are uploaded
+                    $uploadedRes = $resultSheet->where([
+                        'examId' => $examID,
+                        'subjectCode' => $e3SubCode,
+                    ]);
+
+                    if (!empty($uploadedRes)) {
+                        if (count($uploadedRes) >= 3) {
+                            //generate file name 
+                            $fileName = $examID . '_' . $e3SubCode . '.csv';
+
+                            //insert marks
+                            insertMarks($fileName, $examID, $degreeID, $e3SubCode);
+
+                            //update activity table
+                            $message = 'Upload Marks for ' . $e3SubCode . ' in ExamId = ' . $examID . ' successfully. Continue without Examiner 3.';
+                            activity($message);
+                        }
+                    }
+
                 }
 
                 //get uploaded marksheet details 
@@ -1192,7 +1225,7 @@ class SAR extends Controller
                         $subjectIDExaminer3 = null;
                         // Insert data into the database
                         if ($resultSheet->examValidate($examSheet)) {
-
+                            show('inside insert marksheet');
                             //add record to database table
                             $resultSheet->insert($examSheet);
                             $message = 'Upload ' . $marksType . ' Marksheet for ' . $subCode . ' in ExamId = ' . $examID . ' successfully.';
@@ -1329,11 +1362,13 @@ class SAR extends Controller
                                     }
                                 }
                             }
+
+                            echo "<div class='marksheet-errors'>NULL</div>";
                         } else {
                             // Error inserting data into the database
                             $data['errors'] = $resultSheet->errors;
-                            // show($data['errors']);
-                            // var_dump('errors = ' . $resultSheet->errors['marks']);
+
+                            echo "<div class='marksheet-errors'>" . $resultSheet->errors['marks'] . "</div>";
                             echo json_encode(['success' => false, 'message' => 'Error inserting data into the database.']);
                         }
 
@@ -1344,9 +1379,9 @@ class SAR extends Controller
 
 
                 } else {
-                    // // Handle file upload error
+                    // Handle file upload error
                     // message("File upload error", "error", true);
-                    // // echo json_encode(['success' => false, 'message' => 'File upload error.']);
+                    // echo json_encode(['success' => false, 'message' => 'File upload error.']);
                 }
 
 
@@ -1450,11 +1485,16 @@ class SAR extends Controller
 
     public function participants($id = null, $action = null, $id2 = null)
     {
+        $st = new StudentModel();
+        $RepeatStudents = new RepeatStudents();
+        $MedicalStudents = new MedicalStudents();
+
         if (!empty($_SESSION['degreeData'])) {
             $degreeID = $_SESSION['degreeData'][0]->DegreeID;
         }
 
-        $st = new StudentModel();
+
+
         if (!empty($id)) {
             if (!empty($action)) {
                 if ($action === 'delete' && !empty($id2)) {
@@ -1477,6 +1517,74 @@ class SAR extends Controller
             }
         }
         $data['students'] = $st->where(['degreeID' => $degreeID]);
+
+        $RMPopup = false;
+
+        //get repeate and medical student data according to the option
+        if (isset($_POST['selectOption']) == 'option') {
+
+            if (!empty($_POST['SelectedOption'])) {
+                $selectedOption = $_POST['SelectedOption'];
+                $data['selectedOption'] = $selectedOption;
+                $RMPopup = true;
+            }
+
+            if ($selectedOption == 'repete') {
+
+                //join data with student table and get regNo
+                $tables = ['student'];
+                $columns = ['repeat_students.id', 'repeat_students.indexNo', 'student.regNo', 'repeat_students.degreeID', 'repeat_students.paymentStatus', 'repeat_students.attempt', 'repeat_students.subjectCode'];
+                $conditions = ['student.indexNo = repeat_students.indexNo'];
+                $whereConditions = ['repeat_students.degreeID = ' . $degreeID, 'repeat_students.paymentStatus = 0'];
+                $data['rmstudents'] = $RepeatStudents->joinWhere($tables, $columns, $conditions, $whereConditions);
+
+            } else if ($selectedOption == 'medical') {
+
+                //join data with student table and get regNo
+                $tables = ['student'];
+                $columns = ['medical_students.id', 'medical_students.indexNo', 'student.regNo', 'medical_students.degreeID', 'medical_students.status', 'medical_students.attempt', 'medical_students.subjectCode'];
+                $conditions = ['student.indexNo = medical_students.indexNo'];
+                $whereConditions = ['medical_students.degreeID = ' . $degreeID, 'medical_students.status = 0'];
+                $data['rmstudents'] = $MedicalStudents->joinWhere($tables, $columns, $conditions, $whereConditions);
+
+            }
+
+        }
+
+        //update the status of the repete and medical students
+        if (isset($_POST['submitStatus']) == 'status') {
+
+            if (!empty($_POST['ids'])) {
+
+
+                if (!empty($_POST['presentIds'])) {
+                    $ids = $_POST['presentIds'];
+                }
+
+                if (!empty($_POST['option'])) {
+                    $selectedOption = $_POST['option'];
+                }
+
+                if ($selectedOption == 'repete') {
+                    foreach ($ids as $id) {
+                        $RepeatStudents->updateRows(
+                            ['paymentStatus' => 1],
+                            ['id' => $id]
+                        );
+                    }
+                } else if ($selectedOption == 'medical') {
+                    foreach ($ids as $id) {
+                        $MedicalStudents->updateRows(
+                            ['status' => 1],
+                            ['id' => $id]
+                        );
+                    }
+                }
+            }
+            $RMPopup = false;
+        }
+
+        $data['RMpopupStatus'] = $RMPopup;
 
         $this->view('sar-interfaces/sar-degreeparticipants', $data);
     }

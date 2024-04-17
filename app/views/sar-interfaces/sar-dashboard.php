@@ -2,6 +2,7 @@
 
 $role = "SAR";
 $data['role'] = $role;
+$data['recentResults'] = $RecentResultExam;
 
 ?>
 
@@ -564,6 +565,14 @@ $data['role'] = $role;
         }
 
     }
+
+    .result-msg {
+        font-size: 1.5vw;
+        font-weight: 600;
+        color: #17376E;
+        margin: 20px;
+
+    }
 </style>
 
 <body>
@@ -735,8 +744,21 @@ $data['role'] = $role;
                                 Recently Published Examination Results
                             </div>
                             <div class="exam-cards">
-                                <?php $this->view('components/exam-card/exam-card', $data) ?>
-                                <?php $this->view('components/exam-card/exam-card', $data) ?>
+                                <?php if (!empty($RecentResultExam)): ?>
+                                    <?php foreach ($RecentResultExam as $exam): ?>
+                                        <?php
+
+                                        $data['exam'] = $exam;
+                                        $this->view('components/exam-card/exam-card', $data);
+
+                                        ?>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+
+                                    <div class="result-msg">
+                                        No Results Published
+                                    </div>
+                                    < <?php endif; ?>
                             </div>
                         </div>
                     </div>
