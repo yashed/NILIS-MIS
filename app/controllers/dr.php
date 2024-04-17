@@ -450,9 +450,36 @@ class DR extends Controller
     {
         $this->view('dr-interfaces/dr-attendance');
     }
-    public function examination()
+    public function examination($action = null, $id = null)
     {
+        $data = [];
+        $data['action'] = $action;
+        $data['id'] = $id;
+        $degree = new Degree();
+        $student = new StudentModel();
+        $examParticipants = new ExamParticipants();
+        $medicalStudents = new MedicalStudents();
+        $repeatStudents = new RepeatStudents();
+        $examtimetable = new ExamTimeTable();
+        $subjects = new Subjects();
+        $exam = new Exam();
+        $resultSheet = new ResultSheet();
+        $examAttendance = new Attendance();
+
+        $degreeID = $_SESSION['DegreeID'];
+        $data['degrees'] = $degree->find($degreeID);
+
+        $data['students'] = $student->findAll();
+        // $data['subjects'] = $subjects->where(['degreeID' => $degreeID, 'semester' => $semester]);
+
+        // if ($method == 'participants') {
+        // }
+        // else if ($method == 'results') {
+
+        // }
+        // else {
         $this->view('dr-interfaces/dr-examination');
+        // }
     }
     public function login()
     {

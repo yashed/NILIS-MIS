@@ -29,7 +29,7 @@
     --tran-05: all 0.5s ease;
 }
 .dr-reports-home {
-    height: 100vh;
+    /* min-height: 100vh; */
     left: 250px;
     position: relative;
     width: calc(100% - 250px);
@@ -53,11 +53,12 @@
     background-color: var(--text-color);
     padding: 30px 10px 30px 35px;
     border-radius: 6px;
-    margin: px 4px 7px 4px;
+    margin: 7px 4px 7px 4px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     flex-wrap: wrap;
+    min-height: 72vh;
 }
 .dr-reports-card-1 {
     display: flex;
