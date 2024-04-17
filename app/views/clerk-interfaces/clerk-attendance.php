@@ -285,16 +285,37 @@ $data['role'] = $role;
             color: black;
             background-color: #E2E2E2;
         }
+
+        .dr-degree-programs-title {
+            font-size: 36px;
+            font-weight: 500;
+            color: black;
+            padding: 10px 0px 10px 32px;
+            background-color: var(--text-color);
+            border-radius: 6px;
+            /* margin: 5px 4px 5px 4px; */
+        }
+
+        .dr-degree-programs-title1-core {
+            color: #17376e;
+            font-size: 22px;
+            /* margin: 1px 0px 5px 0px; */
+            font-weight: 300;
+            font-size: 27px;
+        }
     </style>
 </head>
 
 <body>
 
     <div class="temp2-home" id="blur-background">
-        <div class="temp2-title">Attendance </div>
-        <?php foreach ($degrees as $degree) : ?>
+    <div class="dr-degree-programs-title">
+            <div class="dr-degree-programs-title1">Attendance</div>
+            <div class="dr-degree-programs-title1-core"><?= $degrees[0]->DegreeName ?></div>
+        </div>
+        <!-- <?php foreach ($degrees as $degree) : ?>
                <?= $degree-> DegreeShortName ?>
-            <?php endforeach; ?>
+            <?php endforeach; ?> -->
 
         <div class="temp2-subsection-2">
             <div class="temp2-subsection-21">
@@ -321,12 +342,10 @@ $data['role'] = $role;
         <form action="" method="post" enctype="multipart/form-data" onsubmit="validateForm()">
             <label for="csvFile">Upload CSV File:</label>
             <div class="form-element">
-                <label for="selectDegree">Choose the degree name</label>
-                <select name="selectDegree" id="form-element-dropdown" required>
-                    <option value="" disabled selected>Select Degree</option>
-                    <option value="DLIM" class="form-element-dropdown-op">DLIM</option>
-                    <option value="DSL" class="form-element-dropdown-op">DSL</option>
-                </select>
+           
+    <input type="hidden" name="selectDegree" value="<?= $degrees[0]->DegreeShortName ?>">
+    <label for="selectDegree">Degree Name: <?= $degrees[0]->DegreeShortName ?></label>
+
             </div>
             <input type="file" name="csvFile" id="csvFile" accept=".csv" required>
             <button type="submit" name="importSubmit" class="import-button">Submit file</button>
@@ -375,37 +394,29 @@ $data['role'] = $role;
             }
         }
 
-        function handleDragOver(event) {
-            event.preventDefault();
-        }
+    function downloadAttendanceSheet() {
+    // Get the degree short name from PHP
+    var degreeShortName = '<?= $degrees[0]->DegreeShortName ?>';
 
-        function handleDrop(event) {
-            event.preventDefault();
-            var files = event.dataTransfer.files;
-            handleFiles(files);
-        }
+    // Construct the file URL dynamically based on the degree short name
+    var fileUrl = '<?= ROOT ?>assets/csv/output/Student_Attendance_' + degreeShortName + '.csv';
 
+    // Create an anchor element
+    var a = document.createElement('a');
+    a.href = fileUrl;
 
-        function downloadAttendanceSheet() {
-            // Modify the file URL dynamically based on the desired file location
-            var fileUrl = '<?= ROOT ?>assets/csv/output/Student_Attendance.csv';
+    // Set the download attribute with the desired file name
+    a.download = 'Student_Attendance_' + degreeShortName + '.csv';
 
-            // Create an anchor element
-            var a = document.createElement('a');
-            a.href = fileUrl;
+    // Append the anchor element to the document
+    document.body.appendChild(a);
 
-            // Set the download attribute with the desired file name
-            a.download = 'Student_Attendance.csv';
+    // Trigger a click event on the anchor element
+    a.click();
 
-            // Append the anchor element to the document
-            document.body.appendChild(a);
-
-            // Trigger a click event on the anchor element
-            a.click();
-
-            // Remove the anchor element from the document
-            document.body.removeChild(a);
-        }
+    // Remove the anchor element from the document
+    document.body.removeChild(a);
+}
 
         function validateForm() {
             var selectedDegree = document.getElementById("form-element-dropdown").value;

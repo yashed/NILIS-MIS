@@ -15,6 +15,9 @@ class Clerk extends Controller
         $user=new User();
         $degree = new Degree();
 
+        $_SESSION['getid']=null;
+        unset ( $_SESSION['getid']);
+
         $data['title'] = 'Dashboard';
         $data['user'] = $user->findAll();
         $data['degrees'] = $degree->findAll();
@@ -33,7 +36,11 @@ class Clerk extends Controller
     {
         $attendance = new studentAttendance();
         $data['attendances'] = $attendance->findAll();
-    
+     
+        $degree=new Degree();
+        $degreeID= $_SESSION['getid'];
+        $data['degrees']=$degree->find($degreeID);
+
         $this->view('clerk-interfaces\clerk-updatedattendance', $data);
     }
 
@@ -114,10 +121,13 @@ public function settings()
 public function attendance()
 {
     $degree = new Degree();
+
     $notification = new NotificationModel();
+    $degreeID= $_SESSION['getid'];
+    $data['degrees']=$degree->find($degreeID);
     $data['notifications'] = $notification->findAll();
  
-    $data['degrees'] = $degree->findAll();
+    // $data['degrees'] = $degree->findAll();
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['importSubmit'])) {
         // Check if the uploaded file is present and no errors occurred during upload
@@ -160,6 +170,7 @@ public function attendance()
                         'index_no' => $index_no
                     ];
                     $studentAttendance->updateRows($updateData, $whereConditions);
+                   
                 } else {
                     // show($_POST);
                     // If record doesn't exist, insert it
@@ -174,6 +185,8 @@ public function attendance()
             }
 
             fclose($csvFile);
+            header('Location: ' . $_SERVER['REQUEST_URI']);
+            exit(); 
         } else {
             echo "Error uploading the file.";
         }
@@ -189,7 +202,9 @@ public function degreeprofile($action = null, $id = null)
     $data = [];
     $data['action'] = $action;
     $data['id'] = $id;
+
     $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
+    $_SESSION['getid']=$degreeID;
     // Check if degree ID is provided
     if ($degreeID !== null) {
         $degree = new Degree();
