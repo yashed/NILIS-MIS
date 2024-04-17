@@ -42,8 +42,18 @@ th {
             <div class="dr-userprofile-row">
                 <div class="dr-userprofile-column1">
                     <div class=dr-userprofile-name>
-                        <img src="<?= ROOT ?>assets/dr/imgano.png">
-                        <p><?= $student[0]->name ?></p>
+                        <?php if ($student[0]->status == "continue") : ?>
+                            <div>
+                                <img src="<?= ROOT ?>assets/dr/imgano.png" alt="Your Image">
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($student[0]->status == "suspended") : ?>
+                            <div style="border: 2px solid red; display: inline-block; border-radius: 100%;">
+                                <img src="<?= ROOT ?>assets/dr/imgano.png" alt="Your Image">
+                            </div>
+                        <p style="color: red;"><?= $student[0]->name ?></p>
+                            <p style="color: red;">Suspended and Degree Changed.</p>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="dr-userprofile-column2">
@@ -65,7 +75,7 @@ th {
             </div><br>
             <div class="dr-userprofile-button-container">
                 <div class="dr-userprofile-buttony">
-                    <?php if ((time() - strtotime($degrees[0]->createdDate)) < (3 * 30 * 24 * 60 * 60)) : ?>
+                    <?php if ((time() - strtotime($degrees[0]->createdDate)) < (3 * 30 * 24 * 60 * 60) && $student[0]->status == "continue") : ?>
                         <input type="button" id="dr-userprofile-changedegreebutton" class="dr-userprofile-button" value="Change Diploma Program" onclick="updateData()">
                     <?php endif; ?>
                 </div>
@@ -187,7 +197,9 @@ th {
                     </div>
                 </div>
                 <div class="dr-userprofile-buttonx">
-                    <input type="button" id="dr-userprofile-updateButton" class="dr-userprofile-button" value="Update" onclick="updateData1()">
+                    <?php if ($student[0]->status == "continue") : ?>
+                        <input type="button" id="dr-userprofile-updateButton" class="dr-userprofile-button" value="Update" onclick="updateData1()">
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
