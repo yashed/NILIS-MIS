@@ -287,16 +287,6 @@ $data['role'] = $role;
                 <div class="exam-sub-title">
                     Upcoming Examination
                 </div>
-                <div class="exam-create-dropdown">
-                    <button class="dropbtn">
-                        <div class="bt-name">Create Examination</div>
-                    </button>
-                    <div class="exam-create-dropdown-content">
-                        <a href="<?= ROOT ?>sar/examination/create/1">Normal Examination</a>
-
-                        <a href="#">Special Examination</a>
-                    </div>
-                </div>
             </div>
             <div class="exam-degree-bar">
                 <div class="exam-card1">
@@ -316,7 +306,6 @@ $data['role'] = $role;
                         <?php $this->view('components/exam-card/exam-card', $data) ?>
                     </div>
                 </div>
-
             </div>
             <div class="exam-subsection-22">
                 <div class="exam-sub-title">
@@ -327,8 +316,6 @@ $data['role'] = $role;
                         <?php $this->view('components/exam-card/exam-card', $data) ?>
                     </div>
                 </div>
-
-
             </div>
         </div>
         <div class="exam-footer">
