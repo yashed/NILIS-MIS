@@ -41,7 +41,7 @@
                                 <span class="text nav-text">Participants</span>
                             </a>
                         </li>
-                        <li class="nav-link">
+                        <li class="nav-link" id="myButton">
                             <a href="<?= ROOT ?>dr/examination">
                                 <i class="bx bx-book icon"></i>
                                 <span class="text nav-text">Examination</span>
