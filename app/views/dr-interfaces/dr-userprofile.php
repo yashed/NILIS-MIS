@@ -141,17 +141,15 @@ th {
                             <p class="dr-userprofile-left-top-text3">Semester <?= $exam->semester ?></p>
                             <table>
                                 <?php if (!empty($finalMarks)) : ?>
-                                <tr>
-                                    <th>Subject</th>
-                                    <th>Result</th>
-                                </tr>
-                                    <?php foreach ($finalMarks as $finalMark) : ?>
-                                        <?= $finalMark->examID ?><p>adooo</p><br>
-                                        <?= $exam->examID ?><p>pakoo</p><br>
-                                        <?php if ($finalMark->examID == $exam->examID) : ?>
+                                    <tr>
+                                        <th>Subject</th>
+                                        <th>Result</th>
+                                    </tr>
+                                    <?php foreach ($finalMarks as $individualFinalMark) : ?>
+                                        <?php if ($individualFinalMark->examID == $exam->examID) : ?>
                                             <tr>
-                                                <td><?= $finalMark->subjectCode ?></td>
-                                                <td><?= $finalMark->grade ?></td>
+                                                <td><?= $individualFinalMark->subjectCode ?></td>
+                                                <td><?= $individualFinalMark->grade ?></td>
                                             </tr>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
