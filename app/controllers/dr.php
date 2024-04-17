@@ -158,19 +158,21 @@ class DR extends Controller
                         // Iterate over each subject's data and insert it into the database
                         foreach ($timetableData as $timetableDataItem) {
                             // Construct the data array for insertion
-                            // show($timetableDataItem);
+                            show($timetableDataItem);
                             $dataSet1 = [
                                 'EventName' => $timetableDataItem['eventName'],
                                 'EventType' => $timetableDataItem['eventType'],
                                 'StartingDate' => $timetableDataItem['eventStart'],
-                                'EndingDate' => $timetableDataItem['eventEnd']
+                                'EndingDate' => $timetableDataItem['eventEnd'],
+                                'EventID' => $timetableDataItem['eventID'],
+                                'DegreeID' => $degreeID
                             ];
                             $dataGet1 = [
                                 'EventID' => $timetableDataItem['eventID'],
                                 'DegreeID' => $degreeID
                             ];
-                            // echo json_encode($data1);
-                            $degreeTimeTable->updateRows($dataSet1, $dataGet1);
+                            $degreeTimeTable->delete($dataGet1);
+                            $degreeTimeTable->insert($dataSet1);
                         }
                         redirect("dr/degreeprofile");
                     }
@@ -395,6 +397,8 @@ class DR extends Controller
                             'status' => $status,
                         ];
                         $studentModel->insert($data);
+
+                        sleep(4);
                         redirect("dr/participants");
                     } else {
                         echo "Error: Failed to generate index and registration numbers.";
