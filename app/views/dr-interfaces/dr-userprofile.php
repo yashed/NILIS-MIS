@@ -2,8 +2,8 @@
 $role = "DR";
 $data['role'] = $role;
 ?>
-<!-- <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?> -->
+<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +34,7 @@ th {
 <body>
     <div class="dr-userprofile">
         <div class="dr-userprofile-white-container1-1">
-            <div class="dr-userprofile-white-container1"><?= $degree[0]->DegreeName ?></div>
+            <div class="dr-userprofile-white-container1"><?= $degrees[0]->DegreeName ?></div>
             <div class="dr-userprofile-white-container1-core">Participants</div>
         </div>
         <div class="dr-userprofile-white-container2-1">
@@ -65,7 +65,7 @@ th {
             </div><br>
             <div class="dr-userprofile-button-container">
                 <div class="dr-userprofile-buttony">
-                    <?php if ((time() - strtotime($degree[0]->createdDate)) < (3 * 30 * 24 * 60 * 60)) : ?>
+                    <?php if ((time() - strtotime($degrees[0]->createdDate)) < (3 * 30 * 24 * 60 * 60)) : ?>
                         <input type="button" id="dr-userprofile-changedegreebutton" class="dr-userprofile-button" value="Change Diploma Program" onclick="updateData()">
                     <?php endif; ?>
                 </div>
@@ -81,17 +81,14 @@ th {
                     <h1 style="font-size: 18px;">Change Diploma Program</h1><br>
                     <div class="dr-userprofile-input-fields" style="margin: 20px 0px 10px 0px;">
                         <label for="degree type" class="dr-userprofile-drop-down">Current Diploma Program</label><br>
-                        <input name="degree type" id="dr-userprofile-degree_type" style="width: 430px; height: 34px; border-radius: 5px; margin: 9px; padding-left: 10px" placeholder="<?= $degree[0]->DegreeName ?>" disabled><br><br><br>
-                        <label for="select degree type" class="dr-userprofile-drop-down">Select Degree Program:</label><br>
-                        <select name="select degree type" id="dr-userprofile-select_degree_type" style="width: 430px; height: 34px; border-radius: 5px; margin: 9px;">
+                        <input name="degree type" id="dr-userprofile-degree_type" style="width: 430px; height: 34px; border-radius: 5px; margin: 9px; padding-left: 10px" placeholder="<?= $degrees[0]->DegreeName ?>" disabled><br><br><br>
+                        <label for="select degree id" class="dr-userprofile-drop-down">Select Degree Program:</label><br>
+                        <select name="select_degree_id" id="dr-userprofile-select_degree_type" style="width: 430px; height: 34px; border-radius: 5px; margin: 9px;">
                             <option value="" default hidden>Select</option>
-                            <?php if (!empty($degree)) : ?>
-                                <?php foreach ($degree as $degrees) : ?>
-                                    <!-- <?php if ($degrees->degreeID == $degree[0]->DegreeID || $degrees->Status == "completed") : ?>
-                                        continue;
-                                    <?php endif; ?> -->
-                                    <?php if ((time() - strtotime($degrees->createdDate)) < (5 * 30 * 24 * 60 * 60)) : ?>
-                                        <option value="<?= $degrees->DegreeShortName ?>" <?= (set_value('select_degree_type') === $degrees->DegreeShortName) ? 'selected' : '' ?>><?= $degrees->DegreeName ?></option>
+                            <?php if (!empty($Degree)) : ?>
+                                <?php foreach ($Degree as $Degrees) : ?>
+                                    <?php if ($Degrees->Status != "completed" && (time() - strtotime($Degrees->createdDate)) < (5 * 30 * 24 * 60 * 60) && $Degrees->DegreeID != $degrees[0]->DegreeID) : ?>
+                                        <option value="<?= $Degrees->DegreeID ?>" <?= (set_value('select_degree_id') === $Degrees->DegreeID) ? 'selected' : '' ?>><?= $Degrees->DegreeName ?></option>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             <?php endif; ?>
@@ -138,52 +135,35 @@ th {
         <div class="dr-userprofile-flex-container">
             <div class="dr-userprofile-white-container3-1">
                 <p class="dr-userprofile-left-top-text2">Examination Results</p>
-                <p class="dr-userprofile-left-top-text3">Semester 1</p>
-                <table>
-                    <tr>
-                        <th>Subject</th>
-                        <th>Result</th>
-                    </tr>
-                    <tr>
-                        <td>Subject1</td>
-                        <td>A</td>
-                    </tr>
-                    <tr>
-                        <td>Subject2</td>
-                        <td>A</td>
-                    </tr>
-                    <tr>
-                        <td>Subject3</td>
-                        <td>A</td>
-                    </tr>
-                    <tr>
-                        <td>Subject4</td>
-                        <td>A</td>
-                    </tr>
-                </table><br>
-                <p class="dr-userprofile-left-top-text3">Semester 2</p>
-                <table>
-                    <tr>
-                        <th>Subject</th>
-                        <th>Result</th>
-                    </tr>
-                    <tr>
-                        <td>Subject1</td>
-                        <td>A</td>
-                    </tr>
-                    <tr>
-                        <td>Subject2</td>
-                        <td>A</td>
-                    </tr>
-                    <tr>
-                        <td>Subject3</td>
-                        <td>A</td>
-                    </tr>
-                    <tr>
-                        <td>Subject4</td>
-                        <td>A</td>
-                    </tr>
-                </table>
+                <?php if (!empty($exams)) : ?>
+                    <?php foreach ($exams as $exam) : ?>
+                        <?php if ($exam->status == "completed") : ?>
+                            <p class="dr-userprofile-left-top-text3">Semester <?= $exam->semester ?></p>
+                            <table>
+                                <?php if (!empty($finalMarks)) : ?>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Result</th>
+                                </tr>
+                                    <?php foreach ($finalMarks as $finalMark) : ?>
+                                        <?= $finalMark->examID ?><p>adooo</p><br>
+                                        <?= $exam->examID ?><p>pakoo</p><br>
+                                        <?php if ($finalMark->examID == $exam->examID) : ?>
+                                            <tr>
+                                                <td><?= $finalMark->subjectCode ?></td>
+                                                <td><?= $finalMark->grade ?></td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                    <p class="dr-userprofile-left-top-text4">No Examination Results for this semester</p>
+                                <?php endif; ?>
+                            </table>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <p class="dr-userprofile-left-top-text4">No Examination Results</p>
+                <?php endif; ?>
             </div>
             <div class="dr-userprofile-white-container4-1">
                 <p class="dr-userprofile-left-top-text2">Other Information</p>
@@ -331,11 +311,6 @@ th {
             $('.dr-userprofile-pop-up1-1').css('display', 'none');
             $('#dr-userprofile-overlay').css('display', 'none');
         }
-
-        function toggleMenu() {
-            document.getElementById("dr-userprofile-subMenu").classList.toggle("open-menu");
-        }
-        
     </script>
 </body>
 

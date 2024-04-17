@@ -14,12 +14,14 @@ class DR extends Controller
     {
         $degree = new Degree();
         $student = new StudentModel();
+        $exam = new Exam();
         // show( $_POST );
         $_SESSION['DegreeID'] = null;
         unset($_SESSION['DegreeID']);
 
         $data['degrees'] = $degree->findAll();
         $data['students'] = $student->findAll();
+        $data['exams'] = $exam->findAll();
         $this->view('dr-interfaces/dr-dashboard', $data);
     }
 
@@ -326,14 +328,16 @@ class DR extends Controller
         if ($studentId) {  // Check if the student ID is provided in the URL
             $degree = new Degree();
             $studentModel = new StudentModel();
+            $finalMarks = new FinalMarks();
+            $exam = new Exam();
             $studentId = $_SESSION['studentId']; // Get student ID from session
             $degreeId = $_SESSION['DegreeID']; // Get degree ID from session
-            // $data['$studentId'] = $studentId;
-            // $data['$degreeId'] = $degreeId;
-            // $degree_id = $data['student'][0]->degreeID;
             $data['student'] = $studentModel->findstudentid($studentId);
             $data['degrees'] = $degree->find($degreeId);
             $data['Degree'] = $degree->findAll();
+            $studentIndexNo = $data['student'][0]->indexNo;
+            $data['finalMarks'] = $finalMarks->find($studentIndexNo);
+            $data['exams'] = $exam->find($degreeId);
             if ($action == "update") {
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (isset($_POST['submit']) && $_POST['submit'] === 'update') {
@@ -359,7 +363,7 @@ class DR extends Controller
             } else if ($action == 'add') {
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     $newDegreeID = $_POST['select_degree_id'];
-                    $oldDegreeID = $data['degrees'][0]->DegreeID;
+                    // $oldDegreeID = $data['degrees'][0]->DegreeID;
                     // echo $newDegreeID;
                     // echo $oldDegreeID;
                     $newDegreeType = $degree->find($newDegreeID)[0]->DegreeShortName;
@@ -407,6 +411,7 @@ class DR extends Controller
     public function participants($id = null, $action = null)
     {
         $st = new StudentModel();
+        $degree = new Degree();
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
@@ -419,6 +424,7 @@ class DR extends Controller
                     $data['students'][] = $student; // Add student to data array
                 }
             }
+            $data['degrees'] = $degree->find($degreeID);
         } else {
             echo "Error: DegreeID not provided in the session."; // If DegreeID is not set in the session
         }
