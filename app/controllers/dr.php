@@ -332,11 +332,12 @@ class DR extends Controller
             $exam = new Exam();
             $studentId = $_SESSION['studentId']; // Get student ID from session
             $degreeId = $_SESSION['DegreeID']; // Get degree ID from session
-            $data['student'] = $studentModel->findstudentid($studentId);
+            $data['student'] = $studentModel->findwhere("id" ,$studentId);
             $data['degrees'] = $degree->find($degreeId);
             $data['Degree'] = $degree->findAll();
-            $studentIndexNo = $data['student'][0]->indexNo;
-            $data['finalMarks'] = $finalMarks->find($studentIndexNo);
+            $studentIndex = $data['student'][0]->indexNo;
+            // echo $studentIndex;
+            $data['finalMarks'] = $finalMarks->findwhere("studentIndexNo", $studentIndex);
             $data['exams'] = $exam->find($degreeId);
             if ($action == "update") {
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -435,9 +436,15 @@ class DR extends Controller
     {
         $this->view('dr-interfaces/dr-settings');
     }
-    public function reports()
+    public function reports($action = null, $id = null)
     {
-        $this->view('dr-interfaces/dr-reports');
+        $data = [];
+        $data['action'] = $action;
+        $data['id'] = $id;
+        $degree = new Degree();
+        $degreeID = $_SESSION['DegreeID'];
+        $data['degrees'] = $degree->find($degreeID);
+        $this->view('dr-interfaces/dr-reports', $data);
     }
     public function attendance()
     {
