@@ -99,6 +99,7 @@ $data['role'] = $role;
 
         .table__header .input-main-group {
             display: flex;
+            justify-content: center;
         }
 
         .table__header .input-group {
@@ -387,6 +388,12 @@ $data['role'] = $role;
         .clickable-row:hover {
             background-color: #0000000b;
         }
+
+        .degree-footer {
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -404,7 +411,7 @@ $data['role'] = $role;
                             <i class='bx bx-search icon'></i>
                             <input type="search" placeholder="Search Data...">
                         </div>
-                        <div class="input-group-filter">Filters</div>
+
                         <button class="dr-degree-programs-button">Search</button>
                     </div>
                     <div class="export__file">
@@ -448,7 +455,7 @@ $data['role'] = $role;
                 </section>
             </div>
         </div>
-        <div class="dr-footer">
+        <div class="degree-footer">
             <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>

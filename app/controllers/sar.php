@@ -42,23 +42,67 @@ class SAR extends Controller
 
         $this->view('sar-interfaces/sar-degreeprograms', $data);
     }
-    public function degreeprofile()
+    public function degreeprofile($action = null, $id = null)
     {
-        $degree = new Degree();
-
+        $data = [];
+        $data['action'] = $action;
+        $data['id'] = $id;
         $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
-
-        //get all degree data and put it on session
-        if ($degreeID != null) {
-            $degreeData = $degree->where(['DegreeID' => $degreeID]);
-            $_SESSION['degreeData'] = $degreeData;
-
+        // Check if degree ID is provided
+        if ($degreeID !== null) {
+            $degree = new Degree();
+            $subject = new Subjects();
+            $degreeTimeTable = new DegreeTimeTable();
+            // Fetch the data based on the ID
+            $degreeData = $degree->find($degreeID);
+            $degreeTimeTableData = $degreeTimeTable->find($degreeID);
+            $subjectsData = $subject->find($degreeID);
+            $data['degrees'] = $degreeData;
+            $subjects = [];
+            foreach ($subjectsData as $subject) {
+                $semesterNumber = $subject->semester;
+                // Create semester array if not already exists
+                if (!isset($subjects[$semesterNumber])) {
+                    $subjects[$semesterNumber] = [];
+                }
+                // Add subject to semester array
+                $subjects[$semesterNumber][] = $subject;
+            }
+            $data['subjects'] = $subjects;
+            $data['degreeTimeTable'] = $degreeTimeTableData;
+            if ($action == "update") {
+                if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                    echo "POST request received";
+                    if (isset($_POST['timetableData'])) {
+                        $timetableData = json_decode($_POST['timetableData'], true);
+                        // Iterate over each subject's data and insert it into the database
+                        foreach ($timetableData as $timetableData) {
+                            echo "a";
+                            // Construct the data array for insertion
+                            $data1 = [
+                                'EventID' => $timetableData['eventID'],
+                                'DegreeID' => $degreeID,
+                                'EventName' => $timetableData['eventName'],
+                                'EventType' => $timetableData['eventType'],
+                                'StartingDate' => $timetableData['eventStart'],
+                                'EndingDate' => $timetableData['eventEnd'],
+                            ];
+                            $degreeTimeTable->update($degreeID, $data1);
+                        }
+                    }
+                }
+            } else if ($action == 'delete') {
+                $degree->delete(['id' => $degreeID]);
+                redirect("sar/degreeprograms");
+            }
+            // Load the view with the data
+            $this->view('sar-interfaces/sar-degreeprofile', $data);
+        } else {
+            echo "Error: Degree ID not provided in the URL.";
         }
-        $data['degrees'] = $degree->findAll();
-
-
-        $this->view('sar-interfaces/sar-degreeprofile', $data);
     }
+
+
     public function examination($method = null, $id = null)
     {
 

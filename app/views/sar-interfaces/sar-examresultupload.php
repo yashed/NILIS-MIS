@@ -781,6 +781,31 @@ $degreeId = $_GET['degreeID'];
         bottom: 0;
         width: 100%;
     }
+
+    .ru-popup.active {
+
+        top: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+    }
+
+    .ru-popup {
+        position: fixed;
+        top: -150%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.25);
+        border: 1.5px solid rgba(00, 00, 00, 0.30);
+        opacity: 0;
+        background: #fff;
+        width: 40%;
+        /* height: 60vh; */
+        padding: 40px;
+        box-shadow: 9px 11px 60.9px 0px rgba(0, 0, 0, 0.60);
+        border-radius: 10px;
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+        z-index: 2000;
+    }
 </style>
 
 <body>
@@ -1083,6 +1108,9 @@ $degreeId = $_GET['degreeID'];
     </div>
 
     </div>
+    <div class="ru-popup" id="ru-popup">
+        <?php $this->view('components/popup/results-upload-popup', $data) ?>
+    </div>
 
     <div class="results-sheet-delet-popup" id="rs-popup">
         <?php $this->view('components/popup/results-sheet-delete-popup', $data) ?>
@@ -1094,6 +1122,20 @@ $degreeId = $_GET['degreeID'];
 
 
 <script>
+
+    //results uploading popup
+    function showResultsUploadingPopup() {
+
+        console.log('run');
+        document.querySelector("#ru-popup").classList.add("active");
+        document.querySelector("#rs-body").classList.add("active");
+    }
+
+    function closeResultsUploadingPopup() {
+        document.querySelector("#ru-popup").classList.remove("active");
+        document.querySelector("#rs-body").classList.remove("active");
+    }
+
     //delete the uploaded file
     function deleteSubmitFile(event, submitViewId, uploadedViewId, subCode, formId, type) {
         event.preventDefault();
@@ -1390,6 +1432,8 @@ $degreeId = $_GET['degreeID'];
 
         var error = <?= json_encode($validateError) ?>;
 
+        //call showResultsUploadingPopup to show popup
+        showResultsUploadingPopup();
 
         if (error !== null && error !== '') {
             alert('Invalid Marks: ' + error);
@@ -1425,6 +1469,11 @@ $degreeId = $_GET['degreeID'];
                 return response.text(); // Change to response.text() to receive HTML
             })
             .then(data => {
+
+                //hide file uploading popup
+                closeResultsUploadingPopup();
+
+
                 console.log('Returned HTML data =', data);
                 alert('File uploaded successfully!');
 
