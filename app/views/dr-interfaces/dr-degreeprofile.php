@@ -123,16 +123,18 @@ $data['role'] = $role;
                     </table>
                 </div>
                 <div class="degreeprofile-box_4_2">
-                    <table class="degreeprofile-create_time_table_raw">
-                        <tr>
-                            <th colspan="3"><button class="degreeprofile-add-new-event" type="button" id="degreeprofile-add_new_event">&#128198 Add New Event</button></th>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td width="12%"><button class="degreeprofile-pin" type="button" id="degreeprofile-update">Update</button></td>
-                            <td width="12%"><button class="degreeprofile-pin" type="submit" id="degreeprofile-save" disabled>Save</button></td>
-                        </tr>
-                    </table>
+                    <?php if ($degrees[0]->Status == "ongoing") : ?>
+                        <table class="degreeprofile-create_time_table_raw">
+                            <tr>
+                                <th colspan="3"><button class="degreeprofile-add-new-event" type="button" id="degreeprofile-add_new_event">&#128198 Add New Event</button></th>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td width="12%"><button class="degreeprofile-pin" type="button" id="degreeprofile-update">Update</button></td>
+                                <td width="12%"><button class="degreeprofile-pin" type="submit" id="degreeprofile-save" disabled>Save</button></td>
+                            </tr>
+                        </table>
+                    <?php endif; ?>
                 </div>
             </form>
         </div>
