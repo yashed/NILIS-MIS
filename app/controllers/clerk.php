@@ -31,7 +31,6 @@ class Clerk extends Controller
     public function notifications()
     {
         $notification = new NotificationModel();
-       
         $notification_count_arr = $notification->countNotifications();
         $data['notification_count_obj'] = $notification_count_arr[0];
         $data['notifications'] = $notification->findAll();

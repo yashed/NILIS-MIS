@@ -23,14 +23,6 @@ $data['role'] = $role;
         $_SESSION['notificationCount'] = $notificationCount;
         
         ?> -->
-
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -255,6 +247,10 @@ $data['role'] = $role;
 </head>
 
 <body>
+<?php $this->view('components/navside-bar/header', $data) ?>
+<?php $this->view('components/navside-bar/sidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?>
+
     <div class="temp3-home">
         <div class="temp3-title">Notifications</div>
         <div class="temp3-subsection-1">
@@ -262,15 +258,11 @@ $data['role'] = $role;
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-start-alert') : ?>
                         <?php
-                        $data['role'] = "Clerk";
-
-                        $link = "clerk"; 
                         $this->view('components/notification-bar/notification-box', [
                             "notification" => $notification,
-                            "role" => $data['role'],
-                            "notify_id" => $notification->notify_id,
-                            "link" =>$link  // Pass the notify_id here
-                        ]) ?>
+                            "role" => $data['role']
+                            // "notify_id" => $notification->notify_id,
+                           ]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -282,8 +274,8 @@ $data['role'] = $role;
                         $data['role'] = "Clerk";
                         $this->view('components/notification-bar/notification-box', [
                             "notification" => $notification,
-                            "role" => $data['role'],
-                            "notify_id" => $notification->notify_id // Pass the notify_id here
+                            "role" => $data['role']
+                             // Pass the notify_id here
                         ]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -296,8 +288,7 @@ $data['role'] = $role;
                         $data['role'] = "Clerk";
                         $this->view('components/notification-bar/notification-box', [
                             "notification" => $notification,
-                            "role" => $data['role'],
-                            "notify_id" => $notification->notify_id // Pass the notify_id here
+                            "role" => $data['role'] // Pass the notify_id here
                         ]) ?> 
                         <?php endif; ?>
                 <?php endforeach; ?>
@@ -310,8 +301,7 @@ $data['role'] = $role;
                         $data['role'] = "Clerk";
                         $this->view('components/notification-bar/notification-box', [
                             "notification" => $notification,
-                            "role" => $data['role'],
-                            "notify_id" => $notification->notify_id // Pass the notify_id here
+                            "role" => $data['role']// Pass the notify_id here
                         ]) ?> 
                         <?php endif; ?>
                 <?php endforeach; ?>
@@ -324,8 +314,7 @@ $data['role'] = $role;
                         $data['role'] = "Clerk";
                         $this->view('components/notification-bar/notification-box', [
                             "notification" => $notification,
-                            "role" => $data['role'],
-                            "notify_id" => $notification->notify_id // Pass the notify_id here
+                            "role" => $data['role']// Pass the notify_id here
                         ]) ?> 
                         <?php endif; ?>
                 <?php endforeach; ?>
@@ -338,8 +327,7 @@ $data['role'] = $role;
                         $data['role'] = "Clerk";
                         $this->view('components/notification-bar/notification-box', [
                             "notification" => $notification,
-                            "role" => $data['role'],
-                            "notify_id" => $notification->notify_id // Pass the notify_id here
+                            "role" => $data['role']// Pass the notify_id here
                         ]) ?> 
                         <?php endif; ?>
                 <?php endforeach; ?>
@@ -350,11 +338,13 @@ $data['role'] = $role;
                     <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'student_attendance_alert') : ?>
                         <?php
                         $data['role'] = "Clerk";
+
+                        $link = "clerk"; 
                         $this->view('components/notification-bar/notification-box', [
                             "notification" => $notification,
                             "role" => $data['role'],
-                            "notify_id" => $notification->notify_id // Pass the notify_id here
-                        ]) ?> 
+                            "link" =>$link  // Pass the notify_id here
+                        ]) ?>
                         <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>

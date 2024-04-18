@@ -163,7 +163,7 @@
          
             <?php if (!empty($link)) : ?>
             <div class="buttons-container">
-                <a href="<?= $link ?>" class="button1" id="notificationButton">Go to Notification</a>
+                <a href="<?= $link ?>" class="button1" id="notificationButton">Take Action</a>
             </div>
         <?php endif; ?>
       

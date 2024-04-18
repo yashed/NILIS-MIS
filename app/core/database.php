@@ -605,7 +605,8 @@ DELIMITER ;
         DECLARE eventCursor CURSOR FOR
             SELECT dt.StartingDate, d.DegreeName
             FROM degree_timetable AS dt
-            JOIN degree AS d ON dt.DegreeID = d.DegreeID;
+            JOIN degree AS d ON dt.DegreeID = d.DegreeID
+            WHERE dt.EventType = 'Examination';
 
         -- Set the current date
         SET currentDate = CURDATE();
@@ -625,14 +626,14 @@ DELIMITER ;
             IF (daysRemaining = 14 ) THEN
                -- Construct notification message
                 SET str1 = CONCAT('There will be an upcoming examination scheduled on ', eventStartDate);
-                SET str2 = CONCAT(' for the diploma ', degreeName, ' examination');
+                SET str2 = CONCAT(' for the diploma ', degreeName, ' examination.');
 
                 -- Print concatenated strings to console (optional)
                 -- SELECT CONCAT(str1, str2);
 
                 -- Insert record into notifications table
-                INSERT INTO notifications (description, type, msg_type)
-                VALUES (CONCAT(str1, str2), 'Examination', 'Exam-start-alert');
+                INSERT INTO notifications (description, type, msg_type,issuing_date)
+                VALUES (CONCAT(str1, str2), 'Examination', 'Exam-start-alert',NOW());
             END IF;
         END LOOP;
 
@@ -658,7 +659,8 @@ DELIMITER ;
         DECLARE eventCursor CURSOR FOR
             SELECT dt.EndingDate, d.DegreeName
             FROM degree_timetable AS dt
-            JOIN degree AS d ON dt.DegreeID = d.DegreeID;
+            JOIN degree AS d ON dt.DegreeID = d.DegreeID
+            WHERE dt.EventType = 'Examination';
 
         -- Set the current date
         SET currentDate = CURDATE();
@@ -684,8 +686,8 @@ DELIMITER ;
                 -- SELECT CONCAT(str1, str2);
 
                 -- Insert record into notifications table
-                INSERT INTO notifications (description, type, msg_type)
-                VALUES (CONCAT(str1), 'Examination', 'Exam-end-alert');
+                INSERT INTO notifications (description, type, msg_type,issuing_date)
+                VALUES (CONCAT(str1), 'Examination', 'Exam-end-alert',NOW());
             END IF;
         END LOOP;
 
@@ -730,7 +732,7 @@ END;
             SET daysRemaining = DATEDIFF(eventStartDate, currentDate);
 
             -- Check if days remaining is less than or equal to 14 and greater than 0
-            IF (daysRemaining <= 7 ) THEN
+            IF (daysRemaining = 7 ) THEN
                -- Construct notification message
                 SET str1 = CONCAT('There will be an upcoming vacation scheduled on ', eventStartDate,' for the diploma ', degreeName,'Please make sure to complete any pending tasks or submissions before the scheduled vacation date.');
                 
@@ -833,7 +835,7 @@ END;
                SET daysRemaining = DATEDIFF(eventStartDate, currentDate);
    
                -- Check if days remaining is less than or equal to 14 and greater than 0
-               IF (daysRemaining <= 7 ) THEN
+               IF (daysRemaining = 7 ) THEN
                   -- Construct notification message
                    SET str1 = CONCAT('Study leave has been scheduled for the ', degreeName ,' diploma program ,starting on ', eventStartDate);
                    SET str2 = CONCAT('.Kindly ensure all relevant pending tasks and submissions are completed before the study leave period begins.');
@@ -1139,7 +1141,7 @@ END;
             SET daysRemaining = DATEDIFF(eventStartDate, currentDate);
 
             -- Check if days remaining is less than or equal to 14 and greater than 0
-            IF (daysRemaining <= 7) THEN
+            IF (daysRemaining = 7) THEN
                -- Construct notification message
                 SET str1 = CONCAT('There will be an upcoming examination scheduled on ', eventStartDate);
                 SET str2 = CONCAT(' for the diploma ', degreeName, ' examination,Ensure that both repeat students and students who have submitted medical documentation are properly added to the examination.');
