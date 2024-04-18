@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<title>Login</title>
 
 <head>
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
@@ -114,11 +115,12 @@
             text-decoration: none;
         }
 
-        .forgot {
+        .forgot-pwd-text {
             font-family: "Poppins";
             font-size: 12px;
             color: #6193b5;
             font-weight: 400;
+            cursor: pointer;
         }
 
         .examination {
@@ -149,7 +151,7 @@
             color: #fff;
 
             width: 35vw;
-            height: 3.5vw;
+            height: 3.2vw;
             padding: 8px 22px;
             border-radius: 10px;
             /* height: 6vh; */
@@ -183,47 +185,131 @@
                 max-width: 260px;
             }
         }
+
+        .show-pass {
+            display: flex;
+            font-family: "Poppins";
+            font-size: 12px;
+            color: #6193b5;
+            font-weight: 400;
+            text-align: left;
+            margin-left: 10px;
+            align-items: center;
+            margin-top: 10px;
+            gap: 5px;
+        }
+
+        .pass-text {
+            margin-left: 5px;
+        }
+
+        .forgot-pwd.active {
+
+            top: 50%;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+        }
+
+        .forgot-pwd {
+            position: fixed;
+            top: -150%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.25);
+            border: 1.5px solid rgba(00, 00, 00, 0.30);
+            opacity: 0;
+            background: #fff;
+            width: 40%;
+            /* height: 60vh; */
+            padding: 40px;
+            box-shadow: 9px 11px 60.9px 0px rgba(0, 0, 0, 0.60);
+            border-radius: 10px;
+            transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+            z-index: 2000;
+        }
+
+        .login-body.active {
+            filter: blur(5px);
+            pointer-events: none;
+            user-select: none;
+            overflow: hidden;
+
+        }
+
+        .login-body {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        }
     </style>
 </head>
 
 <body>
-    <div class="flex-container">
-        <div class="body_01">
-            <img class="img1" src="<?= ROOT ?>/assets/login/NILISLogo.png" alt="Logo" />
-            <h1 class="title">
-                <div class="examination">Examination</div>
-                Management<br />Information<br />System
-            </h1>
-            <img class="img2" src="<?= ROOT ?>/assets/login/Loginpng.png" alt="Logo" />
-        </div>
-        <div class="body_02">
-            <div class="body_02_1">
-                <div class="login">
-                    Sign in to <br />
-                    your account
-                </div>
-                <form method="post">
-                    <input value="<?= set_value('username') ?>" class="input" type="text" placeholder="Username"
-                        name="username" required />
-
-                    <input value="<?= set_value('password') ?>" class="input" type="password" placeholder="Password"
-                        name="password" required />
-
-                    <div class="error_block">
-                        <?php if (!empty($errors['username'])): ?>
-                            <div class="error">
-                                <?= $errors['username'] ?>
-                            </div>
-                        <?php endif; ?>
+    <div class="login-body" id='body'>
+        <div class="flex-container">
+            <div class="body_01">
+                <img class="img1" src="<?= ROOT ?>/assets/login/NILISLogo.png" alt="Logo" />
+                <h1 class="title">
+                    <div class="examination">Examination</div>
+                    Management<br />Information<br />System
+                </h1>
+                <img class="img2" src="<?= ROOT ?>/assets/login/Loginpng.png" alt="Logo" />
+            </div>
+            <div class="body_02">
+                <div class="body_02_1">
+                    <div class="login">
+                        Sign in to <br />
+                        your account
                     </div>
-                    <button type="submit">
-                        <div class="bt-name">Login</div>
-                    </button>
-                </form>
-                <!-- <a href="#"> <label class="forgot">Forgot Password</label></a> -->
+                    <form method="post">
+                        <input value="<?= set_value('username') ?>" class="input" type="text" placeholder="Username"
+                            name="username" required />
+
+                        <input value="<?= set_value('password') ?>" class="input" type="password" placeholder="Password"
+                            name="password" id="password" required />
+                        <div class="show-pass">
+                            <input type="checkbox" onclick="showPassword()">
+                            <div classs='pass-text'>Show Password</div>
+                        </div>
+                        <div class="error_block">
+                            <?php if (!empty($errors['username'])): ?>
+                                <div class="error">
+                                    <?= $errors['username'] ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <button type="submit">
+                            <div class="bt-name">Login</div>
+                        </button>
+                    </form>
+                    <label class="forgot-pwd-text" onclick='showMailPopup()'>Forgot Password</label>
+                </div>
             </div>
         </div>
     </div>
+    <div class="forgot-pwd" id="forgot-pwd">
+        <?php $this->view('components/popup/forgot-pwd', $data) ?>
+    </div>
 </body>
+
+<script>
+    function showPassword() {
+        console.log('show password');
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+
+    function showMailPopup() {
+
+        console.log('run');
+        document.querySelector("#forgot-pwd").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+        console.log('run again');
+    }
+</script>
 
 </html>

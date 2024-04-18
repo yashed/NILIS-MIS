@@ -1,10 +1,10 @@
 <?php
-$role = "clerk";
+$role = "Admin";
 $data['role'] = $role;
-
 ?>
 
-<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
+<?php $this->view('components/navside-bar/header', $data) ?>
+<?php $this->view('components/navside-bar/sidebar', $data) ?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
 
 <!DOCTYPE html>
@@ -13,7 +13,9 @@ $data['role'] = $role;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAR Dashboard</title>
+    <link rel="stylesheet" href="<?= ROOT ?>css/button.css">
+    <link rel="stylesheet" href="<?= ROOT ?>css/create-degree.css">
+    <title>DR Dashboard</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -166,11 +168,16 @@ $data['role'] = $role;
         justify-content: space-around;
         flex-wrap: wrap;
         margin-bottom: 20px;
+        justify-content: center;
     }
 
     .dr-card1 {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        gap: 20px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
     }
 
     .dr-card2 {
@@ -196,58 +203,80 @@ $data['role'] = $role;
         display: flex;
         flex-direction: column;
     }
+
+    .dr-button {
+        float: right;
+        margin-right: 10vh;
+    }
+
+    .model-box {
+        display: none;
+        position: fixed;
+        top: 10%;
+        left: 35%;
+    }
+
+    .danger {
+        border-color: red;
+        border-width: 5px;
+        border-style: groove;
+        border-radius: 5px;
+    }
+
+    .degree-msg {
+        font-size: 1.5vw;
+        font-weight: 500;
+        color: #17376E;
+        margin: 20px;
+
+    }
 </style>
 
 <body>
     <div class="dr-home">
-        <div class="dr-title">Dashboard</div>
+        <div class="dr-title">Degree Program</div>
         <div class="dr-subsection-1">
-            <div class="dr-sub-title">
-                Ongoing Degree Programs
-            </div>
+
+            <div class="dr-sub-title">Ongoing Degree Programs</div>
             <div class="dr-degree-bar">
-                <!-- <div class="dr-card1">
-<a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
-    <?php $this->view('components/degree-card/degree-card', $data) ?>
-</a>
-</div> -->
+
                 <div class="dr-card1">
                     <?php foreach ($degrees as $degree): ?>
-                        <div>
-                            <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
-                        </div>
+                        <?php if (!empty($degree->Status == "ongoing")): ?>
+
+                            <div>
+                                <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                            </div>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </div>
             </div>
         </div>
-        <div class="dr-subsection-2">
-            <div class="dr-subsection-21">
-                <div class="dr-sub-title">
-                    Recently Published Examination Results
+        <div class="dr-subsection-1">
+            <div class="dr-sub-title">Completed Degree Programs</div>
+            <div class="dr-degree-bar">
+                <div class="dr-card1">
+                    <?php $degreeStatus = False; ?>
+                    <?php foreach ($degrees as $degree): ?>
+                        <div>
+                            <?php if ((!empty($degree->Status == "completed"))): ?>
+                                <?php
+                                $this->view('components/degree-card/degree-card', ["degree" => $degree]);
+                                $degreeStatus = True;
+                                ?>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
-                <div class="dr-exam-bar">
-                    <div class="dr-exam-card1">
-                        <?php $this->view('components/exam-card/exam-card', $data) ?>
-                    </div>
-                    <div class="dr-exam-card2">
-                        <?php $this->view('components/exam-card/exam-card', $data) ?>
-                    </div>
-                </div>
-            </div>
-            <div class="dr-subsection-22">
-                <div class="dr-sub-title">
-                    Academic Calender
-                </div>
-                <div class="dr-calender">
-                    <?php $this->view('components/calender/calender', $data) ?>
-                </div>
+                <?php if ($degreeStatus == False): ?>
+                    <div class="degree-msg">No completed degree programs</div>
+                <?php endif; ?>
             </div>
         </div>
         <div class="dr-footer">
             <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>
-
 </body>
 
 </html>
