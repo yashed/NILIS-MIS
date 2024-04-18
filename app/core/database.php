@@ -392,23 +392,21 @@ class Database
 
         $query = "
         CREATE TABLE IF NOT EXISTS `notifications`(
-            `notify_id` int(11) NOT NULL AUTO_INCREMENT,
+            `notify_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
             `description` varchar(255) NOT NULL,
             `type` varchar(50) NOT NULL,
             `msg_type` varchar(100) NOT NULL,
-            `issuing_date` datetime NOT NULL,
-            PRIMARY KEY (`notify_id`)
+            `issuing_date` datetime NOT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         ";
         $this->query($query);
 
         $query = "
         CREATE TABLE IF NOT EXISTS `student_attendance`(
-            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
             `index_no` varchar(40) NOT NULL,
             `attendance` varchar(10) NOT NULL,
             `degree_name` varchar(255) NOT NULL
-            PRIMARY KEY (`id`)
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
           ";
           $this->query($query);

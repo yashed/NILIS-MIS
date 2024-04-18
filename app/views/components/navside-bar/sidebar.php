@@ -1,3 +1,4 @@
+
 <?php if ($role == "DR") : ?>
     <div class="menu-bar">
         <hr>
@@ -309,9 +310,9 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>director/notifications"><i class="bx bxs-bell icon"><?php if(isset($notification_count_obj)): ?>
-                        <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
-                    <?php endif; ?></i></a></li>
+                <li class="hero-ul-li"><a href="<?= ROOT ?>director/notifications"><i class="bx bxs-bell icon"><?php if(isset($notification_count_obj) && $notification_count_obj->notification_count > 0): ?>
+                    <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                <?php endif; ?></i></a></li>
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
@@ -374,9 +375,9 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>clerk/notifications"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj)): ?>
-                        <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
-                    <?php endif; ?></a></i></li>
+                <li class="hero-ul-li"><a href="<?= ROOT ?>clerk/notifications"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj) && $notification_count_obj->notification_count > 0): ?>
+                    <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                <?php endif; ?></a></i></li>
               
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>

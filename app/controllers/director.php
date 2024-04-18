@@ -30,7 +30,9 @@ class DIRECTOR extends Controller
     {
         $notification = new NotificationModel();
         $data['notifications'] = $notification->findAll();
-
+        $notification_count_arr = $notification->countNotificationsDirector();
+   
+        $data['notification_count_obj'] = $notification_count_arr[0];
         $this->view('director-interfaces/director-notifications', $data);
     }
     public function degreeprograms()
