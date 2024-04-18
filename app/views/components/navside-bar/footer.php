@@ -54,6 +54,26 @@
                             text.style.color = 'var(--sidebar-color)';
                         }
                     }
+                    else if (currentUrl == 'http://localhost/NILIS-MIS/public/dr/degreeprofile') {
+                        link1 = document.querySelector('.menu-links .nav-link a[href="http://localhost/NILIS-MIS/public/dr/newdegree"]');
+                        link1.parentNode.classList.add('selected');
+                        var icon = link1.querySelector('.icon');
+                        var text = link1.querySelector('.text');
+                        if (icon && text) {
+                            icon.style.color = 'var(--sidebar-color)';
+                            text.style.color = 'var(--sidebar-color)';
+                        }
+                    }
+                    else if (currentUrl == 'http://localhost/NILIS-MIS/public/dr/examination/participants' || currentUrl == 'http://localhost/NILIS-MIS/public/dr/examination/results') {
+                        link1 = document.querySelector('.menu-links .nav-link a[href="http://localhost/NILIS-MIS/public/dr/examination"]');
+                        link1.parentNode.classList.add('selected');
+                        var icon = link1.querySelector('.icon');
+                        var text = link1.querySelector('.text');
+                        if (icon && text) {
+                            icon.style.color = 'var(--sidebar-color)';
+                            text.style.color = 'var(--sidebar-color)';
+                        }
+                    }
                 });
             });
 </script>

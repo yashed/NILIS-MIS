@@ -92,18 +92,19 @@ class Model extends Database
         }
     }
 
-    public function findstudentid($id)
-    {
-        $query = "select * from " . $this->table . " WHERE id = :id";
-        $params = [':id' => $id];
-        $result = $this->query($query, $params);
-        // Check if the query was successful
-        if (is_array($result) && !empty($result)) {
-            return $result;
-        } else {
-            return null;
-        }
+    public function findwhere($where, $id)
+{
+    $query = "SELECT * FROM " . $this->table . " WHERE {$where} = :id";
+    $params = [':id' => $id];
+    $result = $this->query($query, $params);
+    // Check if the query was successful
+    if (is_array($result) && !empty($result)) {
+        return $result; 
+    } else {
+        return null;
     }
+}
+
     public function setid($id)
     {
 
@@ -443,9 +444,9 @@ class Model extends Database
         // Generate WHERE part of the query
         $wherePart = '';
         foreach ($whereConditions as $key => $value) {
-            $wherePart .= "{$key}=:$key AND ";
+            $wherePart .= " {$key}=:$key AND";
         }
-        $wherePart = rtrim($wherePart, 'AND ');
+        $wherePart = rtrim($wherePart, 'AND');
 
         // Construct the final query
         $query = "UPDATE {$this->table} SET {$setPart} WHERE {$wherePart}";

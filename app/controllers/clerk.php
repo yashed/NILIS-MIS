@@ -39,16 +39,11 @@ class Clerk extends Controller
 
     public function updatedattendance()
     {
-        $attendance = new studentAttendance();
-        $data['attendances'] = $attendance->findAll();
-     
-        $degree=new Degree();
-        $notification = new NotificationModel();
-        $notification_count_arr = $notification->countNotifications();
-        $data['notification_count_obj'] = $notification_count_arr[0];
-        $degreeID= $_SESSION['getid'];
-        $data['degrees']=$degree->find($degreeID);
-
+        $studentModel = new StudentModel();
+        $students = $studentModel->findAll(); // Assuming findAll() retrieves all students
+    
+        $data['students'] = $students;
+    
         $this->view('clerk-interfaces\clerk-updatedattendance', $data);
     }
 
@@ -152,6 +147,8 @@ public function attendance()
             // Process the CSV file
             $csvFile = fopen($_FILES['csvFile']['tmp_name'], 'r');
 
+            // Skip the first four rows
+            for ($i = 0; $i < 4; $i++) {
             // Skip the first four rows
             for ($i = 0; $i < 4; $i++) {
                 fgetcsv($csvFile);
