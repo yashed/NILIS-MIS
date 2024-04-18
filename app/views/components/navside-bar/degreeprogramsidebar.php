@@ -532,7 +532,7 @@
 
 <?php endif ?>
 
-<?php if ($role == "clerk") : ?>
+<?php if ($role == "Clerk") : ?>
 
     <div class="menu-bar">
         <hr>
@@ -579,7 +579,7 @@
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/notification">
+                    <a href="<?= ROOT ?>clerk/notifications">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>

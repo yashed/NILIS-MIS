@@ -36,7 +36,7 @@ class Model extends Database
 
         //define query to add user data
         $query = "insert into " . $this->table;
-        
+
         //add column names and values to the query (impolad function devide data by given character in array)
         $query .= "(" . implode(",", $keys) . ") values (:" . implode(",:", $keys) . ")";
         // show($query);
@@ -86,7 +86,7 @@ class Model extends Database
         $result = $this->query($query, $params);
         // Check if the query was successful
         if (is_array($result) && !empty($result)) {
-            return $result; 
+            return $result;
         } else {
             return null;
         }
@@ -212,6 +212,39 @@ class Model extends Database
         return $this->query($query);
     }
 
+    public function joinWhere($tables, $columns, $conditions, $whereConditions, $order = null, $limit = null)
+    {
+        // Build the query
+        $query = "SELECT " . implode(", ", $columns) . " FROM " . $this->table;
+
+        foreach ($tables as $table) {
+            $query .= " JOIN $table";
+        }
+
+        // Add conditions
+        if (!empty($conditions)) {
+            $query .= " ON " . implode(" AND ", $conditions);
+        }
+
+        // Add where conditions
+        if (!empty($whereConditions)) {
+            $query .= " WHERE " . implode(" AND ", $whereConditions);
+        }
+
+        // Add order and limit clauses if provided
+        if ($order) {
+            $query .= " ORDER BY $order";
+        }
+
+        if ($limit) {
+            $query .= " LIMIT $limit";
+        }
+        // show($query);
+        // Execute the query
+        return $this->query($query);
+    }
+
+
     public function first($data, $order = 'desc')
     {
 
@@ -258,6 +291,40 @@ class Model extends Database
 
         return false;
     }
+
+    public function whereSpecificColumn($data, $columns = '*')
+    {
+        // Ensure $columns is a valid string or array
+        if (!is_string($columns) && !is_array($columns)) {
+            return false;
+        }
+
+        // If $columns is an array, convert it to a comma-separated string
+        if (is_array($columns)) {
+            $columns = implode(',', $columns);
+        }
+
+        $keys = array_keys($data);
+
+        $query = "SELECT $columns FROM " . $this->table . " WHERE ";
+        foreach ($keys as $key) {
+            $query .= "$key = :$key AND ";
+        }
+
+        // Trim last AND and space if they exist
+        $query = rtrim($query, 'AND ');
+
+        // Define query to add user data
+        $res = $this->query($query, $data);
+
+        if (is_array($res)) {
+            return $res;
+        }
+
+        return false;
+    }
+
+
     public function group($column, $conditions = [])
     {
         $query = "SELECT * FROM " . $this->table;
@@ -403,7 +470,6 @@ class Model extends Database
         // show($query);
         $this->query($query, $data);
     }
-
     public function generateIndexRegNumber($degree_id, $degreeShortName, $currentYear)
     {
         $query = "SELECT MAX(CAST(SUBSTRING_INDEX(indexNo, '/', -1) AS UNSIGNED)) AS max_index_number 
@@ -485,5 +551,4 @@ class Model extends Database
      // show($data);
  } */
 
- 
 }
