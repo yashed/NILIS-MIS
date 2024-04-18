@@ -26,9 +26,9 @@ class NotificationModel extends Model
             OR type = 'Examination' AND msg_type = 'Exam-end-alert'
             OR type = 'Vacation' AND msg_type = 'Vacation-start-alert'
             OR type = 'Vacation' AND msg_type = 'Vacation-end-alert'
-            OR type = 'Study leave' AND msg_type = 'Studyleave-start-alert'
-            OR type = 'Study leave' AND msg_type = 'Studyleave-end-alert'
-            OR type = 'Study leave' AND msg_type = 'student_attendance_alert';
+            OR type = 'Study Leave' AND msg_type = 'Studyleave-start-alert'
+            OR type = 'Study Leave' AND msg_type = 'Studyleave-end-alert'
+            OR type = 'Study Leave' AND msg_type = 'student_attendance_alert';
         ";
         $res = $this->query($query);
         if($res) {
@@ -44,8 +44,8 @@ class NotificationModel extends Model
             OR type = 'Examination' AND msg_type = 'Exam-end-alert'
             OR type = 'Vacation' AND msg_type = 'Vacation-start-alert'
             OR type = 'Vacation' AND msg_type = 'Vacation-end-alert'
-            OR type = 'Study leave' AND msg_type = 'Studyleave-start-alert'
-            OR type = 'Study leave' AND msg_type = 'Studyleave-end-alert'
+            OR type = 'Study Leave' AND msg_type = 'Studyleave-start-alert'
+            OR type = 'Study Leave' AND msg_type = 'Studyleave-end-alert'
             OR type = 'Examination' AND msg_type = 'director-remind';
         ";
         $res = $this->query($query);
@@ -62,10 +62,10 @@ class NotificationModel extends Model
             OR type = 'Examination' AND msg_type = 'Exam-end-alert'
             OR type = 'Vacation' AND msg_type = 'Vacation-start-alert'
             OR type = 'Vacation' AND msg_type = 'Vacation-end-alert'
-            OR type = 'Study leave' AND msg_type = 'Studyleave-start-alert'
-            OR type = 'Study leave' AND msg_type = 'Studyleave-end-alert'
+            OR type = 'Study Leave' AND msg_type = 'Studyleave-start-alert'
+            OR type = 'Study Leave' AND msg_type = 'Studyleave-end-alert'
             OR type = 'Examination' AND msg_type = 'Exam-attendance-alert'
-            OR type = 'Study leave' AND msg_type = 'Send-warnings-alert';
+            OR type = 'Study Leave' AND msg_type = 'Send-warnings-alert';
         ";
         $res = $this->query($query);
         if($res) {
@@ -81,10 +81,10 @@ class NotificationModel extends Model
             OR type = 'Examination' AND msg_type = 'Exam-end-alert'
             OR type = 'Vacation' AND msg_type = 'Vacation-start-alert'
             OR type = 'Vacation' AND msg_type = 'Vacation-end-alert'
-            OR type = 'Study leave' AND msg_type = 'Studyleave-start-alert'
-            OR type = 'Study leave' AND msg_type = 'Studyleave-end-alert'
+            OR type = 'Study Leave' AND msg_type = 'Studyleave-start-alert'
+            OR type = 'Study Leave' AND msg_type = 'Studyleave-end-alert'
             OR type = 'Examination' AND msg_type = 'payment_check_alert'
-            OR type = 'Study leave' AND msg_type = 'degree-changed-check';
+            OR type = 'Study Leave' AND msg_type = 'degree-changed-check';
         ";
         $res = $this->query($query);
         if($res) {
@@ -100,10 +100,10 @@ class NotificationModel extends Model
                 OR type = 'Examination' AND msg_type = 'Exam-end-alert'
                 OR type = 'Vacation' AND msg_type = 'Vacation-start-alert'
                 OR type = 'Vacation' AND msg_type = 'Vacation-end-alert'
-                OR type = 'Study leave' AND msg_type = 'Studyleave-start-alert'
-                OR type = 'Study leave' AND msg_type = 'Studyleave-end-alert'
+                OR type = 'Study Leave' AND msg_type = 'Studyleave-start-alert'
+                OR type = 'Study Leave' AND msg_type = 'Studyleave-end-alert'
                 OR type = 'Examination' AND msg_type = 'payment_check_alert'
-                OR type = 'Study leave' AND msg_type = 'degree-changed-check';
+                OR type = 'Study Leave' AND msg_type = 'degree-changed-check';
             ";
             $res = $this->query($query);
             if($res) {

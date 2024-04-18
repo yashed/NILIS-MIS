@@ -12,8 +12,8 @@ $data['role'] = $role;
                 ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert') ||
                 ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert') ||
                 ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert') ||
-                ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-start-alert') ||
-                ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-end-alert')
+                ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-start-alert') ||
+                ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-end-alert')
             ) {
                 $notificationCount++;
             }
@@ -206,7 +206,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-start-alert') : ?>
+                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-start-alert') : ?>
                         <?php
                         $data['role'] = "Clerk";
                         $this->view('components/notification-bar/notification-box', [
@@ -219,7 +219,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-end-alert') : ?>
+                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-end-alert') : ?>
                         <?php
                         $data['role'] = "Clerk";
                         $this->view('components/notification-bar/notification-box', [
@@ -232,7 +232,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'student_attendance_alert') : ?>
+                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'student_attendance_alert') : ?>
                         <?php
                         $data['role'] = "Clerk";
 

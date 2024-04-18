@@ -396,7 +396,8 @@ class Database
             `description` varchar(255) NOT NULL,
             `type` varchar(50) NOT NULL,
             `msg_type` varchar(100) NOT NULL,
-            `issuing_date` datetime NOT NULL
+            `issuing_date` datetime NOT NULL,
+            PRIMARY KEY (`notify_id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         ";
         $this->query($query);
@@ -407,6 +408,7 @@ class Database
             `index_no` varchar(40) NOT NULL,
             `attendance` varchar(10) NOT NULL,
             `degree_name` varchar(255) NOT NULL
+            PRIMARY KEY (`id`)
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
           ";
           $this->query($query);
@@ -818,7 +820,7 @@ END;
            DECLARE eventCursor CURSOR FOR
                SELECT dt.StartingDate, d.DegreeName
                FROM degree_timetable AS dt
-               JOIN degree AS d ON dt.DegreeID = d.DegreeID WHERE dt.EventType = 'Study leave';
+               JOIN degree AS d ON dt.DegreeID = d.DegreeID WHERE dt.EventType = 'Study Leave';
    
            -- Set the current date
            SET currentDate = CURDATE();
@@ -837,7 +839,7 @@ END;
                -- Check if days remaining is less than or equal to 14 and greater than 0
                IF (daysRemaining = 7 ) THEN
                   -- Construct notification message
-                   SET str1 = CONCAT('Study leave has been scheduled for the ', degreeName ,' diploma program ,starting on ', eventStartDate);
+                   SET str1 = CONCAT('Study Leave has been scheduled for the ', degreeName ,' diploma program ,starting on ', eventStartDate);
                    SET str2 = CONCAT('.Kindly ensure all relevant pending tasks and submissions are completed before the study leave period begins.');
    
                    -- Print concatenated strings to console (optional)
@@ -845,7 +847,7 @@ END;
    
                    -- Insert record into notifications table
                    INSERT INTO notifications (description, type, msg_type,issuing_date)
-                   VALUES (CONCAT(str1, str2), 'Study leave', 'Studyleave-start-alert',NOW());
+                   VALUES (CONCAT(str1, str2), 'Study Leave', 'Studyleave-start-alert',NOW());
                END IF;
            END LOOP;
    
@@ -872,7 +874,7 @@ END;
                SELECT dt.EndingDate, d.DegreeName
                FROM degree_timetable AS dt
                JOIN degree AS d ON dt.DegreeID = d.DegreeID
-               WHERE dt.EventType = 'Study leave';
+               WHERE dt.EventType = 'Study Leave';
    
            -- Set the current date
            SET currentDate = CURDATE();
@@ -891,12 +893,12 @@ END;
                -- Check if days remaining is less than or equal to 14 and greater than 0
                IF (daysAfterEvent = 0) THEN
                   -- Construct notification message
-                   SET str1 = CONCAT('The Study leave for the diploma ', degreeName ,' has ended.');
+                   SET str1 = CONCAT('The Study Leave for the diploma ', degreeName ,' has ended.');
                    
    
                    -- Insert record into notifications table
                    INSERT INTO notifications (description, type, msg_type,issuing_date)
-                   VALUES (CONCAT(str1), 'Study leave', 'Studyleave-end-alert',NOW());
+                   VALUES (CONCAT(str1), 'Study Leave', 'Studyleave-end-alert',NOW());
                END IF;
            END LOOP;
    
@@ -1026,7 +1028,7 @@ END;
         DECLARE eventCursor CURSOR FOR
             SELECT dt.StartingDate, d.DegreeName
             FROM degree_timetable AS dt
-            JOIN degree AS d ON dt.DegreeID = d.DegreeID WHERE dt.EventType = 'Study leave';
+            JOIN degree AS d ON dt.DegreeID = d.DegreeID WHERE dt.EventType = 'Study Leave';
 
         -- Set the current date
         SET currentDate = CURDATE();
@@ -1045,10 +1047,10 @@ END;
             
             IF (daysRemaining = 0 ) THEN
                -- Construct notification message
-                SET str1 = CONCAT('Study leave has been scheduled for the ', degreeName ,' diploma program ,starting on ', eventStartDate,'. Ensure to update student attendance before the examination');
+                SET str1 = CONCAT('Study Leave has been scheduled for the ', degreeName ,' diploma program ,starting on ', eventStartDate,'. Ensure to update student attendance before the examination');
                 -- Insert record into notifications table
                 INSERT INTO notifications (description, type, msg_type,issuing_date)
-                VALUES (CONCAT(str1), 'Study leave', 'Student_attendance_alert',NOW());
+                VALUES (CONCAT(str1), 'Study Leave', 'Student_attendance_alert',NOW());
             END IF;
         END LOOP;
 
@@ -1075,7 +1077,7 @@ END;
                SELECT dt.StartingDate, d.DegreeName
                FROM degree_timetable AS dt
                 JOIN degree AS d ON dt.DegreeID = d.DegreeID
-                WHERE dt.EventType = 'Study leave';
+                WHERE dt.EventType = 'Study Leave';
    
            -- Set the current date
            SET currentDate = CURDATE();
@@ -1094,10 +1096,10 @@ END;
                -- Check if days remaining is less than or equal to 14 and greater than 0
                IF (daysRemaining = 0 ) THEN
                   -- Construct notification message
-                   SET str1 = CONCAT('Study leave has been scheduled for the ', degreeName ,' diploma program ,starting on ', eventStartDate,'.Send warnings to students with low attendance and those who haven\'t paid the repeat examination charges.');
+                   SET str1 = CONCAT('Study Leave has been scheduled for the ', degreeName ,' diploma program ,starting on ', eventStartDate,'.Send warnings to students with low attendance and those who haven\'t paid the repeat examination charges.');
                    
                    INSERT INTO notifications (description, type, msg_type,issuing_date)
-                   VALUES (CONCAT(str1), 'Study leave', 'Send-warnings-alert',NOW());
+                   VALUES (CONCAT(str1), 'Study Leave', 'Send-warnings-alert',NOW());
                END IF;
            END LOOP;
    
