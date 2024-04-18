@@ -43,6 +43,9 @@ class Clerk extends Controller
         $data['attendances'] = $attendance->findAll();
      
         $degree=new Degree();
+        $notification = new NotificationModel();
+        $notification_count_arr = $notification->countNotifications();
+        $data['notification_count_obj'] = $notification_count_arr[0];
         $degreeID= $_SESSION['getid'];
         $data['degrees']=$degree->find($degreeID);
 
@@ -64,7 +67,9 @@ public function settings()
 {
     $user = new User();
     $data = [];
-
+    $notification = new NotificationModel();
+    $notification_count_arr = $notification->countNotifications();
+    $data['notification_count_obj'] = $notification_count_arr[0];
     if (isset($_POST['update_user_data'])) {
         // Validate input fields
         $fname = isset($_POST['fname']) ? trim($_POST['fname']) : '';
@@ -130,12 +135,12 @@ public function settings()
 public function attendance()
 {
     $degree = new Degree();
-
     $notification = new NotificationModel();
+    $notification_count_arr = $notification->countNotifications();
+    $data['notification_count_obj'] = $notification_count_arr[0];
     $degreeID= $_SESSION['getid'];
     $data['degrees']=$degree->find($degreeID);
-    $data['notifications'] = $notification->findAll();
- 
+    
     // $data['degrees'] = $degree->findAll();
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['importSubmit'])) {
@@ -211,6 +216,9 @@ public function degreeprofile($action = null, $id = null)
     $data = [];
     $data['action'] = $action;
     $data['id'] = $id;
+    $notification = new NotificationModel();
+    $notification_count_arr = $notification->countNotifications();
+    $data['notification_count_obj'] = $notification_count_arr[0];
 
     $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
     $_SESSION['getid']=$degreeID;
@@ -248,6 +256,11 @@ public function participants($id = null, $action = null, $id2 = null)
 {
 
     $st = new StudentModel();
+
+    $notification = new NotificationModel();
+    $notification_count_arr = $notification->countNotifications();
+    $data['notification_count_obj'] = $notification_count_arr[0];
+
     if (!empty($id)) {
         if (!empty($action)) {
             if ($action === 'delete' && !empty($id2)) {
@@ -280,6 +293,11 @@ public function userprofile($action = null, $id = null)
     $data = [];
     $data['action'] = $action;
     $data['id'] = $id;
+
+    $notification = new NotificationModel();
+    $notification_count_arr = $notification->countNotifications();
+    $data['notification_count_obj'] = $notification_count_arr[0];
+
     // Fetch the specific student data using the ID from the URL
     $studentId = isset($_GET['studentId']) ? $_GET['studentId'] : null;
     // Check if the student ID is provided in the URL
@@ -301,6 +319,9 @@ public function userprofile($action = null, $id = null)
 
 public function reports()
     {
+        $notification = new NotificationModel();
+        $notification_count_arr = $notification->countNotifications();
+        $data['notification_count_obj'] = $notification_count_arr[0];
         $this->view('clerk-interfaces/clerk-reports');
     }
 }

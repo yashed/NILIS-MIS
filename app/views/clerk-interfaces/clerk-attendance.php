@@ -293,6 +293,7 @@ $data['role'] = $role;
             padding: 10px 0px 10px 32px;
             background-color: var(--text-color);
             border-radius: 6px;
+            margin-top:5px;
             /* margin: 5px 4px 5px 4px; */
         }
 
@@ -303,6 +304,38 @@ $data['role'] = $role;
             font-weight: 300;
             font-size: 27px;
         }
+
+        .notification-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.user-pic {
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 8px 10px -0.5px 10px;
+}
+
+.hero-ul {
+    width: 100%;
+    text-align: right;
+}
+
+.hero-ul-li {
+    position: relative; /* Add position relative to allow absolute positioning of badge */
+    display: inline-block;
+    list-style: none;
+}
+
     </style>
 </head>
 

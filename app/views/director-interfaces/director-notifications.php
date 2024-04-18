@@ -149,9 +149,15 @@ $data['role'] = $role;
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Examination' && $notification->msg_type == 'director-remind') : ?>
-                        <?php 
-                             $data['role'] = "Director";
-                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+                        <?php
+                        $data['role'] = "Director";
+
+                        $link = "director"; 
+                        $this->view('components/notification-bar/notification-box', [
+                            "notification" => $notification,
+                            "role" => $data['role'],
+                            "link" =>$link  // Pass the notify_id here
+                        ]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
