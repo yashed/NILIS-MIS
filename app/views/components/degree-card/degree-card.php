@@ -7,7 +7,7 @@
     <title>Degree Card</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
     <style>
-        .degree-body {
+        .degree-card-body {
             border-radius: 8px;
             border: 3px solid rgba(0, 0, 0, 0.05);
             background: var(--colour-primary, #FFF);
@@ -18,19 +18,19 @@
             padding: 3px 3px 5px 3px;
         }
 
-        .degree-img {
+        .degree-card-img {
             width: 98px;
             height: 123px;
             flex-shrink: 0;
         }
 
-        .degree-card {
+        .degree-card-card {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
         }
 
-        .degree-content {
+        .degree-card-content {
             display: flex;
             flex-direction: column;
             justify-content: right;
@@ -42,12 +42,12 @@
             margin-left: 20px;
         }
 
-        .degree-name {
+        .degree-card-name {
             font-size: 55px;
             font-weight: 1000;
         }
 
-        .degree-sub-name {
+        .degree-card-sub-name {
             color: #9AD6FF;
             font-size: 18px;
             font-weight: 700;
@@ -55,12 +55,12 @@
             /* float: right; */
         }
 
-        .degree-name {
+        .degree-card-name {
             color: #17376E;
             text-align: left;
         }
 
-        .degree-info {
+        .degree-card-info {
             display: flex;
             flex-direction: row;
             color: var(--colour-secondary-1, #17376E);
@@ -78,17 +78,17 @@
 
 <body>
     <a href="<?= ROOT ?><?= $_SESSION['USER_DATA']->role?>/degreeprofile?id=<?= $degree->DegreeID ?>" style="text-decoration: none;">
-        <div class="degree-body">
-            <div class="degree-card">
-                <img src="<?= ROOT ?>/assets/degree-card/icon.png" alt="icon.png" class="degree-img">
-                <div class="degree-content">
-                    <div class="degree-name"><?= $degree->DegreeShortName ?></div>
-                    <div class="degree-sub-name"><?= $degree->DegreeName ?></div>
+        <div class="degree-card-body">
+            <div class="degree-card-card">
+                <img src="<?= ROOT ?>/assets/degree-card/icon.png" alt="icon.png" class="degree-card-img">
+                <div class="degree-card-content">
+                    <div class="degree-card-name"><?= $degree->DegreeShortName ?></div>
+                    <div class="degree-card-sub-name"><?= $degree->DegreeName ?></div>
                 </div>
             </div>
-            <div class="degree-info">
-                <div class="degree-year">Academic Year - <?= $degree->AcademicYear ?></div>
-                <div class="degree-type"><?= $degree->DegreeType ?> Program</div>
+            <div class="degree-card-info">
+                <div class="degree-card-year">Academic Year - <?= $degree->AcademicYear ?></div>
+                <div class="degree-card-type"><?= $degree->DegreeType ?> Program</div>
             </div>
         </div>
     </a>

@@ -34,7 +34,7 @@ function redirect($link)
 {
     header("Location: " . ROOT . "" . $link);
     show($_POST);
-    die;
+    die();
 }
 
 
