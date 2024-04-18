@@ -37,10 +37,14 @@
 
     <div class="hero">
         <nav>
-            <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+        <ul class="hero-ul">
+                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notifications"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj)): ?>
+                        <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                    <?php endif; ?></a></i></li>
+              
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
+
 
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
@@ -99,12 +103,16 @@
     </div>
     </nav>
 
-    <div class="hero"/
+    <div class="hero">
         <nav>
-            <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+        <ul class="hero-ul">
+                <li class="hero-ul-li"><a href="<?= ROOT ?>sar/notifications"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj)): ?>
+                        <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                    <?php endif; ?></a></i></li>
+              
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
+
 
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
@@ -163,8 +171,11 @@
 
     <div class="hero">
         <nav>
-            <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+        <ul class="hero-ul">
+                <li class="hero-ul-li"><a href="<?= ROOT ?>assistant-sar/notifications"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj)): ?>
+                        <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                    <?php endif; ?></a></i></li>
+              
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
@@ -231,10 +242,14 @@
 
     <div class="hero">
         <nav>
-            <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+        <ul class="hero-ul">
+                <li class="hero-ul-li"><a href="<?= ROOT ?>admin/notifications"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj)): ?>
+                        <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                    <?php endif; ?></a></i></li>
+              
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
+
 
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">

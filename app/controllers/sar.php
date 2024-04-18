@@ -1374,7 +1374,8 @@ class SAR extends Controller
     public function notifications()
     {
         $notification = new NotificationModel();
-
+        $notification_count_arr = $notification->countNotificationsSAR();
+        $data['notification_count_obj'] = $notification_count_arr[0];
         $data['notifications'] = $notification->findAll();
 
         $this->view('sar-interfaces/sar-notification',$data);
