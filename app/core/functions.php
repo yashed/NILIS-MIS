@@ -127,7 +127,6 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
             // Split each line into an array of values
             $values = str_getcsv($lines[$i]);
 
-
             $inputIndex = $values[0];
             $inputRegNo = $values[1];
             $examiner1Mark = $values[2];
@@ -236,6 +235,39 @@ function getMedicalSubjects($indexNo, $semester)
     return $medicalSubjects;
 }
 
+function processStudents(&$selectedRMStudents)
+{
+    $processedStudents = [];
+    $uindex = null;
+    foreach ($selectedRMStudents as $student) {
+        $index = $student->indexNo;
+        if (isset($student) && $student->studentType === 'medical' && isset($student->indexNo)) {
+
+            $foundRepeat = false;
+            foreach ($selectedRMStudents as $otherStudent) {
+                if (isset($otherStudent) && $otherStudent->indexNo === $index && $otherStudent->studentType === 'repeate') {
+                    $student->studentType = 'medical/repeat';
+                    $processedStudents[] = $student;
+                    $uindex = $index;
+                    break;
+                }
+            }
+            if ($uindex !== $index) {
+                $processedStudents[] = $student;
+            }
+        } else {
+
+            if ($uindex !== $index) {
+                $processedStudents[] = $student;
+            }
+        }
+    }
+
+    $selectedRMStudents = $processedStudents;
+    return $selectedRMStudents;
+}
+
+
 function finalMark($mark1, $mark2, $assigmnet)
 {
     $finalMark = ($mark1 + $mark2) / 2 + $assigmnet / 2;
@@ -245,7 +277,7 @@ function finalMark($mark1, $mark2, $assigmnet)
 function insertMarks($file, $examID, $degreeID, $subCode)
 {
 
-    var_dump($file, $examID, $degreeID, $subCode);
+    // var_dump($file, $examID, $degreeID, $subCode);
     //need to add condition to check the file is full of marks or not
     $mark = new Marks;
 
@@ -271,20 +303,21 @@ function insertMarks($file, $examID, $degreeID, $subCode)
         $data['examiner2Marks'] = $values[3];
         $data['assessmentMarks'] = $values[4];
         $data['examiner3Marks'] = !empty($values[5]) ? $values[5] : -1;
-        show($data);
-        //insert data into table
+        // show($data);
+
+        //insert or update data into table
         if (!empty($mark->markValidate($data))) {
             if ($mark->markValidate($data)->status == 'update') {
                 $id = $mark->markValidate($data)->id;
-                show("Id === ");
-                show($id);
+                // show("Id === ");
+                // show($id);
                 //update data in the databse marks table
                 $mark->update($id, $data);
-            } else {
+            } else if ($mark->markValidate($data)->status == 'insert') {
 
                 $mark->insert($data);
             }
-            // $mark->insert($data);
+
         }
 
     }
@@ -326,7 +359,7 @@ function checkGap($file, $examId, $subCode)
         $values = str_getcsv($lines[$i]);
 
         //check the gap
-        var_dump('values = ' . $values[2] . ' ' . $values[3]);
+        // var_dump('values = ' . $values);
         $gap = abs($values[2] - $values[3]);
         if ($gap > 10) {
             var_dump('gap is greater than 10');
@@ -336,4 +369,89 @@ function checkGap($file, $examId, $subCode)
     return false;
 
 }
+
+function sortArray($array, $key, $order = 'asc')
+{
+    // Define a custom comparison function
+    $compare = function ($a, $b) use ($key, $order) {
+        if ($order === 'asc') {
+            return $a->$key > $b->$key ? 1 : -1;
+        } else {
+            return $a->$key < $b->$key ? 1 : -1;
+        }
+    };
+
+    // Sort the array using the custom comparison function
+    usort($array, $compare);
+
+    return $array;
+}
+
+function updateMarksheet($csvFileName, $dataArray, $newFileName)
+{
+    $csvFilePath = 'assets/csv/examsheets/final-marksheets/' . $csvFileName;
+    $newFilePath = 'assets/csv/examsheets/output/final-marksheets/' . $newFileName;
+
+    // Ensure the output directory exists
+    $newFileDir = dirname($newFilePath);
+    if (!is_dir($newFileDir)) {
+        mkdir($newFileDir, 0777, true); // recursive creation
+    }
+
+    // Read the existing CSV file
+    $rows = [];
+    $headerData = [];
+    if (($handle = fopen($csvFilePath, "r")) !== FALSE) {
+        $lineCount = 0;
+        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            $lineCount++;
+            if ($lineCount <= 3) {
+                // Collect program and subject lines
+                $headerData[] = $data;
+                continue;
+            } else if ($lineCount == 4) {
+                // Skip the redundant header line
+                continue;
+            }
+            $rows[] = $data;
+        }
+        fclose($handle);
+    }
+
+    // Open a new file to write the updated data
+    $newFile = fopen($newFilePath, 'w');
+
+    // Write the program name and subject headers first
+    foreach ($headerData as $headerRow) {
+        fputcsv($newFile, $headerRow);
+    }
+
+    // Write the correct column headers
+    $correctHeader = ['Index No', 'Registration No', 'Examiner 01 Marks', 'Examiner 02 Marks', 'Assignment Marks', 'Examiner 03 Marks', 'Final Marks', 'Grade'];
+    fputcsv($newFile, $correctHeader);
+
+    // Process each row and add new data from $dataArray
+    foreach ($rows as $row) {
+        if (count($row) < 2)
+            continue; // Skip empty rows
+        $indexNo = $row[0]; // Assuming 'Index No' is the first column
+        if (!empty($dataArray)) {
+            foreach ($dataArray as $data) {
+                if ($data->indexNo == $indexNo) {
+                    // Update existing row with final marks and grade
+                    $row[5] = $data->examiner3Marks != -1 ? $data->examiner3Marks : "N/A";
+                    $row[6] = $data->finalMarks;
+                    $row[7] = $data->grade ? $data->grade : "N/A";
+                    break;
+                }
+            }
+        }
+        fputcsv($newFile, $row);
+    }
+
+    fclose($newFile);
+}
+
+
+
 ?>

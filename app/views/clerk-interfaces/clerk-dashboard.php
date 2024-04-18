@@ -102,6 +102,39 @@ $data['role'] = $role;
         font-weight: 600;
         color: #17376E;
     }
+    .dr-subsection-01 {
+        display: flex;
+        padding: 15px 30px 14px 30px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        background-color: var(--text-color);
+        box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.12);
+        width: 25%;
+        height: 150px;
+        flex-direction: row;
+        gap: 60px;
+    }
+
+    .dr-subcard-data {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .dr-subcard-data-value {
+        font-size: 38px;
+        font-weight: 600;
+        color: #17376E;
+    }
+
+    .dr-subcard-data-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #17376E;
+    }
 
     .dr-subsection-1 {
         background-color: var(--text-color);
@@ -140,6 +173,36 @@ $data['role'] = $role;
         margin: 3px 4px 7px 4px;
         width: 50%;
     }
+    .dr-sub-title {
+
+        color: #17376E;
+        font-family: Poppins;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 600;
+        margin: 40px;
+
+    }
+
+    .dr-subsection-2 {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        /* padding: 10px 10px 30px 35px; */
+        /* border-radius: 6px; */
+        /* margin: 7px 4px 7px 4px; */
+    }
+
+    .dr-subsection-21 {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--text-color);
+        padding: 10px 10px 30px 35px;
+        border-radius: 6px;
+        margin: 3px 4px 7px 4px;
+        width: 50%;
+    }
 
     .dr-subsection-22 {
         background-color: var(--text-color);
@@ -148,7 +211,20 @@ $data['role'] = $role;
         margin: 3px 4px 7px 4px;
         width: 50%;
     }
+    .dr-subsection-22 {
+        background-color: var(--text-color);
+        padding: 10px 10px 31px 35px;
+        border-radius: 6px;
+        margin: 3px 4px 7px 4px;
+        width: 50%;
+    }
 
+    .dr-calender {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
     .dr-calender {
         display: flex;
         align-items: center;
@@ -178,7 +254,15 @@ $data['role'] = $role;
         display: flex;
         flex-direction: column;
     }
+    .dr-card1 {
+        display: flex;
+        flex-direction: column;
+    }
 
+    .dr-card2 {
+        display: flex;
+        flex-direction: column;
+    }
     .dr-card2 {
         display: flex;
         flex-direction: column;
@@ -267,8 +351,10 @@ $data['role'] = $role;
                 <div class="dr-exam-bar">
                     <div class="dr-exam-card1">
                         <?php $this->view('components/exam-card/exam-card', $data) ?>
+                        <?php $this->view('components/exam-card/exam-card', $data) ?>
                     </div>
                     <div class="dr-exam-card2">
+                        <?php $this->view('components/exam-card/exam-card', $data) ?>
                         <?php $this->view('components/exam-card/exam-card', $data) ?>
                     </div>
                 </div>

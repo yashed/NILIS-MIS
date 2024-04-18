@@ -63,6 +63,7 @@ class ResultSheet extends Model
 
             return true;
         }
+        var_dump("Invalid Marks , upload valid marksheet ", $this->errors);
         return false;
     }
 }

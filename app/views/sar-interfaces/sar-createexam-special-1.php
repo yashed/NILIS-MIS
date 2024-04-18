@@ -350,6 +350,14 @@ $data['role'] = $role;
       
 
        
+    } 
+    .not-found-stu{
+        font-size: 1.5vw;
+        font-weight: 500;
+        color: #17376E;
+        text-align: center;
+        padding: 60px;
+        margin-top: 20px;
     }
 
 </style>
@@ -376,7 +384,10 @@ $data['role'] = $role;
                     <form method="post" id='repeat-medical-studnet-select'>
                     <div class="degree-student-table">
 
-                        <table class="table">
+                    <table class="table">
+                        <?php if (empty($repeatStudents) && empty($medicalStudents)): ?>
+                                    <div class="not-found-stu">No students found</div>
+                        <?php else: ?>
                             <thead>
                                 <tr>
                                     <th>
@@ -384,7 +395,7 @@ $data['role'] = $role;
                                     </th>
                                     <th>Name</th>
                                     <th>Index Number</th>
-                                    <th>Registration Number</th>
+                                    
                                     <th>Attempt</th>
                                     <th>Subject Code</th>
                                     <th>Student Type</th>
@@ -393,27 +404,28 @@ $data['role'] = $role;
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php if (!empty($repeatStudents)): ?>
                                 <?php foreach ($repeatStudents as $rStudent): ?>
                                     <?php $json = json_encode($rStudent); ?>
                                     <tr>
                                         <td><input type="checkbox" name="item[]" value="<?= $rStudent->id ?>"
                                         <?= isset($_SESSION['checked_RM_students'][$rStudent->id]) ? 'checked' : '' ?>></td>
                                         <td><input type="text" name="name[]" value=" H.A.Yashed Thisra" readonly></td>
-                                        <td><input type="text" name="indexNo[]" value=" <?= $rStudent->indexNo ?>" readonly>
-                                        </td>
-                                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
-                                        <td><input type="text" name="attempt[]" value="  <?= $rStudent->attempt ?>"
+                                        <td><input type="text" name="indexNo[]" value="<?= $rStudent->indexNo ?>" readonly>
+                                        </td>                                    
+                                        <td><input type="text" name="attempt[]" value=" <?= $rStudent->attempt ?>"
                                                 readonly>
                                         </td>
-                                        <td><input type="text" name="subjectCode[]" value=" <?= $rStudent->subjectCode ?>"
+                                        <td><input type="text" name="subjectCode[]" value="<?= $rStudent->subjectCode ?>"
                                                 readonly>
-                                        </td>
+                                            </td>
                                         <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
                                         <td><input type="text" name="status[]" value="Paid" class ="student-status" readonly></td>
                                     </tr>
                                 <?php endforeach; ?>
+                                <?php endif; ?>
 
-
+                               <?php if (!empty($medicalStudents)): ?>
                                 <?php foreach ($medicalStudents as $mStudent): ?>
                                     <?php $json = json_encode($mStudent); ?>
                                     <tr>
@@ -422,7 +434,6 @@ $data['role'] = $role;
                                         <td><input type="text" name="name[]" value=" H.A.Yashed Thisra" readonly></td>
                                         <td><input type="text" name="indexNo[]" value=" <?= $mStudent->indexNo ?>" readonly>
                                         </td>
-                                        <td><input type="text" name="regNo[]" value="DSL/2023/02" readonly></td>
                                         <td><input type="text" name="attempt[]" value="  <?= $mStudent->attempt ?>"
                                                 readonly>
                                         </td>
@@ -432,6 +443,10 @@ $data['role'] = $role;
                                         <td><input type="text" name="status[]" value="Approved" class ="student-status" readonly></td>
                                     </tr>
                                 <?php endforeach; ?>
+                                <?php endif; ?>
+
+                             <?php endif; ?>
+                                   
                             </tbody>
                         </table>
                     </div>
