@@ -26,14 +26,14 @@ class DIRECTOR extends Controller
 
         $this->view('director-interfaces/director-dashboard', $data);
     }
-    public function notifications()
+    public function notification()
     {
         $notification = new NotificationModel();
         $data['notifications'] = $notification->findAll();
         $notification_count_arr = $notification->countNotificationsDirector();
    
         $data['notification_count_obj'] = $notification_count_arr[0];
-        $this->view('director-interfaces/director-notifications', $data);
+        $this->view('director-interfaces/director-notification', $data);
     }
     public function degreeprograms()
     {
