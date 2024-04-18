@@ -151,9 +151,15 @@ $data['role'] = $role;
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-attendance-alert') : ?>
-                        <?php 
-                             $data['role'] = "SAR";
-                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+                        <?php
+                        $data['role'] = "SAR";
+
+                        $link = "sar"; 
+                        $this->view('components/notification-bar/notification-box', [
+                            "notification" => $notification,
+                            "role" => $data['role'],
+                            "link" =>$link  // Pass the notify_id here
+                        ]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -161,9 +167,15 @@ $data['role'] = $role;
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'Send-warnings-alert') : ?>
-                        <?php 
-                             $data['role'] = "SAR";
-                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+                        <?php
+                        $data['role'] = "SAR";
+
+                        $link = "sar"; 
+                        $this->view('components/notification-bar/notification-box', [
+                            "notification" => $notification,
+                            "role" => $data['role'],
+                            "link" =>$link  // Pass the notify_id here
+                        ]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
