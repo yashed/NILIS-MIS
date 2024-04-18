@@ -149,8 +149,6 @@ public function attendance()
 
             // Skip the first four rows
             for ($i = 0; $i < 4; $i++) {
-            // Skip the first four rows
-            for ($i = 0; $i < 4; $i++) {
                 fgetcsv($csvFile);
             }
 
@@ -207,6 +205,7 @@ public function attendance()
     $this->view('clerk-interfaces/clerk-attendance',$data);
     
 }
+
 
 public function degreeprofile($action = null, $id = null)
 {
