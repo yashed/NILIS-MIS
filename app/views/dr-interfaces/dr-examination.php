@@ -1,5 +1,5 @@
 <?php
-$role = "clerk";
+$role = "DR";
 $data['role'] = $role;
 
 ?>
@@ -13,7 +13,7 @@ $data['role'] = $role;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAR Dashboard</title>
+    <title>exam Dashboard</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -36,7 +36,7 @@ $data['role'] = $role;
         --tran-05: all 0.5s ease;
     }
 
-    .dr-home {
+    .exam-home {
         height: 100vh;
         left: 250px;
         position: relative;
@@ -45,7 +45,7 @@ $data['role'] = $role;
         background: var(--body-color);
     }
 
-    .dr-title {
+    .exam-title {
         font-size: 30px;
         font-weight: 600;
         color: black;
@@ -55,12 +55,12 @@ $data['role'] = $role;
         margin: 7px 4px 7px 4px;
     }
 
-    .sidebar.close~.dr-home {
+    .sidebar.close~.exam-home {
         left: 88px;
         width: calc(100% - 88px);
     }
 
-    .dr-subsection-0 {
+    .exam-subsection-0 {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -73,7 +73,7 @@ $data['role'] = $role;
 
     }
 
-    .dr-subsection-01 {
+    .exam-subsection-01 {
         display: flex;
         padding: 15px 30px 14px 30px;
         justify-content: center;
@@ -88,33 +88,33 @@ $data['role'] = $role;
         gap: 60px;
     }
 
-    .dr-subcard-data {
+    .exam-subcard-data {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
     }
 
-    .dr-subcard-data-value {
+    .exam-subcard-data-value {
         font-size: 38px;
         font-weight: 600;
         color: #17376E;
     }
 
-    .dr-subcard-data-title {
+    .exam-subcard-data-title {
         font-size: 18px;
         font-weight: 600;
         color: #17376E;
     }
 
-    .dr-subsection-1 {
+    .exam-subsection-1 {
         background-color: var(--text-color);
-        padding: 10px 10px 30px 35px;
+        padding: 10px 50px 30px 35px;
         border-radius: 6px;
         margin: 7px 4px 7px 4px;
     }
 
-    .dr-sub-title {
+    .exam-sub-title {
 
         color: #17376E;
         font-family: Poppins;
@@ -125,7 +125,7 @@ $data['role'] = $role;
 
     }
 
-    .dr-subsection-2 {
+    .exam-subsection-2 {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -135,7 +135,7 @@ $data['role'] = $role;
         /* margin: 7px 4px 7px 4px; */
     }
 
-    .dr-subsection-21 {
+    .exam-subsection-21 {
         display: flex;
         flex-direction: column;
         background-color: var(--text-color);
@@ -145,7 +145,7 @@ $data['role'] = $role;
         width: 50%;
     }
 
-    .dr-subsection-22 {
+    .exam-subsection-22 {
         background-color: var(--text-color);
         padding: 10px 10px 31px 35px;
         border-radius: 6px;
@@ -153,14 +153,14 @@ $data['role'] = $role;
         width: 50%;
     }
 
-    .dr-calender {
+    .exam-calender {
         display: flex;
         align-items: center;
         justify-content: center;
 
     }
 
-    .dr-degree-bar {
+    .exam-degree-bar {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -168,17 +168,38 @@ $data['role'] = $role;
         margin-bottom: 20px;
     }
 
-    .dr-card1 {
+    .exam-card1 {
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 35%;
     }
 
-    .dr-card2 {
+    .exam-card-content {
         display: flex;
-        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
     }
 
-    .dr-exam-bar {
+    .exam-card2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 70%;
+    }
+
+    .exam-card3 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 70%;
+    }
+
+    .exam-exam-bar {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -187,66 +208,121 @@ $data['role'] = $role;
         gap: 30px;
     }
 
-    .dr-exam-card1 {
-        display: flex;
-        flex-direction: column;
+
+
+    .exam-create-dropdown {
+        width: 15vw;
     }
 
-    .dr-exam-card2 {
+    .exam-create-dropdown-content {
+
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid rgba(23, 55, 110, 0.46);
+        box-shadow: 0px 8px 11px 0px rgba(0, 0, 0, 0.15);
+        border-radius: 12px;
+        width: 15vw;
+        z-index: 1;
+
+    }
+
+    .exam-create-dropdown-content a {
+
+        font-size: 1vw;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        font-weight: 400;
+        text-align: center;
+    }
+
+    .exam-create-dropdown-content a:hover {
+        background-color: #E0E0E0;
+        border-radius: 12px;
+    }
+
+    .exam-create-dropdown:hover .exam-create-dropdown-content {
+        display: block;
+    }
+
+    button {
+        width: 100%;
+        color: #fff;
+        padding: 0.5em 1em 0.5em 1em;
+        border-radius: 8px;
+        background: #17376e;
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        border: 0px;
+        margin-bottom: 10px;
+        /* margin-top: 25px; */
+        flex-wrap: wrap;
+    }
+
+    .bt-name {
+        font-size: 1vw;
+        font-weight: 500px;
+    }
+
+    button:hover {
+        color: #17376e;
+        background-color: white;
+        border: 1px solid var(--colour-secondary-1, #17376e);
+    }
+
+    .exam-subsection-1-titlebar {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
     }
 </style>
 
 <body>
-    <div class="dr-home">
-        <div class="dr-title">Dashboard</div>
-        <div class="dr-subsection-1">
-            <div class="dr-sub-title">
-                Ongoing Degree Programs
+    <div class="exam-home">
+        <div class="exam-title">Examination</div>
+        <div class="exam-subsection-1">
+            <div class="exam-subsection-1-titlebar">
+                <div class="exam-sub-title">
+                    Upcoming Examination
+                </div>
             </div>
-            <div class="dr-degree-bar">
-                <!-- <div class="dr-card1">
-<a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
-    <?php $this->view('components/degree-card/degree-card', $data) ?>
-</a>
-</div> -->
-                <div class="dr-card1">
-                    <?php foreach ($degrees as $degree): ?>
-                        <div>
-                            <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
-                        </div>
-                    <?php endforeach; ?>
+            <div class="exam-degree-bar">
+                <div class="exam-card1">
+                    <?php $this->view('components/exam-card/exam-card', $data) ?>
+
                 </div>
             </div>
         </div>
-        <div class="dr-subsection-2">
-            <div class="dr-subsection-21">
-                <div class="dr-sub-title">
-                    Recently Published Examination Results
+        <div class="exam-subsection-2">
+            <div class="exam-subsection-21">
+                <div class="exam-sub-title">
+                    Ongoing Examination
+
                 </div>
-                <div class="dr-exam-bar">
-                    <div class="dr-exam-card1">
-                        <?php $this->view('components/exam-card/exam-card', $data) ?>
-                    </div>
-                    <div class="dr-exam-card2">
+                <div class="exam-card-content">
+                    <div class="exam-card2">
                         <?php $this->view('components/exam-card/exam-card', $data) ?>
                     </div>
                 </div>
             </div>
-            <div class="dr-subsection-22">
-                <div class="dr-sub-title">
-                    Academic Calender
+            <div class="exam-subsection-22">
+                <div class="exam-sub-title">
+                    Complited Examination
                 </div>
-                <div class="dr-calender">
-                    <?php $this->view('components/calender/calender', $data) ?>
+                <div class="exam-card-content">
+                    <div class="exam-card3">
+                        <?php $this->view('components/exam-card/exam-card', $data) ?>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="dr-footer">
+        <div class="exam-footer">
             <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>
+
 
 </body>
 

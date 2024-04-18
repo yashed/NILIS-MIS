@@ -141,11 +141,13 @@ $data['role'] = $role;
 
     .box_3_2 {
         overflow-y: auto;
-        max-height: 90%;
+        height: 80%;
+        width: 100%;
         margin: 25px 5px 10px 25px;
         display: flex;
         justify-content: center;
     }
+
 
     .time_table {
         margin: 2% 5% 3% 5%;
@@ -252,9 +254,13 @@ $data['role'] = $role;
     }
 
     .box_1 p {
-        font-size: 30px;
+        font-size: 2vw;
+        font-weight: 600;
         color: black;
-        margin: 1% 1% 1% 3%;
+        padding: 10px 0px 10px 32px;
+        background-color: var(--text-color);
+        border-radius: 6px;
+        margin: 7px 4px 7px 4px;
     }
 </style>
 
@@ -263,9 +269,7 @@ $data['role'] = $role;
         <div class="large-box">
             <div class="box_1">
                 <?php if (!empty($degrees)): ?>
-                    <p>
-                        <?= $degrees[0]->DegreeName ?>
-                    </p>
+                    <p><?= $degrees[0]->DegreeName ?></p>
                 <?php else: ?>
                     <p>No data found for the specified degree ID.</p>
                 <?php endif; ?>
@@ -302,15 +306,14 @@ $data['role'] = $role;
                                 <input type="text" name="year" id="year" value="<?= $degrees[0]->AcademicYear ?>" readonly>
                             </td>
                         </tr>
-                        <td colspan="2">
-                            <center><button class="pin" id="delete_degree">Delete Degree</button></center>
-                        </td>
+
                     </table>
                 <?php else: ?>
                     <p>No data found for the specified degree ID.</p>
                 <?php endif; ?>
             </div>
             <div class="box_3">
+                <p>Subjects</p>
                 <div class="box_3_2" id="semester_subjects_credits">
                     <?php if ($subjects): ?>
                         <div id="semester_container">
@@ -326,18 +329,17 @@ $data['role'] = $role;
                                     </tr>
                                     <?php foreach ($semesterSubjects as $subject): ?>
                                         <tr>
-                                            <td><input style="width: 140px; margin-right: 40px;"
-                                                    value="<?= $subject->SubjectName ?>" type="text" name="SubjectName"
-                                                    class="SubjectName" placeholder="Subject"
+                                            <td><input style="width: 15vw; margin-right: 40px;" value="<?= $subject->SubjectName ?>"
+                                                    type="text" name="SubjectName" class="SubjectName" placeholder="Subject"
                                                     id="SubjectName<?= $semesterNumber ?>_<?= $subject->SubjectID ?>"
                                                     style="border: 1px solid #ccc;" readonly></td>
-                                            <td><input style="width: 140px; margin-right: 40px;"
+                                            <td><input style="width: 8vw; margin-right: 40px; text-align:center;"
                                                     value="<?= $subject->SubjectCode ?>" type="text" name="SubjectCode"
                                                     class="SubjectCode" placeholder="Subject Code"
                                                     id="SubjectCode<?= $semesterNumber ?>_<?= $subject->SubjectID ?>"
                                                     style="border: 1px solid #ccc;" readonly></td>
-                                            <td><input style="width: 60px;" value="<?= $subject->NoCredits ?>" type="number"
-                                                    name="NoCredits" class="NoCredits" placeholder="Credits"
+                                            <td><input style="width: 5vw; text-align:center;" value="<?= $subject->NoCredits ?>"
+                                                    type="number" name="NoCredits" class="NoCredits" placeholder="Credits"
                                                     id="NoCredits<?= $semesterNumber ?>_<?= $subject->SubjectID ?>"
                                                     style="border: 1px solid #ccc;" readonly></td>
                                         </tr>
@@ -352,7 +354,7 @@ $data['role'] = $role;
             </div>
             <form class="box_4" id="form1" method="post"
                 action="<?= ROOT ?>dr/degreeprofile/update?id=<?= $degrees[0]->$degreeID ?>">
-                <p>Define Degree Time Table</p>
+                <p>Degree Time Table</p>
                 <div class="box_4_1">
                     <table class="Time_table" id="Time_table">
                         <?php $lastEventID = 0; ?>
@@ -384,22 +386,12 @@ $data['role'] = $role;
                                 } ?>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <p>No data found for the specified degree ID.</p>
+                            <p>No data found for this degree programme.</p>
                         <?php endif; ?>
                     </table>
                 </div>
                 <div class="box_4_2">
-                    <table class="create_time_table_raw">
-                        <tr>
-                            <th colspan="3"><button class="add-new-event" type="button" id="add_new_event">&#128198 Add
-                                    New Event</button></th>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td width="12%"><button class="pin" type="submit" id="update">Update</button></td>
-                            <td width="12%"><button class="pin" type="submit" id="save" disabled>Save</button></td>
-                        </tr>
-                    </table>
+
                 </div>
             </form>
         </div>

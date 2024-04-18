@@ -39,7 +39,7 @@
         <nav>
             <ul class="hero-ul">
                 <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -82,7 +82,7 @@
                 </li>
                 <li class="nav-link">
                     <a href="<?= ROOT ?>sar/degreeprograms">
-                        <i class="bx bx-home icon"></i>
+                        <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Programs</span>
                     </a>
                 </li>
@@ -103,7 +103,7 @@
         <nav>
             <ul class="hero-ul">
             <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -165,7 +165,7 @@
         <nav>
             <ul class="hero-ul">
             <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -233,7 +233,7 @@
         <nav>
             <ul class="hero-ul">
             <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -293,9 +293,9 @@
 
     <div class="hero">
         <nav>
-            <ul class="hero-ul"/
+            <ul class="hero-ul">
             <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -323,13 +323,13 @@
             <ul class="menu-links">
                 <h6 class="topic1">MAIN</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/">
+                    <a href="<?= ROOT ?>clerk">
                         <i class="bx bx-home icon"></i>
                         <span class="text nav-text">Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/">">
+                    <a href="<?= ROOT ?>clerk/notifications">">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>
@@ -357,10 +357,10 @@
         <nav>
             <ul class="hero-ul">
             <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
-            <div class="sub-menu-wrap" id="subMenu"/
+            <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
                     <div class="user-info">
                         <img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg">

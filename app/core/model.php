@@ -92,18 +92,19 @@ class Model extends Database
         }
     }
 
-    public function findstudentid($id)
-    {
-        $query = "select * from " . $this->table . " WHERE id = :id";
-        $params = [':id' => $id];
-        $result = $this->query($query, $params);
-        // Check if the query was successful
-        if (is_array($result) && !empty($result)) {
-            return $result;
-        } else {
-            return null;
-        }
+    public function findwhere($where, $id)
+{
+    $query = "SELECT * FROM " . $this->table . " WHERE {$where} = :id";
+    $params = [':id' => $id];
+    $result = $this->query($query, $params);
+    // Check if the query was successful
+    if (is_array($result) && !empty($result)) {
+        return $result; 
+    } else {
+        return null;
     }
+}
+
     public function setid($id)
     {
 
@@ -170,6 +171,49 @@ class Model extends Database
 
         return false;
     }
+
+    public function whereOr($data)
+    {
+        $query = "SELECT * FROM " . $this->table . " WHERE ";
+
+        $conditions = [];
+
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+
+                $orConditions = [];
+                foreach ($value['values'] as $item) {
+                    $orConditions[] = $key . "=:" . $key . count($orConditions);
+                }
+                $conditions[] = "(" . implode(" OR ", $orConditions) . ")";
+            } else {
+                // Normal conditions, key = value
+                $conditions[] = $key . "=:" . $key;
+            }
+        }
+
+        $query .= implode(" AND ", $conditions);
+
+        // Binding values
+        $bindValues = [];
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                foreach ($value['values'] as $index => $item) {
+                    $bindValues[$key . $index] = $item;
+                }
+            } else {
+                $bindValues[$key] = $value;
+            }
+        }
+
+        show($query);
+        show($bindValues);
+        // Execute the query
+        $res = $this->query($query, $bindValues);
+
+        return is_array($res) ? $res : false;
+    }
+
 
     public function join($tables, $columns, $conditions, $order = null, $limit = null)
     {
@@ -443,9 +487,9 @@ class Model extends Database
         // Generate WHERE part of the query
         $wherePart = '';
         foreach ($whereConditions as $key => $value) {
-            $wherePart .= "{$key}=:$key AND ";
+            $wherePart .= " {$key}=:$key AND";
         }
-        $wherePart = rtrim($wherePart, 'AND ');
+        $wherePart = rtrim($wherePart, 'AND');
 
         // Construct the final query
         $query = "UPDATE {$this->table} SET {$setPart} WHERE {$wherePart}";
@@ -537,5 +581,44 @@ class Model extends Database
      // show($query);
      // show($data);
  } */
+    function getDistinctElements($array1, $array2, $key)
+    {
+        // Combine arrays (even if one is null)
+        $data = array_merge((array) $array1, (array) $array2);
+
+        // Ensure $data is an array
+        if (!is_array($data)) {
+            return [];
+        }
+
+        // Initialize empty result array
+        $result = [];
+
+        // Iterate through each object in the combined data
+        foreach ($data as $object) {
+            // Check if key exists and is allowed
+            if (isset($object->$key) && in_array($key, $this->allowedColumns)) {
+                // Extract value of the key
+                $value = $object->$key;
+
+                // Check if value is already present using efficient isset and === comparison
+                if (!isset($result[$value])) {
+                    // Extract only allowed properties and create a new array
+                    $allowedItem = [];
+                    foreach ($this->allowedColumns as $column) {
+                        if (isset($object->$column)) {
+                            $allowedItem[$column] = $object->$column;
+                        }
+                    }
+                    $result[$value] = $allowedItem;
+                }
+            }
+        }
+
+        // Return the result as an array of arrays
+        return array_values($result);
+    }
+
+
 
 }

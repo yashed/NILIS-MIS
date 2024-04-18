@@ -10,14 +10,19 @@ class Login extends Controller
         $data['errors'] = [];
         $data['title'] = 'Login';
         $user = new User();
-        
+
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+            // show($_POST);
+
             //validate
             $row = $user->first([
                 'username' => $_POST['username']
             ]);
-            
+
             if ($row) {
+                // show($_POST['password']);
+
                 if (password_verify($_POST['password'], $row->password)) {
                     //authentication
                     Auth::authenticate($row);

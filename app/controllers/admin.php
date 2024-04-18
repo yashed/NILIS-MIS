@@ -49,52 +49,70 @@ class Admin extends Controller
       // $user->insert($_POST);
 
       // header('Location: users');
-      if ($_POST['submit'] == "update") {
+      if (!empty($_POST['reset-pw'])) {
+        if ($_POST['reset-pw'] == "reset-pw") {
 
-        if ($user->validateUpdate($_POST)) {
-          $popupUpdate = false;
-
-          $user->update($_POST['id'], $_POST);
-          message("User profile was successfully updated");
-        } else {
-
-          $popupUpdate = true;
-          message("User profile was not updated Corectly", 'error');
-        }
-      } else if ($_POST['submit'] == "add") {
-        if ($user->validate($_POST)) {
-          $popupCreate = false;
-
-          //unset submit value in POST data
-          unset($_POST['submit']);
-
-          try {
-            //set default passsword
+          if (!empty($_POST['role'])) {
             $password = $_POST['role'] . '123';
-            //add date to the POST data
-            $_POST['date'] = date("Y-m-d H:i:s");
-
-            //add password to the POST data
-            $_POST['password'] = password_hash($password, PASSWORD_DEFAULT);
-            $_POST['status'] = 'initial';
-show($_POST);
-            $user->insert($_POST);
-            message("User profile was successfully created");
-
-            //refresh the page
-            header("Refresh:0");
-
-          } catch (\Throwable $th) {
-            // var_dump($th);
           }
-        } else {
-          $popupCreate = true;
-          message("User profile was not created Corectly", 'error');
-        }
-      } else if ($_POST['submit'] == "delete") {
 
-        $user->delete2($_POST);
-        message("User profile was successfully Deleted");
+          $dataToUpdate = [
+            'password' => password_hash($password, PASSWORD_DEFAULT),
+            'status' => 'initial'
+          ];
+
+          $user->update($_POST['id'], $dataToUpdate);
+          message("User password was successfully reset", 'success', true);
+        }
+      }
+      if (!empty($_POST['submit'])) {
+        if ($_POST['submit'] == "update") {
+
+
+          if ($user->validateUpdate($_POST)) {
+            $popupUpdate = false;
+
+            $user->update($_POST['id'], $_POST);
+            message("User profile was successfully updated", 'success', true);
+          } else {
+
+            $popupUpdate = true;
+            message("User profile was not updated Corectly", 'error', true);
+          }
+        } else if ($_POST['submit'] == "add") {
+          if ($user->validate($_POST)) {
+            $popupCreate = false;
+
+            //unset submit value in POST data
+            unset($_POST['submit']);
+
+            try {
+              //set default passsword
+              $password = $_POST['role'] . '123';
+              //add date to the POST data
+              $_POST['date'] = date("Y-m-d H:i:s");
+              //add password to the POST data
+              $_POST['password'] = password_hash($password, PASSWORD_DEFAULT);
+              $_POST['status'] = 'initial';
+
+              $user->insert($_POST);
+              message("User profile was successfully created", 'success', true);
+
+              //refresh the page
+              // header("Refresh:0");
+
+            } catch (\Throwable $th) {
+              // var_dump($th);
+            }
+          } else {
+            $popupCreate = true;
+            message("User profile was not created Corectly", 'error', true);
+          }
+        } else if ($_POST['submit'] == "delete") {
+
+          $user->delete2($_POST);
+          message("User profile was successfully Deleted", 'success', true);
+        }
       }
     }
     //get all data from database
@@ -113,15 +131,12 @@ show($_POST);
     $notification = new NotificationModel();
 
     $data['notifications'] = $notification->findAll();
-    $this->view('admin-interfaces/admin-notifications',$data);
+    $this->view('admin-interfaces/admin-notifications', $data);
   }
 
   public function degreeprograms()
   {
     $degree = new Degree();
-
-    // $degree->insert($_POST);
-
 
     $data['degrees'] = $degree->findAll();
 
@@ -131,39 +146,39 @@ show($_POST);
   public function settings()
   {
     $user = new User();
-    
-    
+
+
     if (isset($_POST['update_user_data'])) {
-        $id = $_SESSION['USER_DATA']->id;
-        $dataToUpdate = [
-            'fname' => $_POST['fname'],
-            'lname' => $_POST['lname'],
-            'email' => $_POST['email'],
-            'phoneNo' => $_POST['phoneNo']
-        ];
+      $id = $_SESSION['USER_DATA']->id;
+      $dataToUpdate = [
+        'fname' => $_POST['fname'],
+        'lname' => $_POST['lname'],
+        'email' => $_POST['email'],
+        'phoneNo' => $_POST['phoneNo']
+      ];
 
-        $user->update($id, $dataToUpdate);
+      $user->update($id, $dataToUpdate);
 
-        $updatedUserData = $user->first(['id' => $id]);
+      $updatedUserData = $user->first(['id' => $id]);
 
-        if ($updatedUserData === null) {
-            echo 'No user data found after update.';
-            exit();
-        }
+      if ($updatedUserData === null) {
+        echo 'No user data found after update.';
+        exit();
+      }
 
-        $data['user'] = $updatedUserData;
+      $data['user'] = $updatedUserData;
     } else {
-        $id = $_SESSION['USER_DATA']->id;
-        $data['user'] = $user->first(['id' => $id]);
+      $id = $_SESSION['USER_DATA']->id;
+      $data['user'] = $user->first(['id' => $id]);
 
-        if ($data['user'] === null) {
-            echo 'No user data found.';
-            exit();
-        }
+      if ($data['user'] === null) {
+        echo 'No user data found.';
+        exit();
+      }
     }
     $this->view('admin-interfaces/admin-settings');
   }
-  
+
   public function activity()
   {
 
