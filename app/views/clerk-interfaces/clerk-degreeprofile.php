@@ -191,7 +191,7 @@ $data['role'] = $role;
         display: none;
     }
 
-   
+
 
     .box_2 p,
     .box_3 p,
@@ -206,6 +206,38 @@ $data['role'] = $role;
         font-size: 30px;
         color: black;
         margin: 1% 1% 1% 3%;
+    }
+
+    .notification-badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 3px 6px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .user-pic {
+        width: 27px;
+        height: 27px;
+        border-radius: 50%;
+        cursor: pointer;
+        margin: 8px 10px -0.5px 10px;
+    }
+
+    .hero-ul {
+        width: 100%;
+        text-align: right;
+    }
+
+    .hero-ul-li {
+        position: relative;
+        /* Add position relative to allow absolute positioning of badge */
+        display: inline-block;
+        list-style: none;
     }
 </style>
 
@@ -249,7 +281,7 @@ $data['role'] = $role;
                                 <input type="text" name="year" id="year" value="<?= $degrees[0]->AcademicYear ?>" readonly>
                             </td>
                         </tr>
-                        
+
                     </table>
                 <?php else : ?>
                     <p>No data found for the specified degree ID.</p>
@@ -287,11 +319,11 @@ $data['role'] = $role;
                 <div class="box_4_1">
                     <table class="Time_table" id="Time_table">
                         <?php $lastEventID = 0; ?>
-                        <?php if($degreeTimeTable): ?>
-                        <tr>
-                            <th align="left">Event</th>
-                            <th colspan="2">Duration</th><br>
-                        </tr>
+                        <?php if ($degreeTimeTable) : ?>
+                            <tr>
+                                <th align="left">Event</th>
+                                <th colspan="2">Duration</th><br>
+                            </tr>
                             <?php foreach ($degreeTimeTable as $event) : ?>
                                 <tr>
                                     <td width="76%"><input type="text" value="<?= $event->EventName ?>" class="event" id="event_<?= $event->EventID ?>" readonly></td>
@@ -305,7 +337,9 @@ $data['role'] = $role;
                                     <td width="12%"><input type="date" value="<?= $event->StartingDate ?>" class="duration" id="start_<?= $event->EventID ?>" readonly></td>
                                     <td width="12%"><input type="date" value="<?= $event->EndingDate ?>" class="duration" id="end_<?= $event->EventID ?>" readonly></td>
                                 </tr>
-                                <?php if ($event->EventID > $lastEventID) { $lastEventID = $event->EventID; }?>
+                                <?php if ($event->EventID > $lastEventID) {
+                                    $lastEventID = $event->EventID;
+                                } ?>
                             <?php endforeach; ?>
                         <?php else : ?>
                             <p>No data found for the specified degree ID.</p>
@@ -319,7 +353,7 @@ $data['role'] = $role;
                         </tr>
                         <tr>
                             <td></td>
-                           
+
                         </tr>
                     </table>
                 </div>
@@ -356,11 +390,11 @@ $data['role'] = $role;
                 }
             };
         }
-        
+
         let eventFields = document.querySelectorAll('.event');
         let eventTypeFields = document.querySelectorAll('.duration');
 
-     
+
     });
 </script>
 
