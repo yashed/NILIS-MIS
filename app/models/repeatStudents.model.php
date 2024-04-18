@@ -18,7 +18,8 @@ class RepeatStudents extends Model
         'indexNo',
         'subjectCode',
         'attempt',
-        'paymentStatus'
+        'paymentStatus',
+        'written'
 
     ];
 

@@ -404,6 +404,62 @@ class Database
         $this->query($query);
     }
 
+    public function updateWritten()
+    {
+        $querry = 'DELIMITER $$
+
+        CREATE TRIGGER after_exam_attendance_update
+        AFTER UPDATE ON exam_attendance
+        FOR EACH ROW
+        BEGIN
+            IF OLD.attendance <> NEW.attendance THEN
+                IF (NEW.type = "repeat" OR NEW.type = "medical/repeat") THEN
+                    UPDATE repeat_students
+                    SET written = IF(NEW.attendance = 1, 1, 0)
+                    WHERE indexNo = NEW.indexNo AND subjectCode = NEW.subjectCode AND attempt = NEW.attempt;
+                END IF;
+                
+                IF (NEW.type = "medical" OR NEW.type = "medical/repeat") THEN
+                    UPDATE medical_students
+                    SET written = IF(NEW.attendance = 1, 1, 0)
+                    WHERE indexNo = NEW.indexNo AND subjectCode = NEW.subjectCode AND attempt = NEW.attempt;
+                END IF;
+            END IF;
+        END$$
+        
+        DELIMITER ;
+        ';
+        $this->query($querry);
+    }
+
+    public function insertMedicalStudents()
+    {
+        $query = 'DELIMITER $$
+
+        CREATE TRIGGER medical_students_insert
+        AFTER UPDATE ON exam_attendance
+        FOR EACH ROW
+        BEGIN
+            -- Check if attendance has changed from 1 to 0, then insert into medical_students
+            IF OLD.attendance = 1 AND NEW.attendance = 0 THEN
+                INSERT INTO medical_students (examID, degreeID, degreeShortName, semester, indexNo, subjectCode, attempt, status, written)
+                SELECT NEW.examID, NEW.degreeID, d.DegreeShortName, NEW.semester, NEW.indexNo, NEW.subjectCode, NEW.attempt, 0, 0
+                FROM degree d
+                WHERE d.DegreeID = NEW.degreeID;
+            END IF;
+        
+            -- Check if attendance has changed from 0 to 1, then delete from medical_students
+            IF OLD.attendance = 0 AND NEW.attendance = 1 THEN
+                DELETE FROM medical_students
+                WHERE indexNo = NEW.indexNo AND subjectCode = NEW.subjectCode AND attempt = NEW.attempt AND examID = NEW.examID;
+            END IF;
+        END$$
+        
+        DELIMITER ;
+        ';
+
+        $this->query($query);
+    }
     public function createFinalMarksTrigger()
     {
         // Create the trigger creation query

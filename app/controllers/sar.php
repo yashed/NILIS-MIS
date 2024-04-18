@@ -255,7 +255,7 @@ class SAR extends Controller
             $tables = ['degree'];
             $columns = ['*'];
             $conditions1 = ['medical_students.degreeID = degree.degreeID', 'medical_students.status=1', 'medical_students.semester= ' . $selectedSemester];
-            $whereConditions1 = ['medical_students.degreeShortName =' . "'" . $degreeShortName[0] . "'"];
+            $whereConditions1 = ['medical_students.degreeShortName =' . "'" . $degreeShortName[0] . "'", 'medical_students.written = 0'];
             $joinStudnetData1 = $medicalStudents->joinWhere($tables, $columns, $conditions1, $whereConditions1);
 
             // show($degreeShortName);
@@ -263,7 +263,7 @@ class SAR extends Controller
 
             //Get join data from repeat students and degree tables 
             $conditions2 = ['repeat_students.degreeID = degree.degreeID', 'repeat_students.paymentStatus=1', 'repeat_students.semester= ' . $selectedSemester];
-            $whereConditions2 = ['repeat_students.degreeShortName=' . "'" . $degreeShortName[0] . "'"];
+            $whereConditions2 = ['repeat_students.degreeShortName=' . "'" . $degreeShortName[0] . "'", 'repeat_students.written = 0'];
             $joinStudnetData2 = $repeatStudents->joinWhere($tables, $columns, $conditions2, $whereConditions2);
 
             if (!empty($joinStudnetData1)) {
@@ -580,7 +580,7 @@ class SAR extends Controller
             $tables = ['degree'];
             $columns = ['*'];
             $conditions1 = ['medical_students.degreeID = degree.degreeID', 'medical_students.status=1', 'medical_students.semester= ' . $selectedSemester];
-            $whereConditions1 = ['medical_students.degreeShortName =' . "'" . $degreeShortName[0] . "'"];
+            $whereConditions1 = ['medical_students.degreeShortName =' . "'" . $degreeShortName[0] . "'", 'medical_students.written = 0'];
             $joinStudnetData1 = $medicalStudents->joinWhere($tables, $columns, $conditions1, $whereConditions1);
 
             // show($degreeShortName);
@@ -588,7 +588,7 @@ class SAR extends Controller
 
             //Get join data from repeat students and degree tables 
             $conditions2 = ['repeat_students.degreeID = degree.degreeID', 'repeat_students.paymentStatus=1', 'repeat_students.semester= ' . $selectedSemester];
-            $whereConditions2 = ['repeat_students.degreeShortName=' . "'" . $degreeShortName[0] . "'"];
+            $whereConditions2 = ['repeat_students.degreeShortName=' . "'" . $degreeShortName[0] . "'", 'repeat_students.written = 0'];
             //need add condition about the attempt of repete student <5
             $joinStudnetData2 = $repeatStudents->joinWhere($tables, $columns, $conditions2, $whereConditions2);
 
@@ -659,7 +659,7 @@ class SAR extends Controller
                                     }
                                 }
                                 //add checked students id to session
-                                $_SESSION['checked_RM_students'][$medicalStudent->id] = true;
+                                $_SESSION['checked_RM_students']['medical'][$medicalStudent->id] = true;
                             }
                         }
 
@@ -686,7 +686,7 @@ class SAR extends Controller
                                     }
                                 }
                                 //add checked students id to session
-                                $_SESSION['checked_RM_students'][$repeatStudent->id] = true;
+                                $_SESSION['checked_RM_students']['repeat'][$repeatStudent->id] = true;
                             }
                         }
 
@@ -702,7 +702,11 @@ class SAR extends Controller
                             if ($_POST['back2'] == 'back2') {
                                 redirect('sar/examination/create/1');
                             }
-
+                        }
+                        if (!empty($_POST['submit'])) {
+                            if ($_POST['submit'] == 'next2') {
+                                redirect('sar/examination/create/3');
+                            }
                         }
 
                     }
@@ -712,6 +716,8 @@ class SAR extends Controller
             $this->view('sar-interfaces/sar-createexam-normal-2', $data);
 
         } else if ($method == "create" && $id == 3) {
+
+            // show($_SESSION['checked_RM_students']);
 
             //get RM students and generate distinct student data list
             $distinctData = $examParticipants->getDistinctElements($_SESSION['Selected_Normal_Students'], $_SESSION['Selected_RM_Students'], 'indexNo');
@@ -965,32 +971,40 @@ class SAR extends Controller
                 if (isset($_POST['submitAttendance']) == 'attendance') {
 
                     //get abset students data from post data
-                    $presendIds = $_POST['presentIds'];
+                    if (!empty($_POST['presentIds'])) {
+                        $presendIds = $_POST['presentIds'];
+                    }
+
                     $allIds = $_POST['ids'];
 
                     if (!empty($presendIds) && !empty($allIds)) {
                         $absentIds = array_diff($allIds, $presendIds);
 
                     }
+                    if (empty($presendIds)) {
+                        $absentIds = $allIds;
+                    }
 
                     //update the attendance table with present students
-                    foreach ($presendIds as $id) {
+                    if (!empty($presendIds)) {
+                        foreach ($presendIds as $id) {
 
-                        $examAttendance->updateRows(
-                            ['attendance' => 1],
-                            ['id' => $id]
-                        );
+                            $examAttendance->updateRows(
+                                ['attendance' => 1],
+                                ['id' => $id]
+                            );
+                        }
                     }
 
                     //update the attendance table with absent students
-                    foreach ($absentIds as $id) {
-                        $examAttendance->updateRows(
-                            ['attendance' => 0],
-                            ['id' => $id]
-                        );
+                    if (!empty($absentIds)) {
+                        foreach ($absentIds as $id) {
+                            $examAttendance->updateRows(
+                                ['attendance' => 0],
+                                ['id' => $id]
+                            );
+                        }
                     }
-
-
                     //close the popup
                     $attetdancePopup = false;
                     message("Attendance Submitted Successfully", "success", true);

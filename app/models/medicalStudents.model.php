@@ -16,7 +16,8 @@ class MedicalStudents extends Model
         'indexNo',
         'subjectCode',
         'attempt',
-        'status'
+        'status',
+        'written'
 
     ];
 

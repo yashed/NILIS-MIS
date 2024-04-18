@@ -405,7 +405,7 @@ $data['role'] = $role;
                                     <?php $json = json_encode($rStudent); ?>
                                     <tr>
                                         <td><input type="checkbox" name="item[]" value="<?= $rStudent->id ?>"
-                                        <?= isset($_SESSION['checked_RM_students'][$rStudent->id]) ? 'checked' : '' ?>></td>
+                                        <?= isset($_SESSION['checked_RM_students']['repeat'][$rStudent->id]) ? 'checked' : '' ?>></td>
                                         <td><input type="text" name="name[]" value=" H.A.Yashed Thisra" readonly></td>
                                         <td><input type="text" name="indexNo[]" value=" <?= $rStudent->indexNo ?>" readonly>
                                         </td>                                    
@@ -426,7 +426,7 @@ $data['role'] = $role;
                                     <?php $json = json_encode($mStudent); ?>
                                     <tr>
                                         <td><input type="checkbox" name="item[]" value="<?= $mStudent->id ?>"
-                                        <?= isset($_SESSION['checked_RM_students'][$mStudent->id]) ? 'checked' : '' ?>></td>
+                                        <?= isset($_SESSION['checked_RM_students']['medical'][$mStudent->id]) ? 'checked' : '' ?>></td>
                                         <td><input type="text" name="name[]" value=" H.A.Yashed Thisra" readonly></td>
                                         <td><input type="text" name="indexNo[]" value=" <?= $mStudent->indexNo ?>" readonly>
                                         </td>
