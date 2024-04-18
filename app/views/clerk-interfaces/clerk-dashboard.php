@@ -314,7 +314,6 @@ $data['role'] = $role;
 
     .hero-ul-li {
         position: relative;
-        /* Add position relative to allow absolute positioning of badge */
         display: inline-block;
         list-style: none;
     }

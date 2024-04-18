@@ -99,7 +99,7 @@
     </div>
     </nav>
 
-    <div class="hero"/
+    <div class="hero">
         <nav>
             <ul class="hero-ul">
             <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
@@ -329,13 +329,13 @@
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/notifications">">
+                    <a href="<?= ROOT ?>clerk/notification">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/degreeprograms">">
+                    <a href="<?= ROOT ?>clerk/degreeprograms">
                         <i class="bx bx-home icon"></i>
                         <span class="text nav-text">Degree Programs</span>
                     </a>
@@ -343,7 +343,7 @@
                 <hr class="horizontal-line">
                 <h6 class="topic2">SETTINGS</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/settings">">
+                    <a href="<?= ROOT ?>clerk/settings">
                         <i class="bx bx-cog icon"></i>
                         <span class="text nav-text">Settings</span>
                     </a>
@@ -356,7 +356,7 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+            <li class="hero-ul-li"><a href="<?= ROOT ?>clerk/notification"><i class="bx bxs-bell icon"></i></a></li>
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 

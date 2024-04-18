@@ -39,11 +39,16 @@ class Clerk extends Controller
 
     public function updatedattendance()
     {
-        $studentModel = new StudentModel();
-        $students = $studentModel->findAll(); // Assuming findAll() retrieves all students
-    
-        $data['students'] = $students;
-    
+        $attendance = new studentAttendance();
+        $data['attendances'] = $attendance->findAll();
+     
+        $degree=new Degree();
+        $notification = new NotificationModel();
+        $notification_count_arr = $notification->countNotifications();
+        $data['notification_count_obj'] = $notification_count_arr[0];
+        $degreeID= $_SESSION['getid'];
+        $data['degrees']=$degree->find($degreeID);
+
         $this->view('clerk-interfaces\clerk-updatedattendance', $data);
     }
 
@@ -205,7 +210,6 @@ public function attendance()
     $this->view('clerk-interfaces/clerk-attendance',$data);
     
 }
-
 
 public function degreeprofile($action = null, $id = null)
 {
