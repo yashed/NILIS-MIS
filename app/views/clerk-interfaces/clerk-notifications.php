@@ -4,11 +4,6 @@ $role = "Clerk";
 $data['role'] = $role;
 
 ?>
-
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
-
 <!-- <?php
         $notificationCount = 0;
         foreach ($notifications as $notification) {
@@ -26,8 +21,13 @@ $data['role'] = $role;
 
         // Pass the notification count to the degreeprogramsidebar component
         $_SESSION['notificationCount'] = $notificationCount;
-
+        
         ?> -->
+
+<?php $this->view('components/navside-bar/header', $data) ?>
+<?php $this->view('components/navside-bar/sidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?>
+
 
 
 
@@ -347,7 +347,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'Student_attendance_alert') : ?>
+                    <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'student_attendance_alert') : ?>
                         <?php
                         $data['role'] = "Clerk";
                         $this->view('components/notification-bar/notification-box', [

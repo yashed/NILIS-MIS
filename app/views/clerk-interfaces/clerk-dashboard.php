@@ -10,7 +10,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SAR Dashboard</title>
+        <title>Clerk Dashboard</title>
     </head>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -97,7 +97,7 @@
 
 .dr-subsection-1 {
     background-color: var(--text-color);
-    padding: 10px 10px 30px 35px;
+    padding: 10px 10px 30px 80px;
     border-radius: 6px;
     margin: 7px 4px 7px 4px;
 }
@@ -157,8 +157,9 @@
 .dr-card-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between; /* or any other desired value */
-    gap: 20px; /* Adjust the gap between cards as needed */
+    /* justify-content: space-between; or any other desired value */
+    gap: 10vw; /* Adjust the gap between cards as needed */
+
 }
 
 
@@ -189,9 +190,41 @@
     flex-direction: column;
 }
 
+.notification-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.user-pic {
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 8px 10px -0.5px 10px;
+}
+
+.hero-ul {
+    width: 100%;
+    text-align: right;
+}
+
+.hero-ul-li {
+    position: relative; /* Add position relative to allow absolute positioning of badge */
+    display: inline-block;
+    list-style: none;
+}
+
     </style>
     <body>
-    <?php $this->view('components/navside-bar/header', $data) ?>
+
+<?php $this->view('components/navside-bar/header', $data) ?>
 <?php $this->view('components/navside-bar/sidebar', $data) ?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
         <div class="dr-home">

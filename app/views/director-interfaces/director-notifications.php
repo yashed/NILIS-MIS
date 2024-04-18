@@ -87,7 +87,7 @@ $data['role'] = $role;
         <div class="temp3-subsection-1">
         <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-start alert') : ?>
+                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-start-alert') : ?>
                         <?php 
                              $data['role'] = "Director";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>

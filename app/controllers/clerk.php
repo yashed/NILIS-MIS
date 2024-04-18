@@ -14,20 +14,26 @@ class Clerk extends Controller
     {
         $user=new User();
         $degree = new Degree();
-
+        $notification = new NotificationModel();
+        $notification_count_arr = $notification->countNotifications();
         $_SESSION['getid']=null;
         unset ( $_SESSION['getid']);
 
+        
         $data['title'] = 'Dashboard';
+        $data['notification_count_obj'] = $notification_count_arr[0];
         $data['user'] = $user->findAll();
         $data['degrees'] = $degree->findAll();
         $this->view('clerk-interfaces/clerk-dashboard', $data);
+       
     }
 
     public function notifications()
     {
         $notification = new NotificationModel();
-
+       
+        $notification_count_arr = $notification->countNotifications();
+        $data['notification_count_obj'] = $notification_count_arr[0];
         $data['notifications'] = $notification->findAll();
         $this->view('clerk-interfaces\clerk-notifications',$data);
     }
@@ -48,6 +54,10 @@ class Clerk extends Controller
     {
         
     $degree=new Degree();
+    $notification = new NotificationModel();
+       
+    $notification_count_arr = $notification->countNotifications();
+    $data['notification_count_obj'] = $notification_count_arr[0];
     $data['degrees'] = $degree->findAll();
     $this->view('clerk-interfaces\clerk-degreeprograms', $data);
     }

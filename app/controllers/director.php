@@ -17,7 +17,10 @@ class DIRECTOR extends Controller
 
         // $degree->insert($_POST);
         // show($_POST);
-
+        $notification = new NotificationModel();
+        $notification_count_arr = $notification->countNotificationsDirector();
+   
+        $data['notification_count_obj'] = $notification_count_arr[0];
         $data['degrees'] = $degree->findAll();
         //show($data['degrees']);
 
