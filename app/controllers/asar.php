@@ -81,87 +81,87 @@ class ASAR extends Controller
 
         $repeatStudents->setid(1000);
 
-        
+
         if ($method == 'results') {
 
-                $examMarks = new Marks();
-                $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
+            $examMarks = new Marks();
+            $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
 
-                //get examID from session
-                if (!empty($_SESSION['examDetails'])) {
-                    $examID = $_SESSION['examDetails'][0]->examID;
-                    $semester = $_SESSION['examDetails'][0]->semester;
-                }
-
-                //get subjects in the exam
-                $examSubjects = $examtimetable->where(['examID' => $examID]);
-
-                //get subject code from post data
-                if (isset($_POST['submit'])) {
-                    $resultSubCode = isset($_POST['subCode']) ? $_POST['subCode'] : '';
-                    // show($resultSubCode);
-
-
-                } else {
-                    $resultSubCode = '';
-                }
-
-                // remove any leading or trailing spaces from the string
-                $resultSubCode = trim($resultSubCode);
-
-                //get subject details
-                $subjectDetails = $subjects->where(['SubjectCode' => $resultSubCode, 'DegreeID' => $degreeID]);
-
-
-
-
-                //get examination results using marks and final marks
-                $tables = ['final_marks', 'exam_participants'];
-                $columns = ['*'];
-                $conditions = ['marks.examID = final_marks.examID', 'marks.studentIndexNo = exam_participants.indexNo', 'marks.studentIndexNo = final_marks.studentIndexNo', 'marks.subjectCode = final_marks.subjectCode'];
-                $whereConditions = ['marks.examID = ' . $examID, 'marks.subjectCode =  "' . $resultSubCode . '"', 'exam_participants.examID = ' . $examID];
-                $examResults = $examMarks->joinWhere($tables, $columns, $conditions, $whereConditions);
-
-                //generate csv file name
-                $fileName = $examID . '_' . $resultSubCode . '.csv';
-                $newFileName = $examID . '_' . $resultSubCode . '_new.csv';
-
-                //generate updated marksheet as csv file
-                if (!empty($resultSubCode)) {
-                    updateMarksheet($fileName, $examResults, $newFileName);
-                }
-
-                $data['subjectDetails'] = $subjectDetails;
-                $data['subNames'] = $examSubjects;
-                $data['examResults'] = $examResults;
-
-
-                $this->view('sar-interfaces/sar-examresults', $data);
-
-            } else if ($method == 'participants') {
-
-                //get the count of exam participants
-                $data['examCount'] = $examParticipants->count(['examID' => $examID]);
-
-                $participants[] = $examParticipants->where(['examID' => $examID]);
-                // show($participants);
-
-                //data that pass to view
-
-                $data['examParticipants'] = $participants;
-                $data['examID'] = $examID;
-                $data['degreeID'] = $degreeID;
-                $data['ExamSubjects'] = $ExamSubjects;
-                $data['attendacePopupStatus'] = $attetdancePopup;
-
-
-                $this->view('sar-interfaces/sar-examparticipants', $data);
+            //get examID from session
+            if (!empty($_SESSION['examDetails'])) {
+                $examID = $_SESSION['examDetails'][0]->examID;
+                $semester = $_SESSION['examDetails'][0]->semester;
             }
-        
-        
-            $this->view('assist-sar-interfaces/asar-examination', $data);
+
+            //get subjects in the exam
+            $examSubjects = $examtimetable->where(['examID' => $examID]);
+
+            //get subject code from post data
+            if (isset($_POST['submit'])) {
+                $resultSubCode = isset($_POST['subCode']) ? $_POST['subCode'] : '';
+                // show($resultSubCode);
+
+
+            } else {
+                $resultSubCode = '';
+            }
+
+            // remove any leading or trailing spaces from the string
+            $resultSubCode = trim($resultSubCode);
+
+            //get subject details
+            $subjectDetails = $subjects->where(['SubjectCode' => $resultSubCode, 'DegreeID' => $degreeID]);
+
+
+
+
+            //get examination results using marks and final marks
+            $tables = ['final_marks', 'exam_participants'];
+            $columns = ['*'];
+            $conditions = ['marks.examID = final_marks.examID', 'marks.studentIndexNo = exam_participants.indexNo', 'marks.studentIndexNo = final_marks.studentIndexNo', 'marks.subjectCode = final_marks.subjectCode'];
+            $whereConditions = ['marks.examID = ' . $examID, 'marks.subjectCode =  "' . $resultSubCode . '"', 'exam_participants.examID = ' . $examID];
+            $examResults = $examMarks->joinWhere($tables, $columns, $conditions, $whereConditions);
+
+            //generate csv file name
+            $fileName = $examID . '_' . $resultSubCode . '.csv';
+            $newFileName = $examID . '_' . $resultSubCode . '_new.csv';
+
+            //generate updated marksheet as csv file
+            if (!empty($resultSubCode)) {
+                updateMarksheet($fileName, $examResults, $newFileName);
+            }
+
+            $data['subjectDetails'] = $subjectDetails;
+            $data['subNames'] = $examSubjects;
+            $data['examResults'] = $examResults;
+
+
+            $this->view('sar-interfaces/sar-examresults', $data);
+
+        } else if ($method == 'participants') {
+
+            //get the count of exam participants
+            $data['examCount'] = $examParticipants->count(['examID' => $examID]);
+
+            $participants[] = $examParticipants->where(['examID' => $examID]);
+            // show($participants);
+
+            //data that pass to view
+
+            // $data['examParticipants'] = $participants;
+            // $data['examID'] = $examID;
+            // $data['degreeID'] = $degreeID;
+            // $data['ExamSubjects'] = $ExamSubjects;
+            // $data['attendacePopupStatus'] = $attetdancePopup;
+
+
+            $this->view('sar-interfaces/sar-examparticipants', $data);
+        }
+
+
+        $this->view('assist-sar-interfaces/asar-examination', $data);
     }
-    
+
     public function notifications()
     {
         $notification = new NotificationModel();

@@ -217,21 +217,29 @@ function leastGap($mark1, $mark2, $mark3)
     }
 }
 
-function getRepeatedSubjects($indexNo, $semester)
+function getRepeatedSubjects($indexNo, $semester = null)
 {
     $repeatStudents = new RepeatStudents;
 
     //get repeated subjects
-    $repeatedSubjects = $repeatStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester,], 'subjectCode');
+    if ($semester == null) {
+        $repeatedSubjects = $repeatStudents->whereSpecificColumn(['indexNo' => $indexNo], 'subjectCode');
+    } else {
+        $repeatedSubjects = $repeatStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester,], 'subjectCode');
+    }
     return $repeatedSubjects;
 }
 
-function getMedicalSubjects($indexNo, $semester)
+function getMedicalSubjects($indexNo, $semester = null)
 {
     $medicalStudents = new MedicalStudents;
 
     //get repeated subjects
-    $medicalSubjects = $medicalStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester], 'subjectCode');
+    if ($semester == null) {
+        $medicalSubjects = $medicalStudents->whereSpecificColumn(['indexNo' => $indexNo], 'subjectCode');
+    } else {
+        $medicalSubjects = $medicalStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester], 'subjectCode');
+    }
     return $medicalSubjects;
 }
 
