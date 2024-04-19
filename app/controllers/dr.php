@@ -184,10 +184,10 @@ class DR extends Controller
                 }
             } else if ($action == "delete") {
                 echo "delete";
-                $data = ['degreeID' => $degreeID];
+                $data = ['DegreeID' => $degreeID];
                 echo json_encode($data);
                 $degree->delete($data);
-                // redirect("dr/degreeprograms");
+                redirect("dr/degreeprograms");
             } else if ($action == "status") {
                 echo "status ";
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -415,7 +415,6 @@ class DR extends Controller
             echo "Error: Student ID not provided in the URL.";
         }
     }
-
 
 
     public function participants($id = null, $action = null)

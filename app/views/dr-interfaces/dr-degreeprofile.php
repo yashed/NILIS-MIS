@@ -12,9 +12,22 @@ $data['role'] = $role;
     <link rel="stylesheet" type="text/css" href="<?= ROOT ?>css/dr/dr-styles.css">
     <title>Degree Profile</title>
 </head>
-
+<style>
+.degreeprofile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    backdrop-filter: blur(5px); /* Add blur effect */
+    z-index: 998; /* Layer it above other content */
+    display: none; /* Initially hidden */
+}
+</style>
 <body>
     <div class="degreeprofile-dr-large-box">
+        <div class="degreeprofile-overlay" id="degreeprofile-overlay"></div>
         <div class="degreeprofile-large-box">
             <div class="degreeprofile-box_1">
                 <?php if (!empty($degrees)) : ?>
@@ -180,18 +193,26 @@ $data['role'] = $role;
     function completedDegree() {
         // Show the overlay and pop-up
         $('#degreeprofile-form3').css('display', 'block');
+        document.getElementById('degreeprofile-overlay').style.display = 'block';
+        document.body.classList.add('no-scroll');
         $('.degreeprofile-close-button-3').click(function(e) {
             // Hide the pop-up when the close button is clicked
             $('#degreeprofile-form3').css('display', 'none');
+            document.getElementById('degreeprofile-overlay').style.display = 'none';
+            document.body.classList.remove('no-scroll');
             e.stopPropagation();
         });
     }
     function deleteDegree() {
         // Show the overlay and pop-up
         $('#degreeprofile-form4').css('display', 'block');
+        document.getElementById('degreeprofile-overlay').style.display = 'block';
+        document.body.classList.add('no-scroll');
         $('.degreeprofile-close-button-3').click(function(e) {
             // Hide the pop-up when the close button is clicked
             $('#degreeprofile-form4').css('display', 'none');
+            document.getElementById('degreeprofile-overlay').style.display = 'none';
+            document.body.classList.remove('no-scroll');
             e.stopPropagation();
         });
     }
