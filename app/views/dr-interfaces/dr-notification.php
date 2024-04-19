@@ -91,7 +91,7 @@ $data['role'] = $role;
         <div class="temp3-subsection-1">
         <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'All') : ?>
+                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-start-alert') : ?>
                         <?php 
                              $data['role'] = "DR";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -131,7 +131,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-start-alert') : ?>
+                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-start-alert') : ?>
                         <?php 
                              $data['role'] = "DR";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -141,7 +141,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-end-alert') : ?>
+                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-end-alert') : ?>
                         <?php 
                              $data['role'] = "DR";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -152,9 +152,31 @@ $data['role'] = $role;
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Examination' && $notification->msg_type == 'payment_check_alert') : ?>
-                        <?php 
-                             $data['role'] = "DR";
-                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+                        <?php
+                        $data['role'] = "DR";
+
+                        $link = "dr"; 
+                        $this->view('components/notification-bar/notification-box', [
+                            "notification" => $notification,
+                            "role" => $data['role'],
+                            "link" =>$link  // Pass the notify_id here
+                        ]) ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            
+            <?php if (!empty($notifications)) : ?>
+                <?php foreach ($notifications as $notification) : ?>
+                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'degree-changed-check') : ?>
+                        <?php
+                        $data['role'] = "DR";
+
+                        $link = "dr"; 
+                        $this->view('components/notification-bar/notification-box', [
+                            "notification" => $notification,
+                            "role" => $data['role'],
+                            "link" =>$link  // Pass the notify_id here
+                        ]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>

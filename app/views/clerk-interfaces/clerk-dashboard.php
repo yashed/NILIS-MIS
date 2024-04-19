@@ -1,11 +1,7 @@
 <?php
-$role = "clerk";
+$role = "Clerk";
 $data['role'] = $role;
-
 ?>
-
-<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +9,7 @@ $data['role'] = $role;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAR Dashboard</title>
+    <title>Clerk Dashboard</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -106,14 +102,77 @@ $data['role'] = $role;
         font-weight: 600;
         color: #17376E;
     }
+    .dr-subsection-01 {
+        display: flex;
+        padding: 15px 30px 14px 30px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        background-color: var(--text-color);
+        box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.12);
+        width: 25%;
+        height: 150px;
+        flex-direction: row;
+        gap: 60px;
+    }
+
+    .dr-subcard-data {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .dr-subcard-data-value {
+        font-size: 38px;
+        font-weight: 600;
+        color: #17376E;
+    }
+
+    .dr-subcard-data-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #17376E;
+    }
 
     .dr-subsection-1 {
         background-color: var(--text-color);
-        padding: 10px 10px 30px 35px;
+        padding: 10px 10px 30px 80px;
         border-radius: 6px;
         margin: 7px 4px 7px 4px;
     }
 
+    .dr-sub-title {
+
+        color: #17376E;
+        font-family: Poppins;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 600;
+        margin: 40px;
+
+    }
+
+    .dr-subsection-2 {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        /* padding: 10px 10px 30px 35px; */
+        /* border-radius: 6px; */
+        /* margin: 7px 4px 7px 4px; */
+    }
+
+    .dr-subsection-21 {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--text-color);
+        padding: 10px 10px 30px 35px;
+        border-radius: 6px;
+        margin: 3px 4px 7px 4px;
+        width: 50%;
+    }
     .dr-sub-title {
 
         color: #17376E;
@@ -152,7 +211,20 @@ $data['role'] = $role;
         margin: 3px 4px 7px 4px;
         width: 50%;
     }
+    .dr-subsection-22 {
+        background-color: var(--text-color);
+        padding: 10px 10px 31px 35px;
+        border-radius: 6px;
+        margin: 3px 4px 7px 4px;
+        width: 50%;
+    }
 
+    .dr-calender {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
     .dr-calender {
         display: flex;
         align-items: center;
@@ -162,17 +234,35 @@ $data['role'] = $role;
 
     .dr-degree-bar {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-around;
         flex-wrap: wrap;
         margin-bottom: 20px;
     }
 
+    .dr-card-container {
+        display: flex;
+        flex-wrap: wrap;
+        /* justify-content: space-between; or any other desired value */
+        gap: 10vw;
+        /* Adjust the gap between cards as needed */
+
+    }
+
+
+    .dr-card1 {
+        display: flex;
+        flex-direction: column;
+    }
     .dr-card1 {
         display: flex;
         flex-direction: column;
     }
 
+    .dr-card2 {
+        display: flex;
+        flex-direction: column;
+    }
     .dr-card2 {
         display: flex;
         flex-direction: column;
@@ -196,9 +286,16 @@ $data['role'] = $role;
         display: flex;
         flex-direction: column;
     }
+
+   
 </style>
 
 <body>
+
+    <?php $this->view('components/navside-bar/header', $data) ?>
+    <?php $this->view('components/navside-bar/sidebar', $data) ?>
+    <?php $this->view('components/navside-bar/footer', $data) ?>
+
     <div class="dr-home">
         <div class="dr-title">Dashboard</div>
         <div class="dr-subsection-1">
@@ -206,19 +303,15 @@ $data['role'] = $role;
                 Ongoing Degree Programs
             </div>
             <div class="dr-degree-bar">
-                <!-- <div class="dr-card1">
-<a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
-    <?php $this->view('components/degree-card/degree-card', $data) ?>
-</a>
-</div> -->
-                <div class="dr-card1">
-                    <?php foreach ($degrees as $degree): ?>
-                        <div>
+                <div class="dr-card-container">
+                    <?php foreach ($degrees as $degree) : ?>
+                        <div class="dr-card1">
                             <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
                         </div>
                     <?php endforeach; ?>
                 </div>
             </div>
+
         </div>
         <div class="dr-subsection-2">
             <div class="dr-subsection-21">
@@ -228,8 +321,10 @@ $data['role'] = $role;
                 <div class="dr-exam-bar">
                     <div class="dr-exam-card1">
                         <?php $this->view('components/exam-card/exam-card', $data) ?>
+                        <?php $this->view('components/exam-card/exam-card', $data) ?>
                     </div>
                     <div class="dr-exam-card2">
+                        <?php $this->view('components/exam-card/exam-card', $data) ?>
                         <?php $this->view('components/exam-card/exam-card', $data) ?>
                     </div>
                 </div>
