@@ -141,7 +141,6 @@ $data['role'] = $role;
                             <i class='bx bx-search dr-participants-icon'></i>
                             <input type="search" placeholder="Search Data...">
                         </div>
-                        <div class="dr-participants-input-group-filter">Filters</div>
                         <button class="dr-participants-button">Search</button>
                     </div>
                     <div class="dr-participants-export__file">
