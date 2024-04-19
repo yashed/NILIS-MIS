@@ -251,30 +251,30 @@
             <ul class="menu-links">
                 <h6 class="topic3">PROGRAMS</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/newdegree">
+                    <a href="<?= ROOT ?>assistant-sar/degreeprofile">
                         <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Name</span></a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/participants">
+                    <a href="<?= ROOT ?>assistant-sar/participants">
                         <i class="bx bx-group icon"></i>
                         <span class="text nav-text">Participants</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/examination">
+                    <a href="<?= ROOT ?>assistant-sar/examination">
                         <i class="bx bx-book icon"></i>
                         <span class="text nav-text">Examination</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/attendance">
+                    <a href="<?= ROOT ?>assistant-sar/attendance">
                         <i class="bx bx-check-square icon"></i>
                         <span class="text nav-text">Attendance</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/reports">
+                    <a href="<?= ROOT ?>assistant-sar/reports">
                         <i class="bx bx-file icon"></i>
                         <span class="text nav-text">Reports</span>
                     </a>
@@ -284,19 +284,19 @@
                 <hr class="horizontal-line"><br>
                 <h6 class="topic1">MAIN</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr">
+                    <a href="<?= ROOT ?>assistant-sar">
                         <i class="bx bx-home icon"></i>
                         <span class="text nav-text">Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/notification">
+                    <a href="<?= ROOT ?>assistant-sar/notification">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/degreeprograms">
+                    <a href="<?= ROOT ?>assistant-sar/degreeprograms">
                         <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Programs</span>
                     </a>
@@ -304,7 +304,7 @@
                 <hr class="horizontal-line">
                 <h6 class="topic2">SETTINGS</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/settings">
+                    <a href="<?= ROOT ?>assistant-sar/settings">
                         <i class="bx bx-cog icon"></i>
                         <span class="text nav-text">Settings</span>
                     </a>
@@ -317,7 +317,7 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+                <li class="hero-ul-li"><a href="<?= ROOT ?>assistant-sar/notification"><i class="bx bxs-bell icon"></i></a></li>
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
@@ -347,30 +347,30 @@
             <ul class="menu-links">
                 <h6 class="topic3">PROGRAMS</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/newdegree">
+                    <a href="<?= ROOT ?>admin/newdegree">
                         <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Name</span></a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/participants">
+                    <a href="<?= ROOT ?>admin/participants">
                         <i class="bx bx-group icon"></i>
                         <span class="text nav-text">Participants</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/examination">
+                    <a href="<?= ROOT ?>admin/examination">
                         <i class="bx bx-book icon"></i>
                         <span class="text nav-text">Examination</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/attendance">
+                    <a href="<?= ROOT ?>admin/attendance">
                         <i class="bx bx-check-square icon"></i>
                         <span class="text nav-text">Attendance</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/reports">
+                    <a href="<?= ROOT ?>admin/reports">
                         <i class="bx bx-file icon"></i>
                         <span class="text nav-text">Reports</span>
                     </a>
@@ -380,19 +380,19 @@
                 <hr class="horizontal-line"><br>
                 <h6 class="topic1">MAIN</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr">
+                    <a href="<?= ROOT ?>admin">
                         <i class="bx bx-home icon"></i>
                         <span class="text nav-text">Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/notification">
+                    <a href="<?= ROOT ?>admin/notification">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/degreeprograms">
+                    <a href="<?= ROOT ?>admin/degreeprograms">
                         <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Programs</span>
                     </a>
@@ -400,7 +400,7 @@
                 <hr class="horizontal-line">
                 <h6 class="topic2">SETTINGS</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/settings">
+                    <a href="<?= ROOT ?>admin/settings">
                         <i class="bx bx-cog icon"></i>
                         <span class="text nav-text">Settings</span>
                     </a>
@@ -413,7 +413,7 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+                <li class="hero-ul-li"><a href="<?= ROOT ?>admin/notification"><i class="bx bxs-bell icon"></i></a></li>
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
@@ -443,30 +443,30 @@
             <ul class="menu-links">
                 <h6 class="topic3">PROGRAMS</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/newdegree">
+                    <a href="<?= ROOT ?>director/degreeprofile">
                         <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Name</span></a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/participants">
+                    <a href="<?= ROOT ?>director/participants">
                         <i class="bx bx-group icon"></i>
                         <span class="text nav-text">Participants</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/examination">
+                    <a href="<?= ROOT ?>director/examination">
                         <i class="bx bx-book icon"></i>
                         <span class="text nav-text">Examination</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/attendance">
+                    <a href="<?= ROOT ?>director/attendance">
                         <i class="bx bx-check-square icon"></i>
                         <span class="text nav-text">Attendance</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/reports">
+                    <a href="<?= ROOT ?>director/reports">
                         <i class="bx bx-file icon"></i>
                         <span class="text nav-text">Reports</span>
                     </a>
@@ -476,19 +476,19 @@
                 <hr class="horizontal-line"><br>
                 <h6 class="topic1">MAIN</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr">
+                    <a href="<?= ROOT ?>director">
                         <i class="bx bx-home icon"></i>
                         <span class="text nav-text">Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/notification">
+                    <a href="<?= ROOT ?>director/notification">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/degreeprograms">
+                    <a href="<?= ROOT ?>director/degreeprograms">
                         <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Programs</span>
                     </a>
@@ -508,8 +508,10 @@
 
     <div class="hero">
         <nav>
-            <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+        <ul class="hero-ul">
+                <li class="hero-ul-li"><a href="<?= ROOT ?>director/notifications"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj) && $notification_count_obj->notification_count > 0): ?>
+                    <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                <?php endif; ?></a></i></li>
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
@@ -579,7 +581,7 @@
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/notifications">
+                    <a href="<?= ROOT ?>clerk/notification">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>
@@ -605,8 +607,10 @@
 
     <div class="hero">
         <nav>
-            <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+        <ul class="hero-ul">
+                <li class="hero-ul-li"><a href="<?= ROOT ?>clerk/notifications"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj) && $notification_count_obj->notification_count > 0): ?>
+                    <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                <?php endif; ?></a></i></li>
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
