@@ -4,10 +4,10 @@ class SAR extends Controller
 {
     function __construct()
     {
-        // if (!Auth::is_dr()) {
-        //     message('You are not authorized to view this page');
-        //     redirect('login');
-        // }
+        if (!Auth::is_sar()) {
+            message('You are not authorized to view this page');
+            redirect('_403_');
+        }
 
     }
 
