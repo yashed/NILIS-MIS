@@ -16,12 +16,22 @@ class MedicalStudents extends Model
         'indexNo',
         'subjectCode',
         'attempt',
-        'status'
+        'status',
+        'written'
 
     ];
 
     public function medicalStudentValidation($data)
     {
+        return true;
+    }
+    public function medicalStudentDataValidation($data)
+    {
+        if ($this->where2(['indexNo' => $data->indexNo, 'subjectCode' => $data->subjectCode, 'attempt' => $data->attempt])) {
+            $this->errors['exist'] = 'data already exists';
+            return false;
+        }
+
         return true;
     }
 }
