@@ -1604,6 +1604,7 @@ class SAR extends Controller
     {
         $degree = new Degree();
         $studentModel = new StudentModel();
+        $finalMarks = new FinalMarks();
 
         $data = [];
         $data['action'] = $action;
@@ -1617,7 +1618,23 @@ class SAR extends Controller
         if (empty($data['student'])) {
             redirect('_404_');
             return;
+
+            //need to handle only access to the specific degree student data
+        } else {
+            $indexNo = $data['student'][0]->indexNo;
         }
+
+
+        //get student results currently uploaded
+        $tables = ['subject'];
+        $columns = ['*'];
+        $conditions = ['subject.SubjectCode = final_marks.subjectCode', 'subject.DegreeID = final_marks.degreeID'];
+        $whereConditions = ["final_marks.studentIndexNo = " . "'$indexNo'"];
+        $studnetRes = $finalMarks->joinWhere($tables, $columns, $conditions, $whereConditions);
+
+        $data['studentResults'] = groupByColumn($studnetRes, 'semester');
+
+
 
         // Check if the student ID is provided in the URL
         if ($studentId) {

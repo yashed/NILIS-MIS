@@ -2,13 +2,13 @@
 $role = "DR";
 $data['role'] = $role;
 ?>
-<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <title>Student Profile</title>
     <link rel="stylesheet" type="text/css" href="<?= ROOT ?>css/dr/dr-styles.css">
     <style>
         @media (min-width: 40em) {
@@ -33,6 +33,9 @@ $data['role'] = $role;
         }
     </style>
 </head>
+
+<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?>
 
 <body>
     <div class="dr-userprofile">
@@ -103,30 +106,46 @@ $data['role'] = $role;
         <div class="dr-userprofile-flex-container">
             <div class="dr-userprofile-white-container3-1">
                 <p class="dr-userprofile-left-top-text2">Examination Results</p>
-                <?php if (!empty($exams)): ?>
-                    <?php foreach ($exams as $exam): ?>
-                        <?php if ($exam->status == "completed"): ?>
-                            <p class="dr-userprofile-left-top-text3">Semester <?= $exam->semester ?></p>
-                            <table>
-                                <?php if (!empty($finalMarks)): ?>
-                                    <tr>
-                                        <th>Subject</th>
-                                        <th>Result</th>
-                                    </tr>
-                                    <?php foreach ($finalMarks as $individualFinalMark): ?>
-                                        <?php if ($individualFinalMark->examID == $exam->examID): ?>
-                                            <tr>
-                                                <td><?= $individualFinalMark->subjectCode ?></td>
-                                                <td><?= $individualFinalMark->grade ?></td>
-                                            </tr>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <p class="dr-userprofile-left-top-text4">No Examination Results for this semester</p>
-                                <?php endif; ?>
-                            </table>
+                <?php if (!empty($studentResults)): ?>
+
+                    <p class="dr-userprofile-left-top-text3">Semester 1</p>
+                    <table>
+                        <?php if (!empty($studentResults[1])): ?>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Result</th>
+                            </tr>
+                            <?php foreach ($studentResults[1] as $results): ?>
+                                <tr>
+                                    <td><?= $results->subjectCode ?></td>
+                                    <td><?= $results->grade ?></td>
+                                </tr>
+
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p class="dr-userprofile-left-top-text4">No Examination Results Submitted for this semester</p>
                         <?php endif; ?>
-                    <?php endforeach; ?>
+                    </table>
+
+                    <p class="dr-userprofile-left-top-text3">Semester 2</p>
+                    <table>
+                        <?php if (!empty($studentResults[2])): ?>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Result</th>
+                            </tr>
+                            <?php foreach ($studentResults[1] as $results): ?>
+                                <tr>
+                                    <td><?= $results->subjectCode ?></td>
+                                    <td><?= $results->grade ?></td>
+                                </tr>
+
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p class="dr-userprofile-left-top-text4">No Examination Results Submitted for this semester</p>
+                        <?php endif; ?>
+                    </table>
+
                 <?php else: ?>
                     <p class="dr-userprofile-left-top-text4">No Examination Results</p>
                 <?php endif; ?>
