@@ -1,3 +1,4 @@
+
 <?php if ($role == "DR") : ?>
     <div class="menu-bar">
         <hr>
@@ -37,10 +38,14 @@
 
     <div class="hero">
         <nav>
-            <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+        <ul class="hero-ul">
+                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notifications"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj)): ?>
+                        <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                    <?php endif; ?></a></i></li>
+              
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
+
 
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
@@ -82,7 +87,7 @@
                 </li>
                 <li class="nav-link">
                     <a href="<?= ROOT ?>sar/degreeprograms">
-                        <i class="bx bx-layer-plus icon"></i>
+                        <i class="bx bx-home icon"></i>
                         <span class="text nav-text">Degree Programs</span>
                     </a>
                 </li>
@@ -101,10 +106,14 @@
 
     <div class="hero">
         <nav>
-            <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+        <ul class="hero-ul">
+                <li class="hero-ul-li"><a href="<?= ROOT ?>sar/notifications"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj)): ?>
+                        <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                    <?php endif; ?></a></i></li>
+              
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
+
 
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
@@ -163,9 +172,12 @@
 
     <div class="hero">
         <nav>
-            <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+        <ul class="hero-ul">
+                <li class="hero-ul-li"><a href="<?= ROOT ?>assistant-sar/notifications"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj)): ?>
+                        <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                    <?php endif; ?></a></i></li>
+              
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -231,10 +243,14 @@
 
     <div class="hero">
         <nav>
-            <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+        <ul class="hero-ul">
+                <li class="hero-ul-li"><a href="<?= ROOT ?>admin/notifications"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj)): ?>
+                        <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                    <?php endif; ?></a></i></li>
+              
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
+
 
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
@@ -261,20 +277,20 @@
             <ul class="menu-links">
                 <h6 class="topic1">MAIN</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>director/">
+                    <a href="<?= ROOT ?>director">
                         <i class="bx bx-home icon"></i>
                         <span class="text nav-text">Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>director/notification">
+                    <a href="<?= ROOT ?>director/notifications">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>
                 </li>
                 <li class="nav-link">
                     <a href="<?= ROOT ?>director/degreeprograms">
-                        <i class="bx bx-home icon"></i>
+                        <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Programs</span>
                     </a>
                 </li>
@@ -294,8 +310,10 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+                <li class="hero-ul-li"><a href="<?= ROOT ?>director/notifications"><i class="bx bxs-bell icon"><?php if(isset($notification_count_obj) && $notification_count_obj->notification_count > 0): ?>
+                    <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                <?php endif; ?></i></a></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -305,7 +323,7 @@
                         <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
                     </div>
                     <hr>
-                    <a href="http://localhost/NILIS-MIS/public/login" class="sub-menu-link">
+                    <a href="<?= ROOT ?>logout" class="sub-menu-link">
                         <i class="bx bx-log-out icon"></i>
                         <p>Logout</p>
                         <span>></span>
@@ -314,6 +332,7 @@
             </div>
         </nav>
     </div>
+
 <?php endif ?>
 
 <?php if ($role == "Clerk") : ?>
@@ -336,7 +355,7 @@
                 </li>
                 <li class="nav-link">
                     <a href="<?= ROOT ?>clerk/degreeprograms">
-                        <i class="bx bx-home icon"></i>
+                        <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Programs</span>
                     </a>
                 </li>
@@ -356,8 +375,11 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>clerk/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+                <li class="hero-ul-li"><a href="<?= ROOT ?>clerk/notification"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj) && $notification_count_obj->notification_count > 0): ?>
+                    <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                <?php endif; ?></a></i></li>
+              
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -367,7 +389,7 @@
                         <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
                     </div>
                     <hr>
-                    <a href="http://localhost/NILIS-MIS/public/login" class="sub-menu-link">
+                    <a href="<?= ROOT ?>logout" class="sub-menu-link">
                         <i class="bx bx-log-out icon"></i>
                         <p>Logout</p>
                         <span>></span>
@@ -376,4 +398,5 @@
             </div>
         </nav>
     </div>
+
 <?php endif ?>

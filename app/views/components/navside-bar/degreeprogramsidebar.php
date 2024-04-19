@@ -5,6 +5,38 @@
     <link rel="stylesheet" type="text/css" href="<?= ROOT ?>css/degreeprogramsidebar-component.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Navsidebar</title>
+    <style>
+        .notification-badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 3px 6px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .user-pic {
+        width: 27px;
+        height: 27px;
+        border-radius: 50%;
+        cursor: pointer;
+        margin: 8px 10px -0.5px 10px;
+    }
+
+    .hero-ul {
+        width: 100%;
+        text-align: right;
+    }
+
+    .hero-ul-li {
+        position: relative;
+        display: inline-block;
+        list-style: none;
+    }
+    </style>
 </head>
 
 <body>
@@ -41,24 +73,11 @@
                                 <span class="text nav-text">Participants</span>
                             </a>
                         </li>
-                        <li class="nav-link" id="myButton">
+                        <li class="nav-link">
                             <a href="<?= ROOT ?>dr/examination">
                                 <i class="bx bx-book icon"></i>
                                 <span class="text nav-text">Examination</span>
                             </a>
-                            <?php
-                            // Check if the URL contains any of the specified patterns
-                            $url = $_SERVER['REQUEST_URI'];
-                            if (
-                                strpos($url, "examination/participants") !== false ||
-                                strpos($url, "examination/results") !== false
-                            ) {
-                                echo '<div class="dropdown">' .
-                                '<a href="' . ROOT . 'dr/examparticipants"><center>Examination Participants</center></a>' .
-                                '<a href="' . ROOT . 'dr/examresults"><center>Examination Results</center></a>' .
-                                    '</div>';
-                            }
-                            ?>
                         </li>
                         <li class="nav-link">
                             <a href="<?= ROOT ?>dr/attendance">
@@ -111,7 +130,7 @@
         <nav>
             <ul class="hero-ul">
                 <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -140,12 +159,12 @@
             <ul class="menu-links">
                 <h6 class="topic3">PROGRAMS</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>sar/degreeprofile">
+                    <a href="<?= ROOT ?>sar/newdegree">
                         <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Name</span></a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>sar/examparticipants">
+                    <a href="<?= ROOT ?>sar/participants">
                         <i class="bx bx-group icon"></i>
                         <span class="text nav-text">Participants</span>
                     </a>
@@ -164,9 +183,9 @@
                         strpos($url, "examination/results") !== false
                     ) {
                         echo '<div class="dropdown">' .
-                            '<a href="' . ROOT . 'sar/participants"><center>Examination Participants</center></a>' .
+                            '<a href="' . ROOT . 'sar/participants"><center>Examination Results</center></a>' .
                             '<a href="' . ROOT . 'sar/resultsupload"><center>Examination Submission</center></a>' .
-                            '<a href="' . ROOT . 'sar/results"><center>Examination Results</center></a>' .
+                            '<a href="' . ROOT . 'sar/results"><center>Examination Participants</center></a>' .
                             '</div>';
                     }
                     ?>
@@ -222,7 +241,7 @@
         <nav>
             <ul class="hero-ul">
                 <li class="hero-ul-li"><a href="<?= ROOT ?>sar/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -318,7 +337,7 @@
         <nav>
             <ul class="hero-ul">
                 <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -414,7 +433,7 @@
         <nav>
             <ul class="hero-ul">
                 <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -443,30 +462,30 @@
             <ul class="menu-links">
                 <h6 class="topic3">PROGRAMS</h6>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/newdegree">
+                    <a href="<?= ROOT ?>director/newdegree">
                         <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Name</span></a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/participants">
+                    <a href="<?= ROOT ?>director/participants">
                         <i class="bx bx-group icon"></i>
                         <span class="text nav-text">Participants</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/examination">
+                    <a href="<?= ROOT ?>director/examination">
                         <i class="bx bx-book icon"></i>
                         <span class="text nav-text">Examination</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/attendance">
+                    <a href="<?= ROOT ?>director/attendance">
                         <i class="bx bx-check-square icon"></i>
                         <span class="text nav-text">Attendance</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/reports">
+                    <a href="<?= ROOT ?>director/reports">
                         <i class="bx bx-file icon"></i>
                         <span class="text nav-text">Reports</span>
                     </a>
@@ -482,13 +501,13 @@
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/notification">
+                    <a href="<?= ROOT ?>director/notification">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>dr/degreeprograms">
+                    <a href="<?= ROOT ?>director/degreeprograms">
                         <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Degree Programs</span>
                     </a>
@@ -508,9 +527,12 @@
 
     <div class="hero">
         <nav>
-            <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+        <ul class="hero-ul">
+                <li class="hero-ul-li"><a href="<?= ROOT ?>director/notification"><i class="bx bxs-bell icon"></i>
+                <?php if(isset($notification_count_obj)): ?>
+                        <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                    <?php endif; ?></a></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
@@ -558,6 +580,7 @@
                 </li>
                 <li class="nav-link">
                     <a href="<?= ROOT ?>clerk/attendance">
+                    
                         <i class="bx bx-check-square icon"></i>
                         <span class="text nav-text">Attendance</span>
                     </a>
@@ -579,7 +602,7 @@
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/notifications">
+                    <a href="<?= ROOT ?>clerk/notification">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>
@@ -605,9 +628,12 @@
 
     <div class="hero">
         <nav>
-            <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>clerk/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+        <ul class="hero-ul">
+                <li class="hero-ul-li"><a href="<?= ROOT ?>clerk/notification"><i class="bx bxs-bell icon"></i>
+                <?php if(isset($notification_count_obj)): ?>
+                        <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                    <?php endif; ?></a></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
