@@ -50,10 +50,22 @@ $data['role'] = $role;
         color: var(--text-color);
         cursor: pointer;
     }
+    .dr-degreeprograms-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    backdrop-filter: blur(5px); /* Add blur effect */
+    z-index: 998; /* Layer it above other content */
+    display: none; /* Initially hidden */
+}
 </style>
 
 <body>
     <div class="dr-degreeprograms-main" id="dr-degreeprograms-body">
+        <div class="dr-degreeprograms-overlay" id="dr-degreeprograms-overlay"></div>
         <?php $this->view('components/navside-bar/header', $data) ?>
         <?php $this->view('components/navside-bar/sidebar', $data) ?>
         <?php $this->view('components/navside-bar/footer', $data) ?>
@@ -192,11 +204,15 @@ $data['role'] = $role;
     function myFunction() {
         const lb = document.querySelector(".dr-degreeprograms-model-box");
         lb.style.display = "block";
+        document.getElementById('dr-degreeprograms-overlay').style.display = 'block';
+        document.body.classList.add('no-scroll');
     }
 
     function myFunction2() {
         const lb = document.querySelector(".dr-degreeprograms-model-box");
         lb.style.display = "none";
+        document.getElementById('dr-degreeprograms-overlay').style.display = 'none';
+        document.body.classList.remove('no-scroll');
     }
     var Form1 = document.getElementById("dr-degreeprograms-Form1");
     var Form2 = document.getElementById("dr-degreeprograms-Form2");
