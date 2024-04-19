@@ -317,24 +317,7 @@ $data['role'] = $role;
     font-weight: bold;
 }
 
-.user-pic {
-    width: 27px;
-    height: 27px;
-    border-radius: 50%;
-    cursor: pointer;
-    margin: 8px 10px -0.5px 10px;
-}
 
-.hero-ul {
-    width: 100%;
-    text-align: right;
-}
-
-.hero-ul-li {
-    position: relative; /* Add position relative to allow absolute positioning of badge */
-    display: inline-block;
-    list-style: none;
-}
 
     </style>
 </head>
@@ -371,6 +354,7 @@ $data['role'] = $role;
             </div>
         </div>
     </div>
+    
     <div id="importFrm" class="popup-form" style="display: none;">
         <form action="" method="post" enctype="multipart/form-data" onsubmit="validateForm()">
             <label for="csvFile">Upload CSV File:</label>
@@ -386,9 +370,9 @@ $data['role'] = $role;
         <button class="close-button" onclick="toggleForm('importFrm')">Close</button>
     </div>
 
-    <div class="temp2-footer">
-        <!-- Footer content -->
-    </div>
+    <div class="dr-footer">
+            <?php $this->view('components/footer/index', $data) ?>
+        </div>
 
     <script>
         function toggleForm(formId) {

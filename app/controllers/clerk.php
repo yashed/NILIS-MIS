@@ -14,16 +14,22 @@ class Clerk extends Controller
     {
         $user=new User();
         $degree = new Degree();
+        $student = new StudentModel();
+        $exam = new Exam();
         $notification = new NotificationModel();
         $notification_count_arr = $notification->countNotifications();
         $_SESSION['getid']=null;
         unset ( $_SESSION['getid']);
 
-        
+        $_SESSION['DegreeID'] = null;
+        unset($_SESSION['DegreeID']);
+
         $data['title'] = 'Dashboard';
         $data['notification_count_obj'] = $notification_count_arr[0];
         $data['user'] = $user->findAll();
         $data['degrees'] = $degree->findAll();
+        $data['students'] = $student->findAll();
+        $data['exams'] = $exam->findAll();
         $this->view('clerk-interfaces/clerk-dashboard', $data);
        
     }
@@ -56,6 +62,7 @@ class Clerk extends Controller
     {
         
     $degree=new Degree();
+    unset($_SESSION['DegreeID']);
     $notification = new NotificationModel();
        
     $notification_count_arr = $notification->countNotifications();
@@ -220,8 +227,13 @@ public function degreeprofile($action = null, $id = null)
     $notification_count_arr = $notification->countNotifications();
     $data['notification_count_obj'] = $notification_count_arr[0];
 
-    $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
-    $_SESSION['getid']=$degreeID;
+    if (isset($_GET['id'])) {
+        $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
+        $_SESSION['DegreeID'] = $degreeID;
+        redirect("clerk/degreeprofile");
+    }
+    $degreeID = $_SESSION['DegreeID'];
+    $_SESSION['DegreeID'] = $degreeID;
     // Check if degree ID is provided
     if ($degreeID !== null) {
         $degree = new Degree();
@@ -252,70 +264,62 @@ public function degreeprofile($action = null, $id = null)
     }
 }
 
-public function participants($id = null, $action = null, $id2 = null)
+public function participants($id = null, $action = null)
 {
-
     $st = new StudentModel();
-
-    $notification = new NotificationModel();
-    $notification_count_arr = $notification->countNotifications();
-    $data['notification_count_obj'] = $notification_count_arr[0];
-
-    if (!empty($id)) {
-        if (!empty($action)) {
-            if ($action === 'delete' && !empty($id2)) {
-                $st->delete(['id' => $id2]);
+    $degree = new Degree();
+    $data = [];
+    $data['action'] = $action;
+    $data['id'] = $id;
+    unset($_SESSION['studentId']);
+    if (isset($_SESSION['DegreeID'])) {
+        $degreeID = $_SESSION['DegreeID'];
+        // Iterate through students to find those with the given DegreeID
+        foreach ($st->findAll() as $student) {
+            if (is_object($student) && $student->degreeID == $degreeID) {
+                $data['students'][] = $student; // Add student to data array
             }
-        } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // print_r( $_POST );
-            // die;
-            $st->update($_POST['id'], $_POST);
-            // redirect( 'student/'.$id );
-            $data['student'] = $st->where(['indexNo' => $id])[0];
-
-            $this->view('common/student/student.view', $data);
-            return;
-        } else {
-            $data['student'] = $st->where(['indexNo' => $id])[0];
-
-            $this->view('common/student/student.view', $data);
-            return;
         }
+        $data['degrees'] = $degree->find($degreeID);
+    } else {
+        echo "Error: DegreeID not provided in the session."; // If DegreeID is not set in the session
     }
-    $data['students'] = $st->findAll();
-    //print_r( $data );
-    // die;
     $this->view('clerk-interfaces/clerk-participants', $data);
 }
 
-// public function userprofile($action = null, $id = null)
-// {
-//     $data = [];
-//     $data['action'] = $action;
-//     $data['id'] = $id;
-
-//     $notification = new NotificationModel();
-//     $notification_count_arr = $notification->countNotifications();
-//     $data['notification_count_obj'] = $notification_count_arr[0];
-
-//     // Fetch the specific student data using the ID from the URL
-//     $studentId = isset($_GET['studentId']) ? $_GET['studentId'] : null;
-//     // Check if the student ID is provided in the URL
-//     if ($studentId) {
-//         $degree = new Degree();
-//         $studentModel = new StudentModel();
-//         $data['student'] = $studentModel->findstudentid($studentId);
-//         $degree_id = $data['student'][0]->degreeID;
-//         $data['degree'] = $degree->find($degree_id);
-//         if ($data['student']) {
-//             $this->view('clerk-interfaces/clerk-userprofile', $data);
-//         } else {
-//             echo "Error: Student not found.";
-//         }
-//     } else {
-//         echo "Error: Student ID not provided in the URL.";
-//     }
-// }
+public function userprofile($action = null, $id = null)
+{
+    $data = [];
+    $data['action'] = $action;
+    $data['id'] = $id;
+    if (isset($_GET['id'])) {
+        $studentId = isset($_GET['id']) ? $_GET['id'] : null;
+        $_SESSION['studentId'] = $studentId;
+        redirect("clerk/userprofile");
+    } else {
+        $studentId = null;
+    }
+    $studentId = $_SESSION['studentId'];
+    $_SESSION['studentId'] = $studentId;
+    if ($studentId) {  // Check if the student ID is provided in the URL
+        $degree = new Degree();
+        $studentModel = new StudentModel();
+        $finalMarks = new FinalMarks();
+        $exam = new Exam();
+        $studentId = $_SESSION['studentId']; // Get student ID from session
+        $degreeId = $_SESSION['DegreeID']; // Get degree ID from session
+        $data['student'] = $studentModel->findwhere("id" ,$studentId);
+        $data['degrees'] = $degree->find($degreeId);
+        $data['Degree'] = $degree->findAll();
+        $studentIndex = $data['student'][0]->indexNo;
+        // echo $studentIndex;
+        $data['finalMarks'] = $finalMarks->findwhere("studentIndexNo", $studentIndex);
+        $data['exams'] = $exam->find($degreeId);
+        $this->view('clerk-interfaces/clerk-userprofile', $data);
+    } else {
+        echo "Error: Student ID not provided in the URL.";
+    }
+}
 
 public function reports()
     {

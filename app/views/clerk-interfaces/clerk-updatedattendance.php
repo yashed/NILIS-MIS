@@ -309,6 +309,11 @@ $data['role'] = $role;
                         <td><?= $attendance->index_no ?></td>
                         <td><?= $attendance->attendance ?></td>
                     </tr>
+                    <?php elseif($attendance->degree_name === 'DPL' && $degrees[0]->DegreeShortName=='DPL' ) :?>
+                        <tr>
+                        <td><?= $attendance->index_no ?></td>
+                        <td><?= $attendance->attendance ?></td>
+                    </tr>
                     <?php endif;?>
                 <?php endforeach; ?>
 

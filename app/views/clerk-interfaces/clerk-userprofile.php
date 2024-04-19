@@ -79,10 +79,6 @@ th {
             </div>
         </div>
 
-       
-       
-       
-        
         <div class="dr-userprofile-flex-container">
             <div class="dr-userprofile-white-container3-1">
                 <p class="dr-userprofile-left-top-text2">Examination Results</p>
@@ -137,11 +133,7 @@ th {
                         </div><br>
                     </div>
                 </div>
-                <div class="dr-userprofile-buttonx">
-                    <?php if ($student[0]->status == "continue") : ?>
-                        <input type="button" id="dr-userprofile-updateButton" class="dr-userprofile-button" value="Update" onclick="updateData1()">
-                    <?php endif; ?>
-                </div>
+               
             </div>
         </div>
       

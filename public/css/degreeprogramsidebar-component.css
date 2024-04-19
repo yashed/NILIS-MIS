@@ -23,7 +23,7 @@ body {
   transition: var(--tran-05);
 }
 
-/*sidebar*/
+
 
 .sidebar {
   position: fixed;
@@ -230,7 +230,24 @@ header .image-text .headder-text {
   color: var(--sidebar-color);
 }
 
+.user-pic {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 8px 10px -0.5px 10px;
+  float: right;
+}
 
+.hero-ul {
+  width: 100%;
+  text-align: right;
+}
+
+.hero-ul-li {
+  display: inline-block;
+  list-style: none;
+}
 
 .sub-menu-wrap {
   position: fixed;
@@ -385,4 +402,3 @@ header .image-text .headder-text {
   background-color: var(--sidebar-color);
   color: var(--text-color);
 }
-
