@@ -43,7 +43,7 @@
                         <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
                     <?php endif; ?></a></i></li>
               
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
 
@@ -80,7 +80,7 @@
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>sar/notification">
+                    <a href="<?= ROOT ?>sar/notifications">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>
@@ -111,7 +111,7 @@
                         <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
                     <?php endif; ?></a></i></li>
               
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic" onclick="toggleMenu()"></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
 
@@ -173,7 +173,7 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+            <li class="hero-ul-li"><a href="<?= ROOT ?>assistant-sar/notification"><i class="bx bxs-bell icon"></i></a></li>
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
@@ -214,6 +214,12 @@
                     </a>
                 </li>
                 <li class="nav-link">
+                    <a href="<?= ROOT ?>admin/userlogs">
+                        <i class='bx bxs-user-account icon'></i>
+                        <span class="text nav-text">User Logs</span>
+                    </a>
+                </li>
+                <li class="nav-link">
                     <a href="<?= ROOT ?>admin/notification">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
@@ -241,7 +247,7 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+            <li class="hero-ul-li"><a href="<?= ROOT ?>admin/notification"><i class="bx bxs-bell icon"></i></a></li>
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
@@ -304,7 +310,7 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+            <li class="hero-ul-li"><a href="<?= ROOT ?>director/notification"><i class="bx bxs-bell icon"></i></a></li>
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
@@ -367,7 +373,7 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+            <li class="hero-ul-li"><a href="<?= ROOT ?>clerk/notification"><i class="bx bxs-bell icon"></i></a></li>
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
