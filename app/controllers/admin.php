@@ -192,7 +192,7 @@ class Admin extends Controller
         exit();
       }
     }
-    $this->view('admin-interfaces/admin-settings');
+    $this->view('admin-interfaces/admin-settings', $data);
   }
 
   public function activity()

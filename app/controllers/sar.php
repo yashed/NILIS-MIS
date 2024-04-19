@@ -40,7 +40,11 @@ class SAR extends Controller
     }
     public function notification()
     {
-        $this->view('sar-interfaces/sar-notification');
+        $notification = new NotificationModel();
+
+        $data['notifications'] = $notification->findAll();
+
+        $this->view('sar-interfaces/sar-notification', $data);
     }
     public function degreeprograms()
     {
@@ -1471,7 +1475,41 @@ class SAR extends Controller
     // }
     public function settings()
     {
-        $this->view('sar-interfaces/sar-settings');
+
+        $user = new User();
+
+
+        if (isset($_POST['update_user_data'])) {
+            $id = $_SESSION['USER_DATA']->id;
+            $dataToUpdate = [
+                'fname' => $_POST['fname'],
+                'lname' => $_POST['lname'],
+                'email' => $_POST['email'],
+                'phoneNo' => $_POST['phoneNo']
+            ];
+
+            $user->update($id, $dataToUpdate);
+
+            $updatedUserData = $user->first(['id' => $id]);
+
+            if ($updatedUserData === null) {
+                echo 'No user data found after update.';
+                exit();
+            }
+
+            $data['user'] = $updatedUserData;
+        } else {
+            $id = $_SESSION['USER_DATA']->id;
+            $data['user'] = $user->first(['id' => $id]);
+
+            if ($data['user'] === null) {
+                echo 'No user data found.';
+                exit();
+            }
+        }
+
+
+        $this->view('sar-interfaces/sar-settings', $data);
     }
     public function login()
     {
@@ -1661,13 +1699,6 @@ class SAR extends Controller
     }
 
 
-    public function notifications()
-    {
-        $notification = new NotificationModel();
 
-        $data['notifications'] = $notification->findAll();
-
-        $this->view('sar-interfaces/sar-notification', $data);
-    }
 
 }
