@@ -189,6 +189,7 @@ $data['role'] = $role;
         align-items: center;
         flex-direction: column;
         width: 70%;
+        gap: 10px;
     }
 
     .exam-card3 {
@@ -369,13 +370,13 @@ $data['role'] = $role;
                                 <?php if ($exam->status == 'completed'): ?>
                                     <?php
                                     $data['exam'] = $exam;
-                                    $ongoingExam = true;
+                                    $completeExam = true;
                                     ?>
                                     <?php $this->view('components/exam-card/exam-card', $data) ?>
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         <?php endif; ?>
-                        <?php if (!$ongoingExam): ?>
+                        <?php if (!$completeExam): ?>
                             <div class='exam-msg'>No Completed examination</div>
                         <?php endif; ?>
                     </div>

@@ -636,18 +636,15 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
     }
 </style>
 <?php
+// Assuming $examParticipants is an array containing all participants
+$perPage = 5; // Number of records per page
+$totalRecords = count($examParticipants); // Total number of records
+$totalPages = ceil($totalRecords / $perPage); // Total number of pages
 
-$perPage = 5;
-if (!empty($examParticipants)) {
-
-    $totalRecords = count($examParticipants);
-}
-$totalPages = ceil($totalRecords / $perPage);
-
-
+// Get current page from URL parameter, default to page 1
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
-
+// Calculate starting index and ending index for pagination
 $start = ($page - 1) * $perPage;
 $end = $start + $perPage;
 
@@ -708,17 +705,7 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
 
                     <div class="participants-form-header">
                         <div class="temp2-sub-title2">Participants</div>
-                        <div class="participant-form-btns">
-                            <button class="admission-button1" id="openModal" onClick='showAttendancePopup()'>Exam
-                                Attendance Submit</button>
-                            <form method="post">
 
-                                <!-- <button class="admission-button0">Download Attendance Sheet</button> -->
-                                <button class="admission-button2" type="submit" name="admission" value="clicked"
-                                    onClick="showMailPopup(event)">Send Admission Card</button>
-
-                            </form>
-                        </div>
                     </div>
                     <div class="display-message">
                         <?php
@@ -823,59 +810,11 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
 </body>
 
 <script>
-    // document.addEventListener("DOMContentLoaded", function () {
-    //     var modal = document.getElementById('myModal');
-    //     var btn = document.getElementById('openModal');
-    //     var span = document.getElementById('closeModal');
-    //     var body = document.body;
 
-    //     btn.onclick = function () {
-    //         modal.style.display = "block";
-    //         body.classList.add('modal-open');
-    //     }
-
-    //     span.onclick = function () {
-    //         modal.style.display = "none";
-    //         body.classList.remove('modal-open');
-    //     }
-
-    //     window.onclick = function (event) {
-    //         if (event.target == modal) {
-    //             modal.style.display = "none";
-    //             body.classList.remove('modal-open');
-    //         }
-    //     }
-    // });
-</script>
-<script>
     $(window).on("load", function () {
         $(".loader-wraper").fadeOut("slow");
     });
-
-    function showMailPopup() {
-
-        console.log('run');
-        document.querySelector("#mail-popup").classList.add("active");
-        document.querySelector("#body").classList.add("active");
-        console.log('run again');
-    }
-
-    function showAttendancePopup() {
-        console.log("Click attendance");
-        document.querySelector("#exam-attendance").classList.add("active");
-        document.querySelector("#body").classList.add("active");
-    }
-
-
-    //handel pop active according to clicked button
-    var popupStatus = <?php echo $attendacePopupStatus ? 'true' : 'false'; ?>;
-    if (popupStatus) {
-
-        // Adding 'active' class to the popup and body elements
-        document.querySelector("#exam-attendance").classList.add("active");
-        document.querySelector("#body").classList.add("active");
-        $(".loader-wraper").fadeOut("slow");
-    }
+    $(".loader-wraper").fadeOut("slow");
 </script>
 
 

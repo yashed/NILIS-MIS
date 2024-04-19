@@ -41,6 +41,7 @@ class ASAR extends Controller
         $examiner3Eligibility = new Examiner3Subject();
         $finalMarks = new FinalMarks();
 
+        //need to add degree details to session 
         $degreeID = 4;
         if (!empty($_SESSION['degreeData'])) {
             $degreeID = $_SESSION['degreeData'][0]->DegreeID;
@@ -48,22 +49,34 @@ class ASAR extends Controller
         } else {
             // $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
         }
+
+
         $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
 
         if (!empty($examID)) {
             $_SESSION['examDetails'] = $exam->where(['examID' => $examID]);
         }
 
-        //get semester from session
-        if (!empty($_SESSION['examDetails'])) {
-            $semester = $_SESSION['examDetails'][0]->semester;
-        }
+
 
         //unset session message data
         if (!empty($_SESSION['message'])) {
             unset($_SESSION['message']);
         }
 
+        //set examination id
+        if (!empty($_SESSION['examDetails'])) {
+            $examID = $_SESSION['examDetails'][0]->examID;
+            $semester = $_SESSION['examDetails'][0]->semester;
+        } else {
+            $examID = null;
+            $semester = null;
+        }
+
+        //give 403 error
+        if ($examID == null) {
+            redirect('_403_');
+        }
 
 
         $data['errors'] = [];
@@ -113,8 +126,6 @@ class ASAR extends Controller
             $subjectDetails = $subjects->where(['SubjectCode' => $resultSubCode, 'DegreeID' => $degreeID]);
 
 
-
-
             //get examination results using marks and final marks
             $tables = ['final_marks', 'exam_participants'];
             $columns = ['*'];
@@ -136,7 +147,7 @@ class ASAR extends Controller
             $data['examResults'] = $examResults;
 
 
-            $this->view('sar-interfaces/sar-examresults', $data);
+            $this->view('assist-sar-interfaces/assist-examresults', $data);
 
         } else if ($method == 'participants') {
 
@@ -144,22 +155,17 @@ class ASAR extends Controller
             $data['examCount'] = $examParticipants->count(['examID' => $examID]);
 
             $participants[] = $examParticipants->where(['examID' => $examID]);
-            // show($participants);
 
-            //data that pass to view
+            $data['examParticipants'] = $participants;
 
-            // $data['examParticipants'] = $participants;
-            // $data['examID'] = $examID;
-            // $data['degreeID'] = $degreeID;
-            // $data['ExamSubjects'] = $ExamSubjects;
-            // $data['attendacePopupStatus'] = $attetdancePopup;
+            $this->view('assist-sar-interfaces/assist-sar-participants', $data);
+        } else {
 
 
-            $this->view('sar-interfaces/sar-examparticipants', $data);
+            $this->view('assist-sar-interfaces/assist-examination', $data);
         }
 
 
-        $this->view('assist-sar-interfaces/asar-examination', $data);
     }
 
     public function notifications()

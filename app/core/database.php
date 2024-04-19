@@ -247,7 +247,7 @@ class Database
     semester int(10) NOT NULL,
     FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
     Foreign key (examID) references exam(examID),
-    primary key (subjectCode, degreeID, semester)
+    primary key (subjectCode, degreeID, semester,examID)
  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
  ";
         $this->query($query);

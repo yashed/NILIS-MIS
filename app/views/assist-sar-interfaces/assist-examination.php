@@ -189,6 +189,7 @@ $data['role'] = $role;
         align-items: center;
         flex-direction: column;
         width: 70%;
+        gap: 10px;
     }
 
     .exam-card3 {
@@ -310,16 +311,6 @@ $data['role'] = $role;
                     Upcoming Examination
                 </div>
                 <div class="exam-create-dropdown">
-                    <a href="<?= ROOT ?>sar/examination/create/0">
-                        <button class="dropbtn">
-                            <div class="bt-name">Create Examination</div>
-                        </button>
-                    </a>
-                    <!-- <div class="exam-create-dropdown-content">
-                        <a href="<?= ROOT ?>sar/examination/create/1">Normal Examination</a>
-
-                        <a href="#">Special Examination</a>
-                    </div> -->
                 </div>
             </div>
             <div class="exam-degree-bar">
@@ -369,13 +360,13 @@ $data['role'] = $role;
                                 <?php if ($exam->status == 'completed'): ?>
                                     <?php
                                     $data['exam'] = $exam;
-                                    $ongoingExam = true;
+                                    $completeExam = true;
                                     ?>
                                     <?php $this->view('components/exam-card/exam-card', $data) ?>
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         <?php endif; ?>
-                        <?php if (!$ongoingExam): ?>
+                        <?php if (!$completeExam): ?>
                             <div class='exam-msg'>No Completed examination</div>
                         <?php endif; ?>
                     </div>

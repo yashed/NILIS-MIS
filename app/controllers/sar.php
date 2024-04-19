@@ -897,10 +897,12 @@ class SAR extends Controller
 
 
                         //append data to examStudents array
-                        foreach ($Participants as $participant) {
 
-                            $examStudents[] = $participant;
+                        if (!empty($Participants)) {
+                            foreach ($Participants as $participant) {
 
+                                $examStudents[] = $participant;
+                            }
                         }
 
                         //get repeat student details
@@ -1548,7 +1550,6 @@ class SAR extends Controller
                 $whereConditions = ['repeat_students.degreeID = ' . $degreeID, 'repeat_students.paymentStatus = 0', 'repeat_students.written = 0'];
                 $data['rmstudents'] = $RepeatStudents->joinWhere($tables, $columns, $conditions, $whereConditions);
 
-                show($data['rmstudents']);
             } else if ($selectedOption == 'medical') {
 
                 //join data with student table and get regNo
