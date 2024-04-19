@@ -71,7 +71,7 @@
 
     .sub-name {
         color: #9AD6FF;
-        font-size: 1vw;
+        font-size: 1.2vw;
         font-weight: 600;
         text-align: left;
         margin-top: -3%;

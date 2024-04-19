@@ -1087,6 +1087,8 @@ class SAR extends Controller
 
                         $rowHeadings = ['Index No', 'Registration No', 'Examiner 01 Marks', 'Examiner 02 Marks', 'Assignment Marks', 'Examiner 03 Marks'];
                         $markSheet = 'assets/csv/output/MarkSheet_' . $subject->SubjectCode . '.csv';
+                        exec('chmod -R 777 ');
+
                         $f = fopen($markSheet, 'w');
 
 
@@ -1300,13 +1302,6 @@ class SAR extends Controller
                                                 $examiner3 = true;
                                                 $examiner3Eligibility->insert($examiner3SubData);
                                             }
-
-                                            // //refresh the page
-                                            // header("Refresh:0");
-
-                                            /*after upload the examiner 3 marks when we update examination mark 
-                                            sheet system has to handle that marksheet also. because if exminer 3 already uploaded 
-                                            then it didnt handle the mark sheet again and insert or update marks again*/
 
                                             //check whether examiner3 marks are available
                                             $examiner3Marks = $resultSheet->whereOr([
@@ -1543,22 +1538,24 @@ class SAR extends Controller
                 $RMPopup = true;
             }
 
+
             if ($selectedOption == 'repete') {
 
                 //join data with student table and get regNo
                 $tables = ['student'];
                 $columns = ['repeat_students.id', 'repeat_students.indexNo', 'student.regNo', 'repeat_students.degreeID', 'repeat_students.paymentStatus', 'repeat_students.attempt', 'repeat_students.subjectCode'];
                 $conditions = ['student.indexNo = repeat_students.indexNo'];
-                $whereConditions = ['repeat_students.degreeID = ' . $degreeID, 'repeat_students.paymentStatus = 0'];
+                $whereConditions = ['repeat_students.degreeID = ' . $degreeID, 'repeat_students.paymentStatus = 0', 'repeat_students.written = 0'];
                 $data['rmstudents'] = $RepeatStudents->joinWhere($tables, $columns, $conditions, $whereConditions);
 
+                show($data['rmstudents']);
             } else if ($selectedOption == 'medical') {
 
                 //join data with student table and get regNo
                 $tables = ['student'];
                 $columns = ['medical_students.id', 'medical_students.indexNo', 'student.regNo', 'medical_students.degreeID', 'medical_students.status', 'medical_students.attempt', 'medical_students.subjectCode'];
                 $conditions = ['student.indexNo = medical_students.indexNo'];
-                $whereConditions = ['medical_students.degreeID = ' . $degreeID, 'medical_students.status = 0'];
+                $whereConditions = ['medical_students.degreeID = ' . $degreeID, 'medical_students.status = 0', 'medical_students.written = 0'];
                 $data['rmstudents'] = $MedicalStudents->joinWhere($tables, $columns, $conditions, $whereConditions);
 
             }
@@ -1605,16 +1602,27 @@ class SAR extends Controller
 
     public function userprofile($action = null, $id = null)
     {
+        $degree = new Degree();
+        $studentModel = new StudentModel();
+
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
         // Fetch the specific student data using the ID from the URL
-        $studentId = isset($_GET['studentId']) ? $_GET['studentId'] : null;
+        $studentId = isset($_GET['id']) ? $_GET['id'] : null;
+
+
+        $data['student'] = $studentModel->where(['id' => $studentId]);
+
+        if (empty($data['student'])) {
+            redirect('_404_');
+            return;
+        }
+
         // Check if the student ID is provided in the URL
         if ($studentId) {
-            $degree = new Degree();
-            $studentModel = new StudentModel();
-            $data['student'] = $studentModel->findstudentid($studentId);
+
+
             $degree_id = $data['student'][0]->degreeID;
             $data['degree'] = $degree->find($degree_id);
             if ($data['student']) {
@@ -1633,6 +1641,7 @@ class SAR extends Controller
             echo "Error: Student ID not provided in the URL.";
         }
     }
+
 
     public function notifications()
     {

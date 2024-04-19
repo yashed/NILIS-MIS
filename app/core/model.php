@@ -79,6 +79,26 @@ class Model extends Database
         return false;
     }
 
+    public function findLimit($start = 0, $perPage = 20)
+    {
+        $start = (int) $start;   // Ensure $start is an integer
+        $perPage = (int) $perPage; // Ensure $perPage is an integer
+
+        // Directly include $start and $perPage in the SQL query
+        $query = "SELECT * FROM " . $this->table . " LIMIT $start, $perPage";
+
+        // Since LIMIT values are now directly in the query, there's no need to pass them as parameters
+        $result = $this->query($query, [], 'object');
+        // show($result);
+        // Check if result is valid and return
+        if ($result !== false && count($result) > 0) {
+            return $result;
+        } else {
+            return []; // Return an empty array if no results
+        }
+    }
+
+
     public function find($id)
     {
         $query = "select * from " . $this->table . " WHERE DegreeID = :id";
@@ -93,17 +113,17 @@ class Model extends Database
     }
 
     public function findwhere($where, $id)
-{
-    $query = "SELECT * FROM " . $this->table . " WHERE {$where} = :id";
-    $params = [':id' => $id];
-    $result = $this->query($query, $params);
-    // Check if the query was successful
-    if (is_array($result) && !empty($result)) {
-        return $result; 
-    } else {
-        return null;
+    {
+        $query = "SELECT * FROM " . $this->table . " WHERE {$where} = :id";
+        $params = [':id' => $id];
+        $result = $this->query($query, $params);
+        // Check if the query was successful
+        if (is_array($result) && !empty($result)) {
+            return $result;
+        } else {
+            return null;
+        }
     }
-}
 
     public function setid($id)
     {

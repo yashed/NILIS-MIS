@@ -678,23 +678,19 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
 
                     <div class="column1">
                         <div class="data1">Course Name<br>
-
+                            <!-- <div class="email"><?= $student->Email ?></div> -->
                             <div class="course" id="course">Diploma in School Librarianship</div>
                         </div>
                         <br>
                         <div class="data2">Examination:<br>
-
-                            <div class="exam" id="exam">1st Semester Examination</div>
+                            <!-- <div class="regNum"> <?= $student->regNo ?></div> -->
+                            <div class="exam" id="exam">2nd Semester Examination</div>
                         </div>
                     </div>
 
                     <div class="column2">
                         <div class="data3">Participation:<br>
-                            <div class="count" id="count"> <?php
-                            if (!empty($examCount)) {
-                                echo $examCount[0]->ExamParticipants;
-                            }
-                            ?></div>
+                            <div class="count" id="count"> 216</div>
                         </div>
                         <br>
                         <div class="data4">Academic Year:<br>

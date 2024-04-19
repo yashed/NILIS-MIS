@@ -47,6 +47,7 @@ class Database
         return false;
     }
 
+
     function create_tables()
     {
         //user table 
@@ -73,7 +74,7 @@ class Database
         $this->query($query);
         //Degree Table
         $query = "
-        CREATE TABLE degree (
+        CREATE TABLE IF NOT EXISTS degree (
             DegreeID ⁠ int(11) NOT NULL AUTO_INCREMENT,
             DegreeType ⁠ varchar(50) NOT NULL,
             DegreeShortName ⁠ varchar(50) NOT NULL,
@@ -137,9 +138,9 @@ class Database
         $this->query($query);
         //student Table
         $query = "
-        CREATE TABLE ⁠ student ⁠ (
-            ⁠ id ⁠ int(11) NOT NULL AUTO_INCREMENT,
-            ⁠ Email ⁠ varchar(40) NOT NULL,
+        CREATE TABLE IF NOT EXISTS student (
+            id int(11) NOT NULL AUTO_INCREMENT,
+            Email ⁠ varchar(40) NOT NULL,
             ⁠ regNo ⁠ varchar(40) NOT NULL,
             ⁠ country ⁠ varchar(40) NOT NULL,
             ⁠ indexNo ⁠ varchar(40) NOT NULL,

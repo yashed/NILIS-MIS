@@ -600,7 +600,6 @@ $degreeId = $_GET['degreeID'];
 
     .btn-secondary-2 {
         width: 20vw;
-        color: #fff;
         height: 5vh;
         padding: 5px 15px 5px 15px;
         border-radius: 10px;
@@ -644,7 +643,6 @@ $degreeId = $_GET['degreeID'];
 
     .btn-secondary-2-examiner3 {
         width: 20vw;
-        color: #fff;
         height: 5vh;
         padding: 5px 15px 5px 15px;
         border-radius: 10px;
@@ -814,6 +812,29 @@ $degreeId = $_GET['degreeID'];
         transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
         z-index: 2000;
     }
+
+    .title-btn-container {
+        display: flex;
+        justify-content: space-between;
+
+    }
+
+    .btn-exam-complete {
+        width: 20vw;
+        height: 5vh;
+        padding: 5px 15px 5px 15px;
+        border-radius: 10px;
+        background: #ffffff;
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        color: #17376e;
+        border: 0px;
+        margin-bottom: 10px;
+        border: 1px solid #17376e;
+        font-size: 1vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 </style>
 
 <body>
@@ -859,9 +880,14 @@ $degreeId = $_GET['degreeID'];
 
             <div class="temp2-subsection-2">
                 <div class="temp2-subsection-21">
-
-                    <div class="temp2-sub-title2">
-                        Results Submission </br>
+                    <div class='title-btn-container'>
+                        <div class="temp2-sub-title2">
+                            Results Submission
+                        </div>
+                        <div class='exam-commplete-btn'>
+                            <button class="btn-exam-complete" name='exam-complete' id='exam-complete'>Complete
+                                Examination</button>
+                        </div>
                     </div>
                     <?php foreach ($examSubjects as $subject): ?>
                         <?php $json = json_encode($subject); ?>

@@ -395,27 +395,30 @@ function updateMarksheet($csvFileName, $dataArray, $newFileName)
     // Ensure the output directory exists
     $newFileDir = dirname($newFilePath);
     if (!is_dir($newFileDir)) {
-        mkdir($newFileDir, 0777, true); // recursive creation
+        mkdir($newFileDir, 0777, true);
     }
+
 
     // Read the existing CSV file
     $rows = [];
     $headerData = [];
-    if (($handle = fopen($csvFilePath, "r")) !== FALSE) {
-        $lineCount = 0;
-        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-            $lineCount++;
-            if ($lineCount <= 3) {
-                // Collect program and subject lines
-                $headerData[] = $data;
-                continue;
-            } else if ($lineCount == 4) {
-                // Skip the redundant header line
-                continue;
+    if (file_exists($csvFilePath)) {
+        if (($handle = fopen($csvFilePath, "r")) !== FALSE) {
+            $lineCount = 0;
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $lineCount++;
+                if ($lineCount <= 3) {
+                    // Collect program and subject lines
+                    $headerData[] = $data;
+                    continue;
+                } else if ($lineCount == 4) {
+                    // Skip the redundant header line
+                    continue;
+                }
+                $rows[] = $data;
             }
-            $rows[] = $data;
+            fclose($handle);
         }
-        fclose($handle);
     }
 
     // Open a new file to write the updated data
