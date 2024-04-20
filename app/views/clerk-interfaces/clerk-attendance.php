@@ -353,6 +353,9 @@ $data['role'] = $role;
                 <button class="admission-button2" onclick="redirectToUpdatedAttendance()">Student Attendance</button>
             </div>
         </div>
+        <div class="dr-footer">
+            <?php $this->view('components/footer/index', $data) ?>
+        </div>
     </div>
     
     <div id="importFrm" class="popup-form" style="display: none;">
@@ -370,9 +373,7 @@ $data['role'] = $role;
         <button class="close-button" onclick="toggleForm('importFrm')">Close</button>
     </div>
 
-    <div class="dr-footer">
-            <?php $this->view('components/footer/index', $data) ?>
-        </div>
+    
 
     <script>
         function toggleForm(formId) {

@@ -17,10 +17,12 @@ class DIRECTOR extends Controller
 
         // $degree->insert($_POST);
         // show($_POST);
-        $notification = new NotificationModel();
-        $notification_count_arr = $notification->countNotificationsDirector();
-   
-        $data['notification_count_obj'] = $notification_count_arr[0];
+        // $notification = new NotificationModel();
+        // $notification_count_arr = $notification->countNotificationsDirector();
+
+        // $data['notification_count_obj'] = $notification_count_arr[0];
+        // $data['notification_count_obj_director'] = getNotificationCountDirector();
+
         $data['degrees'] = $degree->findAll();
         //show($data['degrees']);
 
@@ -29,19 +31,16 @@ class DIRECTOR extends Controller
     public function notification()
     {
         $notification = new NotificationModel();
-        $data['notifications'] = $notification->findAll();
-        $notification_count_arr = $notification->countNotificationsDirector();
-   
-        $data['notification_count_obj'] = $notification_count_arr[0];
+        $username = $_SESSION['USER_DATA']->username;
+        $data['usernames'] = $username;
         $this->view('director-interfaces/director-notification', $data);
     }
     public function degreeprograms()
     {
         $degree = new Degree();
-        $notification = new NotificationModel();
-        $notification_count_arr = $notification->countNotificationsDirector();
-   
-        $data['notification_count_obj'] = $notification_count_arr[0];
+      
+
+       
         // $degree->insert($_POST);
         // show($_POST);
 
@@ -54,10 +53,6 @@ class DIRECTOR extends Controller
 
     public function participants($id = null, $action = null, $id2 = null)
     {
-        $notification = new NotificationModel();
-        $notification_count_arr = $notification->countNotificationsDirector();
-   
-        $data['notification_count_obj'] = $notification_count_arr[0];
         $st = new StudentModel();
         if (!empty($id)) {
             if (!empty($action)) {
@@ -103,9 +98,9 @@ class DIRECTOR extends Controller
         $user = new User();
         $data = [];
         $notification = new NotificationModel();
-        $notification_count_arr = $notification->countNotificationsDirector();
-   
-        $data['notification_count_obj'] = $notification_count_arr[0];
+     
+
+    
         if (isset($_POST['update_user_data'])) {
             // Validate input fields
             $fname = isset($_POST['fname']) ? trim($_POST['fname']) : '';
@@ -168,29 +163,29 @@ class DIRECTOR extends Controller
         $this->view('director-interfaces/director-settings', $data);
     }
 
-//     public function userprofile($action = null, $id = null)
-//     {
-//         $data = [];
-//         $data['action'] = $action;
-//         $data['id'] = $id;
-//         // Fetch the specific student data using the ID from the URL
-//         $studentId = isset($_GET['studentId']) ? $_GET['studentId'] : null;
-//         // Check if the student ID is provided in the URL
-//         if ($studentId) {
-//             $degree = new Degree();
-//             $studentModel = new StudentModel();
-//             $data['student'] = $studentModel->findstudentid($studentId);
-//             $degree_id = $data['student'][0]->degreeID;
-//             $data['degree'] = $degree->find($degree_id);
-//             if ($data['student']) {
-//                 $this->view('director-interfaces/director-userprofile', $data);
-//             } else {
-//                 echo "Error: Student not found.";
-//             }
-// } else {
-//             echo "Error: Student ID not provided in the URL.";
-//         }
-//     }
+    //     public function userprofile($action = null, $id = null)
+    //     {
+    //         $data = [];
+    //         $data['action'] = $action;
+    //         $data['id'] = $id;
+    //         // Fetch the specific student data using the ID from the URL
+    //         $studentId = isset($_GET['studentId']) ? $_GET['studentId'] : null;
+    //         // Check if the student ID is provided in the URL
+    //         if ($studentId) {
+    //             $degree = new Degree();
+    //             $studentModel = new StudentModel();
+    //             $data['student'] = $studentModel->findstudentid($studentId);
+    //             $degree_id = $data['student'][0]->degreeID;
+    //             $data['degree'] = $degree->find($degree_id);
+    //             if ($data['student']) {
+    //                 $this->view('director-interfaces/director-userprofile', $data);
+    //             } else {
+    //                 echo "Error: Student not found.";
+    //             }
+    // } else {
+    //             echo "Error: Student ID not provided in the URL.";
+    //         }
+    //     }
 
 
     public function login()
@@ -200,10 +195,7 @@ class DIRECTOR extends Controller
 
     public function degreeprofile($action = null, $id = null)
     {
-        $notification = new NotificationModel();
-        $notification_count_arr = $notification->countNotificationsDirector();
-   
-        $data['notification_count_obj'] = $notification_count_arr[0];
+      
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
@@ -240,22 +232,22 @@ class DIRECTOR extends Controller
 
     public function reports()
     {
-        $notification = new NotificationModel();
-        $notification_count_arr = $notification->countNotificationsDirector();
-   
-        $data['notification_count_obj'] = $notification_count_arr[0];
+       
+
+        
         $this->view('director-interfaces/director-reports');
     }
 
     public function attendance()
     {
-        $notification = new NotificationModel();
-        $notification_count_arr = $notification->countNotificationsDirector();
-   
-        $data['notification_count_obj'] = $notification_count_arr[0];
+ 
+
+        
         $attendance = new studentAttendance();
         $data['attendances'] = $attendance->findAll();
 
         $this->view('director-interfaces\director-attendance', $data);
     }
+
+    
 }
