@@ -526,6 +526,32 @@ DELIMITER ;
         $this->query($triggerQuery);
     }
 
+    public function createExamDetailsAdd()
+    {
+        $query = "DELIMITER //
+
+        CREATE TRIGGER insert_exam_after_degree_timetable_insert
+        AFTER INSERT ON degree_timetable
+        FOR EACH ROW
+        BEGIN
+            DECLARE semester_value INT;
+            
+            IF NEW.EventName = '1St Semester' THEN
+                SET semester_value = 1;
+            ELSEIF NEW.EventName = '2Nd Semester' THEN
+                SET semester_value = 2;
+            END IF;
+            
+            INSERT INTO exam (examType, degreeID, semester, status)
+            VALUES ('Normal', NEW.DegreeID, semester_value, 'upcoming');
+        END;
+        //
+        
+        DELIMITER ;
+        ";
+        $this->query($query);
+    }
+
     public function createFinalMarksUpdateTrigger()
     {
         $query = "

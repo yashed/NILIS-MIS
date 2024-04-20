@@ -43,6 +43,9 @@ class SAR extends Controller
         $notification = new NotificationModel();
 
         $data['notifications'] = $notification->findAll();
+        $username = $_SESSION['USER_DATA']->username;
+        $data['usernames'] = $username;
+
 
         $this->view('sar-interfaces/sar-notification', $data);
     }

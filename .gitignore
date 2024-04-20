@@ -5,3 +5,4 @@ public/assets/csv/examsheets/final-marksheets/*.csv
 public/assets/csv/examsheets/output/*.csv
 public/assets/csv/output/*.csv
 
+node_modules
