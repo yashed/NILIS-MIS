@@ -39,7 +39,7 @@ $data['role'] = $role;
     }
 
     .dr-home {
-        height: 100vh;
+
         left: 250px;
         position: relative;
         width: calc(100% - 250px);
@@ -114,6 +114,7 @@ $data['role'] = $role;
         padding: 10px 10px 30px 35px;
         border-radius: 6px;
         margin: 7px 4px 7px 4px;
+        min-height: 35vh;
     }
 
     .dr-sub-title {
