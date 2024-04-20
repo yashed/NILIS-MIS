@@ -282,6 +282,15 @@ $data['role'] = $role;
                     option.removeAttribute('disabled');
                 });
             });
+            let m = 2;
+            const duration = <?= json_encode($degrees[0]->Duration) ?>;
+            if (duration == 2) {
+                m = 4;
+            }
+            for (var j = 1; j < m + 1; j++) {
+                document.getElementById('degreeprofile-event_' + j).setAttribute('readonly', 'true');
+                document.getElementById('degreeprofile-type_' + j).setAttribute('disabled', 'true');
+            }
             saveButton.removeAttribute('disabled');
             updateButton.setAttribute('disabled', 'true');
 
