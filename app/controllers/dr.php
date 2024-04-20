@@ -32,6 +32,7 @@ class DR extends Controller
         $data['notifications'] = $notification->findAll();
         $username = $_SESSION['USER_DATA']->username;
         $data['usernames'] = $username;
+        // $data['notification_count_obj'] = $this->getNotificationCountDR();
        
         $this->view('dr-interfaces/dr-notification',$data);
     }
