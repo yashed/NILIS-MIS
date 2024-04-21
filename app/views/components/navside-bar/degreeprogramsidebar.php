@@ -102,7 +102,7 @@
                             </a>
                         </li>
                         <li class="nav-link">
-                            <a href="<?= ROOT ?>dr/notification">
+                            <a href="<?= ROOT ?>dr/notifications">
                                 <i class="bx bx-bell icon"></i>
                                 <span class="text nav-text">Notification</span>
                             </a>
@@ -129,7 +129,7 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notifications"><i class="bx bxs-bell icon"></i></a></li>
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
