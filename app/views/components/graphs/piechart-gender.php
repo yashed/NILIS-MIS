@@ -14,7 +14,7 @@
             if (isset($student->gender)) {
                 if ($student->gender == "M") {
                     $male++;
-                } else {
+                } else if ($student->gender == "F") {
                     $female++;
                 }
             }

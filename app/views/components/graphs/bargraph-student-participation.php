@@ -23,17 +23,21 @@
             $hdlim = 0;
             foreach ($students as $student) {
                 if (isset($student->indexNo)) {
-                    // Split the index number at the '/' mark
-                    $parts = explode('/', $student->indexNo);
-                    $degreeShortName = $parts[0];
-                    if ($degreeShortName == "DLIM") {
-                        $dlim++;
-                    } else if ($degreeShortName == "DSL") {
-                        $dsl++;
-                    } else if ($degreeShortName == "DPL") {
-                        $dpl++;
-                    } else if ($degreeShortName == "HDLIM") {
-                        $hdlim++;
+                    if (isset($student->status)) {
+                        if ($student->status == "continue") {
+                            // Split the index number at the '/' mark
+                            $parts = explode('/', $student->indexNo);
+                            $degreeShortName = $parts[0];
+                            if ($degreeShortName == "DLIM") {
+                                $dlim++;
+                            } else if ($degreeShortName == "DSL") {
+                                $dsl++;
+                            } else if ($degreeShortName == "DPL") {
+                                $dpl++;
+                            } else if ($degreeShortName == "HDLIM") {
+                                $hdlim++;
+                            }
+                        }
                     }
                 }
             }
