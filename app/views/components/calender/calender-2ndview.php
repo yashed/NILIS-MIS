@@ -1,9 +1,9 @@
 <?php
-$role = "Admin";
+$role = $_SESSION['USER_DATA']->role;
 $data['role'] = $role;
 
 ?>
-
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800&display=swap");
 
@@ -43,8 +43,8 @@ $data['role'] = $role;
     }
 
     button {
-        width: 25px;
-        height: 20px;
+        width: 35px;
+        height: 35px;
         cursor: pointer;
         border: none;
         outline: none;
@@ -156,6 +156,8 @@ $data['role'] = $role;
         padding: 25px;
         position: absolute;
         z-index: 20;
+        margin-top: 225px;
+        border-radius: 8px;
     }
 
     #addEvent h2,
@@ -177,10 +179,13 @@ $data['role'] = $role;
 
     #btnSave {
         background-color: #2ed573;
+        width: 65px;
+        margin: 0px 25px 0px 80px;
     }
 
     .btnClose {
         background-color: #2f3542;
+        width: 65px;   
     }
 
     #viewEvent p {
@@ -189,6 +194,8 @@ $data['role'] = $role;
 
     #btnDelete {
         background-color: #17376E;
+        width: 65px; 
+        margin: 0px 25px 0px 80px;
     }
 
     .error {
@@ -223,6 +230,15 @@ $data['role'] = $role;
         box-shadow: 0px 2px 8.6px 0px rgba(0, 0, 0, 0.17);
         background: #FEFBFB;
     }
+    #btnBack .icon,
+    #btnNext .icon {
+        font-size: 25px;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        color: var(--text-color);
+        transition: var(--tran-03);
+    }
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -253,8 +269,8 @@ $data['role'] = $role;
         <div class="header">
             <div id="month"></div>
             <div>
-                <button id="btnBack"><i class="fa fa-angle-left"></i></button>
-                <button id="btnNext"><i class="fa fa-angle-right"></i></button>
+                <button id="btnBack"><i class='bx bx-chevron-left icon'></i></button>
+                <button id="btnNext"><i class='bx bx-chevron-right icon'></i></button>
             </div>
         </div>
         <div class="weekdays">
@@ -281,114 +297,70 @@ $data['role'] = $role;
     </div>
 
     <div id="viewEvent">
-        <h2>Event</h2>
+        <h2>Event name</h2>
         <p id="eventText">This is Sample Event</p>
         <button id="btnDelete">Delete</button>
         <button class="btnClose">Close</button>
     </div>
 
-    <script src="js/script.js"></script>
+    <!-- <script src="js/script.js"></script> -->
 </body>
 
 </html>
 <script>
     const holidays = [
-        {
-            hdate: "01-01-2023",
-            holiday: "New Year Day",
-        },
-        {
-            hdate: "15-01-2023",
-            holiday: "Pongal",
-        },
-        {
-            hdate: "16-01-2023",
-            holiday: "Thiruvalluvar Day",
-        },
-        {
-            hdate: "17-01-2023",
-            holiday: "Uzhavar Thirunal",
-        },
-        {
-            hdate: "26-01-2023",
-            holiday: "Republic Day",
-        },
-        {
-            hdate: "05-02-2023",
-            holiday: "Thai Poosam",
-        },
-        {
-            hdate: "22-03-2023",
-            holiday: "Telugu New Year Day",
-        },
-        {
-            hdate: "01-04-2023",
-            holiday: "Annual closing of Accounts for Commercial Banks and Co-operative Banks",
-        },
-        {
-            hdate: "04-04-2023",
-            holiday: "Mahaveer Jayanthi",
-        },
-        {
-            hdate: "07-04-2023",
-            holiday: "Good Friday",
-        },
-        {
-            hdate: "14-04-2023",
-            holiday: "Tamil New Years Day and Dr.B.R.Ambedkars Birthday",
-        },
-        {
-            hdate: "22-04-2023",
-            holiday: "Ramzan (Idul Fitr)",
-        },
-        {
-            hdate: "01-05-2023",
-            holiday: "May Day",
-        },
-        {
-            hdate: "29-06-2023",
-            holiday: "Bakrid(Idul Azha)",
-        },
-        {
-            hdate: "29-07-2023",
-            holiday: "Muharram",
-        },
-        {
-            hdate: "15-08-2023",
-            holiday: "Independence Day",
-        },
-        {
-            hdate: "06-09-2023",
-            holiday: "Krishna Jayanthi",
-        },
-        {
-            hdate: "17-09-2023",
-            holiday: "Vinayakar Chathurthi",
-        },
-        {
-            hdate: "28-09-2023",
-            holiday: "Milad-un-Nabi",
-        },
-        {
-            hdate: "02-10-2023",
-            holiday: "Gandhi Jayanthi",
-        },
-        {
-            hdate: "23-10-2023",
-            holiday: "Ayutha Pooja",
-        },
-        {
-            hdate: "24-10-2023",
-            holiday: "Vijaya Dasami",
-        },
-        {
-            hdate: "12-11-2023",
-            holiday: "Deepavali",
-        },
-        {
-            hdate: "25-12-2023",
-            holiday: "Christmas",
-        },
+        { hdate: "01-01-2023", holiday: "New Year Day", },
+        { hdate: "15-01-2023", holiday: "Pongal", },
+        { hdate: "16-01-2023", holiday: "Thiruvalluvar Day", },
+        { hdate: "17-01-2023", holiday: "Uzhavar Thirunal", },
+        { hdate: "26-01-2023", holiday: "Republic Day",},
+        { hdate: "05-02-2023", holiday: "Thai Poosam", },
+        { hdate: "22-03-2023", holiday: "Telugu New Year Day", },
+        { hdate: "01-04-2023", holiday: "Annual closing of Accounts for Commercial Banks and Co-operative Banks", },
+        { hdate: "04-04-2023", holiday: "Mahaveer Jayanthi", },
+        { hdate: "07-04-2023", holiday: "Good Friday", },
+        { hdate: "14-04-2023", holiday: "Tamil New Years Day and Dr.B.R.Ambedkars Birthday", },
+        { hdate: "22-04-2023", holiday: "Ramzan (Idul Fitr)", },
+        { hdate: "01-05-2023", holiday: "May Day", },
+        { hdate: "29-06-2023", holiday: "Bakrid(Idul Azha)", },
+        { hdate: "29-07-2023", holiday: "Muharram", },
+        { hdate: "15-08-2023", holiday: "Independence Day", },
+        { hdate: "06-09-2023", holiday: "Krishna Jayanthi", },
+        { hdate: "17-09-2023", holiday: "Vinayakar Chathurthi", },
+        { hdate: "28-09-2023", holiday: "Milad-un-Nabi", },
+        { hdate: "02-10-2023", holiday: "Gandhi Jayanthi", },
+        { hdate: "23-10-2023", holiday: "Ayutha Pooja", },
+        { hdate: "24-10-2023", holiday: "Vijaya Dasami", },
+        { hdate: "12-11-2023", holiday: "Deepavali", },
+        { hdate: "25-12-2023", holiday: "Christmas", },
+        { hdate: "15-01-2024", holiday: "Tamil Thai Pongal Day", },
+        { hdate: "25-01-2024", holiday: "Duruthu Full Moon Poya Day", },
+        { hdate: "04-02-2024", holiday: "National Day", },
+        { hdate: "14-02-2024", holiday: "valentines Day", },
+        { hdate: "23-02-2024", holiday: "Navam Full Moon Poya Day", },
+        { hdate: "08-03-2024", holiday: "Mahasivarathri Day", },
+        { hdate: "11-03-2024", holiday: "Holi Ramadan Start", },
+        { hdate: "24-03-2024", holiday: "Medin Full Moon Poya Day", },
+        { hdate: "29-03-2024", holiday: "Good Friday", },
+        { hdate: "31-03-2024", holiday: "Easter Sunday", },
+        { hdate: "11-04-2024", holiday: "Eid al-Fitr", },
+        { hdate: "12-04-2024", holiday: "Tamil New Years Day", },
+        { hdate: "13-04-2024", holiday: "Tamil New Years Day", },
+        { hdate: "23-04-2024", holiday: "Bakini Full Moon Poya Day", },
+        { hdate: "01-05-2024", holiday: "May Day", },
+        { hdate: "23-05-2024", holiday: "Vesak Full Moon Poya Day", },
+        { hdate: "24-05-2024", holiday: "Day After Vesak Full Moon Poya Day", },
+        { hdate: "17-06-2024", holiday: "Eid al-Fitr", },
+        { hdate: "21-06-2024", holiday: "Poson Full Moon Poya Day", },
+        { hdate: "20-07-2024", holiday: "Esala Full Moon Poya Day", },
+        { hdate: "19-08-2024", holiday: "Nikini Full Moon Poya Day", },
+        { hdate: "16-09-2024", holiday: "Milad-Un-Nabi", },
+        { hdate: "17-09-2024", holiday: "Binara Full Moon Poya Day", },
+        { hdate: "17-10-2024", holiday: "Vap Full Moon Poya Day", },
+        { hdate: "31-10-2024", holiday: "Deepavali", },
+        { hdate: "15-11-2024", holiday: "Ill Full Moon Poya Day", },
+        { hdate: "14-12-2024", holiday: "Uduvap Full Moon Poya Day", },
+        { hdate: "25-12-2024", holiday: "Christmas", },
     ];
     const calendar = document.querySelector("#calendar");
     const monthBanner = document.querySelector("#month");
