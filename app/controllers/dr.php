@@ -476,7 +476,7 @@ class DR extends Controller
     {
         $this->view('dr-interfaces/dr-attendance');
     }
-    public function examination($method = null, $id = null)
+    public function examination($method = null)
     {
         $degree = new Degree();
         $student = new StudentModel();
