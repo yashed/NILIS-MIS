@@ -350,7 +350,7 @@ $data['role'] = $role;
                     alert("Please fill out all fields, Semester " + j + " Subject " + k);
                     return false;
                 }
-                if (!/^[a-zA-Z\s0-9-]+$/.test(subject.trim())) {
+                if (!/^[a-zA-Z\s0-9-&]+$/.test(subject.trim())) {
                     alert("Subject Name can only have letters, numbers, dashes, and spaces.\n" +
                         "Example: Diploma in Public Librarianship-2\n" +
                         "Check Semester " + j + " Subject " + k);
@@ -497,8 +497,7 @@ $data['role'] = $role;
         "C-": "1.70",
         "D+": "1.30",
         "D": "1.00",
-        "D-": "0.70",
-        "F": "0.30"
+        "E": "0.00"
     };
 
     function generateGrades() {
@@ -515,7 +514,7 @@ $data['role'] = $role;
     `;
         gradecontainer.appendChild(headerRow);
 
-        for (var i = 1; i <= 2; i++) {
+        for (var i = 1; i <= 12; i++) {
             var gradeRow = document.createElement("tr");
             var currentGrade = grades[getGradeKey(i)];
             gradeRow.innerHTML = `
