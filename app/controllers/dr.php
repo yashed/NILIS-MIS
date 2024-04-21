@@ -28,11 +28,11 @@ class DR extends Controller
     public function notifications()
     {
         $notification = new NotificationModel();
-
         $data['notifications'] = $notification->findAll();
+
         $username = $_SESSION['USER_DATA']->username;
         $data['usernames'] = $username;
-        // $data['notification_count_obj'] = $this->getNotificationCountDR();
+        $data['notification_count_obj'] = getNotificationCountDR();
        
         $this->view('dr-interfaces/dr-notification',$data);
     }
@@ -227,7 +227,7 @@ class DR extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
-        if ($_SESSION['DegreeID'] == null) {
+        if (!isset($_SESSION['DegreeID']) || $_SESSION['DegreeID'] == null) {
             $degree_id = $degree->lastID('DegreeID');
             $_SESSION['DegreeID'] = $degree_id;
         } else {
@@ -235,7 +235,7 @@ class DR extends Controller
         }
         // echo $degree_id;
         $degree_info = (object)$degree->findByID($degree_id);
-        $data['degrees'] = $degree->findByID($degree_id);
+        $data['degrees'] = $degree->find($degree_id);
         $degreeShortName =  $degree_info->DegreeShortName;
         $currentYear = $degree_info->AcademicYear;
         $currentYear = $currentYear % 100;
@@ -292,7 +292,7 @@ class DR extends Controller
                             fgetcsv($csvFile);
                             while (($rowData = fgetcsv($csvFile)) !== false) {
                                 // Assuming the order of columns in the CSV matches the order in the $rowData array
-                                $IndexNo = $student->generateIndexRegNumber($degree_id, $degreeShortName, $currentYear);
+                                $IndexNo = $student->generateIndexRegNumber($degreeShortName, $currentYear);
                                 if ($IndexNo !== false && $IndexNo['IndexNo'] != null && $IndexNo['RegistationNo'] != null) {
                                     $data = [
                                         'Email' => $rowData[1],
@@ -306,6 +306,7 @@ class DR extends Controller
                                         'degreeID' => $degree_id,
                                         'indexNo' => $IndexNo['IndexNo'],
                                         'regNo' => $IndexNo['RegistationNo'],
+                                        'gender' => $rowData[8],
                                     ];
                                     $student->insert($data);
                                 } else {
@@ -313,6 +314,7 @@ class DR extends Controller
                                 }
                             }
                             fclose($csvFile);
+                            redirect("dr/newdegree");
                         } else {
                             echo "<script>console.log('Failed to upload file.');</script>";
                         }
@@ -364,7 +366,8 @@ class DR extends Controller
                             'country' => $_POST['country'],
                             'phoneNo' => $_POST['phoneNo'],
                             'address' => $_POST['address'],
-                            'birthdate' => $_POST['birthdate']
+                            'birthdate' => $_POST['birthdate'],
+                            'gender' => $_POST['gender'],
                         ];
                         $studentModel->update($studentId, $updatedData);
                         redirect("dr/userprofile");
@@ -391,7 +394,7 @@ class DR extends Controller
                     ];
                     $studentModel->update($studentId, $suspendSTU);
                     // Generate new index and registration numbers
-                    $IndexNo = $studentModel->generateIndexRegNumber($newDegreeID, $newDegreeType, $newDegreeYear);
+                    $IndexNo = $studentModel->generateIndexRegNumber($newDegreeType, $newDegreeYear);
                     if ($IndexNo !== false && $IndexNo['IndexNo'] != null && $IndexNo['RegistationNo'] != null) {
                         $data = [
                             'Email' => $data['student'][0]->Email,
@@ -406,6 +409,7 @@ class DR extends Controller
                             'phoneNo' => $data['student'][0]->phoneNo,
                             'degreeID' => $newDegreeID,
                             'status' => $status,
+                            'gender' => $data['student'][0]->gender,
                         ];
                         $studentModel->insert($data);
 
@@ -448,7 +452,15 @@ class DR extends Controller
 
     public function settings()
     {
-        $this->view('dr-interfaces/dr-settings');
+        $user = new User();
+        // Fetch user data for display
+        $id = $_SESSION['USER_DATA']->id;
+        $data['user'] = $user->first(['id' => $id]);
+
+        if ($data['user'] === null) {
+            $data['error'] = 'No user data found.';
+        }
+        $this->view('dr-interfaces/dr-settings', $data);
     }
     public function reports($action = null, $id = null)
     {
