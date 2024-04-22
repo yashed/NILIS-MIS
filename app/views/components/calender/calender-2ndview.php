@@ -21,10 +21,13 @@ $data['role'] = $role;
         place-items: center;
         flex-direction: column;
     }
+    body.no-scroll {
+        overflow: hidden;
+    }
 
     .container {
         width: 95%;
-        height: 90%;
+        height: 100%;
         background-color: #fff;
         border-radius: 12px;
         padding: 10px;
@@ -113,22 +116,22 @@ $data['role'] = $role;
     }
 
     #currentDay {
-        background-color: #706fd3;
+        background-color: lightgray;
         color: #fff;
     }
 
     .event {
         font-size: 10px;
         padding: 3px;
-        background-color: #3d3d3d;
-        color: #fff;
+        background-color: #9ad6ff;
+        color: black;
         border-radius: 5px;
         max-height: 55px;
         overflow: hidden;
     }
 
     .event.holiday {
-        background-color: palegreen;
+        background-color: #ffd700;
         color: #3d3d3d;
     }
 
@@ -137,65 +140,40 @@ $data['role'] = $role;
         box-shadow: none;
     }
 
-    #modal {
-        display: none;
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100vw;
-        height: 100vh;
-        z-index: 10;
-        background-color: rgba(0, 0, 0, 0.8);
-    }
-
-    #addEvent,
     #viewEvent {
         display: none;
-        width: 350px;
+        width: auto;
         background-color: #fff;
         padding: 25px;
         position: absolute;
-        z-index: 20;
+        z-index: 999;
         margin-top: 225px;
         border-radius: 8px;
     }
 
-    #addEvent h2,
+    #eventText {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+
     #viewEvent h2 {
         font-weight: 500;
         margin-bottom: 10px;
     }
 
-    #txtTitle {
-        padding: 10px;
-        width: 100%;
-        box-sizing: border-box;
-        margin-bottom: 25px;
-        border-radius: 3px;
-        outline: none;
-        border: 1px solid #cbd4c2;
-        font-size: 16px;
-    }
-
-    #btnSave {
-        background-color: #2ed573;
-        width: 65px;
-        margin: 0px 25px 0px 80px;
-    }
-
     .btnClose {
-        background-color: #2f3542;
-        width: 65px;   
+        background-color: #17376e;
+        width: 65px;
     }
 
     #viewEvent p {
         margin-bottom: 20px;
     }
 
-    #btnDelete {
-        background-color: #17376E;
-        width: 65px; 
-        margin: 0px 25px 0px 80px;
+    .overlay {
+        display: none;
+        z-index: 998;
     }
 
     .error {
@@ -239,6 +217,17 @@ $data['role'] = $role;
         color: var(--text-color);
         transition: var(--tran-03);
     }
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        backdrop-filter: blur(5px); /* Add blur effect */
+        z-index: 998; /* Layer it above other content */
+        display: none; /* Initially hidden */
+    }
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -253,6 +242,7 @@ $data['role'] = $role;
 </head>
 
 <body>
+    <div class="overlay" id="overlay"></div>
     <div class="title-bar">
         <div class="back-button">
             <button class="back-button-btn" onclick="history.back()">
@@ -288,24 +278,11 @@ $data['role'] = $role;
             </div>
         </div>
     </div>
-    <div id="modal"></div>
-    <div id="addEvent">
-        <h2>Add Event</h2>
-        <input type="text" id="txtTitle" placeholder="Event Title" />
-        <button id="btnSave">Save</button>
-        <button class="btnClose">Close</button>
-    </div>
-
     <div id="viewEvent">
-        <h2>Event name</h2>
         <p id="eventText">This is Sample Event</p>
-        <button id="btnDelete">Delete</button>
         <button class="btnClose">Close</button>
     </div>
-
-    <!-- <script src="js/script.js"></script> -->
 </body>
-
 </html>
 <script>
     const holidays = [
@@ -367,8 +344,36 @@ $data['role'] = $role;
     let navigation = 0;
     let clicked = null;
     let events = localStorage.getItem("events") ? JSON.parse(localStorage.getItem("events")) : [];
+    // Merge existing events with degreetimetable events
+    const degreetimetableEvents = [
+    <?php
+        // Check if degreetimetables array exists and is not empty
+        if (isset($degreetimetables) && !empty($degreetimetables)) {
+            // Loop through each item in the degreetimetables array
+            foreach ($degreetimetables as $index => $degreetimetable) {
+                // Get the starting date and event name from the current item
+                $startingDate = $degreetimetable->StartingDate;
+                $eventName = $degreetimetable->EventName;
+                // Convert the starting date from YYYY-MM-DD to DD-MM-YYYY format
+                $date = new DateTime($startingDate);
+                $formattedDate = $date->format('d-m-Y'); // Format the date in DD-MM-YYYY
+                // Echo the JavaScript object for the current item
+                echo "{ date: '{$formattedDate}', title: '{$eventName}' }";
+                // Add a comma after each object except the last one
+                if ($index < count($degreetimetables) - 1) {
+                    echo ", ";
+                }
+            }
+        }
+        ?>
+    ];
+    console.log(degreetimetableEvents);
+    events = [...events, ...degreetimetableEvents];
+    // Log the updated events array
+    console.log("Updated events array:", events);
+    // Update the events in localStorage
+    localStorage.setItem("events", JSON.stringify(events));
     const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
     function loadCalendar() {
         const dt = new Date();
 
@@ -437,10 +442,7 @@ $data['role'] = $role;
     function buttons() {
         const btnBack = document.querySelector("#btnBack");
         const btnNext = document.querySelector("#btnNext");
-        const btnDelete = document.querySelector("#btnDelete");
-        const btnSave = document.querySelector("#btnSave");
         const closeButtons = document.querySelectorAll(".btnClose");
-        const txtTitle = document.querySelector("#txtTitle");
 
         btnBack.addEventListener("click", () => {
             navigation--;
@@ -450,35 +452,12 @@ $data['role'] = $role;
             navigation++;
             loadCalendar();
         });
-        modal.addEventListener("click", closeModal);
         closeButtons.forEach((btn) => {
             btn.addEventListener("click", closeModal);
         });
-        btnDelete.addEventListener("click", function () {
-            events = events.filter((e) => e.date !== clicked);
-            localStorage.setItem("events", JSON.stringify(events));
-            closeModal();
-        });
-
-        btnSave.addEventListener("click", function () {
-            if (txtTitle.value) {
-                txtTitle.classList.remove("error");
-                events.push({
-                    date: clicked,
-                    title: txtTitle.value.trim(),
-                });
-                txtTitle.value = "";
-                localStorage.setItem("events", JSON.stringify(events));
-                closeModal();
-            } else {
-                txtTitle.classList.add("error");
-            }
-        });
     }
-
-    const modal = document.querySelector("#modal");
     const viewEventForm = document.querySelector("#viewEvent");
-    const addEventForm = document.querySelector("#addEvent");
+    const overlay = document.querySelector(".overlay");
 
     function showModal(dateText) {
         clicked = dateText;
@@ -487,27 +466,20 @@ $data['role'] = $role;
             //Event already Preset
             document.querySelector("#eventText").innerText = eventOfTheDay.title;
             viewEventForm.style.display = "block";
-        } else {
-            //Add new Event
-            addEventForm.style.display = "block";
+            overlay.style.display = "block";
+            document.body.classList.add('no-scroll');
         }
-        modal.style.display = "block";
     }
 
     //Close Modal
     function closeModal() {
         viewEventForm.style.display = "none";
-        addEventForm.style.display = "none";
-        modal.style.display = "none";
+        overlay.style.display = "none";
+        document.body.classList.remove('no-scroll');
         clicked = null;
         loadCalendar();
     }
 
     buttons();
     loadCalendar();
-
-    /*
-    1. Add Event     
-    3. Update Local Storage
-    */
 </script>

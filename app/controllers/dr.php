@@ -15,6 +15,7 @@ class DR extends Controller
         $degree = new Degree();
         $student = new StudentModel();
         $exam = new Exam();
+        $degreetimetable = new DegreeTimeTable();  
         // show( $_POST );
         $_SESSION['DegreeID'] = null;
         unset($_SESSION['DegreeID']);
@@ -22,6 +23,7 @@ class DR extends Controller
         $data['degrees'] = $degree->findAll();
         $data['students'] = $student->findAll();
         $data['exam'] = $exam->findAll();
+        $data['degreetimetables'] = $degreetimetable->findAll();
         $this->view('dr-interfaces/dr-dashboard', $data);
     }
 
