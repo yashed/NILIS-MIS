@@ -196,8 +196,14 @@ class SAR extends Controller
 
 
         //remove session data
-        if (!empty($_SESSION['examDetails'])) {
-            unset($_SESSION['examDetails']);
+        // if (!empty($_SESSION['examDetails'])) {
+        //     unset($_SESSION['examDetails']);
+        // }
+
+        //add again examDetaios to session
+        if (!empty($examID)) {
+            $_SESSION['examDetails'] = $exam->where(['examID' => $examID]);
+
         }
 
         //Get currect Degree short name

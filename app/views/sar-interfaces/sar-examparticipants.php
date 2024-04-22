@@ -85,12 +85,14 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
 
     .temp2-sub-title1 {
 
+        display: flex;
         color: #17376E;
         font-family: Poppins;
         font-size: 22px;
         font-style: normal;
         font-weight: 600;
         font-size: 1.2vw;
+        justify-content: space-between;
 
     }
 
@@ -601,6 +603,32 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
         transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
     }
 
+    .delete-exam-popup {
+
+        position: fixed;
+        top: -150%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.25);
+        border: 1.5px solid rgba(00, 00, 00, 0.30);
+        opacity: 0;
+        background: #fff;
+        width: 40%;
+        /* height: 60vh; */
+        padding: 40px;
+        box-shadow: 9px 11px 60.9px 0px rgba(0, 0, 0, 0.60);
+        border-radius: 10px;
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+        z-index: 2000;
+    }
+
+    .delete-exam-popup.active {
+        top: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+    }
+
+
     .close-btn {
         position: absolute;
         right: 10px;
@@ -632,6 +660,65 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
         display: flex;
         gap: 10px;
         align-items: flex-end;
+
+    }
+
+    /* Dropdown Button */
+    .dropbtn {
+        background-color: #f1f1f1;
+        color: #17376E;
+        padding: 14px;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        border-radius: 20px
+    }
+
+    .dropbtn:hover,
+    .dropbtn:focus {}
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+
+    .dot-content-dropdown {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        right: 2vw
+    }
+
+
+    .dot-content-dropdown span {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        border-radius: 5px;
+
+    }
+
+
+    .dot-content-dropdown span:hover {
+        background-color: #ddd;
+        border-radius: 5px;
+    }
+
+
+    .show {
+        display: block;
+        border-radius: 5px;
+    }
+
+    .delete-exam :hover {
+        background-color: #f44336;
+        color: white;
 
     }
 </style>
@@ -673,7 +760,31 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
             <div class="temp2-subsection-1">
                 <div class="temp2-sub-title1">
                     <div class='sub-title-01'>Overview</div>
-                    <div class="exam-detail-btn">gg</div>
+                    <div class="exam-detail-btn">
+                        <button onclick="toggleButton()" class="dropbtn">
+                            <div class="dot-3-btn" onclick="toggleButton()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                    <path
+                                        d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                                </svg>
+                            </div>
+                            <form method="post" id='exam-manage'>
+
+                                <div id="Dot3Dropdown" class="dot-content-dropdown">
+                                    <?php if (!empty($_SESSION['examDetails'])): ?>
+                                        <?php if ($_SESSION['examDetails'][0]->status == 'ongoing'): ?>
+                                            <span type="submit" name="mark" value="Mark as Complete">Mark as Complete</span>
+                                        <?php elseif ($_SESSION['examDetails'][0]->status == 'completed'): ?>
+                                            <span type="submit" name="mark" value="">Mark as Ongoing</span>
+                                        <?php endif ?>
+                                    <?php endif ?>
+                                    <span type="submit" class='delete-exam' name="delete"
+                                        onclick="showExamDeletePopup()" style='color:red;'>Delete</span>
+
+                                </div>
+                            </form>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="column1">
@@ -817,32 +928,29 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
     <div id="exam-attendance" class="exam-popup">
         <?php $this->view('sar-interfaces/sar-exam-attendance-submit', $data) ?>
     </div>
+    <div id="delete-exam" class="delete-exam-popup">
+        <?php $this->view('components/popup/examination-delete-popup', $data) ?>
+    </div>
 </body>
 
 <script>
-    // document.addEventListener("DOMContentLoaded", function () {
-    //     var modal = document.getElementById('myModal');
-    //     var btn = document.getElementById('openModal');
-    //     var span = document.getElementById('closeModal');
-    //     var body = document.body;
+    function toggleButton() {
+        document.getElementById("Dot3Dropdown").classList.toggle("show");
+    }
 
-    //     btn.onclick = function () {
-    //         modal.style.display = "block";
-    //         body.classList.add('modal-open');
-    //     }
-
-    //     span.onclick = function () {
-    //         modal.style.display = "none";
-    //         body.classList.remove('modal-open');
-    //     }
-
-    //     window.onclick = function (event) {
-    //         if (event.target == modal) {
-    //             modal.style.display = "none";
-    //             body.classList.remove('modal-open');
-    //         }
-    //     }
-    // });
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dot-content-dropdown");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
 </script>
 <script>
     $(window).on("load", function () {
@@ -860,6 +968,12 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
     function showAttendancePopup() {
         console.log("Click attendance");
         document.querySelector("#exam-attendance").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+    }
+
+    function showExamDeletePopup() {
+        console.log("Click attendance");
+        document.querySelector("#delete-exam").classList.add("active");
         document.querySelector("#body").classList.add("active");
     }
 
