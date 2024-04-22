@@ -6,7 +6,7 @@ class _403_ extends Controller
     public function index()
     {
 
-        $data['title'] = '404';
+        $data['title'] = '403';
 
         $this->view('common/error-page/403', $data);
     }

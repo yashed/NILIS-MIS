@@ -400,6 +400,18 @@ $data['role'] = $role;
         color: #000;
         font-weight: 500;
     }
+
+    .error-msg {
+        font-family: "Poppins";
+        font-size: 12px;
+        color: #FF0000;
+        font-weight: 300;
+        text-align: left;
+    }
+
+    .error-msg-container {
+        display: flex;
+    }
 </style>
 
 <body>
@@ -429,6 +441,13 @@ $data['role'] = $role;
                                     <option value="special">Special Examination</option>
 
                                 </select>
+                            </div>
+                            <div class='error-msg-container'>
+                                <?php if (!empty($errors['exam-error'])): ?>
+                                    <div class="error-msg">
+                                        *<?= $errors['exam-error'] ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="exam-buttons">

@@ -352,6 +352,18 @@ $data['role'] = $role;
         align-items: center;
 
     }
+
+    .cancel-link {
+        display: flex;
+        justify-content: center;
+        font-family: "Poppins";
+        font-size: 12px;
+        color: #17376E;
+        font-weight: 400;
+        margin-top: 40px;
+        text-decoration: underline;
+        cursor: pointer;
+    }
 </style>
 
 <body>
@@ -425,6 +437,7 @@ $data['role'] = $role;
 
                             </div>
                         </div>
+
                     </form>
                 </div>
 

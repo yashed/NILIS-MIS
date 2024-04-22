@@ -11,7 +11,7 @@ class Admin extends Controller
   //   if (!Auth::is_admin()) {
   //     message('You are not authorized to view this page');
   //     show("Error");
-  //     redirect('login');
+  //     redirect('_403_');
   //   }
   // }
 

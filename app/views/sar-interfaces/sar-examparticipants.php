@@ -672,13 +672,10 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
             <div class="temp2-title">Examination</div>
             <div class="temp2-subsection-1">
                 <div class="temp2-sub-title1">
-                    Overview
+                    <div class='sub-title-01'>Overview</div>
+                    <div class="exam-detail-btn">gg</div>
                 </div>
-
                 <div class="row">
-
-
-
                     <div class="column1">
                         <div class="data1">Course Name<br>
                             <!-- <div class="email"><?= $student->Email ?></div> -->

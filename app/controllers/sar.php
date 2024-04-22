@@ -232,21 +232,58 @@ class SAR extends Controller
         }
 
 
+        //check whether examination creation cancle or not
+        if (isset($_POST['cancel-exam'])) {
+            if ($_POST['cancel-exam'] == 'cancel') {
+
+                if (!empty($_SESSION['checked_normal_students'])) {
+                    unset($_SESSION['checked_normal_students']);
+                }
+                if (!empty($_SESSION['checked_RM_students'])) {
+                    unset($_SESSION['checked_RM_students']);
+                }
+                if (!empty($_SESSION['Selected_Normal_Students'])) {
+                    unset($_SESSION['Selected_Normal_Students']);
+                }
+                if (!empty($_SESSION['Selected_RM_Students'])) {
+                    unset($_SESSION['Selected_RM_Students']);
+                }
+                if (!empty($_SESSION['Normal-Exam-Participants'])) {
+                    unset($_SESSION['Normal-Exam-Participants']);
+                }
+                if (!empty($_SESSION['Special-Exam-Participants'])) {
+                    unset($_SESSION['Special-Exam-Participants']);
+                }
+                if (!empty($_SESSION['exam-creation-details'])) {
+                    unset($_SESSION['exam-creation-details']);
+                }
+
+                redirect('sar/examination');
+            }
+        }
 
         if ($method == "create" && $id == "0") {
 
             if (isset($_POST['submit']) && !empty($_POST['exam-type'])) {
 
+                //add degreeId to post to validation
+                $_POST['degreeID'] = $degreeID;
                 //add examination creation data to session
-                $_SESSION['exam-creation-details'] = $_POST;
+                if ($exam->examDataValidation($_POST)) {
+                    $_SESSION['exam-creation-details'] = $_POST;
 
-                if ($_POST['exam-type'] == 'normal') {
-                    redirect('sar/examination/create/1');
-                } else if ($_POST['exam-type'] == 'special') {
-                    redirect('sar/examination/special/1');
+                    if ($_POST['exam-type'] == 'normal') {
+                        redirect('sar/examination/create/1');
+                    } else if ($_POST['exam-type'] == 'special') {
+                        redirect('sar/examination/special/1');
+                    }
                 }
+
+
+
             }
 
+            $data['errors'] = $exam->errors;
             $this->view('sar-interfaces/sar-createexam-0', $data);
 
         } else if ($method == "special" && $id == 1) {
@@ -538,6 +575,7 @@ class SAR extends Controller
                     //Select only selected student's data
                     //Handel Selected students data
                     if (empty($selectedIds)) {
+                        $_SESSION['Selected_Normal_Students'] = [];
                         redirect('sar/examination/create/2');
                     } else {
                         foreach ($data['students'] as $student) {
@@ -727,12 +765,12 @@ class SAR extends Controller
             // show($_SESSION['checked_RM_students']);
 
             //get RM students and generate distinct student data list
+
             $distinctData = $examParticipants->getDistinctElements($_SESSION['Selected_Normal_Students'], $_SESSION['Selected_RM_Students'], 'indexNo');
             $_SESSION['Normal-Exam-Participants'] = $distinctData;
 
             //get semster from session
             $selectedSemester = $_SESSION['exam-creation-details']['semester'];
-            show($selectedSemester);
             $selectedExamDetails = $exam->where(['degreeID' => $degreeID, 'semester' => $selectedSemester, 'status' => 'upcoming']);
 
             //get new examid
@@ -758,7 +796,6 @@ class SAR extends Controller
                     );
 
 
-
                     $subCount = count($_POST['subName']);
 
                     for ($x = 0; $x < $subCount; $x++) {
@@ -778,8 +815,6 @@ class SAR extends Controller
                         $selectedRMStudents = $_SESSION['Selected_RM_Students'];
                         $selectedNormalStudents = $_SESSION['Selected_Normal_Students'];
                         $examParticipantsData = $_SESSION['Normal-Exam-Participants'];
-
-
 
                         foreach ($examParticipantsData as $student) {
 
