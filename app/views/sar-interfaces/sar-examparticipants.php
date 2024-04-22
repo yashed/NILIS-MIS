@@ -710,6 +710,21 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
         border-radius: 5px;
     }
 
+    .dot-content-dropdown input {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        border-radius: 5px;
+
+    }
+
+
+    .dot-content-dropdown input:hover {
+        background-color: #ddd;
+        border-radius: 5px;
+    }
 
     .show {
         display: block;
@@ -771,14 +786,17 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                             </div>
                             <form method="post" id='exam-manage'>
 
+                                <input type='text' name='exam-type' value='<?= $_SESSION['examDetails'][0]->status ?>'
+                                    hidden>
                                 <div id="Dot3Dropdown" class="dot-content-dropdown">
                                     <?php if (!empty($_SESSION['examDetails'])): ?>
                                         <?php if ($_SESSION['examDetails'][0]->status == 'ongoing'): ?>
-                                            <span type="submit" name="mark" value="Mark as Complete">Mark as Complete</span>
+                                            <input type="submit" name="mark" value='Mark as Complete'>
                                         <?php elseif ($_SESSION['examDetails'][0]->status == 'completed'): ?>
-                                            <span type="submit" name="mark" value="">Mark as Ongoing</span>
+                                            <input type="submit" name="mark" value="Mark as Ongoing">
                                         <?php endif ?>
                                     <?php endif ?>
+                                    </input>
                                     <span type="submit" class='delete-exam' name="delete"
                                         onclick="showExamDeletePopup()" style='color:red;'>Delete</span>
 

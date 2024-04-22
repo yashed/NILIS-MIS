@@ -1075,6 +1075,39 @@ class SAR extends Controller
                 $data['attendacePopupStatus'] = $attetdancePopup;
 
 
+
+                //change degree status
+                if (isset($_POST['mark'])) {
+
+                    if (($_POST['mark'] == 'Mark as Complete') || ($_POST['mark'] == 'Mark as Ongoing')) {
+                        if ($_POST['exam-type'] == 'ongoing') {
+                            $exam->updateRows(
+                                ['status' => 'completed'],
+                                ['examID' => $examID]
+                            );
+
+                            $msg = "Examination statues changed as Completed";
+
+                        } elseif ($_POST['exam-type'] == 'completed') {
+                            $exam->updateRows(
+                                ['status' => 'ongoing'],
+                                ['examID' => $examID]
+                            );
+
+                            $msg = "Examination statues changed as Ongoing";
+                        }
+
+                        //update session data
+                        $_SESSION['examDetails'] = $exam->where(['examID' => $examID]);
+                        unset($_POST['mark']);
+                        unset($_POST['exam-type']);
+
+
+                    }
+                    message($msg, "success", true);
+                    activity($msg);
+                }
+
                 $this->view('sar-interfaces/sar-examparticipants', $data);
                 //send mails 
                 // if ($admissionMail->send($to, $mailSubject, '', $name) == false) {
