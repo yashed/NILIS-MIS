@@ -14,7 +14,7 @@ class App
    function __construct()
    {
       $arr = $this->getURL();
-
+      show($arr);
       $filename = "../app/controllers/" . ucfirst($arr[0]) . ".php";
       if (file_exists($filename)) {
          require $filename;
@@ -27,7 +27,7 @@ class App
          require "../app/controllers/" . $this->controller . ".php";
       }
 
-      //  show($arr);
+      show($arr);
       $mycontroller = new $this->controller();
       $mymethod = $arr[1] ?? $this->method;
 

@@ -732,6 +732,15 @@ class SAR extends Controller
 
             //get semster from session
             $selectedSemester = $_SESSION['exam-creation-details']['semester'];
+            show($selectedSemester);
+            $selectedExamDetails = $exam->where(['degreeID' => $degreeID, 'semester' => $selectedSemester, 'status' => 'upcoming']);
+
+            //get new examid
+            if (!empty($selectedExamDetails)) {
+
+                $examID = $selectedExamDetails[0]->examID;
+            }
+
 
             //subject data
             $data['subjects'] = $subjects->where(['degreeID' => $degreeID, 'semester' => $selectedSemester]);
@@ -740,20 +749,15 @@ class SAR extends Controller
             if (isset($_POST['submit'])) {
                 if ($_POST['submit'] == "timetable") {
 
-                    //exam creation
-                    $ExamData['examType'] = 'Normal';
-                    $ExamData['degreeID'] = $degreeID;
-                    $ExamData['semester'] = $selectedSemester;
-                    $ExamData['status'] = 'ongoing';
 
-                    //insert data to exam table
-                    if ($exam->examValidate($ExamData)) {
-                        $exam->insert($ExamData);
-                        $examID = $exam->lastID('examID');
+                    //update exam status as ongoing 
+                    $exam->updateRows
+                    (
+                        ['status' => 'ongoing'],
+                        ['examID' => $examID]
+                    );
 
-                    } else {
-                        $data['errors'] = $exam->errors;
-                    }
+
 
                     $subCount = count($_POST['subName']);
 

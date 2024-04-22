@@ -536,9 +536,9 @@ DELIMITER ;
         BEGIN
             DECLARE semester_value INT;
             
-            IF NEW.EventName = '1St Semester' THEN
+            IF NEW.EventName = 'First Semester' THEN
                 SET semester_value = 1;
-            ELSEIF NEW.EventName = '2Nd Semester' THEN
+            ELSEIF NEW.EventName = 'Second Semester' THEN
                 SET semester_value = 2;
             END IF;
             
