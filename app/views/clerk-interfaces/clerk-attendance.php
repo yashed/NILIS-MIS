@@ -327,7 +327,7 @@ $data['role'] = $role;
     <div class="temp2-home" id="blur-background">
     <div class="dr-degree-programs-title">
             <div class="dr-degree-programs-title1">Attendance</div>
-            <div class="dr-degree-programs-title1-core"><?= $degrees[0]->DegreeName ?></div>
+            <div class="dr-degree-programs-title1-core"><?= $degreedata[0]->DegreeName ?></div>
         </div>
         <!-- <?php foreach ($degrees as $degree) : ?>
                <?= $degree-> DegreeShortName ?>
@@ -335,7 +335,8 @@ $data['role'] = $role;
 
         <div class="temp2-subsection-2">
             <div class="temp2-subsection-21">
-                <button class="btn-secondary-2" onclick="downloadAttendanceSheet()">Download Attendance Sheet</button>
+           
+                <button class="btn-secondary-2" name="degreeid" onclick="downloadAttendanceSheet('<?= $degreedata[0]->DegreeID ?>')">Download Attendance Sheet</button>
                 <div class="dashed-container1">
                     <a href="javascript:toggleForm('importFrm');">
                         <div class="file-input-icon"></div>
@@ -363,8 +364,8 @@ $data['role'] = $role;
             <label for="csvFile">Upload CSV File:</label>
             <div class="form-element">
            
-    <input type="hidden" name="selectDegree" value="<?= $degrees[0]->DegreeShortName ?>">
-    <label for="selectDegree">Degree Name: <?= $degrees[0]->DegreeShortName ?></label>
+    <input type="hidden" name="selectDegree" value="<?= $degreedata[0]->DegreeShortName ?>">
+    <label for="selectDegree">Degree Name: <?= $degreedata[0]->DegreeShortName ?></label>
 
             </div>
             <input type="file" name="csvFile" id="csvFile" accept=".csv" required>
@@ -412,19 +413,16 @@ $data['role'] = $role;
             }
         }
 
-    function downloadAttendanceSheet() {
-    // Get the degree short name from PHP
-    var degreeShortName = '<?= $degrees[0]->DegreeShortName ?>';
-
-    // Construct the file URL dynamically based on the degree short name
-    var fileUrl = '<?= ROOT ?>assets/csv/output/Student_Attendance_' + degreeShortName + '.csv';
+    function downloadAttendanceSheet(degreeid) {
+    // Modify the file URL dynamically based on the degree ID
+    var fileUrl = '<?= ROOT ?>assets/csv/output/Attendance_' + degreeid + '.csv';
 
     // Create an anchor element
     var a = document.createElement('a');
     a.href = fileUrl;
 
     // Set the download attribute with the desired file name
-    a.download = 'Student_Attendance_' + degreeShortName + '.csv';
+    a.download = 'Attendance_' + degreeid + '.csv';
 
     // Append the anchor element to the document
     document.body.appendChild(a);
@@ -435,6 +433,7 @@ $data['role'] = $role;
     // Remove the anchor element from the document
     document.body.removeChild(a);
 }
+
 
         function validateForm() {
             var selectedDegree = document.getElementById("form-element-dropdown").value;

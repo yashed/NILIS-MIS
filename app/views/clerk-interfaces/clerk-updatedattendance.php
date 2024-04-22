@@ -271,7 +271,7 @@ $data['role'] = $role;
 
     <div class="dr-degree-programs-home">
         <div class="dr-degree-programs-title">
-            <div class="dr-degree-programs-title1">Degree Name : <?= $degrees[0]->DegreeShortName ?></div>
+            <div class="dr-degree-programs-title1">Degree Name : <?= $degreedata[0]->DegreeShortName ?></div>
             <div class="dr-degree-programs-title1-core">Attendance</div>
         </div>
         <div class="dr-degree-programs-home-1">
@@ -299,21 +299,12 @@ $data['role'] = $role;
                         </thead>
                         <tbody>
                         <?php foreach ($attendances as $attendance) : ?>
-                            <?php if($attendance->degree_name === 'DLIM' && $degrees[0]->DegreeShortName=='DLIM' ) :?>
+                            <?php if($attendance->degree_name == $degreedata[0]->DegreeShortName ) :?>
                     <tr>
                         <td><?= $attendance->index_no ?></td>
                         <td><?= $attendance->attendance ?></td>
                     </tr>
-                    <?php elseif($attendance->degree_name === 'DSL' && $degrees[0]->DegreeShortName=='DSL' ) :?>
-                        <tr>
-                        <td><?= $attendance->index_no ?></td>
-                        <td><?= $attendance->attendance ?></td>
-                    </tr>
-                    <?php elseif($attendance->degree_name === 'DPL' && $degrees[0]->DegreeShortName=='DPL' ) :?>
-                        <tr>
-                        <td><?= $attendance->index_no ?></td>
-                        <td><?= $attendance->attendance ?></td>
-                    </tr>
+                 
                     <?php endif;?>
                 <?php endforeach; ?>
 

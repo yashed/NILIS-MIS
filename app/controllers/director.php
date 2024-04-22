@@ -14,14 +14,24 @@ class DIRECTOR extends Controller
     public function index()
     {
         $degree = new Degree();
+        $exam = new Exam();
+        // $notification = new NotificationModel();
+        // $notification_count_arr = $notification->countNotifications();
+        $finalMarks = new FinalMarks();
+        $recentExamId = $finalMarks->lastID('examID');
 
+        //join exam and degree tables
+        $dataTables = ['degree'];
+        $columns = ['*'];
+        $examConditions = ['exam.degreeID = degree.DegreeID', 'exam.examID = ' . $recentExamId];
+        $data['RecentResultExam'] = $exam->join($dataTables, $columns, $examConditions);
         // $degree->insert($_POST);
         // show($_POST);
         // $notification = new NotificationModel();
         // $notification_count_arr = $notification->countNotificationsDirector();
 
         // $data['notification_count_obj'] = $notification_count_arr[0];
-        // $data['notification_count_obj_director'] = getNotificationCountDirector();
+        $data['notification_count_obj_director'] = getNotificationCountDirector();
 
         $data['degrees'] = $degree->findAll();
         //show($data['degrees']);

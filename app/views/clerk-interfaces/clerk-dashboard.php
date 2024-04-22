@@ -1,6 +1,7 @@
 <?php
 $role = "Clerk";
 $data['role'] = $role;
+$data['recentResults'] = $RecentResultExam;
 ?>
 
 <!DOCTYPE html>
@@ -9,10 +10,11 @@ $data['role'] = $role;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <head>
-    <link rel="stylesheet" type="text/css" href="<?= ROOT ?>css/clerk/clerk-dashboard.css">
-    <title>Clerk Dashboard</title>
-</head>
+        <link rel="stylesheet" type="text/css" href="<?= ROOT ?>css/clerk/clerk-dashboard.css">
+        <title>Clerk Dashboard</title>
+    </head>
 
 
 <body>
@@ -44,29 +46,35 @@ $data['role'] = $role;
                     Recently Published Examination Results
                 </div>
                 <div class="clerk-exam-bar">
-                    <div class="clerk-exam-card1">
-                        <?php $this->view('components/exam-card/exam-card', $data) ?>
-                        <?php $this->view('components/exam-card/exam-card', $data) ?>
+                    <?php if (!empty($RecentResultExam)) : ?>
+                        <?php foreach ($RecentResultExam as $exam) : ?>
+                            <?php
+
+                            $data['exam'] = $exam;
+                            $this->view('components/exam-card/exam-card', $data);
+
+                            ?>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+
+                        <div class="result-msg">
+                            No Results Published
+                        </div>
+                        < <?php endif; ?> </div>
+                </div>
+                <div class="clerk-subsection-22">
+                    <div class="clerk-sub-title">
+                        Academic Calender
                     </div>
-                    <div class="clerk-exam-card2">
-                        <?php $this->view('components/exam-card/exam-card', $data) ?>
-                        <?php $this->view('components/exam-card/exam-card', $data) ?>
+                    <div class="clerk-calender">
+                        <?php $this->view('components/calender/calender', $data) ?>
                     </div>
                 </div>
             </div>
-            <div class="clerk-subsection-22">
-                <div class="clerk-sub-title">
-                    Academic Calender
-                </div>
-                <div class="clerk-calender">
-                    <?php $this->view('components/calender/calender', $data) ?>
-                </div>
+            <div class="clerk-footer">
+                <?php $this->view('components/footer/index', $data) ?>
             </div>
         </div>
-        <div class="clerk-footer">
-            <?php $this->view('components/footer/index', $data) ?>
-        </div>
-    </div>
 
 </body>
 

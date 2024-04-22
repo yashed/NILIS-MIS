@@ -452,27 +452,27 @@ function updateMarksheet($csvFileName, $dataArray, $newFileName)
     fclose($newFile);
 }
 
-// function getNotificationCount()
-// {
-//     $notification = new NotificationModel();
-//     $username = $_SESSION['USER_DATA']->username;
-//     $data['usernames'] = $username;
-//     $notification_count_arr = $notification->countNotifications($username);
-//     $data['notification_count_obj'] = $notification_count_arr[0];
-//     return $notification_count_arr[0];
+function getNotificationCount()
+{
+    $notification = new NotificationModel();
+    $username = $_SESSION['USER_DATA']->username;
+    $data['usernames'] = $username;
+    $notification_count_arr = $notification->countNotifications($username);
+    $data['notification_count_obj'] = $notification_count_arr[0];
+    return $notification_count_arr[0];
     
-// }
+}
 
-// function getNotificationCountDirector()
-// {
-//     $notification = new NotificationModel();
-//     $username = $_SESSION['USER_DATA']->username;
-//     $data['usernames'] = $username;
-//     $notification_count_arr = $notification->countNotificationsDirector($username);
-//     $data['notification_count_obj_director'] = $notification_count_arr[0];
+function getNotificationCountDirector()
+{
+    $notification = new NotificationModel();
+    $username = $_SESSION['USER_DATA']->username;
+    $data['usernames'] = $username;
+    $notification_count_arr = $notification->countNotificationsDirector($username);
+    $data['notification_count_obj_director'] = $notification_count_arr[0];
 
-//     return $notification_count_arr[0];
-// }
+    return $notification_count_arr[0];
+}
 
 // function getNotificationCountSAR()
 // {
@@ -517,4 +517,7 @@ function updateMarksheet($csvFileName, $dataArray, $newFileName)
 
 //     return $notification_count_arr[0];
 // }
+
+
+
 ?>

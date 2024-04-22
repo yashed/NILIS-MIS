@@ -604,10 +604,11 @@ DELIMITER ;
         DECLARE degreeName TEXT; -- Specify the length for VARCHAR
         DECLARE str1 VARCHAR(255); -- Declare variables for string concatenation
         DECLARE str2 VARCHAR(255);
+        DECLARE eventName TEXT;
     
         -- Cursor to fetch examination events
         DECLARE eventCursor CURSOR FOR
-            SELECT dt.StartingDate, d.DegreeName
+            SELECT dt.StartingDate, d.DegreeName,dt.EventName
             FROM degree_timetable AS dt
             JOIN degree AS d ON dt.DegreeID = d.DegreeID
             WHERE dt.EventType = 'Examination';
@@ -618,7 +619,7 @@ DELIMITER ;
         OPEN eventCursor;
     
         read_loop: LOOP
-            FETCH eventCursor INTO eventStartDate, degreeName;
+            FETCH eventCursor INTO eventStartDate, degreeName,eventName;
             IF eventStartDate IS NULL THEN
                 LEAVE read_loop;
             END IF;
@@ -629,7 +630,7 @@ DELIMITER ;
             -- Check if days remaining is 0 (i.e., the examination is today)
             IF @daysRemaining = 0 THEN
                 -- Construct notification message
-                SET str1 = CONCAT('There is an examination scheduled on', eventStartDate,' for the ', degreeName ,'.');
+                SET str1 = CONCAT('The ', eventName ,' examination is scheduled on ', eventStartDate,' for the ', degreeName ,'.');
                 
     
                 -- Insert record into notifications table for all users
@@ -653,13 +654,15 @@ DELIMITER ;
         DECLARE eventEndDate DATE;
         DECLARE userId INT;
         DECLARE daysAfterExam INT;
-        DECLARE degreeName TEXT; -- Specify the length for VARCHAR
+        DECLARE degreeName TEXT;
+        DECLARE eventName TEXT;
+        -- Specify the length for VARCHAR
 
         DECLARE str1 VARCHAR(255); -- Declare variables for string concatenation
         DECLARE str2 VARCHAR(255);
 
         DECLARE eventCursor CURSOR FOR
-            SELECT dt.EndingDate, d.DegreeName
+            SELECT dt.EndingDate, d.DegreeName,dt.EventName
             FROM degree_timetable AS dt
             JOIN degree AS d ON dt.DegreeID = d.DegreeID
             WHERE dt.EventType = 'Examination';
@@ -670,7 +673,7 @@ DELIMITER ;
         OPEN eventCursor;
 
         read_loop: LOOP
-            FETCH eventCursor INTO eventEndDate, degreeName;
+            FETCH eventCursor INTO eventEndDate, degreeName,eventName;
             IF eventEndDate IS NULL THEN
                 LEAVE read_loop;
             END IF;
@@ -681,7 +684,7 @@ DELIMITER ;
             -- Check if days remaining is less than or equal to 14 and greater than 0
             IF (daysAfterExam = 0) THEN
                -- Construct notification message
-                SET str1 = CONCAT('The examination for the ', degreeName ,' has ended. If required, please proceed with any necessary actions post-examination.');
+                SET str1 = CONCAT('The ', eventName ,' examination for the ', degreeName ,' has ended. If required, please proceed with any necessary actions post-examination.');
                 
 
                 -- Print concatenated strings to console (optional)

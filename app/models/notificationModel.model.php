@@ -19,43 +19,43 @@ class NotificationModel extends Model
         'usernames'
      ];
 
-    //  public function countNotifications($sessionUsername) {
-    //     $query = "
-    //         SELECT COUNT(*) AS notification_count
-    //         FROM notifications
-    //         WHERE ((type = 'Examination' AND msg_type = 'Exam-start-alert' AND usernames = ?)
-    //             OR (type = 'Examination' AND msg_type = 'Exam-end-alert' AND usernames = ?)
-    //             OR (type = 'Vacation' AND msg_type = 'Vacation-start-alert' AND usernames = ?)
-    //             OR (type = 'Vacation' AND msg_type = 'Vacation-end-alert' AND usernames = ?)
-    //             OR (type = 'Study Leave' AND msg_type = 'Studyleave-start-alert' AND usernames = ?)
-    //             OR (type = 'Study Leave' AND msg_type = 'Studyleave-end-alert' AND usernames = ?))
-    //             OR (type = 'Study Leave' AND msg_type = 'student_attendance_alert');
-    //     ";
-    //     // Pass the $sessionUsername for each placeholder
-    //     $res = $this->query($query, [$sessionUsername, $sessionUsername, $sessionUsername, $sessionUsername, $sessionUsername, $sessionUsername]);
-    //     if($res) {
-    //         return $res;
-    //     }
-    // }
+     public function countNotifications($sessionUsername) {
+        $query = "
+            SELECT COUNT(*) AS notification_count
+            FROM notifications
+            WHERE ((type = 'Examination' AND msg_type = 'Exam-start-alert' AND usernames = ?)
+                OR (type = 'Examination' AND msg_type = 'Exam-end-alert' AND usernames = ?)
+                OR (type = 'Vacation' AND msg_type = 'Vacation-start-alert' AND usernames = ?)
+                OR (type = 'Vacation' AND msg_type = 'Vacation-end-alert' AND usernames = ?)
+                OR (type = 'Study Leave' AND msg_type = 'Studyleave-start-alert' AND usernames = ?)
+                OR (type = 'Study Leave' AND msg_type = 'Studyleave-end-alert' AND usernames = ?))
+                OR (type = 'Study Leave' AND msg_type = 'student_attendance_alert');
+        ";
+        // Pass the $sessionUsername for each placeholder
+        $res = $this->query($query, [$sessionUsername, $sessionUsername, $sessionUsername, $sessionUsername, $sessionUsername, $sessionUsername]);
+        if($res) {
+            return $res;
+        }
+    }
 
-    // public function countNotificationsDirector($sessionUsername) {
-    //     $query = "
-    //         SELECT COUNT(*) AS notification_count_director
-    //         FROM notifications
-    //         WHERE ((type = 'Examination' AND msg_type = 'Exam-start-alert' AND usernames = ?)
-    //             OR (type = 'Examination' AND msg_type = 'Exam-end-alert' AND usernames = ?)
-    //             OR (type = 'Vacation' AND msg_type = 'Vacation-start-alert' AND usernames = ?)
-    //             OR (type = 'Vacation' AND msg_type = 'Vacation-end-alert' AND usernames = ?)
-    //             OR (type = 'Study Leave' AND msg_type = 'Studyleave-start-alert' AND usernames = ?)
-    //             OR (type = 'Study Leave' AND msg_type = 'Studyleave-end-alert' AND usernames = ?))
-    //             OR (type = 'Examination' AND msg_type = 'director-remind');
-    //     ";
-    //     // Pass the $sessionUsername for each placeholder
-    //     $res = $this->query($query, [$sessionUsername, $sessionUsername, $sessionUsername, $sessionUsername, $sessionUsername, $sessionUsername]);
-    //     if($res) {
-    //         return $res;
-    //     }
-    // }
+    public function countNotificationsDirector($sessionUsername) {
+        $query = "
+            SELECT COUNT(*) AS notification_count_director
+            FROM notifications
+            WHERE ((type = 'Examination' AND msg_type = 'Exam-start-alert' AND usernames = ?)
+                OR (type = 'Examination' AND msg_type = 'Exam-end-alert' AND usernames = ?)
+                OR (type = 'Vacation' AND msg_type = 'Vacation-start-alert' AND usernames = ?)
+                OR (type = 'Vacation' AND msg_type = 'Vacation-end-alert' AND usernames = ?)
+                OR (type = 'Study Leave' AND msg_type = 'Studyleave-start-alert' AND usernames = ?)
+                OR (type = 'Study Leave' AND msg_type = 'Studyleave-end-alert' AND usernames = ?))
+                OR (type = 'Examination' AND msg_type = 'director-remind');
+        ";
+        // Pass the $sessionUsername for each placeholder
+        $res = $this->query($query, [$sessionUsername, $sessionUsername, $sessionUsername, $sessionUsername, $sessionUsername, $sessionUsername]);
+        if($res) {
+            return $res;
+        }
+    }
     
    
 
