@@ -352,20 +352,33 @@ $data['role'] = $role;
             // Loop through each item in the degreetimetables array
             foreach ($degreetimetables as $index => $degreetimetable) {
                 // Get the starting date and event name from the current item
+                $degreeName = '';
                 $startingDate = $degreetimetable->StartingDate;
                 $eventName = $degreetimetable->EventName;
+                $degreeID = $degreetimetable->DegreeID; 
+                $endDate = $degreetimetable->EndingDate;
+                // echo "console.log('Checking degree ID: " . $degreeID . "')";
+                if (isset($degrees) && !empty($degrees)) {
+                    foreach ($degrees as $degree) {
+                        // echo "console.log('Comparing with degree ID: " . $degree->DegreeID . "')";
+                        if ($degree->DegreeID == $degreeID) {
+                            $degreeName = $degree->DegreeShortName;
+                            break;
+                        }
+                    }
+                }
                 // Convert the starting date from YYYY-MM-DD to DD-MM-YYYY format
                 $date = new DateTime($startingDate);
                 $formattedDate = $date->format('d-m-Y'); // Format the date in DD-MM-YYYY
                 // Echo the JavaScript object for the current item
-                echo "{ date: '{$formattedDate}', title: '{$eventName}' }";
+                echo "{ date: '{$formattedDate}', degreeName: '{$degreeName}', degreeID: '{$degreeID}', title: '{$eventName}', endDate: '{$endDate}' }";
                 // Add a comma after each object except the last one
                 if ($index < count($degreetimetables) - 1) {
                     echo ", ";
                 }
             }
         }
-        ?>
+    ?>
     ];
     console.log(degreetimetableEvents);
     events = [...events, ...degreetimetableEvents];
@@ -373,6 +386,8 @@ $data['role'] = $role;
     console.log("Updated events array:", events);
     // Update the events in localStorage
     localStorage.setItem("events", JSON.stringify(events));
+    const keyToRemove = 'events'; // Specify the key of the item you want to remove
+localStorage.removeItem(keyToRemove);
     const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     function loadCalendar() {
         const dt = new Date();
@@ -415,11 +430,12 @@ $data['role'] = $role;
                 if (i - emptyDays === day && navigation == 0) {
                     dayBox.id = "currentDay";
                 }
-
                 if (eventOfTheDay) {
                     const eventDiv = document.createElement("div");
                     eventDiv.classList.add("event");
-                    eventDiv.innerText = eventOfTheDay.title;
+                    // Combine eventOfTheDay.title and eventOfTheDay.endDate into a single string with a newline character between them
+                    eventDiv.innerText = `${eventOfTheDay.title}\n${eventOfTheDay.endDate}`;
+                    // Append the eventDiv to the dayBox
                     dayBox.appendChild(eventDiv);
                 }
                 if (holidayOfTheDay) {
@@ -461,13 +477,24 @@ $data['role'] = $role;
 
     function showModal(dateText) {
         clicked = dateText;
+        console.log("Clicked date:", dateText);
         const eventOfTheDay = events.find((e) => e.date == dateText);
+        console.log("Event of the day:", eventOfTheDay);
         if (eventOfTheDay) {
-            //Event already Preset
-            document.querySelector("#eventText").innerText = eventOfTheDay.title;
+            // Event already preset
+            const degreeName = eventOfTheDay.degreeName;
+            const eventname = eventOfTheDay.title;
+            const enddate = eventOfTheDay.endDate;
+            const eventTextElement = document.querySelector("#eventText");
+            // Reset the text in eventTextElement before adding new content
+            eventTextElement.innerText = `Degree Name: ${degreeName}\nEvent Name: ${eventname}\nEnd Date: ${enddate}`;
+            console.log("Displaying event title and degreeID in modal");
+            // Show the modal popup
             viewEventForm.style.display = "block";
             overlay.style.display = "block";
             document.body.classList.add('no-scroll');
+        } else {
+            console.log("No event found for the given date.");
         }
     }
 
