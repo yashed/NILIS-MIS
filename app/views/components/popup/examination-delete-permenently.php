@@ -65,7 +65,7 @@
 <body>
 
     <div class="results-delete-popup" id="result-sheet-delete-popup">
-        <div class="close-btn" id="close-delete-popup-e">
+        <div class="close-btn" id="close-delete-popup-ep">
             &times;
         </div>
         <div class="delete-card-rs">
@@ -82,11 +82,12 @@
             </div>
             <div class="delete-text">
                 <h2>Are you sure?</h2>
-                <p>It will delete all the details about this examination and You have to create Exammination again</p>
+                <p>It will delete all the details about this examination permanently and you can't create this
+                    examination again</p>
             </div>
 
             <form class="rs-form" method="post" id='delete-rs-form'>
-                <button name='delete-exam' value='delete' type="submit" class="delete-bt-rs">Delete</button>
+                <button name='delete-exam' value='delete-forever' type="submit" class="delete-bt-rs">Delete</button>
             </form>
 
 
@@ -97,8 +98,8 @@
     <body>
 
         <script>
-            document.querySelector("#close-delete-popup-e").addEventListener("click", function () {
-                document.querySelector("#delete-exam").classList.remove("active");
+            document.querySelector("#close-delete-popup-ep").addEventListener("click", function () {
+                document.querySelector("#delete-exam-p").classList.remove("active");
                 document.querySelector("#body").classList.remove("active");
             });
         </script>

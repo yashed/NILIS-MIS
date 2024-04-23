@@ -44,7 +44,7 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
     }
 
     .temp2-home {
-        height: 100vh;
+
         left: 250px;
         position: relative;
         width: calc(100% - 250px);
@@ -121,6 +121,7 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
         height: auto;
         padding: 1vw 2vw 1vw 2vw;
         align-items: center;
+        min-height: 50vh;
     }
 
     .flex-container-top {
@@ -353,6 +354,7 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
     .table__body-td-name {
         display: flex;
         align-items: center;
+        justify-content: center;
     }
 
     td img {
@@ -629,6 +631,31 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
     }
 
 
+    .delete-perm-popup {
+
+        position: fixed;
+        top: -150%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.25);
+        border: 1.5px solid rgba(00, 00, 00, 0.30);
+        opacity: 0;
+        background: #fff;
+        width: 40%;
+        /* height: 60vh; */
+        padding: 40px;
+        box-shadow: 9px 11px 60.9px 0px rgba(0, 0, 0, 0.60);
+        border-radius: 10px;
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+        z-index: 2000;
+    }
+
+    .delete-perm-popup.active {
+        top: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+    }
+
     .close-btn {
         position: absolute;
         right: 10px;
@@ -736,28 +763,17 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
         color: white;
 
     }
+
+    .empty-msg {
+        font-size: 1.5vw;
+        color: #17376E;
+        font-weight: 500;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+
+    }
 </style>
-<?php
-
-$perPage = 5;
-if (!empty($examParticipants)) {
-
-    $totalRecords = count($examParticipants);
-}
-$totalPages = ceil($totalRecords / $perPage);
-
-
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-
-
-$start = ($page - 1) * $perPage;
-$end = $start + $perPage;
-
-// Slice the array to get records for the current page
-$currentRecords = array_slice($examParticipants, $start, $perPage);
-
-
-?>
 
 <body>
     <div class="loader-wraper">
@@ -790,16 +806,23 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                                     hidden>
                                 <div id="Dot3Dropdown" class="dot-content-dropdown">
                                     <?php if (!empty($_SESSION['examDetails'])): ?>
-                                        <?php if ($_SESSION['examDetails'][0]->status == 'ongoing'): ?>
-                                            <input type="submit" name="mark" value='Mark as Complete'>
-                                        <?php elseif ($_SESSION['examDetails'][0]->status == 'completed'): ?>
-                                            <input type="submit" name="mark" value="Mark as Ongoing">
+                                        <?php if ($_SESSION['examDetails'][0]->examType == "Normal"): ?>
+                                            <?php if ($_SESSION['examDetails'][0]->status == 'ongoing'): ?>
+                                                <input type="submit" name="mark" value='Mark as Complete'>
+                                            <?php elseif ($_SESSION['examDetails'][0]->status == 'completed'): ?>
+                                                <input type="submit" name="mark" value="Mark as Ongoing">
+                                            <?php endif ?>
                                         <?php endif ?>
                                     <?php endif ?>
                                     </input>
+                                    <?php if ($_SESSION['examDetails'][0]->examType == "Normal"): ?>
+                                        <?php if ($_SESSION['examDetails'][0]->status == 'ongoing'): ?>
+                                            <span type="submit" class='delete-exam' name="delete"
+                                                onclick="showExamDeletePopup()" style='color:red;'>Reset Data</span>
+                                        <?php endif ?>
+                                    <?php endif ?>
                                     <span type="submit" class='delete-exam' name="delete"
-                                        onclick="showExamDeletePopup()" style='color:red;'>Delete</span>
-
+                                        onclick="showExamDeletePermPopup()" style='color:red;'>Delete Permanently</span>
                                 </div>
                             </form>
                     </div>
@@ -872,40 +895,46 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($currentRecords as $students):
+                                <?php if (!empty($examParticipants)): ?>
+                                    <?php
                                     if (!empty($_SESSION['examDetails'])) {
 
                                         $examID = $_SESSION['examDetails'][0]->examID;
                                     }
 
-                                    $degreeID = 4;
-                                    if (!empty($_SESSION['degreeDetails'])) {
-
-                                        $degreeID = $_SESSION['degreeDetails'][0]->degreeID;
+                                    if (!empty($_SESSION['degreeData'])) {
+                                        $degreeID = $_SESSION['degreeData'][0]->DegreeID;
                                     }
 
                                     ?>
-                                    <?php foreach ($students as $student): ?>
-                                        <?php $json = json_encode($student); ?>
-                                        <tr>
-                                            <td class="table__body-td-name"><img src="<?= ROOT ?>assets/student.png" alt="">
-                                                Bimsara Anjana</td>
-                                            <td>
-                                                <?= $student->attempt ?>
-                                            </td>
-                                            <td>
-                                                <?= $student->indexNo ?>
-                                            </td>
+                                    <?php if (!empty($examParticipants)): ?>
+                                        <?php foreach ($examParticipants as $student): ?>
 
-                                            <td>
-                                                <?= $student->studentType ?>
-                                            </td>
-                                            <td> <a href="http://localhost/NILIS-MIS/public/admission/login?degreeID=<?= $degreeID ?>&examID=<?= $examID ?>&indexNo=<?= $student->indexNo ?>"
-                                                    target="_blank">tap
-                                                    to see Admission card </a></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php endforeach; ?>
+                                            <tr>
+                                                <td class="table__body-td-name"> <?= $student->name ?>
+                                                </td>
+                                                <td>
+                                                    <?= $student->attempt ?>
+                                                </td>
+                                                <td>
+                                                    <?= $student->indexNo ?>
+                                                </td>
+
+                                                <td>
+                                                    <?= $student->studentType ?>
+                                                </td>
+                                                <td> <a href="http://localhost/NILIS-MIS/public/admission/login?degreeID=<?= $degreeID ?>&examID=<?= $examID ?>&indexNo=<?= $student->indexNo ?>"
+                                                        target="_blank">tap
+                                                        to see Admission card </a></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <div class='empty-msg'>
+                                            No Students Found
+                                        </div>
+                                    <?php endif; ?>
+
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </section>
@@ -913,17 +942,7 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
 
                     <br>
                     <div class="pagination">
-                        <?php if ($page > 1): ?>
-                            <a href="?page=<?= $page - 1 ?>">Previous</a>
-                        <?php endif; ?>
-                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                            <a href="?page=<?= $i ?>" <?= $page === $i ? 'class="active"' : '' ?>>
-                                <?= $i ?>
-                            </a>
-                        <?php endfor; ?>
-                        <?php if ($page < $totalPages): ?>
-                            <a href="?page=<?= $page + 1 ?>">Next</a>
-                        <?php endif; ?>
+
                     </div>
 
 
@@ -948,6 +967,9 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
     </div>
     <div id="delete-exam" class="delete-exam-popup">
         <?php $this->view('components/popup/examination-delete-popup', $data) ?>
+    </div>
+    <div id="delete-exam-p" class="delete-perm-popup">
+        <?php $this->view('components/popup/examination-delete-permenently', $data) ?>
     </div>
 </body>
 
@@ -977,21 +999,27 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
 
     function showMailPopup() {
 
-        console.log('run');
+
         document.querySelector("#mail-popup").classList.add("active");
         document.querySelector("#body").classList.add("active");
-        console.log('run again');
+
     }
 
     function showAttendancePopup() {
-        console.log("Click attendance");
+
         document.querySelector("#exam-attendance").classList.add("active");
         document.querySelector("#body").classList.add("active");
     }
 
     function showExamDeletePopup() {
-        console.log("Click attendance");
+
         document.querySelector("#delete-exam").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+    }
+
+    function showExamDeletePermPopup() {
+
+        document.querySelector("#delete-exam-p").classList.add("active");
         document.querySelector("#body").classList.add("active");
     }
 

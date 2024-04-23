@@ -427,10 +427,18 @@ $data['role'] = $role;
                             <div class="semester-dropdown">
                                 <label class="semester-select-lable">Select the Semester</label>
                                 <select name="semester" class='select-semester'>
-
-                                    <option value="1">Semester 01</option>
-                                    <option value="2">Semester 02 </option>
-
+                                    <?php show($_SESSION['degreeData']); ?>
+                                    <?php if (!empty($_SESSION['degreeData'])): ?>
+                                        <?php if ($_SESSION['degreeData'][0]->Duration == 1): ?>
+                                            <option value="1">Semester 01</option>
+                                            <option value="2">Semester 02 </option>
+                                        <?php elseif ($_SESSION['degreeData'][0]->Duration == 2): ?>
+                                            <option value="1">Semester 01</option>
+                                            <option value="2">Semester 02 </option>
+                                            <option value="3">Semester 03</option>
+                                            <option value="4">Semester 04</option>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
                                 </select>
                             </div>
                             <div class="exam-type-dropdown">

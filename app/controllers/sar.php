@@ -270,6 +270,7 @@ class SAR extends Controller
 
         if ($method == "create" && $id == "0") {
 
+
             if (isset($_POST['submit']) && !empty($_POST['exam-type'])) {
 
                 //add degreeId to post to validation
@@ -639,7 +640,7 @@ class SAR extends Controller
 
             //Get join data from repeat students and degree tables 
             $conditions2 = ['repeat_students.degreeID = degree.degreeID', 'repeat_students.paymentStatus=1', 'repeat_students.semester= ' . $selectedSemester];
-            $whereConditions2 = ['repeat_students.degreeShortName=' . "'" . $degreeShortName[0] . "'", 'repeat_students.written = 0'];
+            $whereConditions2 = ['repeat_students.degreeShortName=' . "'" . $degreeShortName[0] . "'", 'repeat_students.written = 0', 'repeat_students.attempt <' . 5];
             //need add condition about the attempt of repete student <5
             $joinStudnetData2 = $repeatStudents->joinWhere($tables, $columns, $conditions2, $whereConditions2);
 
@@ -831,7 +832,8 @@ class SAR extends Controller
 
                                 unset($student->id);
                             }
-
+                            show($student);
+                            show($examID);
                             $student->examID = $examID;
                             $examParticipants->insert($student);
                         }
@@ -1065,15 +1067,57 @@ class SAR extends Controller
                     activity("Attendance Submitted Successfully");
 
                 }
+                //get exam participant data to pass to the view
+                $epTables = ['student'];
+                $epColumns = ['student.name', 'student.indexNo', 'exam_participants.studentType', 'exam_participants.examID', 'exam_participants.DegreeID', 'exam_participants.attempt'];
+                $epConditions = ['student.indexNo = exam_participants.indexNo'];
+                $epWhereCondition = ['exam_participants.examID= ' . $examID];
+                $examParticipantsData = $examParticipants->joinWhere($epTables, $epColumns, $epConditions, $epWhereCondition);
+
 
                 //data that pass to view
 
-                $data['examParticipants'] = $participants;
+                $data['examParticipants'] = $examParticipantsData;
                 $data['examID'] = $examID;
                 $data['degreeID'] = $degreeID;
                 $data['ExamSubjects'] = $ExamSubjects;
                 $data['attendacePopupStatus'] = $attetdancePopup;
 
+                //delete examination
+                show($_POST);
+                if (isset($_POST['delete-exam'])) {
+                    if ($_POST['delete-exam'] == 'delete') {
+                        //update examination status as upcoming
+                        $exam->updateRows(
+                            ['status' => 'upcoming'],
+                            ['examID' => $examID]
+                        );
+
+                        $examParticipants->delete(['examID' => $examID]);
+                        $examAttendance->delete(['examID' => $examID]);
+                        $examtimetable->delete(['examID' => $examID]);
+                        message("Examination Deleted Successfully", "success", true);
+                        $msg = "Delete Examination Data Successfully , ExamId =  " . $examID;
+                        activity($msg);
+                        redirect('sar/examination');
+                    }
+                }
+
+                //delete Examination permenently
+                if (isset($_POST['delete-exam'])) {
+                    if ($_POST['delete-exam'] == 'delete-forever') {
+
+                        //delete examination
+                        $exam->delete(['examID' => $examID]);
+                        $examParticipants->delete(['examID' => $examID]);
+                        $examAttendance->delete(['examID' => $examID]);
+                        $examtimetable->delete(['examID' => $examID]);
+                        message("Examination Deleted Successfully", "success", true);
+                        $msg = "Delete Examination Data Successfully , ExamId =  " . $examID;
+                        activity($msg);
+                        redirect('sar/examination');
+                    }
+                }
 
 
                 //change degree status
