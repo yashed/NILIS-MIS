@@ -884,10 +884,7 @@ $degreeId = $_GET['degreeID'];
                         <div class="temp2-sub-title2">
                             Results Submission
                         </div>
-                        <div class='exam-commplete-btn'>
-                            <button class="btn-exam-complete" name='exam-complete' id='exam-complete'>Complete
-                                Examination</button>
-                        </div>
+
                     </div>
                     <?php foreach ($examSubjects as $subject): ?>
                         <?php $json = json_encode($subject); ?>
@@ -1484,6 +1481,7 @@ $degreeId = $_GET['degreeID'];
 
 
 
+
         var examId = '<?= $examId ?>';
         var degreeId = '<?= $degreeId ?>';
 
@@ -1525,6 +1523,8 @@ $degreeId = $_GET['degreeID'];
                 else {
                     alert('File uploaded successfully!');
                 }
+
+
 
                 // var examiner3Status = tempDiv.querySelector('#examiner3-status').textContent;
                 // var examiner3SubCode = tempDiv.querySelector('#examiner3SubCode').textContent;

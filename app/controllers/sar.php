@@ -1084,7 +1084,7 @@ class SAR extends Controller
                 $data['attendacePopupStatus'] = $attetdancePopup;
 
                 //delete examination
-                show($_POST);
+                // show($_POST);
                 if (isset($_POST['delete-exam'])) {
                     if ($_POST['delete-exam'] == 'delete') {
                         //update examination status as upcoming
@@ -1213,7 +1213,7 @@ class SAR extends Controller
                     foreach ($ExamSubjects as $subject) {
 
                         //generate marksheet as csv file 
-                        $head = 'Name of  Programme  : ' . $degreeID; //must change to degree name
+                        $head = 'Name of  Programme  : ' . $_SESSION['degreeData'][0]->DegreeName;
                         $title = 'Subject  : ' . $subject->SubjectName;
 
                         $rowHeadings = ['Index No', 'Registration No', 'Examiner 01 Marks', 'Examiner 02 Marks', 'Assignment Marks', 'Examiner 03 Marks'];
@@ -1407,7 +1407,7 @@ class SAR extends Controller
                                         //call the function to check the gap
                                         if (checkGap($fileName, $examID, $subject->SubjectCode)) {
 
-                                            show('examiner3 are available');
+
                                             // $data = [
                                             //     'examiner3' => true,
                                             //     'examiner3SubCode' => $subject->SubjectCode,
@@ -1443,11 +1443,16 @@ class SAR extends Controller
 
                                             if (count($examiner3Marks) == 2) {
 
+                                                $examiner3 = false;
+
                                                 //upload the student marks to database
                                                 $resFileName = $examID . '_' . $subject->SubjectCode . '.csv';
 
                                                 //call the function to upload marks to database
                                                 insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
+
+
+
 
                                                 $msg = 'Uploaded Examination Results with Examiner 3 marks for ' . $subject->SubjectCode . ' successfully , ExamID = ' . $examID;
                                                 activity($msg);
@@ -1822,14 +1827,16 @@ class SAR extends Controller
         $subjects = new Subjects();
         $gradings = new Grades();
         $finalMarks = new FinalMarks();
+        $student = new StudentModel();
 
         $data = [];
         $data['degreeDetails'] = $_SESSION['degreeData'];
         //get semester from get data
         $data['semester'] = isset($_GET['semester']) ? $_GET['semester'] : null;
         $data['subjects'] = $subjects->where(['DegreeID' => $data['degreeDetails'][0]->DegreeID, 'semester' => $data['semester']]);
+        $data['subjectsCodes'] = $subjects->whereSpecificColumn(['DegreeID' => $data['degreeDetails'][0]->DegreeID, 'semester' => $data['semester']], 'SubjectCode');
         $data['grades'] = $gradings->where(['DegreeID' => $data['degreeDetails'][0]->DegreeID]);
-
+        $students = $student->where(['DegreeID' => $data['degreeDetails'][0]->DegreeID]);
         $indexNo = 'DPL/09';
 
         $tables = ['subject', 'exam_attendance'];
@@ -1854,7 +1861,6 @@ class SAR extends Controller
         $bestData = getBestMarks($groupedData, 'finalMarks');
         show($bestData);
         if ($method == '1') {
-
             $this->view('reports/reports-1', $data);
         } else if ($method == '2') {
 

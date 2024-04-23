@@ -80,6 +80,56 @@ function getBestMarks($data, $attribute)
     return $result;
 }
 
+function calculateGPA($marksArray, $gradesArray, $subjectCodesArray)
+{
+    // Initialize variables for GPA calculation
+    $totalCredits = 0;
+    $totalGradePoints = 0;
+
+    // Iterate through each subject code
+    foreach ($subjectCodesArray as $subject) {
+        $subjectCode = $subject->SubjectCode;
+
+        // Check if marks are available for this subject
+        if (isset($marksArray[$subjectCode])) {
+            // Retrieve marks for this subject
+            $subjectMarks = $marksArray[$subjectCode][0];
+
+            // Retrieve credits for this subject
+            $credits = $subjectMarks->NoCredits;
+
+            // Retrieve grade for this subject
+            $grade = $subjectMarks->grade;
+
+            // Find GPV for this grade
+            $gpv = 0;
+            foreach ($gradesArray as $gradeInfo) {
+                if ($gradeInfo->Grade === $grade) {
+                    $gpv = $gradeInfo->GPV;
+                    break;
+                }
+            }
+
+            // Calculate grade points for this subject
+            $gradePoints = $gpv * $credits;
+
+            // Add to total grade points and total credits
+            $totalGradePoints += $gradePoints;
+            $totalCredits += $credits;
+        } else {
+            // If marks are not available, consider credits as 0
+            $totalCredits += 0;
+        }
+    }
+
+    // Calculate GPA
+    if ($totalCredits > 0) {
+        $gpa = $totalGradePoints / $totalCredits;
+        return $gpa;
+    } else {
+        return 0; // Handle division by zero error
+    }
+}
 function groupByColumn($data, $columnName)
 {
     // Check if $data is not an array or if it's empty
