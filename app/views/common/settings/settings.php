@@ -84,7 +84,7 @@
         flex-direction: row;
         padding-top: 1vw;
         padding-right: 11vw;
-        gap: 10vw;
+        gap: 5vw;
     }
 
     .name {
