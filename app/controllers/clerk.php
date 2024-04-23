@@ -51,7 +51,7 @@ class Clerk extends Controller
         $username = $_SESSION['USER_DATA']->username;
         $data['usernames'] = $username;
 
-
+        $data['notification_count_obj'] = getNotificationCount();
         $data['notifications'] = $notification->findAll();
         $this->view('clerk-interfaces\clerk-notification', $data);
     }
