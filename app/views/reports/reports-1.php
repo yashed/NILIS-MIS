@@ -1,5 +1,5 @@
 <head>
-    <title>Admission Card</title>
+    <title>Record Of Examination</title>
     <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
 </head>
 
@@ -66,15 +66,15 @@
 
     .admission-title {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
-        gap: 40px;
+        gap: 100px;
         align-items: center;
     }
 
     .admission-title img {
-        width: 5em;
-        height: 111.11px;
+        width: 4em;
+        height: 81.11px;
         margin-top: 20px;
 
     }
@@ -87,17 +87,17 @@
         font-family: Times New Roman;
         font-size: 26px;
         font-style: normal;
-        font-weight: 400;
+        font-weight: 600;
 
     }
 
     .admission-course-name {
         color: var(--black, #000);
         text-align: center;
-        font-family: Times New Roman;
-        font-size: 20px;
+        font-family: poppins;
+        font-size: 18px;
         font-style: normal;
-        font-weight: 700;
+        font-weight: 500;
         line-height: normal;
     }
 
@@ -125,21 +125,22 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 30px
+        gap: 30px;
+        align-items: center;
     }
 
     .admission-name-index {
         color: var(--black, #000);
-        font-family: Times New Roman;
+        font-family: poppins;
         font-size: 16px;
         font-style: normal;
-        font-weight: 400;
+        /* font-weight: 500; */
         line-height: normal;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-around;
-        gap: 30px;
-        margin-top: 40px;
+
+
     }
 
     .admission-content {
@@ -151,8 +152,8 @@
     }
 
     .admission-table {
-        margin: 50px 0px 20px 0px;
-        font-family: Inter;
+        margin: 20px 0px 20px 0px;
+        font-family: poppins;
         border-collapse: collapse;
         width: 100%;
         /* min-height: px; */
@@ -160,16 +161,17 @@
 
     .admission-table tr {
         border: 1px solid #ddd;
-
+        text-align: center;
 
     }
 
     .admission-table td {
 
-        font-family: Inter;
+        font-family: poppins;
+        text-align: center;
         border: 1px solid #ddd;
         padding: 4px;
-        text-align: left;
+
         font-size: 14px;
         padding: 10px 5px 10px 5px;
     }
@@ -188,8 +190,10 @@
 
     .admission-data-tb {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+
 
     }
 
@@ -228,7 +232,27 @@
     }
 
     .admission-detail {
+        display: flex;
+        flex-direction: column;
         margin-top: 40px;
+    }
+
+    .results-abr {
+        font-family: poppins;
+        font-size: 11px;
+    }
+
+    .roe-table {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 90%;
+    }
+
+    .year-name {
+        font-family: poppins;
+        font-size: 20px;
+        font-weight: 500;
     }
 
     @media print {
@@ -258,6 +282,45 @@
 
 
     }
+
+    .admission-name,
+    .admission-index {
+        font-weight: 400;
+
+    }
+
+    .semester-details {
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .down-data {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 20px;
+
+    }
+
+    .gradings {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .grading-tb tr td {
+        border: none;
+
+    }
+
+    .grading-tb td {
+        text-align: left;
+    }
+
+    .grading-title {
+        margin-bottom: 15px;
+    }
 </style>
 
 
@@ -270,9 +333,9 @@
 <body>
     <div class="admisssion-card">
         <div class="print-btn">
-            <!-- <button class="print-btn-primary" type="submit" onclick="window.print()">Print Admission</button> -->
-            <button class="print-btn-primary" type="submit" onclick="generatePDF()" id="downloadAdmisiionButton">Print
-                Admission</button>
+            <!-- <button class="print-btn-primary" type="submit" onclick="window.print()">Print</button> -->
+            <button class="print-btn-primary" type="submit" onclick="generatePDF()"
+                id="downloadButton">Download</button>
         </div>
         <page size="A4">
             <div class="admission-content">
@@ -283,59 +346,53 @@
                         Colombo</div>
                 </div>
                 <div class="admission-header">
-                    <div class="admission-course-name">Diploma in Library and Information Management - DLIM 2021/2022
+                    <?php if (!empty($degreeDetails)): ?>
+                        <div class="admission-course-name">Final Examination Results Report -
+                            <?= $degreeDetails[0]->DegreeName ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!empty($semester)): ?>
+                        <dive class='semester-details'> Semester 0<?= $semester ?>
                     </div>
-                    <div class="admission-exam">Second Semester Examination - 2022 December</div>
-                    <div class="admission-card">Admission Card</div>
-                    <div class="admission-name-index">
-                        <div class="admission-name">Name of the Candidate: <b>
-                                <?= $studentData[0]->name ?>
-                            </b></div>
-                        <div class="admission-index">Index Number: <b>
-                                <?= $studentData[0]->indexNo;
-                                ?>
-                            </b></div>
-                    </div>
+                <?php endif ?>
+                <div class="results-abr"> <b>N</b> - Normal | <b>MC</b> - Medical | <b>RS</b> - Repeat
 
                 </div>
-                <div class="admission-data-tb">
+
+            </div>
+            <div class="admission-data-tb">
+                <div class="roe-table">
                     <table class="admission-table">
                         <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Subject</th>
-                                <th>Signature of the </br>Candidate</th>
-                                <th>Signature of the </br>Invigilator</th>
+                                <th>Name</th>
+                                <th>IndexN0</th>
+                                <?php if (!empty($subjects)): ?>
+                                    <?php foreach ($subjects as $subject): ?>
+                                        <th><?= $subject->SubjectCode ?> - <?= $subject->NoCredits ?></th>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($timeTableData as $ttdata): ?>
-                                <?php $json = json_encode($ttdata);
-                                // show($ttdata); ?>
-                                <tr>
+                            <tr>
+                                <td>Subject 01</td>
+                                <td>[22]</td>
+                                <td>[1]</td>
+                                <td>3</td>
+                                <td>A</td>
+                            </tr>
 
-                                    <td>
-                                        <?= $ttdata[0]->date ?>
-                                        </br>9.00a.m-12.00noon
-                                    </td>
-                                    <td>
-                                        <?= $ttdata[0]->subjectName ?>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-
-
-                            <?php endforeach; ?>
                         </tbody>
                     </table>
-
                 </div>
+            </div>
+            <div class='down-data'>
                 <div class='admission-detail'>
                     <div class="admission-details-signature">.........................................
                     </div>
                     <div class="admission-details-name">
-                        Yashed Thisara
+                        Mr Janaka Wipularatna
                     </div>
                     <div class="admission-details-possision">
                         Senior Assistant Registrar
@@ -343,29 +400,46 @@
                     <div class="admission-details-date">
                         <?= date("Y-m-d") ?>
                     </div>
+                </div>
+                <div class='gradings'>
+                    <?php if (!empty($grades)): ?>
+                        <div class='grading-title'>Key to gradings</div>
+                        <table class='grading-tb'>
+                            <tbody>
+                                <?php foreach ($grades as $grade): ?>
+                                    <tr>
+                                        <td><?= $grade->Grade ?> </td>
+                                        <td><?= $grade->MaxMarks ?> - <?= $grade->MinMarks ?></td>
+                                    </tr>
+                                <?php endforeach ?>
+                            </tbody>
+                        </table>
 
+                    <?php endif; ?>
                 </div>
             </div>
 
-        </page>
+    </div>
+    </div>
+
+    </page>
     </div>
 
 </body>
 
 <script>
 
-
     function generatePDF() {
         const element = document.querySelector('.admisssion-card');
         html2pdf(element, {
             margin: 0,
-            filename: 'admission_card.pdf',
-            html2canvas: { scale: 2 },
+            filename: 'record_of_examination.pdf',
+            html2canvas: { scale: 3 },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         });
 
         // Hide the download button 
-        const downloadButton = document.getElementById('downloadAdmisiionButton');
+        const downloadButton = document.getElementById('downloadButton');
         downloadButton.style.display = 'none';
 
         // Show the download button after a delay

@@ -263,7 +263,7 @@ class Model extends Database
         return $this->query($query);
     }
 
-    public function joinWhere($tables, $columns, $conditions, $whereConditions, $order = null, $limit = null)
+    public function joinWhere($tables, $columns, $conditions, $whereConditions, $group = null, $order = null, $limit = null)
     {
         // Build the query
         $query = "SELECT " . implode(", ", $columns) . " FROM " . $this->table;
@@ -285,6 +285,10 @@ class Model extends Database
         // Add order and limit clauses if provided
         if ($order) {
             $query .= " ORDER BY $order";
+        }
+
+        if ($order) {
+            $query .= " GROUP BY  $group";
         }
 
         if ($limit) {

@@ -57,6 +57,29 @@ function message($msg = '', $type = 'success', $erase = false)
     return false;
 }
 
+function getBestMarks($data, $attribute)
+{
+    $result = [];
+
+    foreach ($data as $subjectCode => $records) {
+        $maxMark = -1;
+        $bestRecord = null;
+
+        foreach ($records as $record) {
+            if ($record->$attribute > $maxMark) {
+                $maxMark = $record->$attribute;
+                $bestRecord = $record;
+            }
+        }
+
+        if ($bestRecord !== null) {
+            $result[$subjectCode] = [$bestRecord];
+        }
+    }
+
+    return $result;
+}
+
 function groupByColumn($data, $columnName)
 {
     // Check if $data is not an array or if it's empty

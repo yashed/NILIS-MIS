@@ -6,11 +6,11 @@
 
 function __construct()
 {
-    if (!Auth::logged_in()) {
-        message('You are not authorized to view this page');
+    // if (!Auth::logged_in()) {
+    //     message('You are not authorized to view this page');
 
-        redirect('_403_');
-    }
+    //     redirect('_403_');
+    // }
 }
 
 class ROE extends Controller
@@ -28,7 +28,7 @@ class ROE extends Controller
         $degree = new Degree();
         $admissionToken = new AdmissionToken();
         $student = new StudentModel();
-
+        $data = [];
 
 
         //check form submission and validate data
@@ -37,6 +37,8 @@ class ROE extends Controller
             if (!empty($_POST['index'])) {
                 $indexNo = $_POST['index'];
             }
+
+
 
             //check whether the index number is valid
             if ($student->indexNoValidation($_POST)) {
@@ -48,10 +50,6 @@ class ROE extends Controller
 
 
         }
-
-
-
-
         $this->view('reports/report-roe-login', $data);
     }
 

@@ -65,7 +65,7 @@ $data['role'] = $role;
         flex-direction: row;
         justify-content: space-around;
         flex-wrap: wrap;
-        min-height: 72vh;
+        min-height: 80vh;
     }
 
     .dr-reports-card-1 {
@@ -81,6 +81,7 @@ $data['role'] = $role;
         border: 3px solid rgba(0, 0, 0, 0.05);
         background: var(--colour-primary, #FFF);
         margin-bottom: 5px;
+        cursor: pointer;
     }
 
     .dr-reports-card-1 img {
@@ -90,6 +91,7 @@ $data['role'] = $role;
     .dr-reports-card-1 p {
         text-align: center;
         margin-top: 13px;
+
     }
 </style>
 
@@ -97,26 +99,63 @@ $data['role'] = $role;
     <div class="dr-reports-home">
         <div class="dr-reports-title">Reports</div>
         <div class="dr-reports-subsection-1">
-            <div class="dr-reports-card-1">
-                <img src="<?= ROOT ?>assets/dr/Group.png">
-                <p>1st semester examination results</p>
-            </div>
-            <div class="dr-reports-card-1">
-                <img src="<?= ROOT ?>assets/dr/Group.png">
-                <p>2nd semester examination results</p>
-            </div>
-            <div class="dr-reports-card-1">
-                <img src="<?= ROOT ?>assets/dr/Group.png">
-                <p>3rd semester examination results</p>
-            </div>
-            <div class="dr-reports-card-1">
-                <img src="<?= ROOT ?>assets/dr/Group.png">
-                <p>4th semester examination results</p>
-            </div>
+            <?php if (!empty($_SESSION['degreeData'])): ?>
+                <?php if ($_SESSION['degreeData'][0]->Duration == 1): ?>
+                    <div class="dr-reports-card-1" onclick="card1(1)">
+                        <img src="<?= ROOT ?>assets/dr/Group.png">
+                        <p>1st semester examination results</p>
+                    </div>
+                    <div class="dr-reports-card-1" onclick="card1(2)">
+                        <img src="<?= ROOT ?>assets/dr/Group.png">
+                        <p>2nd semester examination results</p>
+                    </div>
+                <?php elseif ($_SESSION['degreeData'][0]->Duration == 2): ?>
+                    <div class="dr-reports-card-1" onclick="card1(1)">
+                        <img src="<?= ROOT ?>assets/dr/Group.png">
+                        <p>1st semester examination results</p>
+                    </div>
+                    <div class="dr-reports-card-1" onclick="card1(2)">
+                        <img src="<?= ROOT ?>assets/dr/Group.png">
+                        <p>2nd semester examination results</p>
+                    </div>
+                    <div class="dr-reports-card-1" onclick="card1(3)">
+                        <img src="<?= ROOT ?>assets/dr/Group.png">
+                        <p>3rd semester examination results</p>
+                    </div>
+                    <div class="dr-reports-card-1" onclick="card1(4)">
+                        <img src="<?= ROOT ?>assets/dr/Group.png">
+                        <p>4th semester examination results</p>
+                    </div>
+                <?php endif; ?>
+                <div class="dr-reports-card-1" onclick="card2()">
+                    <img src="<?= ROOT ?>assets/dr/Group.png">
+                    <p>Final Examination Report</p>
+                </div>
+                <div class="dr-reports-card-1" onclick="roe()">
+                    <img src="<?= ROOT ?>assets/dr/Group.png">
+                    <p>Record of Examination</p>
+                </div>
+
+
+            <?php endif; ?>
         </div>
         <div class="dr-reports-footer">
             <?php $this->view('components/footer/index', $data) ?>
         </div>
 </body>
+<script>
+    function card1(semester) {
+        console.log('card1');
+        window.location.href = '<?= ROOT ?><?= $role ?>/reports/1?semester=' + semester;
+    }
+    function card2() {
+        console.log('card1');
+        window.location.href = '<?= ROOT ?><?= $role ?>/reports/2';
+    }
+    function roe() {
+        window.location.href = '<?= ROOT ?>/roe';
+    }
+
+</script>
 
 </html>

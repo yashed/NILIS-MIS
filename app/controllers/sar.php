@@ -1640,18 +1640,12 @@ class SAR extends Controller
     {
         $this->view('common/login/login.view');
     }
-    // public function resultupload()
-    // {
-    //     $this->view('sar-interfaces/sar-examresultupload');
-    // }
+
     public function results()
     {
         $this->view('sar-interfaces/sar-examresults');
     }
-    // public function examparticipants()
-    // {
-    //     $this->view('sar-interfaces/sar-examparticipants');
-    // }
+
     public function showresults()
     {
         $this->view('sar-interfaces/sar-examresultshow');
@@ -1822,6 +1816,59 @@ class SAR extends Controller
             echo "Error: Student ID not provided in the URL.";
         }
     }
+
+    public function reports($method = null)
+    {
+        $subjects = new Subjects();
+        $gradings = new Grades();
+        $finalMarks = new FinalMarks();
+
+        $data = [];
+        $data['degreeDetails'] = $_SESSION['degreeData'];
+        //get semester from get data
+        $data['semester'] = isset($_GET['semester']) ? $_GET['semester'] : null;
+        $data['subjects'] = $subjects->where(['DegreeID' => $data['degreeDetails'][0]->DegreeID, 'semester' => $data['semester']]);
+        $data['grades'] = $gradings->where(['DegreeID' => $data['degreeDetails'][0]->DegreeID]);
+
+        $indexNo = 'DPL/09';
+
+        $tables = ['subject', 'exam_attendance'];
+        $columns = ['*'];
+        $conditions = [
+            'subject.SubjectCode = final_marks.subjectCode',
+            'subject.DegreeID = final_marks.degreeID',
+            'exam_attendance.examID = final_marks.examID',
+            'exam_attendance.IndexNo = final_marks.studentIndexNo',
+            'final_marks.subjectCode = exam_attendance.subjectCode',
+        ];
+        $whereConditions = [
+            "final_marks.studentIndexNo = " . "'$indexNo'",
+            "exam_attendance.IndexNo = " . "'$indexNo'",
+
+        ];
+
+        $studnetRes = $finalMarks->joinWhere($tables, $columns, $conditions, $whereConditions);
+        $groupedData = groupByColumn($studnetRes, 'subjectCode');
+
+        //get best marks
+        $bestData = getBestMarks($groupedData, 'finalMarks');
+        show($bestData);
+        if ($method == '1') {
+
+            $this->view('reports/reports-1', $data);
+        } else if ($method == '2') {
+
+            $this->view('reports/reports-2', $data);
+        } else if ($method == 'roe') {
+
+            redirect('roe/login');
+        } else {
+
+            $this->view('sar-interfaces/sar-reports', $data);
+        }
+    }
+
+
 
 
 
