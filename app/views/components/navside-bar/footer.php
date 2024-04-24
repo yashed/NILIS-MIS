@@ -29,65 +29,6 @@
             }
         });
 
-<<<<<<< HEAD
-                var currentUrl = window.location.href;    // Get the current URL
-                currentUrl = currentUrl.split('?')[0];    // Remove any query strings from the URL
-                var navLinks = document.querySelectorAll('.menu-links .nav-link a'); // Get all navigation links
-                navLinks.forEach(function(link) {    // Loop through each navigation link
-                    if (link.getAttribute('href') === currentUrl) {    // Compare the href attribute of the link with the current URL
-                        // Add the 'selected' class to the parent list item
-                        link.parentNode.classList.add('selected');
-                        // Change the color of the image within the selected navigation item
-                        var icon = link.querySelector('.icon');
-                        var text = link.querySelector('.text');
-                        if (icon && text) {
-                            icon.style.color = 'var(--sidebar-color)';
-                            text.style.color = 'var(--sidebar-color)';
-                        }
-                    }
-                    else if (currentUrl == 'http://localhost/NILIS-MIS/public/dr/userprofile') {
-                        link1 = document.querySelector('.menu-links .nav-link a[href="http://localhost/NILIS-MIS/public/dr/participants"]');
-                        link1.parentNode.classList.add('selected');
-                        var icon = link1.querySelector('.icon');
-                        var text = link1.querySelector('.text');
-                        if (icon && text) {
-                            icon.style.color = 'var(--sidebar-color)';
-                            text.style.color = 'var(--sidebar-color)';
-                        }
-                    }
-                    else if (currentUrl == 'http://localhost/NILIS-MIS/public/dr/degreeprofile') {
-                        link1 = document.querySelector('.menu-links .nav-link a[href="http://localhost/NILIS-MIS/public/dr/newdegree"]');
-                        link1.parentNode.classList.add('selected');
-                        var icon = link1.querySelector('.icon');
-                        var text = link1.querySelector('.text');
-                        if (icon && text) {
-                            icon.style.color = 'var(--sidebar-color)';
-                            text.style.color = 'var(--sidebar-color)';
-                        }
-                    }
-                    else if (currentUrl == 'http://localhost/NILIS-MIS/public/dr/examination/participants' || currentUrl == 'http://localhost/NILIS-MIS/public/dr/examination/results') {
-                        link1 = document.querySelector('.menu-links .nav-link a[href="http://localhost/NILIS-MIS/public/dr/examination"]');
-                        link1.parentNode.classList.add('selected');
-                        var icon = link1.querySelector('.icon');
-                        var text = link1.querySelector('.text');
-                        if (icon && text) {
-                            icon.style.color = 'var(--sidebar-color)';
-                            text.style.color = 'var(--sidebar-color)';
-                        }
-                    }
-                    else if (currentUrl == 'http://localhost/NILIS-MIS/public/clerk/userprofile') {
-                        link1 = document.querySelector('.menu-links .nav-link a[href="http://localhost/NILIS-MIS/public/clerk/participants"]');
-                        link1.parentNode.classList.add('selected');
-                        var icon = link1.querySelector('.icon');
-                        var text = link1.querySelector('.text');
-                        if (icon && text) {
-                            icon.style.color = 'var(--sidebar-color)';
-                            text.style.color = 'var(--sidebar-color)';
-                        }
-                    }
-                });
-            });
-=======
         var currentUrl = window.location.href;    // Get the current URL
         currentUrl = currentUrl.split('?')[0];    // Remove any query strings from the URL
         var navLinks = document.querySelectorAll('.menu-links .nav-link a'); // Get all navigation links
@@ -155,7 +96,6 @@
             }
         });
     });
->>>>>>> 17c93949c080a9f432244a1fe74fa745048dee2c
 </script>
 
 

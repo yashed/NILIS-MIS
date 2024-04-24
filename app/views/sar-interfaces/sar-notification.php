@@ -102,97 +102,52 @@ $data['role'] = $role;
                 <?php endforeach; ?>
             <?php endif; ?>
 
-<<<<<<< HEAD
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "SAR";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
-=======
-            <?php if (!empty($notifications)): ?>
-                <?php foreach ($notifications as $notification): ?>
-                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert' && $data['usernames'] == $notification->usernames): ?>
-                        <?php
-                        $data['role'] = "SAR";
-                        $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
->>>>>>> 17c93949c080a9f432244a1fe74fa745048dee2c
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
-<<<<<<< HEAD
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "SAR";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
-=======
-            <?php if (!empty($notifications)): ?>
-                <?php foreach ($notifications as $notification): ?>
-                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert' && $data['usernames'] == $notification->usernames): ?>
-                        <?php
-                        $data['role'] = "SAR";
-                        $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
->>>>>>> 17c93949c080a9f432244a1fe74fa745048dee2c
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
-<<<<<<< HEAD
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "SAR";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
-=======
-            <?php if (!empty($notifications)): ?>
-                <?php foreach ($notifications as $notification): ?>
-                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert' && $data['usernames'] == $notification->usernames): ?>
-                        <?php
-                        $data['role'] = "SAR";
-                        $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
->>>>>>> 17c93949c080a9f432244a1fe74fa745048dee2c
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
-<<<<<<< HEAD
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-start-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "SAR";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
-=======
-            <?php if (!empty($notifications)): ?>
-                <?php foreach ($notifications as $notification): ?>
-                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-start-alert' && $data['usernames'] == $notification->usernames): ?>
-                        <?php
-                        $data['role'] = "SAR";
-                        $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
->>>>>>> 17c93949c080a9f432244a1fe74fa745048dee2c
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
-<<<<<<< HEAD
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-end-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "SAR";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
-=======
-            <?php if (!empty($notifications)): ?>
-                <?php foreach ($notifications as $notification): ?>
-                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-end-alert' && $data['usernames'] == $notification->usernames): ?>
-                        <?php
-                        $data['role'] = "SAR";
-                        $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
->>>>>>> 17c93949c080a9f432244a1fe74fa745048dee2c
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
