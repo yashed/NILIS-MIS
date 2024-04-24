@@ -175,19 +175,19 @@
                         <span class="text nav-text">Examination</span>
                     </a>
                     <?php
-                    // Check if the URL contains any of the specified patterns
-                    $url = $_SERVER['REQUEST_URI'];
-                    if (
-                        strpos($url, "examination/participants") !== false ||
-                        strpos($url, "examination/resultsupload") !== false ||
-                        strpos($url, "examination/results") !== false
-                    ) {
-                        echo '<div class="dropdown">' .
-                            '<a href="' . ROOT . 'sar/participants"><center>Examination Results</center></a>' .
-                            '<a href="' . ROOT . 'sar/resultsupload"><center>Examination Submission</center></a>' .
-                            '<a href="' . ROOT . 'sar/results"><center>Examination Participants</center></a>' .
-                            '</div>';
-                    }
+                        // Check if the URL contains any of the specified patterns
+                        $url = $_SERVER['REQUEST_URI'];
+                        if (
+                            strpos($url, "examination/participants") !== false ||
+                            strpos($url, "examination/resultsupload") !== false ||
+                            strpos($url, "examination/results") !== false
+                        ) {
+                            echo '<div class="dropdown">' .
+                                '<a href="' . ROOT . 'sar/examination/participants"><center>Examination Participants</center></a>' .
+                                '<a href="' . ROOT . 'sar/examination/resultsupload"><center>Result Submission</center></a>' .
+                                '<a href="' . ROOT . 'sar/examination/results"><center>Examination Results</center></a>' .
+                                '</div>';
+                        }
                     ?>
                 </li>
                 <li class="nav-link">
