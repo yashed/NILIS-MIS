@@ -63,7 +63,7 @@
                     <ul class="menu-links">
                         <h6 class="topic3">PROGRAMS</h6>
                         <li class="nav-link">
-                            <a href="<?= ROOT ?>dr/newdegree">
+                            <a href="<?= ROOT ?>dr/degreeprofile">
                                 <i class="bx bx-layer-plus icon"></i>
                                 <span class="text nav-text">Degree Name</span></a>
                         </li>
@@ -102,7 +102,7 @@
                             </a>
                         </li>
                         <li class="nav-link">
-                            <a href="<?= ROOT ?>dr/notification">
+                            <a href="<?= ROOT ?>dr/notifications">
                                 <i class="bx bx-bell icon"></i>
                                 <span class="text nav-text">Notification</span>
                             </a>
@@ -129,7 +129,7 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notification"><i class="bx bxs-bell icon"></i></a></li>
+                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notifications"><i class="bx bxs-bell icon"></i></a></li>
                 <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
             </ul>
 
@@ -175,19 +175,19 @@
                         <span class="text nav-text">Examination</span>
                     </a>
                     <?php
-                    // Check if the URL contains any of the specified patterns
-                    $url = $_SERVER['REQUEST_URI'];
-                    if (
-                        strpos($url, "examination/participants") !== false ||
-                        strpos($url, "examination/resultsupload") !== false ||
-                        strpos($url, "examination/results") !== false
-                    ) {
-                        echo '<div class="dropdown">' .
-                            '<a href="' . ROOT . 'sar/participants"><center>Examination Results</center></a>' .
-                            '<a href="' . ROOT . 'sar/resultsupload"><center>Examination Submission</center></a>' .
-                            '<a href="' . ROOT . 'sar/results"><center>Examination Participants</center></a>' .
-                            '</div>';
-                    }
+                        // Check if the URL contains any of the specified patterns
+                        $url = $_SERVER['REQUEST_URI'];
+                        if (
+                            strpos($url, "examination/participants") !== false ||
+                            strpos($url, "examination/resultsupload") !== false ||
+                            strpos($url, "examination/results") !== false
+                        ) {
+                            echo '<div class="dropdown">' .
+                                '<a href="' . ROOT . 'sar/examination/participants"><center>Examination Participants</center></a>' .
+                                '<a href="' . ROOT . 'sar/examination/resultsupload"><center>Result Submission</center></a>' .
+                                '<a href="' . ROOT . 'sar/examination/results"><center>Examination Results</center></a>' .
+                                '</div>';
+                        }
                     ?>
                 </li>
                 <li class="nav-link">

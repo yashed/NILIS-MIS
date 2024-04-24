@@ -918,6 +918,11 @@ input[type=event] {
 .dr-newdegree-box_4 .dr-newdegree-event {
   width: 90%;
   padding-left: 10px;
+  height: 35px;
+  background: transparent; 
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid gainsboro;
 }
 .dr-newdegree-time_table .dr-newdegree-duration {
   text-align: center;

@@ -4,15 +4,37 @@
     /* height: 900px; */
 }
 
-#pass-students-chart {
-    /* width: 50%; */
-    /* height: 30%; */
-}
+/* #pass-students-chart {
+    width: 50%;
+    height: 30%;
+} */
 </style>
 
 <body>
     <div class="bar-chart-pass-students">
         <canvas id="pass-students-chart"></canvas>
+        <?php
+            $dlim = 0;
+            $dsl = 0;
+            $dpl = 0;
+            $hdlim = 0;
+            foreach ($students as $student) {
+                if (isset($student->indexNo)) {
+                    // Split the index number at the '/' mark
+                    $parts = explode('/', $student->indexNo);
+                    $degreeShortName = $parts[0];
+                    if ($degreeShortName == "DLIM") {
+                        $dlim++;
+                    } else if ($degreeShortName == "DSL") {
+                        $dsl++;
+                    } else if ($degreeShortName == "DPL") {
+                        $dpl++;
+                    } else if ($degreeShortName == "HDLIM") {
+                        $hdlim++;
+                    }
+                }
+            }
+        ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -22,12 +44,12 @@
         const ctx1 = document.getElementById('pass-students-chart');
         const DATA_COUNT = 3;
 
-        const labels1 = ['DILIM', 'DSL', 'HDILIM'];
+        const labels1 = ['DLIM', 'DSL', 'DPL' , 'HDLIM'];
         const data1 = {
             labels: labels1,
             datasets: [{
                     label: 'Participants',
-                    data: [80, 60, 74],
+                    data: [<?= $dlim ?>, <?= $dsl ?>, <?= $dpl ?>, <?= $hdlim ?>],
                     backgroundColor: 'rgb(23, 55, 110)',
                     stack: 'Stack 0',
                     maxBarThickness: 50
@@ -35,7 +57,7 @@
 
                 {
                     label: 'Pass Students',
-                    data: [55, 49, 55],
+                    data: [45, 39, 50],
                     backgroundColor: 'rgb(154, 214, 255)',
                     stack: 'Stack 1',
                     maxBarThickness: 50

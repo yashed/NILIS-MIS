@@ -87,7 +87,7 @@ th {
             </div><br>
             <div class="dr-userprofile-button-container">
                 <div class="dr-userprofile-buttony">
-                    <?php if ((time() - strtotime($degrees[0]->createdDate)) < (3 * 30 * 24 * 60 * 60) && $student[0]->status == "continue") : ?>
+                    <?php if ((time() - strtotime($degrees[0]->createdDate)) < (3 * 30 * 24 * 60 * 60) && $student[0]->status == "continue" && $degrees[0]->Status == "ongoing") : ?>
                         <input type="button" id="dr-userprofile-changedegreebutton" class="dr-userprofile-button" value="Change Diploma Program" onclick="updateData()">
                     <?php endif; ?>
                 </div>
@@ -208,7 +208,7 @@ th {
                     </div>
                 </div>
                 <div class="dr-userprofile-buttonx">
-                    <?php if ($student[0]->status == "continue") : ?>
+                    <?php if ($student[0]->status == "continue" && $degrees[0]->Status == "ongoing") : ?>
                         <input type="button" id="dr-userprofile-updateButton" class="dr-userprofile-button" value="Update" onclick="updateData1()">
                     <?php endif; ?>
                 </div>

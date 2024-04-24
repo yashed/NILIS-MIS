@@ -16,6 +16,32 @@
 <body>
     <div class="bar-chart-students">
         <canvas id="student-participants"></canvas>
+        <?php
+            $dlim = 0;
+            $dsl = 0;
+            $dpl = 0;
+            $hdlim = 0;
+            foreach ($students as $student) {
+                if (isset($student->indexNo)) {
+                    if (isset($student->status)) {
+                        if ($student->status == "continue") {
+                            // Split the index number at the '/' mark
+                            $parts = explode('/', $student->indexNo);
+                            $degreeShortName = $parts[0];
+                            if ($degreeShortName == "DLIM") {
+                                $dlim++;
+                            } else if ($degreeShortName == "DSL") {
+                                $dsl++;
+                            } else if ($degreeShortName == "DPL") {
+                                $dpl++;
+                            } else if ($degreeShortName == "HDLIM") {
+                                $hdlim++;
+                            }
+                        }
+                    }
+                }
+            }
+        ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -30,12 +56,12 @@
                 max: 100
             };
 
-            const labels2 = ['DILIM', 'DSL', 'DPL', 'HDLIM'];
+            const labels2 = ['DLIM', 'DSL', 'DPL', 'HDLIM'];
             const data2 = {
                 labels: labels2,
                 datasets: [{
                     label: 'No of Students',
-                    data: [23, 45, 33, 67],
+                    data: [<?= $dlim ?>, <?= $dsl ?>, <?= $dpl ?>, <?= $hdlim ?>],
                     borderColor: 'rgb(154, 214, 255)',
                     backgroundColor: 'rgb(154, 214, 255)',
                 }, ]
