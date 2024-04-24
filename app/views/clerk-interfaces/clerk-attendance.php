@@ -304,22 +304,7 @@ $data['role'] = $role;
             font-weight: 300;
             font-size: 27px;
         }
-
-        .notification-badge {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 3px 6px;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-
-
-    </style>
+</style>
 </head>
 
 <body>

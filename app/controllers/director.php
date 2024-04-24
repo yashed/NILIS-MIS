@@ -71,7 +71,7 @@ class DIRECTOR extends Controller
         if (isset($_GET['id'])) {
             $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
             $_SESSION['DegreeID'] = $degreeID;
-            redirect("clerk/degreeprofile");
+            redirect("director/degreeprofile");
         }
         $degreeID = $_SESSION['DegreeID'];
         $_SESSION['DegreeID'] = $degreeID;
@@ -99,7 +99,7 @@ class DIRECTOR extends Controller
             $data['degreeTimeTable'] = $degreeTimeTableData;
 
             // Load the view with the data
-            $this->view('clerk-interfaces/clerk-degreeprofile', $data);
+            $this->view('director-interfaces/director-degreeprofile', $data);
         } else {
             echo "Error: Degree ID not provided in the URL.";
         }
@@ -126,7 +126,7 @@ class DIRECTOR extends Controller
         } else {
             echo "Error: DegreeID not provided in the session."; // If DegreeID is not set in the session
         }
-        $this->view('clerk-interfaces/clerk-participants', $data);
+        $this->view('director-interfaces/director-participants', $data);
     }
 
     public function userprofile($action = null, $id = null)
@@ -138,7 +138,7 @@ class DIRECTOR extends Controller
         if (isset($_GET['id'])) {
             $studentId = isset($_GET['id']) ? $_GET['id'] : null;
             $_SESSION['studentId'] = $studentId;
-            redirect("clerk/userprofile");
+            redirect("director/userprofile");
         } else {
             $studentId = null;
         }
@@ -158,7 +158,7 @@ class DIRECTOR extends Controller
             // echo $studentIndex;
             $data['finalMarks'] = $finalMarks->findwhere("studentIndexNo", $studentIndex);
             $data['exams'] = $exam->find($degreeId);
-            $this->view('clerk-interfaces/clerk-userprofile', $data);
+            $this->view('director-interfaces/director-userprofile', $data);
         } else {
             echo "Error: Student ID not provided in the URL.";
         }
@@ -212,7 +212,15 @@ class DIRECTOR extends Controller
     {
         $attendance = new studentAttendance();
         $data['attendances'] = $attendance->findAll();
+        // show($attendance);
+        // show($data['attendances']);
+        $degree = new Degree();
 
+        if (!empty($_SESSION['DegreeID'])) {
+            $degreeId = $_SESSION['DegreeID'];
+        }
+        $data['degreedata'] = $degree->find($degreeId);
+        // show($data['degreedata']);
         $this->view('director-interfaces\director-attendance', $data);
     }
 

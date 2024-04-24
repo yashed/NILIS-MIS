@@ -22,6 +22,7 @@ class DR extends Controller
         $data['degrees'] = $degree->findAll();
         $data['students'] = $student->findAll();
         $data['exams'] = $exam->findAll();
+        
         $this->view('dr-interfaces/dr-dashboard', $data);
     }
 
