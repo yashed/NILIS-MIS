@@ -50,10 +50,22 @@ $data['role'] = $role;
         color: var(--text-color);
         cursor: pointer;
     }
+    .dr-degreeprograms-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    backdrop-filter: blur(5px); /* Add blur effect */
+    z-index: 998; /* Layer it above other content */
+    display: none; /* Initially hidden */
+}
 </style>
 
 <body>
     <div class="dr-degreeprograms-main" id="dr-degreeprograms-body">
+        <div class="dr-degreeprograms-overlay" id="dr-degreeprograms-overlay"></div>
         <?php $this->view('components/navside-bar/header', $data) ?>
         <?php $this->view('components/navside-bar/sidebar', $data) ?>
         <?php $this->view('components/navside-bar/footer', $data) ?>
@@ -136,6 +148,7 @@ $data['role'] = $role;
                                     <option value="DLIM" <?= (set_value('select_degree_type') === 'DLIM') ? 'selected' : '' ?>>DLIM</option>
                                     <option value="DPL" <?= (set_value('select_degree_type') === 'DPL') ? 'selected' : '' ?>>DPL</option>
                                     <option value="DSL" <?= (set_value('select_degree_type') === 'DSL') ? 'selected' : '' ?>>DSL</option>
+                                    <option value="HDLIM" <?= (set_value('select_degree_type') === 'HDLIM') ? 'selected' : '' ?>>HDLIM</option>
                                 </select><br><br><br>
                             </div>
 
@@ -192,11 +205,15 @@ $data['role'] = $role;
     function myFunction() {
         const lb = document.querySelector(".dr-degreeprograms-model-box");
         lb.style.display = "block";
+        document.getElementById('dr-degreeprograms-overlay').style.display = 'block';
+        document.body.classList.add('no-scroll');
     }
 
     function myFunction2() {
         const lb = document.querySelector(".dr-degreeprograms-model-box");
         lb.style.display = "none";
+        document.getElementById('dr-degreeprograms-overlay').style.display = 'none';
+        document.body.classList.remove('no-scroll');
     }
     var Form1 = document.getElementById("dr-degreeprograms-Form1");
     var Form2 = document.getElementById("dr-degreeprograms-Form2");
@@ -333,16 +350,18 @@ $data['role'] = $role;
                     alert("Please fill out all fields, Semester " + j + " Subject " + k);
                     return false;
                 }
-                if (!/^[a-zA-Z\s]+$/.test(subject.trim())) {
-                    alert("Subject Name can only have letters and spaces. Semester " + j + " Subject " + k);
+                if (!/^[a-zA-Z\s0-9-&]+$/.test(subject.trim())) {
+                    alert("Subject Name can only have letters, numbers, dashes, and spaces.\n" +
+                        "Example: Diploma in Public Librarianship-2\n" +
+                        "Check Semester " + j + " Subject " + k);
                     return false;
                 }
                 if (!/^[a-zA-Z0-9]+$/.test(subCodes)) {
-                    alert("Subject Code can only have letters and numbers. Semester " + j + " Subject " + k);
+                    alert("Subject Code can only have letters and numbers.\n" + "Check Semester " + j + " Subject " + k);
                     return false;
                 }
                 if (!/^[0-9]+$/.test(credits)) {
-                    alert("No Credits can only have numbers. Semester " + j + " Subject " + k);
+                    alert("Credits can only have numbers.\nCheck Semester " + j + " Subject " + k);
                     return false;
                 }
             }
@@ -392,6 +411,36 @@ $data['role'] = $role;
             numSemesters = 4;
             showSemesters(4);
         }
+         // Get the second select element
+        var selectDegreeType = document.getElementById('dr-degreeprograms-select_degree_type');
+        // Remove all options from the second select element
+        selectDegreeType.innerHTML = '<option value="" default hidden>Select</option>';
+        // Add the "Select" option back
+        var option = document.createElement('option');
+        option.value = '';
+        option.text = 'Select';
+        option.hidden = true;
+        option.defaultSelected = true;
+        selectDegreeType.add(option);
+        // Add options based on the selected degree type
+        if (degreeType === '1 Year') {
+            var options = [
+                { value: 'DLIM', text: 'DLIM' },
+                { value: 'DPL', text: 'DPL' },
+                { value: 'DSL', text: 'DSL' }
+            ];
+        } else if (degreeType === '2 Year') {
+            var options = [
+                { value: 'HDLIM', text: 'HDLIM' }
+            ];
+        }
+        // Add the options to the second select element
+        options.forEach(function(optionData) {
+            var option = document.createElement('option');
+            option.value = optionData.value;
+            option.text = optionData.text;
+            selectDegreeType.add(option);
+        });
     }
 
     function showSemesters(numSemesters) {
@@ -448,8 +497,7 @@ $data['role'] = $role;
         "C-": "1.70",
         "D+": "1.30",
         "D": "1.00",
-        "D-": "0.70",
-        "F": "0.30"
+        "E": "0.00"
     };
 
     function generateGrades() {
@@ -466,7 +514,7 @@ $data['role'] = $role;
     `;
         gradecontainer.appendChild(headerRow);
 
-        for (var i = 1; i <= 2; i++) {
+        for (var i = 1; i <= 12; i++) {
             var gradeRow = document.createElement("tr");
             var currentGrade = grades[getGradeKey(i)];
             gradeRow.innerHTML = `

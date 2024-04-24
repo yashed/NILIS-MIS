@@ -41,7 +41,9 @@ $data['role'] = $role;
                             <?php if (!empty($students)) : ?>
                                 <?php $count = 0; ?>
                                 <?php foreach ($students as $student) : ?>
+                                    <?php if ($student->status == "continue") : ?>
                                         <?php $count++; ?>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
                             <?php endif; ?>
                             <?=$count?>

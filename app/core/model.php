@@ -527,12 +527,13 @@ class Model extends Database
         // show($query);
         $this->query($query, $data);
     }
-    public function generateIndexRegNumber($degree_id, $degreeShortName, $currentYear)
+    public function generateIndexRegNumber($degreeShortName, $currentYear)
     {
-        $query = "SELECT MAX(CAST(SUBSTRING_INDEX(indexNo, '/', -1) AS UNSIGNED)) AS max_index_number 
-              FROM student 
-              WHERE DegreeID = ?";
-        $data = [$degree_id]; // Data to be bound to the query
+        $query = "SELECT MAX(CAST(SUBSTRING_INDEX(student.indexNo, '/', -1) AS UNSIGNED)) AS max_index_number
+        FROM student
+        JOIN degree ON student.degreeID = degree.DegreeID
+        WHERE degree.DegreeShortName = ?";
+        $data = [$degreeShortName]; // Data to be bound to the query
         $result = $this->query($query, $data);
 
         if ($result && isset($result[0]->max_index_number)) {

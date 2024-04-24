@@ -85,6 +85,7 @@ $data['role'] = $role;
         padding-left: 5vw;
     }
 
+<<<<<<< HEAD
     .flex {
         display: flex;
         flex-direction: row;
@@ -221,6 +222,8 @@ $data['role'] = $role;
         font-weight: 500;
         font-size: 0.9vw;
     }
+=======
+>>>>>>> 4067037df2a0334f7b2fc5b2b8144bfd48e844e7
 </style>
 
 <body>
@@ -229,6 +232,7 @@ $data['role'] = $role;
         <div class="temp3-subsection-1">
             <div class="temp3-sub-title">
                 Account Settings
+<<<<<<< HEAD
 
             </div>
 
@@ -383,6 +387,17 @@ $data['role'] = $role;
             phoneNoInput.addEventListener('input', checkPhoneNo);
         });
     </script>
+=======
+                </div>
+                <?php $this->view('common/settings/settings', $data) ?>
+
+           </div>
+
+        <div class="temp3-footer">
+            <?php $this->view('components/footer/index', $data) ?>
+        </div>
+
+>>>>>>> 4067037df2a0334f7b2fc5b2b8144bfd48e844e7
 </body>
 
 </html>

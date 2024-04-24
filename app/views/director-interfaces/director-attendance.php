@@ -1,5 +1,5 @@
 <?php
-$role = "Clerk";
+$role = "director";
 $data['role'] = $role;
 ?>
 <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
@@ -268,10 +268,9 @@ $data['role'] = $role;
 </head>
 
 <body>
-
     <div class="dr-degree-programs-home">
         <div class="dr-degree-programs-title">
-            <div class="dr-degree-programs-title1">Degree Name : <?= $degrees[0]->DegreeShortName ?></div>
+            <div class="dr-degree-programs-title1">Diploma in Library and Information Management</div>
             <div class="dr-degree-programs-title1-core">Attendance</div>
         </div>
         <div class="dr-degree-programs-home-1">
@@ -299,17 +298,10 @@ $data['role'] = $role;
                         </thead>
                         <tbody>
                         <?php foreach ($attendances as $attendance) : ?>
-                            <?php if($attendance->degree_name === 'DLIM' && $degrees[0]->DegreeShortName=='DLIM' ) :?>
                     <tr>
                         <td><?= $attendance->index_no ?></td>
                         <td><?= $attendance->attendance ?></td>
                     </tr>
-                    <?php elseif($attendance->degree_name === 'DSL' && $degrees[0]->DegreeShortName=='DSL' ) :?>
-                        <tr>
-                        <td><?= $attendance->index_no ?></td>
-                        <td><?= $attendance->attendance ?></td>
-                    </tr>
-                    <?php endif;?>
                 <?php endforeach; ?>
 
                         </tbody>

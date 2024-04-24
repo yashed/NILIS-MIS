@@ -185,7 +185,7 @@
                         ) {
                             echo '<div class="dropdown">' .
                                 '<a href="' . ROOT . 'sar/examination/participants"><center>Examination Participants</center></a>' .
-                                '<a href="' . ROOT . 'sar/examination/resultsupload"><center>Examination Submission</center></a>' .
+                                '<a href="' . ROOT . 'sar/examination/resultsupload"><center>Result Submission</center></a>' .
                                 '<a href="' . ROOT . 'sar/examination/results"><center>Examination Results</center></a>' .
                                 '</div>';
                         }

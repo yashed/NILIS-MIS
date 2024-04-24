@@ -21,6 +21,7 @@ class StudentModel extends Model
         'degreeID',
         'attendance',
         'status',
+        'gender',
     ];
 
     public function validate($data)

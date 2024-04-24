@@ -29,10 +29,22 @@ th {
   font-weight: bold;
   padding: 10px;
 }
+.dr-userprofile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    backdrop-filter: blur(5px); /* Add blur effect */
+    z-index: 998; /* Layer it above other content */
+    display: none; /* Initially hidden */
+}
     </style>
 </head>
 <body>
     <div class="dr-userprofile">
+        <div class="dr-userprofile-overlay" id="dr-userprofile-overlay"></div>
         <div class="dr-userprofile-white-container1-1">
             <div class="dr-userprofile-white-container1"><?= $degrees[0]->DegreeName ?></div>
             <div class="dr-userprofile-white-container1-core">Participants</div>
@@ -75,7 +87,7 @@ th {
             </div><br>
             <div class="dr-userprofile-button-container">
                 <div class="dr-userprofile-buttony">
-                    <?php if ((time() - strtotime($degrees[0]->createdDate)) < (3 * 30 * 24 * 60 * 60) && $student[0]->status == "continue") : ?>
+                    <?php if ((time() - strtotime($degrees[0]->createdDate)) < (3 * 30 * 24 * 60 * 60) && $student[0]->status == "continue" && $degrees[0]->Status == "ongoing") : ?>
                         <input type="button" id="dr-userprofile-changedegreebutton" class="dr-userprofile-button" value="Change Diploma Program" onclick="updateData()">
                     <?php endif; ?>
                 </div>
@@ -125,7 +137,6 @@ th {
                 </p>
             </div>
         </div>
-        <div id="dr-userprofile-overlay"></div>
         <form class="dr-userprofile-pop-up2" id="dr-userprofile-deleteForm" method="post" action="<?= ROOT ?>dr/userprofile/delete">
             <div class="dr-userprofile-popupForm">
                 <center><svg id="dr-userprofile-userDeletePopupImg" xmlns="http://www.w3.org/2000/svg" width="67" height="66" viewBox="0 0 67 66" fill="none">
@@ -197,7 +208,7 @@ th {
                     </div>
                 </div>
                 <div class="dr-userprofile-buttonx">
-                    <?php if ($student[0]->status == "continue") : ?>
+                    <?php if ($student[0]->status == "continue" && $degrees[0]->Status == "ongoing") : ?>
                         <input type="button" id="dr-userprofile-updateButton" class="dr-userprofile-button" value="Update" onclick="updateData1()">
                     <?php endif; ?>
                 </div>
@@ -270,11 +281,12 @@ th {
             // Show the overlay and pop-up
             $('#dr-userprofile-overlay').css('display', 'block');
             $('.dr-userprofile-pop-up1').css('display', 'block');
-
+            document.body.classList.add('no-scroll');
             $('#dr-userprofile-close-button').click(function(e) {
                 // Hide the pop-up and overlay when the close button is clicked
                 $('.dr-userprofile-pop-up1').css('display', 'none');
                 $('#dr-userprofile-overlay').css('display', 'none');
+                document.body.classList.remove('no-scroll');
                 e.stopPropagation();
             });
         }
@@ -283,11 +295,12 @@ th {
             // Show the overlay and pop-up
             $('#dr-userprofile-overlay').css('display', 'block');
             $('.dr-userprofile-popup').css('display', 'block');
-            
+            document.body.classList.add('no-scroll');
             $('.dr-userprofile-close-button').click(function(e) {
                 // Hide the pop-up and overlay when the close button is clicked
                 $('.dr-userprofile-popup').css('display', 'none');
                 $('#dr-userprofile-overlay').css('display', 'none');
+                document.body.classList.remove('no-scroll');
                 e.stopPropagation();
             });
         }
@@ -296,11 +309,12 @@ th {
             // Show the overlay and pop-up
             $('#dr-userprofile-overlay').css('display', 'block');
             $('.dr-userprofile-pop-up2').css('display', 'block');
-
+            document.body.classList.add('no-scroll');
             $('.dr-userprofile-close-button-3').click(function(e) {
                 // Hide the pop-up and overlay when the close button is clicked
                 $('.dr-userprofile-pop-up2').css('display', 'none');
                 $('#dr-userprofile-overlay').css('display', 'none');
+                document.body.classList.remove('no-scroll');
                 e.stopPropagation();
             });
         }
@@ -309,10 +323,11 @@ th {
             $('.dr-userprofile-pop-up1').css('display', 'none');
             $('#dr-userprofile-overlay').css('display', 'block');
             $('.dr-userprofile-pop-up1-1').css('display', 'block');
-
+            document.body.classList.add('no-scroll');
             $('#dr-userprofile-overlay').click(function(e) {
                 $('.dr-userprofile-pop-up1-1').css('display', 'none');
                 $('#dr-userprofile-overlay').css('display', 'none');
+                document.body.classList.remove('no-scroll');
                 e.stopPropagation();
             });
         }

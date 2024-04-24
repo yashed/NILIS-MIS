@@ -5,12 +5,6 @@ $data['role'] = $role;
 
 ?>
 
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,59 +56,12 @@ $data['role'] = $role;
             width: calc(100% - 88px);
         }
 
-        /* .temp3-subsection-0 {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center; */
-        /* background-color: var(--text-color); */
-        /* padding: 15px 10px 15px 35px;
-            border-radius: 6px;
-            margin: 7px 4px 7px 4px;
-            flex-wrap: wrap;
-
-        } */
-
-        /* .temp3-subsection-01 {
-            display: flex;
-            padding: 15px 30px 14px 30px;
-            justify-content: center;
-            align-items: center;
-            border-radius: 10px;
-            border: 1px solid rgba(0, 0, 0, 0.12);
-            background-color: var(--text-color);
-            box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.12);
-            width: 25%;
-            height: 150px;
-            flex-direction: row;
-            gap: 60px;
-        } */
-
-        /* .temp3-subcard-data {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .temp3-subcard-data-value {
-            font-size: 38px;
-            font-weight: 600;
-            color: #17376E;
-        }
-
-        .temp3-subcard-data-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #17376E;
-        } */
 
         .temp3-subsection-1 {
             background-color: var(--text-color);
             padding: 10px 10px 30px 35px;
             border-radius: 6px;
             margin: 7px 4px 7px 4px;
-            min-height: 80vh;
 
         }
 
@@ -132,6 +79,10 @@ $data['role'] = $role;
 </head>
 
 <body>
+    <?php $this->view('components/navside-bar/header', $data) ?>
+    <?php $this->view('components/navside-bar/sidebar', $data) ?>
+    <?php $this->view('components/navside-bar/footer', $data) ?>
+
     <div class="temp3-home">
         <div class="temp3-title">Notifications</div>
         <div class="temp3-subsection-1">
@@ -140,14 +91,20 @@ $data['role'] = $role;
                     <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-start-alert'): ?>
                         <?php
                         $data['role'] = "SAR";
-                        $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+
+                        $link = "sar";
+                        $this->view('components/notification-bar/notification-box', [
+                            "notification" => $notification,
+                            "role" => $data['role'],
+                            "link" => $link  // Pass the notify_id here
+                        ]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
             <?php if (!empty($notifications)): ?>
                 <?php foreach ($notifications as $notification): ?>
-                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert'): ?>
+                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert' && $data['usernames'] == $notification->usernames): ?>
                         <?php
                         $data['role'] = "SAR";
                         $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -157,7 +114,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)): ?>
                 <?php foreach ($notifications as $notification): ?>
-                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert'): ?>
+                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert' && $data['usernames'] == $notification->usernames): ?>
                         <?php
                         $data['role'] = "SAR";
                         $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -167,7 +124,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)): ?>
                 <?php foreach ($notifications as $notification): ?>
-                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert'): ?>
+                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert' && $data['usernames'] == $notification->usernames): ?>
                         <?php
                         $data['role'] = "SAR";
                         $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -177,7 +134,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)): ?>
                 <?php foreach ($notifications as $notification): ?>
-                    <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-start-alert'): ?>
+                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-start-alert' && $data['usernames'] == $notification->usernames): ?>
                         <?php
                         $data['role'] = "SAR";
                         $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -187,7 +144,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)): ?>
                 <?php foreach ($notifications as $notification): ?>
-                    <?php if ($notification->type == 'Study leave' && $notification->msg_type == 'Studyleave-end-alert'): ?>
+                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-end-alert' && $data['usernames'] == $notification->usernames): ?>
                         <?php
                         $data['role'] = "SAR";
                         $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -200,11 +157,32 @@ $data['role'] = $role;
                     <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-attendance-alert'): ?>
                         <?php
                         $data['role'] = "SAR";
-                        $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
+
+                        $link = "sar";
+                        $this->view('components/notification-bar/notification-box', [
+                            "notification" => $notification,
+                            "role" => $data['role'],
+                            "link" => $link  // Pass the notify_id here
+                        ]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
+            <?php if (!empty($notifications)): ?>
+                <?php foreach ($notifications as $notification): ?>
+                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Send-warnings-alert'): ?>
+                        <?php
+                        $data['role'] = "SAR";
+
+                        $link = "sar";
+                        $this->view('components/notification-bar/notification-box', [
+                            "notification" => $notification,
+                            "role" => $data['role'],
+                            "link" => $link  // Pass the notify_id here
+                        ]) ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
 
         </div>
     </div>
