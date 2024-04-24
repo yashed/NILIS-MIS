@@ -6,14 +6,14 @@
 class Admin extends Controller
 {
 
-  // function __construct()
-  // {
-  //   if (!Auth::is_admin()) {
-  //     message('You are not authorized to view this page');
-  //     show("Error");
-  //     redirect('login');
-  //   }
-  // }
+  function __construct()
+  {
+    if (!Auth::is_admin()) {
+      message('You are not authorized to view this page');
+      show("Error");
+      redirect('_403_');
+    }
+  }
 
   public function index()
   {
@@ -24,14 +24,30 @@ class Admin extends Controller
     //   header('Location: login');
     // }
 
+    $degree = new Degree();
+    $exam = new Exam();
+    $finalMarks = new FinalMarks();
+
+    $data['title'] = 'Dashboard';
+
+    //find all ongoing degree programs
+    $data['ongoing_degrees'] = $degree->where(['Status' => 'ongoing']);
+
+
+    $recentExamId = $finalMarks->lastID('examID');
+
+    //join exam and degree tables
+    $dataTables = ['degree'];
+    $columns = ['*'];
+    $examConditions = ['exam.degreeID = degree.DegreeID', 'exam.examID = ' . $recentExamId];
+    $data['RecentResultExam'] = $exam->join($dataTables, $columns, $examConditions);
     $data['title'] = "Page not found";
 
     $this->view('admin-interfaces/admin-dashboard', $data);
   }
   public function dashboard()
   {
-    $data['title'] = 'Dashboard';
-    $this->view('admin-interfaces/admin-dashboard', $data);
+
   }
   public function users()
   {
@@ -142,7 +158,7 @@ class Admin extends Controller
 
     $this->view('admin-interfaces/admin-degreeprograms', $data);
   }
-  
+
   public function settings()
   {
       $user = new User();
@@ -181,10 +197,20 @@ class Admin extends Controller
 
   public function activity()
   {
-
     $activity = new Activity();
+    $perPage = 20; // Number of records per page
+    $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+    $start = ($page - 1) * $perPage;
 
-    $data['activities'] = $activity->findAll();
+    // Assuming findAll can take limit and offset
+    $data['activities'] = $activity->findLimit($start, $perPage);
+
+    if (!empty($data['activities'])) {
+      $data['totalRows'] = count($activity->findAll());
+    }
+
+    $data['currentPage'] = $page;
+    $data['perPage'] = $perPage;
 
 
     $this->view('admin-interfaces/admin-activity-log', $data);

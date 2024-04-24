@@ -47,6 +47,7 @@ class Database
         return false;
     }
 
+
     function create_tables()
     {
         //user table 
@@ -138,8 +139,8 @@ class Database
         //student Table
         $query = "
         CREATE TABLE IF NOT EXISTS student (
-            ⁠ id ⁠ int(11) NOT NULL AUTO_INCREMENT,
-            ⁠ Email ⁠ varchar(40) NOT NULL,
+            id int(11) NOT NULL AUTO_INCREMENT,
+            Email ⁠ varchar(40) NOT NULL,
             ⁠ regNo ⁠ varchar(40) NOT NULL,
             ⁠ country ⁠ varchar(40) NOT NULL,
             ⁠ indexNo ⁠ varchar(40) NOT NULL,
@@ -246,7 +247,7 @@ class Database
     semester int(10) NOT NULL,
     FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
     Foreign key (examID) references exam(examID),
-    primary key (subjectCode, degreeID, semester)
+    primary key (subjectCode, degreeID, semester,examID)
  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
  ";
         $this->query($query);
@@ -412,8 +413,8 @@ class Database
             `degree_name` varchar(255) NOT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
           ";
-          $this->query($query);
-        }
+        $this->query($query);
+    }
 
     public function updateWritten()
     {
@@ -534,6 +535,32 @@ DELIMITER ;
 
         // Execute the trigger creation query
         $this->query($triggerQuery);
+    }
+
+    public function createExamDetailsAdd()
+    {
+        $query = "DELIMITER //
+
+        CREATE TRIGGER insert_exam_after_degree_timetable_insert
+        AFTER INSERT ON degree_timetable
+        FOR EACH ROW
+        BEGIN
+            DECLARE semester_value INT;
+            
+            IF NEW.EventName = 'First Semester' THEN
+                SET semester_value = 1;
+            ELSEIF NEW.EventName = 'Second Semester' THEN
+                SET semester_value = 2;
+            END IF;
+            
+            INSERT INTO exam (examType, degreeID, semester, status)
+            VALUES ('Normal', NEW.DegreeID, semester_value, 'upcoming');
+        END;
+        //
+        
+        DELIMITER ;
+        ";
+        $this->query($query);
     }
 
     public function createFinalMarksUpdateTrigger()
@@ -1212,10 +1239,10 @@ END;
     END;
   ";
 
-     // Execute the procedure creation query
-     $this->query($query);
+        // Execute the procedure creation query
+        $this->query($query);
 
-     $query = "
+        $query = "
      CREATE PROCEDURE IF NOT EXISTS `reminder_director`()
      BEGIN
      DECLARE currentDate DATE;
@@ -1267,10 +1294,10 @@ END;
 END;
      ";
 
-     // Execute the procedure creation query
-     $this->query($query);
+        // Execute the procedure creation query
+        $this->query($query);
 
-     $query = "
+        $query = "
      CREATE PROCEDURE IF NOT EXISTS `degree_changed`()
      BEGIN
   DECLARE currentDate DATE;
@@ -1321,8 +1348,8 @@ END;
 END;
 ";
 
-  // Execute the procedure creation query
-  $this->query($query);
+        // Execute the procedure creation query
+        $this->query($query);
     }
 
     public function create_event()

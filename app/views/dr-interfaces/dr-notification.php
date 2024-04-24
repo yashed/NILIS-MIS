@@ -1,24 +1,18 @@
 <?php
-
 $role = "DR";
 $data['role'] = $role;
-
 ?>
-
-<?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
+<?php $this->view('components/navside-bar/header', $data) ?>
+<?php $this->view('components/navside-bar/sidebar', $data) ?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-
         * {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -61,14 +55,12 @@ $data['role'] = $role;
             width: calc(100% - 88px);
         }
 
-       
-
         .temp3-subsection-1 {
             background-color: var(--text-color);
             padding: 10px 10px 30px 35px;
             border-radius: 6px;
             margin: 7px 4px 7px 4px;
-
+            /* min-height: 72vh; */
         }
 
         .temp3-sub-title {
@@ -79,12 +71,9 @@ $data['role'] = $role;
             font-style: normal;
             font-weight: 600;
             margin: 40px;
-
         }
-
     </style>
 </head>
-
 <body>
     <div class="temp3-home">
         <div class="temp3-title">Notifications</div>
@@ -181,14 +170,10 @@ $data['role'] = $role;
                 <?php endforeach; ?>
             <?php endif; ?>
             
-
-
         </div>
     </div>
-
     <div class="temp3-footer">
         <?php $this->view('components/footer/index', $data) ?>
     </div>
 </body>
-
 </html>

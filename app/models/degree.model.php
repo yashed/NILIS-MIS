@@ -15,7 +15,7 @@ class Degree extends Model
 		'Duration',
 		'AcademicYear',
 		'Status',
-		'CreatedDate',
+		'createdDate',
 	];
 
 	public function validate($data)

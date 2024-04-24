@@ -435,6 +435,7 @@ $data['recentResults'] = $RecentResultExam;
         font-size: var(--fs-400);
         font-style: normal;
         font-weight: 600;
+        text-align: center;
         line-height: normal;
     }
 
@@ -691,24 +692,29 @@ $data['recentResults'] = $RecentResultExam;
                             </div>
 
                             <div class="up-exam-cards">
-                                <div class="upcomming-exam-card">
-                                    <div class="up-exam-degree-name">
-                                        Diploma in School Librarianship
-                                    </div>
-                                    <div class="up-exam-semester">
-                                        1<sup>st</sup> Semester Examination
-                                    </div>
-                                    <div class="up-exam-dates">
-                                        <div class="up-exam-stdate">
-                                            Starting Date : <span> 2023/05/21 </span>
+                                <!-- <?php show($upcomingExams); ?> -->
+                                <?php if (!empty($upcomingExams)): ?>
+                                    <?php foreach ($upcomingExams as $exam): ?>
+                                        <!-- <?php show($exam); ?> -->
+                                        <div class="upcomming-exam-card">
+                                            <div class="up-exam-degree-name"><?= $exam->DegreeName ?>
+                                            </div>
+                                            <div class="up-exam-semester">
+                                                <?= $exam->EventName ?> Examination
+                                            </div>
+                                            <div class="up-exam-dates">
+                                                <div class="up-exam-stdate">
+                                                    Starting Date : <span> <?= $exam->StartingDate ?> </span>
+                                                </div>
+                                                <div class="up-exam-enddate">
+                                                    End Date : <span> <?= $exam->EndingDate ?> </span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="up-exam-enddate">
-                                            End Date : <span> 2023/05/21 </span>
-                                        </div>
-                                    </div>
-                                </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
 
-                                <div class="upcomming-exam-card">
+                                <!-- <div class="upcomming-exam-card">
                                     <div class="up-exam-degree-name">
                                         Diploma in School Librarianship
                                     </div>
@@ -723,7 +729,7 @@ $data['recentResults'] = $RecentResultExam;
                                             End Date : <span> 2023/05/21 </span>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
 
                         </div>

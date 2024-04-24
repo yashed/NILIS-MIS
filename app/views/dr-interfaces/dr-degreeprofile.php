@@ -10,11 +10,25 @@ $data['role'] = $role;
 
 <head>
     <link rel="stylesheet" type="text/css" href="<?= ROOT ?>css/dr/dr-styles.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Degree Profile</title>
 </head>
-
+<style>
+.degreeprofile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    backdrop-filter: blur(5px); /* Add blur effect */
+    z-index: 998; /* Layer it above other content */
+    display: none; /* Initially hidden */
+}
+</style>
 <body>
     <div class="degreeprofile-dr-large-box">
+        <div class="degreeprofile-overlay" id="degreeprofile-overlay"></div>
         <div class="degreeprofile-large-box">
             <div class="degreeprofile-box_1">
                 <?php if (!empty($degrees)) : ?>
@@ -112,6 +126,9 @@ $data['role'] = $role;
                                         </select></td>
                                     <td width="12%"><input type="date" value="<?= $event->StartingDate ?>" class="degreeprofile-duration" id="degreeprofile-start_<?= $event->EventID ?>" readonly></td>
                                     <td width="12%"><input type="date" value="<?= $event->EndingDate ?>" class="degreeprofile-duration" id="degreeprofile-end_<?= $event->EventID ?>" readonly></td>
+                                    <?php if ($event->EventType != "Examination") : ?>
+                                        <td><i class='bx bx-minus' data-event-id="<?= $event->EventID ?>"></i></td>
+                                    <?php endif; ?>
                                 </tr>
                                 <?php if ($event->EventID > $lastEventID) {
                                     $lastEventID = $event->EventID;
@@ -180,18 +197,26 @@ $data['role'] = $role;
     function completedDegree() {
         // Show the overlay and pop-up
         $('#degreeprofile-form3').css('display', 'block');
+        document.getElementById('degreeprofile-overlay').style.display = 'block';
+        document.body.classList.add('no-scroll');
         $('.degreeprofile-close-button-3').click(function(e) {
             // Hide the pop-up when the close button is clicked
             $('#degreeprofile-form3').css('display', 'none');
+            document.getElementById('degreeprofile-overlay').style.display = 'none';
+            document.body.classList.remove('no-scroll');
             e.stopPropagation();
         });
     }
     function deleteDegree() {
         // Show the overlay and pop-up
         $('#degreeprofile-form4').css('display', 'block');
+        document.getElementById('degreeprofile-overlay').style.display = 'block';
+        document.body.classList.add('no-scroll');
         $('.degreeprofile-close-button-3').click(function(e) {
             // Hide the pop-up when the close button is clicked
             $('#degreeprofile-form4').css('display', 'none');
+            document.getElementById('degreeprofile-overlay').style.display = 'none';
+            document.body.classList.remove('no-scroll');
             e.stopPropagation();
         });
     }
@@ -199,7 +224,11 @@ $data['role'] = $role;
         let add = document.querySelector("#degreeprofile-add_new_event");
         let table = document.querySelector(".degreeprofile-Time_table");
         let i = <?= $lastEventID ?> + 1;
+        console.log(i);
         let count = 0;
+        const duration = <?= json_encode($degrees[0]->Duration) ?>;
+        const lock = duration * 2;
+        console.log(duration);
         // Define a function to handle the change event
         function handleChange(eventIndex) {
             return function(e) {
@@ -207,16 +236,39 @@ $data['role'] = $role;
                 var typeValue = $('#degreeprofile-type_' + eventIndex).val();
                 var startValue = $('#degreeprofile-start_' + eventIndex).val();
                 var endValue = $('#degreeprofile-end_' + eventIndex).val();
-
+                 // console.log(eventValue ,typeValue ,startValue ,endValue);
+                if (startValue < new Date().toISOString().split('T')[0]) {
+                    alert('Start date cannot be earlier than today\'s date.');
+                    $('#degreeprofile-start_' + eventIndex).val(new Date().toISOString().split('T')[0]);
+                    startValue = (new Date().toISOString().split('T')[0]);
+                }
+                if (startValue > endValue) {
+                    alert('End date cannot be earlier than start date.');
+                    $('#degreeprofile-end_' + eventIndex).val(startValue);
+                    endValue = startValue;
+                }
                 if (eventValue !== "" && typeValue !== "" && startValue !== "" && endValue !== "") {
                     $('#degreeprofile-event_' + (eventIndex + 1)).prop('readonly', false);
                     $('#degreeprofile-type_' + (eventIndex + 1)).prop('disabled', false);
                     $('#degreeprofile-start_' + (eventIndex + 1)).prop('readonly', false);
                     $('#degreeprofile-end_' + (eventIndex + 1)).prop('readonly', false);
                     count = eventIndex + 1;
+                    validateEvents();
                 }
                 if (count == i) {
                     add.removeAttribute("disabled");
+                }
+                if (lock == 2 || lock == 4) {
+                    $('#degreeprofile-event_1').prop('readonly', true);
+                    $('#degreeprofile-type_1').prop('disabled', true);
+                    $('#degreeprofile-event_2').prop('readonly', true);
+                    $('#degreeprofile-type_2').prop('disabled', true);
+                }
+                if (lock == 4) {
+                    $('#degreeprofile-event_3').prop('readonly', true);
+                    $('#degreeprofile-type_3').prop('disabled', true);
+                    $('#degreeprofile-event_4').prop('readonly', true);
+                    $('#degreeprofile-type_4').prop('disabled', true);
                 }
             };
         }
@@ -227,7 +279,6 @@ $data['role'] = $role;
                     <td><input type="text" value="" class="degreeprofile-event" id="degreeprofile-event_${i}" placeholder="New Event"></td>
                     <td width="12%" padding-right="3px"><select  class="degreeprofile-duration" id="degreeprofile-type_${i}">
                                 <option value="" default hidden>Event Type</option>
-                                <option value="Examination" <?= (set_value('type_${i}') === 'Examination') ? 'selected' : '' ?>>Examination</option>
                                 <option value="Study Leave" <?= (set_value('type_${i}') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
                                 <option value="Vacation" <?= (set_value('type_${i}') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
                                 <option value="Other" <?= (set_value('type_${i}') === 'Other') ? 'selected' : '' ?>>Other</option>
@@ -239,12 +290,14 @@ $data['role'] = $role;
             let newRow = document.createElement("tr");
             newRow.innerHTML = template;
             table.appendChild(newRow);
+            alert("Please fill out all fields in new event");
             add.setAttribute("disabled", "true");
+            save.setAttribute("disabled", "true");
             $('#degreeprofile-event_' + i + ', #degreeprofile-type_' + i + ', #degreeprofile-start_' + i + ', #degreeprofile-end_' + i).on("change", handleChange(i));
             i++;
         });
         let updateButton = document.getElementById("degreeprofile-update");
-        let saveButton = document.getElementById("degreeprofile-save");
+        let save = document.getElementById("degreeprofile-save");
         let completeDegreeButton = document.getElementById("degreeprofile-complete_degree");
         let eventFields = document.querySelectorAll('.degreeprofile-event');
         let eventTypeFields = document.querySelectorAll('.degreeprofile-duration');
@@ -261,24 +314,50 @@ $data['role'] = $role;
                     option.removeAttribute('disabled');
                 });
             });
-            saveButton.removeAttribute('disabled');
+            let m = 2;
+            if (duration == 2) {
+                m = 4;
+            }
+            for (var j = 1; j < m + 1; j++) {
+                document.getElementById('degreeprofile-event_' + j).setAttribute('readonly', 'true');
+                document.getElementById('degreeprofile-type_' + j).setAttribute('disabled', 'true');
+            }
+            save.removeAttribute('disabled');
             updateButton.setAttribute('disabled', 'true');
-
             // Attach change event handlers to all sets of fields
             for (var k = 1; k < i; k++) {
                 $('#degreeprofile-event_' + k + ', #degreeprofile-type_' + k + ', #degreeprofile-start_' + k + ', #degreeprofile-end_' + k).on("change", handleChange(k));
             }
         });
-        saveButton.onclick = function(event) {
+        function validateEvents() {
+            for (var k = 1; k < i; k++) {
+                var eventValue = $('#degreeprofile-event_' + k).val();
+                var typeValue = $('#degreeprofile-type_' + k).val();
+                var startValue = $('#degreeprofile-start_' + k).val();
+                var endValue = $('#degreeprofile-end_' + k).val();
+                // Check if events and dates are filled for each evnt
+                if (eventValue === "" || typeValue === "" || startValue === "" || endValue === "") {
+                    return;
+                }
+                if (!/^[a-zA-Z0-9\s]+$/.test(eventValue)) {
+                    alert("Event Name for row " + k + " must be a sentence and number.");
+                    return;
+                }
+            }
+            save.removeAttribute("disabled");
+            add.removeAttribute("disabled");
+        }
+        save.onclick = function(event) {
             event.preventDefault();
             var timetableData = [];
+            console.log(i);
             var timeTable = document.getElementById(`degreeprofile-Time_table`);
             for (var k = 1; k < i; k++) { // loop through all rows except the header
                 var eventID = k;
-                var eventName = document.getElementById(`degreeprofile-event_${k}`).value.trim();
-                var eventType = document.getElementById(`degreeprofile-type_${k}`).value.trim();
-                var eventStart = document.getElementById(`degreeprofile-start_${k}`).value.trim();
-                var eventEnd = document.getElementById(`degreeprofile-end_${k}`).value.trim();
+                var eventName = $('#degreeprofile-event_' + k).val();
+                var eventType = $('#degreeprofile-type_' + k).val();
+                var eventStart = $('#degreeprofile-start_' + k).val();
+                var eventEnd = $('#degreeprofile-end_' + k).val();
                 // Push data to timetableData array
                 timetableData.push({
                     eventID: eventID,
@@ -309,9 +388,37 @@ $data['role'] = $role;
                     option.setAttribute('disabled', 'true');
                 });
             });
-            saveButton.setAttribute('disabled', 'true');
+            save.setAttribute('disabled', 'true');
             updateButton.removeAttribute('disabled', 'true');
         }
+        // Attach event listener to minus icons
+        document.querySelectorAll('.bx-minus').forEach(function (icon) {
+            icon.addEventListener('click', function () {
+                const eventId = this.getAttribute('data-event-id');
+                
+                // Make an AJAX request to delete the event with the specified EventID
+                // You would replace the URL and method as needed
+                fetch(`/delete-event/${eventId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Remove the row from the table
+                        const row = this.closest('tr');
+                        row.remove();
+                    } else {
+                        console.error('Failed to delete event:', data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting event:', error);
+                });
+            });
+        });
     });
 </script>
 

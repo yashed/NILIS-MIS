@@ -11,14 +11,9 @@ class Home extends Controller
         $db->create_tables();
         $db->create_procedure();
         $db->create_event();
-        // $db->createFinalMarksTrigger();
-        // $res= $db->query("select * from users");
 
-        // show($res);
 
-        //    $users = new User();
-        //    $users->insert($data);
-
+        redirect('login');
         $this->view('common/login/login');
     }
     public function edit($id = null, $name = null)

@@ -7,9 +7,7 @@ $data['role'] = $role;
 
 ?>
 
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -254,7 +252,8 @@ $data['role'] = $role;
         padding: 8px;
         font-size: 14px;
         font-weight: 600px;
-        text-align: center;;
+        text-align: center;
+        ;
     }
 
     .table td {
@@ -311,7 +310,7 @@ $data['role'] = $role;
         border: 1px solid
     }
 
-    .btn-secondary {
+    .btn-secondary-2 {
         min-width: 10vh;
         color: #17376e;
         background: white;
@@ -323,7 +322,7 @@ $data['role'] = $role;
         margin-bottom: 10px;
     }
 
-    .btn-secondary:hover {
+    .btn-secondary-2:hover {
         color: black;
         background-color: #E0E0E0;
         border: 1px solid #17376e;
@@ -343,11 +342,13 @@ $data['role'] = $role;
         background-color: none;
         border: none;
     }
-    .student-status{
+
+    .student-status {
         color: #10344D;
-        font-weight: 600;       
+        font-weight: 600;
     }
-    .not-found-stu{
+
+    .not-found-stu {
         font-size: 1.5vw;
         font-weight: 500;
         color: #17376E;
@@ -356,144 +357,225 @@ $data['role'] = $role;
         margin-top: 20px;
     }
 
+
+
+    .cancel-link {
+        display: flex;
+        justify-content: center;
+        font-family: "Poppins";
+        font-size: 12px;
+        color: #17376E;
+        font-weight: 400;
+        margin-top: 40px;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .cancel-a:hover {
+        color: #FF0000;
+    }
+
+    .exam-cancel {
+        position: fixed;
+        top: -150%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.25);
+        border: 1.5px solid rgba(00, 00, 00, 0.30);
+        opacity: 0;
+        background: #fff;
+        width: 40%;
+        padding: 40px;
+        box-shadow: 9px 11px 60.9px 0px rgba(0, 0, 0, 0.60);
+        border-radius: 10px;
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+        z-index: 2000;
+    }
+
+    .exam-cancel.active {
+        top: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+    }
+
+    .create-body {
+        width: 100%;
+    }
+
+    .create-body.active {
+        filter: blur(5px);
+        pointer-events: none;
+        user-select: none;
+        background: rgba(0, 0, 0, 0.30);
+        overflow: hidden;
+    }
 </style>
 
 <body>
-    <div class="exam-create-home">
-        <div class="exam-create-title">Create Examination</div>
-        <div class="exam-create-subsection-1">
-            <div class="exam-create-sub-title">
-                Add Participant
+    <div class='create-body' id='exam-create-body'>
 
-                <div class="exam-create-steps">
-                    <div class="progress">
-                        <lable class="form-subname">Select <span style="color:#17376E; font-weight:600">Repeated </span>
-                            and <span style="color:#17376E; font-weight:600">Medical Approved </span> Students add to
-                            the
-                            examination</lable>
-                        <lable class="form-subname">Step 2 of 3</lable>
+    <?php $this->view('components/navside-bar/header', $data) ?>
+        <?php $this->view('components/navside-bar/sidebar', $data) ?>
+        <?php $this->view('components/navside-bar/footer', $data) ?>
 
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-bar-active"></div>
-                    </div>
-                    <form method="post" id='repeat-medical-studnet-select'>
-                    <div class="degree-student-table">
+        <div class="exam-create-home">
+            <div class="exam-create-title">Create Examination</div>
+            <div class="exam-create-subsection-1">
+                <div class="exam-create-sub-title">
+                    Add Participant
 
-                        <table class="table">
-                        <?php if (empty($repeatStudents) && empty($medicalStudents)): ?>
-                                    <div class="not-found-stu">No students found</div>
-                        <?php else: ?>
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <input type="checkbox" class="checkAll" name="checkAll" />
-                                    </th>
-                                    <th>Name</th>
-                                    <th>Index Number</th>
-                                    
-                                    <th>Attempt</th>
-                                    <th>Subject Code</th>
-                                    <th>Student Type</th>
-                                    <th>Status</th>
-                                </tr>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (!empty($repeatStudents)): ?>
-                                <?php foreach ($repeatStudents as $rStudent): ?>
-                                    <?php $json = json_encode($rStudent); ?>
-                                    <tr>
-                                        <td><input type="checkbox" name="item[]" value="<?= $rStudent->id ?>"
-                                        <?= isset($_SESSION['checked_RM_students']['repeat'][$rStudent->id]) ? 'checked' : '' ?>></td>
-                                        <td><input type="text" name="name[]" value=" H.A.Yashed Thisra" readonly></td>
-                                        <td><input type="text" name="indexNo[]" value=" <?= $rStudent->indexNo ?>" readonly>
-                                        </td>                                    
-                                        <td><input type="text" name="attempt[]" value="  <?= $rStudent->attempt ?>"
+                    <div class="exam-create-steps">
+                        <div class="progress">
+                            <lable class="form-subname">Select <span style="color:#17376E; font-weight:600">Repeated
+                                </span>
+                                and <span style="color:#17376E; font-weight:600">Medical Approved </span> Students add
+                                to
+                                the
+                                examination</lable>
+                            <lable class="form-subname">Step 2 of 3</lable>
+
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-bar-active"></div>
+                        </div>
+                        <form method="post" id='repeat-medical-studnet-select'>
+                            <div class="degree-student-table">
+
+                                <table class="table">
+                                    <?php if (empty($repeatStudents) && empty($medicalStudents)): ?>
+                                        <div class="not-found-stu">No students found</div>
+                                    <?php else: ?>
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <input type="checkbox" class="checkAll" name="checkAll" />
+                                                </th>
+                                                <th>Name</th>
+                                                <th>Index Number</th>
+
+                                                <th>Attempt</th>
+                                                <th>Subject Code</th>
+                                                <th>Student Type</th>
+                                                <th>Status</th>
+                                            </tr>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php if (!empty($repeatStudents)): ?>
+                                                <?php foreach ($repeatStudents as $rStudent): ?>
+                                                    <?php $json = json_encode($rStudent); ?>
+                                                    <tr>
+                                                        <td><input type="checkbox" name="item[]" value="<?= $rStudent->id ?>"
+                                                                <?= isset($_SESSION['checked_RM_students']['repeat'][$rStudent->id]) ? 'checked' : '' ?>></td>
+                                                        <td><input type="text" name="name[]" value=" H.A.Yashed Thisra" readonly>
+                                                        </td>
+                                                        <td><input type="text" name="indexNo[]" value=" <?= $rStudent->indexNo ?>"
+                                                                readonly>
+                                                        </td>
+                                                        <td><input type="text" name="attempt[]" value="  <?= $rStudent->attempt ?>"
+                                                                readonly>
+                                                        </td>
+                                                        <td><input type="text" name="subjectCode[]" value=" <?= $rStudent->subjectCode ?>"
                                                 readonly>
-                                        </td>
-                                        <td><input type="text" name="subjectCode[]" value=" <?= $rStudent->subjectCode ?>"
-                                                readonly>
-                                            </td>
-                                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
-                                        <td><input type="text" name="status[]" value="Paid" class ="student-status" readonly></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                                <?php endif; ?>
+                                                        </td>
+                                                        <td><input type="text" name="studentType[]" value="Repeat" readonly></td>
+                                                        <td><input type="text" name="status[]" value="Paid" class="student-status"
+                                                                readonly></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
 
-                               <?php if (!empty($medicalStudents)): ?>
-                                <?php foreach ($medicalStudents as $mStudent): ?>
-                                    <?php $json = json_encode($mStudent); ?>
-                                    <tr>
-                                        <td><input type="checkbox" name="item[]" value="<?= $mStudent->id ?>"
-                                        <?= isset($_SESSION['checked_RM_students']['medical'][$mStudent->id]) ? 'checked' : '' ?>></td>
-                                        <td><input type="text" name="name[]" value=" H.A.Yashed Thisra" readonly></td>
-                                        <td><input type="text" name="indexNo[]" value=" <?= $mStudent->indexNo ?>" readonly>
-                                        </td>
-                                        <td><input type="text" name="attempt[]" value="  <?= $mStudent->attempt ?>"
-                                                readonly>
-                                        </td>
-                                        <td><input type="text" name="subjectCode[]" value=" <?= $mStudent->subjectCode ?>"
+                                            <?php if (!empty($medicalStudents)): ?>
+                                                <?php foreach ($medicalStudents as $mStudent): ?>
+                                                    <?php $json = json_encode($mStudent); ?>
+                                                    <tr>
+                                                        <td><input type="checkbox" name="item[]" value="<?= $mStudent->id ?>"
+                                                                <?= isset($_SESSION['checked_RM_students']['medical'][$mStudent->id]) ? 'checked' : '' ?>></td>
+                                                        <td><input type="text" name="name[]" value=" H.A.Yashed Thisra" readonly>
+                                                        </td>
+                                                        <td><input type="text" name="indexNo[]" value=" <?= $mStudent->indexNo ?>"
+                                                                readonly>
+                                                        </td>
+                                                        <td><input type="text" name="attempt[]" value="  <?= $mStudent->attempt ?>"
+                                                                readonly>
+                                                        </td>
+                                                        <td><input type="text" name="subjectCode[]" value=" <?= $mStudent->subjectCode ?>"
                                                 readonly></td>
-                                        <td><input type="text" name="studentType[]" value="Medical" readonly></td>
-                                        <td><input type="text" name="status[]" value="Approved" class ="student-status" readonly></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                                <?php endif; ?>
+                                                        <td><input type="text" name="studentType[]" value="Medical" readonly></td>
+                                                        <td><input type="text" name="status[]" value="Approved"
+                                                                class="student-status" readonly></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
 
-                             <?php endif; ?>
-                                   
-                            </tbody>
-                        </table>
+                                        <?php endif; ?>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class=" exam-buttons">
+                                <div class="cancel-button">
+                                    <button class="btn-secondary-2" type="submit" value="back2"
+                                        name='back2'>Back</button>
+                                </div>
+                                <div class="next-button">
+                                    <button class="btn-primary" type="submit" name='submit' value='next2'>Next</button>
+                                </div>
+                            </div>
+                            <div class='cancel-link'>
+                                <a class="cancel-a" onclick='showExamCanclePopup()'>Cancel</a>
+                            </div>
+                        </form>
                     </div>
-                    <div class=" exam-buttons">
-                        <div class="cancel-button">
-                            <button class="btn-secondary" type="submit" value = "back2" name='back2' >Back</button>
-                        </div>
-                        <div class="next-button">
-                            <button class="btn-primary" type="submit" name='submit' value='next2'>Next</button>
-                        </div>
-                    </div>
-                </form>
                 </div>
             </div>
+
+            <div class="exam-create-footer">
+                <?php $this->view('components/footer/index', $data) ?>
+            </div>
         </div>
-
-        <div class="exam-create-footer">
-            <?php $this->view('components/footer/index', $data) ?>
-        </div>
-        <script>
-            $(document).ready(function () {
-                $(".checkAll").on("click", function () {
-                    $(this)
-                        .closest("table")
-                        .find("tbody :checkbox")
-                        .prop("checked", this.checked)
-                        .closest("tr")
-                        .toggleClass("selected", this.checked);
-                });
-
-                $("tbody :checkbox").on("click", function () {
-                    // toggle selected class to the checkbox in a row
-                    $(this)
-                        .closest("tr")
-                        .toggleClass("selected", this.checked);
-
-                    // add selected class on check all
-                    $(this).closest("table")
-                        .find(".checkAll")
-                        .prop("checked",
-                            $(this)
-                                .closest("table")
-                                .find("tbody :checkbox:checked").length ==
-                            $(this)
-                                .closest("table")
-                                .find("tbody :checkbox").length
-                        );
-                });
-            });
-        </script>
+    </div>
+    <div id="exam-cancel" class="exam-cancel">
+        <?php $this->view('components/popup/examination-cancel-popup', $data) ?>
+    </div>
 </body>
 
+<script>
+    function showExamCanclePopup() {
+        console.log("showExamCanclePopup");
+        document.querySelector("#exam-cancel").classList.add("active");
+        document.querySelector("#exam-create-body").classList.add("active");
+
+    }
+    $(document).ready(function () {
+        $(".checkAll").on("click", function () {
+            $(this)
+                .closest("table")
+                .find("tbody :checkbox")
+                .prop("checked", this.checked)
+                .closest("tr")
+                .toggleClass("selected", this.checked);
+        });
+
+        $("tbody :checkbox").on("click", function () {
+            // toggle selected class to the checkbox in a row
+            $(this)
+                .closest("tr")
+                .toggleClass("selected", this.checked);
+
+            // add selected class on check all
+            $(this).closest("table")
+                .find(".checkAll")
+                .prop("checked",
+                    $(this)
+                        .closest("table")
+                        .find("tbody :checkbox:checked").length ==
+                    $(this)
+                        .closest("table")
+                        .find("tbody :checkbox").length
+                );
+        });
+    });
+</script>
 
 </html>

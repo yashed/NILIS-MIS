@@ -55,7 +55,12 @@
     padding: 10px 10px 30px 35px;
     border-radius: 6px;
     margin: 7px 4px 7px 4px;
-    min-height: 72vh;
+    /* min-height: 72vh; */
+}
+.dr-attendance-temp3-footer {
+    /* position: fixed; */
+    bottom: 0;
+    width: 100%;
 }
 </style>
 <body>
