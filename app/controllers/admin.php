@@ -6,14 +6,14 @@
 class Admin extends Controller
 {
 
-  // function __construct()
-  // {
-  //   if (!Auth::is_admin()) {
-  //     message('You are not authorized to view this page');
-  //     show("Error");
-  //     redirect('_403_');
-  //   }
-  // }
+  function __construct()
+  {
+    if (!Auth::is_admin()) {
+      message('You are not authorized to view this page');
+      show("Error");
+      redirect('_403_');
+    }
+  }
 
   public function index()
   {

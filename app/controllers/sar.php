@@ -5,7 +5,7 @@ class SAR extends Controller
     function __construct()
     {
         if (!Auth::is_sar()) {
-            message('You are not authorized to view this page');
+            message('You are not authorized to view this page', 'error', true);
             redirect('_403_');
         }
 
@@ -13,14 +13,43 @@ class SAR extends Controller
 
     public function index($checkUser = false)
     {
-
-        $exam = new Exam();
-        $finalMarks = new FinalMarks();
         //uncoment this to add autherization to sar
         // if (!Auth::is_sar()) {
         //     message('You are not authorized to view this page', 'error',true);
         //     header('Location: login');
         // }
+
+        $degree = new Degree();
+        $student = new StudentModel();
+        $exam = new Exam();
+        $degreetimetable = new DegreeTimeTable();
+        $finalMarks = new FinalMarks();
+        $db = new Database();
+
+
+        //remove degree data from session
+        if (!empty($_SESSION['degreeData'])) {
+            unset($_SESSION['degreeData']);
+        }
+        //remove exam details from session
+        if (!empty($_SESSION['examDetails'])) {
+            unset($_SESSION['examDetails']);
+        }
+
+        //get data to show as upcoming examination in sar dashboard
+        $upTable = ['degree'];
+        $upColumns = ['*'];
+        $upConditions = ['degree_timetable.DegreeID = Degree.DegreeID', 'StartingDate >= CURDATE()'];
+        $data['upcomingExams'] = $degreetimetable->join($upTable, $upColumns, $upConditions, 'StartingDate', 2);
+
+
+        //pass data to graphs and chalender
+        $data['degrees'] = $degree->findAll();
+        $data['students'] = $student->findAll();
+        $data['exam'] = $exam->findAll();
+        $data['degreetimetables'] = $degreetimetable->findAll();
+
+
 
         //get last results submitted examination id
         $recentExamId = $finalMarks->lastID('examID');

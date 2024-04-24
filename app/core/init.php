@@ -8,6 +8,9 @@
 
 spl_autoload_register(function ($class_name) {
 
+    //convert class name to lowercase
+    // $class_name = strtolower($class_name);
+
     // Check if the class is in the models directory
 
     $model_path = "../app/models/" . $class_name . ".model.php";
