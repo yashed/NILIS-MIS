@@ -57,6 +57,79 @@ function message($msg = '', $type = 'success', $erase = false)
     return false;
 }
 
+function getBestMarks($data, $attribute)
+{
+    $result = [];
+
+    foreach ($data as $subjectCode => $records) {
+        $maxMark = -1;
+        $bestRecord = null;
+
+        foreach ($records as $record) {
+            if ($record->$attribute > $maxMark) {
+                $maxMark = $record->$attribute;
+                $bestRecord = $record;
+            }
+        }
+
+        if ($bestRecord !== null) {
+            $result[$subjectCode] = [$bestRecord];
+        }
+    }
+
+    return $result;
+}
+
+function calculateGPA($marksArray, $gradesArray, $subjectCodesArray)
+{
+    // Initialize variables for GPA calculation
+    $totalCredits = 0;
+    $totalGradePoints = 0;
+
+    // Iterate through each subject code
+    foreach ($subjectCodesArray as $subject) {
+        $subjectCode = $subject->SubjectCode;
+
+        // Check if marks are available for this subject
+        if (isset($marksArray[$subjectCode])) {
+            // Retrieve marks for this subject
+            $subjectMarks = $marksArray[$subjectCode][0];
+
+            // Retrieve credits for this subject
+            $credits = $subjectMarks->NoCredits;
+
+            // Retrieve grade for this subject
+            $grade = $subjectMarks->grade;
+
+            // Find GPV for this grade
+            $gpv = 0;
+            foreach ($gradesArray as $gradeInfo) {
+                if ($gradeInfo->Grade === $grade) {
+                    $gpv = $gradeInfo->GPV;
+                    break;
+                }
+            }
+
+            // Calculate grade points for this subject
+            $gradePoints = $gpv * $credits;
+
+            // Add to total grade points and total credits
+            $totalGradePoints += $gradePoints;
+            $totalCredits += $credits;
+        } else {
+            // If marks are not available, consider credits as 0
+            $totalCredits += 0;
+        }
+    }
+
+    // Calculate GPA
+    if ($totalCredits > 0) {
+        $gpa = $totalGradePoints / $totalCredits;
+        return $gpa;
+    } else {
+        return 0; // Handle division by zero error
+    }
+}
 function groupByColumn($data, $columnName)
 {
     // Check if $data is not an array or if it's empty
@@ -217,21 +290,29 @@ function leastGap($mark1, $mark2, $mark3)
     }
 }
 
-function getRepeatedSubjects($indexNo, $semester)
+function getRepeatedSubjects($indexNo, $semester = null)
 {
     $repeatStudents = new RepeatStudents;
 
     //get repeated subjects
-    $repeatedSubjects = $repeatStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester,], 'subjectCode');
+    if ($semester == null) {
+        $repeatedSubjects = $repeatStudents->whereSpecificColumn(['indexNo' => $indexNo], 'subjectCode');
+    } else {
+        $repeatedSubjects = $repeatStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester,], 'subjectCode');
+    }
     return $repeatedSubjects;
 }
 
-function getMedicalSubjects($indexNo, $semester)
+function getMedicalSubjects($indexNo, $semester = null)
 {
     $medicalStudents = new MedicalStudents;
 
     //get repeated subjects
-    $medicalSubjects = $medicalStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester], 'subjectCode');
+    if ($semester == null) {
+        $medicalSubjects = $medicalStudents->whereSpecificColumn(['indexNo' => $indexNo], 'subjectCode');
+    } else {
+        $medicalSubjects = $medicalStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester], 'subjectCode');
+    }
     return $medicalSubjects;
 }
 
@@ -395,27 +476,30 @@ function updateMarksheet($csvFileName, $dataArray, $newFileName)
     // Ensure the output directory exists
     $newFileDir = dirname($newFilePath);
     if (!is_dir($newFileDir)) {
-        mkdir($newFileDir, 0777, true); // recursive creation
+        mkdir($newFileDir, 0777, true);
     }
+
 
     // Read the existing CSV file
     $rows = [];
     $headerData = [];
-    if (($handle = fopen($csvFilePath, "r")) !== FALSE) {
-        $lineCount = 0;
-        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-            $lineCount++;
-            if ($lineCount <= 3) {
-                // Collect program and subject lines
-                $headerData[] = $data;
-                continue;
-            } else if ($lineCount == 4) {
-                // Skip the redundant header line
-                continue;
+    if (file_exists($csvFilePath)) {
+        if (($handle = fopen($csvFilePath, "r")) !== FALSE) {
+            $lineCount = 0;
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $lineCount++;
+                if ($lineCount <= 3) {
+                    // Collect program and subject lines
+                    $headerData[] = $data;
+                    continue;
+                } else if ($lineCount == 4) {
+                    // Skip the redundant header line
+                    continue;
+                }
+                $rows[] = $data;
             }
-            $rows[] = $data;
+            fclose($handle);
         }
-        fclose($handle);
     }
 
     // Open a new file to write the updated data

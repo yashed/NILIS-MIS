@@ -16,10 +16,12 @@ $data['role'] = $role;
         body {
             min-height: auto;
         }
+
         table {
             width: 100%;
             margin: 5px 5px 5px 20px;
         }
+
         td img {
             width: 36px;
             height: 36px;
@@ -129,7 +131,7 @@ $data['role'] = $role;
 <body>
     <div class="dr-participants-home">
         <div class="dr-participants-title">
-            <div class="dr-participants-title1"><?=$degrees[0]->DegreeName?></div>
+            <div class="dr-participants-title1"><?= $degrees[0]->DegreeName ?></div>
             <div class="dr-participants-title1-core">Participants</div>
         </div>
         <div class="dr-participants-home-1">
@@ -144,19 +146,23 @@ $data['role'] = $role;
                         <button class="dr-participants-button">Search</button>
                     </div>
                     <div class="dr-participants-export__file">
-                        <label for="dr-participants-export-file" class="dr-participants-export__file-btn" title="Export File"></label><br><br>
+                        <label for="dr-participants-export-file" class="dr-participants-export__file-btn"
+                            title="Export File"></label><br><br>
                         <input type="checkbox" id="dr-participants-export-file">
                         <div class="dr-participants-export__file-options">
                             <label>Export As</label>
-                            <label for="dr-participants-export-file" id="dr-participants-toPDF">PDF <img src="<?= ROOT ?>assets/dr-participant-table/pdf.png" alt=""></label>
-                            <label for="dr-participants-export-file" id="dr-participants-toCSV">CSV <img src="<?= ROOT ?>assets/dr-participant-table/csv.png" alt=""></label>
-                            <label for="dr-participants-export-file" id="dr-participants-toEXCEL">EXCEL <img src="<?= ROOT ?>assets/dr-participant-table/excel.png" alt=""></label>
+                            <label for="dr-participants-export-file" id="dr-participants-toPDF">PDF <img
+                                    src="<?= ROOT ?>assets/dr-participant-table/pdf.png" alt=""></label>
+                            <label for="dr-participants-export-file" id="dr-participants-toCSV">CSV <img
+                                    src="<?= ROOT ?>assets/dr-participant-table/csv.png" alt=""></label>
+                            <label for="dr-participants-export-file" id="dr-participants-toEXCEL">EXCEL <img
+                                    src="<?= ROOT ?>assets/dr-participant-table/excel.png" alt=""></label>
                         </div>
                     </div>
                 </section>
                 <section class="dr-participants-table__body">
                     <table id="dr-participants-table_p">
-                        <?php if (!empty($students)) : ?>
+                        <?php if (!empty($students)): ?>
                             <thead>
                                 <tr>
                                     <th> Name </th>
@@ -166,7 +172,7 @@ $data['role'] = $role;
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($students as $student) : ?>
+                                <?php foreach ($students as $student): ?>
                                     <tr data-id="<?= $student->id ?>" class="dr-participants-clickable-row">
                                         <td class="dr-participants-table__body-td-name"><?= $student->name ?> </td>
                                         <td> <?= $student->indexNo ?> </td>
@@ -175,8 +181,8 @@ $data['role'] = $role;
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
-                        <?php else : ?>
-                        <p style="margin: 20px 30%;">No students found for the diploma program.</p>
+                        <?php else: ?>
+                            <p style="margin: 20px 30%;">No students found for the diploma program.</p>
                         <?php endif; ?>
                     </table>
                 </section>
@@ -246,7 +252,7 @@ $data['role'] = $role;
 
     const customers_table = document.querySelector('#dr-participants-table_p');
     const pdf_btn = document.querySelector('#dr-participants-toPDF');
-    const toPDF = function(customers_table) {
+    const toPDF = function (customers_table) {
         const html_code = `
         <link rel="stylesheet" type="text/css" href="<?= ROOT ?>css/dr/dr-styles.css">
         <div class="dr-participants-table_p">${customers_table.innerHTML}</div>
@@ -272,7 +278,7 @@ $data['role'] = $role;
     // 4. Converting HTML table to CSV File
 
     const csv_btn = document.querySelector('#dr-participants-toCSV');
-    const toCSV = function(table) {
+    const toCSV = function (table) {
         const t_heads = table.querySelectorAll('th'),
             tbody_rows = table.querySelectorAll('tbody tr');
         // Extract headers
@@ -306,7 +312,7 @@ $data['role'] = $role;
     // 5. Converting HTML table to EXCEL File
 
     const excel_btn = document.querySelector('#dr-participants-toEXCEL');
-    const toExcel = function(table) {
+    const toExcel = function (table) {
         const t_heads = table.querySelectorAll('th');
         const tbody_rows = table.querySelectorAll('tbody tr');
         // Extract and format headers
@@ -333,7 +339,7 @@ $data['role'] = $role;
     };
 
     //For CSV and EXCEL
-    const downloadFile = function(data, fileType, fileName = 'download') {
+    const downloadFile = function (data, fileType, fileName = 'download') {
         const blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -346,11 +352,11 @@ $data['role'] = $role;
     };
 
     // for pass the data, for make row clickable
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const table = document.getElementById('dr-participants-table_p');
         const rows = table.querySelectorAll('tbody tr');
         rows.forEach((row) => {
-            row.addEventListener('click', function() {
+            row.addEventListener('click', function () {
                 // Get the unique identifier from the data-id attribute
                 const studentId = row.getAttribute('data-id');
                 console.log(studentId);
@@ -359,4 +365,5 @@ $data['role'] = $role;
         });
     });
 </script>
+
 </html>

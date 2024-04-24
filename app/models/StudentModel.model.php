@@ -3,7 +3,7 @@
 class StudentModel extends Model
 {
 
-    public  $errors = [];
+    public $errors = [];
     protected $table = 'student';
     protected $primaryKey = 'id';
     protected $allowedColumns = [
@@ -95,5 +95,21 @@ class StudentModel extends Model
         }
     }
 
-   
+
+    //indexNO validation
+    public function indexNoValidation($data)
+    {
+        if ($this->where2(['indexNo' => $data['index']])) {
+
+            return true;
+        } else {
+
+            $this->errors['Index-Error'] = 'Incorrect Index Number';
+            return false;
+        }
+
+
+    }
+
+
 }

@@ -543,7 +543,6 @@ $data['popupStatus'] = isset($RMpopupStatus) ? $RMpopupStatus : '';
 
     var popupStatus = <?php echo $RMpopupStatus ? 'true' : 'false'; ?>;
     if (popupStatus) {
-
         // Adding 'active' class to the popup and body elements
         document.querySelector("#RM-popup").classList.add("active");
         document.querySelector("#body").classList.add("active");
@@ -580,33 +579,6 @@ $data['popupStatus'] = isset($RMpopupStatus) ? $RMpopupStatus : '';
 
     // 2. Sorting | Ordering data of HTML table
 
-    // table_headings.forEach((head, i) => {
-    //     let sort_asc = true;
-    //     head.onclick = () => {
-    //         table_headings.forEach(head => head.classList.remove('active'));
-    //         head.classList.add('active');
-
-    //         document.querySelectorAll('td').forEach(td => td.classList.remove('active'));
-    //         table_rows.forEach(row => {
-    //             row.querySelectorAll('td')[i].classList.add('active');
-    //         })
-
-    //         head.classList.toggle('asc', sort_asc);
-    //         sort_asc = head.classList.contains('asc') ? false : true;
-
-    //         sortTable(i, sort_asc);
-    //     }
-    // })
-    // function sortTable(column, sort_asc) {
-    //     [...table_rows].sort((a, b) => {
-    //             let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
-    //                 second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
-
-    //             return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
-    //         })
-    //         .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
-    // }
-
     table_headings.forEach((head, i) => {
         let sort_asc = true;
         head.onclick = () => {
@@ -640,168 +612,108 @@ $data['popupStatus'] = isset($RMpopupStatus) ? $RMpopupStatus : '';
 
     // 3. Converting HTML table to PDF
 
-    const pdf_btn = document.querySelector('#toPDF');
-    const customers_table = document.querySelector('#customers_table');
+    // const customers_table = document.querySelector('#dr-participants-table_p');
+    // const pdf_btn = document.querySelector('#dr-participants-toPDF');
+    // const toPDF = function (customers_table) {
+    //     const html_code = `
+    //     <link rel="stylesh eet" type="text/css" href="<?= ROOT ?>css/dr/dr-styles.css">
+    //     <div class="dr-participants-table_p">${customers_table.innerHTML}</div>
+    //     `;
 
-    const toPDF = function (customers_table) {
-        const html_code = `
-        <link rel="stylesheet" href="style.css">
-        <main class="table" >${customers_table.innerHTML}</main>
-        `;
+    //     const new_window = window.open();
+    //     new_window.document.write(html_code);
+    //     setTimeout(() => {
+    //         new_window.print();
+    //         new_window.close();
+    //     }, 400);
+    // }
+    // pdf_btn.onclick = () => {
+    //     const element = document.querySelector('#dr-participants-table_p');
+    //     html2pdf(element, {
+    //         margin: 1,
+    //         filename: 'participants-table.pdf',
+    //         html2canvas: { scale: 2 },
+    //         jsPDF: { orientation: 'portrait', unit: 'in', format: 'letter', compressPDF: true }
+    //     });
+    // }
 
-        const new_window = window.open();
-        new_window.document.write(html_code);
+    // 4. Converting HTML table to CSV File
 
-        setTimeout(() => {
-            new_window.print();
-            new_window.close();
-        }, 400);
-    }
+    // const csv_btn = document.querySelector('#dr-participants-toCSV');
+    // const toCSV = function (table) {
+    //     const t_heads = table.querySelectorAll('th'),
+    //         tbody_rows = table.querySelectorAll('tbody tr');
+    //     // Extract headers
+    //     const headings = [...t_heads].map(head => `"${head.textContent.trim()}"`).join(',');
+    //     // Extract data
+    //     const table_data = [...tbody_rows].map(row => {
+    //         const cells = row.querySelectorAll('td');
+    //         const data = [...cells].map(cell => {
+    //             // Handle commas, quotes, and newlines in cell text
+    //             let text = cell.textContent.trim().replace(/"/g, '""');
+    //             return `"${text}"`; // Quote the text to handle commas
+    //         }).join(',');
+    //         // Optional: handle images if present
+    //         let img = '';
+    //         const imgTag = row.querySelector('img');
+    //         if (imgTag) {
+    //             img = imgTag.src; // Export the image URL
+    //             img = img.replace(/"/g, '""'); // Escape quotes in URL
+    //         }
+    //         return data + (img ? `,"${img}"` : ',""'); // Append image URL if exists
+    //     }).join('\n');
 
-    pdf_btn.onclick = () => {
-        toPDF(customers_table);
-    }
+    //     return headings + '\n' + table_data;
+    // };
+    // csv_btn.onclick = () => {
+    //     const table = document.querySelector('#dr-participants-table_p');
+    //     const csvData = toCSV(table);
+    //     downloadFile(csvData, 'csv', 'participants');
+    // };
 
-    // 4. Converting HTML table to JSON
+    // 5. Converting HTML table to EXCEL File
 
-    const json_btn = document.querySelector('#toJSON');
+    // const excel_btn = document.querySelector('#dr-participants-toEXCEL');
+    // const toExcel = function (table) {
+    //     const t_heads = table.querySelectorAll('th');
+    //     const tbody_rows = table.querySelectorAll('tbody tr');
+    //     // Extract and format headers
+    //     const headings = [...t_heads].map(head => {
+    //         return `"${head.textContent.trim().replace(/"/g, '""')}"`; // Enclose in quotes and escape existing quotes
+    //     }).join(',');
+    //     // Extract and format data
+    //     const table_data = [...tbody_rows].map(row => {
+    //         const cells = row.querySelectorAll('td');
+    //         const formattedCells = [...cells].map(cell => {
+    //             return `"${cell.textContent.trim().replace(/"/g, '""')}"`; // Enclose in quotes and escape existing quotes
+    //         });
+    //         // Optional: Add an image URL if needed
+    //         const imgTag = row.querySelector('img');
+    //         const img = imgTag ? `"${imgTag.src.replace(/"/g, '""')}"` : '""'; // Check if image exists and escape quotes
+    //         return [...formattedCells, img].join(','); // Combine cell data with image URL
+    //     }).join('\n');
+    //     return headings + '\n' + table_data;
+    // };
+    // excel_btn.onclick = () => {
+    //     const table = document.querySelector('#dr-participants-table_p'); // Ensure this selector is correct
+    //     const excelData = toExcel(table);
+    //     downloadFile(excelData, 'participants'); // Saving as .txt for Excel to read as TSV
+    // };
 
-    const toJSON = function (table) {
-        let table_data = [],
-            t_head = [],
+    // //For CSV and EXCEL
+    // const downloadFile = function (data, fileType, fileName = 'download') {
+    //     const blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
+    //     const url = URL.createObjectURL(blob);
+    //     const a = document.createElement('a');
+    //     a.href = url;
+    //     a.download = `${fileName}.${fileType}`;
+    //     document.body.appendChild(a);
+    //     a.click();
+    //     document.body.removeChild(a);
+    //     URL.revokeObjectURL(url);
+    // };
 
-            t_headings = table.querySelectorAll('th'),
-            t_rows = table.querySelectorAll('tbody tr');
-
-        for (let t_heading of t_headings) {
-            let actual_head = t_heading.textContent.trim().split(' ');
-
-            t_head.push(actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase());
-        }
-
-        t_rows.forEach(row => {
-            const row_object = {},
-                t_cells = row.querySelectorAll('td');
-
-            t_cells.forEach((t_cell, cell_index) => {
-                const img = t_cell.querySelector('img');
-                if (img) {
-                    row_object['customer image'] = decodeURIComponent(img.src);
-                }
-                row_object[t_head[cell_index]] = t_cell.textContent.trim();
-            })
-            table_data.push(row_object);
-        })
-
-        return JSON.stringify(table_data, null, 4);
-    }
-
-    json_btn.onclick = () => {
-        const json = toJSON(customers_table);
-        downloadFile(json, 'json')
-    }
-
-    // 5. Converting HTML table to CSV File
-
-    const csv_btn = document.querySelector('#toCSV');
-
-    const toCSV = function (table) {
-        // Code For SIMPLE TABLE
-        // const t_rows = table.querySelectorAll('tr');
-        // return [...t_rows].map(row => {
-        //     const cells = row.querySelectorAll('th, td');
-        //     return [...cells].map(cell => cell.textContent.trim()).join(',');
-        // }).join('\n');
-
-        const t_heads = table.querySelectorAll('th'),
-            tbody_rows = table.querySelectorAll('tbody tr');
-
-        const headings = [...t_heads].map(head => {
-            let actual_head = head.textContent.trim().split(' ');
-            return actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase();
-        }).join(',') + ',' + 'image name';
-
-        const table_data = [...tbody_rows].map(row => {
-            const cells = row.querySelectorAll('td'),
-                img = decodeURIComponent(row.querySelector('img').src),
-                data_without_img = [...cells].map(cell => cell.textContent.replace(/,/g, ".").trim()).join(',');
-
-            return data_without_img + ',' + img;
-        }).join('\n');
-
-        return headings + '\n' + table_data;
-    }
-
-    csv_btn.onclick = () => {
-        const csv = toCSV(customers_table);
-        downloadFile(csv, 'csv', 'customer orders');
-    }
-
-    // 6. Converting HTML table to EXCEL File
-
-    const excel_btn = document.querySelector('#toEXCEL');
-
-    const toExcel = function (table) {
-        // Code For SIMPLE TABLE
-        // const t_rows = table.querySelectorAll('tr');
-        // return [...t_rows].map(row => {
-        //     const cells = row.querySelectorAll('th, td');
-        //     return [...cells].map(cell => cell.textContent.trim()).join('\t');
-        // }).join('\n');
-
-        const t_heads = table.querySelectorAll('th'),
-            tbody_rows = table.querySelectorAll('tbody tr');
-
-        const headings = [...t_heads].map(head => {
-            let actual_head = head.textContent.trim().split(' ');
-            return actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase();
-        }).join('\t') + '\t' + 'image name';
-
-        const table_data = [...tbody_rows].map(row => {
-            const cells = row.querySelectorAll('td'),
-                img = decodeURIComponent(row.querySelector('img').src),
-                data_without_img = [...cells].map(cell => cell.textContent.trim()).join('\t');
-
-            return data_without_img + '\t' + img;
-        }).join('\n');
-
-        return headings + '\n' + table_data;
-    }
-
-    excel_btn.onclick = () => {
-        const excel = toExcel(customers_table);
-        downloadFile(excel, 'excel');
-    }
-
-    const downloadFile = function (data, fileType, fileName = '') {
-        const a = document.createElement('a');
-        a.download = fileName;
-        const mime_types = {
-            'json': 'application/json',
-            'csv': 'text/csv',
-            'excel': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        }
-        a.href = `
-            data:${mime_types[fileType]};charset=utf-8,${encodeURIComponent(data)}
-        `;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-    }
-
-    function getValueFromSelectedRow(table, rowIndex, columnIndex) {
-        var rows = table.rows;
-
-        if (rowIndex >= 0 && rowIndex < rows.length) {
-            var selectedRow = rows[rowIndex];
-            var cellValue = selectedRow.cells[columnIndex].textContent;
-            return cellValue;
-        } else {
-            return "Invalid row index";
-        }
-    }
-
-
+    // for pass the data, for make row clickable
     document.addEventListener('DOMContentLoaded', function () {
         const table = document.getElementById('table_p');
         const rows = table.querySelectorAll('tbody tr');
@@ -812,24 +724,7 @@ $data['popupStatus'] = isset($RMpopupStatus) ? $RMpopupStatus : '';
                 const studentId = row.getAttribute('data-id');
 
                 // Navigate to the target page with the data as a query parameter
-                window.location.href = '<?= ROOT ?>sar/userprofile' + studentId;
-            });
-        });
-    });
-
-
-    // for make row clickable
-    document.addEventListener('DOMContentLoaded', function () {
-        const table = document.getElementById('table_p');
-        const rows = table.querySelectorAll('tbody tr');
-
-        rows.forEach((row) => {
-            row.addEventListener('click', function () {
-                // Get the unique identifier from the data-id attribute
-                const studentId = row.getAttribute('data-id');
-
-                // Navigate to the target page with the data as a query parameter
-                window.location.href = '<?= ROOT ?>sar/userprofile?studentId=' + studentId;
+                window.location.href = '<?= ROOT ?>sar/userprofile?id=' + studentId;
             });
         });
     });

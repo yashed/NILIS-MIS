@@ -210,11 +210,12 @@
         padding: 10px 0;
     }
 
-    .error {
+    .error-msg {
         color: red;
         font-size: 12px;
         font-weight: 400;
         line-height: normal;
+        margin: 0 0 10 0;
     }
 
     .nilis-logo-login {
@@ -253,7 +254,9 @@ $degree = $degreeDetails[0]->DegreeShortName ?? null;
                     <div class="admission-login-input">
                         <lable class="login-input-title">Enter Student Index number</lable>
                         <input type="text" name="index" class="input-index" placeholder="Index Number">
-                        <span class="error" hidden>Invalid Index Number</span>
+                        <?php if (!empty($errors['Index-Error'])): ?>
+                            <div class="error-msg">*<?= $errors['Index-Error'] ?></div>
+                        <?php endif; ?>
                     </div>
 
                     <div class="login-btn">
