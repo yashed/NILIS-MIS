@@ -1,9 +1,7 @@
-<head>
-    <title>Record Of Examination</title>
-    <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
-</head>
-
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examination Report</title>
+<script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
     @import url('https://fonts.cdnfonts.com/css/times-new-roman');
@@ -49,14 +47,16 @@
     page {
         background: white;
         display: block;
-        margin: 0 auto;
-        margin-bottom: 0.5cm;
-        /* box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.1); */
+        margin: 10px auto;
+        margin-bottom: 1cm;
+
     }
 
     page[size="A4"] {
         width: 21cm;
-        height: 29.7cm;
+        /* height: 29.7cm; */
+        height: 100%;
+        box-sizing: border-box;
     }
 
 
@@ -156,7 +156,7 @@
         font-family: poppins;
         border-collapse: collapse;
         width: 100%;
-        /* min-height: px; */
+
     }
 
     .admission-table tr {
@@ -171,7 +171,6 @@
         text-align: center;
         border: 1px solid #ddd;
         padding: 4px;
-
         font-size: 14px;
         padding: 10px 5px 10px 5px;
     }
@@ -255,6 +254,21 @@
         font-weight: 500;
     }
 
+    /* 
+    @page {
+        size: A4;
+        margin: 2cm;
+
+    }
+
+
+    page[size="A4"] {
+        width: 100%;
+        height: 100%;
+        padding: 1cm;
+
+    } */
+
     @media print {
 
         #print {
@@ -266,11 +280,11 @@
         }
 
         body,
-        page {
+        /* page {
             background: white;
             margin: 0;
             box-shadow: 0;
-        }
+        } */
 
         .print-btn {
             display: none;
@@ -299,7 +313,7 @@
         flex-direction: row;
         justify-content: space-between;
         gap: 20px;
-
+        padding: 0 40px 0 40px;
     }
 
     .gradings {
@@ -320,6 +334,11 @@
 
     .grading-title {
         margin-bottom: 15px;
+    }
+
+    .html2pdf__page .row-span-multiple-pages {
+        margin-bottom: 20px;
+        /* Adjust margin size as needed */
     }
 </style>
 
@@ -355,17 +374,14 @@
                         <dive class='semester-details'> Semester 0<?= $semester ?>
                     </div>
                 <?php endif ?>
-                <div class="results-abr"> <b>N</b> - Normal | <b>MC</b> - Medical | <b>RS</b> - Repeat
-
-                </div>
 
             </div>
             <div class="admission-data-tb">
                 <div class="roe-table">
                     <table class="admission-table">
                         <thead>
-                            <tr>
-                                <th>Name</th>
+                            <tr class='table-row'>
+                                <th>Reg No</th>
                                 <th>IndexN0</th>
                                 <?php if (!empty($subjects)): ?>
                                     <?php foreach ($subjects as $subject): ?>
@@ -373,15 +389,35 @@
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>
+
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Subject 01</td>
-                                <td>[22]</td>
-                                <td>[1]</td>
-                                <td>3</td>
-                                <td>A</td>
-                            </tr>
+                            <?php if (!empty($students)): ?>
+                                <?php foreach ($students as $student): ?>
+
+                                    <tr>
+                                        <td><?= $student->regNo; ?></td>
+                                        <td><?= $student->indexNo; ?></td>
+                                        <?php if (!empty($subjects)): ?>
+                                            <?php foreach ($subjects as $subject): ?>
+                                                <?php if (!empty($studentRes[$student->indexNo][$subject->SubjectCode])): ?>
+                                                    <?php if ($studentRes[$student->indexNo][$subject->SubjectCode][0]->grade == 'F'): ?>
+                                                        <td style="background-color: red;">
+                                                            <?= $studentRes[$student->indexNo][$subject->SubjectCode][0]->grade ?>
+                                                        </td>
+                                                    <?php else: ?>
+                                                        <td><?= $studentRes[$student->indexNo][$subject->SubjectCode][0]->grade ?></td>
+                                                    <?php endif; ?>
+                                                <?php else: ?>
+                                                    <td>ab </td>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+
+                                    </tr>
+
+                                <?php endforeach; ?>
+                            <?php endif; ?>
 
                         </tbody>
                     </table>
@@ -410,8 +446,13 @@
                                     <tr>
                                         <td><?= $grade->Grade ?> </td>
                                         <td><?= $grade->MaxMarks ?> - <?= $grade->MinMarks ?></td>
+
                                     </tr>
                                 <?php endforeach ?>
+                                <tr>
+                                    <td>ab</td>
+                                    <td>absent</td>
+                                </tr>
                             </tbody>
                         </table>
 
@@ -428,6 +469,17 @@
 </body>
 
 <script>
+    const rowsPerPage = 24;
+    const rows = document.querySelectorAll('.table-row');
+    rows.forEach((row, index) => {
+
+        const pageNumber = Math.floor(index / rowsPerPage) + 1;
+
+
+        if (pageNumber > 1) {
+            row.classList.add('row-span-multiple-pages');
+        }
+    });
 
     function generatePDF() {
         const element = document.querySelector('.admisssion-card');
@@ -435,7 +487,17 @@
             margin: 0,
             filename: 'record_of_examination.pdf',
             html2canvas: { scale: 3 },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            beforeGenerate: function () {
+                const pages = document.querySelectorAll('.html2pdf__page');
+                pages.forEach(page => {
+                    const marginDiv = document.createElement('div');
+                    marginDiv.style.width = '100%';
+                    marginDiv.style.height = '1cm'; // Adjust margin height as needed
+                    marginDiv.style.pageBreakAfter = 'always';
+                    page.appendChild(marginDiv);
+                });
+            }
         });
 
         // Hide the download button 

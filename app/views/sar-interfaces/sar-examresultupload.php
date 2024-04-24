@@ -3,7 +3,8 @@ $role = "SAR";
 $data['role'] = $role;
 $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 $examId = $_SESSION['examDetails'][0]->examID;
-$degreeId = $_GET['degreeID'];
+
+$degreeID = $_SESSION['examDetails'][0]->degreeID;
 ?>
 
 

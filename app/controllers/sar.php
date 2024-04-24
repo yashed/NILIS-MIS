@@ -67,12 +67,18 @@ class SAR extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
-        $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
-
-        //update session degree data
-        if (!empty($degreeID)) {
+        if (isset($_GET['id'])) {
+            $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
             $_SESSION['degreeData'] = $degree->where(['DegreeID' => $degreeID]);
+            redirect("sar/degreeprofile");
+
         }
+
+        $degreeID = $_SESSION['degreeData'][0]->DegreeID;
+        // $_SESSION['degreeData']->DegreeID = $degreeID;
+        //update session degree data
+
+
 
         // Check if degree ID is provided
         if ($degreeID !== null) {
@@ -868,14 +874,20 @@ class SAR extends Controller
             $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
             $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
 
-            //add examination details to the session
-            $_SESSION['examDetails'] = $exam->where(['examID' => $examID]);
+
+            if (!empty($examID)) {
+                //add examination details to the session
+                $_SESSION['examDetails'] = $exam->where(['examID' => $examID]);
+            }
 
             //set examination id
             if (!empty($_SESSION['examDetails'])) {
                 $examID = $_SESSION['examDetails'][0]->examID;
                 $semester = $_SESSION['examDetails'][0]->semester;
+                $degreeID = $_SESSION['examDetails'][0]->degreeID;
+
             } else {
+
                 $examID = null;
                 $semester = null;
             }
@@ -887,6 +899,11 @@ class SAR extends Controller
             $ExamSubjects = $subjects->where(['degreeID' => $degreeID, 'semester' => $semester]);
 
             if ($method == 'participants') {
+
+                if (!empty($_GET['examID']) && !empty($_GET['degreeID'])) {
+                    redirect('sar/examination/participants');
+                }
+
 
                 $admissionMail = new Mail();
 
@@ -1160,12 +1177,21 @@ class SAR extends Controller
 
             } else if ($method == 'resultsupload') {
 
+                if (!empty($_GET['examID']) && !empty($_GET['degreeID'])) {
+                    redirect('sar/examination/resultsupload');
+                }
+
+                //get examID and DegreeID from session
+                if (!empty($_SESSION['examDetails'])) {
+                    $examID = $_SESSION['examDetails'][0]->examID;
+                    $degreeID = $_SESSION['examDetails'][0]->degreeID;
+                    $semester = $_SESSION['examDetails'][0]->semester;
+                }
+
+
+
                 //examiner3 variable (this is added for use of reload page)
                 $examiner3 = false;
-                //redirect ro examination page if examID null
-                if (empty($examID)) {
-                    redirect('sar/examination');
-                }
 
                 //get students data from exam participants table
                 $tables = ['student'];
@@ -1835,31 +1861,41 @@ class SAR extends Controller
         $data['semester'] = isset($_GET['semester']) ? $_GET['semester'] : null;
         $data['subjects'] = $subjects->where(['DegreeID' => $data['degreeDetails'][0]->DegreeID, 'semester' => $data['semester']]);
         $data['subjectsCodes'] = $subjects->whereSpecificColumn(['DegreeID' => $data['degreeDetails'][0]->DegreeID, 'semester' => $data['semester']], 'SubjectCode');
+
         $data['grades'] = $gradings->where(['DegreeID' => $data['degreeDetails'][0]->DegreeID]);
         $students = $student->where(['DegreeID' => $data['degreeDetails'][0]->DegreeID]);
-        $indexNo = 'DPL/09';
+        $data['students'] = $students;
+        $data['studentRes'] = [];
 
-        $tables = ['subject', 'exam_attendance'];
-        $columns = ['*'];
-        $conditions = [
-            'subject.SubjectCode = final_marks.subjectCode',
-            'subject.DegreeID = final_marks.degreeID',
-            'exam_attendance.examID = final_marks.examID',
-            'exam_attendance.IndexNo = final_marks.studentIndexNo',
-            'final_marks.subjectCode = exam_attendance.subjectCode',
-        ];
-        $whereConditions = [
-            "final_marks.studentIndexNo = " . "'$indexNo'",
-            "exam_attendance.IndexNo = " . "'$indexNo'",
+        foreach ($students as $student) {
+            $indexNo = $student->indexNo;
 
-        ];
+            $tables = ['subject', 'exam_attendance'];
+            $columns = ['*'];
+            $conditions = [
+                'subject.SubjectCode = final_marks.subjectCode',
+                'subject.DegreeID = final_marks.degreeID',
+                'exam_attendance.examID = final_marks.examID',
+                'exam_attendance.IndexNo = final_marks.studentIndexNo',
+                'final_marks.subjectCode = exam_attendance.subjectCode',
+            ];
+            $whereConditions = [
+                "final_marks.studentIndexNo = " . "'$indexNo'",
+                "exam_attendance.IndexNo = " . "'$indexNo'",
 
-        $studnetRes = $finalMarks->joinWhere($tables, $columns, $conditions, $whereConditions);
-        $groupedData = groupByColumn($studnetRes, 'subjectCode');
+            ];
 
-        //get best marks
-        $bestData = getBestMarks($groupedData, 'finalMarks');
-        show($bestData);
+            $studnetRes = $finalMarks->joinWhere($tables, $columns, $conditions, $whereConditions);
+            $groupedData = groupByColumn($studnetRes, 'subjectCode');
+
+            //get best marks
+            $bestData = getBestMarks($groupedData, 'finalMarks');
+            $data['studentRes'][$indexNo] = $bestData;
+            // show($bestData);
+
+        }
+        // show($data['studentRes']);
+
         if ($method == '1') {
             $this->view('reports/reports-1', $data);
         } else if ($method == '2') {
