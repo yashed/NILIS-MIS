@@ -1482,7 +1482,7 @@ $degreeId = $_SESSION['examDetails'][0]->degreeID;
         formData.append('type', type);
 
 
-        var targetURL = '<?= ROOT ?>sar/examination/resultsupload?degreeID=' + degreeId + '&examID=' + examId;
+        var targetURL = '<?= ROOT ?>sar/examination/resultsupload';
         console.log('targetURL = ', targetURL);
         console.log('formData = ', formData);
 
