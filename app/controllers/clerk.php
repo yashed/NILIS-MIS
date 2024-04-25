@@ -3,17 +3,35 @@
 class Clerk extends Controller
 {
 
-    // function __construct()
-    // {
-    //     if (!Auth::is_clerk()) {
-    //         message('You are not authorized to view this page');
-    //         redirect('login');
-    //     }
-    // }
+    function __construct()
+    {
+        if (!Auth::is_clerk()) {
+            message('You are not authorized to view this page');
+            redirect('login');
+        }
+    }
     public function index()
     {
         $user = new User();
+        $user = new User();
         $degree = new Degree();
+        $student = new StudentModel();
+        $exam = new Exam();
+        $degreetimetable = new DegreeTimeTable();
+        // $notification = new NotificationModel();
+        // $notification_count_arr = $notification->countNotifications();
+        $finalMarks = new FinalMarks();
+        $recentExamId = $finalMarks->lastID('examID');
+
+        //join exam and degree tables
+        $dataTables = ['degree'];
+        $columns = ['*'];
+        $examConditions = ['exam.degreeID = degree.DegreeID', 'exam.examID = ' . $recentExamId];
+        $data['RecentResultExam'] = $exam->join($dataTables, $columns, $examConditions);
+
+        // show($data['RecentResultExam']);
+        $_SESSION['getid'] = null;
+        unset($_SESSION['getid']);
         $student = new StudentModel();
         $exam = new Exam();
         $degreetimetable = new DegreeTimeTable();
@@ -35,11 +53,21 @@ class Clerk extends Controller
         $_SESSION['DegreeID'] = null;
         unset($_SESSION['DegreeID']);
 
+        $_SESSION['DegreeID'] = null;
+        unset($_SESSION['DegreeID']);
+
         $data['title'] = 'Dashboard';
         $data['notification_count_obj'] = getNotificationCount();
 
         // $data['notification_count_obj'] = $notification_count_arr[0];
+        $data['notification_count_obj'] = getNotificationCount();
+
+        // $data['notification_count_obj'] = $notification_count_arr[0];
         $data['user'] = $user->findAll();
+        $data['ongoingDegrees'] = $degree->where(['status' => 'ongoing']);
+        $data['students'] = $student->findAll();
+        $data['exams'] = $exam->findAll();
+        $data['degreetimetables'] = $degreetimetable->findAll();
         $data['ongoingDegrees'] = $degree->where(['status' => 'ongoing']);
         $data['students'] = $student->findAll();
         $data['exams'] = $exam->findAll();
@@ -50,6 +78,10 @@ class Clerk extends Controller
     public function notification()
     {
         $notification = new NotificationModel();
+        $username = $_SESSION['USER_DATA']->username;
+        $data['usernames'] = $username;
+
+        $data['notification_count_obj'] = getNotificationCount();
         $username = $_SESSION['USER_DATA']->username;
         $data['usernames'] = $username;
 
@@ -83,6 +115,12 @@ class Clerk extends Controller
 
         $data['degrees'] = $degree->findAll();
         $this->view('clerk-interfaces\clerk-degreeprograms', $data);
+
+        $degree = new Degree();
+        unset($_SESSION['DegreeID']);
+
+        $data['degrees'] = $degree->findAll();
+        $this->view('clerk-interfaces\clerk-degreeprograms', $data);
     }
 
     public function settings()
@@ -96,6 +134,20 @@ class Clerk extends Controller
             $lname = isset($_POST['lname']) ? trim($_POST['lname']) : '';
             $phoneNo = isset($_POST['phoneNo']) ? trim($_POST['phoneNo']) : '';
 
+    public function settings()
+    {
+        $user = new User();
+        $data = [];
+
+        if (isset($_POST['update_user_data'])) {
+            // Validate input fields
+            $fname = isset($_POST['fname']) ? trim($_POST['fname']) : '';
+            $lname = isset($_POST['lname']) ? trim($_POST['lname']) : '';
+            $phoneNo = isset($_POST['phoneNo']) ? trim($_POST['phoneNo']) : '';
+
+            // Update user data
+            $id = $_SESSION['USER_DATA']->id;
+            $dataToUpdate = [
             // Update user data
             $id = $_SESSION['USER_DATA']->id;
             $dataToUpdate = [

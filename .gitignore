@@ -4,5 +4,7 @@ public/assets/csv/examsheets/*.csv
 public/assets/csv/examsheets/final-marksheets/*.csv
 public/assets/csv/examsheets/output/*.csv
 public/assets/csv/output/*.csv
-
+public/assets/csv/input/*.csv
+public/assets/csv/input/DLS-input/*.csv
+public/assets/csv/input/
 node_modules

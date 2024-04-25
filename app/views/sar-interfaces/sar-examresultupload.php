@@ -3,8 +3,7 @@ $role = "SAR";
 $data['role'] = $role;
 $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 $examId = $_SESSION['examDetails'][0]->examID;
-
-$degreeID = $_SESSION['examDetails'][0]->degreeID;
+$degreeId = $_SESSION['examDetails'][0]->degreeID;
 ?>
 
 
@@ -1154,6 +1153,8 @@ $degreeID = $_SESSION['examDetails'][0]->degreeID;
 
 
 <script>
+    var examId = <?php echo $examId ?>;
+    var degreeId = <?php echo $degreeId ?>;
 
     //results uploading popup
     function showResultsUploadingPopup() {
@@ -1481,11 +1482,6 @@ $degreeID = $_SESSION['examDetails'][0]->degreeID;
         formData.append('type', type);
 
 
-
-
-        var examId = '<?= $examId ?>';
-        var degreeId = '<?= $degreeId ?>';
-
         var targetURL = '<?= ROOT ?>sar/examination/resultsupload?degreeID=' + degreeId + '&examID=' + examId;
         console.log('targetURL = ', targetURL);
         console.log('formData = ', formData);
@@ -1499,7 +1495,7 @@ $degreeID = $_SESSION['examDetails'][0]->degreeID;
                     console.log('Res = '.response);
                     throw new Error('Network response was not ok');
                 }
-                return response.text(); // Change to response.text() to receive HTML
+                return response.text();
             })
             .then(data => {
 
@@ -1508,7 +1504,6 @@ $degreeID = $_SESSION['examDetails'][0]->degreeID;
 
 
                 console.log('Returned HTML data =', data);
-                // alert('File uploaded successfully!');
 
                 // Now you can manipulate the HTML content as needed
                 var tempDiv = document.createElement('div');

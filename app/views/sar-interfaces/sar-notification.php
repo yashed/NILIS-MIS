@@ -5,6 +5,15 @@ $data['role'] = $role;
 
 ?>
 
+<<<<<<< HEAD
+<?php $this->view('components/navside-bar/header',$data) ?>
+<?php $this->view('components/navside-bar/sidebar',$data) ?>
+<?php $this->view('components/navside-bar/footer',$data) ?>
+
+
+
+=======
+>>>>>>> 17c93949c080a9f432244a1fe74fa745048dee2c
 <!DOCTYPE html>
 <html lang="en">
 

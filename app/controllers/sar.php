@@ -1387,6 +1387,7 @@ class SAR extends Controller
 
                 if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
 
+                    // show('inside file upload');
 
                     // Specify the target directory
                     $targetDirectory = 'assets/csv/examsheets/';

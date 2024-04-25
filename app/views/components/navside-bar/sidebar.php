@@ -1,3 +1,4 @@
+
 <?php if ($role == "DR") : ?>
     <div class="menu-bar">
         <hr>
@@ -49,7 +50,7 @@
                 <div class="sub-menu">
                     <div class="user-info">
                         <img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                        <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
                     </div>
                     <hr>
                     <a href="<?= ROOT ?>logout" class="sub-menu-link">
@@ -65,7 +66,7 @@
 <?php endif ?>
 
 
-<?php if ($role == "SAR") : ?>
+<?php if ($role == "SAR"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">
@@ -116,7 +117,7 @@
                 <div class="sub-menu">
                     <div class="user-info">
                         <img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                        <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
                     </div>
                     <hr>
                     <a href="http://localhost/NILIS-MIS/public/login" class="sub-menu-link">
@@ -130,7 +131,7 @@
     </div>
 <?php endif ?>
 
-<?php if ($role == "Assistant-SAR") : ?>
+<?php if ($role == "Assistant-SAR"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">
@@ -180,7 +181,7 @@
                 <div class="sub-menu">
                     <div class="user-info">
                         <img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                        <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
                     </div>
                     <hr>
                     <a href="http://localhost/NILIS-MIS/public/login" class="sub-menu-link">
@@ -194,7 +195,7 @@
     </div>
 <?php endif ?>
 
-<?php if ($role == "Admin") : ?>
+<?php if ($role == "Admin"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">
@@ -257,7 +258,7 @@
                 <div class="sub-menu">
                     <div class="user-info">
                         <img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                        <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
                     </div>
                     <hr>
                     <a href="http://localhost/NILIS-MIS/public/login" class="sub-menu-link">
@@ -271,7 +272,7 @@
     </div>
 <?php endif ?>
 
-<?php if ($role == "director") : ?>
+<?php if ($role == "director"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">
@@ -321,7 +322,7 @@
                 <div class="sub-menu">
                     <div class="user-info">
                         <img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                        <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
                     </div>
                     <hr>
                     <a href="<?= ROOT ?>logout" class="sub-menu-link">
@@ -336,7 +337,7 @@
 
 <?php endif ?>
 
-<?php if ($role == "Clerk") : ?>
+<?php if ($role == "Clerk"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">
@@ -387,7 +388,7 @@
                 <div class="sub-menu">
                     <div class="user-info">
                         <img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                        <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
                     </div>
                     <hr>
                     <a href="<?= ROOT ?>logout" class="sub-menu-link">

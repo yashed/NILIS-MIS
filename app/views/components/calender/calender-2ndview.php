@@ -21,6 +21,7 @@ $data['role'] = $role;
         place-items: center;
         flex-direction: column;
     }
+
     body.no-scroll {
         overflow: hidden;
     }
@@ -208,6 +209,7 @@ $data['role'] = $role;
         box-shadow: 0px 2px 8.6px 0px rgba(0, 0, 0, 0.17);
         background: #FEFBFB;
     }
+
     #btnBack .icon,
     #btnNext .icon {
         font-size: 25px;
@@ -217,16 +219,21 @@ $data['role'] = $role;
         color: var(--text-color);
         transition: var(--tran-03);
     }
+
     .overlay {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-        backdrop-filter: blur(5px); /* Add blur effect */
-        z-index: 998; /* Layer it above other content */
-        display: none; /* Initially hidden */
+        background: rgba(0, 0, 0, 0.5);
+        /* Semi-transparent background */
+        backdrop-filter: blur(5px);
+        /* Add blur effect */
+        z-index: 998;
+        /* Layer it above other content */
+        display: none;
+        /* Initially hidden */
     }
 </style>
 <!DOCTYPE html>
@@ -283,6 +290,7 @@ $data['role'] = $role;
         <button class="btnClose">Close</button>
     </div>
 </body>
+
 </html>
 <script>
     const holidays = [
@@ -290,7 +298,7 @@ $data['role'] = $role;
         { hdate: "15-01-2023", holiday: "Pongal", },
         { hdate: "16-01-2023", holiday: "Thiruvalluvar Day", },
         { hdate: "17-01-2023", holiday: "Uzhavar Thirunal", },
-        { hdate: "26-01-2023", holiday: "Republic Day",},
+        { hdate: "26-01-2023", holiday: "Republic Day", },
         { hdate: "05-02-2023", holiday: "Thai Poosam", },
         { hdate: "22-03-2023", holiday: "Telugu New Year Day", },
         { hdate: "01-04-2023", holiday: "Annual closing of Accounts for Commercial Banks and Co-operative Banks", },
@@ -346,7 +354,7 @@ $data['role'] = $role;
     let events = localStorage.getItem("events") ? JSON.parse(localStorage.getItem("events")) : [];
     // Merge existing events with degreetimetable events
     const degreetimetableEvents = [
-    <?php
+        <?php
         // Check if degreetimetables array exists and is not empty
         if (isset($degreetimetables) && !empty($degreetimetables)) {
             // Loop through each item in the degreetimetables array
@@ -355,7 +363,7 @@ $data['role'] = $role;
                 $degreeName = '';
                 $startingDate = $degreetimetable->StartingDate;
                 $eventName = $degreetimetable->EventName;
-                $degreeID = $degreetimetable->DegreeID; 
+                $degreeID = $degreetimetable->DegreeID;
                 $endDate = $degreetimetable->EndingDate;
                 // echo "console.log('Checking degree ID: " . $degreeID . "')";
                 if (isset($degrees) && !empty($degrees)) {
@@ -378,7 +386,7 @@ $data['role'] = $role;
                 }
             }
         }
-    ?>
+        ?>
     ];
     console.log(degreetimetableEvents);
     events = [...events, ...degreetimetableEvents];
@@ -387,7 +395,7 @@ $data['role'] = $role;
     // Update the events in localStorage
     localStorage.setItem("events", JSON.stringify(events));
     const keyToRemove = 'events'; // Specify the key of the item you want to remove
-localStorage.removeItem(keyToRemove);
+    localStorage.removeItem(keyToRemove);
     const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     function loadCalendar() {
         const dt = new Date();
