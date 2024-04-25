@@ -1626,7 +1626,7 @@ class SAR extends Controller
                 $tables = ['final_marks', 'exam_participants'];
                 $columns = ['*'];
                 $conditions = ['marks.examID = final_marks.examID', 'marks.studentIndexNo = exam_participants.indexNo', 'marks.studentIndexNo = final_marks.studentIndexNo', 'marks.subjectCode = final_marks.subjectCode'];
-                $whereConditions = ['marks.examID = ' . $examID, 'marks.subjectCode =  "' . $resultSubCode . '"', 'exam_participants.examID = ' . $examID];
+                $whereConditions = ['marks.examID = ' . $examID, "marks.subjectCode =  '" . $resultSubCode . "'", 'exam_participants.examID = ' . $examID];
                 $examResults = $examMarks->joinWhere($tables, $columns, $conditions, $whereConditions);
 
                 //generate csv file name
