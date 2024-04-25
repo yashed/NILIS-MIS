@@ -224,5 +224,107 @@ class DIRECTOR extends Controller
         $this->view('director-interfaces\director-attendance', $data);
     }
 
+    public function examination($method = null)
+    {
+        $degree = new Degree();
+        $student = new StudentModel();
+        $examParticipants = new ExamParticipants();
+        $medicalStudents = new MedicalStudents();
+        $repeatStudents = new RepeatStudents();
+        $examtimetable = new ExamTimeTable();
+        $subjects = new Subjects();
+        $exam = new Exam();
+        $resultSheet = new ResultSheet();
+        $examAttendance = new Attendance();
+        $examiner3Eligibility = new Examiner3Subject();
+        $finalMarks = new FinalMarks();
+
+        //need to add degree details to session 
+        if (!empty($_SESSION['DegreeID'])) {
+            $degreeID = $_SESSION['DegreeID']->DegreeID;
+        }
+        $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
+
+        if (!empty($examID)) {
+            $_SESSION['examDetails'] = $exam->where(['examID' => $examID]);
+        }
+        //unset session message data
+        if (!empty($_SESSION['message'])) {
+            unset($_SESSION['message']);
+        }
+        //set examination id
+        if (!empty($_SESSION['examDetails'])) {
+            $examID = $_SESSION['examDetails'][0]->examID;
+            $semester = $_SESSION['examDetails'][0]->semester;
+        } else {
+            $examID = null;
+            $semester = null;
+        }
+        //give 403 error
+        if ($examID == null) {
+            redirect('_403_');
+        }
+
+        $data['errors'] = [];
+        $data['degrees'] = $degree->findAll();
+        $data['students'] = $student->where(['degreeID' => $degreeID]);
+
+        //get exam details with degree details
+        $dataTables = ['degree'];
+        $columns = ['*'];
+        $examConditions = ['exam.degreeID = degree.DegreeID', 'exam.degreeID= ' . $degreeID];
+        $data['examDetails'] = $exam->join($dataTables, $columns, $examConditions);
+
+        $repeatStudents->setid(1000);
+        if ($method == 'results') {
+
+            $examMarks = new Marks();
+            $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
+            //get examID from session
+            if (!empty($_SESSION['examDetails'])) {
+                $examID = $_SESSION['examDetails'][0]->examID;
+                $semester = $_SESSION['examDetails'][0]->semester;
+            }
+            //get subjects in the exam
+            $examSubjects = $examtimetable->where(['examID' => $examID]);
+            //get subject code from post data
+            if (isset($_POST['submit'])) {
+                $resultSubCode = isset($_POST['subCode']) ? $_POST['subCode'] : '';
+                // show($resultSubCode);
+            } else {
+                $resultSubCode = '';
+            }
+            // remove any leading or trailing spaces from the string
+            $resultSubCode = trim($resultSubCode);
+
+            //get subject details
+            $subjectDetails = $subjects->where(['SubjectCode' => $resultSubCode, 'DegreeID' => $degreeID]);
+            //get examination results using marks and final marks
+            $tables = ['final_marks', 'exam_participants'];
+            $columns = ['*'];
+            $conditions = ['marks.examID = final_marks.examID', 'marks.studentIndexNo = exam_participants.indexNo', 'marks.studentIndexNo = final_marks.studentIndexNo', 'marks.subjectCode = final_marks.subjectCode'];
+            $whereConditions = ['marks.examID = ' . $examID, 'marks.subjectCode =  "' . $resultSubCode . '"', 'exam_participants.examID = ' . $examID];
+            $examResults = $examMarks->joinWhere($tables, $columns, $conditions, $whereConditions);
+            //generate csv file name
+            $fileName = $examID . '_' . $resultSubCode . '.csv';
+            $newFileName = $examID . '_' . $resultSubCode . '_new.csv';
+            //generate updated marksheet as csv file
+            if (!empty($resultSubCode)) {
+                updateMarksheet($fileName, $examResults, $newFileName);
+            }
+            $data['subjectDetails'] = $subjectDetails;
+            $data['subNames'] = $examSubjects;
+            $data['examResults'] = $examResults;
+            $this->view('director-interfaces/director-examresults', $data);
+        } else if ($method == 'participants') {
+            //get the count of exam participants
+            $data['examCount'] = $examParticipants->count(['examID' => $examID]);
+            $participants[] = $examParticipants->where(['examID' => $examID]);
+            $data['examParticipants'] = $participants;
+            $this->view('director-interfaces/director-examparticipants', $data);
+        } else {
+            $this->view('director-interfaces/director-examination', $data);
+        }
+    }
     
 }
