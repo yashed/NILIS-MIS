@@ -474,10 +474,10 @@ function updateMarksheet($csvFileName, $dataArray, $newFileName)
     $newFilePath = 'assets/csv/examsheets/output/final-marksheets/' . $newFileName;
 
     // Ensure the output directory exists
-    $newFileDir = dirname($newFilePath);
-    if (!is_dir($newFileDir)) {
-        mkdir($newFileDir, 0777, true);
-    }
+    // $newFileDir = dirname($newFilePath);
+    // if (!is_dir($newFileDir)) {
+    //     mkdir($newFileDir, 0777, true);
+    // }
 
 
     // Read the existing CSV file
