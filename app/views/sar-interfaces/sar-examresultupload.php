@@ -1449,9 +1449,6 @@ $degreeId = $_SESSION['examDetails'][0]->degreeID;
 
 
 
-
-            // container.appendChild(buttonContainer);
-
             // Create the file icon image if not present
             var existingFileIcon = container.querySelector('.file-input-icon');
             if (!existingFileIcon) {
@@ -1528,24 +1525,24 @@ $degreeId = $_SESSION['examDetails'][0]->degreeID;
                 var tempDiv = document.createElement('div');
                 tempDiv.innerHTML = data;
 
-                var error = tempDiv.querySelector('.marksheet-errors').textContent;
-                console.log('Error:', error);
-                //if there is an eror it show error message
-                if (error !== 'NULL') {
-                    alert('Error : ' + error);
-                    return;
-                }
-                else {
-                    alert('File uploaded successfully!');
-                }
+                // var error = tempDiv.querySelector('.marksheet-errors').textContent;
+                // console.log('Error:', error);
+                // //if there is an eror it show error message
+                // if (error !== 'NULL') {
+                //     alert('Error : ' + error);
+                //     return;
+                // }
+                // else {
+                //     alert('File uploaded successfully!');
+                // }
 
-                // var examiner3StatusElements = tempDiv.querySelectorAll('.examiner3-status');
-                // var statusArray = [];
+                var examiner3StatusElements = tempDiv.querySelectorAll('.examiner3-status');
+                var statusArray = [];
 
-                // examiner3StatusElements.forEach(function (element) {
-                //     statusArray.push(element.textContent);
-                // });
-                // console.log('Examiner 3 Status:', statusArray);
+                examiner3StatusElements.forEach(function (element) {
+                    statusArray.push(element.textContent);
+                });
+                console.log('Examiner 3 Status:', statusArray);
 
                 var examiner3SubCodeElements = tempDiv.querySelectorAll('.examiner3subCode');
                 var subCodeArray = [];

@@ -39,7 +39,7 @@ class SAR extends Controller
         //get data to show as upcoming examination in sar dashboard
         $upTable = ['degree'];
         $upColumns = ['*'];
-        $upConditions = ['degree_timetable.DegreeID = Degree.DegreeID', 'StartingDate >= CURDATE()'];
+        $upConditions = ['degree_timetable.DegreeID = degree.DegreeID', 'StartingDate >= CURDATE()'];
         $data['upcomingExams'] = $degreetimetable->join($upTable, $upColumns, $upConditions, 'StartingDate', 2);
 
 
@@ -188,7 +188,6 @@ class SAR extends Controller
             unset($_SESSION['message']);
         }
 
-
         $model = new Model();
         $degree = new Degree();
         $student = new StudentModel();
@@ -203,6 +202,7 @@ class SAR extends Controller
         $examiner3Eligibility = new Examiner3Subject();
         $finalMarks = new FinalMarks();
 
+        //get the count of exam participants
         $data['errors'] = [];
         $data['degrees'] = $degree->findAll();
         $data['students'] = $student->where(['degreeID' => $degreeID]);
@@ -228,7 +228,6 @@ class SAR extends Controller
         $processedStudentID2 = [];
         $timeTableData = [];
         $ExamData = [];
-
 
         //remove session data
         // if (!empty($_SESSION['examDetails'])) {
@@ -946,9 +945,6 @@ class SAR extends Controller
 
 
 
-                //get the count of exam participants
-                $data['examCount'] = $examParticipants->count(['examID' => $examID]);
-
                 $participants[] = $examParticipants->where(['examID' => $examID]);
                 // show($participants);
 
@@ -1155,9 +1151,13 @@ class SAR extends Controller
 
                         //delete examination
                         $exam->delete(['examID' => $examID]);
-                        $examParticipants->delete(['examID' => $examID]);
-                        $examAttendance->delete(['examID' => $examID]);
-                        $examtimetable->delete(['examID' => $examID]);
+
+                        //as co supervisor remark change omly delete the exam in exam table
+
+                        // $examParticipants->delete(['examID' => $examID]);
+                        // $examAttendance->delete(['examID' => $examID]);
+                        // $examtimetable->delete(['examID' => $examID]);
+
                         message("Examination Deleted Successfully", "success", true);
                         $msg = "Delete Examination Data Successfully , ExamId =  " . $examID;
                         activity($msg);
@@ -1197,6 +1197,9 @@ class SAR extends Controller
                     message($msg, "success", true);
                     activity($msg);
                 }
+
+                //pass exam participants data to the view
+                $data['examCount'] = $examParticipants->count(['examID' => $examID]);
 
                 $this->view('sar-interfaces/sar-examparticipants', $data);
                 //send mails 
@@ -1498,8 +1501,6 @@ class SAR extends Controller
                                                 insertMarks($resFileName, $examID, $degreeID, $subject->SubjectCode);
 
 
-
-
                                                 $msg = 'Uploaded Examination Results with Examiner 3 marks for ' . $subject->SubjectCode . ' successfully , ExamID = ' . $examID;
                                                 activity($msg);
 
@@ -1577,6 +1578,9 @@ class SAR extends Controller
 
 
                 $data['examId'] = $examID;
+
+                //pass exam participants data to the view
+                $data['examCount'] = $examParticipants->count(['examID' => $examID]);
                 $this->view('sar-interfaces/sar-examresultupload', $data);
 
 
@@ -1590,6 +1594,7 @@ class SAR extends Controller
                 if (!empty($_SESSION['examDetails'])) {
                     $examID = $_SESSION['examDetails'][0]->examID;
                     $semester = $_SESSION['examDetails'][0]->semester;
+                    $degreeID = $_SESSION['examDetails'][0]->degreeID;
                 }
 
                 //get subjects in the exam
@@ -1607,6 +1612,7 @@ class SAR extends Controller
 
                 // remove any leading or trailing spaces from the string
                 $resultSubCode = trim($resultSubCode);
+
 
                 //get subject details
                 $subjectDetails = $subjects->where(['SubjectCode' => $resultSubCode, 'DegreeID' => $degreeID]);
@@ -1630,8 +1636,15 @@ class SAR extends Controller
                     updateMarksheet($fileName, $examResults, $newFileName);
                 }
 
+
+                //pass exam participants data to the view
+                $data['examCount'] = $examParticipants->count(['examID' => $examID]);
+
+                //pass subject details
                 $data['subjectDetails'] = $subjectDetails;
                 $data['subNames'] = $examSubjects;
+
+                //pass exam results to the view
                 $data['examResults'] = $examResults;
 
 

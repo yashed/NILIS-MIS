@@ -822,7 +822,7 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
                                         <?php endif ?>
                                     <?php endif ?>
                                     <span type="submit" class='delete-exam' name="delete"
-                                        onclick="showExamDeletePermPopup()" style='color:red;'>Delete Permanently</span>
+                                        onclick="showExamDeletePermPopup()" style='color:red;'>Delete </span>
                                 </div>
                             </form>
                     </div>
@@ -831,11 +831,14 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
                     <div class="column1">
                         <div class="data1">Course Name<br>
 
-                            <div class="course" id="course">Diploma in School Librarianship</div>
+                            <div class="course" id="course">
+                                <?php if (!empty($_SESSION['degreeData'])): ?>
+                                    <?= $_SESSION['degreeData'][0]->DegreeName ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
                         <br>
                         <div class="data2">Examination:<br>
-
                             <div class="exam" id="exam">
                                 <?php if (!empty($_SESSION['examDetails'])): ?>
                                     <?= $_SESSION['examDetails'][0]->semester ?> Semester Examination
