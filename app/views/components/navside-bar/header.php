@@ -17,25 +17,6 @@
             font-size: 12px;
             font-weight: bold;
         }
-
-        .user-pic {
-            width: 27px;
-            height: 27px;
-            border-radius: 50%;
-            cursor: pointer;
-            margin: 8px 10px -0.5px 10px;
-        }
-
-        .hero-ul {
-            width: 100%;
-            text-align: right;
-        }
-
-        .hero-ul-li {
-            position: relative;
-            display: inline-block;
-            list-style: none;
-        }
     </style>
 </head>
 
