@@ -38,7 +38,7 @@ class SAR extends Controller
         //get data to show as upcoming examination in sar dashboard
         $upTable = ['degree'];
         $upColumns = ['*'];
-        $upConditions = ['degree_timetable.DegreeID = Degree.DegreeID', 'StartingDate >= CURDATE()'];
+        $upConditions = ['degree_timetable.DegreeID = degree.DegreeID', 'StartingDate >= CURDATE()'];
         $data['upcomingExams'] = $degreetimetable->join($upTable, $upColumns, $upConditions, 'StartingDate', 2);
 
 
