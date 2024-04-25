@@ -294,7 +294,7 @@ class Model extends Database
         if ($limit) {
             $query .= " LIMIT $limit";
         }
-        // show($query);
+        show($query);
         // Execute the query
         return $this->query($query);
     }
