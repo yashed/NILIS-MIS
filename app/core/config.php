@@ -30,7 +30,7 @@ define('DBDRIVER', 'mysql');
 
 
 // root path 
-// define('ROOT', 'http://13.251.194.207/');
+define('ROOT', 'http://13.251.194.207/');
 
 // if ($_SERVER['SERVER_NAME'] == 'localhost') {
 
@@ -43,7 +43,7 @@ define('DBDRIVER', 'mysql');
 
 //     //root path (localhost)
 //     //root path 
-define('ROOT', 'http://localhost/NILIS-MIS/public/');
+// define('ROOT', 'http://localhost/NILIS-MIS/public/');
 //     define('ROOTDIR', 'http://localhost/NILIS-MIS/');
 // }
 //  else {
