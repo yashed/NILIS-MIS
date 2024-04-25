@@ -4,7 +4,7 @@ $data['role'] = $role;
 $validateError = isset($errors['marks']) ? $errors['marks'] : null;
 $examId = $_SESSION['examDetails'][0]->examID;
 
-$degreeID = $_SESSION['examDetails'][0]->degreeID;
+$degreeId = $_SESSION['examDetails'][0]->degreeID;
 ?>
 
 
@@ -858,18 +858,35 @@ $degreeID = $_SESSION['examDetails'][0]->degreeID;
                     <div class="column1">
                         <div class="data1">Course Name<br>
                             <!-- <div class="email"><?= $student->Email ?></div> -->
-                            <div class="course" id="course">Diploma in School Librarianship</div>
+                            <div class="course" id="course">
+                                <div class="exam" id="exam">
+                                    <?php if (!empty($_SESSION['degreeData'])): ?>
+                                        <?= $_SESSION['degreeData'][0]->DegreeName ?> Semester Examination
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
                         <br>
                         <div class="data2">Examination:<br>
-                            <!-- <div class="regNum"> <?= $student->regNo ?></div> -->
-                            <div class="exam" id="exam">2nd Semester Examination</div>
+
+                            <div class="exam" id="exam">
+                                <div class="exam" id="exam">
+                                    <?php if (!empty($_SESSION['examDetails'])): ?>
+                                        <?= $_SESSION['examDetails'][0]->semester ?> Semester Examination
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="column2">
                         <div class="data3">Participation:<br>
-                            <div class="count" id="count"> 216</div>
+                            <div class="count" id="count"> <?php
+                            if (!empty($examCount)) {
+                                echo $examCount[0]->ExamParticipants;
+                            }
+                            ?>
+                            </div>
                         </div>
                         <br>
                         <div class="data4">Academic Year:<br>
@@ -1481,12 +1498,11 @@ $degreeID = $_SESSION['examDetails'][0]->degreeID;
         formData.append('type', type);
 
 
-
-
         var examId = '<?= $examId ?>';
         var degreeId = '<?= $degreeId ?>';
 
-        var targetURL = '<?= ROOT ?>sar/examination/resultsupload?degreeID=' + degreeId + '&examID=' + examId;
+        //check the url if there is uploading error 
+        var targetURL = '<?= ROOT ?>sar/examination/resultsupload';
         console.log('targetURL = ', targetURL);
         console.log('formData = ', formData);
 
@@ -1499,16 +1515,14 @@ $degreeID = $_SESSION['examDetails'][0]->degreeID;
                     console.log('Res = '.response);
                     throw new Error('Network response was not ok');
                 }
-                return response.text(); // Change to response.text() to receive HTML
+                return response.text();
             })
             .then(data => {
 
                 //hide file uploading popup
                 closeResultsUploadingPopup();
 
-
                 console.log('Returned HTML data =', data);
-                // alert('File uploaded successfully!');
 
                 // Now you can manipulate the HTML content as needed
                 var tempDiv = document.createElement('div');
@@ -1525,19 +1539,13 @@ $degreeID = $_SESSION['examDetails'][0]->degreeID;
                     alert('File uploaded successfully!');
                 }
 
+                // var examiner3StatusElements = tempDiv.querySelectorAll('.examiner3-status');
+                // var statusArray = [];
 
-
-                // var examiner3Status = tempDiv.querySelector('#examiner3-status').textContent;
-                // var examiner3SubCode = tempDiv.querySelector('#examiner3SubCode').textContent;
-                // var examiner3SubID = tempDiv.querySelector('#examiner3SubID').textContent;
-
-                var examiner3StatusElements = tempDiv.querySelectorAll('.examiner3-status');
-                var statusArray = [];
-
-                examiner3StatusElements.forEach(function (element) {
-                    statusArray.push(element.textContent);
-                });
-                console.log('Examiner 3 Status:', statusArray);
+                // examiner3StatusElements.forEach(function (element) {
+                //     statusArray.push(element.textContent);
+                // });
+                // console.log('Examiner 3 Status:', statusArray);
 
                 var examiner3SubCodeElements = tempDiv.querySelectorAll('.examiner3subCode');
                 var subCodeArray = [];
@@ -1556,6 +1564,8 @@ $degreeID = $_SESSION['examDetails'][0]->degreeID;
                 console.log('Examiner 3 SubID:', subIDArray);
 
 
+                //set file name
+
                 subCodeArray.forEach(function (subCode) {
                     var Examiner3containerId = 'container' + subCode + '_4';
                     var Examiner3Btn = 'Examiner3_btn_' + subCode;
@@ -1572,36 +1582,22 @@ $degreeID = $_SESSION['examDetails'][0]->degreeID;
                 });
 
                 //show uploaded view
-                // var Examiner3fileContainerId = 'file-info-container-' + subCode + '-' + type;
-                // var Examiner3buttonContainerId = 'button-container-' + subCode + '-' + type;
-                // var Examiner3containerId = 'container' + examiner3SubCode + '_4';
-                // var Examiner3Btn = 'Examiner3_btn_' + examiner3SubCode;
-
-
-                //henadel examiner 3 marks upload sesction
-                // document.getElementById(Examiner3containerId).style.display = 'flex';
-                // document.getElementById(Examiner3Btn).style.display = 'flex';
-
-                // element.setAttribute('data-active', examiner3Status ? 'true' : 'false');
-
-                // if (examiner3Status == '1') {
-                //     document.getElementById(Examiner3containerId).style.display = 'flex';
-                //     document.getElementById(Examiner3Btn).style.display = 'flex';
-                // }
-
-                //show uploaded view
                 var fileContainerId = 'file-info-container-' + subCode + '-' + type;
                 var buttonContainerId = 'button-container-' + subCode + '-' + type;
+                var fileNameSpanID = subCode + '_' + type + '_FN';
 
-                // console.log(Examiner3containerId);
-                // console.log(Examiner3Btn);
+
+
+                //set uploaded file name
+                var fileNameSpan = document.getElementById(fileNameSpanID);
+                if (fileNameSpan) {
+                    console.log('File Name:', fileInput.files[0].name);
+                    fileNameSpan.textContent = fileInput.files[0].name;
+                }
+
 
                 document.getElementById(fileContainerId).style.display = 'none';
                 document.getElementById(buttonContainerId).style.display = 'none';
-
-                //show uploaded view of the file
-                console.log(submitViewId);
-                console.log(uploadedViewId);
 
                 document.getElementById(submitViewId).classList.add("remove");
                 document.getElementById(uploadedViewId).classList.remove("remove");
@@ -1653,7 +1649,7 @@ $degreeID = $_SESSION['examDetails'][0]->degreeID;
 
 
     function downloadFile(subjectCode) {
-        // Modify the file URL dynamically based on the subjectCode
+        //define the link of the marksheet
         var fileUrl = '<?= ROOT ?>assets/csv/output/MarkSheet_' + subjectCode + '.csv';
 
         // Create an anchor element
@@ -1672,17 +1668,6 @@ $degreeID = $_SESSION['examDetails'][0]->degreeID;
         // Remove the anchor element from the document
         document.body.removeChild(a);
     }
-</script>
-<script>
-    // Extract values from the parsed HTML
-
-    // var examiner3 = true;
-
-    // console.log('examiner 3 = ', examiner3);
-    // console.log('examiner3SubCode = ', examiner3SubCode);
-    // elements.forEach(function (element) {
-    //     element.dataset.active = examiner3;
-    // });
 </script>
 
 </html>

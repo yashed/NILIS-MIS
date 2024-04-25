@@ -1462,16 +1462,7 @@ class SAR extends Controller
                                         //call the function to check the gap
                                         if (checkGap($fileName, $examID, $subject->SubjectCode)) {
 
-
-                                            // $data = [
-                                            //     'examiner3' => true,
-                                            //     'examiner3SubCode' => $subject->SubjectCode,
-                                            //     'subjectIDExaminer3' => $subject->SubjectID
-                                            // ];
-
-                                            //add examiner 3 eligible data to array
-                                            // $eligibilityData[] = $object;
-
+                                            //set examinaer 3 eligible data
                                             $examiner3 = true;
                                             $examiner3SubCode = $subject->SubjectCode;
                                             $subjectIDExaminer3 = $subject->SubjectID;
@@ -1484,7 +1475,7 @@ class SAR extends Controller
 
                                             //validate the data and insert into the database
                                             if ($examiner3Eligibility->DataValidate($examiner3SubData)) {
-                                                show('Insert Examiner 3 data to database');
+                                                show('Insert Examiner3 eligible data to database');
                                                 $examiner3 = true;
                                                 $examiner3Eligibility->insert($examiner3SubData);
                                             }
