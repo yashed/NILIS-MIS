@@ -71,7 +71,7 @@
 
     .sub-name {
         color: #9AD6FF;
-        font-size: 1vw;
+        font-size: 1.2vw;
         font-weight: 600;
         text-align: left;
         margin-top: -3%;
@@ -88,8 +88,18 @@
         line-height: normal;
         justify-content: center;
         font-family: "Poppins", sans-serif;
-        /* margin-top: 2.3%; */
+        gap: 1vw;
         margin-bottom: 2%;
+    }
+
+    .special-exam {
+        background-color: #FFD700;
+        color: #17376E;
+        padding: 2px 5px;
+        border-radius: 5px;
+        font-size: 10px;
+        font-weight: 600;
+        margin-left: 5px;
     }
 
     @media (max-width:1100px) {
@@ -123,10 +133,20 @@
         window.location.href = desiredUrl;
     }
 </script>
+<?php
+
+if (!empty($_SESSION['USER_DATA'])) {
+
+    $role = $_SESSION['USER_DATA']->role;
+} else {
+    redirect('_403_');
+}
+
+?>
 
 <body>
     <div class="exam-card-body">
-        <!-- <?php show($role); ?> -->
+
         <div class="container" onclick="redirectToURL(<?= $exam->examID ?>,<?= $exam->degreeID ?>,'<?= $role ?>')">
             <div class="card">
                 <div class="content">
@@ -145,6 +165,9 @@
             <div class="exam-year">
                 <?= $exam->semester ?> Semester Examination
             </div>
+            <?php if ($exam->examType == 'Special'): ?>
+                <div class='special-exam'>Special</div>
+            <?php endif; ?>
         </div>
 
     </div>

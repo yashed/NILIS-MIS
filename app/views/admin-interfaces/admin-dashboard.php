@@ -1,7 +1,7 @@
 <?php
 $role = "Admin";
 $data['role'] = $role;
-
+$data['recentResults'] = $RecentResultExam;
 ?>
 
 <?php $this->view('components/navside-bar/header', $data) ?>
@@ -84,10 +84,10 @@ $data['role'] = $role;
         border: 1px solid rgba(0, 0, 0, 0.12);
         background-color: var(--text-color);
         box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.12);
-        width: 25%;
+        width: 20vw;
         height: 150px;
         flex-direction: row;
-        gap: 60px;
+        gap: 40px;
     }
 
     .admin-subcard-data {
@@ -98,15 +98,16 @@ $data['role'] = $role;
     }
 
     .admin-subcard-data-value {
-        font-size: 38px;
+        font-size: 3vw;
         font-weight: 600;
         color: #17376E;
     }
 
     .admin-subcard-data-title {
-        font-size: 18px;
+        font-size: 1.5vw;
         font-weight: 600;
         color: #17376E;
+        text-align: center;
     }
 
     .admin-subsection-1 {
@@ -172,7 +173,12 @@ $data['role'] = $role;
 
     .admin-card1 {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 0px 20px 0px;
     }
 
     .admin-card2 {
@@ -192,6 +198,8 @@ $data['role'] = $role;
     .admin-exam-card1 {
         width: 80%;
         display: flex;
+        align-items: center;
+        justify-content: center;
         flex-direction: column;
     }
 
@@ -199,6 +207,22 @@ $data['role'] = $role;
         width: 80%;
         display: flex;
         flex-direction: column;
+    }
+
+    .admin-subcard-img1 {
+        width: 15vw;
+        height: 15vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .result-msg {
+        font-size: 20px;
+        font-weight: 600;
+        color: #17376E;
+        text-align: center;
+
     }
 </style>
 
@@ -252,30 +276,25 @@ $data['role'] = $role;
             </div>
             <div class="admin-degree-bar">
                 <div class="admin-card1">
-                    <div class="admin-sub-title">No On Going Degree Program Created Yet</div>
-
-                    <a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
-                        <!-- <?php foreach ($degrees as $degree): ?> -->
+                    <?php if (!empty($ongoing_degrees)): ?>
+                        <?php foreach ($ongoing_degrees as $degree): ?>
                             <div>
-                                x
-
                                 <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
                             </div>
 
 
-                            <!-- <?php endforeach; ?> -->
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="admin-sub-title">No On Going Degree Program Created Yet</div>
+                    <?php endif; ?>
+
                     </a>
 
-                    <!-- <?php $this->view('components/degree-card/degree-card', $data) ?> -->
+
 
 
                 </div>
-                <!-- <div class="admin-card2">
-                 
-                    <?php $this->view('components/degree-card/degree-card', $data) ?>
-          
-              
-                </div> -->
+
 
 
             </div>
@@ -289,13 +308,21 @@ $data['role'] = $role;
                 <div class="admin-exam-bar">
                     <div class="admin-exam-card1">
 
-                        <?php $this->view('components/exam-card/exam-card', $data) ?>
+                        <?php if (!empty($RecentResultExam)): ?>
+                            <?php foreach ($RecentResultExam as $exam): ?>
+                                <?php
 
-                    </div>
-                    <div class="admin-exam-card2">
+                                $data['exam'] = $exam;
+                                $this->view('components/exam-card/exam-card', $data);
 
-                        <?php $this->view('components/exam-card/exam-card', $data) ?>
+                                ?>
+                            <?php endforeach; ?>
+                        <?php else: ?>
 
+                            <div class="result-msg">
+                                No Results Published
+                            </div>
+                            < <?php endif; ?>
                     </div>
                 </div>
 

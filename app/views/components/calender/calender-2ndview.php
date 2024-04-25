@@ -1,9 +1,9 @@
 <?php
-$role = "Admin";
+$role = $_SESSION['USER_DATA']->role;
 $data['role'] = $role;
 
 ?>
-
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800&display=swap");
 
@@ -22,9 +22,13 @@ $data['role'] = $role;
         flex-direction: column;
     }
 
+    body.no-scroll {
+        overflow: hidden;
+    }
+
     .container {
         width: 95%;
-        height: 90%;
+        height: 100%;
         background-color: #fff;
         border-radius: 12px;
         padding: 10px;
@@ -43,8 +47,8 @@ $data['role'] = $role;
     }
 
     button {
-        width: 25px;
-        height: 20px;
+        width: 35px;
+        height: 35px;
         cursor: pointer;
         border: none;
         outline: none;
@@ -113,22 +117,22 @@ $data['role'] = $role;
     }
 
     #currentDay {
-        background-color: #706fd3;
+        background-color: lightgray;
         color: #fff;
     }
 
     .event {
         font-size: 10px;
         padding: 3px;
-        background-color: #3d3d3d;
-        color: #fff;
+        background-color: #9ad6ff;
+        color: black;
         border-radius: 5px;
         max-height: 55px;
         overflow: hidden;
     }
 
     .event.holiday {
-        background-color: palegreen;
+        background-color: #ffd700;
         color: #3d3d3d;
     }
 
@@ -137,58 +141,40 @@ $data['role'] = $role;
         box-shadow: none;
     }
 
-    #modal {
-        display: none;
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100vw;
-        height: 100vh;
-        z-index: 10;
-        background-color: rgba(0, 0, 0, 0.8);
-    }
-
-    #addEvent,
     #viewEvent {
         display: none;
-        width: 350px;
+        width: auto;
         background-color: #fff;
         padding: 25px;
         position: absolute;
-        z-index: 20;
+        z-index: 999;
+        margin-top: 225px;
+        border-radius: 8px;
     }
 
-    #addEvent h2,
+    #eventText {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+
     #viewEvent h2 {
         font-weight: 500;
         margin-bottom: 10px;
     }
 
-    #txtTitle {
-        padding: 10px;
-        width: 100%;
-        box-sizing: border-box;
-        margin-bottom: 25px;
-        border-radius: 3px;
-        outline: none;
-        border: 1px solid #cbd4c2;
-        font-size: 16px;
-    }
-
-    #btnSave {
-        background-color: #2ed573;
-    }
-
     .btnClose {
-        background-color: #2f3542;
+        background-color: #17376e;
+        width: 65px;
     }
 
     #viewEvent p {
         margin-bottom: 20px;
     }
 
-    #btnDelete {
-        background-color: #17376E;
+    .overlay {
+        display: none;
+        z-index: 998;
     }
 
     .error {
@@ -223,6 +209,32 @@ $data['role'] = $role;
         box-shadow: 0px 2px 8.6px 0px rgba(0, 0, 0, 0.17);
         background: #FEFBFB;
     }
+
+    #btnBack .icon,
+    #btnNext .icon {
+        font-size: 25px;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        color: var(--text-color);
+        transition: var(--tran-03);
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        /* Semi-transparent background */
+        backdrop-filter: blur(5px);
+        /* Add blur effect */
+        z-index: 998;
+        /* Layer it above other content */
+        display: none;
+        /* Initially hidden */
+    }
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -237,6 +249,7 @@ $data['role'] = $role;
 </head>
 
 <body>
+    <div class="overlay" id="overlay"></div>
     <div class="title-bar">
         <div class="back-button">
             <button class="back-button-btn" onclick="history.back()">
@@ -253,8 +266,8 @@ $data['role'] = $role;
         <div class="header">
             <div id="month"></div>
             <div>
-                <button id="btnBack"><i class="fa fa-angle-left"></i></button>
-                <button id="btnNext"><i class="fa fa-angle-right"></i></button>
+                <button id="btnBack"><i class='bx bx-chevron-left icon'></i></button>
+                <button id="btnNext"><i class='bx bx-chevron-right icon'></i></button>
             </div>
         </div>
         <div class="weekdays">
@@ -272,131 +285,118 @@ $data['role'] = $role;
             </div>
         </div>
     </div>
-    <div id="modal"></div>
-    <div id="addEvent">
-        <h2>Add Event</h2>
-        <input type="text" id="txtTitle" placeholder="Event Title" />
-        <button id="btnSave">Save</button>
-        <button class="btnClose">Close</button>
-    </div>
-
     <div id="viewEvent">
-        <h2>Event</h2>
         <p id="eventText">This is Sample Event</p>
-        <button id="btnDelete">Delete</button>
         <button class="btnClose">Close</button>
     </div>
-
-    <script src="js/script.js"></script>
 </body>
 
 </html>
 <script>
     const holidays = [
-        {
-            hdate: "01-01-2023",
-            holiday: "New Year Day",
-        },
-        {
-            hdate: "15-01-2023",
-            holiday: "Pongal",
-        },
-        {
-            hdate: "16-01-2023",
-            holiday: "Thiruvalluvar Day",
-        },
-        {
-            hdate: "17-01-2023",
-            holiday: "Uzhavar Thirunal",
-        },
-        {
-            hdate: "26-01-2023",
-            holiday: "Republic Day",
-        },
-        {
-            hdate: "05-02-2023",
-            holiday: "Thai Poosam",
-        },
-        {
-            hdate: "22-03-2023",
-            holiday: "Telugu New Year Day",
-        },
-        {
-            hdate: "01-04-2023",
-            holiday: "Annual closing of Accounts for Commercial Banks and Co-operative Banks",
-        },
-        {
-            hdate: "04-04-2023",
-            holiday: "Mahaveer Jayanthi",
-        },
-        {
-            hdate: "07-04-2023",
-            holiday: "Good Friday",
-        },
-        {
-            hdate: "14-04-2023",
-            holiday: "Tamil New Years Day and Dr.B.R.Ambedkars Birthday",
-        },
-        {
-            hdate: "22-04-2023",
-            holiday: "Ramzan (Idul Fitr)",
-        },
-        {
-            hdate: "01-05-2023",
-            holiday: "May Day",
-        },
-        {
-            hdate: "29-06-2023",
-            holiday: "Bakrid(Idul Azha)",
-        },
-        {
-            hdate: "29-07-2023",
-            holiday: "Muharram",
-        },
-        {
-            hdate: "15-08-2023",
-            holiday: "Independence Day",
-        },
-        {
-            hdate: "06-09-2023",
-            holiday: "Krishna Jayanthi",
-        },
-        {
-            hdate: "17-09-2023",
-            holiday: "Vinayakar Chathurthi",
-        },
-        {
-            hdate: "28-09-2023",
-            holiday: "Milad-un-Nabi",
-        },
-        {
-            hdate: "02-10-2023",
-            holiday: "Gandhi Jayanthi",
-        },
-        {
-            hdate: "23-10-2023",
-            holiday: "Ayutha Pooja",
-        },
-        {
-            hdate: "24-10-2023",
-            holiday: "Vijaya Dasami",
-        },
-        {
-            hdate: "12-11-2023",
-            holiday: "Deepavali",
-        },
-        {
-            hdate: "25-12-2023",
-            holiday: "Christmas",
-        },
+        { hdate: "01-01-2023", holiday: "New Year Day", },
+        { hdate: "15-01-2023", holiday: "Pongal", },
+        { hdate: "16-01-2023", holiday: "Thiruvalluvar Day", },
+        { hdate: "17-01-2023", holiday: "Uzhavar Thirunal", },
+        { hdate: "26-01-2023", holiday: "Republic Day", },
+        { hdate: "05-02-2023", holiday: "Thai Poosam", },
+        { hdate: "22-03-2023", holiday: "Telugu New Year Day", },
+        { hdate: "01-04-2023", holiday: "Annual closing of Accounts for Commercial Banks and Co-operative Banks", },
+        { hdate: "04-04-2023", holiday: "Mahaveer Jayanthi", },
+        { hdate: "07-04-2023", holiday: "Good Friday", },
+        { hdate: "14-04-2023", holiday: "Tamil New Years Day and Dr.B.R.Ambedkars Birthday", },
+        { hdate: "22-04-2023", holiday: "Ramzan (Idul Fitr)", },
+        { hdate: "01-05-2023", holiday: "May Day", },
+        { hdate: "29-06-2023", holiday: "Bakrid(Idul Azha)", },
+        { hdate: "29-07-2023", holiday: "Muharram", },
+        { hdate: "15-08-2023", holiday: "Independence Day", },
+        { hdate: "06-09-2023", holiday: "Krishna Jayanthi", },
+        { hdate: "17-09-2023", holiday: "Vinayakar Chathurthi", },
+        { hdate: "28-09-2023", holiday: "Milad-un-Nabi", },
+        { hdate: "02-10-2023", holiday: "Gandhi Jayanthi", },
+        { hdate: "23-10-2023", holiday: "Ayutha Pooja", },
+        { hdate: "24-10-2023", holiday: "Vijaya Dasami", },
+        { hdate: "12-11-2023", holiday: "Deepavali", },
+        { hdate: "25-12-2023", holiday: "Christmas", },
+        { hdate: "15-01-2024", holiday: "Tamil Thai Pongal Day", },
+        { hdate: "25-01-2024", holiday: "Duruthu Full Moon Poya Day", },
+        { hdate: "04-02-2024", holiday: "National Day", },
+        { hdate: "14-02-2024", holiday: "valentines Day", },
+        { hdate: "23-02-2024", holiday: "Navam Full Moon Poya Day", },
+        { hdate: "08-03-2024", holiday: "Mahasivarathri Day", },
+        { hdate: "11-03-2024", holiday: "Holi Ramadan Start", },
+        { hdate: "24-03-2024", holiday: "Medin Full Moon Poya Day", },
+        { hdate: "29-03-2024", holiday: "Good Friday", },
+        { hdate: "31-03-2024", holiday: "Easter Sunday", },
+        { hdate: "11-04-2024", holiday: "Eid al-Fitr", },
+        { hdate: "12-04-2024", holiday: "Tamil New Years Day", },
+        { hdate: "13-04-2024", holiday: "Tamil New Years Day", },
+        { hdate: "23-04-2024", holiday: "Bakini Full Moon Poya Day", },
+        { hdate: "01-05-2024", holiday: "May Day", },
+        { hdate: "23-05-2024", holiday: "Vesak Full Moon Poya Day", },
+        { hdate: "24-05-2024", holiday: "Day After Vesak Full Moon Poya Day", },
+        { hdate: "17-06-2024", holiday: "Eid al-Fitr", },
+        { hdate: "21-06-2024", holiday: "Poson Full Moon Poya Day", },
+        { hdate: "20-07-2024", holiday: "Esala Full Moon Poya Day", },
+        { hdate: "19-08-2024", holiday: "Nikini Full Moon Poya Day", },
+        { hdate: "16-09-2024", holiday: "Milad-Un-Nabi", },
+        { hdate: "17-09-2024", holiday: "Binara Full Moon Poya Day", },
+        { hdate: "17-10-2024", holiday: "Vap Full Moon Poya Day", },
+        { hdate: "31-10-2024", holiday: "Deepavali", },
+        { hdate: "15-11-2024", holiday: "Ill Full Moon Poya Day", },
+        { hdate: "14-12-2024", holiday: "Uduvap Full Moon Poya Day", },
+        { hdate: "25-12-2024", holiday: "Christmas", },
     ];
     const calendar = document.querySelector("#calendar");
     const monthBanner = document.querySelector("#month");
     let navigation = 0;
     let clicked = null;
     let events = localStorage.getItem("events") ? JSON.parse(localStorage.getItem("events")) : [];
+    // Merge existing events with degreetimetable events
+    const degreetimetableEvents = [
+        <?php
+        // Check if degreetimetables array exists and is not empty
+        if (isset($degreetimetables) && !empty($degreetimetables)) {
+            // Loop through each item in the degreetimetables array
+            foreach ($degreetimetables as $index => $degreetimetable) {
+                // Get the starting date and event name from the current item
+                $degreeName = '';
+                $startingDate = $degreetimetable->StartingDate;
+                $eventName = $degreetimetable->EventName;
+                $degreeID = $degreetimetable->DegreeID;
+                $endDate = $degreetimetable->EndingDate;
+                // echo "console.log('Checking degree ID: " . $degreeID . "')";
+                if (isset($degrees) && !empty($degrees)) {
+                    foreach ($degrees as $degree) {
+                        // echo "console.log('Comparing with degree ID: " . $degree->DegreeID . "')";
+                        if ($degree->DegreeID == $degreeID) {
+                            $degreeName = $degree->DegreeShortName;
+                            break;
+                        }
+                    }
+                }
+                // Convert the starting date from YYYY-MM-DD to DD-MM-YYYY format
+                $date = new DateTime($startingDate);
+                $formattedDate = $date->format('d-m-Y'); // Format the date in DD-MM-YYYY
+                // Echo the JavaScript object for the current item
+                echo "{ date: '{$formattedDate}', degreeName: '{$degreeName}', degreeID: '{$degreeID}', title: '{$eventName}', endDate: '{$endDate}' }";
+                // Add a comma after each object except the last one
+                if ($index < count($degreetimetables) - 1) {
+                    echo ", ";
+                }
+            }
+        }
+        ?>
+    ];
+    console.log(degreetimetableEvents);
+    events = [...events, ...degreetimetableEvents];
+    // Log the updated events array
+    console.log("Updated events array:", events);
+    // Update the events in localStorage
+    localStorage.setItem("events", JSON.stringify(events));
+    const keyToRemove = 'events'; // Specify the key of the item you want to remove
+    localStorage.removeItem(keyToRemove);
     const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
     function loadCalendar() {
         const dt = new Date();
 
@@ -438,11 +438,12 @@ $data['role'] = $role;
                 if (i - emptyDays === day && navigation == 0) {
                     dayBox.id = "currentDay";
                 }
-
                 if (eventOfTheDay) {
                     const eventDiv = document.createElement("div");
                     eventDiv.classList.add("event");
-                    eventDiv.innerText = eventOfTheDay.title;
+                    // Combine eventOfTheDay.title and eventOfTheDay.endDate into a single string with a newline character between them
+                    eventDiv.innerText = `${eventOfTheDay.title}\n${eventOfTheDay.endDate}`;
+                    // Append the eventDiv to the dayBox
                     dayBox.appendChild(eventDiv);
                 }
                 if (holidayOfTheDay) {
@@ -465,10 +466,7 @@ $data['role'] = $role;
     function buttons() {
         const btnBack = document.querySelector("#btnBack");
         const btnNext = document.querySelector("#btnNext");
-        const btnDelete = document.querySelector("#btnDelete");
-        const btnSave = document.querySelector("#btnSave");
         const closeButtons = document.querySelectorAll(".btnClose");
-        const txtTitle = document.querySelector("#txtTitle");
 
         btnBack.addEventListener("click", () => {
             navigation--;
@@ -478,64 +476,45 @@ $data['role'] = $role;
             navigation++;
             loadCalendar();
         });
-        modal.addEventListener("click", closeModal);
         closeButtons.forEach((btn) => {
             btn.addEventListener("click", closeModal);
         });
-        btnDelete.addEventListener("click", function () {
-            events = events.filter((e) => e.date !== clicked);
-            localStorage.setItem("events", JSON.stringify(events));
-            closeModal();
-        });
-
-        btnSave.addEventListener("click", function () {
-            if (txtTitle.value) {
-                txtTitle.classList.remove("error");
-                events.push({
-                    date: clicked,
-                    title: txtTitle.value.trim(),
-                });
-                txtTitle.value = "";
-                localStorage.setItem("events", JSON.stringify(events));
-                closeModal();
-            } else {
-                txtTitle.classList.add("error");
-            }
-        });
     }
-
-    const modal = document.querySelector("#modal");
     const viewEventForm = document.querySelector("#viewEvent");
-    const addEventForm = document.querySelector("#addEvent");
+    const overlay = document.querySelector(".overlay");
 
     function showModal(dateText) {
         clicked = dateText;
+        console.log("Clicked date:", dateText);
         const eventOfTheDay = events.find((e) => e.date == dateText);
+        console.log("Event of the day:", eventOfTheDay);
         if (eventOfTheDay) {
-            //Event already Preset
-            document.querySelector("#eventText").innerText = eventOfTheDay.title;
+            // Event already preset
+            const degreeName = eventOfTheDay.degreeName;
+            const eventname = eventOfTheDay.title;
+            const enddate = eventOfTheDay.endDate;
+            const eventTextElement = document.querySelector("#eventText");
+            // Reset the text in eventTextElement before adding new content
+            eventTextElement.innerText = `Degree Name: ${degreeName}\nEvent Name: ${eventname}\nEnd Date: ${enddate}`;
+            console.log("Displaying event title and degreeID in modal");
+            // Show the modal popup
             viewEventForm.style.display = "block";
+            overlay.style.display = "block";
+            document.body.classList.add('no-scroll');
         } else {
-            //Add new Event
-            addEventForm.style.display = "block";
+            console.log("No event found for the given date.");
         }
-        modal.style.display = "block";
     }
 
     //Close Modal
     function closeModal() {
         viewEventForm.style.display = "none";
-        addEventForm.style.display = "none";
-        modal.style.display = "none";
+        overlay.style.display = "none";
+        document.body.classList.remove('no-scroll');
         clicked = null;
         loadCalendar();
     }
 
     buttons();
     loadCalendar();
-
-    /*
-    1. Add Event     
-    3. Update Local Storage
-    */
 </script>

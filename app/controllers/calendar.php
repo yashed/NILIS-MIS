@@ -9,7 +9,11 @@ class Calendar extends Controller
 
     public function index()
     {
-        $this->view('components/calender/calender-2ndview');
+        $degree = new Degree();
+        $degreetimetable = new DegreeTimeTable(); 
+        $data['degrees'] = $degree->findAll();
+        $data['degreetimetables'] = $degreetimetable->findAll();
+        $this->view('components/calender/calender-2ndview', $data);
     }
 }
 
