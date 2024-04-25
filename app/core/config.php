@@ -14,17 +14,17 @@ define('APP_DESC', 'Examination Managment System');
 
 //connect to live server
 //database config for live server
-// define('DBNAME', 'nilisdb_aws');
-// define('DBHOST', '127.0.0.1');
-// define('DBUSER', 'root');
-// define('DBPASS', '');
-// define('DBDRIVER', 'mysql');
-
-define('DBHOST', 'fit.mysql.database.azure.com');
-define('DBNAME', 'nilis_db');
-define('DBUSER', 'fitadmin');
-define('DBPASS', 'password@123');
+define('DBNAME', 'nilisdb_aws');
+define('DBHOST', '127.0.0.1');
+define('DBUSER', 'root');
+define('DBPASS', '');
 define('DBDRIVER', 'mysql');
+
+// define('DBHOST', 'fit.mysql.database.azure.com');
+// define('DBNAME', 'nilis_db');
+// define('DBUSER', 'fitadmin');
+// define('DBPASS', 'password@123');
+// define('DBDRIVER', 'mysql');
 
 
 

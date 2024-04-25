@@ -24,7 +24,6 @@ class SAR extends Controller
         $exam = new Exam();
         $degreetimetable = new DegreeTimeTable();
         $finalMarks = new FinalMarks();
-        $db = new Database();
 
 
         //remove degree data from session
