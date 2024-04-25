@@ -28,15 +28,15 @@
     --tran-04: all 0.4s ease;
     --tran-05: all 0.5s ease;
 }
-.reports-home {
-    height: 100vh;
+.dr-reports-home {
+    /* min-height: 100vh; */
     left: 250px;
     position: relative;
     width: calc(100% - 250px);
     transition: var(--tran-05);
     background: var(--body-color);
 }
-.reports-title {
+.dr-reports-title {
     font-size: 30px;
     font-weight: 600;
     color: black;
@@ -45,21 +45,22 @@
     border-radius: 6px;
     margin: 7px 4px 7px 4px;
 }
-.sidebar.close~.reports-home {
+.sidebar.close~.dr-reports-home {
     left: 88px;
     width: calc(100% - 88px);
 }
-.reports-subsection-1 {
+.dr-reports-subsection-1 {
     background-color: var(--text-color);
     padding: 30px 10px 30px 35px;
     border-radius: 6px;
-    margin: px 4px 7px 4px;
+    margin: 7px 4px 7px 4px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     flex-wrap: wrap;
+    min-height: 72vh;
 }
-.report-card-1 {
+.dr-reports-card-1 {
     display: flex;
     flex-direction: column;
     width: 300px;
@@ -73,36 +74,36 @@
     background: var(--colour-primary, #FFF);
     margin-bottom: 5px;
 }
-.report-card-1 img {
+.dr-reports-card-1 img {
     margin: 0 auto;
 }
-.report-card-1 p {
+.dr-reports-card-1 p {
     text-align: center;
     margin-top: 13px;
 }
 </style>
 <body>
-    <div class="reports-home">
-        <div class="reports-title">Reports</div>
-        <div class="reports-subsection-1">
-            <div class="report-card-1">
+    <div class="dr-reports-home">
+        <div class="dr-reports-title">Reports</div>
+        <div class="dr-reports-subsection-1">
+            <div class="dr-reports-card-1">
                 <img src="<?=ROOT?>assets/dr/Group.png">
                 <p>1st semester examination results</p>
             </div>
-            <div class="report-card-1">
+            <div class="dr-reports-card-1">
                 <img src="<?=ROOT?>assets/dr/Group.png">
                 <p>2nd semester examination results</p>
             </div>
-            <div class="report-card-1">
+            <div class="dr-reports-card-1">
                 <img src="<?=ROOT?>assets/dr/Group.png">
                 <p>3rd semester examination results</p>
             </div>
-            <div class="report-card-1">
+            <div class="dr-reports-card-1">
                 <img src="<?=ROOT?>assets/dr/Group.png">
                 <p>4th semester examination results</p>
             </div>
         </div>
-        <div class="reports-footer">
+        <div class="dr-reports-footer">
             <?php $this->view('components/footer/index',$data) ?>
         </div>
 </body>

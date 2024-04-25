@@ -5,6 +5,7 @@ class Admission extends Controller
 
     public function index()
     {
+
     }
 
     public function login()
@@ -75,7 +76,7 @@ class Admission extends Controller
             $examID = $tokenData[0]->examID;
         } else {
 
-            message('Invalid Token', 'danger');
+            message('Invalid Token', 'error', true);
         }
 
         //get student data
@@ -118,20 +119,16 @@ class Admission extends Controller
             //get the attempt of the repeate student
             $attempt = $repeateStudent->where(['indexNo' => $indexNo, 'semester' => $semester]);
             //get subject the student repeat
-            $subjects = $repeateStudent->where(['indexNo' => $indexNo, 'semester' => $semester, 'attempt' => $attempt[0]->attempt]);
-
+            // $subjects = $repeateStudent->where(['indexNo' => $indexNo, 'semester' => $semester, 'attempt' => $attempt[0]->attempt]);
+            $subjects = getRepeatedSubjects($indexNo, $semester);
 
 
             //get time table data
             $examTimeTableData = [];
-
-            // $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'degreeID' => $studentExamData[0]->degreeID, 'semester' => $semester]);
-            // show($examTimeTableData);
             //get subject data from timetable for each subject
             foreach ($subjects as $subject) {
 
                 $subjectCode = $subject->subjectCode;
-
                 $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'semester' => $semester, 'subjectCode' => $subjectCode]);
 
             }
@@ -140,22 +137,43 @@ class Admission extends Controller
 
         } else if (($studentExamData[0]->studentType == 'medical')) {
 
-            //get student details from medical student table
-            $attempt = $medicalStudent->where(['indexNo' => $indexNo, 'semester' => $semester]);
-
             //get subject the student repeat
-            $subjects = $medicalStudent->where(['indexNo' => $indexNo, 'semester' => $semester, 'attempt' => $attempt[0]->attempt]);
+            $subjects = getMedicalSubjects($indexNo, $semester);
 
 
             $examTimeTableData = [];
             //get subject data from timetable for each subject
             foreach ($subjects as $subject) {
 
-                $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'semester' => $semester, 'subjectCode' => $subject->subjectCode]);
+                $subjectCode = $subject->subjectCode;
+                $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'semester' => $semester, 'subjectCode' => $subjectCode]);
             }
 
             // show($examTimeTableData);
+        } else if ($studentExamData[0]->studentType == 'medical/repeat') {
+
+
+            //get repeated subjects
+            $subjects1 = getRepeatedSubjects($indexNo, $semester);
+
+            //get medical approved subjects
+            $subjects2 = getMedicalSubjects($indexNo, $semester);
+            $Subjects = array_merge($subjects1, $subjects2);
+
+
+            //get timetable data
+            foreach ($Subjects as $subject) {
+
+                $subjectCode = $subject->subjectCode;
+                $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'semester' => $semester, 'subjectCode' => $subjectCode]);
+
+            }
+
+
+
+
         }
+
 
 
 

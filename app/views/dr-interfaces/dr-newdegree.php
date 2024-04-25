@@ -6,100 +6,9 @@ $data['role'] = $role;
 <?php $this->view('components/navside-bar/footer', $data) ?>
 
 <head>
+    <link rel="stylesheet" type="text/css" href="<?= ROOT ?>css/dr/dr-styles.css">
 </head>
 <style>
-    * {
-        font-family: 'Poppins', sans-serif;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    :root {
-        --body-color: #E2E2E2;
-        --sidebar-color: #17376E;
-        --primary-color: #9AD6FF;
-        --text-color: #ffffff;
-        --tran-02: all 0.2s ease;
-        --tran-03: all 0.3s ease;
-        --tran-04: all 0.4s ease;
-        --tran-05: all 0.5s ease;
-    }
-
-    body {
-        background-color: #E2E2E2;
-    }
-
-    .white-container1 {
-        height: 100vh;
-        left: 250px;
-        position: relative;
-        width: calc(100% - 250px);
-        transition: var(--tran-05);
-        background: var(--body-color);
-    }
-
-    .sidebar.close~.white-container1 {
-        left: 88px;
-        width: calc(100% - 88px);
-    }
-
-    .white-container2 {
-        background-color: white;
-        padding: 20px;
-        height: 530px;
-        font-family: "Poppins", sans-serif;
-        font-size: 22px;
-        align-items: center;
-        justify-content: center;
-        border-radius: 10px;
-        transition: all 0.5s ease;
-        margin: 7px 4px 7px 4px;
-    }
-
-    .left-top-text {
-        text-align: left;
-        margin-top: 20px;
-        color: #17376E;
-        margin-bottom: 30px;
-        font-family: "Poppins", sans-serif;
-    }
-
-    .download-button {
-        /* display: inline-block; */
-        padding: 10px 20px;
-        background-color: #17376E;
-        color: #fff;
-        text-decoration: none;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        width: auto;
-        font-size: 12px;
-        float: right;
-    }
-
-    .dashed-container {
-        border: 2px dashed #333;
-        padding: 8px;
-        width: auto;
-        height: 300px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .file-input-icon {
-        width: 74px;
-        height: 81.5px;
-        background-image: url('<?= ROOT ?>assets/dr/Icon03.png');
-        background-size: cover;
-        background-repeat: no-repeat;
-        cursor: pointer;
-        margin-bottom: 10px;
-    }
-
     input[type="file"] {
         margin: 10px 0;
         margin-left: 150px;
@@ -107,32 +16,6 @@ $data['role'] = $role;
 
     input[type="file"] {
         display: none;
-    }
-
-    .text1 {
-        font-size: 20px;
-        margin-left: 15px;
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
-
-    .browse-label {
-        color: #9AD6FF;
-        cursor: pointer;
-    }
-
-    .white-container3 {
-        margin-top: 10px;
-        background-color: white;
-        padding: 20px;
-        height: 500px;
-        font-family: "Poppins", sans-serif;
-        font-size: 22px;
-        align-items: center;
-        justify-content: center;
-        border-radius: 10px;
-        transition: all 0.5s ease;
-        margin: 7px 4px 7px 4px;
     }
 
     input[type=event] {
@@ -145,237 +28,92 @@ $data['role'] = $role;
         margin-bottom: 16px;
         resize: vertical;
     }
-
-    .container {
-        border-radius: 5px;
-        padding: 20px;
-    }
-
-    .x {
-        display: flex;
-        align-items: center;
-    }
-
-    .x input {
-        margin: 5px;
-    }
-
-    .y {
-        display: flex;
-        align-items: center;
-        margin-left: 100px;
-        height: 35px;
-    }
-
-    .y input {
-        width: 130px;
-        height: 43px;
-    }
-
-    .container a {
-        background-color: #17376E;
-        color: #fff;
-        text-decoration: none;
-        font-size: medium;
-        border-radius: 5px;
-        padding: 4px 5px 4px 5px;
-        margin-top: 10px;
-        float: right;
-        margin-right: 20px;
-    }
-
-    .addevent {
-        height: 40px;
-        width: auto;
-        border-radius: 5px;
-        padding: 0 4px 0 4px;
-        cursor: pointer;
-    }
-
-    .addevent:hover {
-        height: 41px;
-        font-size: 14px;
-    }
-
-    .box_4 {
-        border-radius: 5px;
-        margin: 5px 5px 5px 5px;
-        background-color: var(--text-color);
-        grid-column: 1 / 3;
-        grid-row: 3/ 3;
-        padding: 5px 5px 2px 5px;
-    }
-
-    .time_table {
-        margin: 2% 5% 3% 5%;
-        border-spacing: 5px;
-        height: 35px;
-        width: 90%;
-    }
-
-    .create_time_table_raw {
-        margin: 1% 5% 3% 5%;
-        border-spacing: 5px;
-        align-items: center;
-        height: 35px;
-        width: 90%;
-    }
-
-    .box_4 input {
-        width: 100%;
-        height: 35px;
-        background: transparent;
-        outline: none;
-        border-radius: 5px;
-        border: 1px solid gainsboro;
-    }
-
-    .box_4 .event {
-        width: 90%;
-        padding-left: 10px;
-    }
-
-    .time_table .duration {
-        text-align: center;
-        width: 100%;
-        height: 35px;
-        outline: none;
-        border-radius: 5px;
-        border: 1px solid gainsboro;
-    }
-
-    .box_4_1 {
-        overflow-y: auto;
-        max-height: 60%;
-    }
-
-    #add_new_event {
-        width: 100%;
-        height: 35px;
-        background: transparent;
-        outline: none;
-        border-radius: 5px;
-        border: 1px solid gainsboro;
-        color: gray;
-        align-items: center;
-        cursor: pointer;
-    }
-
-    #save {
-        background-color: var(--sidebar-color);
-        color: var(--text-color);
-        border-radius: 7px;
-        width: 100%;
-        height: 35px;
-        border-color: var(--text-color);
-        font-weight: 500;
-        margin: 10px 0px 0px 0px;
-    }
-
-    #save:hover {
-        background-color: var(--text-color);
-        color: var(--sidebar-color);
-        border-radius: 7px;
-        width: 100%;
-        height: 35px;
-        font-weight: 500;
-        border-color: var(--sidebar-color);
-        border-width: 2px;
-    }
-
-    .box_4 p {
-        font-size: 20px;
-        color: var(--sidebar-color);
-        margin: 3% 0 0 5%;
-        font-weight: 500;
-        margin: 5px 5px 5px 10px;
-    }
 </style>
 
 <body>
     <header>
     </header>
-    <div class="white-container1">
-        <div class="white-container1-1">
-            <div class="white-container2">
-                <p class="left-top-text">Add Student Details</p>
-                <a href="<?= ROOT ?>assets/csv/output/student-data-input.csv" class=" download-button" download>Download
-                    File</a><br><br>
-                <form method="post" enctype="multipart/form-data">
-                    <div class="dashed-container">
-                        <label for="student-data" class="file-input-icon"></label>
-                        <input type="file" id="student-data" name="student-data">
-                        <p class="text1">Drag and drop or <label for="student-data" class="browse-label">browser</label> your files</p>
-                        <button type="submit" class="download-button" name="student-data" value="upload-csv">Upload</button>
+    <div class="dr-newdegree-white-container1">
+        <div class="dr-newdegree-white-container1-1">
+            <div class="dr-newdegree-white-container2">
+                <p class="dr-newdegree-left-top-text">Add Student Details</p>
+                <a href="<?= ROOT ?>assets/csv/output/student-data-input.csv" class=" dr-newdegree-download-button"
+                    download>Download File</a><br><br>
+                <form method="post" enctype="multipart/form-data" action="<?= ROOT ?>dr/newdegree/file">
+                    <div class="dr-newdegree-dashed-container"> <!-- File input field -->
+                        <input type="file" id="student-data" name="student-data"> <!-- Label for browsing files -->
+                        <label for="student-data" class="dr-newdegree-file-input-icon"></label> <!-- Text and button -->
+                        <p class="dr-newdegree-text1">Drag and drop or <label for="student-data"
+                                class="dr-newdegree-browse-label">browse</label> your files</p>
+                        <button type="submit" class="dr-newdegree-download-button" name="submit"
+                            value="upload-csv">Upload</button>
                     </div>
                 </form>
             </div>
-            <form class="box_4" method="post" action="<?= ROOT ?>dr/newDegree/add" id="form1">
+            <form class="dr-newdegree-box_4" method="post" action="<?= ROOT ?>dr/newdegree/add" id="dr-newdegree-form1">
                 <p>Define Degree Time Table</p>
-                <div class="box_4_1">
-                    <table class="Time_table" id="Time_table">
+                <div class="dr-newdegree-box_4_1">
+                    <table class="dr-newdegree-Time_table" id="dr-newdegree-Time_table">
                         <tr>
                             <th align="left">Event</th>
                             <th colspan="2">Duration</th>
                         </tr>
                         <tr>
-                            <td width="76%"><input type="text" value="" name="event_1" class="event" id="event_1" placeholder="Mid Semester Break"></td>
-                            <td width="14%"><select name="type_1" class="duration" id="type_1" style="padding: 0px 2px 0px 2px;">
-                                    <option value="" default hidden>Event Type</option>
-                                    <option value="Examination" <?= (set_value('type_1') === 'Examination') ? 'selected' : '' ?>>Examination</option>
-                                    <option value="Study Leave" <?= (set_value('type_1') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
-                                    <option value="Vacation" <?= (set_value('type_1') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
-                                    <option value="Other" <?= (set_value('type_1') === 'Other') ? 'selected' : '' ?>>Other</option>
-                                </select></td>
-                            <td width="12%"><input type="date" value="" name="start_1" class="duration" id="start_1" placeholder=""></td>
-                            <td width="12%"><input type="date" value="" name="end_1" class="duration" id="end_1" placeholder=""></td>
+                            <td width="76%"><input type="text" value="First Semester" name="event_1"
+                                    class="dr-newdegree-event" id="dr-newdegree-event_1" readonly></td>
+                            <td width="14%"><input name="type_1" class="dr-newdegree-duration" id="dr-newdegree-type_1"
+                                    style="padding: 0px 2px 0px 2px;" value="Examination" readonly></td>
+                            <td width="12%"><input type="date" value="" name="start_1" class="dr-newdegree-duration"
+                                    id="dr-newdegree-start_1" placeholder=""></td>
+                            <td width="12%"><input type="date" value="" name="end_1" class="dr-newdegree-duration"
+                                    id="dr-newdegree-end_1" placeholder=""></td>
                         </tr>
                         <tr>
-                            <td><input type="text" value="" name="event_2" class="event" id="event_2" placeholder="Study Leave" readonly></td>
-                            <td width="12%" padding-right="3px"><select name="type_2" class="duration" id="type_2" disabled>
-                                    <option value="" default hidden>Event Type</option>
-                                    <option value="Examination" <?= (set_value('type_2') === 'Examination') ? 'selected' : '' ?>>Examination</option>
-                                    <option value="Study Leave" <?= (set_value('type_2') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
-                                    <option value="Vacation" <?= (set_value('type_2') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
-                                    <option value="Other" <?= (set_value('type_2') === 'Other') ? 'selected' : '' ?>>Other</option>
-                                </select></td>
-                            <td><input type="date" value="" name="start_2" class="duration" id="start_2" placeholder="" readonly></td>
-                            <td><input type="date" value="" name="end_2" class="duration" id="end_2" placeholder="" readonly></td>
+                            <td width="76%"><input type="text" value="Second Semester" name="event_2"
+                                    class="dr-newdegree-event" id="dr-newdegree-event_2" readonly></td>
+                            <td width="14%"><input name="type_2" class="dr-newdegree-duration" id="dr-newdegree-type_2"
+                                    style="padding: 0px 2px 0px 2px;" value="Examination" readonly></td>
+                            <td width="12%"><input type="date" value="" name="start_2" class="dr-newdegree-duration"
+                                    id="dr-newdegree-start_2" placeholder=""></td>
+                            <td width="12%"><input type="date" value="" name="end_2" class="dr-newdegree-duration"
+                                    id="dr-newdegree-end_2" placeholder=""></td>
                         </tr>
-                        <tr>
-                            <td><input type="text" value="" name="event_3" class="event" id="event_3" placeholder="First Semester Examination" readonly></td>
-                            <td width="12%" padding-right="3px"><select name="type_3" class="duration" id="type_3" disabled>
-                                    <option value="" default hidden>Event Type</option>
-                                    <option value="Examination" <?= (set_value('type_3') === 'Examination') ? 'selected' : '' ?>>Examination</option>
-                                    <option value="Study Leave" <?= (set_value('type_3') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
-                                    <option value="Vacation" <?= (set_value('type_3') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
-                                    <option value="Other" <?= (set_value('type_3') === 'Other') ? 'selected' : '' ?>>Other</option>
-                                </select></td>
-                            <td><input type="date" value="" name="start_3" class="duration" id="start_3" placeholder="" readonly></td>
-                            <td><input type="date" value="" name="end_3" class="duration" id="end_3" placeholder="" readonly></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" value="" name="event_4" class="event" id="event_4" placeholder="Second Semester Examination" readonly></td>
-                            <td width="12%" padding-right="3px"><select name="type_4" class="duration" id="type_4" disabled>
-                                    <option value="" default hidden>Event Type</option>
-                                    <option value="Examination" <?= (set_value('type_4') === 'Examination') ? 'selected' : '' ?>>Examination</option>
-                                    <option value="Study Leave" <?= (set_value('type_4') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
-                                    <option value="Vacation" <?= (set_value('type_4') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
-                                    <option value="Other" <?= (set_value('type_4') === 'Other') ? 'selected' : '' ?>>Other</option>
-                                </select></td>
-                            <td><input type="date" value="" name="start_4" class="duration" id="start_4" placeholder="" readonly></td>
-                            <td><input type="date" value="" name="end_4" class="duration" id="end_4" placeholder="" readonly></td>
-                        </tr>
+                        <?php $id = 3; ?>
+                        <?php if ($degrees[0]->Duration == 2): ?>
+                            <tr>
+                                <td width="76%"><input type="text" value="Third Semester" name="event_3"
+                                        class="dr-newdegree-event" id="dr-newdegree-event_3" readonly></td>
+                                <td width="14%"><input name="type_3" class="dr-newdegree-duration" id="dr-newdegree-type_3"
+                                        style="padding: 0px 2px 0px 2px;" value="Examination" readonly></td>
+                                <td width="12%"><input type="date" value="" name="start_3" class="dr-newdegree-duration"
+                                        id="dr-newdegree-start_3" placeholder=""></td>
+                                <td width="12%"><input type="date" value="" name="end_3" class="dr-newdegree-duration"
+                                        id="dr-newdegree-end_3" placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td width="76%"><input type="text" value="Fourth Semester" name="event_4"
+                                        class="dr-newdegree-event" id="dr-newdegree-event_4" readonly></td>
+                                <td width="14%"><input name="type_4" class="dr-newdegree-duration" id="dr-newdegree-type_4"
+                                        style="padding: 0px 2px 0px 2px;" value="Examination" readonly></td>
+                                <td width="12%"><input type="date" value="" name="start_4" class="dr-newdegree-duration"
+                                        id="dr-newdegree-start_4" placeholder=""></td>
+                                <td width="12%"><input type="date" value="" name="end_4" class="dr-newdegree-duration"
+                                        id="dr-newdegree-end_4" placeholder=""></td>
+                            </tr>
+                            <?php $id = 5; ?>
+                        <?php endif; ?>
                     </table>
                 </div>
-                <div class="box_4_2">
-                    <table class="create_time_table_raw">
+                <div class="dr-newdegree-box_4_2">
+                    <table class="dr-newdegree-create_time_table_raw">
                         <tr>
-                            <th colspan="3"><button type="button" class="add-new-event" id="add_new_event" disabled>&#128198 Add New Event</button></th>
+                            <th colspan="3"><button type="button" class="dr-newdegree-add-new-event"
+                                    id="dr-newdegree-add_new_event" disabled>&#128198 Add New Event</button></th>
                         </tr>
                         <tr>
                             <td></td>
-                            <td width="12%"><button class="pin" type="" id="save">Save</button></td>
+                            <td width="12%"><button class="dr-newdegree-pin" type="button" id="dr-newdegree-save"
+                                    disabled>Save</button></td>
                         </tr>
                     </table>
                 </div>
@@ -387,70 +125,108 @@ $data['role'] = $role;
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        let add = document.querySelector("#add_new_event");
-        let table = document.querySelector(".Time_table");
-        let count = 0;
-        let i = 5;
+        let add = document.querySelector("#dr-newdegree-add_new_event");
+        let table = document.querySelector(".dr-newdegree-Time_table");
+        let i = <?= $id ?>;
+        const lock = <?= $id ?>;
+        console.log(i);
         // Define a function to handle the change event
         function handleChange(eventIndex) {
-            return function(e) {
-                var eventValue = $('#event_' + eventIndex).val();
-                var typeValue = $('#type_' + eventIndex).val();
-                var startValue = $('#start_' + eventIndex).val();
-                var endValue = $('#end_' + eventIndex).val();
-
-                if (eventValue !== "" && typeValue !== "" && startValue !== "" && endValue !== "") {
-                    $('#event_' + (eventIndex + 1)).prop('readonly', false);
-                    $('#type_' + (eventIndex + 1)).prop('disabled', false);
-                    $('#start_' + (eventIndex + 1)).prop('readonly', false);
-                    $('#end_' + (eventIndex + 1)).prop('readonly', false);
-                    count = eventIndex + 1;
+            return function (e) {
+                var eventValue = $('#dr-newdegree-event_' + eventIndex).val();
+                var typeValue = $('#dr-newdegree-type_' + eventIndex).val();
+                var startValue = $('#dr-newdegree-start_' + eventIndex).val();
+                var endValue = $('#dr-newdegree-end_' + eventIndex).val();
+                // console.log(eventValue ,typeValue ,startValue ,endValue);
+                if (startValue < new Date().toISOString().split('T')[0]) {
+                    alert('Start date cannot be earlier than today\'s date.');
+                    $('#dr-newdegree-start_' + eventIndex).val(new Date().toISOString().split('T')[0]);
+                    startValue = (new Date().toISOString().split('T')[0]);
                 }
-                if (count == i) {
-                    add.removeAttribute("disabled");
+                if (startValue > endValue) {
+                    alert('End date cannot be earlier than start date.');
+                    $('#dr-newdegree-end_' + eventIndex).val(startValue);
+                    endValue = startValue;
+                }
+                if (eventValue !== "" && typeValue !== "" && startValue !== "" && endValue !== "") {
+                    $('#dr-newdegree-event_' + (eventIndex + 1)).prop('readonly', false);
+                    $('#dr-newdegree-type_' + (eventIndex + 1)).prop('disabled', false);
+                    $('#dr-newdegree-start_' + (eventIndex + 1)).prop('readonly', false);
+                    $('#dr-newdegree-end_' + (eventIndex + 1)).prop('readonly', false);
+                    validateEvents()
+                }
+                if (lock == 3 || lock == 5) {
+                    $('#dr-newdegree-event_1').prop('readonly', true);
+                    $('#dr-newdegree-type_1').prop('readonly', true);
+                    $('#dr-newdegree-event_2').prop('readonly', true);
+                    $('#dr-newdegree-type_2').prop('readonly', true);
+                }
+                if (lock == 5) {
+                    $('#dr-newdegree-event_3').prop('readonly', true);
+                    $('#dr-newdegree-type_3').prop('readonly', true);
+                    $('#dr-newdegree-event_4').prop('readonly', true);
+                    $('#dr-newdegree-type_4').prop('readonly', true);
                 }
             };
         }
         // Attach change event handlers to all four sets of fields
         for (var k = 1; k < i; k++) {
-            $('#event_' + k + ', #type_' + k + ', #start_' + k + ', #end_' + k).on("change", handleChange(k));
+            $('#dr-newdegree-event_' + k + ', #dr-newdegree-type_' + k + ', #dr-newdegree-start_' + k + ', #dr-newdegree-end_' + k).on("change", handleChange(k));
         }
+
         //Add new event
         add.addEventListener("click", (event) => {
             let template = `
                 <tr>
-                    <td><input type="text" value="" name="event_${i}" class="event" id="event_${i}" placeholder="New Event"></td>
-                    <td width="12%" padding-right="3px"><select name="type_${i}"  class="duration" id="type_${i}">
+                    <td><input type="text" value="" name="event_${i}" class="dr-newdegree-event" id="dr-newdegree-event_${i}" placeholder="New Event"></td>
+                    <td width="12%" padding-right="3px"><select name="type_${i}"  class="dr-newdegree-duration" id="dr-newdegree-type_${i}">
                                 <option value="" default hidden>Event Type</option>
-                                <option value="Examination" <?= (set_value('type_${i}') === 'Examination') ? 'selected' : '' ?>>Examination</option>
                                 <option value="Study Leave" <?= (set_value('type_${i}') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
                                 <option value="Vacation" <?= (set_value('type_${i}') === 'Vacation') ? 'selected' : '' ?>>Vacation</option>
                                 <option value="Other" <?= (set_value('type_${i}') === 'Other') ? 'selected' : '' ?>>Other</option>
                             </select></td>
-                    <td><input type="date" value="" name="start_${i}" class="duration" id="start_${i}" placeholder=""></td>
-                    <td><input type="date" value="" name="end_${i}" class="duration" id="end_${i}" placeholder=""></td>
+                    <td><input type="date" value="" name="start_${i}" class="dr-newdegree-duration" id="dr-newdegree-start_${i}" placeholder=""></td>
+                    <td><input type="date" value="" name="end_${i}" class="dr-newdegree-duration" id="dr-newdegree-end_${i}" placeholder=""></td>
                 </tr>
             `;
             let newRow = document.createElement("tr");
             newRow.innerHTML = template;
             table.appendChild(newRow);
+            alert("Please fill out all fields in new event");
             add.setAttribute("disabled", "true");
-            $('#event_' + i + ', #type_' + i + ', #start_' + i + ', #end_' + i).on("change", handleChange(i));
+            save.setAttribute("disabled", "true");
+            $('#dr-newdegree-event_' + i + ', #dr-newdegree-type_' + i + ', #dr-newdegree-start_' + i + ', #dr-newdegree-end_' + i).on("change", handleChange(i));
             i++;
         });
-
-
-        var save = document.getElementById("save");
-        save.onclick = function(event) {
+        function validateEvents() {
+            for (var k = 1; k < i; k++) {
+                var eventValue = $('#dr-newdegree-event_' + k).val();
+                var typeValue = $('#dr-newdegree-type_' + k).val();
+                var startValue = $('#dr-newdegree-start_' + k).val();
+                var endValue = $('#dr-newdegree-end_' + k).val();
+                // Check if events and dates are filled for each evnt
+                if (eventValue === "" || typeValue === "" || startValue === "" || endValue === "") {
+                    return;
+                }
+                if (!/^[a-zA-Z0-9\s]+$/.test(eventValue)) {
+                    alert("Event Name for row " + k + " must be a sentence and number.");
+                    return;
+                }
+            }
+            save.removeAttribute("disabled");
+            add.removeAttribute("disabled");
+        }
+        var save = document.getElementById("dr-newdegree-save");
+        save.onclick = function (event) {
             event.preventDefault();
             var timetableData = [];
-            var timeTable = document.getElementById(`Time_table`);
-            for (var k = 1; k < count; k++) { // loop through all rows except the header
+            var timeTable = document.getElementById(`dr-newdegree-Time_table`);
+            for (var k = 1; k < i; k++) { // loop through all rows except the header
                 var eventID = k;
-                var eventName = document.getElementById(`event_${k}`).value.trim();
-                var eventType = document.getElementById(`type_${k}`).value.trim();
-                var eventStart = document.getElementById(`start_${k}`).value.trim();
-                var eventEnd = document.getElementById(`end_${k}`).value.trim();
+                var eventName = document.getElementById(`dr-newdegree-event_${k}`).value.trim();
+                var eventType = document.getElementById(`dr-newdegree-type_${k}`).value.trim();
+                var eventStart = document.getElementById(`dr-newdegree-start_${k}`).value.trim();
+                var eventEnd = document.getElementById(`dr-newdegree-end_${k}`).value.trim();
                 // Push data to timetableData array
                 timetableData.push({
                     eventID: eventID,
@@ -459,16 +235,25 @@ $data['role'] = $role;
                     eventStart: eventStart,
                     eventEnd: eventEnd
                 });
-                // console.log(timetableData); 
+                // console.log(timetableData);
                 var timetableDataInput = document.createElement('input');
                 timetableDataInput.setAttribute('type', 'hidden');
                 timetableDataInput.setAttribute('name', `timetableData`);
                 timetableDataInput.setAttribute('value', JSON.stringify(timetableData));
-                document.getElementById('form1').appendChild(timetableDataInput);
+                document.getElementById('dr-newdegree-form1').appendChild(timetableDataInput);
             }
-            document.getElementById("form1").submit();
+            save.setAttribute("disabled", "true");
+            document.getElementById("dr-newdegree-form1").submit();
         }
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+            if (error) {
+                alert(error);
+            }
+        };
     </script>
 </body>
 
 </html>
+<!-- <option value="Examination" <?= (set_value('type_${i}') === 'Examination') ? 'selected' : '' ?>>Examination</option> -->

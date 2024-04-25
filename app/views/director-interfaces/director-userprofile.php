@@ -10,76 +10,13 @@ $data['role'] = $role;
 
 <head>
     <link rel="stylesheet" type="text/css" href="<?= ROOT ?>css/student/style.css">
-    <style>
-        #overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1;
-            transition: background-color 0.5s;
-        }
-
-        .button-container {
-            margin-top: 35px;
-            display: flex;
-            flex-direction: row;
-            float: right;
-            margin-right: 20%;
-        }
-
-        .yesorno {
-            margin: 5% 25%;
-            display: flex;
-            flex-direction: row;
-            column-gap: 20px;
-        }
-
-        .pop-up {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 20px;
-            z-index: 2;
-        }
-
-        .pop-up1 {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 20px;
-            z-index: 2;
-            border-radius: 15px;
-        }
-
-        .pop-up2 {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 20px;
-            z-index: 2;
-            border-radius: 15px;
-        }
-    </style>
 </head>
 
 <body>
     <div class="dr-userprofile">
         <div class="white-container1-1">
-            <div class="white-container1">Diploma in Library and Information Management</div>
-            <div class="white-container1-core">Participants</div>
+            <div class="white-container1"><?= $degree[0]->DegreeName ?></div>
+            <div class="white-container1-core"><b>Participants</b></div>
         </div>
         <div class="white-container2-1">
             <p class="left-top-text2">User Details</p>
@@ -100,19 +37,17 @@ $data['role'] = $role;
                 </div>
                 <div class="column3">
                     <div class="data3"><b>Country:</b><br>
-                        <div class="country"> Sri Lanka</div>
+                        <div class="country"> <?= $student[0]->country ?></div>
                     </div><br>
                     <div class="data4"><b>Index number:</b><br>
                         <div class="indexNum"> <?= $student[0]->indexNo ?></div>
                     </div>
                 </div>
             </div><br>
-           
+          
         </div>
 
-       
-      
-       
+        
         <div class="flex-container">
             <div class="white-container3-1">
                 <p class="left-top-text2">Examination Results</p>
@@ -169,82 +104,33 @@ $data['role'] = $role;
                     <div class="column2-1">
                         <div class="data1"><b>Date Of Birth:</b><br>
                             <div class="bday"><?= $student[0]->birthdate ?></div>
-                        </div><br>
+                        </div>
                         <div class="data2"><b>N.I.C. No:</b><br>
                             <div class="nic"> <?= $student[0]->nicNo ?></div>
-                        </div><br>
-                        <div class="data2"><b>Phone Number:</b><br>
-                            <div class="phoneNum"> <?= $student[0]->phoneNo ?></div>
+                        </div>
+                        <div class="data2"><b>WhatsApp Number:</b><br>
+                            <div class="Fax"><?= $student[0]->whatsappNo ?></div>
                         </div>
                     </div>
                     <div class="column2-2">
-                        <div class="data1"><b>WhatsApp Number:</b><br>
-                            <div class="Fax"><?= $student[0]->whatsapp_number ?></div>
-                        </div><br>
-                        <div class="data2"><b>Address:</b><br>
+                        <div class="data3"><b>Address:</b><br>
                             <div class="adr"> <?= $student[0]->address ?></div>
                         </div>
+                        <div class="data4"><b>Phone Number:</b><br>
+                            <div class="phoneNum"> <?= $student[0]->phoneNo ?></div>
+                        </div><br>
                     </div>
                 </div>
-              
+                
             </div>
         </div>
-        
+ 
         <div class="dr-footer">
             <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>
-    <script>
-       
-        
-
-      
-
-        function myFunction() {
-            $('.pop-up1').css('display', 'none');
-            $('#overlay').css('display', 'block');
-            $('.pop-up1-1').css('display', 'block');
-
-            $('#overlay').click(function(e) {
-                $('.pop-up1-1').css('display', 'none');
-                $('#overlay').css('display', 'none');
-                e.stopPropagation();
-            });
-        }
-        function crossForDiplomaChange() {
-            $('.pop-up1-1').css('display', 'none');
-            $('#overlay').css('display', 'none');
-        }
-        (() => {
-            const body = document.querySelector("body"),
-                sidebar = body.querySelector(".sidebar"),
-                toggle = body.querySelector(".toggle")
-            whitecontainer11 = body.querySelector(".white-container1-1");
-            whitecontainer21 = body.querySelector(".white-container2-1");
-            whitecontainer31 = body.querySelector(".white-container3-1");
-
-            toggle.addEventListener("click", () => {
-                //sidebar.classList.toggle("close");
-                whitecontainer11.classList.toggle("close");
-                whitecontainer21.classList.toggle("close");
-                whitecontainer31.classList.toggle("close");
-
-            });
-        })()
-
-        function toggleMenu() {
-            document.getElementById("subMenu").classList.toggle("open-menu");
-        }
-
-
-        // Add this code to target_page.php
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const studentId = urlParams.get('studentId');
-
-            // Now you can use the `studentId` to fetch and display the corresponding student's data.
-        });
-    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    
 </body>
 
 </html>

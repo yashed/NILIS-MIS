@@ -200,6 +200,14 @@
                 </ul>
             </div>
         </div>
+        <?php
+        if (isset($degreetimetables) && !empty($degreetimetables)) {
+            $degreetimetableDates = [];
+            foreach ($degreetimetables as $degreetimetable) {
+                $degreetimetableDates[] = $degreetimetable->StartingDate;
+            }
+        }
+        ?>
     </div>
     <script>
         const daysTag = document.querySelector(".days"),
@@ -224,31 +232,43 @@
         ];
 
         // Define custom highlighted dates
-        const customHighlightedDates = ["2024-2-25", "2024-2-27", "2024-2-24", "2025-3-23", "2024-2-22"];
-
+        const customHighlightedDates = <?= json_encode($degreetimetableDates); ?>;
+        // console.log(customHighlightedDates);
         const renderCalendar = () => {
             let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(),
                 lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(),
                 lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(),
                 lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate();
             let liTag = "";
+            // Add previous month's last days
             for (let i = firstDayofMonth; i > 0; i--) {
                 liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
             }
+            // Add current month's days
             for (let i = 1; i <= lastDateofMonth; i++) {
+                // Format month and day with leading zeros
+                const formattedMonth = (currMonth + 1).toString().padStart(2, "0");
+                const formattedDay = i.toString().padStart(2, "0");
+                // Construct date string
+                const currentDateString = `${currYear}-${formattedMonth}-${formattedDay}`;
+                // Check if current date should be highlighted
+                let isHighlighted = customHighlightedDates.includes(currentDateString);
+                // Check if current date is today
                 let isToday =
                     i === date.getDate() &&
                         currMonth === new Date().getMonth() &&
-                        currYear === new Date().getFullYear()
-                        ? "active"
-                        : "";
-                let isHighlighted = customHighlightedDates.includes(`${currYear}-${currMonth + 1}-${i}`);
+                        currYear === new Date().getFullYear() ?
+                        "active" : "";
+                // Determine className based on whether date is highlighted and/or today
                 let className = isToday ? `${isToday}` : `${isHighlighted ? "highlighted" : ""}`;
+                // Add list item for current date
                 liTag += `<li class="${className}">${i}</li>`;
             }
+            // Add next month's first days
             for (let i = lastDayofMonth; i < 6; i++) {
                 liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`;
             }
+            // Update the current date display and the days list
             currentDate.innerText = `${months[currMonth]} ${currYear}`;
             daysTag.innerHTML = liTag;
         };

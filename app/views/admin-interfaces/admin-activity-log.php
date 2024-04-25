@@ -2,7 +2,7 @@
 
 
 
-$role = "DR";
+$role = "Admin";
 $data['role'] = $role;
 
 ?>
@@ -17,7 +17,7 @@ $data['role'] = $role;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>temp3 Dashboard</title>
+    <title>Admin Logs</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -231,6 +231,75 @@ $data['role'] = $role;
     th {
         background-color: #f2f2f2;
     }
+
+    /* General Styles */
+    .wrapper {
+        width: 400px;
+        padding: 20px;
+        margin: auto;
+        background-color: #ffffff;
+        box-shadow: 0 1px 2px 0 #c9ced1;
+        border-radius: 4px;
+    }
+
+    /* Pagination Styles */
+    .pager {
+        display: flex;
+        list-style: none;
+        text-align: center;
+        padding: 0;
+        margin-top: 20px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .pager__item {
+        display: inline-block;
+        font-size: 1vw;
+        margin: 0 5px;
+    }
+
+    .pager__item.active .pager__link,
+    .pager__link:hover {
+        background-color: #17376E;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .pager__link {
+        display: block;
+        text-align: center;
+        padding: 8px 12px;
+        color: #2f3640;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .pager__item--prev svg,
+    .pager__item--next svg {
+        fill: #2f3640;
+    }
+
+    .pager__item--prev svg :hover {
+        fill: #fff;
+        background-color: none;
+    }
+
+    .pager__item--next svg :hover {
+        fill: #fff;
+        background-color: none;
+    }
+
+    .pager__list {
+        display: flex;
+        list-style: none;
+        text-align: center;
+        padding: 0;
+        margin-top: 20px;
+        align-items: center;
+        justify-content: center;
+    }
 </style>
 
 <body>
@@ -240,8 +309,6 @@ $data['role'] = $role;
             <div class="temp3-sub-title">
                 Logs
             </div>
-
-
             <div class="result-table">
                 <?php if (!empty($activities)): ?>
                     <table>
@@ -276,21 +343,77 @@ $data['role'] = $role;
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
-
                         </tbody>
                     </table>
+                    <div id="pagination" class="pager">
+                        <ul class="pager__list">
+                            <!-- Previous Page Link -->
+                            <?php if ($currentPage > 1): ?>
+                                <li class="pager__item pager__item--prev">
+                                    <a href="?page=<?= $currentPage - 1 ?>" class="pager__link">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 20 20"
+                                            fill="none">
+                                            <path
+                                                d="M13.3837 2.045C13.618 2.27941 13.7497 2.59729 13.7497 2.92875C13.7497 3.2602 13.618 3.57809 13.3837 3.8125L7.19619 10L13.3837 16.1875C13.6114 16.4233 13.7374 16.739 13.7345 17.0668C13.7317 17.3945 13.6002 17.708 13.3685 17.9398C13.1367 18.1715 12.8232 18.303 12.4954 18.3058C12.1677 18.3087 11.8519 18.1827 11.6162 17.955L4.54494 10.8837C4.3106 10.6493 4.17896 10.3315 4.17896 10C4.17896 9.66854 4.3106 9.35066 4.54494 9.11625L11.6162 2.045C11.8506 1.81066 12.1685 1.67902 12.4999 1.67902C12.8314 1.67902 13.1493 1.81066 13.3837 2.045Z"
+                                                fill="" />
+                                        </svg>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+
+
+                            <?php for ($i = 1; $i <= ceil($totalRows / $perPage); $i++): ?>
+                                <li class="pager__item <?= ($currentPage == $i) ? 'active' : ''; ?>">
+                                    <a href="?page=<?= $i ?>" class="pager__link">
+                                        <?= $i ?>
+                                    </a>
+                                </li>
+                            <?php endfor; ?>
+
+
+                            <?php if ($currentPage < ceil($totalRows / $perPage)): ?>
+                                <li class="pager__item pager__item--next">
+                                    <a href="?page=<?= $currentPage + 1 ?>" class="pager__link">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 20 20">
+                                            <path
+                                                d="M6.61631 17.955C6.38197 17.7206 6.25033 17.4027 6.25033 17.0713C6.25033 16.7398 6.38197 16.4219 6.61631 16.1875L12.8038 10L6.61631 3.8125C6.38861 3.57675 6.26262 3.26099 6.26547 2.93325C6.26832 2.6055 6.39978 2.29199 6.63154 2.06023C6.8633 1.82847 7.17681 1.69701 7.50456 1.69416C7.83231 1.69131 8.14806 1.8173 8.38381 2.045L15.4551 9.11625C15.6894 9.35066 15.821 9.66855 15.821 10C15.821 10.3315 15.6894 10.6493 15.4551 10.8838L8.38381 17.955C8.1494 18.1893 7.83152 18.321 7.50006 18.321C7.16861 18.321 6.85072 18.1893 6.61631 17.955Z" />
+                                        </svg>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+
                 <?php else: ?>
                     <div class="result-message">No Activity to Show</div>
                 <?php endif; ?>
             </div>
-
         </div>
-
         <div class="temp3-footer">
             <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>
 
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const paginationLinks = document.querySelectorAll('#pagination a');
+        paginationLinks.forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const url = link.getAttribute('href');
+                fetch(url)
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        const newTable = doc.querySelector('.result-table');
+                        document.querySelector('.result-table').innerHTML = newTable.innerHTML;
+                    })
+                    .catch(error => console.error('Error loading the page: ', error));
+            });
+        });
+    });
+</script>
 
 </html>

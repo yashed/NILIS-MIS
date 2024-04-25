@@ -16,7 +16,7 @@ $data['role'] = $role;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href="http://localhost/NILIS-MIS/public/css/admin-users.css"> -->
-    <title>Admin Dashboard</title>
+    <title>Admin Users</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -202,7 +202,7 @@ $data['role'] = $role;
         margin-left: auto;
         align-items: flex-end;
         flex-direction: column;
-        margin-bottom: 100px;
+        /* margin-bottom: 100px; */
         width: 100%;
     }
 
@@ -468,6 +468,27 @@ $data['role'] = $role;
         overflow: hidden;
 
     }
+
+    .update-title-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        justify-content: space-between
+    }
+
+    #rest-pw {
+        width: 25%;
+        padding: 0.5em 1em 0.5em 1em;
+        border-radius: 8px;
+        background: #fff;
+        border: 1px solid #E02424;
+        color: #E02424;
+    }
+
+    #rest-pw:hover {
+        color: #fff;
+        background-color: #E91401;
+    }
 </style>
 <!--Add new User-->
 
@@ -642,7 +663,7 @@ $data['role'] = $role;
                                                     stroke-linejoin="round" />
                                             </svg>
                                         </div>
-                                        <div onclick="onUpdateUserClick('<?= $user->id ?>', '<?= $user->fname ?>', '<?= $user->lname ?>', '<?= $user->email ?>', '<?= $user->phoneNo ?>')"
+                                        <div onclick="onUpdateUserClick('<?= $user->id ?>', '<?= $user->fname ?>', '<?= $user->lname ?>', '<?= $user->email ?>', '<?= $user->phoneNo ?>', '<?= $user->role ?>')"
                                             class="user-update" id="show-update">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                 viewBox="0 0 20 20" fill="none">
@@ -672,7 +693,7 @@ $data['role'] = $role;
 
 
             <script>
-                function onUpdateUserClick(userId, fname, lname, email, phoneNo) {
+                function onUpdateUserClick(userId, fname, lname, email, phoneNo, role) {
                     // Your existing code for onUpdateUserClick
                     onDataPopup('update-popup', {
                         id: userId,
@@ -680,6 +701,7 @@ $data['role'] = $role;
                         lname: lname,
                         email: email,
                         phoneNo: phoneNo,
+                        role: role
                     });
 
                     // Add the following line to change the CSS class

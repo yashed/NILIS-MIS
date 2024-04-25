@@ -17,23 +17,31 @@ class DIRECTOR extends Controller
 
         // $degree->insert($_POST);
         // show($_POST);
-
+        $notification = new NotificationModel();
+        $notification_count_arr = $notification->countNotificationsDirector();
+   
+        $data['notification_count_obj'] = $notification_count_arr[0];
         $data['degrees'] = $degree->findAll();
         //show($data['degrees']);
 
         $this->view('director-interfaces/director-dashboard', $data);
     }
-    public function notifications()
+    public function notification()
     {
         $notification = new NotificationModel();
         $data['notifications'] = $notification->findAll();
-
+        $notification_count_arr = $notification->countNotificationsDirector();
+   
+        $data['notification_count_obj'] = $notification_count_arr[0];
         $this->view('director-interfaces/director-notification', $data);
     }
     public function degreeprograms()
     {
         $degree = new Degree();
-
+        $notification = new NotificationModel();
+        $notification_count_arr = $notification->countNotificationsDirector();
+   
+        $data['notification_count_obj'] = $notification_count_arr[0];
         // $degree->insert($_POST);
         // show($_POST);
 
@@ -42,22 +50,14 @@ class DIRECTOR extends Controller
 
         $this->view('director-interfaces/director-degreeprograms', $data);
     }
-    public function degreeprofile()
-    {
-        $degree = new Degree();
 
-        // $degree->insert($_POST);
-        // show($_POST);
-
-        $data['degrees'] = $degree->findAll();
-        //show($data['degrees']);
-
-        $this->view('director-interfaces/director-degreeprofile', $data);
-    }
 
     public function participants($id = null, $action = null, $id2 = null)
     {
-
+        $notification = new NotificationModel();
+        $notification_count_arr = $notification->countNotificationsDirector();
+   
+        $data['notification_count_obj'] = $notification_count_arr[0];
         $st = new StudentModel();
         if (!empty($id)) {
             if (!empty($action)) {
@@ -101,65 +101,161 @@ class DIRECTOR extends Controller
     public function settings()
     {
         $user = new User();
-
-
+        $data = [];
+        $notification = new NotificationModel();
+        $notification_count_arr = $notification->countNotificationsDirector();
+   
+        $data['notification_count_obj'] = $notification_count_arr[0];
         if (isset($_POST['update_user_data'])) {
-            $id = $_SESSION['USER_DATA']->id;
-            $dataToUpdate = [
-                'fname' => $_POST['fname'],
-                'lname' => $_POST['lname'],
-                'email' => $_POST['email'],
-                'phoneNo' => $_POST['phoneNo']
-            ];
+            // Validate input fields
+            $fname = isset($_POST['fname']) ? trim($_POST['fname']) : '';
+            $lname = isset($_POST['lname']) ? trim($_POST['lname']) : '';
+            $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+            $phoneNo = isset($_POST['phoneNo']) ? trim($_POST['phoneNo']) : '';
 
-            $user->update($id, $dataToUpdate);
+            $errorMessage = '';
 
-            $updatedUserData = $user->first(['id' => $id]);
+            if (empty($fname) || empty($lname) || empty($email) || empty($phoneNo)) {
+                $errorMessage = '*All fields are required.';
+            } else {
+                // Additional validation for phone number
+                $phoneNoPattern = '/^\d{10}$/'; // Regex pattern to match exactly 10 digits
+                if (!preg_match($phoneNoPattern, $phoneNo)) {
+                    $errorMessage = 'Phone number is not valid. It should contain exactly 10 digits.';
+                } else {
+                    // Update user data
+                    $id = $_SESSION['USER_DATA']->id;
+                    $dataToUpdate = [
+                        'fname' => $fname,
+                        'lname' => $lname,
+                        'email' => $email,
+                        'phoneNo' => $phoneNo
+                    ];
 
-            if ($updatedUserData === null) {
-                echo 'No user data found after update.';
-                exit();
+                    $user->update($id, $dataToUpdate);
+
+                    // Fetch updated user data
+                    $updatedUserData = $user->first(['id' => $id]);
+
+                    if ($updatedUserData === null) {
+                        $errorMessage = 'No user data found after update.';
+                    } else {
+                        $data['user'] = $updatedUserData;
+                    }
+                }
             }
 
-            $data['user'] = $updatedUserData;
+            if (!empty($errorMessage)) {
+                // Display error message and retain user input
+                $data['error'] = $errorMessage;
+                $data['user'] = (object)[
+                    'fname' => $fname,
+                    'lname' => $lname,
+                    'email' => $email,
+                    'phoneNo' => $phoneNo
+                ];
+            }
         } else {
+            // Fetch user data for display
             $id = $_SESSION['USER_DATA']->id;
             $data['user'] = $user->first(['id' => $id]);
 
             if ($data['user'] === null) {
-                echo 'No user data found.';
-                exit();
+                $data['error'] = 'No user data found.';
             }
         }
 
         $this->view('director-interfaces/director-settings', $data);
     }
 
-    public function userprofile()
-    {
-        $degree = new Degree();
-        $data['degrees'] = $degree->findAll();
+//     public function userprofile($action = null, $id = null)
+//     {
+//         $data = [];
+//         $data['action'] = $action;
+//         $data['id'] = $id;
+//         // Fetch the specific student data using the ID from the URL
+//         $studentId = isset($_GET['studentId']) ? $_GET['studentId'] : null;
+//         // Check if the student ID is provided in the URL
+//         if ($studentId) {
+//             $degree = new Degree();
+//             $studentModel = new StudentModel();
+//             $data['student'] = $studentModel->findstudentid($studentId);
+//             $degree_id = $data['student'][0]->degreeID;
+//             $data['degree'] = $degree->find($degree_id);
+//             if ($data['student']) {
+//                 $this->view('director-interfaces/director-userprofile', $data);
+//             } else {
+//                 echo "Error: Student not found.";
+//             }
+// } else {
+//             echo "Error: Student ID not provided in the URL.";
+//         }
+//     }
 
-        // Fetch the specific student data using the ID from the URL
-        $studentId = isset($_GET['studentId']) ? $_GET['studentId'] : null;
-        // show($studentId);
-        // Check if the student ID is provided in the URL
-        if ($studentId) {
-            $studentModel = new StudentModel();
-            $data['student'] = $studentModel->find($studentId);
-            // var_dump($data['student']);
-            // Check if the student data is retrieved
-            if ($data['student']) {
-                $this->view('director-interfaces/director-userprofile', $data);
-            } else {
-                echo "Error: Student not found.";
-            }
-        } else {
-            echo "Error: Student ID not provided in the URL.";
-        }
-    }
+
     public function login()
     {
         $this->view('common/login/login.view');
+    }
+
+    public function degreeprofile($action = null, $id = null)
+    {
+        $notification = new NotificationModel();
+        $notification_count_arr = $notification->countNotificationsDirector();
+   
+        $data['notification_count_obj'] = $notification_count_arr[0];
+        $data = [];
+        $data['action'] = $action;
+        $data['id'] = $id;
+        $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
+        // Check if degree ID is provided
+        if ($degreeID !== null) {
+            $degree = new Degree();
+            $subject = new Subjects();
+            $degreeTimeTable = new DegreeTimeTable();
+            // Fetch the data based on the ID
+            $degreeData = $degree->find($degreeID);
+            $degreeTimeTableData = $degreeTimeTable->find($degreeID);
+            $subjectsData = $subject->find($degreeID);
+            $data['degrees'] = $degreeData;
+            $subjects = [];
+            foreach ($subjectsData as $subject) {
+                $semesterNumber = $subject->semester;
+                // Create semester array if not already exists
+                if (!isset($subjects[$semesterNumber])) {
+                    $subjects[$semesterNumber] = [];
+                }
+                // Add subject to semester array
+                $subjects[$semesterNumber][] = $subject;
+            }
+            $data['subjects'] = $subjects;
+            $data['degreeTimeTable'] = $degreeTimeTableData;
+
+            // Load the view with the data
+            $this->view('director-interfaces/director-degreeprofile', $data);
+        } else {
+            echo "Error: Degree ID not provided in the URL.";
+        }
+    }
+
+    public function reports()
+    {
+        $notification = new NotificationModel();
+        $notification_count_arr = $notification->countNotificationsDirector();
+   
+        $data['notification_count_obj'] = $notification_count_arr[0];
+        $this->view('director-interfaces/director-reports');
+    }
+
+    public function attendance()
+    {
+        $notification = new NotificationModel();
+        $notification_count_arr = $notification->countNotificationsDirector();
+   
+        $data['notification_count_obj'] = $notification_count_arr[0];
+        $attendance = new studentAttendance();
+        $data['attendances'] = $attendance->findAll();
+
+        $this->view('director-interfaces\director-attendance', $data);
     }
 }

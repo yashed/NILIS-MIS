@@ -34,7 +34,7 @@ function redirect($link)
 {
     header("Location: " . ROOT . "" . $link);
     show($_POST);
-    die;
+    die();
 }
 
 
@@ -57,6 +57,79 @@ function message($msg = '', $type = 'success', $erase = false)
     return false;
 }
 
+function getBestMarks($data, $attribute)
+{
+    $result = [];
+
+    foreach ($data as $subjectCode => $records) {
+        $maxMark = -1;
+        $bestRecord = null;
+
+        foreach ($records as $record) {
+            if ($record->$attribute > $maxMark) {
+                $maxMark = $record->$attribute;
+                $bestRecord = $record;
+            }
+        }
+
+        if ($bestRecord !== null) {
+            $result[$subjectCode] = [$bestRecord];
+        }
+    }
+
+    return $result;
+}
+
+function calculateGPA($marksArray, $gradesArray, $subjectCodesArray)
+{
+    // Initialize variables for GPA calculation
+    $totalCredits = 0;
+    $totalGradePoints = 0;
+
+    // Iterate through each subject code
+    foreach ($subjectCodesArray as $subject) {
+        $subjectCode = $subject->SubjectCode;
+
+        // Check if marks are available for this subject
+        if (isset($marksArray[$subjectCode])) {
+            // Retrieve marks for this subject
+            $subjectMarks = $marksArray[$subjectCode][0];
+
+            // Retrieve credits for this subject
+            $credits = $subjectMarks->NoCredits;
+
+            // Retrieve grade for this subject
+            $grade = $subjectMarks->grade;
+
+            // Find GPV for this grade
+            $gpv = 0;
+            foreach ($gradesArray as $gradeInfo) {
+                if ($gradeInfo->Grade === $grade) {
+                    $gpv = $gradeInfo->GPV;
+                    break;
+                }
+            }
+
+            // Calculate grade points for this subject
+            $gradePoints = $gpv * $credits;
+
+            // Add to total grade points and total credits
+            $totalGradePoints += $gradePoints;
+            $totalCredits += $credits;
+        } else {
+            // If marks are not available, consider credits as 0
+            $totalCredits += 0;
+        }
+    }
+
+    // Calculate GPA
+    if ($totalCredits > 0) {
+        $gpa = $totalGradePoints / $totalCredits;
+        return $gpa;
+    } else {
+        return 0; // Handle division by zero error
+    }
+}
 function groupByColumn($data, $columnName)
 {
     // Check if $data is not an array or if it's empty
@@ -126,7 +199,6 @@ function createMarkSheet($inputCSV, $examID, $subCode, $type)
         for ($i = 4; $i < count($lines); $i++) {
             // Split each line into an array of values
             $values = str_getcsv($lines[$i]);
-
 
             $inputIndex = $values[0];
             $inputRegNo = $values[1];
@@ -218,23 +290,64 @@ function leastGap($mark1, $mark2, $mark3)
     }
 }
 
-function getRepeatedSubjects($indexNo, $semester)
+function getRepeatedSubjects($indexNo, $semester = null)
 {
     $repeatStudents = new RepeatStudents;
 
     //get repeated subjects
-    $repeatedSubjects = $repeatStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester,], 'subjectCode');
+    if ($semester == null) {
+        $repeatedSubjects = $repeatStudents->whereSpecificColumn(['indexNo' => $indexNo], 'subjectCode');
+    } else {
+        $repeatedSubjects = $repeatStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester,], 'subjectCode');
+    }
     return $repeatedSubjects;
 }
 
-function getMedicalSubjects($indexNo, $semester)
+function getMedicalSubjects($indexNo, $semester = null)
 {
     $medicalStudents = new MedicalStudents;
 
     //get repeated subjects
-    $medicalSubjects = $medicalStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester], 'subjectCode');
+    if ($semester == null) {
+        $medicalSubjects = $medicalStudents->whereSpecificColumn(['indexNo' => $indexNo], 'subjectCode');
+    } else {
+        $medicalSubjects = $medicalStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester], 'subjectCode');
+    }
     return $medicalSubjects;
 }
+
+function processStudents(&$selectedRMStudents)
+{
+    $processedStudents = [];
+    $uindex = null;
+    foreach ($selectedRMStudents as $student) {
+        $index = $student->indexNo;
+        if (isset($student) && $student->studentType === 'medical' && isset($student->indexNo)) {
+
+            $foundRepeat = false;
+            foreach ($selectedRMStudents as $otherStudent) {
+                if (isset($otherStudent) && $otherStudent->indexNo === $index && $otherStudent->studentType === 'repeate') {
+                    $student->studentType = 'medical/repeat';
+                    $processedStudents[] = $student;
+                    $uindex = $index;
+                    break;
+                }
+            }
+            if ($uindex !== $index) {
+                $processedStudents[] = $student;
+            }
+        } else {
+
+            if ($uindex !== $index) {
+                $processedStudents[] = $student;
+            }
+        }
+    }
+
+    $selectedRMStudents = $processedStudents;
+    return $selectedRMStudents;
+}
+
 
 function finalMark($mark1, $mark2, $assigmnet)
 {
@@ -245,7 +358,7 @@ function finalMark($mark1, $mark2, $assigmnet)
 function insertMarks($file, $examID, $degreeID, $subCode)
 {
 
-    var_dump($file, $examID, $degreeID, $subCode);
+    // var_dump($file, $examID, $degreeID, $subCode);
     //need to add condition to check the file is full of marks or not
     $mark = new Marks;
 
@@ -271,20 +384,21 @@ function insertMarks($file, $examID, $degreeID, $subCode)
         $data['examiner2Marks'] = $values[3];
         $data['assessmentMarks'] = $values[4];
         $data['examiner3Marks'] = !empty($values[5]) ? $values[5] : -1;
-        show($data);
-        //insert data into table
+        // show($data);
+
+        //insert or update data into table
         if (!empty($mark->markValidate($data))) {
             if ($mark->markValidate($data)->status == 'update') {
                 $id = $mark->markValidate($data)->id;
-                show("Id === ");
-                show($id);
+                // show("Id === ");
+                // show($id);
                 //update data in the databse marks table
                 $mark->update($id, $data);
-            } else {
+            } else if ($mark->markValidate($data)->status == 'insert') {
 
                 $mark->insert($data);
             }
-            // $mark->insert($data);
+
         }
 
     }
@@ -326,7 +440,7 @@ function checkGap($file, $examId, $subCode)
         $values = str_getcsv($lines[$i]);
 
         //check the gap
-        var_dump('values = ' . $values[2] . ' ' . $values[3]);
+        // var_dump('values = ' . $values);
         $gap = abs($values[2] - $values[3]);
         if ($gap > 10) {
             var_dump('gap is greater than 10');
@@ -336,4 +450,157 @@ function checkGap($file, $examId, $subCode)
     return false;
 
 }
+
+function sortArray($array, $key, $order = 'asc')
+{
+    // Define a custom comparison function
+    $compare = function ($a, $b) use ($key, $order) {
+        if ($order === 'asc') {
+            return $a->$key > $b->$key ? 1 : -1;
+        } else {
+            return $a->$key < $b->$key ? 1 : -1;
+        }
+    };
+
+    // Sort the array using the custom comparison function
+    usort($array, $compare);
+
+    return $array;
+}
+
+function updateMarksheet($csvFileName, $dataArray, $newFileName)
+{
+    $csvFilePath = 'assets/csv/examsheets/final-marksheets/' . $csvFileName;
+    $newFilePath = 'assets/csv/examsheets/output/final-marksheets/' . $newFileName;
+
+    // Ensure the output directory exists
+    $newFileDir = dirname($newFilePath);
+    if (!is_dir($newFileDir)) {
+        mkdir($newFileDir, 0777, true);
+    }
+
+
+    // Read the existing CSV file
+    $rows = [];
+    $headerData = [];
+    if (file_exists($csvFilePath)) {
+        if (($handle = fopen($csvFilePath, "r")) !== FALSE) {
+            $lineCount = 0;
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $lineCount++;
+                if ($lineCount <= 3) {
+                    // Collect program and subject lines
+                    $headerData[] = $data;
+                    continue;
+                } else if ($lineCount == 4) {
+                    // Skip the redundant header line
+                    continue;
+                }
+                $rows[] = $data;
+            }
+            fclose($handle);
+        }
+    }
+
+    // Open a new file to write the updated data
+    $newFile = fopen($newFilePath, 'w');
+
+    // Write the program name and subject headers first
+    foreach ($headerData as $headerRow) {
+        fputcsv($newFile, $headerRow);
+    }
+
+    // Write the correct column headers
+    $correctHeader = ['Index No', 'Registration No', 'Examiner 01 Marks', 'Examiner 02 Marks', 'Assignment Marks', 'Examiner 03 Marks', 'Final Marks', 'Grade'];
+    fputcsv($newFile, $correctHeader);
+
+    // Process each row and add new data from $dataArray
+    foreach ($rows as $row) {
+        if (count($row) < 2)
+            continue; // Skip empty rows
+        $indexNo = $row[0]; // Assuming 'Index No' is the first column
+        if (!empty($dataArray)) {
+            foreach ($dataArray as $data) {
+                if ($data->indexNo == $indexNo) {
+                    // Update existing row with final marks and grade
+                    $row[5] = $data->examiner3Marks != -1 ? $data->examiner3Marks : "N/A";
+                    $row[6] = $data->finalMarks;
+                    $row[7] = $data->grade ? $data->grade : "N/A";
+                    break;
+                }
+            }
+        }
+        fputcsv($newFile, $row);
+    }
+
+    fclose($newFile);
+}
+
+
+function getNotificationCount()
+{
+    $notification = new NotificationModel();
+    $username = $_SESSION['USER_DATA']->username;
+    $data['usernames'] = $username;
+    $notification_count_arr = $notification->countNotifications($username);
+    $data['notification_count_obj'] = $notification_count_arr[0];
+    return $notification_count_arr[0];
+
+}
+
+function getNotificationCountDirector()
+{
+    $notification = new NotificationModel();
+    $username = $_SESSION['USER_DATA']->username;
+    $data['usernames'] = $username;
+    $notification_count_arr = $notification->countNotificationsDirector($username);
+    $data['notification_count_obj_director'] = $notification_count_arr[0];
+
+    return $notification_count_arr[0];
+}
+
+function getNotificationCountSAR()
+{
+    $notification = new NotificationModel();
+    $username = $_SESSION['USER_DATA']->username;
+    $data['usernames'] = $username;
+    $notification_count_arr = $notification->countNotificationsSAR($username);
+    $data['notification_count_obj_sar'] = $notification_count_arr[0];
+
+    return $notification_count_arr[0];
+}
+
+function getNotificationCountDR()
+{
+    $notification = new NotificationModel();
+    $username = $_SESSION['USER_DATA']->username;
+    $data['usernames'] = $username;
+    $notification_count_arr = $notification->countNotificationsDR($username);
+    $data['notification_count_obj_dr'] = $notification_count_arr[0];
+
+    return $notification_count_arr[0];
+}
+
+function getNotificationCountAssistSAR()
+{
+    $notification = new NotificationModel();
+    $username = $_SESSION['USER_DATA']->username;
+    $data['usernames'] = $username;
+    $notification_count_arr = $notification->countNotificationsAssistSAR($username);
+    $data['notification_count_obj_ASAR'] = $notification_count_arr[0];
+
+    return $notification_count_arr[0];
+}
+
+function getNotificationCountAdmin()
+{
+    $notification = new NotificationModel();
+    $username = $_SESSION['USER_DATA']->username;
+    $data['usernames'] = $username;
+    $notification_count_arr = $notification->countNotificationsAdmin($username);
+    $data['notification_count_obj_admin'] = $notification_count_arr[0];
+
+    return $notification_count_arr[0];
+}
+
 ?>

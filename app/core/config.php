@@ -14,16 +14,22 @@ define('APP_DESC', 'Examination Managment System');
 
 //connect to live server
 //database config for live server
-define('DBHOST', 'fit.mysql.database.azure.com');
-define('DBNAME', 'nilis_db');
-define('DBUSER', 'fitadmin');
-define('DBPASS', 'password@123');
+define('DBNAME', 'nilisdb_aws');
+define('DBHOST', '127.0.0.1');
+define('DBUSER', 'root');
+define('DBPASS', '');
 define('DBDRIVER', 'mysql');
 
+// define('DBHOST', 'bitnami@13.251.194.207');
+// define('DBNAME', 'nilisdb_aws');
+// define('DBUSER', 'root');
+// define('DBPASS', ' ');
+// define('DBDRIVER', 'mysql');
 
-// // root path 
-define('ROOT', 'https://nilis-examination.azurewebsites.net/public/');
-define('ROOTDIR', 'http://localhost/NILIS-MIS/');
+
+
+// root path 
+define('ROOT', 'http://13.251.194.207/');
 
 // if ($_SERVER['SERVER_NAME'] == 'localhost') {
 
@@ -36,8 +42,10 @@ define('ROOTDIR', 'http://localhost/NILIS-MIS/');
 
 //     //root path (localhost)
 //     //root path 
-//     define('ROOT', 'https://nilis-examination.azurewebsites.net');
-// } else {
+//     define('ROOT', 'http://localhost/NILIS-MIS/public/');
+//     define('ROOTDIR', 'http://localhost/NILIS-MIS/');
+// }
+//  else {
 //     //database config for live server
 //     define('DBHOST', 'sql6.freesqldatabase.com');
 //     define('DBNAME', 'sql6683375');
