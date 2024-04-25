@@ -34,21 +34,20 @@ class SAR extends Controller
         if (!empty($_SESSION['examDetails'])) {
             unset($_SESSION['examDetails']);
         }
-        show('01');
+
         //get data to show as upcoming examination in sar dashboard
         $upTable = ['degree'];
         $upColumns = ['*'];
         $upConditions = ['degree_timetable.DegreeID = Degree.DegreeID', 'StartingDate >= CURDATE()'];
         $data['upcomingExams'] = $degreetimetable->join($upTable, $upColumns, $upConditions, 'StartingDate', 2);
 
-        show('02');
+
         //pass data to graphs and chalender
         $data['degrees'] = $degree->findAll();
         $data['students'] = $student->findAll();
         $data['exam'] = $exam->findAll();
         $data['degreetimetables'] = $degreetimetable->findAll();
 
-        show('03');
 
         //get last results submitted examination id
         $recentExamId = $finalMarks->lastID('examID');
@@ -58,12 +57,12 @@ class SAR extends Controller
         $columns = ['*'];
         $examConditions = ['exam.degreeID = degree.DegreeID', 'exam.examID = ' . $recentExamId];
         $data['RecentResultExam'] = $exam->join($dataTables, $columns, $examConditions);
-        show('04');
+
         $degree = new Degree();
 
         $data['degrees'] = $degree->findAll();
         $data['checkUser'] = $checkUser;
-        show('05');
+
         $this->view('sar-interfaces/sar-dashboard', $data);
     }
     public function notification()
