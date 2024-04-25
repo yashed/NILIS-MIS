@@ -33,8 +33,6 @@ class ResultSheet extends Model
 
         $lines = explode("\n", $fileContent);
 
-
-        var_dump($fileContent);
         for ($i = 4; $i < count($lines); $i++) {
 
             $values = str_getcsv($lines[$i]);
@@ -53,7 +51,6 @@ class ResultSheet extends Model
 
             if ($mark > 100 || $mark < 0) {
                 $this->errors['marks'] = 'Invalid marks';
-                var_dump("Invalid Marks , upload valid marksheet");
                 return false;
             }
         }
