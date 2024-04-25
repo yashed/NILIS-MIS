@@ -123,16 +123,6 @@ class Clerk extends Controller
         $this->view('clerk-interfaces\clerk-degreeprograms', $data);
     }
 
-    public function settings()
-    {
-        $user = new User();
-        $data = [];
-
-        if (isset($_POST['update_user_data'])) {
-            // Validate input fields
-            $fname = isset($_POST['fname']) ? trim($_POST['fname']) : '';
-            $lname = isset($_POST['lname']) ? trim($_POST['lname']) : '';
-            $phoneNo = isset($_POST['phoneNo']) ? trim($_POST['phoneNo']) : '';
 
     public function settings()
     {
@@ -145,9 +135,6 @@ class Clerk extends Controller
             $lname = isset($_POST['lname']) ? trim($_POST['lname']) : '';
             $phoneNo = isset($_POST['phoneNo']) ? trim($_POST['phoneNo']) : '';
 
-            // Update user data
-            $id = $_SESSION['USER_DATA']->id;
-            $dataToUpdate = [
             // Update user data
             $id = $_SESSION['USER_DATA']->id;
             $dataToUpdate = [
@@ -171,7 +158,6 @@ class Clerk extends Controller
 
         $this->view('clerk-interfaces/clerk-settings', $data);
     }
-
     public function attendance()
     {
         $degree = new Degree();
