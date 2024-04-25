@@ -1635,7 +1635,7 @@ class SAR extends Controller
 
                 //generate updated marksheet as csv file
                 if (!empty($resultSubCode)) {
-                    updateMarksheet($fileName, $examResults, $newFileName);
+                    // updateMarksheet($fileName, $examResults, $newFileName);
                 }
 
                 $data['subjectDetails'] = $subjectDetails;
