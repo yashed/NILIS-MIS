@@ -10,6 +10,7 @@ $data['role'] = $role;
 
 <head>
     <link rel="stylesheet" type="text/css" href="<?= ROOT ?>css/dr/dr-styles.css">
+    <title>Userprofile</title>
     <style>
         @media (min-width: 40em) {
   :root {

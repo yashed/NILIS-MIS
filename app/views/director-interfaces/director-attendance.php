@@ -9,7 +9,7 @@ $data['role'] = $role;
 <html lang="en">
 
 <head>
-    <title> Student Participants</title>
+    <title> Attendance</title>
     <style>
         * {
             margin: 0;

@@ -11,7 +11,7 @@ $data['recentResults'] = $RecentResultExam;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>director-dash Dashboard</title>
+    <title>Director Dashboard</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -335,6 +335,7 @@ $data['recentResults'] = $RecentResultExam;
         font-style: normal;
         font-weight: 600;
         margin: 20px;
+        margin-bottom: 4vw;
     }
 
 
@@ -387,7 +388,7 @@ $data['recentResults'] = $RecentResultExam;
     .graph04-sub-title {
         font-size: 12px;
         font-style: normal;
-        font-weight: 400;
+        font-weight: 600;
         color: var(--Gray, #4F4F4F);
         margin: 10px 0px 10px 20px;
     }
@@ -489,7 +490,7 @@ $data['recentResults'] = $RecentResultExam;
 <?php $this->view('components/navside-bar/header', $data) ?>
 <?php $this->view('components/navside-bar/sidebar', $data) ?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
-    <div class="director-dash-home">
+<div class="director-dash-home">
         <div class="director-dash-title">Dashboard</div>
         <div class="director-dash-card-subsection-0">
 
@@ -500,7 +501,17 @@ $data['recentResults'] = $RecentResultExam;
                     </div>
                     <div class="director-dash-card-subcard-data">
                         <div class="director-dash-card-subcard-data-title">Students</div>
-                        <div class="director-dash-card-subcard-data-value">200</div>
+                        <div class="director-dash-card-subcard-data-value">
+                            <?php if (!empty($students)): ?>
+                                <?php $count = 0; ?>
+                                <?php foreach ($students as $student): ?>
+                                    <?php if ($student->status == "continue"): ?>
+                                        <?php $count++; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <?= $count ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -512,7 +523,17 @@ $data['recentResults'] = $RecentResultExam;
                     </div>
                     <div class="director-dash-card-subcard-data">
                         <div class="director-dash-card-subcard-data-title">Ongoing</br>Degrees</div>
-                        <div class="director-dash-card-subcard-data-value">04</div>
+                        <div class="director-dash-card-subcard-data-value">
+                            <?php if (!empty($degrees)): ?>
+                                <?php $count = 0; ?>
+                                <?php foreach ($degrees as $degree): ?>
+                                    <?php if ($degree->Status == "ongoing"): ?>
+                                        <?php $count++; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <?= $count ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -523,7 +544,17 @@ $data['recentResults'] = $RecentResultExam;
                     </div>
                     <div class="director-dash-card-subcard-data">
                         <div class="director-dash-card-subcard-data-title">Ongoing</br>Examination</div>
-                        <div class="director-dash-card-subcard-data-value">04</div>
+                        <div class="director-dash-card-subcard-data-value">
+                            <?php if (!empty($exams)): ?>
+                                <?php $count = 0; ?>
+                                <?php foreach ($exams as $exam): ?>
+                                    <?php if ($exam->status == "ongoing"): ?>
+                                        <?php $count++; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <?= $count ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -534,7 +565,17 @@ $data['recentResults'] = $RecentResultExam;
                     </div>
                     <div class="director-dash-card-subcard-data">
                         <div class="director-dash-card-subcard-data-title">Results Published </br>Exminations</div>
-                        <div class="director-dash-card-subcard-data-value">04</div>
+                        <div class="director-dash-card-subcard-data-value">
+                            <?php if (!empty($exams)): ?>
+                                <?php $count = 0; ?>
+                                <?php foreach ($exams as $exam): ?>
+                                    <?php if ($exam->status == "completed"): ?>
+                                        <?php $count++; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <?= $count ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -544,11 +585,11 @@ $data['recentResults'] = $RecentResultExam;
                 <div class="director-dash-subsection-1-1-1">
 
                     <div class="director-dash-subsection-1-1-1-1">
-                        <div class="graph01-sub-title">
-                            Statistics
-                        </div>
                         <div class="graph01-title">
-                            Course Participants
+                        Course Participants
+                        </div>
+                        <div class="graph01-sub-title">
+                        Statistics
                         </div>
 
                         <div class="graph01">
@@ -587,7 +628,7 @@ $data['recentResults'] = $RecentResultExam;
                             Student Performance
                         </div>
                         <div class="graph04-sub-title">
-                            Degree Name
+                            Diploma Name
                         </div>
                         <div class="graph04">
                             <?php $this->view('components/graphs/piechart-student-results', $data) ?>
@@ -598,7 +639,7 @@ $data['recentResults'] = $RecentResultExam;
                             Student Attendance
                         </div>
                         <div class="graph04-sub-title">
-                            Degree Name
+                        Average Student Attendance by Diploma Program
                         </div>
                         <div class="graph05">
                             <?php $this->view('components/graphs/bargraph-student-attendance', $data) ?>

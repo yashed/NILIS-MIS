@@ -410,7 +410,8 @@ class Database
             `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
             `index_no` varchar(40) NOT NULL,
             `attendance` varchar(10) NOT NULL,
-            `degree_name` varchar(255) NOT NULL
+            `degree_name` varchar(255) NOT NULL,
+            `degree_id` int(11) NOT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
           ";
         $this->query($query);

@@ -16,22 +16,36 @@
 
 
         .banner {
+            position: relative;
+            /* Add position relative to allow absolute positioning of pseudo-element */
             margin-left: 1%;
             display: flex;
             width: 80%;
-            height: 200px;
+            height: auto;
+            /* Change height to auto for better responsiveness */
             background: #FFFFFF;
             border: 1px solid rgba(0, 0, 0, 0.1);
             box-shadow: 0px 7px 4px rgba(0, 0, 0, 0.02), 0px 3px 3px rgba(0, 0, 0, 0.03), 0px 1px 2px rgba(0, 0, 0, 0.03), 0px 0px 0px rgba(0, 0, 0, 0.03);
             border-radius: 8px;
             margin-bottom: 20px;
+            overflow: hidden;
+            /* Hide overflow to prevent shadow clipping */
         }
 
-        .color-strip {
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 10px;
+            /* Width of the blue line */
             height: 100%;
-            background: #17376E;
-            margin-right: 1%;
+            background-color: #17376E;
+            /* Blue color */
+            border-top-left-radius: 8px;
+            /* Adjust border radius to match banner */
+            border-bottom-left-radius: 8px;
+            /* Adjust border radius to match banner */
         }
 
 
@@ -43,6 +57,11 @@
             height: 95%;
             padding-left: 1%;
             font-family: 'Poppins', sans-serif;
+            margin-left: 15px;
+            /* Add space after the blue line */
+            padding: 20px;
+            /* Add padding for better spacing */
+
         }
 
         .note {
@@ -70,6 +89,7 @@
             margin-left: 45px;
             margin-bottom: 0.3%;
             margin-top: 1%;
+            font-size: 0.8vw;
         }
 
         .buttons-container {
@@ -97,8 +117,8 @@
             cursor: pointer;
         }
 
-        .button1:hover{
-            background-color:#D0D0D0;
+        .button1:hover {
+            background-color: #D0D0D0;
         }
 
         .flex {
@@ -160,13 +180,13 @@
                 <?= $notification->description ?>
             </div>
             </br>
-         
+
             <?php if (!empty($link)) : ?>
-            <div class="buttons-container">
-                <a href="<?= $link ?>" class="button1" id="notificationButton">Take Action</a>
-            </div>
-        <?php endif; ?>
-      
+                <div class="buttons-container">
+                    <a href="<?= $link ?>" class="button1" id="notificationButton">Take Action</a>
+                </div>
+            <?php endif; ?>
+
 
         </div>
         <form action="<?= ROOT ?>notification/delete" method="post">
@@ -174,14 +194,7 @@
             <button type="submit" name="delete_notification" class="close-symbol">✖</button>
         </form>
     </div>
-    <script>
-    document.getElementById('notificationButton').addEventListener('click', function(event) {
-        // Prevent the default action (following the link)
-        event.preventDefault();
-        // Redirect to the button link
-        window.location.href = '<?= ROOT ?>' + '<?= $link ?>';
-    });
-    </script>
+
 </body>
 
 </html>

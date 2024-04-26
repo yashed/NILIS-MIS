@@ -12,7 +12,7 @@ class Clerk extends Controller
     }
     public function index()
     {
-        $user = new User();
+       
         $user = new User();
         $degree = new Degree();
         $student = new StudentModel();
@@ -30,8 +30,8 @@ class Clerk extends Controller
         $data['RecentResultExam'] = $exam->join($dataTables, $columns, $examConditions);
 
         // show($data['RecentResultExam']);
-        $_SESSION['getid'] = null;
-        unset($_SESSION['getid']);
+        // $_SESSION['getid'] = null;
+        // unset($_SESSION['getid']);
         $student = new StudentModel();
         $exam = new Exam();
         $degreetimetable = new DegreeTimeTable();
@@ -47,11 +47,6 @@ class Clerk extends Controller
         $data['RecentResultExam'] = $exam->join($dataTables, $columns, $examConditions);
 
         // show($data['RecentResultExam']);
-        $_SESSION['getid'] = null;
-        unset($_SESSION['getid']);
-
-        $_SESSION['DegreeID'] = null;
-        unset($_SESSION['DegreeID']);
 
         $_SESSION['DegreeID'] = null;
         unset($_SESSION['DegreeID']);
@@ -60,14 +55,9 @@ class Clerk extends Controller
         $data['notification_count_obj'] = getNotificationCount();
 
         // $data['notification_count_obj'] = $notification_count_arr[0];
-        $data['notification_count_obj'] = getNotificationCount();
 
         // $data['notification_count_obj'] = $notification_count_arr[0];
         $data['user'] = $user->findAll();
-        $data['ongoingDegrees'] = $degree->where(['status' => 'ongoing']);
-        $data['students'] = $student->findAll();
-        $data['exams'] = $exam->findAll();
-        $data['degreetimetables'] = $degreetimetable->findAll();
         $data['ongoingDegrees'] = $degree->where(['status' => 'ongoing']);
         $data['students'] = $student->findAll();
         $data['exams'] = $exam->findAll();
@@ -82,43 +72,39 @@ class Clerk extends Controller
         $data['usernames'] = $username;
 
         $data['notification_count_obj'] = getNotificationCount();
-        $username = $_SESSION['USER_DATA']->username;
-        $data['usernames'] = $username;
-
-        $data['notification_count_obj'] = getNotificationCount();
         $data['notifications'] = $notification->findAll();
         $this->view('clerk-interfaces\clerk-notification', $data);
     }
 
     public function updatedattendance()
     {
-        $attendance = new studentAttendance();
-        $data['attendances'] = $attendance->findAll();
-        // show($attendance);
-        // show($data['attendances']);
-      
         $degree = new Degree();
-
+    
         if (!empty($_SESSION['DegreeID'])) {
             $degreeId = $_SESSION['DegreeID'];
         }
+    
         $data['degreedata'] = $degree->find($degreeId);
-        // show($data['degreedata']);
+        $att = new studentAttendance();
+    
+        $attendances = []; // Initialize an empty array to hold attendance data
+    
+        foreach ($att->findAll() as $attendance) {
+            if (is_object($attendance) && $attendance->degree_id == $degreeId) {
+                $attendances[] = $attendance; // Add attendance to the array
+            }
+        }
+        // show($attendances); // Check if attendance data is retrieved correctly
+    
+        $data['attendances'] = $attendances; // Assign attendance data to $data
+    
         $this->view('clerk-interfaces\clerk-updatedattendance', $data);
     }
 
     public function degreeprograms()
     {
-
         $degree = new Degree();
-        unset($_SESSION['DegreeID']);
-
-        $data['degrees'] = $degree->findAll();
-        $this->view('clerk-interfaces\clerk-degreeprograms', $data);
-
-        $degree = new Degree();
-        unset($_SESSION['DegreeID']);
-
+        $data['notification_count_obj'] = getNotificationCount();
         $data['degrees'] = $degree->findAll();
         $this->view('clerk-interfaces\clerk-degreeprograms', $data);
     }
@@ -128,6 +114,7 @@ class Clerk extends Controller
     {
         $user = new User();
         $data = [];
+        $data['notification_count_obj'] = getNotificationCount();
 
         if (isset($_POST['update_user_data'])) {
             // Validate input fields
@@ -158,29 +145,39 @@ class Clerk extends Controller
 
         $this->view('clerk-interfaces/clerk-settings', $data);
     }
+
     public function attendance()
     {
         $degree = new Degree();
-
+        $attendance = new studentAttendance();
+        // $data['attendances'] = $attendance->findAll();
+        // show($attendance);
+        // show($data['attendances']);
+      
         if (!empty($_SESSION['DegreeID'])) {
             $degreeId = $_SESSION['DegreeID'];
         }
+
+        $degree_info = (object) $degree->findByID($degreeId);
+        $data['degrees'] = $degree->find($degreeId);
+        $degreeShortName = $degree_info->DegreeShortName;
+        // show($degreeShortName);
         //get degree details
         $data['degreedata'] = $degree->find($degreeId);
         // show($_SESSION['DegreeID']);
         // show($data['degreedata']);
-
+        $data['notification_count_obj'] = getNotificationCount();
         $st = new StudentModel();
         foreach ($st->findAll() as $student) {
-            if (is_object($student) && $student->degreeID == $degreeId) {
+            if (is_object($student) && $student->degreeID == $degreeId && $student->status == "continue") {
                 $students[] = $student;
                 // show($student);
                 // Add student to data array
             }
         }
-
+if(!empty($students)){
         if (!empty($degreeId)) {
-            $head = 'Name of  Programme  : ' . $degreeId;
+            $head = 'Name of  Programme  : ' . $degreeShortName;
             $rowHeadings = ['Index No', 'Registration No', 'Attendance'];
             $attedancesheet = 'assets/csv/output/Attendance_' . $degreeId . '.csv';
             $f = fopen($attedancesheet, 'w');
@@ -203,6 +200,7 @@ class Clerk extends Controller
                 fclose($f);
             }
         }
+    }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['importSubmit'])) {
             // Check if the uploaded file is present and no errors occurred during upload
@@ -210,11 +208,12 @@ class Clerk extends Controller
                 // Load StudentModel
                 $studentAttendance = new studentAttendance();
                 $degree_name = $_POST['selectDegree'];
+                $degree_id = $_POST['selectID'];
                 // Process the CSV file
                 $csvFile = fopen($_FILES['csvFile']['tmp_name'], 'r');
 
                 // Skip the first four rows
-                for ($i = 0; $i < 4; $i++) {
+                for ($i = 0; $i < 3; $i++) {
                     fgetcsv($csvFile);
                 }
 
@@ -240,7 +239,8 @@ class Clerk extends Controller
                         // If record exists, update it
                         $updateData = [
                             'attendance' => $attendance,
-                            'degree_name' => $degree_name
+                            'degree_name' => $degree_name,
+                            'degree_id' => $degree_id
                         ];
                         $whereConditions = [
                             'index_no' => $index_no
@@ -252,7 +252,8 @@ class Clerk extends Controller
                         $insertData = [
                             'index_no' => $index_no,
                             'degree_name' => $degree_name,
-                            'attendance' => $attendance
+                            'attendance' => $attendance,
+                            'degree_id' => $degree_id
                         ];
                         // show($insertData);
                         $studentAttendance->insert($insertData);
@@ -273,13 +274,12 @@ class Clerk extends Controller
         $this->view('clerk-interfaces/clerk-attendance', $data);
     }
 
-
     public function degreeprofile($action = null, $id = null)
     {
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
-
+        $data['notification_count_obj'] = getNotificationCount();
         if (isset($_GET['id'])) {
             $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
             $_SESSION['DegreeID'] = $degreeID;
@@ -324,7 +324,7 @@ class Clerk extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
-
+        $data['notification_count_obj'] = getNotificationCount();
         unset($_SESSION['studentId']);
         if (isset($_SESSION['DegreeID'])) {
             $degreeID = $_SESSION['DegreeID'];
@@ -346,7 +346,7 @@ class Clerk extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
-        
+        $data['notification_count_obj'] = getNotificationCount();
         if (isset($_GET['id'])) {
             $studentId = isset($_GET['id']) ? $_GET['id'] : null;
             $_SESSION['studentId'] = $studentId;
@@ -378,8 +378,8 @@ class Clerk extends Controller
 
     public function reports()
     {
-
-        $this->view('clerk-interfaces/clerk-reports');
+        $data['notification_count_obj'] = getNotificationCount();
+        $this->view('clerk-interfaces/clerk-reports',$data);
     }
 
     public function examination($method = null)

@@ -3,13 +3,13 @@
 class DIRECTOR extends Controller
 {
 
-    // function __construct()
-    // {
-    //     if (!Auth::is_director()) {
-    //         message('You are not authorized to view this page');
-    //         redirect('login');
-    //     }
-    // }
+    function __construct()
+    {
+        if (!Auth::is_director()) {
+            message('You are not authorized to view this page');
+            redirect('login');
+        }
+    }
 
     public function index()
     {
@@ -17,6 +17,12 @@ class DIRECTOR extends Controller
         $exam = new Exam();
         // $notification = new NotificationModel();
         // $notification_count_arr = $notification->countNotifications();
+        $student = new StudentModel();
+        $exam = new Exam();
+        $degreetimetable = new DegreeTimeTable();
+        $attendance = new studentAttendance();
+        $data['attendances'] = $attendance->findAll();
+       
         $finalMarks = new FinalMarks();
         $recentExamId = $finalMarks->lastID('examID');
 
@@ -35,7 +41,9 @@ class DIRECTOR extends Controller
 
         $data['degrees'] = $degree->findAll();
         //show($data['degrees']);
-
+        $data['students'] = $student->findAll();
+        $data['exams'] = $exam->findAll();
+        $data['degreetimetables'] = $degreetimetable->findAll();
         $this->view('director-interfaces/director-dashboard', $data);
     }
     public function notification()
@@ -44,20 +52,18 @@ class DIRECTOR extends Controller
         $username = $_SESSION['USER_DATA']->username;
         $data['usernames'] = $username;
         $data['notifications'] = $notification->findAll();
+        $data['notification_count_obj_director'] = getNotificationCountDirector();
         $this->view('director-interfaces/director-notification', $data);
     }
     public function degreeprograms()
     {
         $degree = new Degree();
-      
-
-       
         // $degree->insert($_POST);
         // show($_POST);
 
         $data['degrees'] = $degree->findAll();
         //show($data['degrees']);
-
+        $data['notification_count_obj_director'] = getNotificationCountDirector();
         $this->view('director-interfaces/director-degreeprograms', $data);
     }
 
@@ -67,7 +73,7 @@ class DIRECTOR extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
-
+        $data['notification_count_obj_director'] = getNotificationCountDirector();
         if (isset($_GET['id'])) {
             $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
             $_SESSION['DegreeID'] = $degreeID;
@@ -112,7 +118,7 @@ class DIRECTOR extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
-
+        $data['notification_count_obj_director'] = getNotificationCountDirector();
         unset($_SESSION['studentId']);
         if (isset($_SESSION['DegreeID'])) {
             $degreeID = $_SESSION['DegreeID'];
@@ -134,7 +140,7 @@ class DIRECTOR extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
-
+        $data['notification_count_obj_director'] = getNotificationCountDirector();
         if (isset($_GET['id'])) {
             $studentId = isset($_GET['id']) ? $_GET['id'] : null;
             $_SESSION['studentId'] = $studentId;
@@ -167,7 +173,7 @@ class DIRECTOR extends Controller
     {
         $user = new User();
         $data = [];
-
+        $data['notification_count_obj_director'] = getNotificationCountDirector();
         if (isset($_POST['update_user_data'])) {
             // Validate input fields
             $fname = isset($_POST['fname']) ? trim($_POST['fname']) : '';
@@ -205,13 +211,15 @@ class DIRECTOR extends Controller
 
     public function reports()
     {
-       $this->view('director-interfaces/director-reports');
+       $data['notification_count_obj_director'] = getNotificationCountDirector();
+       $this->view('director-interfaces/director-reports',$data);
     }
 
     public function attendance()
     {
         $attendance = new studentAttendance();
         $data['attendances'] = $attendance->findAll();
+        $data['notification_count_obj_director'] = getNotificationCountDirector();
         // show($attendance);
         // show($data['attendances']);
         $degree = new Degree();

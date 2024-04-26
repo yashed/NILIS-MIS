@@ -15,7 +15,7 @@ $data['role'] = $role;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>temp2 Dashboard</title>
+    <title>Attendance</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
@@ -157,7 +157,7 @@ $data['role'] = $role;
             width: 60vw;
             height: 20vw;
             margin-top: 3vw;
-            margin-left: 15vw;
+            margin-left: 30vh;
             margin-bottom: 5vw;
             display: flex;
             flex-direction: column;
@@ -176,8 +176,7 @@ $data['role'] = $role;
             cursor: pointer;
             width: 12vw;
             font-size: 0.8vw;
-            margin-left: 40vw;
-          
+            margin-left: 85vh;
         }
 
         .admission-button2:hover {
@@ -196,7 +195,7 @@ $data['role'] = $role;
             border: 1px solid #17376e;
             font-size: 1vw;
             margin-top: 2%;
-            margin-left: 39%;
+            margin-left: 75vh;
         }
 
         .popup-form {
@@ -300,15 +299,27 @@ $data['role'] = $role;
         .dr-degree-programs-title1-core {
             color: #17376e;
             font-size: 22px;
-            /* margin: 1px 0px 5px 0px; */
             font-weight: 300;
             font-size: 27px;
         }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            z-index: 999; /* Ensure it's above other content */
+            display: none; /* Initially hidden */
+        }
+
+      
 </style>
 </head>
 
 <body>
-
+<div class="overlay" id="overlay"></div> 
     <div class="temp2-home" id="blur-background">
     <div class="dr-degree-programs-title">
             <div class="dr-degree-programs-title1">Attendance</div>
@@ -343,14 +354,17 @@ $data['role'] = $role;
             <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>
-    
+        </div>
+
     <div id="importFrm" class="popup-form" style="display: none;">
-        <form action="" method="post" enctype="multipart/form-data" onsubmit="validateForm()">
+        <form action="" method="post" enctype="multipart/form-data">
             <label for="csvFile">Upload CSV File:</label>
             <div class="form-element">
            
+    <input type="hidden" name="selectID" value="<?= $degreedata[0]->DegreeID ?>">
+
     <input type="hidden" name="selectDegree" value="<?= $degreedata[0]->DegreeShortName ?>">
-    <label for="selectDegree">Degree Name: <?= $degreedata[0]->DegreeShortName ?></label>
+    <label for="selectDegree">Diploma Name: <?= $degreedata[0]->DegreeShortName ?></label>
 
             </div>
             <input type="file" name="csvFile" id="csvFile" accept=".csv" required>
@@ -362,40 +376,21 @@ $data['role'] = $role;
     
 
     <script>
-        function toggleForm(formId) {
+          function toggleForm(formId) {
             var form = document.getElementById(formId);
-            var blurBackground = document.getElementById("blur-background");
+            var overlay = document.getElementById('overlay');
             if (form.style.display === "none") {
                 form.style.display = "block";
-                blurBackground.classList.add("blur-background"); // Apply blur effect
+                overlay.style.display = "block"; // Show overlay
             } else {
                 form.style.display = "none";
-                blurBackground.classList.remove("blur-background"); // Remove blur effect
+                overlay.style.display = "none"; // Hide overlay
             }
         }
 
         function redirectToUpdatedAttendance() {
             // Replace ROOT with your actual root URL
             window.location.href = "<?= ROOT ?>clerk/updatedattendance";
-        }
-
-        function handleFileSelect(event) {
-            event.preventDefault();
-            var files = event.target.files;
-            handleFiles(files);
-        }
-
-        function handleFiles(files) {
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                if (file.type === 'text/csv') {
-                    // Process the CSV file
-                    console.log('CSV file selected:', file.name);
-                    // You can handle further processing here
-                } else {
-                    console.log('Invalid file type. Please select a CSV file.');
-                }
-            }
         }
 
     function downloadAttendanceSheet(degreeid) {
@@ -420,15 +415,6 @@ $data['role'] = $role;
 }
 
 
-        function validateForm() {
-            var selectedDegree = document.getElementById("form-element-dropdown").value;
-            if (selectedDegree === "") {
-                document.getElementById("degreeError").style.display = "inline";
-                return false; // Prevent form submission
-            }
-            return true;
-            // Allow form submission
-        }
     </script>
 </body>
 
