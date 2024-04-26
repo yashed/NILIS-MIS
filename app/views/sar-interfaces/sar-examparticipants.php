@@ -775,7 +775,7 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                                             <td>
                                                 <?= $student->studentType ?>
                                             </td>
-                                            <td> <a href="http://localhost/NILIS-MIS/public/admission/login?degreeID=<?= $degreeID ?>&examID=<?= $examID ?>&indexNo=<?= $student->indexNo ?>"
+                                            <td> <a href="<? ROOT ?>admission/login?degreeID=<?= $degreeID ?>&examID=<?= $examID ?>&indexNo=<?= $student->indexNo ?>"
                                                     target="_blank">tap
                                                     to see Admission card </a></td>
                                         </tr>
