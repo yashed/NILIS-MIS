@@ -14,13 +14,12 @@
             box-sizing: border-box;
         }
 
-
         .banner {
             position: relative;
             /* Add position relative to allow absolute positioning of pseudo-element */
-            margin-left: 1%;
+            margin-left: 15vw;
             display: flex;
-            width: 80%;
+            width: 60%;
             height: auto;
             /* Change height to auto for better responsiveness */
             background: #FFFFFF;
@@ -29,7 +28,6 @@
             border-radius: 8px;
             margin-bottom: 20px;
             overflow: hidden;
-            /* Hide overflow to prevent shadow clipping */
         }
 
         .banner::before {
@@ -180,13 +178,6 @@
                 <?= $notification->description ?>
             </div>
             </br>
-
-            <?php if (!empty($link)) : ?>
-                <div class="buttons-container">
-                    <a href="<?= $link ?>" class="button1" id="notificationButton">Take Action</a>
-                </div>
-            <?php endif; ?>
-
 
         </div>
         <form action="<?= ROOT ?>notification/delete" method="post">

@@ -77,29 +77,31 @@ class Clerk extends Controller
     }
 
     public function updatedattendance()
-    {
-        $degree = new Degree();
-    
-        if (!empty($_SESSION['DegreeID'])) {
-            $degreeId = $_SESSION['DegreeID'];
-        }
-    
+{
+    $degree = new Degree();
+
+    if (!empty($_SESSION['DegreeID'])) {
+        $degreeId = $_SESSION['DegreeID'];
         $data['degreedata'] = $degree->find($degreeId);
+        
+        $attendances = [];
+        
         $att = new studentAttendance();
-    
-        $attendances = []; // Initialize an empty array to hold attendance data
-    
-        foreach ($att->findAll() as $attendance) {
-            if (is_object($attendance) && $attendance->degree_id == $degreeId) {
-                $attendances[] = $attendance; // Add attendance to the array
+        $allAttendances = $att->findAll();
+        if (!empty($allAttendances)) {
+            foreach ($allAttendances as $attendance) {
+                if (is_object($attendance) && $attendance->degree_id == $degreeId) {
+                    $attendances[] = $attendance;
+                }
             }
         }
-        // show($attendances); // Check if attendance data is retrieved correctly
-    
-        $data['attendances'] = $attendances; // Assign attendance data to $data
-    
-        $this->view('clerk-interfaces\clerk-updatedattendance', $data);
+        $data['attendances'] = $attendances;
+    } else {
+        $data['attendances'] = [];
+            // If DegreeID is not set in the session, set $data['attendances'] as an empty array
     }
+    $this->view('clerk-interfaces/clerk-updatedattendance', $data);
+}
 
     public function degreeprograms()
     {
@@ -162,7 +164,6 @@ class Clerk extends Controller
         $data['degrees'] = $degree->find($degreeId);
         $degreeShortName = $degree_info->DegreeShortName;
         // show($degreeShortName);
-        //get degree details
         $data['degreedata'] = $degree->find($degreeId);
         // show($_SESSION['DegreeID']);
         // show($data['degreedata']);
@@ -172,7 +173,6 @@ class Clerk extends Controller
             if (is_object($student) && $student->degreeID == $degreeId && $student->status == "continue") {
                 $students[] = $student;
                 // show($student);
-                // Add student to data array
             }
         }
 if(!empty($students)){
@@ -217,17 +217,7 @@ if(!empty($students)){
                     fgetcsv($csvFile);
                 }
 
-                // Start reading from the 4th row and first column
-                // $row = 3; 
                 while (($line = fgetcsv($csvFile)) !== FALSE) {
-                    // $row++;
-
-                    // // Skip rows until reaching the 4th row
-                    // if ($row < 4) {
-                    //     continue;
-                    // }
-
-                    // Read data from the first column (index 0)
                     $index_no = $line[0];
                     $reg_no = $line[1];
                     $attendance = $line[2];
@@ -236,26 +226,28 @@ if(!empty($students)){
                     // Check if the record already exists
                     $existingData = $studentAttendance->where(['index_no' => $index_no]);
                     if ($existingData) {
-                        // If record exists, update it
-                        $updateData = [
-                            'attendance' => $attendance,
-                            'degree_name' => $degree_name,
-                            'degree_id' => $degree_id
-                        ];
-                        $whereConditions = [
-                            'index_no' => $index_no
-                        ];
-                        $studentAttendance->updateRows($updateData, $whereConditions);
-                    } else {
+                        // Check if the attendance value is not empty
+                        if (!empty($attendance)) {
+                            // If record exists and attendance value is not empty, update it
+                            $updateData = [
+                                'attendance' => $attendance,
+                                'degree_name' => $degree_name,
+                                'degree_id' => $degree_id
+                            ];
+                            $whereConditions = [
+                                'index_no' => $index_no
+                            ];
+                            $studentAttendance->updateRows($updateData, $whereConditions);
+                        }
+                    }else {
                         // show($_POST);
-                        // If record doesn't exist, insert it
+                        //only If record not existing, insert it
                         $insertData = [
                             'index_no' => $index_no,
                             'degree_name' => $degree_name,
                             'attendance' => $attendance,
                             'degree_id' => $degree_id
                         ];
-                        // show($insertData);
                         $studentAttendance->insert($insertData);
                     }
                 }
