@@ -44,8 +44,8 @@
                             text.style.color = 'var(--sidebar-color)';
                         }
                     }
-                    else if (currentUrl == '<? ROOT ?>public/dr/userprofile') {
-                        link1 = document.querySelector('.menu-links .nav-link a[href="<? ROOT ?>public/dr/participants"]');
+                    else if (currentUrl == '<?= ROOT ?>dr/userprofile') {
+                        link1 = document.querySelector('.menu-links .nav-link a[href="<?= ROOT ?>dr/participants"]');
                         link1.parentNode.classList.add('selected');
                         var icon = link1.querySelector('.icon');
                         var text = link1.querySelector('.text');
@@ -54,8 +54,8 @@
                             text.style.color = 'var(--sidebar-color)';
                         }
                     }
-                    else if (currentUrl == '<? ROOT ?>public/dr/newdegree') {
-                        link1 = document.querySelector('.menu-links .nav-link a[href="<? ROOT ?>public/dr/degreeprofile"]');
+                    else if (currentUrl == '<?= ROOT ?>dr/newdegree') {
+                        link1 = document.querySelector('.menu-links .nav-link a[href="<?= ROOT ?>dr/degreeprofile"]');
                         link1.parentNode.classList.add('selected');
                         var icon = link1.querySelector('.icon');
                         var text = link1.querySelector('.text');
@@ -64,8 +64,8 @@
                             text.style.color = 'var(--sidebar-color)';
                         }
                     }
-                    else if (currentUrl == '<? ROOT ?>public/dr/examination/participants' || currentUrl == '<? ROOT ?>public/dr/examination/results') {
-                        link1 = document.querySelector('.menu-links .nav-link a[href="<? ROOT ?>public/dr/examination"]');
+                    else if (currentUrl == '<?= ROOT ?>dr/examination/participants' || currentUrl == '<? ROOT ?>dr/examination/results') {
+                        link1 = document.querySelector('.menu-links .nav-link a[href="<?= ROOT ?>dr/examination"]');
                         link1.parentNode.classList.add('selected');
                         var icon = link1.querySelector('.icon');
                         var text = link1.querySelector('.text');
@@ -74,8 +74,8 @@
                             text.style.color = 'var(--sidebar-color)';
                         }
                     }
-                    else if (currentUrl == '<? ROOT ?>public/clerk/userprofile') {
-                        link1 = document.querySelector('.menu-links .nav-link a[href="<? ROOT ?>public/clerk/participants"]');
+                    else if (currentUrl == '<?= ROOT ?>clerk/userprofile') {
+                        link1 = document.querySelector('.menu-links .nav-link a[href="<?= ROOT ?>clerk/participants"]');
                         link1.parentNode.classList.add('selected');
                         var icon = link1.querySelector('.icon');
                         var text = link1.querySelector('.text');
@@ -84,8 +84,8 @@
                             text.style.color = 'var(--sidebar-color)';
                         }
                     }
-                    else if (currentUrl == '<? ROOT ?>public/sar/examination/participants' || currentUrl == '<? ROOT ?>public/sar/examination/results' || currentUrl == '<? ROOT ?>public/sar/examination/resultsupload') {
-                        link1 = document.querySelector('.menu-links .nav-link a[href="<? ROOT ?>public/sar/examination"]');
+                    else if (currentUrl == '<?= ROOT ?>sar/examination/participants' || currentUrl == '<?= ROOT ?>sar/examination/results' || currentUrl == '<?= ROOT ?>sar/examination/resultsupload') {
+                        link1 = document.querySelector('.menu-links .nav-link a[href="<?= ROOT ?>sar/examination"]');
                         link1.parentNode.classList.add('selected');
                         var icon = link1.querySelector('.icon');
                         var text = link1.querySelector('.text');

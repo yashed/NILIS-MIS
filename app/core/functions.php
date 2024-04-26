@@ -451,24 +451,55 @@ function updateMarksheet($csvFileName, $dataArray, $newFileName)
 
     fclose($newFile);
 }
-
 function getNotificationCountDR()
-    {
-        $notification = new NotificationModel();
-        $notification_count_arr = $notification->countNotificationsDR();
-        return $notification_count_arr[0];
-    }
-function getNotificationCountSAR()
-    {
-        $notification = new NotificationModel();
-        $notification_count_arr = $notification->countNotificationsSAR();
-        return $notification_count_arr[0];
-    }
-function getNotificationCountAdmin()
-    {
-        $notification = new NotificationModel();
-        $notification_count_arr = $notification->countNotificationsAdmin();
-        return $notification_count_arr[0];
-    }
+{
+    $notification = new NotificationModel();
+    $username = $_SESSION['USER_DATA']->username;
+    $data['usernames'] = $username;
+    $notification_count_arr = $notification->countNotificationsDR($username);
+    $data['notification_count_obj_dr'] = $notification_count_arr[0];
 
+    return $notification_count_arr[0];
+}
+function validateRowData($rowData) {
+    // Validate Full-Name
+    if (empty($rowData[0]) && !preg_match('/^[a-zA-Z\s]+$/', $rowData[0])) {
+        return false;
+    }
+    // Validate Email
+    if (!filter_var($rowData[1], FILTER_VALIDATE_EMAIL)) {
+        return false; // Email must be valid
+    }
+    // Validate Country
+    if (empty($rowData[2]) && !preg_match("/^[A-Z][a-z'-]+(?:\s[A-Z][a-z'-]+)+$/", $rowData[2])) {
+        return false; // Country cannot be empty
+    }
+    // Validate NIC-No
+    if (!preg_match('/^\d{12}$|^\d{9}[VX]$/', $rowData[3])) {
+        return false; // NIC No must match the specific pattern (e.g., 123456789V)
+    }
+    // Validate Date-Of-Birth
+    // $dob = DateTime::createFromFormat('Y-m-d', $rowData[4]);
+    // $now = new DateTime();
+    // if ($dob === false) {
+    //     return false; // Date must be a valid date
+    // }
+    // Validate whatsappNo
+    if (!preg_match('/^\+?[\d\s]{9,15}$/', $rowData[5])) {
+        return false; // Whatsapp number must be in a valid phone number format
+    }
+    // Validate Address
+    if (empty($rowData[6])) {
+        return false; // Address cannot be empty
+    }
+    // Validate Phone-No
+    if (!preg_match('/^\+?[\d\s]{9,15}$/', $rowData[7])) {
+        return false; // Phone number must be in a valid phone number format
+    }
+    // Validate Gender
+    if ($rowData[8] !== 'M' && $rowData[8] !== 'F') {
+        return false; // Gender must be either 'M' or 'F'
+    }
+    return true; // All validations passed
+}
 ?>
