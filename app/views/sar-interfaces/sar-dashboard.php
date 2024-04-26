@@ -764,7 +764,7 @@ $data['recentResults'] = $RecentResultExam;
                                     <div class="result-msg">
                                         No Results Published
                                     </div>
-                                    < <?php endif; ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

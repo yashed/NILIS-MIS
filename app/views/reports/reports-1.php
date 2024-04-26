@@ -376,89 +376,96 @@
                 <?php endif ?>
 
             </div>
-            <div class="admission-data-tb">
-                <div class="roe-table">
-                    <table class="admission-table">
-                        <thead>
-                            <tr class='table-row'>
-                                <th>Reg No</th>
-                                <th>IndexN0</th>
-                                <?php if (!empty($subjects)): ?>
-                                    <?php foreach ($subjects as $subject): ?>
-                                        <th><?= $subject->SubjectCode ?> - <?= $subject->NoCredits ?></th>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tr>
+            <?php if (!empty($examtype)): ?>
+                <?php if ($examtype == 'completed'): ?>
+                    <div class="admission-data-tb">
+                        <div class="roe-table">
+                            <table class="admission-table">
 
-                        </thead>
-                        <tbody>
-                            <?php if (!empty($students)): ?>
-                                <?php foreach ($students as $student): ?>
-
-                                    <tr>
-                                        <td><?= $student->regNo; ?></td>
-                                        <td><?= $student->indexNo; ?></td>
+                                <thead>
+                                    <tr class='table-row'>
+                                        <th>Reg No</th>
+                                        <th>IndexN0</th>
                                         <?php if (!empty($subjects)): ?>
                                             <?php foreach ($subjects as $subject): ?>
-                                                <?php if (!empty($studentRes[$student->indexNo][$subject->SubjectCode])): ?>
-                                                    <?php if ($studentRes[$student->indexNo][$subject->SubjectCode][0]->grade == 'F'): ?>
-                                                        <td style="background-color: red;">
-                                                            <?= $studentRes[$student->indexNo][$subject->SubjectCode][0]->grade ?>
-                                                        </td>
-                                                    <?php else: ?>
-                                                        <td><?= $studentRes[$student->indexNo][$subject->SubjectCode][0]->grade ?></td>
-                                                    <?php endif; ?>
-                                                <?php else: ?>
-                                                    <td>ab </td>
-                                                <?php endif; ?>
+                                                <th><?= $subject->SubjectCode ?> - <?= $subject->NoCredits ?></th>
                                             <?php endforeach; ?>
                                         <?php endif; ?>
-
                                     </tr>
 
-                                <?php endforeach; ?>
+                                </thead>
+                                <tbody>
+                                    <?php if (!empty($students)): ?>
+                                        <?php foreach ($students as $student): ?>
+
+                                            <tr>
+                                                <td><?= $student->regNo; ?></td>
+                                                <td><?= $student->indexNo; ?></td>
+                                                <?php if (!empty($subjects)): ?>
+                                                    <?php foreach ($subjects as $subject): ?>
+                                                        <?php if (!empty($studentRes[$student->indexNo][$subject->SubjectCode])): ?>
+                                                            <?php if ($studentRes[$student->indexNo][$subject->SubjectCode][0]->grade == 'F'): ?>
+                                                                <td style="background-color: red;">
+                                                                    <?= $studentRes[$student->indexNo][$subject->SubjectCode][0]->grade ?>
+                                                                </td>
+                                                            <?php else: ?>
+                                                                <td><?= $studentRes[$student->indexNo][$subject->SubjectCode][0]->grade ?></td>
+                                                            <?php endif; ?>
+                                                        <?php else: ?>
+                                                            <td>ab </td>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
+                                                <?php endif; ?>
+
+                                            </tr>
+
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class='down-data'>
+                        <div class='admission-detail'>
+                            <div class="admission-details-signature">.........................................
+                            </div>
+                            <div class="admission-details-name">
+                                Mr Janaka Wipularatna
+                            </div>
+                            <div class="admission-details-possision">
+                                Senior Assistant Registrar
+                            </div>
+                            <div class="admission-details-date">
+                                <?= date("Y-m-d") ?>
+                            </div>
+                        </div>
+                        <div class='gradings'>
+                            <?php if (!empty($grades)): ?>
+                                <div class='grading-title'>Key to gradings</div>
+                                <table class='grading-tb'>
+                                    <tbody>
+                                        <?php foreach ($grades as $grade): ?>
+                                            <tr>
+                                                <td><?= $grade->Grade ?> </td>
+                                                <td><?= $grade->MaxMarks ?> - <?= $grade->MinMarks ?></td>
+
+                                            </tr>
+                                        <?php endforeach ?>
+                                        <tr>
+                                            <td>ab</td>
+                                            <td>absent</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
                             <?php endif; ?>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class='down-data'>
-                <div class='admission-detail'>
-                    <div class="admission-details-signature">.........................................
+                        </div>
                     </div>
-                    <div class="admission-details-name">
-                        Mr Janaka Wipularatna
-                    </div>
-                    <div class="admission-details-possision">
-                        Senior Assistant Registrar
-                    </div>
-                    <div class="admission-details-date">
-                        <?= date("Y-m-d") ?>
-                    </div>
-                </div>
-                <div class='gradings'>
-                    <?php if (!empty($grades)): ?>
-                        <div class='grading-title'>Key to gradings</div>
-                        <table class='grading-tb'>
-                            <tbody>
-                                <?php foreach ($grades as $grade): ?>
-                                    <tr>
-                                        <td><?= $grade->Grade ?> </td>
-                                        <td><?= $grade->MaxMarks ?> - <?= $grade->MinMarks ?></td>
-
-                                    </tr>
-                                <?php endforeach ?>
-                                <tr>
-                                    <td>ab</td>
-                                    <td>absent</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                    <?php endif; ?>
-                </div>
-            </div>
+                <?php else: ?>
+                    <div>Examination was not Comppleted . Submit All marks and Mark as completed to generate report</div>
+                <?php endif ?>
+            <?php endif; ?>
 
     </div>
     </div>

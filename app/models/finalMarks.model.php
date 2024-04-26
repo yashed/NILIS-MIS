@@ -34,7 +34,7 @@ class FinalMarks extends Model
 
             // Determine the grade based on finalMarks and grading rules
             $grade = $this->determineGrade($record, $gradingRules);
-
+            // show($grade);
 
             // Update the grade
             $this->updateRows(
@@ -76,6 +76,7 @@ class FinalMarks extends Model
                         }
                     }
                 }
+
                 return $rule->Grade;
             }
         }

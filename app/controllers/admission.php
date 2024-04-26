@@ -13,8 +13,17 @@ class Admission extends Controller
         $exam = new Exam();
         $degree = new Degree();
         $admissionToken = new AdmissionToken();
-        $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
-        $indexNo = isset($_GET['indexNo']) ? $_GET['indexNo'] : null;
+
+        if (isset($_GET['token'])) {
+            $token = $_GET['token'];
+            $tokenData = $admissionToken->where(['token' => $token]);
+            $indexNo = $tokenData[0]->indexNo;
+            $examID = $tokenData[0]->examID;
+        } else {
+
+            $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
+            $indexNo = isset($_GET['indexNo']) ? $_GET['indexNo'] : null;
+        }
 
         //get exam details
         if ($examID != null) {

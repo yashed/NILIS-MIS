@@ -226,7 +226,7 @@ class Model extends Database
             }
         }
 
-        show($query);
+        // show($query);
         show($bindValues);
         // Execute the query
         $res = $this->query($query, $bindValues);

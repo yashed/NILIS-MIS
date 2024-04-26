@@ -534,25 +534,26 @@ function updateMarksheet($csvFileName, $dataArray, $newFileName)
     }
 
     fclose($newFile);
+    chmod($newFilePath, 0777);
 }
 
 function getNotificationCountDR()
-    {
-        $notification = new NotificationModel();
-        $notification_count_arr = $notification->countNotificationsDR();
-        return $notification_count_arr[0];
-    }
+{
+    $notification = new NotificationModel();
+    $notification_count_arr = $notification->countNotificationsDR();
+    return $notification_count_arr[0];
+}
 function getNotificationCountSAR()
-    {
-        $notification = new NotificationModel();
-        $notification_count_arr = $notification->countNotificationsSAR();
-        return $notification_count_arr[0];
-    }
+{
+    $notification = new NotificationModel();
+    $notification_count_arr = $notification->countNotificationsSAR();
+    return $notification_count_arr[0];
+}
 function getNotificationCountAdmin()
-    {
-        $notification = new NotificationModel();
-        $notification_count_arr = $notification->countNotificationsAdmin();
-        return $notification_count_arr[0];
-    }
+{
+    $notification = new NotificationModel();
+    $notification_count_arr = $notification->countNotificationsAdmin();
+    return $notification_count_arr[0];
+}
 
 ?>

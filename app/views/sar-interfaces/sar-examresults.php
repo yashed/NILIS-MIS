@@ -532,7 +532,7 @@ $data['role'] = $role;
                                     </button>
                                     <div class="exam-create-dropdown-content">
                                         <a onclick="downloadMarkSheet('<?= $subjectCode ?>','<?= $examId ?>')">.CSV</a>
-                                        <a href="#">.PDF</a>
+                                        <!-- <a href="#">.PDF</a> -->
                                     </div>
                                 </div>
 

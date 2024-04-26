@@ -154,7 +154,7 @@
         margin: 50px 0px 20px 0px;
         font-family: Inter;
         border-collapse: collapse;
-        width: 100%;
+        width: 90%;
         /* min-height: px; */
     }
 
@@ -335,7 +335,7 @@
                     <div class="admission-details-signature">.........................................
                     </div>
                     <div class="admission-details-name">
-                        Yashed Thisara
+                        Mr Janaka Wipularatna
                     </div>
                     <div class="admission-details-possision">
                         Senior Assistant Registrar
