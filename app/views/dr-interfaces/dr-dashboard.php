@@ -1,6 +1,7 @@
 <?php
 $role = "DR";
 $data['role'] = $role;
+$data['recentResults'] = $RecentResultExam;
 ?>
 
 <?php $this->view('components/navside-bar/header', $data) ?>
@@ -201,8 +202,18 @@ $data['role'] = $role;
                             Recently Published Examination Results
                         </div>
                         <div class="dr-dash-exam-cards">
-                            <?php $this->view('components/exam-card/exam-card', $data) ?>
-                            <?php $this->view('components/exam-card/exam-card', $data) ?>
+                            <?php if (!empty($RecentResultExam)): ?>
+                                <?php foreach ($RecentResultExam as $exam): ?>
+                                    <?php
+                                        $data['exam'] = $exam;
+                                        $this->view('components/exam-card/exam-card', $data);
+                                    ?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="result-msg">
+                                    No Results Published
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
