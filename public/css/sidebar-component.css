@@ -240,6 +240,7 @@ header .image-text .headder-text {
 .hero-ul-li {
   display: inline-block;
   list-style: none;
+  position: relative;
 }
 
 .sub-menu-wrap {
