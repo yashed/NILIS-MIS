@@ -14,18 +14,23 @@ $data['role'] = $role;
     <title>Degree Profile</title>
 </head>
 <style>
-.degreeprofile-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    backdrop-filter: blur(5px); /* Add blur effect */
-    z-index: 998; /* Layer it above other content */
-    display: none; /* Initially hidden */
-}
+    .degreeprofile-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        /* Semi-transparent background */
+        backdrop-filter: blur(5px);
+        /* Add blur effect */
+        z-index: 998;
+        /* Layer it above other content */
+        display: none;
+        /* Initially hidden */
+    }
 </style>
+
 <body>
     <div class="degreeprofile-dr-large-box">
         <div class="degreeprofile-overlay" id="degreeprofile-overlay"></div>
@@ -34,10 +39,11 @@ $data['role'] = $role;
                 <?php if (!empty($degrees)) : ?>
                     <p><?= $degrees[0]->DegreeName ?></p>
                 <?php else : ?>
-                    <p>No data found for the specified degree ID.</p>
+                    <p>No data found for the specified diploma ID.</p>
                 <?php endif; ?>
             </div>
-            <form class="degreeprofile-box_2" id="degreeprofile-form2" method="" action=""><p>Overview</p>
+            <form class="degreeprofile-box_2" id="degreeprofile-form2" method="" action="">
+                <p>Overview</p>
                 <?php if ($degrees) : ?>
                     <table class="degreeprofile-Overview_table" colspan="2" style="display: flex; justify-content: center;">
                         <tr>
@@ -63,7 +69,17 @@ $data['role'] = $role;
                             </td>
                             <td>
                                 <b>Participants</b><br>
-                                <input type="text" name="year" id="degreeprofile-year" value="<?= $degrees[0]->AcademicYear ?>" readonly>
+                                    <?php $NoStu = 0; ?>
+                                    <?php if (!empty($students)) : ?>
+                                        <?php foreach ($students as $student) : ?>
+                                            <?php if ($student->status != "suspended" && $student->degreeID == $degrees[0]->DegreeID) : ?>
+                                                <?php $NoStu++; ?>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    <?php else : ?>
+                                        <?php $NoStu = 0; ?>
+                                    <?php endif; ?>
+                                <input type="text" name="year" id="degreeprofile-year" value="<?= $NoStu ?>" readonly>
                             </td>
                         </tr>
                         <td colspan="2">
@@ -138,6 +154,7 @@ $data['role'] = $role;
                             <p>No data found for the specified degree ID.</p>
                         <?php endif; ?>
                     </table>
+                    <span class="eventDelete" style="color: red; float: right; margin-right: 53px;"></span>
                 </div>
                 <div class="degreeprofile-box_4_2">
                     <?php if ($degrees[0]->Status == "ongoing") : ?>
@@ -172,7 +189,7 @@ $data['role'] = $role;
             </h2>
             <div class="degreeprofile-yesorno">
                 <button class="degreeprofile-close-button-2" type="submit" value="delete">Yes,I'm Sure</button>
-                <button class="degreeprofile-close-button-3" type="button" >No,Cancel</button>
+                <button class="degreeprofile-close-button-3" type="button">No,Cancel</button>
             </div>
         </div>
     </form>
@@ -188,11 +205,26 @@ $data['role'] = $role;
             </h2>
             <div class="degreeprofile-yesorno">
                 <button class="degreeprofile-close-button-2" type="submit" value="delete">Yes,I'm Sure</button>
-                <button class="degreeprofile-close-button-3" type="button" >No,Cancel</button>
+                <button class="degreeprofile-close-button-3" type="button">No,Cancel</button>
             </div>
         </div>
     </form>
+    <div id="degreeprofile-eventDelete">
+        <center><svg id="degreeprofile-userDeletePopupImg" xmlns="http://www.w3.org/2000/svg" width="67" height="66" viewBox="0 0 67 66" fill="none">
+                <path d="M33.5 63C50.0685 63 63.5 49.5685 63.5 33C63.5 16.4315 50.0685 3 33.5 3C16.9315 3 3.5 16.4315 3.5 33C3.5 49.5685 16.9315 63 33.5 63Z" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M33.5 21V33" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M33.5 45H33.53" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg></center>
+        <h2 id="degreeprofile-userDeletePopupH2">
+            <center>Are you want to delete this Event?</center>
+        </h2>
+        <div class="degreeprofile-yesorno">
+            <button class="degreeprofile-close-button-5" type="button" value="delete">Yes,I'm Sure</button>
+            <button class="degreeprofile-close-button-3" type="button">No,Cancel</button>
+        </div>
+    </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
     function completedDegree() {
         // Show the overlay and pop-up
@@ -218,8 +250,57 @@ $data['role'] = $role;
             document.getElementById('degreeprofile-overlay').style.display = 'none';
             document.body.classList.remove('no-scroll');
             e.stopPropagation();
-        });
+        }); 
     }
+    let eventID = 0;
+    $(document).ready(function() {
+        $(".bx-minus").on("click", function(e) {
+            e.preventDefault();
+            var clickedElement = $(this);
+            eventID = clickedElement.attr('data-event-id');
+            console.log(eventID);
+            document.getElementById('degreeprofile-eventDelete').style.display = "block";
+            document.getElementById('degreeprofile-overlay').style.display = 'block';
+            document.body.classList.add('no-scroll');
+            $('.degreeprofile-close-button-3').click(function(e) {
+                document.getElementById('degreeprofile-eventDelete').style.display = "none";
+                document.getElementById('degreeprofile-overlay').style.display = 'none';
+                document.body.classList.remove('no-scroll');
+                e.stopPropagation();
+            });
+        });
+    });
+    $(document).ready(function() {
+        $(".degreeprofile-close-button-5").on("click", function(e) {
+            e.preventDefault();
+            document.getElementById('degreeprofile-eventDelete').style.display = "none";
+            document.getElementById('degreeprofile-overlay').style.display = 'none';
+            document.body.classList.remove('no-scroll');
+            console.log(eventID);
+            var eventId = eventID;
+            document.getElementById('degreeprofile-event_' + eventId).closest('tr').remove();
+            $.ajax({
+                type: "POST",
+                url: "<?= ROOT ?>dr/degreeprofile/eventDelete",
+                data: {
+                    eventId: eventId
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === "success") {
+                        console.log(response.message);
+                        $(".eventDelete").text("Event deleted successfully.");
+                    } else {
+                        $(".eventDelete").text("Event not deleted.");
+                    }
+                },
+                // error: function(jqXHR, textStatus, errorThrown) {
+                //     console.error("Error:", textStatus, errorThrown);
+                //     $(".eventDelete").text("An error occurred while deleting the event.");
+                // }
+            });
+        });
+    });
     document.addEventListener("DOMContentLoaded", function() {
         let add = document.querySelector("#degreeprofile-add_new_event");
         let table = document.querySelector(".degreeprofile-Time_table");
@@ -236,7 +317,7 @@ $data['role'] = $role;
                 var typeValue = $('#degreeprofile-type_' + eventIndex).val();
                 var startValue = $('#degreeprofile-start_' + eventIndex).val();
                 var endValue = $('#degreeprofile-end_' + eventIndex).val();
-                 // console.log(eventValue ,typeValue ,startValue ,endValue);
+                // console.log(eventValue ,typeValue ,startValue ,endValue);
                 if (startValue < new Date().toISOString().split('T')[0]) {
                     alert('Start date cannot be earlier than today\'s date.');
                     $('#degreeprofile-start_' + eventIndex).val(new Date().toISOString().split('T')[0]);
@@ -272,7 +353,6 @@ $data['role'] = $role;
                 }
             };
         }
-
         add.addEventListener("click", () => {
             let template = `
                 <tr>
@@ -390,35 +470,7 @@ $data['role'] = $role;
             });
             save.setAttribute('disabled', 'true');
             updateButton.removeAttribute('disabled', 'true');
-        }
-        // Attach event listener to minus icons
-        document.querySelectorAll('.bx-minus').forEach(function (icon) {
-            icon.addEventListener('click', function () {
-                const eventId = this.getAttribute('data-event-id');
-                
-                // Make an AJAX request to delete the event with the specified EventID
-                // You would replace the URL and method as needed
-                fetch(`/delete-event/${eventId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Remove the row from the table
-                        const row = this.closest('tr');
-                        row.remove();
-                    } else {
-                        console.error('Failed to delete event:', data.error);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error deleting event:', error);
-                });
-            });
-        });
+        }        
     });
 </script>
 
