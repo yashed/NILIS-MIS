@@ -479,11 +479,11 @@ function validateRowData($rowData) {
         return false; // NIC No must match the specific pattern (e.g., 123456789V)
     }
     // Validate Date-Of-Birth
-    // $dob = DateTime::createFromFormat('Y-m-d', $rowData[4]);
-    // $now = new DateTime();
-    // if ($dob === false) {
-    //     return false; // Date must be a valid date
-    // }
+    $dob = DateTime::createFromFormat('Y-m-d', $rowData[4]);
+    $now = new DateTime();
+    if ($dob === false) {
+        return false; // Date must be a valid date
+    }
     // Validate whatsappNo
     if (!preg_match('/^\+?[\d\s]{9,15}$/', $rowData[5])) {
         return false; // Whatsapp number must be in a valid phone number format

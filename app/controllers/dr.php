@@ -179,13 +179,13 @@ class DR extends Controller
             $data['students'] = $student->find($degreeID);
             if ($action == "update") {
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-                    // show($_POST);
+                    show($_POST);
                     if (isset($_POST['timetableData'])) {
                         $timetableData = json_decode($_POST['timetableData'], true);
                         // Iterate over each subject's data and insert it into the database
                         foreach ($timetableData as $timetableDataItem) {
                             // Construct the data array for insertion
-                            // show($timetableDataItem);
+                            show($timetableDataItem);
                             $dataSet1 = [
                                 'EventName' => $timetableDataItem['eventName'],
                                 'EventType' => $timetableDataItem['eventType'],
@@ -297,7 +297,7 @@ class DR extends Controller
                 redirect("dr/degreeprofile");
             }
         } else if ($action == 'file') {
-            $expectedColumns = ['Full-Name', 'Email', 'Country', 'NIC-No', 'Date-Of-Birth', 'whatsappNo', 'Address', 'Phone-No', 'Gender(M/F)'];
+            $expectedColumns = ['Name', 'Email', 'Country', 'NIC-No', 'Date-Of-Birth', 'whatsappNo', 'Address', 'Phone-No', 'Gender(M/F)'];
             $uploadDirectory = 'assets/csv/input/';
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if (isset($_POST['submit']) && $_POST['submit'] == 'upload-csv') {
@@ -321,12 +321,14 @@ class DR extends Controller
                                     exit();
                                 }
                                 $invalidRows = [];
+                                $validRows = [];
                                 while (($rowData = fgetcsv($csvFile)) !== false) {
                                     // echo $rowData;
                                     if (!validateRowData($rowData)) {
                                         $invalidRows[] = $rowData;
                                         continue;
-                                    }
+                                    } 
+                                    $validRows[] = $rowData;
                                 }
                                 if (!empty($invalidRows)) {
                                     // Convert invalid rows array to a human-readable string
@@ -341,22 +343,24 @@ class DR extends Controller
                                     redirect("dr/newdegree");
                                 }
                                 if (empty($invalidRows)) {
-                                    while (($rowData = fgetcsv($csvFile)) !== false) {
+                                    echo "adoo";
+                                    foreach ($validRows as $rowData1) {
+                                        echo "asdsax";
                                         $IndexNo = $student->generateIndexRegNumber($degreeShortName, $currentYear);
                                         if ($IndexNo !== false && $IndexNo['IndexNo'] != null && $IndexNo['RegistationNo'] != null && isset($IndexNo['IndexNo'], $IndexNo['RegistationNo'])) {
                                             $data1 = [
-                                                'Email' => $rowData[1],
-                                                'country' => $rowData[2],
-                                                'name' => $rowData[0],
-                                                'nicNo' => $rowData[3],
-                                                'birthdate' => $rowData[4],
-                                                'whatsappNo' => $rowData[5],
-                                                'address' => $rowData[6],
-                                                'phoneNo' => $rowData[7],
+                                                'Email' => $rowData1[1],
+                                                'country' => $rowData1[2],
+                                                'name' => $rowData1[0],
+                                                'nicNo' => $rowData1[3],
+                                                'birthdate' => $rowData1[4],
+                                                'whatsappNo' => $rowData1[5],
+                                                'address' => $rowData1[6],
+                                                'phoneNo' => $rowData1[7],
                                                 'degreeID' => $degree_id,
                                                 'indexNo' => $IndexNo['IndexNo'],
                                                 'regNo' => $IndexNo['RegistationNo'],
-                                                'gender' => $rowData[8],
+                                                'gender' => $rowData1[8],
                                             ];
                                             $student->insert($data1);
                                         } else {

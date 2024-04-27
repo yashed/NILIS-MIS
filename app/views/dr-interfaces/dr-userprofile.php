@@ -58,12 +58,13 @@ th {
                             <div>
                                 <img src="<?= ROOT ?>assets/dr/imgano.png" alt="Your Image">
                             </div>
+                            <p><?= $student[0]->name ?></p>
                         <?php endif; ?>
                         <?php if ($student[0]->status == "suspended") : ?>
                             <div style="border: 2px solid red; display: inline-block; border-radius: 100%;">
                                 <img src="<?= ROOT ?>assets/dr/imgano.png" alt="Your Image">
                             </div>
-                        <p style="color: red;"><?= $student[0]->name ?></p>
+                            <p style="color: red;"><?= $student[0]->name ?></p>
                             <p style="color: red;">Suspended and Degree Changed.</p>
                         <?php endif; ?>
                     </div>
@@ -199,6 +200,9 @@ th {
                         </div>
                     </div>
                     <div class="dr-userprofile-column2-2">
+                        <div class="dr-userprofile-data3"><b>Gender:</b><br>
+                            <div class="dr-userprofile-adr"> <?= $student[0]->gender ?></div>
+                        </div>
                         <div class="dr-userprofile-data3"><b>Address:</b><br>
                             <div class="dr-userprofile-adr"> <?= $student[0]->address ?></div>
                         </div>
@@ -215,7 +219,7 @@ th {
             </div>
         </div>
         <div class="dr-userprofile-popup" id="dr-userprofile-update-popup">
-            <form method="post" action="<?= ROOT ?>dr/userprofile/update">
+            <form id="dr-userprofile-update-popup-form" method="post" action="<?= ROOT ?>dr/userprofile/update">
                 <div class="dr-userprofile-popup-card">
                     <div class="dr-userprofile-form">
                         <h2>Update User Details</h2>
@@ -228,8 +232,8 @@ th {
                                         <input type="text" placeholder="Enter" id="dr-userprofile-up-name" name="name" value="<?= $student[0]->name ?>">
                                     </div>
                                     <div class="dr-userprofile-form-element">
-                                        <label for="email">Email</label>
-                                        <input type="text" placeholder="Enter" id="dr-userprofile-up-email" name="Email" value="<?= $student[0]->Email ?>">
+                                        <label for="email">Gender</label>
+                                        <input type="text" placeholder="Enter" id="dr-userprofile-up-gender" name="gender" value="<?= $student[0]->gender ?>">
                                     </div>
                                     <div class="dr-userprofile-form-element">
                                         <label for="nicNo">NIC</label>
@@ -242,7 +246,7 @@ th {
                                 </div>
                                 <div class="dr-userprofile-column-02">
                                     <div class="dr-userprofile-form-element">
-                                        <label for="indexNo">Index Number</label>
+                                        <label for="country">Country</label>
                                         <input type="text" placeholder="Enter" id="dr-userprofile-up-country" name="country" value="<?= $student[0]->country ?>">
                                     </div>
                                     <div class="dr-userprofile-form-element">
@@ -254,15 +258,15 @@ th {
                                         <input type="text" placeholder="Enter" id="dr-userprofile-up-address" name="address" value="<?= $student[0]->address ?>">
                                     </div>
                                     <div class="dr-userprofile-form-element">
-                                        <label for="birthdate">Birthdate</label>
-                                        <input type="text" placeholder="Enter" id="dr-userprofile-up-birthdate" name="birthdate" value="<?= $student[0]->birthdate ?>">
+                                        <label for="birthdate">Birthdate</label><br>
+                                        <input style="width: 204px;" type="text" placeholder="Enter" id="dr-userprofile-up-birthdate" name="birthdate" value="<?= $student[0]->birthdate ?>">
                                     </div>
                                 </div>
-
                             </div>
+                            <span class="invalidInput" style="color: red; font-size: 10px;"></span>
                             <div class="dr-userprofile-student-create-update">
-                                <button class="dr-userprofile-close-button" type="button">Close</button>
                                 <button name='submit' value='update' id="dr-userprofile-submitbutton" type="submit">Update</button>
+                                <button class="dr-userprofile-close-button" type="button">Close</button>
                             </div>
                         </div>
 
@@ -336,6 +340,96 @@ th {
             $('.dr-userprofile-pop-up1-1').css('display', 'none');
             $('#dr-userprofile-overlay').css('display', 'none');
         }
+        // Get references to the form and submit button
+        const form = document.getElementById('dr-userprofile-update-popup-form');
+        const submitButton = document.getElementById('dr-userprofile-submitbutton');
+
+        // Regular expression for NIC validation
+        const nicRegex = /^\d{12}$|^\d{9}[VX]$/;
+
+        // Add click event listener to the submit button
+        submitButton.onclick = function(event) {
+            // Initialize a flag to track form validity
+            let isValid = true;
+            
+            // Clear previous error messages and reset field borders
+            document.querySelectorAll('.invalidInput').forEach(el => el.textContent = '');
+            document.querySelectorAll('input').forEach(input => input.style.border = '');
+            
+            // Validate each field according to your requirements
+            const nameField = form.elements['name'];
+            const genderField = form.elements['gender'];
+            const nicNoField = form.elements['nicNo'];
+            const whatsappNoField = form.elements['whatsappNo'];
+            const countryField = form.elements['country'];
+            const phoneNoField = form.elements['phoneNo'];
+            const addressField = form.elements['address'];
+            const birthdateField = form.elements['birthdate'];
+            
+            // Validate name
+            if (nameField.value.trim() === '' || !/^[a-zA-Z]+$/.test(nameField.value.trim())) {
+                document.querySelector(".invalidInput").textContent += "Name is not valid.\n";
+                nameField.style.border = '1px solid red';
+                isValid = false;
+            }
+            
+            // Validate gender
+            if (genderField.value.trim() !== 'M' && genderField.value.trim() !== 'F') {
+                document.querySelector(".invalidInput").textContent += "Gender is not valid.\n";
+                genderField.style.border = '1px solid red';
+                isValid = false;
+            }
+            
+            // Validate NIC number
+            if (!nicRegex.test(nicNoField.value.trim())) {
+                document.querySelector(".invalidInput").textContent += "Invalid NIC number. It must be a 12-digit number or a 9-digit number followed by V or X.\n";
+                nicNoField.style.border = '1px solid red';
+                isValid = false;
+            }
+            
+            // Validate Whatsapp number
+            if (!/^\d{9,15}$/.test(whatsappNoField.value.trim())) {
+                document.querySelector(".invalidInput").textContent += "Whatsapp Number is not valid.\n";
+                whatsappNoField.style.border = '1px solid red';
+                isValid = false;
+            }
+            
+            // Validate country
+            if (!/^[a-zA-Z]+$/.test(countryField.value.trim())) {
+                document.querySelector(".invalidInput").textContent += "Country is not valid.\n";
+                countryField.style.border = '1px solid red';
+                isValid = false;
+            }
+            
+            // Validate phone number
+            if (!/^\d{9,15}$/.test(phoneNoField.value.trim())) {
+                document.querySelector(".invalidInput").textContent += "Phone Number is not valid.\n";
+                phoneNoField.style.border = '1px solid red';
+                isValid = false;
+            }
+            
+            // Validate address
+            if (addressField.value.trim() === '' || !/^[A-Za-z'-]+(?:\s[A-Za-z'-]+)+$/.test(addressField.value.trim())) {
+                document.querySelector(".invalidInput").textContent += "Address is not valid.\n";
+                addressField.style.border = '1px solid red';
+                isValid = false;
+            }
+
+            // Validate birthdate
+            if (birthdateField.value.trim() === '' || !/^\d{4}-\d{2}-\d{2}$/.test(birthdateField.value.trim())) {
+                document.querySelector(".invalidInput").textContent += "Birthdate is not valid.\n";
+                birthdateField.style.border = '1px solid red';
+                isValid = false;
+            }
+            
+            // Prevent form submission if the form is not valid
+            if (!isValid) {
+                event.preventDefault();
+            } else {
+                // Allow form submission if the form is valid
+                form.submit();
+            }
+        };
     </script>
 </body>
 
