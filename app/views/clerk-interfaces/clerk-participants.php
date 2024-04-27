@@ -11,7 +11,7 @@ $data['role'] = $role;
 <head>
     <link rel="stylesheet" type="text/css" href="<?= ROOT ?>css/dr/dr-styles.css">
     <script src="https://unpkg.com/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
-    <title>DR Student Participants</title>
+    <title>Participants</title>
     <style>
         body {
             min-height: auto;

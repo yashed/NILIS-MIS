@@ -14,7 +14,7 @@ $data['role'] = $role;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>temp3 Dashboard</title>
+    <title>Settings</title>
 
 </head>
 <style>
@@ -62,12 +62,12 @@ $data['role'] = $role;
         width: calc(100% - 88px);
     }
 
-
-
-
     .temp3-subsection-1 {
         background-color: var(--text-color);
-        padding: 10px 10px 30px 50px;
+        /* padding: 10px 10px 30px 60px; */
+        padding-left: 9vw;
+        padding-bottom: 4vw;
+        padding-top: 3vw;
         border-radius: 6px;
         margin: 7px 4px 7px 4px;
         height: auto;
@@ -81,47 +81,50 @@ $data['role'] = $role;
         font-style: normal;
         font-weight: 600;
         padding-top: 1vw;
-        padding-bottom: 1vw;
-   
+        padding-bottom: 2vw;
     }
+
 
     .flex {
         display: flex;
         flex-direction: row;
         padding-top: 1vw;
         padding-right: 11vw;
-
+        gap: 5vw;
     }
 
     .name {
-
-
         flex-direction: column;
         align-items: baseline;
         row-gap: 10px;
         padding-left: 5vw;
         padding-bottom: 2vw;
-
-
     }
 
     .name img {
         padding-left: 2vw;
-        width: 15vw;
-        height: 12vw;
+        width: 12vw;
+        height: 10vw;
 
     }
 
     .student-name {
         /* padding-right: 30vw; */
-        flex: 60%;
-padding-left: 1.5vw;
+        flex-direction: row;
+        padding-left: 2vw;
+
         font-size: 1.2vw;
         font-weight: 500;
         color: #17376e;
     }
 
-    .admission-button {
+    .button-container {
+        margin-left: 15vw;
+        display: flex;
+        gap: 10px;
+    }
+
+    .cancelBtn {
 
         background-color: #ffffff;
         border: 1px solid #17376E;
@@ -129,18 +132,16 @@ padding-left: 1.5vw;
         text-decoration: none;
         padding-top: 0.2vw;
         text-align: center;
-
         border-radius: 5px;
         cursor: pointer;
-
         font-size: 0.8vw;
         margin-right: 2vw;
         width: 12vw;
-        
+
 
     }
 
-    .admission-button2 {
+    .saveBtn {
 
         background-color: #17376E;
         color: #fff;
@@ -148,22 +149,41 @@ padding-left: 1.5vw;
         padding-top: 0.3vw;
         padding-bottom: 0.3vw;
         text-align: center;
-
         border: none;
         border-radius: 5px;
         cursor: pointer;
-
         font-size: 0.8vw;
         width: 12vw;
-       
+
     }
 
-    .admission-button2:hover {
+    .saveBtn:hover {
         color: #17376e;
         background-color: white;
         border: 1px solid var(--colour-secondary-1, #17376e);
+    }
 
+    #editBtn {
 
+        background-color: #17376E;
+        color: #fff;
+        text-decoration: none;
+        padding-top: 0.3vw;
+        padding-bottom: 0.3vw;
+        text-align: center;
+        margin-left: 30vw;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.8vw;
+        width: 12vw;
+
+    }
+
+    #editBtn:hover {
+        color: #17376e;
+        background-color: white;
+        border: 1px solid var(--colour-secondary-1, #17376e);
     }
 
     input[type=text],
@@ -199,7 +219,7 @@ padding-left: 1.5vw;
         width: 50vw;
     }
 
-  
+
 
     .form-element3 {
         margin-right: 9vw;
@@ -228,168 +248,210 @@ padding-left: 1.5vw;
         font-size: 0.8vw;
         color: red;
     }
+
+    /* #editButtons {
+            display: none;
+            display: flex;
+            flex-direction: column; 
+        }   */
 </style>
 
 <body>
     <div class="temp3-home">
-        <div class="temp3-title">Settings</div>
+        <div class="temp3-title">Account Settings</div>
         <div class="temp3-subsection-1">
-            <div class="temp3-sub-title">
-                Account Settings
-
-            </div>
-
-            <form action="" method="POST">
 
 
-                <div class=name>
+            <form action="" method="POST" id="settingsForm">
+                <!-- First Name -->
+                <div class="name">
                     <img src="<?= ROOT ?>assets/dr/imgano.png">
-                 
                     <div class="flex">
                         <div class="student-name">
                             <p>
-                            USER : <?= $user->fname ?> <?= $user->lname ?>
+                                <?= $user->fname ?> <?= $user->lname ?>
                             </p>
                         </div>
-                        <a href="" class="admission-button">Cancel</a>
-                        <div class="form-element">
-                            <button type="submit" name="update_user_data" class="admission-button2">Save Data</button>
+                        <div id="editButtons" style="display: none;">
+                            <div class="button-container">
+                                <button class="cancelBtn" id="cancelBtn">Cancel</button>
+                                <button type="submit" name="update_user_data" class="saveBtn" id="saveBtn">Save Data</button>
+                            </div>
+                        </div>
+                        <div id="editButton">
+                            <button id="editBtn">Edit</button>
                         </div>
                     </div>
-
                 </div>
 
+                <!-- First Name Input -->
                 <div class="user-data">
-
                     <div class="column-01">
-
                         <div class="form-element">
                             <label for="fname">
                                 <div class="label-name">First Name</div>
                             </label>
                             <input type="text" placeholder="<?= $user->fname ?>" id="fname" name="fname" class="form-control" value="<?= $user->fname ?>">
-                            <?php if (isset($_POST['update_user_data']) && empty($_POST['fname'])) : ?>
-                                <span class="error">*First name is required.</span>
-                            <?php endif; ?>
+                            <span class="error" id="fname-error" style="display: none;"></span>
                         </div>
                     </div>
+
+                    <!-- Last Name Input -->
                     <div class="column-02">
                         <div class="form-element">
                             <label for="lname">
                                 <div class="label-name">Last Name</div>
                             </label>
                             <input type="text" placeholder="<?= $user->lname ?>" id="lname" name="lname" class="form-control" value="<?= $user->lname ?>">
-
-                            <?php if (isset($_POST['update_user_data']) && empty($_POST['lname'])) : ?>
-                                <span class="error">*Last name is required.</span>
-                            <?php endif; ?>
+                            <span class="error" id="lname-error" style="display: none;"></span>
                         </div>
                     </div>
                 </div>
 
+                <!-- Email Input -->
                 <div class="form-element3">
                     <label for="email">
                         <div class="label-name">Email</div>
                     </label>
                     <input type="text" placeholder="<?= $user->email ?>" id="email" name="email" class="form-control" value="<?= $user->email ?>">
-                    <?php if (isset($_POST['update_user_data']) && empty($_POST['email'])) : ?>
-                        <span class="error">*Email is required.</span>
-                    <?php endif; ?>
+                    <!-- <span class="error" id="email-error" style="display: none;">*Email is required.</span> -->
+
                 </div>
+
+                <!-- Phone Number Input -->
                 <div class="form-element4">
-                    <label for="role">
+                    <label for="phoneNo">
                         <div class="label-name">Phone Number</div>
                     </label>
                     <input type="text" placeholder="<?= $user->phoneNo ?>" id="phoneNo" name="phoneNo" class="form-control" value="<?= $user->phoneNo ?>">
-                    <?php if (isset($_POST['update_user_data']) && empty($_POST['phoneNo'])) : ?>
-                        <span class="error">*Phone Number is required.</span>
-                    <?php endif; ?>
+                    <span class="error" id="phoneNo-error" style="display: none;"></span>
 
-                    <?php if (isset($data['error'])) : ?>
+                    <!-- <?php if (isset($data['error'])) : ?>
                         <div class="error-message">
                             <?php echo $data['error']; ?>
                         </div>
-                    <?php endif; ?>
-
+                    <?php endif; ?> -->
+                    
                 </div>
-
             </form>
-
         </div>
-
     </div>
 
-    <div class="temp3-footer">
+    <div class="dr-footer">
         <?php $this->view('components/footer/index', $data) ?>
     </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // Initially set the input fields to readonly mode
             var firstNameInput = document.getElementById('fname');
             var lastNameInput = document.getElementById('lname');
             var emailInput = document.getElementById('email');
             var phoneNoInput = document.getElementById('phoneNo');
-            var submitButton = document.getElementById('submitBtn');
-            var errorMessage = document.getElementById('fname-error');
-            var errorMessage = document.getElementById('lname-error');
-            var errorMessage = document.getElementById('email-error');
-            var errorMessage = document.getElementById('phoneNo-error');
+            var submitButton = document.getElementById('saveBtn');
 
+            // Function to toggle read-only mode
+            function setReadOnlyMode(value) {
+                firstNameInput.readOnly = value;
+                lastNameInput.readOnly = value;
+                emailInput.readOnly = value;
+                phoneNoInput.readOnly = value;
+            }
+            setReadOnlyMode(true);
 
+            // Function to check if the first name is empty
             function checkFirstName() {
+                var firstNameError = document.getElementById('fname-error');
                 if (firstNameInput.value.trim() === '') {
                     submitButton.disabled = true;
-                    errorMessage.style.display = 'block';
+                    firstNameError.textContent = "*First name is required.";
+                    firstNameError.style.display = 'block';
+                    return false; // Return false if first name is empty
                 } else {
                     submitButton.disabled = false;
-                    errorMessage.style.display = 'none';
+                    firstNameError.style.display = 'none';
+                    return true; // Return true if first name is not empty
                 }
             }
 
             function checkLastName() {
-                if (firstNameInput.value.trim() === '') {
+                var lastNameError = document.getElementById('lname-error');
+
+                if (lastNameInput.value.trim() === '') {
                     submitButton.disabled = true;
-                    errorMessage.style.display = 'block';
+                    lastNameError.textContent = "*Last name is required.";
+                    lastNameError.style.display = 'block';
+                    return false;
                 } else {
                     submitButton.disabled = false;
-                    errorMessage.style.display = 'none';
+                    lastNameError.textContent = "";
+                    lastNameError.style.display = 'none';
+                    return true;
                 }
             }
 
-            function checkEmail() {
-                if (firstNameInput.value.trim() === '') {
-                    submitButton.disabled = true;
-                    errorMessage.style.display = 'block';
-                } else {
-                    submitButton.disabled = false;
-                    errorMessage.style.display = 'none';
-                }
-            }
 
+            // Function to check if the phone number is empty and valid
             function checkPhoneNo() {
+                var phoneNoError = document.getElementById('phoneNo-error');
                 var phoneNo = phoneNoInput.value.trim();
                 var phoneNoPattern = /^\d{10}$/; // Regex pattern to match exactly 10 digits
 
                 if (!phoneNoPattern.test(phoneNo)) {
                     submitButton.disabled = true;
-                    errorMessage.textContent = "Phone number is not valid. It should contain exactly 10 digits.";
-                    errorMessage.style.display = 'block';
+                    phoneNoError.textContent = "Phone number is not valid. It should contain exactly 10 digits.";
+                    phoneNoError.style.display = 'block';
+                    return false;
                 } else {
                     submitButton.disabled = false;
-                    errorMessage.textContent = ""; // Clear error message
-                    errorMessage.style.display = 'none';
+                    phoneNoError.textContent = "";
+                    phoneNoError.style.display = 'none';
+                    return true;
                 }
             }
 
+            // Function to check the entire form before submission
+            function checkForm() {
+                var isFirstNameValid = checkFirstName();
+                var isLastNameValid = checkLastName();
+                var isPhoneNoValid = checkPhoneNo();
 
-            checkFirstName();
-            checkLastName();
-            checkEmail();
-            checkPhoneNo();
+                return isFirstNameValid && isLastNameValid && isPhoneNoValid;
+            }
 
+            // Add event listeners for input fields
             firstNameInput.addEventListener('input', checkFirstName);
             lastNameInput.addEventListener('input', checkLastName);
-            emailInput.addEventListener('input', checkEmail);
             phoneNoInput.addEventListener('input', checkPhoneNo);
+
+            
+            // Add event listener for form submission
+            document.getElementById("settingsForm").addEventListener("submit", function(event) {
+                if (!checkForm()) {
+                    event.preventDefault(); // Prevent form submission if form is invalid
+                }
+            });
+
+            // Add event listener for "Edit" button
+            document.getElementById("editBtn").addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent default link behavior
+                // Enable editing fields
+                document.getElementById("editButton").style.display = "none";
+                document.getElementById("editButtons").style.display = "block";
+
+                function setReadOnlyMode2(value) {
+                    firstNameInput.readOnly = value;
+                    lastNameInput.readOnly = value;
+                    emailInput.readOnly = true;
+                    phoneNoInput.readOnly = value;
+                }
+                setReadOnlyMode2(false);
+            });
+
+            document.getElementById("cancelBtn").addEventListener("click", function() {
+                window.location.reload();
+            });
+
         });
     </script>
 </body>

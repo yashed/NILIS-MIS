@@ -12,6 +12,7 @@ $data['role'] = $role;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
@@ -87,7 +88,7 @@ $data['role'] = $role;
         <div class="temp3-subsection-1">
         <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-start-alert') : ?>
+                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-start-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "Director";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -98,7 +99,7 @@ $data['role'] = $role;
             
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert') : ?>
+                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "Director";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -108,7 +109,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert') : ?>
+                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "Director";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -118,7 +119,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert') : ?>
+                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "Director";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -128,7 +129,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-start-alert') : ?>
+                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-start-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "Director";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -138,7 +139,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-end-alert') : ?>
+                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-end-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "Director";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>

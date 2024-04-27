@@ -87,25 +87,7 @@ $data['recentResults'] = $RecentResultExam;
                 gap: 60px;
             }
 
-            .clerk-subcard-data {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-direction: column;
-            }
-
-            .clerk-subcard-data-value {
-                font-size: 38px;
-                font-weight: 600;
-                color: #17376E;
-            }
-
-            .clerk-subcard-data-title {
-                font-size: 18px;
-                font-weight: 600;
-                color: #17376E;
-            }
-
+          
             .clerk-subsection-01 {
                 display: flex;
                 padding: 15px 30px 14px 30px;
@@ -121,24 +103,6 @@ $data['recentResults'] = $RecentResultExam;
                 gap: 60px;
             }
 
-            .clerk-subcard-data {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-direction: column;
-            }
-
-            .clerk-subcard-data-value {
-                font-size: 38px;
-                font-weight: 600;
-                color: #17376E;
-            }
-
-            .clerk-subcard-data-title {
-                font-size: 18px;
-                font-weight: 600;
-                color: #17376E;
-            }
 
             .clerk-subsection-1 {
                 background-color: var(--text-color);
@@ -158,26 +122,6 @@ $data['recentResults'] = $RecentResultExam;
 
             }
 
-            .clerk-subsection-2 {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-
-                /* padding: 10px 10px 30px 35px; */
-                /* border-radius: 6px; */
-                /* margin: 7px 4px 7px 4px; */
-            }
-
-            .clerk-subsection-21 {
-                display: flex;
-                flex-direction: column;
-                background-color: var(--text-color);
-                padding: 10px 10px 30px 35px;
-                border-radius: 6px;
-                margin: 3px 4px 7px 4px;
-                width: 50%;
-            }
-
             .clerk-sub-title {
 
                 color: #17376E;
@@ -204,14 +148,6 @@ $data['recentResults'] = $RecentResultExam;
                 flex-direction: column;
                 background-color: var(--text-color);
                 padding: 10px 10px 30px 35px;
-                border-radius: 6px;
-                margin: 3px 4px 7px 4px;
-                width: 50%;
-            }
-
-            .clerk-subsection-22 {
-                background-color: var(--text-color);
-                padding: 10px 10px 31px 35px;
                 border-radius: 6px;
                 margin: 3px 4px 7px 4px;
                 width: 50%;
@@ -262,20 +198,6 @@ $data['recentResults'] = $RecentResultExam;
                 flex-direction: column;
             }
 
-            .clerk-card1 {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .clerk-card2 {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .clerk-card2 {
-                display: flex;
-                flex-direction: column;
-            }
 
             .clerk-exam-bar {
                 display: flex;
@@ -284,6 +206,7 @@ $data['recentResults'] = $RecentResultExam;
                 align-items: center;
                 flex-wrap: nowrap;
                 gap: 30px;
+                width:60%;
             }
 
             .clerk-exam-card1 {
