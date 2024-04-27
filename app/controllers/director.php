@@ -15,37 +15,29 @@ class DIRECTOR extends Controller
     {
         $degree = new Degree();
         $exam = new Exam();
-        // $notification = new NotificationModel();
-        // $notification_count_arr = $notification->countNotifications();
         $student = new StudentModel();
         $exam = new Exam();
         $degreetimetable = new DegreeTimeTable();
         $attendance = new studentAttendance();
         $data['attendances'] = $attendance->findAll();
-       
         $finalMarks = new FinalMarks();
+
         $recentExamId = $finalMarks->lastID('examID');
 
-        //join exam and degree tables
         $dataTables = ['degree'];
         $columns = ['*'];
         $examConditions = ['exam.degreeID = degree.DegreeID', 'exam.examID = ' . $recentExamId];
         $data['RecentResultExam'] = $exam->join($dataTables, $columns, $examConditions);
-        // $degree->insert($_POST);
-        // show($_POST);
-        // $notification = new NotificationModel();
-        // $notification_count_arr = $notification->countNotificationsDirector();
-
-        // $data['notification_count_obj'] = $notification_count_arr[0];
         $data['notification_count_obj_director'] = getNotificationCountDirector();
 
+
         $data['degrees'] = $degree->findAll();
-        //show($data['degrees']);
         $data['students'] = $student->findAll();
         $data['exams'] = $exam->findAll();
         $data['degreetimetables'] = $degreetimetable->findAll();
         $this->view('director-interfaces/director-dashboard', $data);
     }
+
     public function notification()
     {
         $notification = new NotificationModel();
@@ -58,11 +50,7 @@ class DIRECTOR extends Controller
     public function degreeprograms()
     {
         $degree = new Degree();
-        // $degree->insert($_POST);
-        // show($_POST);
-
         $data['degrees'] = $degree->findAll();
-        //show($data['degrees']);
         $data['notification_count_obj_director'] = getNotificationCountDirector();
         $this->view('director-interfaces/director-degreeprograms', $data);
     }
@@ -80,7 +68,7 @@ class DIRECTOR extends Controller
             redirect("director/degreeprofile");
         }
         $degreeID = $_SESSION['DegreeID'];
-        $_SESSION['DegreeID'] = $degreeID;
+
         // Check if degree ID is provided
         if ($degreeID !== null) {
             $degree = new Degree();
@@ -91,6 +79,7 @@ class DIRECTOR extends Controller
             $degreeTimeTableData = $degreeTimeTable->find($degreeID);
             $subjectsData = $subject->find($degreeID);
             $data['degrees'] = $degreeData;
+
             $subjects = [];
             foreach ($subjectsData as $subject) {
                 $semesterNumber = $subject->semester;
@@ -123,6 +112,8 @@ class DIRECTOR extends Controller
         if (isset($_SESSION['DegreeID'])) {
             $degreeID = $_SESSION['DegreeID'];
             // Iterate through students to find those with the given DegreeID
+           
+
             foreach ($st->findAll() as $student) {
                 if (is_object($student) && $student->degreeID == $degreeID) {
                     $data['students'][] = $student; // Add student to data array
@@ -156,14 +147,23 @@ class DIRECTOR extends Controller
             $finalMarks = new FinalMarks();
             $exam = new Exam();
             $studentId = $_SESSION['studentId']; // Get student ID from session
-            $degreeId = $_SESSION['DegreeID']; // Get degree ID from session
+            $degreeId = $_SESSION['DegreeID'];
+                       
+ // Get degree ID from session
             $data['student'] = $studentModel->findwhere("id", $studentId);
+            // show($data['student']);
             $data['degrees'] = $degree->find($degreeId);
             $data['Degree'] = $degree->findAll();
             $studentIndex = $data['student'][0]->indexNo;
+            // show($studentIndex);
+            $studentreg = $data['student'][0]->regNo;
+            // show($studentreg);
+
             // echo $studentIndex;
             $data['finalMarks'] = $finalMarks->findwhere("studentIndexNo", $studentIndex);
             $data['exams'] = $exam->find($degreeId);
+            //   show($data['exams']);
+            // show($data['finalMarks']);
             $this->view('director-interfaces/director-userprofile', $data);
         } else {
             echo "Error: Student ID not provided in the URL.";
@@ -217,18 +217,29 @@ class DIRECTOR extends Controller
 
     public function attendance()
     {
-        $attendance = new studentAttendance();
-        $data['attendances'] = $attendance->findAll();
-        $data['notification_count_obj_director'] = getNotificationCountDirector();
-        // show($attendance);
-        // show($data['attendances']);
         $degree = new Degree();
 
         if (!empty($_SESSION['DegreeID'])) {
             $degreeId = $_SESSION['DegreeID'];
+            $data['degreedata'] = $degree->find($degreeId);
+            
+            $attendances = [];
+            
+            $att = new studentAttendance();
+            $allAttendances = $att->findAll();
+            if (!empty($allAttendances)) {
+                foreach ($allAttendances as $attendance) {
+                    if (is_object($attendance) && $attendance->degree_id == $degreeId) {
+                        $attendances[] = $attendance;
+                    }
+                }
+            }
+            $data['attendances'] = $attendances;
+        } else {
+            $data['attendances'] = [];
+                // If DegreeID is not set in the session, set $data['attendances'] as an empty array
         }
-        $data['degreedata'] = $degree->find($degreeId);
-        // show($data['degreedata']);
+        // show($degreeId);
         $this->view('director-interfaces\director-attendance', $data);
     }
 

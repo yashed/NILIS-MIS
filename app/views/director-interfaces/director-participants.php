@@ -33,7 +33,7 @@ $data['role'] = $role;
         td {
             border-collapse: collapse;
             padding: 1rem;
-            text-align: left;
+            text-align: center;
         }
 
         thead th {
@@ -67,6 +67,7 @@ $data['role'] = $role;
         tbody tr td p,
         tbody tr td img {
             transition: .2s ease-in-out;
+            justify-content: center;
         }
 
         tbody tr.hide td,

@@ -542,6 +542,28 @@ class DR extends Controller
     public function settings()
     {
         $user = new User();
+        $data = [];
+        $data['notification_count_obj'] = getNotificationCount();
+
+        if (isset($_POST['update_user_data'])) {
+            // Validate input fields
+            $fname = isset($_POST['fname']) ? trim($_POST['fname']) : '';
+            $lname = isset($_POST['lname']) ? trim($_POST['lname']) : '';
+            $phoneNo = isset($_POST['phoneNo']) ? trim($_POST['phoneNo']) : '';
+
+            // Update user data
+            $id = $_SESSION['USER_DATA']->id;
+            $dataToUpdate = [
+                'fname' => $fname,
+                'lname' => $lname,
+                'phoneNo' => $phoneNo
+            ];
+
+            $user->update($id, $dataToUpdate);
+            header('Location:settings');
+            exit;
+        }
+
         // Fetch user data for display
         $id = $_SESSION['USER_DATA']->id;
         $data['user'] = $user->first(['id' => $id]);
@@ -549,8 +571,10 @@ class DR extends Controller
         if ($data['user'] === null) {
             $data['error'] = 'No user data found.';
         }
+
         $this->view('dr-interfaces/dr-settings', $data);
     }
+
     public function reports($action = null, $id = null)
     {
         $data = [];

@@ -1,0 +1,1960 @@
+* {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  :root {
+    --body-color: #e2e2e2;
+    --sidebar-color: #17376e;
+    --primary-color: #9ad6ff;
+    --text-color: #ffffff;
+  
+    --tran-02: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.4s ease;
+    --tran-05: all 0.5s ease;
+  
+    --fs-xl: 5rem;
+    --fs-600: 1.5rem;
+    --fs-500: 1.25rem;
+    --fs-400: 1rem;
+    --fs-300: 0.875rem;
+  }
+  body.no-scroll {
+    overflow: hidden;
+  }
+  /*#DASHBOARD_CSS*/
+  
+  .clerk-dash-home {
+    height: 100vh;
+    left: 250px;
+    position: relative;
+    width: calc(100% - 250px);
+    transition: var(--tran-05);
+    background: var(--body-color);
+  }
+  .clerk-dash-title {
+    font-size: 30px;
+    font-weight: 600;
+    color: black;
+    padding: 10px 0px 10px 32px;
+    background-color: var(--text-color);
+    border-radius: 6px;
+    margin: 7px 4px 7px 4px;
+  }
+  .sidebar.close~.clerk-dash-home {
+    left: 88px;
+    width: calc(100% - 88px);
+  }
+  .clerk-dash-subsection-0 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    /* background-color: var(--text-color); */
+    padding: 15px 10px 15px 35px;
+    border-radius: 6px;
+    margin: 7px 4px 7px 4px;
+    flex-wrap: wrap;
+  }
+  .clerk-dash-subsection-01 {
+    display: flex;
+    padding: 15px 30px 14px 30px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background-color: var(--text-color);
+    box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.12);
+    width: 25%;
+    height: 150px;
+    flex-direction: row;
+    gap: 60px;
+  }
+  .clerk-dash-subcard-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .clerk-dash-subcard-data-value {
+    font-size: 38px;
+    font-weight: 600;
+    color: #17376E;
+  }
+  .clerk-dash-subcard-data-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #17376E;
+  }
+  .clerk-dash-subsection-1-1 {
+    display: flex;
+    flex-direction: column;
+    width: 67%;
+  }
+  .clerk-dash-subsection-1-1-1 {
+    display: flex;
+    flex-direction: row;
+  }
+  .clerk-dash-subsection-1-1-1-1 {
+    background-color: var(--text-color);
+    padding: 10px 10px 30px 35px;
+    border-radius: 6px;
+    margin: 4px 4px 4px 4px;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+  }
+  .clerk-dash-subsection-1-1-1-2 {
+    background-color: var(--text-color);
+    padding: 10px 10px 30px 35px;
+    border-radius: 6px;
+    margin: 4px 4px 4px 4px;
+    width: 50%
+  }
+  .clerk-dash-subsection-1-1-1-3 {
+    background-color: var(--text-color);
+    padding: 10px 10px 30px 35px;
+    border-radius: 6px;
+    margin: 4px 4px 4px 4px;
+    width: 100%
+  }
+  .clerk-dash-subsection-1-1-1-4 {
+    background-color: var(--text-color);
+    padding: 10px 10px 30px 35px;
+    border-radius: 6px;
+    margin: 4px 4px 4px 4px;
+    width: 100%;
+    min-height: 300px;
+  }
+  .clerk-dash-subsection-1-1-1-5 {
+    background-color: var(--text-color);
+    padding: 10px 10px 10px 10px;
+    border-radius: 6px;
+    margin: 4px 4px 4px 4px;
+    width: 50%
+  }
+  .clerk-dash-subsection-1-2 {
+    /* background-color: var(--text-color);*/
+    /*padding: 10px 10px 30px 35px;*/
+    /*border-radius: 6px;*/
+    /*margin: 7px 4px 7px 4px; */
+    width: 33%;
+  }
+  .clerk-dash-subsection-1-2-1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+  }
+  .clerk-dash-subsection-1-1-2-1 {
+    background-color: var(--text-color);
+    padding: 10px 10px 30px 35px;
+    border-radius: 6px;
+    margin: 4px 4px 4px 4px;
+    height: 50%;
+  }
+  .clerk-dash-subsection-1-1-2-2 {
+    background-color: var(--text-color);
+    padding: 10px 10px 30px 35px;
+    border-radius: 6px;
+    margin: 4px 4px 4px 4px;
+    height: 50%;
+  }
+  .clerk-dash-sub-title {
+    color: #17376E;
+    font-family: Poppins;
+    font-size: var(--fs-500);
+    font-style: normal;
+    font-weight: 600;
+    margin: 20px;
+  }
+  .clerk-dash-subsection-2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* padding: 10px 10px 30px 35px; */
+    /* border-radius: 6px; */
+    /* margin: 7px 4px 7px 4px; */
+  }
+  .clerk-dash-subsection-21 {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--text-color);
+    padding: 10px 10px 30px 35px;
+    border-radius: 6px;
+    margin: 3px 4px 7px 4px;
+    width: 50%;
+  }
+  .clerk-dash-subsection-22 {
+    background-color: var(--text-color);
+    padding: 10px 10px 31px 35px;
+    border-radius: 6px;
+    margin: 3px 4px 7px 4px;
+    width: 100%;
+  }
+  .clerk-dash-main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* align-items: center; */
+  }
+  .clerk-dash-card-subsection-0 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    /* background-color: var(--text-color); */
+    padding: 15px 10px 15px 35px;
+    border-radius: 6px;
+    margin: 7px 4px 7px 4px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .clerk-dash-card-subsection-01 {
+    display: flex;
+    /* padding: 15px 30px 14px 30px; */
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background-color: var(--text-color);
+    box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.12);
+    min-width: 22%;
+    height: 120px;
+    flex-direction: row;
+    gap: 60px;
+    cursor: pointer;
+  }
+  .clerk-dash-card-subcard-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .clerk-dash-card-subcard-data-value {
+    font-size: 38px;
+    font-weight: 600;
+    color: #17376E;
+  }
+  .clerk-dash-card-subcard-data-title {
+    display: flex;
+    font-size: 16px;
+    font-weight: 600;
+    color: #17376E;
+    align-items: center;
+    min-width: 120px;
+    justify-content: center;
+    text-align: center;
+  }
+  .clerk-dash-card-subcard-img1 img {
+    max-width: 70px;
+    min-width: 50px;
+    max-height: 80px;
+    min-height: 50px;
+  }
+  .clerk-dash-sucard-out {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: 10px;
+    gap: 10px;
+  }
+  .clerk-dash-graph04,
+  .clerk-dash-graph01,
+  .clerk-dash-graph02,
+  .clerk-dash-graph03,
+  .clerk-dash-calender-comp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .clerk-dash-calender-title {
+    color: #17376E;
+    font-family: Poppins;
+    font-size: var(--fs-500);
+    font-style: normal;
+    font-weight: 600;
+    margin: 20px 20px 50px 20px;
+  }
+  .clerk-dash-graph01-title,
+  .clerk-dash-graph02-title,
+  .clerk-dash-graph03-title {
+    color: #17376E;
+    font-family: Poppins;
+    font-size: var(--fs-500);
+    font-style: normal;
+    font-weight: 600;
+    margin: 20px;
+  }
+  .clerk-dash-graph01-sub-title {
+    color: var(--neutral-colors-400, #9291A5);
+    margin: 20px 0px 0px 20px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+  }
+  .clerk-dash-graph02-sub-title {
+    color: var(--neutral-colors-400, #9291A5);
+    margin: 20px 0px 0px 20px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+  }
+  .clerk-dash-graph04-title {
+    color: #17376E;
+    font-family: Poppins;
+    font-size: var(--fs-500);
+    font-style: normal;
+    font-weight: 600;
+    margin: 20px 0px 0px 20px;
+  }
+  .clerk-dash-graph04-Exam-title {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    margin: 20px 0px 0px 20px;
+  }
+  .clerk-dash-graph04-sub-title {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    color: var(--Gray, #4F4F4F);
+    margin: 10px 0px 10px 20px;
+  }
+  .clerk-dash-exam-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+  }
+  .clerk-dash-degree-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 5vh;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 2px 10px 2px;
+    width: 100%;
+    height: auto;
+  }
+  .clerk-dash-upcomming-exam-card {
+    width: 40vh;
+    height: 15vh;
+    border-radius: 10px;
+    border: 2px solid rgba(23, 55, 110, 0.10);
+    box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1vh;
+    cursor: pointer;
+  }
+  .clerk-dash-up-exam-degree-name {
+    color: var(--colour-secondary-2, #9AD6FF);
+    font-family: Poppins;
+    font-size: var(--fs-400);
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+  .clerk-dash-up-exam-semester {
+    color: var(--colour-secondary-1, #17376E);
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 10px;
+  }
+  .clerk-dash-up-exam-dates {
+    font-family: Poppins;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .clerk-dash-up-exam-dates {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5vh;
+  }
+  .clerk-dash-up-exam-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+  
+  }
+  @media (max-width: 1100px) {
+    .clerk-dash-up-exam-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 1vh;
+        align-items: center;
+        justify-content: center;
+  }
+    .clerk-dash-up-exam-dates {
+        font-family: Poppins;
+        font-size: 8px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+    .clerk-dash-up-exam-semester {
+        color: var(--colour-secondary-1, #17376E);
+        font-family: Poppins;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        margin-bottom: 5px;
+    }
+    .clerk-dash-up-exam-degree-name {
+        color: var(--colour-secondary-2, #9AD6FF);
+        font-family: Poppins;
+        font-size: var(--fs-300);
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+    }
+    .clerk-dash-upcomming-exam-card {
+        width: 45vh;
+        border-radius: 10px;
+        border: 2px solid rgba(23, 55, 110, 0.10);
+        box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.25);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2px;
+        cursor: pointer;
+    }
+  }
+  
+  /*#DEGREEPROGRAMS_CSS*/
+  .clerk-degreeprograms-home {
+    height: 100vh;
+    left: 250px;
+    position: relative;
+    width: calc(100% - 250px);
+    transition: var(--tran-05);
+    background: var(--body-color);
+  }
+  .clerk-degreeprograms-title {
+    font-size: 30px;
+    font-weight: 600;
+    color: black;
+    padding: 10px 0px 10px 32px;
+    background-color: var(--text-color);
+    border-radius: 6px;
+    margin: 7px 4px 7px 4px;
+  }
+  .sidebar.close~.clerk-degreeprograms-home {
+    left: 88px;
+    width: calc(100% - 88px);
+  }
+  .clerk-degreeprograms-subsection-1 {
+    background-color: var(--text-color);
+    padding: 10px 10px 30px 35px;
+    border-radius: 6px;
+    margin: 7px 4px 7px 4px;
+  }
+  .clerk-degreeprograms-sub-title {
+    color: #17376E;
+    font-family: Poppins;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 600;
+    margin: 40px;
+  }
+  .clerk-degreeprograms-degree-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .clerk-degreeprograms-card1 {
+    margin-bottom: 4px;
+  }
+  .clerk-degreeprograms-exam-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 30px;
+  }
+  .clerk-degreeprograms-exam-card1 {
+    margin-bottom: 5px;
+  }
+  .clerk-degreeprograms-model-box {
+    display: none;
+    position: fixed;
+    top: 1%;
+    left: 35%;
+    /* box-shadow: 17px 27px 400px rgba(0, 0, 0, 1.15);   */
+    /* opacity: 0; */
+    z-index: 999; 
+  }
+  .clerk-degreeprograms-model-box.active {
+    opacity: 1;
+    transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+  }
+  .clerk-degreeprograms-danger {
+    border-color: red;
+    border-width: 5px;
+    border-style: groove;
+    border-radius: 5px;
+  }
+  .clerk-degreeprograms-user-error {
+    color: red;
+    font-size: 10px;
+    font-weight: 400;
+    margin-left: 5px;
+  }
+  .clerk-degreeprograms-bt-name {
+    color: #fff;
+    padding: 8px 22px;
+    border-radius: 6px;
+    background: #17376E;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.20);
+    border: 0px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .clerk-degreeprograms-bt-name:hover {
+    background: #fff;
+    color: #17376E;
+  }
+  .clerk-degreeprograms-bt-name-white {
+    background: #fff;
+    padding: 8px 22px;
+    /* margin-left: -100px; */
+    border-radius: 6px;
+    color: #17376E;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.20);
+    border: 0px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .clerk-degreeprograms-bt-name-white:hover {
+    color: #fff;
+    background: #17376E;
+  }
+  .clerk-degreeprograms-addSubject {
+    width: 80%;
+    height: 35px;
+    background: transparent;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid gainsboro;
+    color: gray;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 15px;
+  }
+  .clerk-degreeprograms-addSubject:hover {
+    border: 3px solid gainsboro;
+    font-weight: 600;
+  }
+  .clerk-degreeprograms-button-btn1 {
+    margin-top: 50px;
+  }
+  .clerk-degreeprograms-container {
+    background-position: center;
+    background-size: cover;
+    width: 540px;
+    height: 600px;
+    margin: 8px auto;
+    margin-top: 80px;
+    background: var(--text-color);
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    border-width: 2px;
+    border-style: groove;
+    border-color: #000;
+    border-radius: 5px;
+  }
+  .clerk-degreeprograms-container form {
+    width: 280px;
+    position: absolute;
+    top: 90px;
+    left: 70px;
+    transition: 0.5s;
+  }
+  .clerk-degreeprograms-btn-box {
+    width: 100%;
+    margin: 30px 10px 20px 10px;
+    text-align: center;
+  }
+  .clerk-degreeprograms-btn-box1 {
+    width: 100%;
+    margin: 60px 10px 20px 10px;
+    text-align: center;
+  }
+  #clerk-degreeprograms-Form2 {
+    width: 400px;
+    display: none;
+  }
+  #clerk-degreeprograms-Form3 {
+    display: none;
+  }
+  .clerk-degreeprograms-step-row {
+    width: 450px;
+    height: 8px;
+    margin: 10px 0 30px -20px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+  }
+  #clerk-degreeprograms-progress1,
+  #clerk-degreeprograms-progress2,
+  #clerk-degreeprograms-progress3 {
+    position: absolute;
+    height: 140%;
+    width: 15px;
+    background: var(--sidebar-color);
+    transition: 1s;
+    margin: 10px 0 10px 0;
+    border-radius: 10px;
+    /* transition: width 1s ease; */
+  }
+  .clerk-degreeprograms-input-field label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #2e2e2e;
+    margin-top: 15px;
+  }
+  .clerk-degreeprograms-input-field input {
+    outline: none;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    padding: 0 15px;
+    height: 42px;
+    margin: 8px 0 8px 0;
+  }
+  .clerk-degreeprograms-clerkop-down {
+    margin: 30vh 4vh 10vh 0;
+  }
+  .clerk-degreeprograms-input-field input:is(:focus, :valid) {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.13);
+  }
+  /*form2*/
+  #clerk-degreeprograms-form2_p {
+    float: left;
+    margin: 0px 0px 25px -40px;
+  }
+  .clerk-degreeprograms-box_3 {
+    border-radius: 5px;
+    margin: 30px 2px 0px -32px;
+    background-color: var(--text-color);
+    grid-column: 2 / 2;
+    grid-row: 2/ 2;
+    height: 280px;
+    width: 344px;
+  }
+  .clerk-degreeprograms-Subject_table {
+    margin: 5% 0% 1% 0%;
+    border-spacing: 5px;
+    text-align: left;
+  }
+  .clerk-degreeprograms-Subject_table input {
+    width: 80%;
+    height: 30px;
+    background: transparent;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid gainsboro;
+  }
+  .clerk-degreeprograms-credits {
+    text-align: center;
+    width: 20%;
+  }
+  .clerk-degreeprograms-box_3_2 {
+    overflow-y: auto;
+    max-height: 100%;
+    width: 465px;
+    margin: 0px 0px 0px 6px;
+  }
+  .clerk-degreeprograms-box_3 p {
+    font-size: 18px;
+    color: var(--sidebar-color);
+    margin: 3% 0 0 9%;
+    font-weight: 350;
+  }
+  #clerk-degreeprograms-semester_container {
+    left: -10px;
+    align-items: center;
+  }
+  #clerk-degreeprograms-semester {
+    margin: 4px 0 -10px 27px;
+  }
+  .clerk-degreeprograms-Subject_table .clerk-degreeprograms-subjectCode {
+    width: 110%;
+    margin: 0px 0px 0px -8px;
+  }
+  .clerk-degreeprograms-Subject_table .clerk-degreeprograms-SubjectName {
+    margin-left: 0px;
+  }
+  .clerk-degreeprograms-Grade_table .clerk-degreeprograms-grade {
+    border: 1px black solid;
+    border-radius: 5px;
+    padding-left: 20px;
+  }
+  .clerk-degreeprograms-Grade_table .clerk-degreeprograms-maxvalue {
+    border: 1px black solid;
+    border-radius: 5px;
+    padding-left: 14px;
+  }
+  .clerk-degreeprograms-Grade_table .clerk-degreeprograms-minvalue {
+    border: 1px black solid;
+    border-radius: 5px;
+    padding-left: 14px;
+  }
+  .clerk-degreeprograms-Grade_table .clerk-degreeprograms-gpa {
+    border: 1px black solid;
+    border-radius: 5px;
+    padding-left: 15px;
+  }
+  
+  /*#NEWDEGREE_CSS*/
+  .clerk-newdegree-white-container1 {
+    height: 100vh;
+    left: 250px;
+    position: relative;
+    width: calc(100% - 250px);
+    transition: var(--tran-05);
+    background: var(--body-color);
+  }
+  .sidebar.close~.clerk-newdegree-white-container1 {
+    left: 88px;
+    width: calc(100% - 88px);
+  }
+  .clerk-newdegree-white-container2 {
+    background-color: white;
+    padding: 20px;
+    height: 530px;
+    font-family: "Poppins", sans-serif;
+    font-size: 22px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    transition: all 0.5s ease;
+    margin: 7px 4px 7px 4px;
+  }
+  .clerk-newdegree-left-top-text {
+    text-align: left;
+    margin-top: 20px;
+    color: #17376E;
+    margin-bottom: 30px;
+    font-family: "Poppins", sans-serif;
+  }
+  .clerk-newdegree-download-button {
+    /* display: inline-block; */
+    padding: 10px 20px;
+    background-color: #17376E;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: auto;
+    font-size: 12px;
+    float: right;
+  }
+  .clerk-newdegree-dashed-container {
+    border: 2px dashed #333;
+    padding: 8px;
+    width: auto;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  input[type="file"] {
+    margin: 10px 0;
+    margin-left: 150px;
+  }
+  input[type="file"] {
+    display: none;
+  }
+  input[type=event] {
+    width: 50%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+  }
+  .clerk-newdegree-file-input-icon {
+    width: 74px;
+    height: 81.5px;
+    background-image: url('../../assets/clerk/Icon03.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  .clerk-newdegree-text1 {
+    font-size: 20px;
+    margin-left: 15px;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .clerk-newdegree-browse-label {
+    color: #9AD6FF;
+    cursor: pointer;
+  }
+  .clerk-newdegree-white-container3 {
+    margin-top: 10px;
+    background-color: white;
+    padding: 20px;
+    height: 500px;
+    font-family: "Poppins", sans-serif;
+    font-size: 22px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    transition: all 0.5s ease;
+    margin: 7px 4px 7px 4px;
+  }
+  .clerk-newdegree-container {
+    border-radius: 5px;
+    padding: 20px;
+  }
+  .clerk-newdegree-x {
+    display: flex;
+    align-items: center;
+  }
+  .clerk-newdegree-x input {
+    margin: 5px;
+  }
+  .clerk-newdegree-y {
+    display: flex;
+    align-items: center;
+    margin-left: 100px;
+    height: 35px;
+  }
+  .clerk-newdegree-y input {
+    width: 130px;
+    height: 43px;
+  }
+  .clerk-newdegree-container a {
+    background-color: #17376E;
+    color: #fff;
+    text-decoration: none;
+    font-size: medium;
+    border-radius: 5px;
+    padding: 4px 5px 4px 5px;
+    margin-top: 10px;
+    float: right;
+    margin-right: 20px;
+  }
+  .clerk-newdegree-addevent {
+    height: 40px;
+    width: auto;
+    border-radius: 5px;
+    padding: 0 4px 0 4px;
+    cursor: pointer;
+  }
+  .clerk-newdegree-addevent:hover {
+    height: 41px;
+    font-size: 14px;
+  }
+  .clerk-newdegree-box_4 {
+    border-radius: 5px;
+    margin: 5px 5px 5px 5px;
+    background-color: var(--text-color);
+    grid-column: 1 / 3;
+    grid-row: 3/ 3;
+    padding: 5px 5px 2px 5px;
+  }
+  .clerk-newdegree-time_table {
+    margin: 2% 5% 3% 5%;
+    border-spacing: 5px;
+    height: 35px;
+    width: 90%;
+  }
+  .clerk-newdegree-create_time_table_raw {
+    margin: 1% 5% 3% 5%;
+    border-spacing: 5px;
+    align-items: center;
+    height: 35px;
+    width: 90%;
+  }
+  .clerk-newdegree-box_4 input {
+    width: 100%;
+    height: 35px;
+    background: transparent;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid gainsboro;
+  }
+  .clerk-newdegree-box_4 .clerk-newdegree-event {
+    width: 90%;
+    padding-left: 10px;
+    height: 35px;
+    background: transparent; 
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid gainsboro;
+  }
+  .clerk-newdegree-time_table .clerk-newdegree-duration {
+    text-align: center;
+    width: 100%;
+    height: 35px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid gainsboro;
+  }
+  .clerk-newdegree-box_4_1 {
+    overflow-y: auto;
+    max-height: 60%;
+  }
+  #clerk-newdegree-add_new_event {
+    width: 100%;
+    height: 35px;
+    background: transparent;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid gainsboro;
+    color: gray;
+    align-items: center;
+    cursor: pointer;
+  }
+  #clerk-newdegree-save {
+    background-color: var(--sidebar-color);
+    color: var(--text-color);
+    border-radius: 7px;
+    width: 100%;
+    height: 35px;
+    border-color: var(--text-color);
+    font-weight: 500;
+    margin: 10px 0px 0px 0px;
+  }
+  #clerk-newdegree-save:hover {
+    background-color: var(--text-color);
+    color: var(--sidebar-color);
+    border-radius: 7px;
+    width: 100%;
+    height: 35px;
+    font-weight: 500;
+    border-color: var(--sidebar-color);
+    border-width: 2px;
+  }
+  .clerk-newdegree-box_4 p {
+    font-size: 20px;
+    color: var(--sidebar-color);
+    margin: 3% 0 0 5%;
+    font-weight: 500;
+    margin: 5px 5px 5px 10px;
+  }
+  
+  /*#DEGREEPROFILE_CSS*/
+  .degreeprofile-large-box {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 9% 45% 46%;
+  }
+  .degreeprofile-clerk-large-box {
+    height: 100vh;
+    left: 250px;
+    position: relative;
+    width: calc(100% - 250px);
+    transition: var(--tran-05);
+    background: var(--body-color);
+  }
+  .sidebar.close~.degreeprofile-clerk-large-box {
+    left: 88px;
+    width: calc(100% - 88px);
+  }
+  .degreeprofile-box_1 {
+    border-radius: 5px;
+    margin: 5px;
+    padding: 0 2px 2px 2px;
+    background-color: var(--text-color);
+    grid-column: 1 / 3;
+    grid-row: 1 / 1;
+  }
+  .degreeprofile-box_2 {
+    border-radius: 5px;
+    margin: 0 5px 5px 5px;
+    background-color: var(--text-color);
+    grid-column: 1 / 1;
+    grid-row: 2 / 2;
+  }
+  .degreeprofile-box_3 {
+    border-radius: 5px;
+    margin: 0 5px 5px 0;
+    background-color: var(--text-color);
+    grid-column: 2 / 2;
+    grid-row: 2/ 2;
+  }
+  .degreeprofile-box_4 {
+    border-radius: 5px;
+    margin: 0 5px 5px 5px;
+    background-color: var(--text-color);
+    grid-column: 1 / 3;
+    grid-row: 3/ 3;
+  }
+  .degreeprofile-Overview_table {
+    margin: 20px 5px 5px 25px;
+    border-spacing: 16px;
+  }
+  .degreeprofile-Overview_table input {
+    width: 100%;
+    height: 35px;
+    background: transparent;
+    border: 0px solid gainsboro;
+    padding: 0px 20px 0px 13px;
+    margin-right: 50px;
+  }
+  .degreeprofile-Overview_table .degreeprofile-name {
+    width: 150%;
+    height: 35px;
+    background: transparent;
+  }
+  #degreeprofile-complete_degree {
+    color: var(--text-color);
+    background-color: var(--sidebar-color);
+    border-radius: 7px;
+    width: 30%;
+    height: 35px;
+    border: 2px solid var(--sidebar-color);
+    padding: 5px 3px 3px 5px;
+    cursor: pointer;
+    margin: 0px 25px;
+  }
+  #degreeprofile-complete_degree:hover {
+    color: var(--sidebar-color);
+    background-color: var(--text-color);
+  }
+  #degreeprofile-delete_degree {
+    color: red;
+    border-radius: 7px;
+    width: 30%;
+    height: 35px;
+    border: 2px solid red;
+    padding: 5px 3px 3px 5px;
+    cursor: pointer;
+    margin: 0px 25px;
+  }
+  #degreeprofile-delete_degree:hover {
+    color: white;
+    background-color: red;
+  }
+  .degreeprofile-Subject_table {
+    margin: 10px 3px 5px 30px;
+    border-spacing: 5px;
+    text-align: left;
+  }
+  .degreeprofile-Subject_table input {
+    width: 80%;
+    height: 35px;
+    background: transparent;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid gainsboro;
+    padding-left: 8px;
+  }
+  .degreeprofile-credits {
+    text-align: center;
+  }
+  .degreeprofile-box_3_2 {
+    overflow-y: auto;
+    max-height: 90%;
+    margin: 25px 5px 10px 25px;
+    display: flex;
+    justify-content: center;
+  }
+  .degreeprofile-time_table {
+    margin: 2% 5% 3% 5%;
+    border-spacing: 5px;
+    height: 35px;
+    width: 90%;
+  }
+  .degreeprofile-create_time_table_raw {
+    margin: 1% 5% 3% 5%;
+    border-spacing: 5px;
+    align-items: center;
+    height: 35px;
+    width: 90%;
+  }
+  .degreeprofile-box_4 input {
+    width: 100%;
+    height: 35px;
+    background: transparent;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid gainsboro;
+  }
+  .degreeprofile-box_4 .degreeprofile-event {
+    width: 90%;
+    padding-left: 10px;
+  }
+  .degreeprofile-time_table .degreeprofile-duration {
+    text-align: center;
+    width: 100%;
+    height: 35px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid gainsboro;
+  }
+  .degreeprofile-box_4_1 {
+    overflow-y: auto;
+    max-height: 75%;
+  }
+  .degreeprofile-box_4_2 {
+    padding-bottom: 100px;
+  }
+  #degreeprofile-add_new_event {
+    width: 100%;
+    height: 35px;
+    background: transparent;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid gainsboro;
+    color: gray;
+    align-items: center;
+    cursor: pointer;
+    display: none;
+  }
+  #degreeprofile-save,
+  #degreeprofile-update {
+    background-color: #A8A8A8;
+    color: var(--sidebar-color);
+    border-radius: 7px;
+    width: 100%;
+    height: 35px;
+    border-color: var(--text-color);
+    font-weight: 500;
+    margin-top: 7px;
+  }
+  #degreeprofile-save:hover,
+  #degreeprofile-update:hover {
+    background-color: #A8A8A8;
+    color: var(--sidebar-color);
+    border-radius: 7px;
+    width: 100%;
+    height: 35px;
+    font-weight: 500;
+    border-color: var(--sidebar-color);
+    border-width: 2px;
+  }
+  #degreeprofile-save:hover:disabled,
+  #degreeprofile-update:hover:disabled {
+    color: rgba(16, 16, 16, 0.3);
+    border-radius: 7px;
+    width: 100%;
+    height: 35px;
+    border-color: var(--text-color);
+    font-weight: 500;
+    margin-top: 7px;
+  }
+  .degreeprofile-box_2 p,
+  .degreeprofile-box_3 p,
+  .degreeprofile-box_4 p {
+    font-size: 20px;
+    color: var(--sidebar-color);
+    margin: 3% 0 0 5%;
+    font-weight: 500;
+  }
+  .degreeprofile-box_1 p {
+    font-size: 30px;
+    color: black;
+    margin: 1% 1% 1% 3%;
+  }
+  .degreeprofile-form3 {
+    display:  none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    z-index: 999;
+    border-radius: 15px;
+  }
+  .degreeprofile-form4 {
+    display:  none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    z-index: 999;
+    border-radius: 15px;
+  }
+  .degreeprofile-popupForm1 {
+    border-radius: 5px;
+    background-color: var(--text-color);
+    padding: 23px;
+    width: 500px;
+    height: 500px;
+  }
+  #degreeprofile-userDeletePopupH2 {
+    font-weight: 400;
+    margin: 20px 10px;
+  }
+  .degreeprofile-yesorno {
+    margin: 5% 25%;
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+  }
+  .degreeprofile-close-button-2 {
+    background-color: var(--text-color);
+    color: red;
+    padding: 8px 22px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid red;
+    border-width: 1px;
+  }
+  .degreeprofile-close-button-3 {
+    background-color: var(--text-color);
+    color: black;
+    padding: 8px 22px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid black;
+    border-width: 1px;
+  }
+  
+  /*#DEGREEPARTICIPANTS_CSS*/
+  .clerk-participants-home {
+    left: 250px;
+    position: relative;
+    width: calc(100% - 250px);
+    min-width: 70%;
+    transition: var(--tran-05);
+    background: var(--body-color);
+  }
+  .clerk-participants-title {
+    font-size: 30px;
+    font-weight: 600;
+    color: black;
+    padding: 10px 0px 10px 32px;
+    background-color: var(--text-color);
+    border-radius: 6px;
+    margin: 5px 4px 5px 4px;
+  }
+  .clerk-participants-title1-core {
+    color: #17376e;
+    font-size: 22px;
+    margin: 10px 0px 5px 0px;
+    font-weight: 300;
+  }
+  .clerk-participants-home-1 {
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin: 7px 4px 2px 4px;
+    padding: 10px 32px 10px 32px;
+    min-height: 67vh;
+  }
+  .sidebar.close~.clerk-participants-home {
+    left: 88px;
+    width: calc(100% - 88px);
+  }
+  .clerk-participants-table {
+    width: auto;
+    height: auto;
+    background-color: var(--text-color);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 10px 8px 10px 8px;
+  }
+  .clerk-participants-table__header p {
+    width: 100%;
+    height: 10%;
+    color: var(--sidebar-color);
+    background-color: var(--text-color);
+    padding: 10px 5px 10px 35px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+    font-size: 30px;
+    font-weight: 500;
+  }
+  .clerk-participants-table__header .clerk-participants-input-main-group {
+    display: flex;
+  }
+  .clerk-participants-table__header .clerk-participants-input-group {
+    width: 55%;
+    height: 100%;
+    background-color: var(--body-color);
+    margin: 10px 15px 10px 35px;
+    padding: 5px;
+    border-radius: 7px;
+    display: flex;
+    transition: .2s;
+  }
+  .clerk-participants-table__header .clerk-participants-input-group-filter {
+    width: 15%;
+    height: 100%;
+    background-color: var(--text-color);
+    margin: 10px 15px 10px 10px;
+    padding: 8px 7px 8px 7px;
+    border-style: groove;
+    border-radius: 7px;
+    border-color: var(--body-color);
+    border-width: 2px;
+    display: flex;
+    justify-content: center;
+  }
+  .clerk-participants-table__header .clerk-participants-button {
+    height: 100%;
+    margin: 13px 5px 10px 10px;
+    padding: 8px 7px 8px 7px;
+    border-radius: 7px;
+    float: right;
+    background-color: var(--sidebar-color);
+    color: var(--text-color);
+  }
+  .clerk-participants-table__header .clerk-participants-button:hover {
+    background-color: var(--text-color);
+    color: var(--sidebar-color);
+  }
+  /* .table__header .input-group:hover {
+    width: 45%;
+    background-color: #afabab;
+    box-shadow: 0 .1rem .4rem #0002;
+    font-weight: 500;
+  } */
+  .clerk-participants-table__header .clerk-participants-input-group .clerk-participants-icon {
+    font-size: 25px;
+    padding: 5px 4px 0px 4px;
+  }
+  .clerk-participants-table__header .clerk-participants-input-group input {
+    width: 100%;
+    padding: 7px 7px 7px 20px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+  }
+  .clerk-participants-table__body {
+    width: 95%;
+    max-height: calc(89% - 1.6rem);
+    margin: 5px 20px 50px 20px;
+    border-radius: .6rem;
+    overflow: auto;
+    overflow: overlay;
+    outline-style: groove;
+    outline-width: 2px;
+    /* outline-color: #17376E; */
+  }
+  .clerk-participants-table__body::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+  .clerk-participants-table__body::-webkit-scrollbar-thumb {
+    border-radius: .5rem;
+    background-color: var(--body-color);
+    visibility: hidden;
+  }
+  .clerk-participants-table__body:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+  }
+  .clerk-participants-table__body-td-name {
+    display: flex;
+  }
+  .clerk-participants-status {
+    padding: .4rem 0;
+    border-radius: 2rem;
+    text-align: center;
+  }
+  .clerk-participants-export__file {
+    margin: 0px 35px 2px 5px;
+    float: right;
+  }
+  .clerk-participants-export__file .clerk-participants-export__file-btn {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    transition: .2s ease-in-out;
+    background: #fff6 url("../../assets/clerk-participant-table/export.png") center / 100% no-repeat;
+  }
+  .clerk-participants-export__file .clerk-participants-export__file-btn:hover {
+    background-color: #fff;
+    transform: scale(1.15);
+    cursor: pointer;
+  }
+  .clerk-participants-export__file input {
+    display: none;
+  }
+  .clerk-participants-export__file .clerk-participants-export__file-options {
+    position: absolute;
+    right: 80px;
+    width: 12rem;
+    border-radius: .5rem;
+    overflow: hidden;
+    text-align: center;
+    opacity: 0;
+    transform: scale(.8);
+    transform-origin: top right;
+    box-shadow: 0 .2rem .5rem var(--sidebar-color);
+    transition: .2s;
+    background-color: #fff;
+  }
+  .clerk-participants-export__file input:checked+.clerk-participants-export__file-options {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 100;
+  }
+  .clerk-participants-export__file .clerk-participants-export__file-options label {
+    display: block;
+    width: 100%;
+    padding: .6rem 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    transition: .2s ease-in-out;
+  }
+  .clerk-participants-export__file .clerk-participants-export__file-options label:first-of-type {
+    padding: 1rem 0;
+    background-color: var(--sidebar-color) !important;
+    color: var(--text-color);
+  }
+  .clerk-participants-export__file .clerk-participants-export__file-options label:hover {
+    transform: scale(1.05);
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  .clerk-participants-export__file .clerk-participants-export__file-options img {
+    width: 2rem;
+    height: auto;
+  }
+  .clerk-participants-clickable-row {
+    cursor: pointer;
+    background-color: transparent;
+  }
+  .clerk-participants-clickable-row:hover {
+    background-color: #0000000b;
+  }
+  
+  /*#DEGREEUSERPROFILE_CSS*/
+  .clerk-userprofile {
+    height: 100vh;
+    left: 250px;
+    position: relative;
+    width: calc(100% - 250px);
+    transition: var(--tran-05);
+    background: var(--body-color);
+  }
+  .clerk-userprofile-white-container1-1 {
+    font-size: 30px;
+    font-weight: 600;
+    color: black;
+    padding: 10px 0px 10px 32px;
+    background-color: var(--text-color);
+    border-radius: 6px;
+    margin: 7px 4px 7px 4px;
+  }
+  .clerk-userprofile-white-container1-core {
+    color: #17376e;
+    font-size: 22px;
+    margin: 10px 0px 5px 0px;
+    font-weight: 300;
+  }
+  .sidebar.close ~ .clerk-userprofile {
+    left: 88px;
+    width: calc(100% - 88px);
+  }
+  .clerk-userprofile-left-top-text {
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    color: #c02626;
+    margin-bottom: 30px;
+  }
+  .clerk-userprofile-white-container2-1 {
+    background-color: white;
+    height: 400px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin: 7px 4px 2px 4px;
+    padding: 10px 0px 10px 32px;
+  }
+  .clerk-userprofile-flex-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  .clerk-userprofile-white-container3-1 {
+    flex: 1;
+    padding: 7px 0px 50px 32px;
+    margin: 5px 4px 2px 4px;
+    background-color: white;
+    width: 50%;
+    font-size: 22px;
+    border-radius: 10px;
+  }
+  .clerk-userprofile-white-container4-1 {
+    flex: 1;
+    padding: 7px 5px 5px 32px;
+    margin: 5px 4px 2px 4px;
+    background-color: white;
+    width: 50%;
+    font-size: 22px;
+    border-radius: 10px;
+  }
+  .clerk-userprofile-row {
+    display: flex;
+    /* margin-left: 5%; */
+  }
+  .clerk-userprofile-column1 {
+    flex: 33.33%;
+    background-color: #ffffff;
+    height: 150px;
+    /* margin-left: 5%; */
+  }
+  .clerk-userprofile-column2,
+  .clerk-userprofile-column3 {
+    flex: 33.33%;
+    background-color: #ffffff;
+    padding: 2%;
+    height: 150px;
+  }
+  .clerk-userprofile-data2,
+  .clerk-userprofile-data4 {
+    font-size: 18px;
+    padding-left: 10%;
+    color: #17376e;
+    padding-top: 20px;
+  }
+  .clerk-userprofile-data1,
+  .clerk-userprofile-data3 {
+    font-size: 18px;
+    padding-left: 10%;
+    color: #17376e;
+  }
+  .clerk-userprofile-email,
+  .clerk-userprofile-regNum,
+  .clerk-userprofile-country,
+  .clerk-userprofile-indexNum {
+    padding-top: 5px;
+    font-size: 18px;
+    color: #000000;
+  }
+  .clerk-userprofile-name {
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+  }
+  .clerk-userprofile-left-top-text2 {
+    padding-top: 2%;
+    text-align: left;
+    margin: 0;
+    color: #17376e;
+    margin-bottom: 30px;
+    font-size: 21px;
+    font-weight: bold;
+  }
+  .clerk-userprofile-row2 {
+    display: flex;
+    margin-left: 10%;
+  }
+  .clerk-userprofile-column2-2 {
+    padding-left: 15%;
+  }
+  .clerk-userprofile-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  .clerk-userprofile-left-top-text3 {
+    text-align: left;
+    margin: 0;
+    padding: 10px 0px 0px 32px;
+    color: #000000;
+    margin-bottom: 5px;
+  }
+  .clerk-userprofile-left-top-text4 {
+    text-align: left;
+    margin: 0;
+    padding: 10px 0px 0px 32px;
+    color: #000000;
+    margin-bottom: 5px;
+    font-size: medium;
+  }
+  .clerk-userprofile-table {
+    border-collapse: collapse;
+    width: 300px;
+  }
+  .clerk-userprofile-bday,
+  .clerk-userprofile-nic,
+  .clerk-userprofile-phoneNum,
+  .clerk-userprofile-Fax,
+  .clerk-userprofile-aclerk {
+    padding-top: 5px;
+    padding-bottom: 30px;
+    font-size: 18px;
+    color: #000000;
+  }
+  .clerk-userprofile-button {
+    background-color: #17376e;
+    border: none;
+    color: white;
+    padding: 8px 22px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  .clerk-userprofile-buttonx {
+    margin-top: 20px;
+  }
+  #clerk-userprofile-updateButton {
+    margin-left: 37%;
+    border-radius: 8px;
+    width: 150px;
+    height: 40px;
+    padding-bottom: 22px;
+  }
+  #clerk-userprofile-updateButton:hover {
+    background-color: var(--text-color);
+    color: var(--sidebar-color);
+    border: 2px solid var(--sidebar-color);
+  }
+  #clerk-userprofile-submitbutton {
+    width: 100%;
+    background-color: #17376e;
+    color: #ffffff;
+    padding: 8px 22px;
+    margin: 8px 27px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100px;
+  }
+  #clerk-userprofile-submitbutton:hover {
+    background-color: #ccc;
+  }
+  .clerk-userprofile-close-button {
+    /* width: 100%; */
+    background-color: var(--text-color);
+    color: var(--sidebar-color);
+    padding: 8px 22px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid red;
+    border-width: 1px;
+  }
+  .clerk-userprofile-close-button-2 {
+    background-color: var(--text-color);
+    color: red;
+    padding: 8px 22px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid red;
+    border-width: 1px;
+  }
+  .clerk-userprofile-close-button-3 {
+    background-color: var(--text-color);
+    color: black;
+    padding: 8px 22px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid black;
+    border-width: 1px;
+  }
+  .clerk-userprofile-close-button:hover {
+    background-color: #e2e2e2;
+  }
+  .clerk-userprofile-popupForm1 {
+    border-radius: 5px;
+    background-color: var(--text-color);
+    padding: 23px;
+    width: 500px;
+    height: 500px;
+  }
+  #clerk-userprofile-changedegreebutton {
+    border-radius: 8px;
+    width: 250px;
+    height: 40px;
+  }
+  #clerk-userprofile-changedegreebutton:hover {
+    background-color: var(--text-color);
+    color: var(--sidebar-color);
+    border: 2px solid var(--sidebar-color);
+  }
+  #clerk-userprofile-userDeletePopupImg {
+    height: 100px;
+    width: 100px;
+  }
+  #clerk-userprofile-userDeletePopupH2 {
+    font-weight: 400;
+    margin: 20px 10px;
+  }
+  #clerk-userprofile-deletebutton {
+    display: inline-block;
+    background-color: var(--text-color);
+    border: 2px solid red;
+    color: red;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    height: 40px;
+    margin-left: 20;
+  }
+  #clerk-userprofile-deletebutton:hover {
+    background-color: red;
+    color: var(--text-color);
+  }
+  .clerk-userprofile-cur-deg,
+  .clerk-userprofile-change-deg {
+    font-size: 20px;
+  }
+  .clerk-userprofile-change-deg select {
+    padding: 20px;
+    font-size: 18px;
+  }
+  #clerk-userprofile-update-deg {
+    width: 100%;
+    background-color: #17376e;
+    color: #ffffff;
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100px;
+  }
+  #clerk-userprofile-update-deg:hover {
+    background-color: #ccc;
+  }
+  .clerk-userprofile-clerkop-down {
+    margin: 30vh 4vh 10vh 0;
+    font-size: 12px;
+  }
+  .clerk-userprofile-bt-name-white {
+    background: #fff;
+    padding: 8px 22px;
+    margin-left: -100px;
+    border-radius: 6px;
+    color: #17376e;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+    border: 0px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .clerk-userprofile-bt-name-white:hover {
+    color: #fff;
+    background: #17376e;
+  }
+  .clerk-userprofile-bt-name {
+    color: #fff;
+    padding: 8px 22px;
+    border-radius: 6px;
+    background: #17376e;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+    border: 0px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 20px;
+  }
+  .clerk-userprofile-bt-name:hover {
+    background: #fff;
+    color: #17376e;
+  }
+  .clerk-userprofile-btn-box {
+    width: 100%;
+    margin: 30px 10px 20px 10px;
+    text-align: center;
+  }
+  /*pop up for update*/
+  .clerk-userprofile-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.25);
+    opacity: 1;
+    background: #fff;
+    width: 500px;
+    padding: 20px 30px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms,
+      transform 200ms ease-in-out 0ms;
+    z-index: 999;
+  }
+  .clerk-userprofile-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  }
+  .clerk-userprofile-popup .clerk-userprofile-form h2 {
+    text-align: center;
+    color: #17376e;
+    margin: 10px 0px 20px;
+    font-size: 22px;
+    font-weight: 600;
+  }
+  .clerk-userprofile-popup .form .clerk-userprofile-form-element {
+    display: flex;
+    margin: 15px 0px;
+    align-content: flex-end;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  .clerk-userprofile-popup .clerk-userprofile-form .clerk-userprofile-form-element label {
+    font-size: 14px;
+    color: #222;
+  }
+  .clerk-userprofile-popup .clerk-userprofile-form .clerk-userprofile-form-element input[type="text"] {
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    height: 33px;
+  }
+  .clerk-userprofile-popup .clerk-userprofile-form .clerk-userprofile-form-element button {
+    padding: 10px;
+    height: 5vh;
+    width: 30%;
+    border: none;
+    outline: none;
+    background: #17376e;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  .clerk-userprofile-user-data {
+    display: flex;
+    gap: 30px;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  .clerk-userprofile-column-01,
+  .clerk-userprofile-column-02 {
+    width: 50%;
+  }
+  .clerk-userprofile-popup-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .clerk-userprofile-student-create-update {
+    margin: 2% 0% 0% 27%;
+  }
+  .clerk-userprofile-pop-up1-1 {
+    display: none;
+    position: fixed;
+    background-color: var(--text-color);
+    color: black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    margin: 5px 8px;
+    padding: 40px 65px;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+  }
+  .clerk-userprofile-pop-up1-1 h2 {
+    font-weight: 600;
+    margin: 20px 10px;
+  }
+  .clerk-userprofile-pop-up1-1 p {
+    font-weight: 400;
+    margin: 20px 10px;
+  }
+  #clerk-userprofile-crossForDiplomaChange{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 20px;
+    cursor: pointer;
+  }
+  .clerk-userprofile-button-container {
+    margin-top: 45px;
+    display: flex;
+    flex-direction: row;
+    float: right;
+    margin-right: 20%;
+  }
+  .clerk-userprofile-yesorno {
+    margin: 5% 25%;
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+  }
+  .clerk-userprofile-pop-up1 {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    z-index: 999;
+    border-radius: 15px;
+  }
+  .clerk-userprofile-pop-up2 {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    z-index: 999;
+    border-radius: 15px;
+  }

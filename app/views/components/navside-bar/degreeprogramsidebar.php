@@ -5,39 +5,7 @@
     <link rel="stylesheet" type="text/css" href="<?= ROOT ?>css/degreeprogramsidebar-component.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Navsidebar</title>
-    <style>
-        .notification-badge {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            padding: 3px 6px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .user-pic {
-            width: 27px;
-            height: 27px;
-            border-radius: 50%;
-            cursor: pointer;
-            margin: 8px 10px -0.5px 10px;
-        }
-
-        .hero-ul {
-            width: 100%;
-            text-align: right;
-        }
-
-        .hero-ul-li {
-            position: relative;
-            display: inline-block;
-            list-style: none;
-        }
-    </style>
-</head>
+    </head>
 
 <body>
     <nav class="sidebar close">
@@ -532,12 +500,13 @@
 
         <div class="hero">
             <nav>
-                <ul class="hero-ul">
-                    <li class="hero-ul-li"><a href="<?= ROOT ?>director/notification"><i class="bx bxs-bell icon"></i></a>
-                    </li>
-                    <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg"
-                            class="user-pic"></li>
-                </ul>
+            <ul class="hero-ul">
+                <li class="hero-ul-li"><a href="<?= ROOT ?>director/notification"><i class="bx bxs-bell icon"><?php if(isset($notification_count_obj_director) && $notification_count_obj_director->notification_count_director > 0): ?>
+                    <span class="notification-badge"><?= $notification_count_obj_director->notification_count_director ?></span>
+                <?php endif; ?></i></a></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+            </ul>
+
 
                 <div class="sub-menu-wrap" id="subMenu">
                     <div class="sub-menu">
@@ -566,7 +535,7 @@
                 <ul class="menu-links">
                     <h6 class="topic3">PROGRAMS</h6>
                     <li class="nav-link">
-                        <a href="<?= ROOT ?>clerk/newdegree">
+                        <a href="<?= ROOT ?>clerk/degreeprofile">
                             <i class="bx bx-layer-plus icon"></i>
                             <span class="text nav-text">Degree Name</span></a>
                     </li>
@@ -632,11 +601,13 @@
 
         <div class="hero">
             <nav>
-                <ul class="hero-ul">
-                    <li class="hero-ul-li"><a href="<?= ROOT ?>clerk/notification"><i class="bx bxs-bell icon"></i></a></li>
-                    <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg"
-                            class="user-pic"></li>
-                </ul>
+            <ul class="hero-ul">
+                <li class="hero-ul-li"><a href="<?= ROOT ?>clerk/notification"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj) && $notification_count_obj->notification_count > 0): ?>
+                    <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                <?php endif; ?></a></i></li>
+              
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+            </ul>
 
                 <div class="sub-menu-wrap" id="subMenu">
                     <div class="sub-menu">
