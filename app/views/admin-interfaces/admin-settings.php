@@ -14,7 +14,7 @@ $data['role'] = $role;
 </head>
 
 <body>
-<?php $this->view('common/settings/settings', $data) ?>
+    <?php $this->view('common/settings/settings', $data) ?>
 </body>
 
 </html>

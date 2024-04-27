@@ -20,6 +20,13 @@ define('DBUSER', 'fitadmin');
 define('DBPASS', 'password@123');
 define('DBDRIVER', 'mysql');
 
+// define('DBHOST', 'bitnami@13.251.194.207');
+// define('DBNAME', 'nilisdb_aws');
+// define('DBUSER', 'root');
+// define('DBPASS', ' ');
+// define('DBDRIVER', 'mysql');
+
+
 
 // root path 
 define('ROOT', 'http://localhost/NILIS-MIS/public/');
@@ -36,8 +43,8 @@ define('ROOT', 'http://localhost/NILIS-MIS/public/');
 //     //root path (localhost)
 //     //root path 
 //     define('ROOT', 'http://localhost/NILIS-MIS/public/');
-//     define('ROOTDIR', 'http://localhost/NILIS-MIS/');
-// } else {
+// }
+//  else {
 //     //database config for live server
 //     define('DBHOST', 'sql6.freesqldatabase.com');
 //     define('DBNAME', 'sql6683375');

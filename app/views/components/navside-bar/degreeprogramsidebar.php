@@ -36,7 +36,7 @@
             <i class='bx bx-chevron-right toggle'></i>
         </header>
 
-        <?php if ($role == "DR") : ?>
+        <?php if ($role == "DR"): ?>
 
             <div class="menu-bar">
                 <hr>
@@ -105,7 +105,7 @@
                     </ul>
                 </div>
             </div>
-    </nav>
+        </nav>
 
     <div class="hero">
         <nav>
@@ -133,31 +133,31 @@
         </nav>
     </div>
 
-<?php endif ?>
-<?php if ($role == "SAR") : ?>
+    <?php endif ?>
+    <?php if ($role == "SAR"): ?>
 
-    <div class="menu-bar">
-        <hr>
-        <div class="menu">
-            <ul class="menu-links">
-                <h6 class="topic3">PROGRAMS</h6>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>sar/degreeprofile">
-                        <i class="bx bx-layer-plus icon"></i>
-                        <span class="text nav-text">Degree Name</span></a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>sar/participants">
-                        <i class="bx bx-group icon"></i>
-                        <span class="text nav-text">Participants</span>
-                    </a>
-                </li>
-                <li class="nav-link" id="myButton">
-                    <a href="<?= ROOT ?>sar/examination">
-                        <i class="bx bx-book icon"></i>
-                        <span class="text nav-text">Examination</span>
-                    </a>
-                    <?php
+        <div class="menu-bar">
+            <hr>
+            <div class="menu">
+                <ul class="menu-links">
+                    <h6 class="topic3">PROGRAMS</h6>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>sar/degreeprofile">
+                            <i class="bx bx-layer-plus icon"></i>
+                            <span class="text nav-text">Degree Name</span></a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>sar/participants">
+                            <i class="bx bx-group icon"></i>
+                            <span class="text nav-text">Participants</span>
+                        </a>
+                    </li>
+                    <li class="nav-link" id="myButton">
+                        <a href="<?= ROOT ?>sar/examination">
+                            <i class="bx bx-book icon"></i>
+                            <span class="text nav-text">Examination</span>
+                        </a>
+                        <?php
                         // Check if the URL contains any of the specified patterns
                         $url = $_SERVER['REQUEST_URI'];
                         if (
@@ -171,54 +171,54 @@
                                 '<a href="' . ROOT . 'sar/examination/results"><center>Examination Results</center></a>' .
                                 '</div>';
                         }
-                    ?>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>sar/attendance">
-                        <i class="bx bx-check-square icon"></i>
-                        <span class="text nav-text">Attendance</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>sar/reports">
-                        <i class="bx bx-file icon"></i>
-                        <span class="text nav-text">Reports</span>
-                    </a>
-                </li>
+                        ?>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>sar/attendance">
+                            <i class="bx bx-check-square icon"></i>
+                            <span class="text nav-text">Attendance</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>sar/reports">
+                            <i class="bx bx-file icon"></i>
+                            <span class="text nav-text">Reports</span>
+                        </a>
+                    </li>
 
 
-                <hr class="horizontal-line"><br>
-                <h6 class="topic1">MAIN</h6>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>sar">
-                        <i class="bx bx-home icon"></i>
-                        <span class="text nav-text">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>sar/notifications">
-                        <i class="bx bx-bell icon"></i>
-                        <span class="text nav-text">Notification</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>sar/degreeprograms">
-                        <i class="bx bx-layer-plus icon"></i>
-                        <span class="text nav-text">Degree Programs</span>
-                    </a>
-                </li>
-                <hr class="horizontal-line">
-                <h6 class="topic2">SETTINGS</h6>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>sar/settings">
-                        <i class="bx bx-cog icon"></i>
-                        <span class="text nav-text">Settings</span>
-                    </a>
-                </li>
-            </ul>
+                    <hr class="horizontal-line"><br>
+                    <h6 class="topic1">MAIN</h6>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>sar">
+                            <i class="bx bx-home icon"></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>sar/notifications">
+                            <i class="bx bx-bell icon"></i>
+                            <span class="text nav-text">Notification</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>sar/degreeprograms">
+                            <i class="bx bx-layer-plus icon"></i>
+                            <span class="text nav-text">Degree Programs</span>
+                        </a>
+                    </li>
+                    <hr class="horizontal-line">
+                    <h6 class="topic2">SETTINGS</h6>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>sar/settings">
+                            <i class="bx bx-cog icon"></i>
+                            <span class="text nav-text">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-    </nav>
+        </nav>
 
     <div class="hero">
         <nav>
@@ -246,77 +246,77 @@
         </nav>
     </div>
 
-<?php endif ?>
-<?php if ($role == "Assistant-SAR") : ?>
+    <?php endif ?>
+    <?php if ($role == "Assistant-SAR"): ?>
 
-    <div class="menu-bar">
-        <hr>
-        <div class="menu">
-            <ul class="menu-links">
-                <h6 class="topic3">PROGRAMS</h6>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>assistant-sar/degreeprofile">
-                        <i class="bx bx-layer-plus icon"></i>
-                        <span class="text nav-text">Degree Name</span></a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>assistant-sar/participants">
-                        <i class="bx bx-group icon"></i>
-                        <span class="text nav-text">Participants</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>assistant-sar/examination">
-                        <i class="bx bx-book icon"></i>
-                        <span class="text nav-text">Examination</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>assistant-sar/attendance">
-                        <i class="bx bx-check-square icon"></i>
-                        <span class="text nav-text">Attendance</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>assistant-sar/reports">
-                        <i class="bx bx-file icon"></i>
-                        <span class="text nav-text">Reports</span>
-                    </a>
-                </li>
+        <div class="menu-bar">
+            <hr>
+            <div class="menu">
+                <ul class="menu-links">
+                    <h6 class="topic3">PROGRAMS</h6>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>assistant-sar/degreeprofile">
+                            <i class="bx bx-layer-plus icon"></i>
+                            <span class="text nav-text">Degree Name</span></a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>assistant-sar/participants">
+                            <i class="bx bx-group icon"></i>
+                            <span class="text nav-text">Participants</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>assistant-sar/examination">
+                            <i class="bx bx-book icon"></i>
+                            <span class="text nav-text">Examination</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>assistant-sar/attendance">
+                            <i class="bx bx-check-square icon"></i>
+                            <span class="text nav-text">Attendance</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>assistant-sar/reports">
+                            <i class="bx bx-file icon"></i>
+                            <span class="text nav-text">Reports</span>
+                        </a>
+                    </li>
 
 
-                <hr class="horizontal-line"><br>
-                <h6 class="topic1">MAIN</h6>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>assistant-sar">
-                        <i class="bx bx-home icon"></i>
-                        <span class="text nav-text">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>assistant-sar/notification">
-                        <i class="bx bx-bell icon"></i>
-                        <span class="text nav-text">Notification</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>assistant-sar/degreeprograms">
-                        <i class="bx bx-layer-plus icon"></i>
-                        <span class="text nav-text">Degree Programs</span>
-                    </a>
-                </li>
-                <hr class="horizontal-line">
-                <h6 class="topic2">SETTINGS</h6>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>assistant-sar/settings">
-                        <i class="bx bx-cog icon"></i>
-                        <span class="text nav-text">Settings</span>
-                    </a>
-                </li>
-            </ul>
+                    <hr class="horizontal-line"><br>
+                    <h6 class="topic1">MAIN</h6>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>assistant-sar">
+                            <i class="bx bx-home icon"></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>assistant-sar/notification">
+                            <i class="bx bx-bell icon"></i>
+                            <span class="text nav-text">Notification</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>assistant-sar/degreeprograms">
+                            <i class="bx bx-layer-plus icon"></i>
+                            <span class="text nav-text">Degree Programs</span>
+                        </a>
+                    </li>
+                    <hr class="horizontal-line">
+                    <h6 class="topic2">SETTINGS</h6>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>assistant-sar/settings">
+                            <i class="bx bx-cog icon"></i>
+                            <span class="text nav-text">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-    </nav>
+        </nav>
 
     <div class="hero">
         <nav>
@@ -344,77 +344,77 @@
         </nav>
     </div>
 
-<?php endif ?>
-<?php if ($role == "Admin") : ?>
+    <?php endif ?>
+    <?php if ($role == "Admin"): ?>
 
-    <div class="menu-bar">
-        <hr>
-        <div class="menu">
-            <ul class="menu-links">
-                <h6 class="topic3">PROGRAMS</h6>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>admin/degreeprofile">
-                        <i class="bx bx-layer-plus icon"></i>
-                        <span class="text nav-text">Degree Name</span></a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>admin/participants">
-                        <i class="bx bx-group icon"></i>
-                        <span class="text nav-text">Participants</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>admin/examination">
-                        <i class="bx bx-book icon"></i>
-                        <span class="text nav-text">Examination</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>admin/attendance">
-                        <i class="bx bx-check-square icon"></i>
-                        <span class="text nav-text">Attendance</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>admin/reports">
-                        <i class="bx bx-file icon"></i>
-                        <span class="text nav-text">Reports</span>
-                    </a>
-                </li>
+        <div class="menu-bar">
+            <hr>
+            <div class="menu">
+                <ul class="menu-links">
+                    <h6 class="topic3">PROGRAMS</h6>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>admin/degreeprofile">
+                            <i class="bx bx-layer-plus icon"></i>
+                            <span class="text nav-text">Degree Name</span></a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>admin/participants">
+                            <i class="bx bx-group icon"></i>
+                            <span class="text nav-text">Participants</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>admin/examination">
+                            <i class="bx bx-book icon"></i>
+                            <span class="text nav-text">Examination</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>admin/attendance">
+                            <i class="bx bx-check-square icon"></i>
+                            <span class="text nav-text">Attendance</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>admin/reports">
+                            <i class="bx bx-file icon"></i>
+                            <span class="text nav-text">Reports</span>
+                        </a>
+                    </li>
 
 
-                <hr class="horizontal-line"><br>
-                <h6 class="topic1">MAIN</h6>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>admin">
-                        <i class="bx bx-home icon"></i>
-                        <span class="text nav-text">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>admin/notification">
-                        <i class="bx bx-bell icon"></i>
-                        <span class="text nav-text">Notification</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>admin/degreeprograms">
-                        <i class="bx bx-layer-plus icon"></i>
-                        <span class="text nav-text">Degree Programs</span>
-                    </a>
-                </li>
-                <hr class="horizontal-line">
-                <h6 class="topic2">SETTINGS</h6>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>admin/settings">
-                        <i class="bx bx-cog icon"></i>
-                        <span class="text nav-text">Settings</span>
-                    </a>
-                </li>
-            </ul>
+                    <hr class="horizontal-line"><br>
+                    <h6 class="topic1">MAIN</h6>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>admin">
+                            <i class="bx bx-home icon"></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>admin/notification">
+                            <i class="bx bx-bell icon"></i>
+                            <span class="text nav-text">Notification</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>admin/degreeprograms">
+                            <i class="bx bx-layer-plus icon"></i>
+                            <span class="text nav-text">Degree Programs</span>
+                        </a>
+                    </li>
+                    <hr class="horizontal-line">
+                    <h6 class="topic2">SETTINGS</h6>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>admin/settings">
+                            <i class="bx bx-cog icon"></i>
+                            <span class="text nav-text">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-    </nav>
+        </nav>
 
     <div class="hero">
         <nav>
@@ -442,77 +442,77 @@
         </nav>
     </div>
 
-<?php endif ?>
-<?php if ($role == "director") : ?>
+    <?php endif ?>
+    <?php if ($role == "director"): ?>
 
-    <div class="menu-bar">
-        <hr>
-        <div class="menu">
-            <ul class="menu-links">
-                <h6 class="topic3">PROGRAMS</h6>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>director/degreeprofile">
-                        <i class="bx bx-layer-plus icon"></i>
-                        <span class="text nav-text">Degree Name</span></a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>director/participants">
-                        <i class="bx bx-group icon"></i>
-                        <span class="text nav-text">Participants</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>director/examination">
-                        <i class="bx bx-book icon"></i>
-                        <span class="text nav-text">Examination</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>director/attendance">
-                        <i class="bx bx-check-square icon"></i>
-                        <span class="text nav-text">Attendance</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>director/reports">
-                        <i class="bx bx-file icon"></i>
-                        <span class="text nav-text">Reports</span>
-                    </a>
-                </li>
+        <div class="menu-bar">
+            <hr>
+            <div class="menu">
+                <ul class="menu-links">
+                    <h6 class="topic3">PROGRAMS</h6>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>director/degreeprofile">
+                            <i class="bx bx-layer-plus icon"></i>
+                            <span class="text nav-text">Degree Name</span></a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>director/participants">
+                            <i class="bx bx-group icon"></i>
+                            <span class="text nav-text">Participants</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>director/examination">
+                            <i class="bx bx-book icon"></i>
+                            <span class="text nav-text">Examination</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>director/attendance">
+                            <i class="bx bx-check-square icon"></i>
+                            <span class="text nav-text">Attendance</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>director/reports">
+                            <i class="bx bx-file icon"></i>
+                            <span class="text nav-text">Reports</span>
+                        </a>
+                    </li>
 
 
-                <hr class="horizontal-line"><br>
-                <h6 class="topic1">MAIN</h6>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>director">
-                        <i class="bx bx-home icon"></i>
-                        <span class="text nav-text">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>director/notification">
-                        <i class="bx bx-bell icon"></i>
-                        <span class="text nav-text">Notification</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>director/degreeprograms">
-                        <i class="bx bx-layer-plus icon"></i>
-                        <span class="text nav-text">Degree Programs</span>
-                    </a>
-                </li>
-                <hr class="horizontal-line">
-                <h6 class="topic2">SETTINGS</h6>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>director/settings">
-                        <i class="bx bx-cog icon"></i>
-                        <span class="text nav-text">Settings</span>
-                    </a>
-                </li>
-            </ul>
+                    <hr class="horizontal-line"><br>
+                    <h6 class="topic1">MAIN</h6>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>director">
+                            <i class="bx bx-home icon"></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>director/notification">
+                            <i class="bx bx-bell icon"></i>
+                            <span class="text nav-text">Notification</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>director/degreeprograms">
+                            <i class="bx bx-layer-plus icon"></i>
+                            <span class="text nav-text">Degree Programs</span>
+                        </a>
+                    </li>
+                    <hr class="horizontal-line">
+                    <h6 class="topic2">SETTINGS</h6>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>director/settings">
+                            <i class="bx bx-cog icon"></i>
+                            <span class="text nav-text">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-    </nav>
+        </nav>
 
     <div class="hero">
         <nav>
@@ -540,9 +540,9 @@
         </nav>
     </div>
 
-<?php endif ?>
+    <?php endif ?>
 
-<?php if ($role == "Clerk") : ?>
+    <?php if ($role == "Clerk"): ?>
 
     <div class="menu-bar">
         <hr>
@@ -581,38 +581,38 @@
                 </li>
 
 
-                <hr class="horizontal-line"><br>
-                <h6 class="topic1">MAIN</h6>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk">
-                        <i class="bx bx-home icon"></i>
-                        <span class="text nav-text">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/notification">
-                        <i class="bx bx-bell icon"></i>
-                        <span class="text nav-text">Notification</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/degreeprograms">
-                        <i class="bx bx-layer-plus icon"></i>
-                        <span class="text nav-text">Degree Programs</span>
-                    </a>
-                </li>
-                <hr class="horizontal-line">
-                <h6 class="topic2">SETTINGS</h6>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/settings">
-                        <i class="bx bx-cog icon"></i>
-                        <span class="text nav-text">Settings</span>
-                    </a>
-                </li>
-            </ul>
+                    <hr class="horizontal-line"><br>
+                    <h6 class="topic1">MAIN</h6>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>clerk">
+                            <i class="bx bx-home icon"></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>clerk/notification">
+                            <i class="bx bx-bell icon"></i>
+                            <span class="text nav-text">Notification</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>clerk/degreeprograms">
+                            <i class="bx bx-layer-plus icon"></i>
+                            <span class="text nav-text">Degree Programs</span>
+                        </a>
+                    </li>
+                    <hr class="horizontal-line">
+                    <h6 class="topic2">SETTINGS</h6>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>clerk/settings">
+                            <i class="bx bx-cog icon"></i>
+                            <span class="text nav-text">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-    </nav>
+        </nav>
 
     <div class="hero">
         <nav>
@@ -641,4 +641,4 @@
         </nav>
     </div>
 
-<?php endif ?>
+    <?php endif ?>

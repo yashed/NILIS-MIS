@@ -5,6 +5,15 @@ $data['role'] = $role;
 
 ?>
 
+<<<<<<< HEAD
+<?php $this->view('components/navside-bar/header',$data) ?>
+<?php $this->view('components/navside-bar/sidebar',$data) ?>
+<?php $this->view('components/navside-bar/footer',$data) ?>
+
+
+
+=======
+>>>>>>> 17c93949c080a9f432244a1fe74fa745048dee2c
 <!DOCTYPE html>
 <html lang="en">
 
@@ -75,30 +84,28 @@ $data['role'] = $role;
             margin: 40px;
 
         }
-
-       
     </style>
 </head>
 
 <body>
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
+    <?php $this->view('components/navside-bar/header', $data) ?>
+    <?php $this->view('components/navside-bar/sidebar', $data) ?>
+    <?php $this->view('components/navside-bar/footer', $data) ?>
 
     <div class="temp3-home">
         <div class="temp3-title">Notifications</div>
         <div class="temp3-subsection-1">
-        <?php if (!empty($notifications)) : ?>
-                <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-start-alert') : ?>
+            <?php if (!empty($notifications)): ?>
+                <?php foreach ($notifications as $notification): ?>
+                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-start-alert'): ?>
                         <?php
                         $data['role'] = "SAR";
 
-                        $link = "sar"; 
+                        $link = "sar";
                         $this->view('components/notification-bar/notification-box', [
                             "notification" => $notification,
                             "role" => $data['role'],
-                            "link" =>$link  // Pass the notify_id here
+                            "link" => $link  // Pass the notify_id here
                         ]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -106,7 +113,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert') : ?>
+                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-end-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "SAR";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -116,7 +123,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert') : ?>
+                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "SAR";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -126,7 +133,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert') : ?>
+                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-end-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "SAR";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -136,7 +143,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-start-alert') : ?>
+                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-start-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "SAR";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -146,7 +153,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-end-alert') : ?>
+                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Studyleave-end-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "SAR";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -154,33 +161,33 @@ $data['role'] = $role;
                 <?php endforeach; ?>
             <?php endif; ?>
 
-            <?php if (!empty($notifications)) : ?>
-                <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-attendance-alert') : ?>
+            <?php if (!empty($notifications)): ?>
+                <?php foreach ($notifications as $notification): ?>
+                    <?php if ($notification->type == 'Examination' && $notification->msg_type == 'Exam-attendance-alert'): ?>
                         <?php
                         $data['role'] = "SAR";
 
-                        $link = "sar"; 
+                        $link = "sar";
                         $this->view('components/notification-bar/notification-box', [
                             "notification" => $notification,
                             "role" => $data['role'],
-                            "link" =>$link  // Pass the notify_id here
+                            "link" => $link  // Pass the notify_id here
                         ]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
-            <?php if (!empty($notifications)) : ?>
-                <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Send-warnings-alert') : ?>
+            <?php if (!empty($notifications)): ?>
+                <?php foreach ($notifications as $notification): ?>
+                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Send-warnings-alert'): ?>
                         <?php
                         $data['role'] = "SAR";
 
-                        $link = "sar"; 
+                        $link = "sar";
                         $this->view('components/notification-bar/notification-box', [
                             "notification" => $notification,
                             "role" => $data['role'],
-                            "link" =>$link  // Pass the notify_id here
+                            "link" => $link  // Pass the notify_id here
                         ]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -189,12 +196,12 @@ $data['role'] = $role;
         </div>
     </div>
 
-    
+
 
     <div class="temp3-footer">
         <?php $this->view('components/footer/index', $data) ?>
     </div>
- 
+
 </body>
 
 </html>

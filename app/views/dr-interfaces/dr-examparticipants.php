@@ -711,7 +711,8 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                             <form method="post">
 
                                 <!-- <button class="admission-button0">Download Attendance Sheet</button> -->
-                                <button class="admission-button2" type="submit" name="admission" value="clicked" onClick="showMailPopup(event)">Send Admission Card</button>
+                                <button class="admission-button2" type="submit" name="admission" value="clicked"
+                                    onClick="showMailPopup(event)">Send Admission Card</button>
 
                             </form>
                         </div>
@@ -742,8 +743,8 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($currentRecords as $students) : ?>
-                                    <?php foreach ($students as $student) : ?>
+                                <?php foreach ($currentRecords as $students): ?>
+                                    <?php foreach ($students as $student): ?>
                                         <?php $json = json_encode($student); ?>
                                         <tr>
                                             <td class="table__body-td-name"><img src="<?= ROOT ?>assets/student.png" alt="">
@@ -770,15 +771,15 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
 
                     <br>
                     <div class="pagination">
-                        <?php if ($page > 1) : ?>
+                        <?php if ($page > 1): ?>
                             <a href="?page=<?= $page - 1 ?>">Previous</a>
                         <?php endif; ?>
-                        <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                             <a href="?page=<?= $i ?>" <?= $page === $i ? 'class="active"' : '' ?>>
                                 <?= $i ?>
                             </a>
                         <?php endfor; ?>
-                        <?php if ($page < $totalPages) : ?>
+                        <?php if ($page < $totalPages): ?>
                             <a href="?page=<?= $page + 1 ?>">Next</a>
                         <?php endif; ?>
                     </div>
@@ -831,7 +832,7 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
     // });
 </script>
 <script>
-    $(window).on("load", function() {
+    $(window).on("load", function () {
         $(".loader-wraper").fadeOut("slow");
     });
 

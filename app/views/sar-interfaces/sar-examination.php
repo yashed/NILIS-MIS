@@ -189,6 +189,7 @@ $data['role'] = $role;
         align-items: center;
         flex-direction: column;
         width: 70%;
+        gap: 10px;
     }
 
     .exam-card3 {
@@ -324,8 +325,22 @@ $data['role'] = $role;
             </div>
             <div class="exam-degree-bar">
                 <div class="exam-card1">
-                    <!--Need to change this login upcomming examinations -->
-                    <div class="exam-msg">No upcomming Examination</div>
+
+                    <?php $upcmoning = false ?>
+                    <?php if (!empty($examDetails)): ?>
+                        <?php foreach ($examDetails as $exam): ?>
+                            <?php if ($exam->status == 'upcoming'): ?>
+                                <?php
+                                $data['exam'] = $exam;
+                                $upcmoning = true;
+                                ?>
+                                <?php $this->view('components/exam-card/exam-card', $data) ?>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    <?php if (!$upcmoning): ?>
+                        <div class='exam-msg'>No Upcoming examination</div>
+                    <?php endif; ?>
 
                 </div>
             </div>
@@ -369,13 +384,13 @@ $data['role'] = $role;
                                 <?php if ($exam->status == 'completed'): ?>
                                     <?php
                                     $data['exam'] = $exam;
-                                    $ongoingExam = true;
+                                    $completeExam = true;
                                     ?>
                                     <?php $this->view('components/exam-card/exam-card', $data) ?>
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         <?php endif; ?>
-                        <?php if (!$ongoingExam): ?>
+                        <?php if (!$completeExam): ?>
                             <div class='exam-msg'>No Completed examination</div>
                         <?php endif; ?>
                     </div>

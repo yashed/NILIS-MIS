@@ -8,9 +8,6 @@ $data['role'] = $role;
 
 ?>
 
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -396,58 +393,115 @@ $data['role'] = $role;
         font-weight: 300;
         text-align: left;
     }
+
+    .cancel-link {
+        display: flex;
+        justify-content: center;
+        font-family: "Poppins";
+        font-size: 12px;
+        color: #17376E;
+        font-weight: 400;
+        margin-top: 40px;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .cancel-a:hover {
+        color: #FF0000;
+    }
+
+    .exam-cancel {
+        position: fixed;
+        top: -150%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.25);
+        border: 1.5px solid rgba(00, 00, 00, 0.30);
+        opacity: 0;
+        background: #fff;
+        width: 40%;
+        /* height: 60vh; */
+        padding: 40px;
+        box-shadow: 9px 11px 60.9px 0px rgba(0, 0, 0, 0.60);
+        border-radius: 10px;
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+        z-index: 2000;
+    }
+
+    .exam-cancel.active {
+        top: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+    }
+
+    .create-body {
+        width: 100%;
+    }
+
+    .create-body.active {
+        filter: blur(5px);
+        pointer-events: none;
+        user-select: none;
+        background: rgba(0, 0, 0, 0.30);
+        overflow: hidden;
+    }
 </style>
 
 <body>
-    <div class="exam-create-home">
-        <div class="exam-create-title">Create Examination</div>
-        <div class="exam-create-subsection-1">
-            <form method="post" id="exam-timetable" name='exam-timetable' onsubmit="return validateForm();">
-                <div class="exam-create-sub-title">
-                    Add Participant
+    <div class='create-body' id='exam-create-body'>
+        <?php $this->view('components/navside-bar/header', $data) ?>
+        <?php $this->view('components/navside-bar/sidebar', $data) ?>
+        <?php $this->view('components/navside-bar/footer', $data) ?>
 
-                    <div class="exam-create-steps">
-                        <div class="progress">
-                            <lable class="form-subname">Define time table for the examination</lable>
-                            <lable class="form-subname">Step 3 of 3</lable>
+        <div class="exam-create-home">
+            <div class="exam-create-title">Create Examination</div>
+            <div class="exam-create-subsection-1">
+                <form method="post" id="exam-timetable" name='exam-timetable' onsubmit="return validateForm();">
+                    <div class="exam-create-sub-title">
+                        Add Participant
 
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-bar-active"></div>
-                        </div>
-                        <div class="exam-time-table">
-                            <table class="table">
-                                <tr>
-                                    <th>
-                                        Subject
-                                    </th>
-                                    <th>
-                                        Date
-                                    </th>
-                                    <th>
-                                        Time
-                                    </th>
-                                </tr>
-                                <?php foreach ($subjects as $subject): ?>
-                                    <?php $json = json_encode($subject); ?>
+                        <div class="exam-create-steps">
+                            <div class="progress">
+                                <lable class="form-subname">Define time table for the examination</lable>
+                                <lable class="form-subname">Step 3 of 3</lable>
 
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-bar-active"></div>
+                            </div>
+                            <div class="exam-time-table">
+                                <table class="table">
                                     <tr>
-                                        <td>
-                                            <input type="text" name="subName[]" value="<?= $subject->SubjectName ?>"
-                                                id="input-subject" class="exam-sub-input">
-                                            <input type="text" name="subCode[]" value="<?= $subject->SubjectCode ?>"
-                                                id="input-subject" class="exam-sub-input" hidden>
-                                        </td>
-                                        <td>
-                                            <input type="date" name="examDate[]" id="input-date" class=exam-date-input>
-                                        </td>
-                                        <td>
-                                            <input type="time" name="examTime[]" class="exam-input-time">
-                                        </td>
+                                        <th>
+                                            Subject
+                                        </th>
+                                        <th>
+                                            Date
+                                        </th>
+                                        <th>
+                                            Time
+                                        </th>
                                     </tr>
+                                    <?php foreach ($subjects as $subject): ?>
+                                        <?php $json = json_encode($subject); ?>
 
-                                <?php endforeach; ?>
-                                <!-- <tr>
+                                        <tr>
+                                            <td>
+                                                <input type="text" name="subName[]" value="<?= $subject->SubjectName ?>"
+                                                    id="input-subject" class="exam-sub-input">
+                                                <input type="text" name="subCode[]" value="<?= $subject->SubjectCode ?>"
+                                                    id="input-subject" class="exam-sub-input" hidden>
+                                            </td>
+                                            <td>
+                                                <input type="date" name="examDate[]" id="input-date" class=exam-date-input>
+                                            </td>
+                                            <td>
+                                                <input type="time" name="examTime[]" class="exam-input-time">
+                                            </td>
+                                        </tr>
+
+                                    <?php endforeach; ?>
+                                    <!-- <tr>
                                     <td>
                                         <input type="text" name="subName[]" placeholder="Subject 01" id="input-subject"
                                             class="exam-sub-input">
@@ -489,42 +543,58 @@ $data['role'] = $role;
                                         <input type="time" name="examTime[]" class="exam-input-time">
                                     </td>
                                 </tr> -->
-                            </table>
-                            <div>
-                                <?php if (!empty($errors['date'])): ?>
-                                    <div class="error">
-                                        <?= $errors['date'] ?>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                            <div>
-                                <?php if (!empty($errors['subjectName'])): ?>
-                                    <div class="error">
-                                        <?= $errors['subjectName'] ?>
-                                    </div>
-                                <?php endif; ?>
+                                </table>
+                                <div>
+                                    <?php if (!empty($errors['date'])): ?>
+                                        <div class="error">
+                                            <?= $errors['date'] ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                                <div>
+                                    <?php if (!empty($errors['subjectName'])): ?>
+                                        <div class="error">
+                                            <?= $errors['subjectName'] ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="exam-buttons">
-                    <div class="cancel-button">
-                        <button class="btn-secondary" type="button"
-                            onclick="window.location.href='<?= ROOT ?>sar/examination/create/2'">Back</button>
+                    <div class="exam-buttons">
+                        <div class="cancel-button">
+                            <button class="btn-secondary" type="button"
+                                onclick="window.location.href='<?= ROOT ?>sar/examination/create/2'">Back</button>
 
+                        </div>
+                        <div class="next-button">
+                            <button class="btn-primary" type="submit" value='timetable' name='submit'>Submit</button>
+                        </div>
                     </div>
-                    <div class="next-button">
-                        <button class="btn-primary" type="submit" value='timetable' name='submit'>Submit</button>
+                    <div class=cancel-link>
+                        <a class='cancel-a' onclick='showExamCanclePopup()'>Cancel</a>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
+            <div class="exam-create-footer">
+                <?php $this->view('components/footer/index', $data) ?>
+            </div>
         </div>
-        <div class="exam-create-footer">
-            <?php $this->view('components/footer/index', $data) ?>
-        </div>
+    </div>
+    <div id="exam-cancel" class="exam-cancel">
+        <?php $this->view('components/popup/examination-cancel-popup', $data) ?>
     </div>
 </body>
 <script>
+
+    function showExamCanclePopup() {
+
+        document.querySelector("#exam-cancel").classList.add("active");
+        document.querySelector("#exam-create-body").classList.add("active");
+
+
+    }
+
     function validateForm() {
         var subjects = document.getElementsByName("subName[]");
         var dates = document.getElementsByName("examDate[]");

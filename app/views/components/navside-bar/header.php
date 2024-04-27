@@ -17,19 +17,20 @@
         font-weight: bold;
     }
     </style>
-        </head>
-        <body>
-            <nav class="sidebar close">
-                <header>
-                    <div class="image-text">
-                        <span class="image">
-                            <img src="<?=ROOT?>assets/NILIS-logo.png" alt="logo">
-                        </span>
-                        <div class="text header-text">
-                            <h4 class="name1">National Institute of</h4>
-                            <h5 class="name2">Library and Information Sciences</h5>
-                            <span class="profession">University of Colombo</span>
-                        </div>
-                    </div>
-                    <i class='bx bx-chevron-right toggle'></i>
-                </header>
+</head>
+
+<body>
+    <nav class="sidebar close">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <img src="<?= ROOT ?>assets/NILIS-logo.png" alt="logo">
+                </span>
+                <div class="text header-text">
+                    <h4 class="name1">National Institute of</h4>
+                    <h5 class="name2">Library and Information Sciences</h5>
+                    <span class="profession">University of Colombo</span>
+                </div>
+            </div>
+            <i class='bx bx-chevron-right toggle'></i>
+        </header>

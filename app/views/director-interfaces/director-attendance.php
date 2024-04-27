@@ -9,7 +9,7 @@ $data['role'] = $role;
 <html lang="en">
 
 <head>
-    <title> Student Participants</title>
+    <title> Attendance</title>
     <style>
         * {
             margin: 0;
@@ -268,9 +268,10 @@ $data['role'] = $role;
 </head>
 
 <body>
+
     <div class="dr-degree-programs-home">
         <div class="dr-degree-programs-title">
-            <div class="dr-degree-programs-title1">Diploma in Library and Information Management</div>
+            <div class="dr-degree-programs-title1">Degree Name : <?= $degreedata[0]->DegreeShortName ?></div>
             <div class="dr-degree-programs-title1-core">Attendance</div>
         </div>
         <div class="dr-degree-programs-home-1">
@@ -298,10 +299,13 @@ $data['role'] = $role;
                         </thead>
                         <tbody>
                         <?php foreach ($attendances as $attendance) : ?>
+                            <?php if($attendance->degree_name == $degreedata[0]->DegreeShortName ) :?>
                     <tr>
                         <td><?= $attendance->index_no ?></td>
                         <td><?= $attendance->attendance ?></td>
                     </tr>
+                 
+                    <?php endif;?>
                 <?php endforeach; ?>
 
                         </tbody>

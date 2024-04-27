@@ -1,5 +1,5 @@
 <?php
-$role = "director";
+$role = "Clerk";
 $data['role'] = $role;
 ?>
 <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
@@ -10,6 +10,7 @@ $data['role'] = $role;
 
 <head>
     <link rel="stylesheet" type="text/css" href="<?= ROOT ?>css/dr/dr-styles.css">
+    <title>Userprofile</title>
     <style>
         @media (min-width: 40em) {
   :root {
@@ -79,10 +80,6 @@ th {
             </div>
         </div>
 
-       
-       
-       
-        
         <div class="dr-userprofile-flex-container">
             <div class="dr-userprofile-white-container3-1">
                 <p class="dr-userprofile-left-top-text2">Examination Results</p>
@@ -137,11 +134,7 @@ th {
                         </div><br>
                     </div>
                 </div>
-                <div class="dr-userprofile-buttonx">
-                    <?php if ($student[0]->status == "continue") : ?>
-                        <input type="button" id="dr-userprofile-updateButton" class="dr-userprofile-button" value="Update" onclick="updateData1()">
-                    <?php endif; ?>
-                </div>
+               
             </div>
         </div>
       
@@ -149,65 +142,7 @@ th {
             <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        //Change Degree and Delete button
-        function updateData() {
-            // Show the overlay and pop-up
-            $('#dr-userprofile-overlay').css('display', 'block');
-            $('.dr-userprofile-pop-up1').css('display', 'block');
-
-            $('#dr-userprofile-close-button').click(function(e) {
-                // Hide the pop-up and overlay when the close button is clicked
-                $('.dr-userprofile-pop-up1').css('display', 'none');
-                $('#dr-userprofile-overlay').css('display', 'none');
-                e.stopPropagation();
-            });
-        }
-
-        function updateData1() {
-            // Show the overlay and pop-up
-            $('#dr-userprofile-overlay').css('display', 'block');
-            $('.dr-userprofile-popup').css('display', 'block');
-            
-            $('.dr-userprofile-close-button').click(function(e) {
-                // Hide the pop-up and overlay when the close button is clicked
-                $('.dr-userprofile-popup').css('display', 'none');
-                $('#dr-userprofile-overlay').css('display', 'none');
-                e.stopPropagation();
-            });
-        }
-
-        function updateData2() {
-            // Show the overlay and pop-up
-            $('#dr-userprofile-overlay').css('display', 'block');
-            $('.dr-userprofile-pop-up2').css('display', 'block');
-
-            $('.dr-userprofile-close-button-3').click(function(e) {
-                // Hide the pop-up and overlay when the close button is clicked
-                $('.dr-userprofile-pop-up2').css('display', 'none');
-                $('#dr-userprofile-overlay').css('display', 'none');
-                e.stopPropagation();
-            });
-        }
-
-        function myFunction() {
-            $('.dr-userprofile-pop-up1').css('display', 'none');
-            $('#dr-userprofile-overlay').css('display', 'block');
-            $('.dr-userprofile-pop-up1-1').css('display', 'block');
-
-            $('#dr-userprofile-overlay').click(function(e) {
-                $('.dr-userprofile-pop-up1-1').css('display', 'none');
-                $('#dr-userprofile-overlay').css('display', 'none');
-                e.stopPropagation();
-            });
-        }
-
-        function crossForDiplomaChange() {
-            $('.dr-userprofile-pop-up1-1').css('display', 'none');
-            $('#dr-userprofile-overlay').css('display', 'none');
-        }
-    </script>
+    
 </body>
 
 </html>

@@ -1,147 +1,274 @@
-body {
-    background-color: #E2E2E2;
-    margin: 0; 
-    padding: 0; 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.white-container1 {
-    background-color: white;
-    padding: 20px;
-    margin-left: 250px;
-    color: #000000;
-    font-size: 36px;
-    font-family:"Poppins",sans-serif;
-    margin-bottom: 10px;
+:root {
+    --body-color: #E2E2E2;
+    --sidebar-color: #17376E;
+    --primary-color: #9AD6FF;
+    --text-color: #ffffff;
+    --tran-02: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.4s ease;
+    --tran-05: all 0.5s ease;
+}
+
+.clerk-home {
+    height: 100vh;
+    left: 250px;
+    position: relative;
+    width: calc(100% - 250px);
+    transition: var(--tran-05);
+    background: var(--body-color);
+}
+
+.clerk-title {
+    font-size: 30px;
+    font-weight: 600;
+    color: black;
+    padding: 10px 0px 10px 32px;
+    background-color: var(--text-color);
+    border-radius: 6px;
+    margin: 7px 4px 7px 4px;
+}
+
+.sidebar.close~.clerk-home {
+    left: 88px;
+    width: calc(100% - 88px);
+}
+
+.clerk-subsection-0 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    /* background-color: var(--text-color); */
+    padding: 15px 10px 15px 35px;
+    border-radius: 6px;
+    margin: 7px 4px 7px 4px;
+    flex-wrap: wrap;
+
+}
+
+.clerk-subsection-01 {
+    display: flex;
+    padding: 15px 30px 14px 30px;
+    justify-content: center;
+    align-items: center;
     border-radius: 10px;
-    transition: all 0.5s ease;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background-color: var(--text-color);
+    box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.12);
+    width: 25%;
+    height: 150px;
+    flex-direction: row;
+    gap: 60px;
 }
 
-.white-container1.close{
-    margin-left: 88px;
-}
-
-.left-top-text {
-    text-align: left;
-    margin: 0; 
-    padding: 0; 
-    color: #17376E;
-    margin-bottom: 30px;
-}
-
-.white-container2 {
-    margin-left: 250px;
-    background-color: white;
-    padding-left: 50px;
-    padding-top: 20px;
-    height: 300px;
-    /* font-family:"Poppins",sans-serif; */
-    font-size: 24px;
+.clerk-subcard-data {
+    display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
-    transition: all 0.5s ease;
+    flex-direction: column;
 }
 
-.white-container2.close{
-    margin-left: 88px;
-    padding-left: 10%;
-    padding-right: 10%;
+.clerk-subcard-data-value {
+    font-size: 38px;
+    font-weight: 600;
+    color: #17376E;
 }
 
-.flex-container {
+.clerk-subcard-data-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #17376E;
+}
+.clerk-subsection-01 {
     display: flex;
-    justify-content: space-between;
-    gap:10px;
-}
-
-.degree-card-left {
-    width: 300px;
-    height: 200px; 
-    background-color: #ffffff;
-    display: inline-block;
-}
-.degree-card-right {
-    width: 300px;
-    height: 200px; 
-    background-color: #ffffff;
-    display: inline-block;
-    margin-left: 180px;
-}
-
-
-.white-container3 {
-    flex: 1;
-    margin-left: 250px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background-color: white;
-    padding: 20px;
-    height: 600px;
-    width:320px;
-    /* font-family: "Poppins", sans-serif; */
-    font-size: 24px;
+    padding: 15px 30px 14px 30px;
+    justify-content: center;
+    align-items: center;
     border-radius: 10px;
-    
-    transition: all 0.5s ease;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background-color: var(--text-color);
+    box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.12);
+    width: 25%;
+    height: 150px;
+    flex-direction: row;
+    gap: 60px;
 }
 
-.white-container3.close{
-    margin-left: 88px;
-    padding-left: 8%;
-}
-
-.text1{
-    font-family:"Poppins",sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 32px;
-    /* or 114% */
+.clerk-subcard-data {
     display: flex;
     align-items: center;
-    text-align: center;
-    letter-spacing: -0.02em;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.clerk-subcard-data-value {
+    font-size: 38px;
+    font-weight: 600;
+    color: #17376E;
+}
+
+.clerk-subcard-data-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #17376E;
+}
+
+.clerk-subsection-1 {
+    background-color: var(--text-color);
+    padding: 10px 10px 30px 80px;
+    border-radius: 6px;
+    margin: 7px 4px 7px 4px;
+}
+
+.clerk-sub-title {
 
     color: #17376E;
-    margin-left:40px;
+    font-family: Poppins;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 600;
+    margin: 40px;
+
+}
+
+.clerk-subsection-2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    /* padding: 10px 10px 30px 35px; */
+    /* border-radius: 6px; */
+    /* margin: 7px 4px 7px 4px; */
+}
+
+.clerk-subsection-21 {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--text-color);
+    padding: 10px 10px 30px 35px;
+    border-radius: 6px;
+    margin: 3px 4px 7px 4px;
+    width: 50%;
+}
+.clerk-sub-title {
+
+    color: #17376E;
+    font-family: Poppins;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 600;
+    margin: 40px;
+
+}
+
+.clerk-subsection-2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    /* padding: 10px 10px 30px 35px; */
+    /* border-radius: 6px; */
+    /* margin: 7px 4px 7px 4px; */
+}
+
+.clerk-subsection-21 {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--text-color);
+    padding: 10px 10px 30px 35px;
+    border-radius: 6px;
+    margin: 3px 4px 7px 4px;
+    width: 50%;
+}
+
+.clerk-subsection-22 {
+    background-color: var(--text-color);
+    padding: 10px 10px 31px 35px;
+    border-radius: 6px;
+    margin: 3px 4px 7px 4px;
+    width: 50%;
+}
+.clerk-subsection-22 {
+    background-color: var(--text-color);
+    padding: 10px 10px 31px 35px;
+    border-radius: 6px;
+    margin: 3px 4px 7px 4px;
+    width: 50%;
+}
+
+.clerk-calender {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.clerk-calender {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.clerk-degree-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
     margin-bottom: 20px;
 }
 
-.exam-card1{
-  margin-left: 30px;
-  margin-bottom: 20px;
+.clerk-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-between; or any other desired value */
+    gap: 3vw;
+    /* Adjust the gap between cards as needed */
+
 }
 
-.exam-card2{
-  margin-left: 30px;
-  margin-bottom: 20px;
+
+.clerk-card1 {
+    display: flex;
+    flex-direction: column;
+}
+.clerk-card1 {
+    display: flex;
+    flex-direction: column;
 }
 
-.white-container4 {
-    flex: 1;
-    margin-top:10px;
-    margin-bottom: 10px;
-    background-color: white;
-    padding-left: 100px;
-    height: 600px;
-    width:300px;
-    font-family: "Poppins", sans-serif;
-    font-size: 24px;
-    border-radius: 10px;
+.clerk-card2 {
+    display: flex;
+    flex-direction: column;
+}
+.clerk-card2 {
+    display: flex;
+    flex-direction: column;
 }
 
-/*calender css*/
-.heading-calender{
-    font-family: "Poppins", sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 20px;
-    /* identical to box height, or 71% */
-    letter-spacing: -0.02em;
-    margin-left: 50px; 
-    margin-top: 20px;
-    margin-bottom: 50px;
-    color: #17376E;
+.clerk-exam-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 30px;
 }
 
+.clerk-exam-card1 {
+    display: flex;
+    flex-direction: column;
+}
+
+.clerk-exam-card2 {
+    display: flex;
+    flex-direction: column;
+}

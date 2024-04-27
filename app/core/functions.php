@@ -57,6 +57,79 @@ function message($msg = '', $type = 'success', $erase = false)
     return false;
 }
 
+function getBestMarks($data, $attribute)
+{
+    $result = [];
+
+    foreach ($data as $subjectCode => $records) {
+        $maxMark = -1;
+        $bestRecord = null;
+
+        foreach ($records as $record) {
+            if ($record->$attribute > $maxMark) {
+                $maxMark = $record->$attribute;
+                $bestRecord = $record;
+            }
+        }
+
+        if ($bestRecord !== null) {
+            $result[$subjectCode] = [$bestRecord];
+        }
+    }
+
+    return $result;
+}
+
+function calculateGPA($marksArray, $gradesArray, $subjectCodesArray)
+{
+    // Initialize variables for GPA calculation
+    $totalCredits = 0;
+    $totalGradePoints = 0;
+
+    // Iterate through each subject code
+    foreach ($subjectCodesArray as $subject) {
+        $subjectCode = $subject->SubjectCode;
+
+        // Check if marks are available for this subject
+        if (isset($marksArray[$subjectCode])) {
+            // Retrieve marks for this subject
+            $subjectMarks = $marksArray[$subjectCode][0];
+
+            // Retrieve credits for this subject
+            $credits = $subjectMarks->NoCredits;
+
+            // Retrieve grade for this subject
+            $grade = $subjectMarks->grade;
+
+            // Find GPV for this grade
+            $gpv = 0;
+            foreach ($gradesArray as $gradeInfo) {
+                if ($gradeInfo->Grade === $grade) {
+                    $gpv = $gradeInfo->GPV;
+                    break;
+                }
+            }
+
+            // Calculate grade points for this subject
+            $gradePoints = $gpv * $credits;
+
+            // Add to total grade points and total credits
+            $totalGradePoints += $gradePoints;
+            $totalCredits += $credits;
+        } else {
+            // If marks are not available, consider credits as 0
+            $totalCredits += 0;
+        }
+    }
+
+    // Calculate GPA
+    if ($totalCredits > 0) {
+        $gpa = $totalGradePoints / $totalCredits;
+        return $gpa;
+    } else {
+        return 0; // Handle division by zero error
+    }
+}
 function groupByColumn($data, $columnName)
 {
     // Check if $data is not an array or if it's empty
@@ -217,21 +290,29 @@ function leastGap($mark1, $mark2, $mark3)
     }
 }
 
-function getRepeatedSubjects($indexNo, $semester)
+function getRepeatedSubjects($indexNo, $semester = null)
 {
     $repeatStudents = new RepeatStudents;
 
     //get repeated subjects
-    $repeatedSubjects = $repeatStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester,], 'subjectCode');
+    if ($semester == null) {
+        $repeatedSubjects = $repeatStudents->whereSpecificColumn(['indexNo' => $indexNo], 'subjectCode');
+    } else {
+        $repeatedSubjects = $repeatStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester,], 'subjectCode');
+    }
     return $repeatedSubjects;
 }
 
-function getMedicalSubjects($indexNo, $semester)
+function getMedicalSubjects($indexNo, $semester = null)
 {
     $medicalStudents = new MedicalStudents;
 
     //get repeated subjects
-    $medicalSubjects = $medicalStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester], 'subjectCode');
+    if ($semester == null) {
+        $medicalSubjects = $medicalStudents->whereSpecificColumn(['indexNo' => $indexNo], 'subjectCode');
+    } else {
+        $medicalSubjects = $medicalStudents->whereSpecificColumn(['indexNo' => $indexNo, 'semester' => $semester], 'subjectCode');
+    }
     return $medicalSubjects;
 }
 
@@ -395,27 +476,30 @@ function updateMarksheet($csvFileName, $dataArray, $newFileName)
     // Ensure the output directory exists
     $newFileDir = dirname($newFilePath);
     if (!is_dir($newFileDir)) {
-        mkdir($newFileDir, 0777, true); // recursive creation
+        mkdir($newFileDir, 0777, true);
     }
+
 
     // Read the existing CSV file
     $rows = [];
     $headerData = [];
-    if (($handle = fopen($csvFilePath, "r")) !== FALSE) {
-        $lineCount = 0;
-        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-            $lineCount++;
-            if ($lineCount <= 3) {
-                // Collect program and subject lines
-                $headerData[] = $data;
-                continue;
-            } else if ($lineCount == 4) {
-                // Skip the redundant header line
-                continue;
+    if (file_exists($csvFilePath)) {
+        if (($handle = fopen($csvFilePath, "r")) !== FALSE) {
+            $lineCount = 0;
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $lineCount++;
+                if ($lineCount <= 3) {
+                    // Collect program and subject lines
+                    $headerData[] = $data;
+                    continue;
+                } else if ($lineCount == 4) {
+                    // Skip the redundant header line
+                    continue;
+                }
+                $rows[] = $data;
             }
-            $rows[] = $data;
+            fclose($handle);
         }
-        fclose($handle);
     }
 
     // Open a new file to write the updated data
@@ -451,6 +535,40 @@ function updateMarksheet($csvFileName, $dataArray, $newFileName)
 
     fclose($newFile);
 }
+
+function getNotificationCount()
+{
+    $notification = new NotificationModel();
+    $username = $_SESSION['USER_DATA']->username;
+    $data['usernames'] = $username;
+    $notification_count_arr = $notification->countNotifications($username);
+    $data['notification_count_obj'] = $notification_count_arr[0];
+    return $notification_count_arr[0];
+    
+}
+
+function getNotificationCountDirector()
+{
+    $notification = new NotificationModel();
+    $username = $_SESSION['USER_DATA']->username;
+    $data['usernames'] = $username;
+    $notification_count_arr = $notification->countNotificationsDirector($username);
+    $data['notification_count_obj_director'] = $notification_count_arr[0];
+
+    return $notification_count_arr[0];
+}
+
+function getNotificationCountSAR()
+{
+    $notification = new NotificationModel();
+    $username = $_SESSION['USER_DATA']->username;
+    $data['usernames'] = $username;
+    $notification_count_arr = $notification->countNotificationsSAR($username);
+    $data['notification_count_obj_sar'] = $notification_count_arr[0];
+
+    return $notification_count_arr[0];
+}
+
 function getNotificationCountDR()
 {
     $notification = new NotificationModel();
@@ -458,6 +576,28 @@ function getNotificationCountDR()
     $data['usernames'] = $username;
     $notification_count_arr = $notification->countNotificationsDR($username);
     $data['notification_count_obj_dr'] = $notification_count_arr[0];
+
+    return $notification_count_arr[0];
+}
+
+function getNotificationCountAssistSAR()
+{
+    $notification = new NotificationModel();
+    $username = $_SESSION['USER_DATA']->username;
+    $data['usernames'] = $username;
+    $notification_count_arr = $notification->countNotificationsAssistSAR($username);
+    $data['notification_count_obj_ASAR'] = $notification_count_arr[0];
+
+    return $notification_count_arr[0];
+}
+
+function getNotificationCountAdmin()
+{
+    $notification = new NotificationModel();
+    $username = $_SESSION['USER_DATA']->username;
+    $data['usernames'] = $username;
+    $notification_count_arr = $notification->countNotificationsAdmin($username);
+    $data['notification_count_obj_admin'] = $notification_count_arr[0];
 
     return $notification_count_arr[0];
 }
@@ -475,23 +615,23 @@ function validateRowData($rowData) {
         return false; // Country cannot be empty
     }
     // Validate NIC-No
-    if (!preg_match('/^\d{12}$|^\d{9}[VX]$/', $rowData[3])) {
-        return false; // NIC No must match the specific pattern (e.g., 123456789V)
-    }
+    // if (!preg_match('/^\d{12}$|^\d{9}[VX]$/', $rowData[3])) {
+    //     return false; // NIC No must match the specific pattern (e.g., 123456789V)
+    // }
     // Validate Date-Of-Birth
-    $dob = DateTime::createFromFormat('Y-m-d', $rowData[4]);
-    $now = new DateTime();
-    if ($dob === false) {
-        return false; // Date must be a valid date
-    }
+    // $dob = DateTime::createFromFormat('Y-m-d', $rowData[4]);
+    // $now = new DateTime();
+    // if ($dob === false) {
+    //     return false; // Date must be a valid date
+    // }
     // Validate whatsappNo
     if (!preg_match('/^\+?[\d\s]{9,15}$/', $rowData[5])) {
-        return false; // Whatsapp number must be in a valid phone number format
+        return false; // Whatsapp number    must be in a valid phone number format
     }
     // Validate Address
-    if (empty($rowData[6])) {
-        return false; // Address cannot be empty
-    }
+    // if (empty($rowData[6])) {
+    //     return false; // Address cannot be empty
+    // }
     // Validate Phone-No
     if (!preg_match('/^\+?[\d\s]{9,15}$/', $rowData[7])) {
         return false; // Phone number must be in a valid phone number format
@@ -502,4 +642,6 @@ function validateRowData($rowData) {
     }
     return true; // All validations passed
 }
+
+
 ?>

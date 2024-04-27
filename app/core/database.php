@@ -47,6 +47,7 @@ class Database
         return false;
     }
 
+
     function create_tables()
     {
         //user table 
@@ -138,8 +139,8 @@ class Database
         //student Table
         $query = "
         CREATE TABLE IF NOT EXISTS student (
-            ⁠ id ⁠ int(11) NOT NULL AUTO_INCREMENT,
-            ⁠ Email ⁠ varchar(40) NOT NULL,
+            id int(11) NOT NULL AUTO_INCREMENT,
+            Email ⁠ varchar(40) NOT NULL,
             ⁠ regNo ⁠ varchar(40) NOT NULL,
             ⁠ country ⁠ varchar(40) NOT NULL,
             ⁠ indexNo ⁠ varchar(40) NOT NULL,
@@ -246,7 +247,7 @@ class Database
     semester int(10) NOT NULL,
     FOREIGN KEY (degreeID) REFERENCES degree(DegreeID),
     Foreign key (examID) references exam(examID),
-    primary key (subjectCode, degreeID, semester)
+    primary key (subjectCode, degreeID, semester,examID)
  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
  ";
         $this->query($query);
@@ -393,13 +394,14 @@ class Database
         $this->query($query);
 
         $query = "
-        CREATE TABLE IF NOT EXISTS `notifications`(
-            `notify_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        CREATE TABLE IF NOT EXISTS `notifications` (
+            `notify_id` int(11) NOT NULL,
             `description` varchar(255) NOT NULL,
             `type` varchar(50) NOT NULL,
             `msg_type` varchar(100) NOT NULL,
-            `issuing_date` datetime NOT NULL
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            `issuing_date` datetime NOT NULL,
+            `usernames` varchar(20) NOT NULL
+          ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         ";
         $this->query($query);
 
@@ -408,11 +410,12 @@ class Database
             `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
             `index_no` varchar(40) NOT NULL,
             `attendance` varchar(10) NOT NULL,
-            `degree_name` varchar(255) NOT NULL
+            `degree_name` varchar(255) NOT NULL,
+            `degree_id` int(11) NOT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
           ";
-          $this->query($query);
-        }
+        $this->query($query);
+    }
 
     public function updateWritten()
     {
@@ -535,6 +538,32 @@ DELIMITER ;
         $this->query($triggerQuery);
     }
 
+    public function createExamDetailsAdd()
+    {
+        $query = "DELIMITER //
+
+        CREATE TRIGGER insert_exam_after_degree_timetable_insert
+        AFTER INSERT ON degree_timetable
+        FOR EACH ROW
+        BEGIN
+            DECLARE semester_value INT;
+            
+            IF NEW.EventName = 'First Semester' THEN
+                SET semester_value = 1;
+            ELSEIF NEW.EventName = 'Second Semester' THEN
+                SET semester_value = 2;
+            END IF;
+            
+            INSERT INTO exam (examType, degreeID, semester, status)
+            VALUES ('Normal', NEW.DegreeID, semester_value, 'upcoming');
+        END;
+        //
+        
+        DELIMITER ;
+        ";
+        $this->query($query);
+    }
+
     public function createFinalMarksUpdateTrigger()
     {
         $query = "
@@ -594,107 +623,51 @@ DELIMITER ;
 
     public function create_procedure()
     {
-        // Procedure creation query
-        $query = "
-        CREATE PROCEDURE IF NOT EXISTS `InsertNotification`()
-        BEGIN
-        DECLARE currentDate DATE;
-        DECLARE eventStartDate DATE;
-        DECLARE userId INT;
-        DECLARE daysRemaining INT;
-        DECLARE degreeName TEXT; -- Specify the length for VARCHAR
-
-        DECLARE str1 VARCHAR(255); -- Declare variables for string concatenation
-        DECLARE str2 VARCHAR(255);
-
-        DECLARE eventCursor CURSOR FOR
-            SELECT dt.StartingDate, d.DegreeName
-            FROM degree_timetable AS dt
-            JOIN degree AS d ON dt.DegreeID = d.DegreeID;
-
-        -- Set the current date
-        SET currentDate = CURDATE();
-
-        OPEN eventCursor;
-
-        read_loop: LOOP
-            FETCH eventCursor INTO eventStartDate, degreeName;
-            IF eventStartDate IS NULL THEN
-                LEAVE read_loop;
-            END IF;
-
-            -- Calculate the days remaining
-            SET daysRemaining = DATEDIFF(eventStartDate, currentDate);
-
-            -- Check if days remaining is less than or equal to 14 and greater than 0
-            IF (daysRemaining <= 14 AND daysRemaining > 0) THEN
-               -- Construct notification message
-                SET str1 = CONCAT('There will be an upcoming examination scheduled on ', eventStartDate);
-                SET str2 = CONCAT(' for the diploma ', degreeName, ' examination');
-
-                -- Print concatenated strings to console (optional)
-                -- SELECT CONCAT(str1, str2);
-
-                -- Insert record into notifications table
-                INSERT INTO notifications (description, type, msg_type,button_text,button_link)
-                VALUES (CONCAT(str1, str2), 'Examination', 'msg1', 'create examination','sar/examination');
-            END IF;
-        END LOOP;
-
-        CLOSE eventCursor;
-    END;
-        ";
-
-        // Execute the procedure creation query
-        $this->query($query);
 
         $query = "
         CREATE PROCEDURE IF NOT EXISTS `Exam_Begin`()
         BEGIN
         DECLARE currentDate DATE;
         DECLARE eventStartDate DATE;
-        DECLARE userId INT;
-        DECLARE daysRemaining INT;
         DECLARE degreeName TEXT; -- Specify the length for VARCHAR
-
         DECLARE str1 VARCHAR(255); -- Declare variables for string concatenation
         DECLARE str2 VARCHAR(255);
-
+        DECLARE eventName TEXT;
+    
+        -- Cursor to fetch examination events
         DECLARE eventCursor CURSOR FOR
-            SELECT dt.StartingDate, d.DegreeName
+            SELECT dt.StartingDate, d.DegreeName,dt.EventName
             FROM degree_timetable AS dt
             JOIN degree AS d ON dt.DegreeID = d.DegreeID
             WHERE dt.EventType = 'Examination';
-
+    
         -- Set the current date
         SET currentDate = CURDATE();
-
+    
         OPEN eventCursor;
-
+    
         read_loop: LOOP
-            FETCH eventCursor INTO eventStartDate, degreeName;
+            FETCH eventCursor INTO eventStartDate, degreeName,eventName;
             IF eventStartDate IS NULL THEN
                 LEAVE read_loop;
             END IF;
-
+    
             -- Calculate the days remaining
-            SET daysRemaining = DATEDIFF(eventStartDate, currentDate);
-
-            -- Check if days remaining is less than or equal to 14 and greater than 0
-            IF (daysRemaining = 14 ) THEN
-               -- Construct notification message
-                SET str1 = CONCAT('There will be an upcoming examination scheduled on ', eventStartDate);
-                SET str2 = CONCAT(' for the diploma ', degreeName, ' examination.');
-
-                -- Print concatenated strings to console (optional)
-                -- SELECT CONCAT(str1, str2);
-
-                -- Insert record into notifications table
-                INSERT INTO notifications (description, type, msg_type,issuing_date)
-                VALUES (CONCAT(str1, str2), 'Examination', 'Exam-start-alert',NOW());
+            SET @daysRemaining = DATEDIFF(eventStartDate, currentDate);
+    
+            -- Check if days remaining is 0 (i.e., the examination is today)
+            IF @daysRemaining = 0 THEN
+                -- Construct notification message
+                SET str1 = CONCAT('The ', eventName ,' examination is scheduled on ', eventStartDate,' for the ', degreeName ,'.');
+                
+    
+                -- Insert record into notifications table for all users
+                INSERT INTO notifications (description, type, msg_type, issuing_date, usernames)
+                SELECT CONCAT(str1), 'Examination', 'Exam-start-alert', NOW(), username
+                FROM users;
             END IF;
         END LOOP;
-
+    
         CLOSE eventCursor;
     END;
         ";
@@ -709,13 +682,15 @@ DELIMITER ;
         DECLARE eventEndDate DATE;
         DECLARE userId INT;
         DECLARE daysAfterExam INT;
-        DECLARE degreeName TEXT; -- Specify the length for VARCHAR
+        DECLARE degreeName TEXT;
+        DECLARE eventName TEXT;
+        -- Specify the length for VARCHAR
 
         DECLARE str1 VARCHAR(255); -- Declare variables for string concatenation
         DECLARE str2 VARCHAR(255);
 
         DECLARE eventCursor CURSOR FOR
-            SELECT dt.EndingDate, d.DegreeName
+            SELECT dt.EndingDate, d.DegreeName,dt.EventName
             FROM degree_timetable AS dt
             JOIN degree AS d ON dt.DegreeID = d.DegreeID
             WHERE dt.EventType = 'Examination';
@@ -726,7 +701,7 @@ DELIMITER ;
         OPEN eventCursor;
 
         read_loop: LOOP
-            FETCH eventCursor INTO eventEndDate, degreeName;
+            FETCH eventCursor INTO eventEndDate, degreeName,eventName;
             IF eventEndDate IS NULL THEN
                 LEAVE read_loop;
             END IF;
@@ -735,23 +710,26 @@ DELIMITER ;
             SET daysAfterExam = DATEDIFF(currentDate,eventEndDate);
 
             -- Check if days remaining is less than or equal to 14 and greater than 0
-            IF (daysAfterExam = 1) THEN
+            IF (daysAfterExam = 0) THEN
                -- Construct notification message
-                SET str1 = CONCAT('The examination for the diploma ', degreeName ,' has ended. If required, please proceed with any necessary actions post-examination.');
+                SET str1 = CONCAT('The ', eventName ,' examination for the ', degreeName ,' has ended. If required, please proceed with any necessary actions post-examination.');
                 
 
                 -- Print concatenated strings to console (optional)
-                -- SELECT CONCAT(str1, str2);
+                -- SELECT CONCAT(str1);
 
                 -- Insert record into notifications table
-                INSERT INTO notifications (description, type, msg_type,issuing_date)
-                VALUES (CONCAT(str1), 'Examination', 'Exam-end-alert',NOW());
+                INSERT INTO notifications (description, type, msg_type,issuing_date,usernames)
+                 SELECT CONCAT(str1), 'Examination', 'Exam-end-alert', NOW(), username
+            FROM users;
+
             END IF;
         END LOOP;
 
         CLOSE eventCursor;
     
 END;
+
         ";
 
         // Execute the procedure creation query
@@ -790,12 +768,14 @@ END;
             SET daysRemaining = DATEDIFF(eventStartDate, currentDate);
 
             -- Check if days remaining is less than or equal to 14 and greater than 0
-            IF (daysRemaining = 7 ) THEN
+            IF (daysRemaining = 0 ) THEN
                -- Construct notification message
-                SET str1 = CONCAT('There will be an upcoming vacation scheduled on ', eventStartDate,' for the diploma ', degreeName,'Please make sure to complete any pending tasks or submissions before the scheduled vacation date.');
+                SET str1 = CONCAT('There will be an upcoming vacation scheduled on ', eventStartDate,' for the ', degreeName,'.Please make sure to complete any pending tasks or submissions before the scheduled vacation date.');
                 
-                INSERT INTO notifications (description, type, msg_type,issuing_date)
-                VALUES (CONCAT(str1), 'Vacation', 'Vacation-start-alert',NOW());
+                INSERT INTO notifications (description, type, msg_type,issuing_date,usernames)
+              SELECT CONCAT(str1), 'Vacation', 'Vacation-start-alert', NOW(), username
+            FROM users;
+
             END IF;
         END LOOP;
 
@@ -841,15 +821,13 @@ END;
                -- Check if days remaining is less than or equal to 14 and greater than 0
                IF (daysAfterEvent = 0) THEN
                   -- Construct notification message
-                   SET str1 = CONCAT('The vacation period for the diploma ', degreeName ,' has ended and normal semester activities will resume starting from tomorrow ');
-                   
-   
-                   -- Print concatenated strings to console (optional)
-                   -- SELECT CONCAT(str1, str2);
+                   SET str1 = CONCAT('The vacation period for the ', degreeName ,' has ended and normal semester activities will resume starting from tomorrow. ');
+
    
                    -- Insert record into notifications table
-                   INSERT INTO notifications (description, type, msg_type,issuing_date)
-                   VALUES (CONCAT(str1), 'Vacation', 'Vacation-end-alert',NOW());
+                   INSERT INTO notifications (description, type, msg_type, issuing_date, usernames)
+                   SELECT CONCAT(str1), 'Vacation', 'Vacation-end-alert', NOW(), username
+                   FROM users;
                END IF;
            END LOOP;
    
@@ -893,17 +871,18 @@ END;
                SET daysRemaining = DATEDIFF(eventStartDate, currentDate);
    
                -- Check if days remaining is less than or equal to 14 and greater than 0
-               IF (daysRemaining = 7 ) THEN
+               IF (daysRemaining = 0 ) THEN
                   -- Construct notification message
-                   SET str1 = CONCAT('Study Leave has been scheduled for the ', degreeName ,' diploma program ,starting on ', eventStartDate);
+                   SET str1 = CONCAT('Study Leave has been scheduled for the ', degreeName ,' ,starting on ', eventStartDate);
                    SET str2 = CONCAT('.Kindly ensure all relevant pending tasks and submissions are completed before the study leave period begins.');
    
                    -- Print concatenated strings to console (optional)
                    -- SELECT CONCAT(str1, str2);
    
                    -- Insert record into notifications table
-                   INSERT INTO notifications (description, type, msg_type,issuing_date)
-                   VALUES (CONCAT(str1, str2), 'Study Leave', 'Studyleave-start-alert',NOW());
+                   INSERT INTO notifications (description, type, msg_type, issuing_date, usernames)
+                   SELECT CONCAT(str1, str2), 'Study Leave', 'Studyleave-start-alert', NOW(), username
+                   FROM users;
                END IF;
            END LOOP;
    
@@ -949,12 +928,13 @@ END;
                -- Check if days remaining is less than or equal to 14 and greater than 0
                IF (daysAfterEvent = 0) THEN
                   -- Construct notification message
-                   SET str1 = CONCAT('The Study Leave for the diploma ', degreeName ,' has ended.');
+                   SET str1 = CONCAT('The Study Leave for the ', degreeName ,' has ended.');
                    
    
                    -- Insert record into notifications table
-                   INSERT INTO notifications (description, type, msg_type,issuing_date)
-                   VALUES (CONCAT(str1), 'Study Leave', 'Studyleave-end-alert',NOW());
+                   INSERT INTO notifications (description, type, msg_type, issuing_date, usernames)
+                   SELECT CONCAT(str1), 'Study Leave', 'Studyleave-end-alert', NOW(), username
+                   FROM users;
                END IF;
            END LOOP;
    
@@ -998,9 +978,9 @@ END;
                SET daysRemaining = DATEDIFF(eventStartDate, currentDate);
    
                -- Check if days remaining is less than or equal to 14 and greater than 0
-               IF (daysRemaining = 7 ) THEN
+               IF (daysRemaining = 0 ) THEN
                   -- Construct notification message
-                   SET str1 = CONCAT('There will be an upcoming examination scheduled on ', eventStartDate,' for the diploma ', degreeName, ' examination.Please review the payment details of all students before the exams commence.');
+                   SET str1 = CONCAT('There will be an upcoming examination scheduled on ', eventStartDate,' for the ', degreeName, ' examination.Please review the payment details of all students before the exams commence.');
                    -- Insert record into notifications table
                    INSERT INTO notifications (description, type, msg_type,issuing_date)
                    VALUES (CONCAT(str1), 'Examination', 'payement_check_alert',NOW());
@@ -1049,7 +1029,7 @@ END;
                -- Check if days remaining is less than or equal to 14 and greater than 0
                IF (daysAfterExam = 1) THEN
                   -- Construct notification message
-                   SET str1 = CONCAT('The examination for the diploma ', degreeName ,' has ended. Please upload the  examination attendance of the students.');
+                   SET str1 = CONCAT('The examination for the ', degreeName ,' has ended. Please upload the  examination attendance of the students.');
                    
    
                    -- Print concatenated strings to console (optional)
@@ -1070,7 +1050,7 @@ END;
         $this->query($query);
 
         $query = "
-           CREATE PROCEDURE IF NOT EXISTS `Student-Attendance`()
+           CREATE PROCEDURE IF NOT EXISTS `Student_Attendance`()
            BEGIN
         DECLARE currentDate DATE;
         DECLARE eventStartDate DATE;
@@ -1103,7 +1083,7 @@ END;
             
             IF (daysRemaining = 0 ) THEN
                -- Construct notification message
-                SET str1 = CONCAT('Study Leave has been scheduled for the ', degreeName ,' diploma program ,starting on ', eventStartDate,'. Ensure to update student attendance before the examination');
+                SET str1 = CONCAT('Study Leave has been scheduled for the ', degreeName ,' ,starting on ', eventStartDate,'. Ensure to update student attendance before the examination');
                 -- Insert record into notifications table
                 INSERT INTO notifications (description, type, msg_type,issuing_date)
                 VALUES (CONCAT(str1), 'Study Leave', 'Student_attendance_alert',NOW());
@@ -1152,7 +1132,7 @@ END;
                -- Check if days remaining is less than or equal to 14 and greater than 0
                IF (daysRemaining = 0 ) THEN
                   -- Construct notification message
-                   SET str1 = CONCAT('Study Leave has been scheduled for the ', degreeName ,' diploma program ,starting on ', eventStartDate,'.Send warnings to students with low attendance and those who haven\'t paid the repeat examination charges.');
+                   SET str1 = CONCAT('Study Leave has been scheduled for the ', degreeName ,' ,starting on ', eventStartDate,'.Send warnings to students with low attendance and those who haven\'t paid the repeat examination charges.');
                    
                    INSERT INTO notifications (description, type, msg_type,issuing_date)
                    VALUES (CONCAT(str1), 'Study Leave', 'Send-warnings-alert',NOW());
@@ -1199,10 +1179,10 @@ END;
             SET daysRemaining = DATEDIFF(eventStartDate, currentDate);
 
             -- Check if days remaining is less than or equal to 14 and greater than 0
-            IF (daysRemaining = 7) THEN
+            IF (daysRemaining = 0) THEN
                -- Construct notification message
                 SET str1 = CONCAT('There will be an upcoming examination scheduled on ', eventStartDate);
-                SET str2 = CONCAT(' for the diploma ', degreeName, ' examination,Ensure that both repeat students and students who have submitted medical documentation are properly added to the examination.');
+                SET str2 = CONCAT(' for the ', degreeName, ' examination,Ensure that both repeat students and students who have submitted medical documentation are properly added to the examination.');
 
                 -- Print concatenated strings to console (optional)
                 -- SELECT CONCAT(str1, str2);
@@ -1260,10 +1240,10 @@ END;
     END;
   ";
 
-     // Execute the procedure creation query
-     $this->query($query);
+        // Execute the procedure creation query
+        $this->query($query);
 
-     $query = "
+        $query = "
      CREATE PROCEDURE IF NOT EXISTS `reminder_director`()
      BEGIN
      DECLARE currentDate DATE;
@@ -1296,9 +1276,9 @@ END;
          SET daysAfterExam = DATEDIFF(currentDate,eventEndDate);
 
          -- Check if days remaining is less than or equal to 14 and greater than 0
-         IF (daysAfterExam = 1) THEN
+         IF (daysAfterExam = 0) THEN
             -- Construct notification message
-             SET str1 = CONCAT('The examination for the diploma ', degreeName ,' has ended.After the marking period, please review the GPA reports and grades of the students.');
+             SET str1 = CONCAT('The examination for the ', degreeName ,' has ended.After the marking period, please review the GPA reports and grades of the students.');
              
 
              -- Print concatenated strings to console (optional)
@@ -1315,10 +1295,10 @@ END;
 END;
      ";
 
-     // Execute the procedure creation query
-     $this->query($query);
+        // Execute the procedure creation query
+        $this->query($query);
 
-     $query = "
+        $query = "
      CREATE PROCEDURE IF NOT EXISTS `degree_changed`()
      BEGIN
   DECLARE currentDate DATE;
@@ -1354,7 +1334,7 @@ END;
       IF (daysRemaining <= 30) THEN
          -- Construct notification message
           SET str1 = CONCAT('There will be an upcoming examination scheduled on ', eventStartDate);
-          SET str2 = CONCAT(' for the diploma ', degreeName,' examination.Ensure that the data of students whose degrees have changed is accurately updated in the system before the examination commences.');
+          SET str2 = CONCAT(' for the ', degreeName,' examination.Ensure that the data of students whose degrees have changed is accurately updated in the system before the examination commences.');
 
           -- Print concatenated strings to console (optional)
           -- SELECT CONCAT(str1, str2);
@@ -1369,24 +1349,12 @@ END;
 END;
 ";
 
-  // Execute the procedure creation query
-  $this->query($query);
+        // Execute the procedure creation query
+        $this->query($query);
     }
 
     public function create_event()
     {
-        // Event creation query
-        $query = "
-        CREATE EVENT IF NOT EXISTS `daily_event` 
-        ON SCHEDULE EVERY 30 MINUTE STARTS '2024-02-20 08:34:00' 
-        ON COMPLETION NOT PRESERVE ENABLE 
-        DO 
-            CALL InsertNotification();
-        ";
-
-        // Execute the event creation query
-        $this->query($query);
-
         $query = "
         CREATE EVENT IF NOT EXISTS `Exam-Begin` 
         ON SCHEDULE EVERY 1 DAY STARTS '2024-02-21 21:41:00' 
@@ -1480,7 +1448,7 @@ END;
         ON SCHEDULE EVERY 1 DAY STARTS '2024-02-21 21:41:00'
         ON COMPLETION NOT PRESERVE ENABLE 
         DO 
-        CALL Exam_Attendance()
+        CALL Student_Attendance()
         ";
 
         // Execute the event creation query
@@ -1540,5 +1508,6 @@ END;
 
         // Execute the event creation query
         $this->query($query);
+    
     }
 }

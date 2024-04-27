@@ -343,9 +343,9 @@ class DR extends Controller
                                     redirect("dr/newdegree");
                                 }
                                 if (empty($invalidRows)) {
-                                    echo "adoo";
+                                    // echo "adoo";
                                     foreach ($validRows as $rowData1) {
-                                        echo "asdsax";
+                                        // echo "asdsax";
                                         $IndexNo = $student->generateIndexRegNumber($degreeShortName, $currentYear);
                                         if ($IndexNo !== false && $IndexNo['IndexNo'] != null && $IndexNo['RegistationNo'] != null && isset($IndexNo['IndexNo'], $IndexNo['RegistationNo'])) {
                                             $data1 = [

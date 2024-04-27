@@ -29,6 +29,21 @@ $data['role'] = $role;
         display: none;
         /* Initially hidden */
     }
+    .degreeprofile-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        /* Semi-transparent background */
+        backdrop-filter: blur(5px);
+        /* Add blur effect */
+        z-index: 998;
+        /* Layer it above other content */
+        display: none;
+        /* Initially hidden */
+    }
 </style>
 
 <body>
@@ -36,7 +51,7 @@ $data['role'] = $role;
         <div class="degreeprofile-overlay" id="degreeprofile-overlay"></div>
         <div class="degreeprofile-large-box">
             <div class="degreeprofile-box_1">
-                <?php if (!empty($degrees)) : ?>
+                <?php if (!empty($degrees)): ?>
                     <p><?= $degrees[0]->DegreeName ?></p>
                 <?php else : ?>
                     <p>No data found for the specified diploma ID.</p>
@@ -49,23 +64,27 @@ $data['role'] = $role;
                         <tr>
                             <td>
                                 <b>Diploma Name</b><br>
-                                <input type="text" name="name" id="degreeprofile-name" class="degreeprofile-name" value="<?= $degrees[0]->DegreeName ?>" readonly>
+                                <input type="text" name="name" id="degreeprofile-name" class="degreeprofile-name"
+                                    value="<?= $degrees[0]->DegreeName ?>" readonly>
                             </td>
                         </tr>
                         <tr>
                             <td style="padding-right: 20px;">
                                 <b>Diploma Short Name</b><br>
-                                <input type="text" name="type" id="degreeprofile-type" value="<?= $degrees[0]->DegreeShortName ?>" readonly>
+                                <input type="text" name="type" id="degreeprofile-type"
+                                    value="<?= $degrees[0]->DegreeShortName ?>" readonly>
                             </td>
                             <td>
                                 <b>Academic Year</b><br>
-                                <input type="text" name="year" id="degreeprofile-year" value="<?= $degrees[0]->AcademicYear ?>" readonly>
+                                <input type="text" name="year" id="degreeprofile-year"
+                                    value="<?= $degrees[0]->AcademicYear ?>" readonly>
                             </td>
                         </tr>
                         <tr>
                             <td style="padding-right: 20px;">
                                 <b>Diploma Type</b><br>
-                                <input type="text" name="type" id="degreeprofile-type" value="<?= $degrees[0]->DegreeType ?>" readonly>
+                                <input type="text" name="type" id="degreeprofile-type"
+                                    value="<?= $degrees[0]->DegreeType ?>" readonly>
                             </td>
                             <td>
                                 <b>Participants</b><br>
@@ -83,66 +102,90 @@ $data['role'] = $role;
                             </td>
                         </tr>
                         <td colspan="2">
-                            <?php if ($degrees[0]->Status == "ongoing") : ?>
-                                <button class="degreeprofile-pin" type="button" id="degreeprofile-complete_degree" onclick="completedDegree()">Completed</button>
+                            <?php if ($degrees[0]->Status == "ongoing"): ?>
+                                <button class="degreeprofile-pin" type="button" id="degreeprofile-complete_degree"
+                                    onclick="completedDegree()">Completed</button>
                             <?php endif; ?>
-                            <button class="degreeprofile-pin" type="button" id="degreeprofile-delete_degree" onclick="deleteDegree()">Delete Degree</button>
+                            <button class="degreeprofile-pin" type="button" id="degreeprofile-delete_degree"
+                                onclick="deleteDegree()">Delete Degree</button>
                         </td>
                     </table>
-                <?php else : ?>
+                <?php else: ?>
                     <p>No data found for the specified degree ID.</p>
                 <?php endif; ?>
             </form>
             <div class="degreeprofile-box_3">
                 <div class="degreeprofile-box_3_2" id="degreeprofile-semester_subjects_credits">
-                    <?php if ($subjects) : ?>
+                    <?php if ($subjects): ?>
                         <div id="degreeprofile-semester_container">
-                            <?php foreach ($subjects as $semesterNumber => $semesterSubjects) : ?>
+                            <?php foreach ($subjects as $semesterNumber => $semesterSubjects): ?>
                                 <table class="degreeprofile-Subject_table">
-                                    <p id="degreeprofile-Semester" name="semester" class="degreeprofile-semester<?= $semesterNumber ?>">Semester <?= $semesterNumber ?></p>
+                                    <p id="degreeprofile-Semester" name="semester"
+                                        class="degreeprofile-semester<?= $semesterNumber ?>">Semester <?= $semesterNumber ?></p>
                                     <tr>
                                         <th>Subject Name</th>
                                         <th>Subject Code</th>
                                         <th>Credits</th>
                                     </tr>
-                                    <?php foreach ($semesterSubjects as $subject) : ?>
+                                    <?php foreach ($semesterSubjects as $subject): ?>
                                         <tr>
-                                            <td><input style="width: 300px; margin-right: 20px;" value="<?= $subject->SubjectName ?>" type="text" name="SubjectName" class="degreeprofile-SubjectName" placeholder="Subject" id="degreeprofile-SubjectName<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
-                                            <td><input style="width: 110px; margin-right: 20px;" value="<?= $subject->SubjectCode ?>" type="text" name="SubjectCode" class="degreeprofile-SubjectCode" placeholder="Subject Code" id="degreeprofile-SubjectCode<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
-                                            <td><input style="width: 60px;" value="<?= $subject->NoCredits ?>" type="number" name="NoCredits" class="degreeprofile-NoCredits" placeholder="Credits" id="degreeprofile-NoCredits<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
+                                            <td><input style="width: 300px; margin-right: 20px;"
+                                                    value="<?= $subject->SubjectName ?>" type="text" name="SubjectName"
+                                                    class="degreeprofile-SubjectName" placeholder="Subject"
+                                                    id="degreeprofile-SubjectName<?= $semesterNumber ?>_<?= $subject->SubjectID ?>"
+                                                    style="border: 1px solid #ccc;" readonly></td>
+                                            <td><input style="width: 110px; margin-right: 20px;"
+                                                    value="<?= $subject->SubjectCode ?>" type="text" name="SubjectCode"
+                                                    class="degreeprofile-SubjectCode" placeholder="Subject Code"
+                                                    id="degreeprofile-SubjectCode<?= $semesterNumber ?>_<?= $subject->SubjectID ?>"
+                                                    style="border: 1px solid #ccc;" readonly></td>
+                                            <td><input style="width: 60px;" value="<?= $subject->NoCredits ?>" type="number"
+                                                    name="NoCredits" class="degreeprofile-NoCredits" placeholder="Credits"
+                                                    id="degreeprofile-NoCredits<?= $semesterNumber ?>_<?= $subject->SubjectID ?>"
+                                                    style="border: 1px solid #ccc;" readonly></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </table>
                             <?php endforeach; ?>
                         </div>
-                    <?php else : ?>
+                    <?php else: ?>
                         <p>No data found for the specified degree ID.</p>
                     <?php endif; ?>
                 </div>
             </div>
-            <form class="degreeprofile-box_4" id="degreeprofile-form1" method="post" action="<?= ROOT ?>dr/degreeprofile/update">
+            <form class="degreeprofile-box_4" id="degreeprofile-form1" method="post"
+                action="<?= ROOT ?>dr/degreeprofile/update">
                 <p>Define Degree Time Table</p>
                 <div class="degreeprofile-box_4_1">
                     <table class="degreeprofile-Time_table" id="degreeprofile-Time_table">
                         <?php $lastEventID = 0; ?>
-                        <?php if ($degreeTimeTable) : ?>
+                        <?php if ($degreeTimeTable): ?>
                             <tr>
                                 <th align="left">Event</th>
                                 <th colspan="2">Duration</th><br>
                             </tr>
-                            <?php foreach ($degreeTimeTable as $event) : ?>
+                            <?php foreach ($degreeTimeTable as $event): ?>
                                 <tr>
-                                    <td width="76%"><input type="text" value="<?= $event->EventName ?>" class="degreeprofile-event" id="degreeprofile-event_<?= $event->EventID ?>" readonly></td>
-                                    <td width="14%"><select class="degreeprofile-duration" id="degreeprofile-type_<?= $event->EventID ?>">
+                                    <td width="76%"><input type="text" value="<?= $event->EventName ?>"
+                                            class="degreeprofile-event" id="degreeprofile-event_<?= $event->EventID ?>"
+                                            readonly></td>
+                                    <td width="14%"><select class="degreeprofile-duration"
+                                            id="degreeprofile-type_<?= $event->EventID ?>">
                                             <option value="" default hidden>Event Type</option>
                                             <option value="Examination" <?= ($event->EventType === 'Examination') ? 'selected' : '' ?> disabled>Examination</option>
                                             <option value="Study Leave" <?= ($event->EventType === 'Study Leave') ? 'selected' : '' ?> disabled>Study Leave</option>
-                                            <option value="Vacation" <?= ($event->EventType === 'Vacation') ? 'selected' : '' ?> disabled>Vacation</option>
-                                            <option value="Other" <?= ($event->EventType === 'Other') ? 'selected' : '' ?> disabled>Other</option>
+                                            <option value="Vacation" <?= ($event->EventType === 'Vacation') ? 'selected' : '' ?>
+                                                disabled>Vacation</option>
+                                            <option value="Other" <?= ($event->EventType === 'Other') ? 'selected' : '' ?>
+                                                disabled>Other</option>
                                         </select></td>
-                                    <td width="12%"><input type="date" value="<?= $event->StartingDate ?>" class="degreeprofile-duration" id="degreeprofile-start_<?= $event->EventID ?>" readonly></td>
-                                    <td width="12%"><input type="date" value="<?= $event->EndingDate ?>" class="degreeprofile-duration" id="degreeprofile-end_<?= $event->EventID ?>" readonly></td>
-                                    <?php if ($event->EventType != "Examination") : ?>
+                                    <td width="12%"><input type="date" value="<?= $event->StartingDate ?>"
+                                            class="degreeprofile-duration" id="degreeprofile-start_<?= $event->EventID ?>"
+                                            readonly></td>
+                                    <td width="12%"><input type="date" value="<?= $event->EndingDate ?>"
+                                            class="degreeprofile-duration" id="degreeprofile-end_<?= $event->EventID ?>"
+                                            readonly></td>
+                                    <?php if ($event->EventType != "Examination"): ?>
                                         <td><i class='bx bx-minus' data-event-id="<?= $event->EventID ?>"></i></td>
                                     <?php endif; ?>
                                 </tr>
@@ -150,22 +193,25 @@ $data['role'] = $role;
                                     $lastEventID = $event->EventID;
                                 } ?>
                             <?php endforeach; ?>
-                        <?php else : ?>
+                        <?php else: ?>
                             <p>No data found for the specified degree ID.</p>
                         <?php endif; ?>
                     </table>
                     <span class="eventDelete" style="color: red; float: right; margin-right: 53px;"></span>
                 </div>
                 <div class="degreeprofile-box_4_2">
-                    <?php if ($degrees[0]->Status == "ongoing") : ?>
+                    <?php if ($degrees[0]->Status == "ongoing"): ?>
                         <table class="degreeprofile-create_time_table_raw">
                             <tr>
-                                <th colspan="3"><button class="degreeprofile-add-new-event" type="button" id="degreeprofile-add_new_event">&#128198 Add New Event</button></th>
+                                <th colspan="3"><button class="degreeprofile-add-new-event" type="button"
+                                        id="degreeprofile-add_new_event">&#128198 Add New Event</button></th>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td width="12%"><button class="degreeprofile-pin" type="button" id="degreeprofile-update">Update</button></td>
-                                <td width="12%"><button class="degreeprofile-pin" type="submit" id="degreeprofile-save" disabled>Save</button></td>
+                                <td width="12%"><button class="degreeprofile-pin" type="button"
+                                        id="degreeprofile-update">Update</button></td>
+                                <td width="12%"><button class="degreeprofile-pin" type="submit" id="degreeprofile-save"
+                                        disabled>Save</button></td>
                             </tr>
                         </table>
                     <?php endif; ?>
@@ -176,12 +222,18 @@ $data['role'] = $role;
             <?php $this->view('components/footer/index', $data) ?>
         </div>
     </div>
-    <form method="post" id="degreeprofile-form3" class="degreeprofile-form3" action="<?= ROOT ?>dr/degreeprofile/status">
+    <form method="post" id="degreeprofile-form3" class="degreeprofile-form3"
+        action="<?= ROOT ?>dr/degreeprofile/status">
         <div class="degreeprofile-popupForm">
-            <center><svg id="degreeprofile-userDeletePopupImg" xmlns="http://www.w3.org/2000/svg" width="67" height="66" viewBox="0 0 67 66" fill="none">
-                    <path d="M33.5 63C50.0685 63 63.5 49.5685 63.5 33C63.5 16.4315 50.0685 3 33.5 3C16.9315 3 3.5 16.4315 3.5 33C3.5 49.5685 16.9315 63 33.5 63Z" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M33.5 21V33" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M33.5 45H33.53" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+            <center><svg id="degreeprofile-userDeletePopupImg" xmlns="http://www.w3.org/2000/svg" width="67" height="66"
+                    viewBox="0 0 67 66" fill="none">
+                    <path
+                        d="M33.5 63C50.0685 63 63.5 49.5685 63.5 33C63.5 16.4315 50.0685 3 33.5 3C16.9315 3 3.5 16.4315 3.5 33C3.5 49.5685 16.9315 63 33.5 63Z"
+                        stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M33.5 21V33" stroke="#E02424" stroke-width="6" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M33.5 45H33.53" stroke="#E02424" stroke-width="6" stroke-linecap="round"
+                        stroke-linejoin="round" />
                 </svg></center>
             <input type="hidden" name="degreeStatus" value="completed">
             <h2 id="degreeprofile-userDeletePopupH2">
@@ -193,12 +245,18 @@ $data['role'] = $role;
             </div>
         </div>
     </form>
-    <form method="post" id="degreeprofile-form4" class="degreeprofile-form4" action="<?= ROOT ?>dr/degreeprofile/delete">
+    <form method="post" id="degreeprofile-form4" class="degreeprofile-form4"
+        action="<?= ROOT ?>dr/degreeprofile/delete">
         <div class="degreeprofile-popupForm">
-            <center><svg id="degreeprofile-userDeletePopupImg" xmlns="http://www.w3.org/2000/svg" width="67" height="66" viewBox="0 0 67 66" fill="none">
-                    <path d="M33.5 63C50.0685 63 63.5 49.5685 63.5 33C63.5 16.4315 50.0685 3 33.5 3C16.9315 3 3.5 16.4315 3.5 33C3.5 49.5685 16.9315 63 33.5 63Z" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M33.5 21V33" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M33.5 45H33.53" stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+            <center><svg id="degreeprofile-userDeletePopupImg" xmlns="http://www.w3.org/2000/svg" width="67" height="66"
+                    viewBox="0 0 67 66" fill="none">
+                    <path
+                        d="M33.5 63C50.0685 63 63.5 49.5685 63.5 33C63.5 16.4315 50.0685 3 33.5 3C16.9315 3 3.5 16.4315 3.5 33C3.5 49.5685 16.9315 63 33.5 63Z"
+                        stroke="#E02424" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M33.5 21V33" stroke="#E02424" stroke-width="6" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M33.5 45H33.53" stroke="#E02424" stroke-width="6" stroke-linecap="round"
+                        stroke-linejoin="round" />
                 </svg></center>
             <h2 id="degreeprofile-userDeletePopupH2">
                 <center>Are you want to delete this Diploma?</center>
@@ -232,7 +290,7 @@ $data['role'] = $role;
         $('#degreeprofile-form3').css('display', 'block');
         document.getElementById('degreeprofile-overlay').style.display = 'block';
         document.body.classList.add('no-scroll');
-        $('.degreeprofile-close-button-3').click(function(e) {
+        $('.degreeprofile-close-button-3').click(function (e) {
             // Hide the pop-up when the close button is clicked
             $('#degreeprofile-form3').css('display', 'none');
             document.getElementById('degreeprofile-overlay').style.display = 'none';
@@ -245,7 +303,7 @@ $data['role'] = $role;
         $('#degreeprofile-form4').css('display', 'block');
         document.getElementById('degreeprofile-overlay').style.display = 'block';
         document.body.classList.add('no-scroll');
-        $('.degreeprofile-close-button-3').click(function(e) {
+        $('.degreeprofile-close-button-3').click(function (e) {
             // Hide the pop-up when the close button is clicked
             $('#degreeprofile-form4').css('display', 'none');
             document.getElementById('degreeprofile-overlay').style.display = 'none';
@@ -314,11 +372,12 @@ $data['role'] = $role;
         console.log(duration);
         // Define a function to handle the change event
         function handleChange(eventIndex) {
-            return function(e) {
+            return function (e) {
                 var eventValue = $('#degreeprofile-event_' + eventIndex).val();
                 var typeValue = $('#degreeprofile-type_' + eventIndex).val();
                 var startValue = $('#degreeprofile-start_' + eventIndex).val();
                 var endValue = $('#degreeprofile-end_' + eventIndex).val();
+                // console.log(eventValue ,typeValue ,startValue ,endValue);
                 // console.log(eventValue ,typeValue ,startValue ,endValue);
                 if (startValue < new Date().toISOString().split('T')[0]) {
                     alert('Start date cannot be earlier than today\'s date.');

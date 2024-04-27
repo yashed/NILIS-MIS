@@ -1,5 +1,4 @@
-
-<?php if ($role == "DR") : ?>
+<?php if ($role == "DR"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">
@@ -66,7 +65,7 @@
 <?php endif ?>
 
 
-<?php if ($role == "SAR") : ?>
+<?php if ($role == "SAR"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">
@@ -131,7 +130,7 @@
     </div>
 <?php endif ?>
 
-<?php if ($role == "Assistant-SAR") : ?>
+<?php if ($role == "Assistant-SAR"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">
@@ -195,7 +194,7 @@
     </div>
 <?php endif ?>
 
-<?php if ($role == "Admin") : ?>
+<?php if ($role == "Admin"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">
@@ -272,7 +271,7 @@
     </div>
 <?php endif ?>
 
-<?php if ($role == "director") : ?>
+<?php if ($role == "director"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">
@@ -337,7 +336,7 @@
 
 <?php endif ?>
 
-<?php if ($role == "Clerk") : ?>
+<?php if ($role == "Clerk"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">

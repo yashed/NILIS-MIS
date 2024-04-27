@@ -2,6 +2,7 @@
 $role = "DR";
 $data['role'] = $role;
 $data['recentResults'] = $RecentResultExam;
+$data['recentResults'] = $RecentResultExam;
 ?>
 
 <?php $this->view('components/navside-bar/header', $data) ?>
@@ -39,15 +40,15 @@ $data['recentResults'] = $RecentResultExam;
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Students</div>
                         <div class="dr-dash-card-subcard-data-value">
-                            <?php if (!empty($students)) : ?>
+                            <?php if (!empty($students)): ?>
                                 <?php $count = 0; ?>
-                                <?php foreach ($students as $student) : ?>
-                                    <?php if ($student->status == "continue") : ?>
+                                <?php foreach ($students as $student): ?>
+                                    <?php if ($student->status == "continue"): ?>
                                         <?php $count++; ?>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             <?php endif; ?>
-                            <?=$count?>
+                            <?= $count ?>
                         </div>
                     </div>
                 </div>
@@ -61,15 +62,15 @@ $data['recentResults'] = $RecentResultExam;
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Ongoing</br>Degrees</div>
                         <div class="dr-dash-card-subcard-data-value">
-                            <?php if (!empty($degrees)) : ?>
+                            <?php if (!empty($degrees)): ?>
                                 <?php $count = 0; ?>
-                                <?php foreach ($degrees as $degree) : ?>
-                                    <?php if ($degree->Status == "ongoing") : ?>
+                                <?php foreach ($degrees as $degree): ?>
+                                    <?php if ($degree->Status == "ongoing"): ?>
                                         <?php $count++; ?>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             <?php endif; ?>
-                            <?=$count?>
+                            <?= $count ?>
                         </div>
                     </div>
                 </div>
@@ -82,15 +83,15 @@ $data['recentResults'] = $RecentResultExam;
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Ongoing</br>Examination</div>
                         <div class="dr-dash-card-subcard-data-value">
-                            <?php if (!empty($exams)) : ?>
+                            <?php if (!empty($exams)): ?>
                                 <?php $count = 0; ?>
-                                <?php foreach ($exams as $exam) : ?>
-                                    <?php if ($exam->status == "ongoing") : ?>
+                                <?php foreach ($exams as $exam): ?>
+                                    <?php if ($exam->status == "ongoing"): ?>
                                         <?php $count++; ?>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             <?php endif; ?>
-                            <?=$count?>
+                            <?= $count ?>
                         </div>
                     </div>
                 </div>
@@ -103,15 +104,15 @@ $data['recentResults'] = $RecentResultExam;
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Results Published </br>Exminations</div>
                         <div class="dr-dash-card-subcard-data-value">
-                            <?php if (!empty($exams)) : ?>
+                            <?php if (!empty($exams)): ?>
                                 <?php $count = 0; ?>
-                                <?php foreach ($exams as $exam) : ?>
-                                    <?php if ($exam->status == "completed") : ?>
+                                <?php foreach ($exams as $exam): ?>
+                                    <?php if ($exam->status == "completed"): ?>
                                         <?php $count++; ?>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             <?php endif; ?>
-                            <?=$count?>
+                            <?= $count ?>
                         </div>
                     </div>
                 </div>
@@ -162,24 +163,25 @@ $data['recentResults'] = $RecentResultExam;
                             Ongoing Degree Programs
                         </div>
                         <div class="dr-dash-degree-cards">
-                            <?php if (!empty($degrees)) : ?>
+                            <?php if (!empty($degrees)): ?>
                                 <?php $count = 0; ?>
                                 <?php $ongoing_degrees_exist = false; ?>
-                                <?php foreach ($degrees as $degree) : ?>
-                                    <?php if ($degree->Status == "ongoing") : ?>
+                                <?php foreach ($degrees as $degree): ?>
+                                    <?php if ($degree->Status == "ongoing"): ?>
                                         <?php $ongoing_degrees_exist = true; ?>
                                         <div class="dr-dash-dr-card1">
-                                            <a href="<?= ROOT ?>dr/degreeprofile?id=<?= $degree->DegreeID ?>" style="text-decoration: none;">
+                                            <a href="<?= ROOT ?>dr/degreeprofile?id=<?= $degree->DegreeID ?>"
+                                                style="text-decoration: none;">
                                                 <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
                                             </a>
                                         </div>
                                         <?php $count++; ?>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
-                                <?php if (!$ongoing_degrees_exist) : ?>
+                                <?php if (!$ongoing_degrees_exist): ?>
                                     <p>No data found under the ongoing diploma program.</p>
                                 <?php endif; ?>
-                            <?php else : ?>
+                            <?php else: ?>
                                 <p>No data found for the diploma program.</p>
                             <?php endif; ?>
                         </div>
