@@ -9,7 +9,6 @@ class Admin extends Controller
   function __construct()
   {
     if (!Auth::is_admin()) {
-      message('You are not authorized to view this page');
       show("Error");
       redirect('_403_');
     }
@@ -25,14 +24,26 @@ class Admin extends Controller
     // }
 
     $degree = new Degree();
+    $student = new StudentModel();
+    $exam = new Exam();
+    $degreetimetable = new DegreeTimeTable();
+    $user = new User();
+
+
+    $degree = new Degree();
     $exam = new Exam();
     $finalMarks = new FinalMarks();
 
     $data['title'] = 'Dashboard';
+    $data['degrees'] = $degree->findAll();
+    $data['students'] = $student->findAll();
+    $data['exam'] = $exam->findAll();
+    $data['degreetimetables'] = $degreetimetable->findAll();
 
     //find all ongoing degree programs
     $data['ongoing_degrees'] = $degree->where(['Status' => 'ongoing']);
-
+    $data['ongoing_exam'] = $exam->where(['status' => 'ongoing']);
+    $data['users'] = $user->findAll();
 
     $recentExamId = $finalMarks->lastID('examID');
 
@@ -141,6 +152,79 @@ class Admin extends Controller
     $this->view('admin-interfaces/admin-users', $data);
   }
 
+  public function degreeprofile($action = null, $id = null)
+  {
+    $degree = new Degree();
+
+    $data = [];
+    $data['action'] = $action;
+    $data['id'] = $id;
+    if (isset($_GET['id'])) {
+      $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
+      $_SESSION['degreeData'] = $degree->where(['DegreeID' => $degreeID]);
+      redirect("admin/degreeprofile");
+
+    }
+
+    $degreeID = $_SESSION['degreeData'][0]->DegreeID;
+    // $_SESSION['degreeData']->DegreeID = $degreeID;
+    //update session degree data
+
+
+
+    // Check if degree ID is provided
+    if ($degreeID !== null) {
+      $degree = new Degree();
+      $subject = new Subjects();
+      $degreeTimeTable = new DegreeTimeTable();
+      // Fetch the data based on the ID
+      $degreeData = $degree->find($degreeID);
+      $degreeTimeTableData = $degreeTimeTable->find($degreeID);
+      $subjectsData = $subject->find($degreeID);
+      $data['degrees'] = $degreeData;
+      $subjects = [];
+      foreach ($subjectsData as $subject) {
+        $semesterNumber = $subject->semester;
+        // Create semester array if not already exists
+        if (!isset($subjects[$semesterNumber])) {
+          $subjects[$semesterNumber] = [];
+        }
+        // Add subject to semester array
+        $subjects[$semesterNumber][] = $subject;
+      }
+      $data['subjects'] = $subjects;
+      $data['degreeTimeTable'] = $degreeTimeTableData;
+      if ($action == "update") {
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+          echo "POST request received";
+          if (isset($_POST['timetableData'])) {
+            $timetableData = json_decode($_POST['timetableData'], true);
+            // Iterate over each subject's data and insert it into the database
+            foreach ($timetableData as $timetableData) {
+              echo "a";
+              // Construct the data array for insertion
+              $data1 = [
+                'EventID' => $timetableData['eventID'],
+                'DegreeID' => $degreeID,
+                'EventName' => $timetableData['eventName'],
+                'EventType' => $timetableData['eventType'],
+                'StartingDate' => $timetableData['eventStart'],
+                'EndingDate' => $timetableData['eventEnd'],
+              ];
+              $degreeTimeTable->update($degreeID, $data1);
+            }
+          }
+        }
+      } else if ($action == 'delete') {
+        $degree->delete(['id' => $degreeID]);
+        redirect("admin/degreeprograms");
+      }
+      // Load the view with the data
+      $this->view('admin-interfaces/admin-degreeprofile', $data);
+    } else {
+      echo "Error: Degree ID not provided in the URL.";
+    }
+  }
 
   public function notifications()
   {

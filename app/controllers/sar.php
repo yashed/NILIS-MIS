@@ -5,7 +5,6 @@ class SAR extends Controller
     function __construct()
     {
         if (!Auth::is_sar()) {
-            message('You are not authorized to view this page', 'error', true);
             redirect('_403_');
         }
 
@@ -211,9 +210,9 @@ class SAR extends Controller
         $data['degrees'] = $degree->findAll();
         $data['students'] = $student->where(['degreeID' => $degreeID]);
 
-        if (empty($degreeID)) {
-            redirect('login');
-        }
+        // if (empty($degreeID)) {
+        //     redirect('login');
+        // }
 
         //get exam details with degree details
         $dataTables = ['degree'];
@@ -820,7 +819,7 @@ class SAR extends Controller
             //get semster from session
             $selectedSemester = $_SESSION['exam-creation-details']['semester'];
             $selectedExamDetails = $exam->where(['degreeID' => $degreeID, 'semester' => $selectedSemester, 'status' => 'upcoming']);
-            show($selectedExamDetails);
+
             //get new examid
             if (!empty($selectedExamDetails)) {
 
@@ -1970,10 +1969,9 @@ class SAR extends Controller
 
         }
 
-
         //validate data, check wheter examination is completed
         $data['examtype'] = $exam->whereSpecificColumn(['DegreeID' => $data['degreeDetails'][0]->DegreeID, 'semester' => $data['semester']], 'status');
-        $data['degreetype'] = $$_SESSION['degreeData'][0]->DegreeType;
+        $data['degreetype'] = $_SESSION['degreeData'][0]->DegreeType;
 
 
         if ($method == '1') {

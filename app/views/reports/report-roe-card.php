@@ -154,8 +154,8 @@
         margin: 20px 0px 20px 0px;
         font-family: poppins;
         border-collapse: collapse;
-        width: 100%;
-        /* min-height: px; */
+        width: 90%;
+        align-self: center;
     }
 
     .admission-table tr {
@@ -316,7 +316,7 @@
                 <div class="admission-header">
                     <?php if (!empty($degreeDetails)): ?>
                         <div class="admission-course-name">Student Record of Examinations -
-                            <?= $degreeDetails[0]->DegreeName ?>
+                            <?= $degreeDetails[0]->DegreeName ?> - <?= $degreeDetails[0]->AcademicYear ?>
                         </div>
                     <?php endif; ?>
                     <div class="results-abr"> <b>N</b> - Normal | <b>MC</b> - Medical | <b>RS</b> - Repeat
@@ -336,55 +336,149 @@
                     <div class="roe-table">
                         <?php if (!empty($degreeDetails)): ?>
                             <?php if ($degreeDetails[0]->Duration == 2): ?>
-                                <div class="year-name">
-                                    Year 01
+                                <?php if (!empty($studentResults[1]) || !empty($studentResults[2])): ?>
+                                    <div class="year-name">
+                                        Year 01
+                                    </div>
+                                    <table class="admission-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Subject</th>
+                                                <th>Year</th>
+                                                <th>Semester</th>
+                                                <th>Credits</th>
+                                                <th>Results</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php if (!empty($studentResults[1])): ?>
+                                                <?php foreach ($studentResults[1] as $results): ?>
+                                                    <tr>
+                                                        <td><?= $results->SubjectName ?></td>
+                                                        <td><?= $results->semester ?></td>
+                                                        <td><?php
+
+                                                        if ($results->type == 'medical') {
+                                                            echo 'MC';
+                                                        } else if ($results->type == 'medical/repeat') {
+                                                            if (in_array($results->subjectCode, $repeateSubjects)) {
+                                                                echo 'RS';
+                                                            } else if (in_array($results->subjectCode, $medicalSubjects)) {
+                                                                echo 'MC';
+                                                            }
+                                                        } else if ($results->type == 'repeat') {
+                                                            echo 'RC';
+                                                        } else if ($results->type == 'initial') {
+                                                            echo 'N';
+                                                        }
+
+                                                        ?></td>
+                                                        <td><?= $results->NoCredits ?></td>
+                                                        <td><?= $results->grade ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
+                                            <?php if (!empty($studentResults[2])): ?>
+                                                <?php foreach ($studentResults[2] as $results): ?>
+                                                    <tr>
+                                                        <td><?= $results->SubjectName ?></td>
+                                                        <td><?= $results->semester ?></td>
+                                                        <td><?php
+
+                                                        if ($results->type == 'medical') {
+                                                            echo 'MC';
+                                                        } else if ($results->type == 'medical/repeat') {
+                                                            if (in_array($results->subjectCode, $repeateSubjects)) {
+                                                                echo 'RS';
+                                                            } else if (in_array($results->subjectCode, $medicalSubjects)) {
+                                                                echo 'MC';
+                                                            }
+                                                        } else if ($results->type == 'repeat') {
+                                                            echo 'RC';
+                                                        } else if ($results->type == 'initial') {
+                                                            echo 'N';
+                                                        }
+                                                        ?></td>
+                                                        <td><?= $results->NoCredits ?></td>
+                                                        <td><?= $results->grade ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
+                                        </tbody>
+                                    </table>
+                                <?php endif; ?>
+                                <?php if (!empty($studentResults[3]) || !empty($studentResults[4])): ?>
+                                    <div class="year-name">
+                                        Year 02
+                                    </div>
+                                    <table class="admission-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Subject</th>
+                                                <th>Year</th>
+                                                <th>Semester</th>
+                                                <th>Credits</th>
+                                                <th>Results</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php if (!empty($studentResults[3])): ?>
+                                                <?php foreach ($studentResults[3] as $results): ?>
+                                                    <tr>
+                                                        <td><?= $results->SubjectName ?></td>
+                                                        <td><?= $results->semester ?></td>
+                                                        <td><?php
+
+                                                        if ($results->type == 'medical') {
+                                                            echo 'MC';
+                                                        } else if ($results->type == 'medical/repeat') {
+                                                            if (in_array($results->subjectCode, $repeateSubjects)) {
+                                                                echo 'RS';
+                                                            } else if (in_array($results->subjectCode, $medicalSubjects)) {
+                                                                echo 'MC';
+                                                            }
+                                                        } else if ($results->type == 'repeat') {
+                                                            echo 'RC';
+                                                        } else if ($results->type == 'initial') {
+                                                            echo 'N';
+                                                        }
+
+                                                        ?></td>
+                                                        <td><?= $results->NoCredits ?></td>
+                                                        <td><?= $results->grade ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
+                                            <?php if (!empty($studentResults[4])): ?>
+                                                <?php foreach ($studentResults[4] as $results): ?>
+                                                    <tr>
+                                                        <td><?= $results->SubjectName ?></td>
+                                                        <td><?= $results->semester ?></td>
+                                                        <td><?php
+
+                                                        if ($results->type == 'medical') {
+                                                            echo 'MC';
+                                                        } else if ($results->type == 'medical/repeat') {
+                                                            if (in_array($results->subjectCode, $repeateSubjects)) {
+                                                                echo 'RS';
+                                                            } else if (in_array($results->subjectCode, $medicalSubjects)) {
+                                                                echo 'MC';
+                                                            }
+                                                        } else if ($results->type == 'repeat') {
+                                                            echo 'RC';
+                                                        } else if ($results->type == 'initial') {
+                                                            echo 'N';
+                                                        }
+                                                        ?></td>
+                                                        <td><?= $results->NoCredits ?></td>
+                                                        <td><?= $results->grade ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <table class="admission-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Subject</th>
-                                            <th>Year</th>
-                                            <th>Semester</th>
-                                            <th>Credits</th>
-                                            <th>Results</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <tr>
-                                            <td>Subject 01</td>
-                                            <td>[22]</td>
-                                            <td>[1]</td>
-                                            <td>3</td>
-                                            <td>A</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Subject 02</td>
-                                            <td>[22]</td>
-                                            <td>[1]</td>
-                                            <td>3</td>
-                                            <td>A</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Subject 03</td>
-                                            <td>[22]</td>
-                                            <td>[1]</td>
-                                            <td>3</td>
-                                            <td>A</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Subject 04</td>
-                                            <td>[22]</td>
-                                            <td>[1]</td>
-                                            <td>3</td>
-                                            <td>A</td>
-                                        </tr>
-
-
-
-                                    </tbody>
-                                </table>
-                            </div>
+                            <?php endif; ?>
                         <?php elseif ($degreeDetails[0]->Duration == 1): ?>
                             <table class="admission-table">
                                 <thead>

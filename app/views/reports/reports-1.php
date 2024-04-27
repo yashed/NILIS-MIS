@@ -340,6 +340,14 @@
         margin-bottom: 20px;
         /* Adjust margin size as needed */
     }
+
+    .exam-msg {
+        font-size: 20px;
+        font-weight: 500;
+        color: red;
+        text-align: center;
+
+    }
 </style>
 
 
@@ -377,7 +385,7 @@
 
             </div>
             <?php if (!empty($examtype)): ?>
-                <?php if ($examtype == 'completed'): ?>
+                <?php if ($examtype[0]->status == 'completed'): ?>
                     <div class="admission-data-tb">
                         <div class="roe-table">
                             <table class="admission-table">
@@ -463,7 +471,8 @@
                         </div>
                     </div>
                 <?php else: ?>
-                    <div>Examination was not Comppleted . Submit All marks and Mark as completed to generate report</div>
+                    <div class='exam-msg'>Examination was not completed. Submit all marks and mark examination as completed to
+                        generate the report.</div>
                 <?php endif ?>
             <?php endif; ?>
 
