@@ -15,7 +15,7 @@ $data['role'] = $role;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>temp2 Dashboard</title>
+    <title>Attendance</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
@@ -157,7 +157,7 @@ $data['role'] = $role;
             width: 60vw;
             height: 20vw;
             margin-top: 3vw;
-            margin-left: 15vw;
+            margin-left: 30vh;
             margin-bottom: 5vw;
             display: flex;
             flex-direction: column;
@@ -176,8 +176,7 @@ $data['role'] = $role;
             cursor: pointer;
             width: 12vw;
             font-size: 0.8vw;
-            margin-left: 40vw;
-          
+            margin-left: 85vh;
         }
 
         .admission-button2:hover {
@@ -196,7 +195,7 @@ $data['role'] = $role;
             border: 1px solid #17376e;
             font-size: 1vw;
             margin-top: 2%;
-            margin-left: 39%;
+            margin-left: 75vh;
         }
 
         .popup-form {
@@ -300,51 +299,31 @@ $data['role'] = $role;
         .dr-degree-programs-title1-core {
             color: #17376e;
             font-size: 22px;
-            /* margin: 1px 0px 5px 0px; */
             font-weight: 300;
             font-size: 27px;
         }
 
-        .notification-badge {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 3px 6px;
-    font-size: 12px;
-    font-weight: bold;
-}
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            z-index: 999; /* Ensure it's above other content */
+            display: none; /* Initially hidden */
+        }
 
-.user-pic {
-    width: 27px;
-    height: 27px;
-    border-radius: 50%;
-    cursor: pointer;
-    margin: 8px 10px -0.5px 10px;
-}
-
-.hero-ul {
-    width: 100%;
-    text-align: right;
-}
-
-.hero-ul-li {
-    position: relative; /* Add position relative to allow absolute positioning of badge */
-    display: inline-block;
-    list-style: none;
-}
-
-    </style>
+      
+</style>
 </head>
 
 <body>
-
+<div class="overlay" id="overlay"></div> 
     <div class="temp2-home" id="blur-background">
     <div class="dr-degree-programs-title">
             <div class="dr-degree-programs-title1">Attendance</div>
-            <div class="dr-degree-programs-title1-core"><?= $degrees[0]->DegreeName ?></div>
+            <div class="dr-degree-programs-title1-core"><?= $degreedata[0]->DegreeName ?></div>
         </div>
         <!-- <?php foreach ($degrees as $degree) : ?>
                <?= $degree-> DegreeShortName ?>
@@ -352,7 +331,8 @@ $data['role'] = $role;
 
         <div class="temp2-subsection-2">
             <div class="temp2-subsection-21">
-                <button class="btn-secondary-2" onclick="downloadAttendanceSheet()">Download Attendance Sheet</button>
+           
+                <button class="btn-secondary-2" name="degreeid" onclick="downloadAttendanceSheet('<?= $degreedata[0]->DegreeID ?>')">Download Attendance Sheet</button>
                 <div class="dashed-container1">
                     <a href="javascript:toggleForm('importFrm');">
                         <div class="file-input-icon"></div>
@@ -370,14 +350,21 @@ $data['role'] = $role;
                 <button class="admission-button2" onclick="redirectToUpdatedAttendance()">Student Attendance</button>
             </div>
         </div>
+        <div class="dr-footer">
+            <?php $this->view('components/footer/index', $data) ?>
+        </div>
     </div>
+        </div>
+
     <div id="importFrm" class="popup-form" style="display: none;">
-        <form action="" method="post" enctype="multipart/form-data" onsubmit="validateForm()">
+        <form action="" method="post" enctype="multipart/form-data">
             <label for="csvFile">Upload CSV File:</label>
             <div class="form-element">
            
-    <input type="hidden" name="selectDegree" value="<?= $degrees[0]->DegreeShortName ?>">
-    <label for="selectDegree">Degree Name: <?= $degrees[0]->DegreeShortName ?></label>
+    <input type="hidden" name="selectID" value="<?= $degreedata[0]->DegreeID ?>">
+
+    <input type="hidden" name="selectDegree" value="<?= $degreedata[0]->DegreeShortName ?>">
+    <label for="selectDegree">Diploma Name: <?= $degreedata[0]->DegreeShortName ?></label>
 
             </div>
             <input type="file" name="csvFile" id="csvFile" accept=".csv" required>
@@ -386,20 +373,18 @@ $data['role'] = $role;
         <button class="close-button" onclick="toggleForm('importFrm')">Close</button>
     </div>
 
-    <div class="temp2-footer">
-        <!-- Footer content -->
-    </div>
+    
 
     <script>
-        function toggleForm(formId) {
+          function toggleForm(formId) {
             var form = document.getElementById(formId);
-            var blurBackground = document.getElementById("blur-background");
+            var overlay = document.getElementById('overlay');
             if (form.style.display === "none") {
                 form.style.display = "block";
-                blurBackground.classList.add("blur-background"); // Apply blur effect
+                overlay.style.display = "block"; // Show overlay
             } else {
                 form.style.display = "none";
-                blurBackground.classList.remove("blur-background"); // Remove blur effect
+                overlay.style.display = "none"; // Hide overlay
             }
         }
 
@@ -408,38 +393,16 @@ $data['role'] = $role;
             window.location.href = "<?= ROOT ?>clerk/updatedattendance";
         }
 
-        function handleFileSelect(event) {
-            event.preventDefault();
-            var files = event.target.files;
-            handleFiles(files);
-        }
-
-        function handleFiles(files) {
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                if (file.type === 'text/csv') {
-                    // Process the CSV file
-                    console.log('CSV file selected:', file.name);
-                    // You can handle further processing here
-                } else {
-                    console.log('Invalid file type. Please select a CSV file.');
-                }
-            }
-        }
-
-    function downloadAttendanceSheet() {
-    // Get the degree short name from PHP
-    var degreeShortName = '<?= $degrees[0]->DegreeShortName ?>';
-
-    // Construct the file URL dynamically based on the degree short name
-    var fileUrl = '<?= ROOT ?>assets/csv/output/Student_Attendance_' + degreeShortName + '.csv';
+    function downloadAttendanceSheet(degreeid) {
+    // Modify the file URL dynamically based on the degree ID
+    var fileUrl = '<?= ROOT ?>assets/csv/output/Attendance_' + degreeid + '.csv';
 
     // Create an anchor element
     var a = document.createElement('a');
     a.href = fileUrl;
 
     // Set the download attribute with the desired file name
-    a.download = 'Student_Attendance_' + degreeShortName + '.csv';
+    a.download = 'Attendance_' + degreeid + '.csv';
 
     // Append the anchor element to the document
     document.body.appendChild(a);
@@ -451,15 +414,7 @@ $data['role'] = $role;
     document.body.removeChild(a);
 }
 
-        function validateForm() {
-            var selectedDegree = document.getElementById("form-element-dropdown").value;
-            if (selectedDegree === "") {
-                document.getElementById("degreeError").style.display = "inline";
-                return false; // Prevent form submission
-            }
-            return true;
-            // Allow form submission
-        }
+
     </script>
 </body>
 

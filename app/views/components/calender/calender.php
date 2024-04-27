@@ -201,12 +201,12 @@
             </div>
         </div>
         <?php
-            if (isset($degreetimetables) && !empty($degreetimetables)) {
-                $degreetimetableDates = [];
-                foreach ($degreetimetables as $degreetimetable) {
-                    $degreetimetableDates[] = $degreetimetable->StartingDate;
-                }
+        if (isset($degreetimetables) && !empty($degreetimetables)) {
+            $degreetimetableDates = [];
+            foreach ($degreetimetables as $degreetimetable) {
+                $degreetimetableDates[] = $degreetimetable->StartingDate;
             }
+        }
         ?>
     </div>
     <script>
@@ -254,11 +254,11 @@
                 // Check if current date should be highlighted
                 let isHighlighted = customHighlightedDates.includes(currentDateString);
                 // Check if current date is today
-                let isToday = 
+                let isToday =
                     i === date.getDate() &&
-                    currMonth === new Date().getMonth() &&
-                    currYear === new Date().getFullYear() ?
-                    "active" : "";
+                        currMonth === new Date().getMonth() &&
+                        currYear === new Date().getFullYear() ?
+                        "active" : "";
                 // Determine className based on whether date is highlighted and/or today
                 let className = isToday ? `${isToday}` : `${isHighlighted ? "highlighted" : ""}`;
                 // Add list item for current date
@@ -292,7 +292,7 @@
         //go to second view of the calendar
         function loadNextView() {
             console.log("click");
-            window.location.href = 'http://localhost/NILIS-MIS/public/calendar';
+            window.location.href = 'calendar';
         }
     </script>
 </body>

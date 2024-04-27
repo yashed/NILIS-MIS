@@ -37,18 +37,32 @@ $data['role'] = $role;
         <div class="dr-newdegree-white-container1-1">
             <div class="dr-newdegree-white-container2">
                 <p class="dr-newdegree-left-top-text">Add Student Details</p>
-                <a href="<?= ROOT ?>assets/csv/output/student-data-input.csv" class=" dr-newdegree-download-button" download>Download File</a><br><br>
-                <form method="post" enctype="multipart/form-data" action="<?=ROOT?>dr/newdegree/file">
-                    <div class="dr-newdegree-dashed-container">  <!-- File input field -->
+                <a href="<?= ROOT ?>assets/csv/output/student-data-input.csv" class=" dr-newdegree-download-button"
+                    download>Download File</a><br><br>
+                <form method="post" enctype="multipart/form-data" action="<?= ROOT ?>dr/newdegree/file">
+                    <div class="dr-newdegree-dashed-container"> <!-- File input field -->
                         <input type="file" id="student-data" name="student-data"> <!-- Label for browsing files -->
                         <label for="student-data" class="dr-newdegree-file-input-icon"></label> <!-- Text and button -->
                         <p class="dr-newdegree-text1">Drag and drop or <label for="student-data" class="dr-newdegree-browse-label">browse</label> your files</p>
+                        <div class="display-message">
+                        <?php
+                        if (message()) {
+                            echo '<div class="profile-message">';
+                            if ($_SESSION['message_type'] == 'success') {
+                                echo "<div class='error-message-profile' style='color: green; font-size: 14px; margin-bottom: 5px;'>" . message('', '', true) . "</div>";
+                            } else {
+                                echo "<div class='error-message-profile' style='color:red; font-size: 14px; margin-bottom: 5px;'>" . message('', '', true) . "</div>";
+                            }
+                            echo '</div>';
+                        }
+                        ?>
+                    </div>
                         <button type="submit" class="dr-newdegree-download-button" name="submit" value="upload-csv">Upload</button>
                     </div>
                 </form>
             </div>
             <form class="dr-newdegree-box_4" method="post" action="<?= ROOT ?>dr/newdegree/add" id="dr-newdegree-form1">
-                <p>Define Degree Time Table</p>
+                <p>Define Diploma Time Table</p>
                 <div class="dr-newdegree-box_4_1">
                     <table class="dr-newdegree-Time_table" id="dr-newdegree-Time_table">
                         <tr>
@@ -56,30 +70,46 @@ $data['role'] = $role;
                             <th colspan="2">Duration</th>
                         </tr>
                         <tr>
-                            <td width="76%"><input type="text" value="First Semester" name="event_1" class="dr-newdegree-event" id="dr-newdegree-event_1" readonly></td>
-                            <td width="14%"><input name="type_1" class="dr-newdegree-duration" id="dr-newdegree-type_1" style="padding: 0px 2px 0px 2px;" value="Examination" readonly></td>
-                            <td width="12%"><input type="date" value="" name="start_1" class="dr-newdegree-duration" id="dr-newdegree-start_1" placeholder=""></td>
-                            <td width="12%"><input type="date" value="" name="end_1" class="dr-newdegree-duration" id="dr-newdegree-end_1" placeholder=""></td>
+                            <td width="76%"><input type="text" value="First Semester" name="event_1"
+                                    class="dr-newdegree-event" id="dr-newdegree-event_1" readonly></td>
+                            <td width="14%"><input name="type_1" class="dr-newdegree-duration" id="dr-newdegree-type_1"
+                                    style="padding: 0px 2px 0px 2px;" value="Examination" readonly></td>
+                            <td width="12%"><input type="date" value="" name="start_1" class="dr-newdegree-duration"
+                                    id="dr-newdegree-start_1" placeholder=""></td>
+                            <td width="12%"><input type="date" value="" name="end_1" class="dr-newdegree-duration"
+                                    id="dr-newdegree-end_1" placeholder=""></td>
                         </tr>
                         <tr>
-                            <td width="76%"><input type="text" value="Second Semester" name="event_2" class="dr-newdegree-event" id="dr-newdegree-event_2" readonly></td>
-                            <td width="14%"><input name="type_2" class="dr-newdegree-duration" id="dr-newdegree-type_2" style="padding: 0px 2px 0px 2px;" value="Examination" readonly></td>
-                            <td width="12%"><input type="date" value="" name="start_2" class="dr-newdegree-duration" id="dr-newdegree-start_2" placeholder=""></td>
-                            <td width="12%"><input type="date" value="" name="end_2" class="dr-newdegree-duration" id="dr-newdegree-end_2" placeholder=""></td>
+                            <td width="76%"><input type="text" value="Second Semester" name="event_2"
+                                    class="dr-newdegree-event" id="dr-newdegree-event_2" readonly></td>
+                            <td width="14%"><input name="type_2" class="dr-newdegree-duration" id="dr-newdegree-type_2"
+                                    style="padding: 0px 2px 0px 2px;" value="Examination" readonly></td>
+                            <td width="12%"><input type="date" value="" name="start_2" class="dr-newdegree-duration"
+                                    id="dr-newdegree-start_2" placeholder=""></td>
+                            <td width="12%"><input type="date" value="" name="end_2" class="dr-newdegree-duration"
+                                    id="dr-newdegree-end_2" placeholder=""></td>
                         </tr>
                         <?php $id = 3; ?>
-                        <?php if ($degrees[0]->Duration == 2) : ?>
+                        <?php if ($degrees[0]->Duration == 2): ?>
                             <tr>
-                                <td width="76%"><input type="text" value="Third Semester" name="event_3" class="dr-newdegree-event" id="dr-newdegree-event_3"readonly></td>
-                                <td width="14%"><input name="type_3" class="dr-newdegree-duration" id="dr-newdegree-type_3" style="padding: 0px 2px 0px 2px;" value="Examination" readonly></td>
-                                <td width="12%"><input type="date" value="" name="start_3" class="dr-newdegree-duration" id="dr-newdegree-start_3" placeholder=""></td>
-                                <td width="12%"><input type="date" value="" name="end_3" class="dr-newdegree-duration" id="dr-newdegree-end_3" placeholder=""></td>
+                                <td width="76%"><input type="text" value="Third Semester" name="event_3"
+                                        class="dr-newdegree-event" id="dr-newdegree-event_3" readonly></td>
+                                <td width="14%"><input name="type_3" class="dr-newdegree-duration" id="dr-newdegree-type_3"
+                                        style="padding: 0px 2px 0px 2px;" value="Examination" readonly></td>
+                                <td width="12%"><input type="date" value="" name="start_3" class="dr-newdegree-duration"
+                                        id="dr-newdegree-start_3" placeholder=""></td>
+                                <td width="12%"><input type="date" value="" name="end_3" class="dr-newdegree-duration"
+                                        id="dr-newdegree-end_3" placeholder=""></td>
                             </tr>
                             <tr>
-                                <td width="76%"><input type="text" value="Fourth Semester" name="event_4" class="dr-newdegree-event" id="dr-newdegree-event_4"readonly></td>
-                                <td width="14%"><input name="type_4" class="dr-newdegree-duration" id="dr-newdegree-type_4" style="padding: 0px 2px 0px 2px;" value="Examination" readonly></td>
-                                <td width="12%"><input type="date" value="" name="start_4" class="dr-newdegree-duration" id="dr-newdegree-start_4" placeholder=""></td>
-                                <td width="12%"><input type="date" value="" name="end_4" class="dr-newdegree-duration" id="dr-newdegree-end_4" placeholder=""></td>
+                                <td width="76%"><input type="text" value="Fourth Semester" name="event_4"
+                                        class="dr-newdegree-event" id="dr-newdegree-event_4" readonly></td>
+                                <td width="14%"><input name="type_4" class="dr-newdegree-duration" id="dr-newdegree-type_4"
+                                        style="padding: 0px 2px 0px 2px;" value="Examination" readonly></td>
+                                <td width="12%"><input type="date" value="" name="start_4" class="dr-newdegree-duration"
+                                        id="dr-newdegree-start_4" placeholder=""></td>
+                                <td width="12%"><input type="date" value="" name="end_4" class="dr-newdegree-duration"
+                                        id="dr-newdegree-end_4" placeholder=""></td>
                             </tr>
                             <?php $id = 5; ?>
                         <?php endif; ?>
@@ -88,11 +118,13 @@ $data['role'] = $role;
                 <div class="dr-newdegree-box_4_2">
                     <table class="dr-newdegree-create_time_table_raw">
                         <tr>
-                            <th colspan="3"><button type="button" class="dr-newdegree-add-new-event" id="dr-newdegree-add_new_event" disabled>&#128198 Add New Event</button></th>
+                            <th colspan="3"><button type="button" class="dr-newdegree-add-new-event"
+                                    id="dr-newdegree-add_new_event" disabled>&#128198 Add New Event</button></th>
                         </tr>
                         <tr>
                             <td></td>
-                            <td width="12%"><button class="dr-newdegree-pin" type="button" id="dr-newdegree-save" disabled>Save</button></td>
+                            <td width="12%"><button class="dr-newdegree-pin" type="button" id="dr-newdegree-save"
+                                    disabled>Save</button></td>
                         </tr>
                     </table>
                 </div>
@@ -111,7 +143,7 @@ $data['role'] = $role;
         console.log(i);
         // Define a function to handle the change event
         function handleChange(eventIndex) {
-            return function(e) {
+            return function (e) {
                 var eventValue = $('#dr-newdegree-event_' + eventIndex).val();
                 var typeValue = $('#dr-newdegree-type_' + eventIndex).val();
                 var startValue = $('#dr-newdegree-start_' + eventIndex).val();
@@ -196,7 +228,7 @@ $data['role'] = $role;
             add.removeAttribute("disabled");
         }
         var save = document.getElementById("dr-newdegree-save");
-        save.onclick = function(event) {
+        save.onclick = function (event) {
             event.preventDefault();
             var timetableData = [];
             var timeTable = document.getElementById(`dr-newdegree-Time_table`);
@@ -224,7 +256,7 @@ $data['role'] = $role;
             save.setAttribute("disabled", "true");
             document.getElementById("dr-newdegree-form1").submit();
         }
-        window.onload = function() {
+        window.onload = function () {
             const urlParams = new URLSearchParams(window.location.search);
             const error = urlParams.get('error');
             if (error) {
@@ -235,4 +267,3 @@ $data['role'] = $role;
 </body>
 
 </html>
-<!-- <option value="Examination" <?= (set_value('type_${i}') === 'Examination') ? 'selected' : '' ?>>Examination</option> -->

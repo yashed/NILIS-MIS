@@ -1171,6 +1171,8 @@ $degreeId = $_SESSION['examDetails'][0]->degreeID;
 
 
 <script>
+    var examId = <?php echo $examId ?>;
+    var degreeId = <?php echo $degreeId ?>;
 
     //results uploading popup
     function showResultsUploadingPopup() {
