@@ -251,6 +251,7 @@ span.notification-badge {
   position: relative;
   display: inline-block;
   list-style: none;
+  position: relative;
 }
 /* .user-pic {
   width: 27px;

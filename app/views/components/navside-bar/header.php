@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <link rel="stylesheet" type="text/css" href="<?= ROOT ?>css/sidebar-component.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Navsidebar</title>
-    <style>
-        .notification-badge {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            padding: 3px 6px;
-            font-size: 12px;
-            font-weight: bold;
-        }
+    <html lang="en">
+        <head>
+            <link rel="stylesheet" type="text/css" href="<?=ROOT?>css/sidebar-component.css">
+            <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+            <title>Navsidebar</title>
+            <style>
+        span.notification-badge {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 3px 6px;
+        font-size: 12px;
+        font-weight: bold;
+    }
     </style>
 </head>
 

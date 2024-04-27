@@ -13,8 +13,17 @@ class Admission extends Controller
         $exam = new Exam();
         $degree = new Degree();
         $admissionToken = new AdmissionToken();
-        $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
-        $indexNo = isset($_GET['indexNo']) ? $_GET['indexNo'] : null;
+
+        if (isset($_GET['token'])) {
+            $token = $_GET['token'];
+            $tokenData = $admissionToken->where(['token' => $token]);
+            $indexNo = $tokenData[0]->indexNo;
+            $examID = $tokenData[0]->examID;
+        } else {
+
+            $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
+            $indexNo = isset($_GET['indexNo']) ? $_GET['indexNo'] : null;
+        }
 
         //get exam details
         if ($examID != null) {
@@ -75,8 +84,7 @@ class Admission extends Controller
             $indexNo = $tokenData[0]->indexNo;
             $examID = $tokenData[0]->examID;
         } else {
-
-            message('Invalid Token', 'error', true);
+            echo "Token invalid";
         }
 
         //get student data
@@ -140,16 +148,13 @@ class Admission extends Controller
             //get subject the student repeat
             $subjects = getMedicalSubjects($indexNo, $semester);
 
-
             $examTimeTableData = [];
             //get subject data from timetable for each subject
             foreach ($subjects as $subject) {
-
                 $subjectCode = $subject->subjectCode;
                 $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'semester' => $semester, 'subjectCode' => $subjectCode]);
             }
 
-            // show($examTimeTableData);
         } else if ($studentExamData[0]->studentType == 'medical/repeat') {
 
 
@@ -173,8 +178,6 @@ class Admission extends Controller
 
 
         }
-
-
 
 
         $studentData = $student->where(['indexNo' => $indexNo]);

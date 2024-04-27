@@ -8,3 +8,4 @@ public/assets/csv/input/*.csv
 public/assets/csv/input/DLS-input/*.csv
 public/assets/csv/input/
 node_modules
+*.csv

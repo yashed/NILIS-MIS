@@ -43,15 +43,26 @@ $data['role'] = $role;
                     <div class="dr-newdegree-dashed-container"> <!-- File input field -->
                         <input type="file" id="student-data" name="student-data"> <!-- Label for browsing files -->
                         <label for="student-data" class="dr-newdegree-file-input-icon"></label> <!-- Text and button -->
-                        <p class="dr-newdegree-text1">Drag and drop or <label for="student-data"
-                                class="dr-newdegree-browse-label">browse</label> your files</p>
-                        <button type="submit" class="dr-newdegree-download-button" name="submit"
-                            value="upload-csv">Upload</button>
+                        <p class="dr-newdegree-text1">Drag and drop or <label for="student-data" class="dr-newdegree-browse-label">browse</label> your files</p>
+                        <div class="display-message">
+                        <?php
+                        if (message()) {
+                            echo '<div class="profile-message">';
+                            if ($_SESSION['message_type'] == 'success') {
+                                echo "<div class='error-message-profile' style='color: green; font-size: 14px; margin-bottom: 5px;'>" . message('', '', true) . "</div>";
+                            } else {
+                                echo "<div class='error-message-profile' style='color:red; font-size: 14px; margin-bottom: 5px;'>" . message('', '', true) . "</div>";
+                            }
+                            echo '</div>';
+                        }
+                        ?>
+                    </div>
+                        <button type="submit" class="dr-newdegree-download-button" name="submit" value="upload-csv">Upload</button>
                     </div>
                 </form>
             </div>
             <form class="dr-newdegree-box_4" method="post" action="<?= ROOT ?>dr/newdegree/add" id="dr-newdegree-form1">
-                <p>Define Degree Time Table</p>
+                <p>Define Diploma Time Table</p>
                 <div class="dr-newdegree-box_4_1">
                     <table class="dr-newdegree-Time_table" id="dr-newdegree-Time_table">
                         <tr>
@@ -256,4 +267,3 @@ $data['role'] = $role;
 </body>
 
 </html>
-<!-- <option value="Examination" <?= (set_value('type_${i}') === 'Examination') ? 'selected' : '' ?>>Examination</option> -->

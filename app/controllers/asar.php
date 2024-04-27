@@ -3,23 +3,19 @@
 class ASAR extends Controller
 {
 
-    // function __construct()
-    // {
-    //     if (!Auth::is_director()) {
-    //         message('You are not authorized to view this page');
-    //         redirect('login');
-    //     }
-    // }
+    function __construct()
+    {
+        if (!Auth::is_director()) {
+            redirect('_403_');
+        }
+    }
 
     public function index()
     {
         $degree = new Degree();
 
-        // $degree->insert($_POST);
-        // show($_POST);
-
         $data['degrees'] = $degree->findAll();
-        //show($data['degrees']);
+
 
         $this->view('director-interfaces/director-dashboard', $data);
     }
