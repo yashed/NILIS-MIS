@@ -226,6 +226,7 @@ $data['role'] = $role;
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
+    let $deletedEvents = [];
     function completedDegree() {
         // Show the overlay and pop-up
         $('#degreeprofile-form3').css('display', 'block');
@@ -276,7 +277,8 @@ $data['role'] = $role;
             document.getElementById('degreeprofile-eventDelete').style.display = "none";
             document.getElementById('degreeprofile-overlay').style.display = 'none';
             document.body.classList.remove('no-scroll');
-            console.log(eventID);
+            $deletedEvents.push(eventID);
+            console.log($deletedEvents);
             var eventId = eventID;
             document.getElementById('degreeprofile-event_' + eventId).closest('tr').remove();
             $.ajax({
@@ -427,12 +429,29 @@ $data['role'] = $role;
             save.removeAttribute("disabled");
             add.removeAttribute("disabled");
         }
+        for (k=1; k < i; k++) {
+            if ($deletedEvents.includes(k.toString()) < i - 1) {
+                console.log(`$deletedEvents: `, $deletedEvents);
+                console.log("eventids are higher than deletedEvents, so cant dlete elements in array.");
+            } else {
+                $deletedEvents = [];
+            }
+        }
         save.onclick = function(event) {
             event.preventDefault();
             var timetableData = [];
             console.log(i);
+            
             var timeTable = document.getElementById(`degreeprofile-Time_table`);
             for (var k = 1; k < i; k++) { // loop through all rows except the header
+                // console.log(`Type of k: ${typeof k}`);
+                // console.log(`Type of deletedEvent element: ${typeof $deletedEvents[0]}`);
+                // console.log(`$deletedEvents: `, $deletedEvents);
+                // console.log(`Checking if ${k} is in $deletedEvents: ${$deletedEvents.includes(k)}`);
+                if ($deletedEvents.includes(k.toString())) {
+                    console.log(`Skipping row ${k} because it is in deletedEvents`);
+                    continue; // Skip processing this row
+                }
                 var eventID = k;
                 var eventName = $('#degreeprofile-event_' + k).val();
                 var eventType = $('#degreeprofile-type_' + k).val();

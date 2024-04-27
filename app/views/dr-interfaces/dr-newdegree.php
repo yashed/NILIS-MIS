@@ -61,7 +61,7 @@ $data['role'] = $role;
                 </form>
             </div>
             <form class="dr-newdegree-box_4" method="post" action="<?= ROOT ?>dr/newdegree/add" id="dr-newdegree-form1">
-                <p>Define Degree Time Table</p>
+                <p>Define Diploma Time Table</p>
                 <div class="dr-newdegree-box_4_1">
                     <table class="dr-newdegree-Time_table" id="dr-newdegree-Time_table">
                         <tr>

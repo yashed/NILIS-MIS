@@ -1664,28 +1664,30 @@ input[type=event] {
 }
 #dr-userprofile-submitbutton {
   width: 100%;
-  background-color: #17376e;
-  color: #ffffff;
+  background-color: var(--sidebar-color);
+  color: var(--text-color);
   padding: 8px 22px;
-  margin: 8px 27px;
+  margin: 8px -14px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   width: 100px;
 }
 #dr-userprofile-submitbutton:hover {
-  background-color: #ccc;
+  background-color: var(--text-color);
+  color: var(--sidebar-color);
+  border: 2px solid var(--sidebar-color);
 }
 .dr-userprofile-close-button {
   /* width: 100%; */
   background-color: var(--text-color);
   color: var(--sidebar-color);
   padding: 8px 22px;
-  margin: 8px 0;
+  margin: 8px 40px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  border: 2px solid red;
+  border: 2px solid var(--sidebar-color);
   border-width: 1px;
 }
 .dr-userprofile-close-button-2 {
@@ -1711,7 +1713,9 @@ input[type=event] {
   border-width: 1px;
 }
 .dr-userprofile-close-button:hover {
-  background-color: #e2e2e2;
+  background-color: var(--text-color);
+  color: var(--sidebar-color);
+  border: 2px solid var(--sidebar-color);
 }
 .dr-userprofile-popupForm1 {
   border-radius: 5px;
