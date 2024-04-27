@@ -593,7 +593,17 @@ $data['recentResults'] = $RecentResultExam;
                         </div>
                         <div class="sar-dash-card-subcard-data">
                             <div class="sar-dash-card-subcard-data-title">Students</div>
-                            <div class="sar-dash-card-subcard-data-value">200</div>
+                            <div class="sar-dash-card-subcard-data-value">
+                                <?php if (!empty($students)): ?>
+                                    <?php $count = 0; ?>
+                                    <?php foreach ($students as $student): ?>
+                                        <?php if ($student->status == "continue"): ?>
+                                            <?php $count++; ?>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                                <?= $count ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -605,7 +615,17 @@ $data['recentResults'] = $RecentResultExam;
                         </div>
                         <div class="sar-dash-card-subcard-data">
                             <div class="sar-dash-card-subcard-data-title">Ongoing</br>Degrees</div>
-                            <div class="sar-dash-card-subcard-data-value">04</div>
+                            <div class="sar-dash-card-subcard-data-value">
+                                <?php if (!empty($degrees)): ?>
+                                    <?php $count = 0; ?>
+                                    <?php foreach ($degrees as $degree): ?>
+                                        <?php if ($degree->Status == "ongoing"): ?>
+                                            <?php $count++; ?>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                                <?= $count ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -616,7 +636,17 @@ $data['recentResults'] = $RecentResultExam;
                         </div>
                         <div class="sar-dash-card-subcard-data">
                             <div class="sar-dash-card-subcard-data-title">Ongoing</br>Examination</div>
-                            <div class="sar-dash-card-subcard-data-value">04</div>
+                            <div class="sar-dash-card-subcard-data-value">
+                                <?php if (!empty($exams)): ?>
+                                    <?php $count = 0; ?>
+                                    <?php foreach ($exams as $exam): ?>
+                                        <?php if ($exam->status == "ongoing"): ?>
+                                            <?php $count++; ?>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                                <?= $count ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -627,7 +657,17 @@ $data['recentResults'] = $RecentResultExam;
                         </div>
                         <div class="sar-dash-card-subcard-data">
                             <div class="sar-dash-card-subcard-data-title">Results Published </br>Exminations</div>
-                            <div class="sar-dash-card-subcard-data-value">04</div>
+                            <div class="sar-dash-card-subcard-data-value">
+                                <?php if (!empty($exams)): ?>
+                                    <?php $count = 0; ?>
+                                    <?php foreach ($exams as $exam): ?>
+                                        <?php if ($exam->status == "completed"): ?>
+                                            <?php $count++; ?>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                                <?= $count ?>
+                            </div>
                         </div>
                     </div>
                 </div>
