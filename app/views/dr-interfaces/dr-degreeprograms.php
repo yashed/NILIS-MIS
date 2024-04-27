@@ -70,13 +70,13 @@ $data['role'] = $role;
         <?php $this->view('components/navside-bar/sidebar', $data) ?>
         <?php $this->view('components/navside-bar/footer', $data) ?>
         <div class="dr-degreeprograms-home">
-            <div class="dr-degreeprograms-title">Degree Program</div>
+            <div class="dr-degreeprograms-title">Diploma Program</div>
             <div class="dr-degreeprograms-subsection-1">
 
                 <div class="dr-degreeprograms-button-btn">
-                    <button onclick="myFunction()" type="button" class="dr-degreeprograms-bt-name" style="float: right; margin-right: 40px;">Create Degree Program</button>
+                    <button onclick="myFunction()" type="button" class="dr-degreeprograms-bt-name" style="float: right; margin-right: 40px;">Create Diploma Program</button>
                 </div>
-                <div class="dr-degreeprograms-sub-title">Ongoing Degree Programs</div>
+                <div class="dr-degreeprograms-sub-title">Ongoing Diploma Programs</div>
                 <div class="dr-degreeprograms-degree-bar">
                     <?php if (!empty($degrees)): ?>
                             <?php $ongoing_degrees_exist = false; ?>
@@ -99,7 +99,7 @@ $data['role'] = $role;
                 </div>
             </div>
             <div class="dr-degreeprograms-subsection-1">
-                <div class="dr-degreeprograms-sub-title">Completed Degree Programs</div>
+                <div class="dr-degreeprograms-sub-title">Completed Diploma Programs</div>
                 <div class="dr-degreeprograms-degree-bar">
                     <?php if (!empty($degrees)): ?>
                             <?php $completed_degrees_exist = false; ?>
@@ -128,7 +128,7 @@ $data['role'] = $role;
             <div class="dr-degreeprograms-model-box" id="dr-degreeprograms-create-popup">
 
                 <div class="dr-degreeprograms-container">
-                    <h3>Create New Degree Program</h3>
+                    <h3>Create New Diploma Program</h3>
                     <form method="post" action="<?= ROOT ?>dr/degreeprograms/add">
                         <div id="dr-degreeprograms-Form1">
                             <br>
@@ -136,13 +136,13 @@ $data['role'] = $role;
                                 <div class="dr-degreeprograms-step-row">
                                     <div id="dr-degreeprograms-progress1"></div>
                                 </div>
-                                <label for="degree type" class="dr-degreeprograms-drop-down">Degree Type:</label><br>
+                                <label for="degree type" class="dr-degreeprograms-drop-down">Diploma Type:</label><br>
                                 <select name="degree type" id="dr-degreeprograms-degree_type" style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;" onchange="handleDegreeTypeChange()">
                                     <option value="" default hidden>Select</option>
-                                    <option value="1 Year" <?= (set_value('degree_type') === '1 Year') ? 'selected' : '' ?>>1 Year Degree</option>
-                                    <option value="2 Year" <?= (set_value('degree_type') === '2 Year') ? 'selected' : '' ?>>2 Year Degree</option>
+                                    <option value="1 Year" <?= (set_value('degree_type') === '1 Year') ? 'selected' : '' ?>>1 Year Diploma</option>
+                                    <option value="2 Year" <?= (set_value('degree_type') === '2 Year') ? 'selected' : '' ?>>2 Year Diploma</option>
                                 </select><br><br><br>
-                                <label for="select degree type" class="dr-degreeprograms-drop-down">Select Degree Program:</label><br>
+                                <label for="select degree type" class="dr-degreeprograms-drop-down">Select Diploma Program:</label><br>
                                 <select name="select degree type" id="dr-degreeprograms-select_degree_type" style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;">
                                     <option value="" default hidden>Select</option>
                                     <option value="DLIM" <?= (set_value('select_degree_type') === 'DLIM') ? 'selected' : '' ?>>DLIM</option>

@@ -1058,7 +1058,7 @@ input[type=event] {
   color: red;
   border-radius: 7px;
   width: 30%;
-  height: 35px;
+  min-height: 35px;
   border: 2px solid red;
   padding: 5px 3px 3px 5px;
   cursor: pointer;
@@ -1144,26 +1144,26 @@ input[type=event] {
   cursor: pointer;
   display: none;
 }
-#degreeprofile-save,
-#degreeprofile-update {
-  background-color: #A8A8A8;
-  color: var(--sidebar-color);
+#degreeprofile-update,
+#degreeprofile-save {
+  background-color: var(--sidebar-color);
+  color: var(--text-color);
   border-radius: 7px;
   width: 100%;
   height: 35px;
-  border-color: var(--text-color);
+  /* border-color: var(--sidebar-color); */
   font-weight: 500;
   margin-top: 7px;
 }
-#degreeprofile-save:hover,
+#degreeprofile-save:hover ,
 #degreeprofile-update:hover {
-  background-color: #A8A8A8;
+  background-color: var(--text-color);
   color: var(--sidebar-color);
   border-radius: 7px;
   width: 100%;
   height: 35px;
   font-weight: 500;
-  border-color: var(--sidebar-color);
+  /* border-color: var(--sidebar-color); */
   border-width: 2px;
 }
 #degreeprofile-save:hover:disabled,
@@ -1200,6 +1200,7 @@ input[type=event] {
   z-index: 999;
   border-radius: 15px;
 }
+#degreeprofile-eventDelete,
 .degreeprofile-form4 {
   display:  none;
   position: fixed;
@@ -1228,7 +1229,8 @@ input[type=event] {
   flex-direction: row;
   column-gap: 20px;
 }
-.degreeprofile-close-button-2 {
+.degreeprofile-close-button-2,
+.degreeprofile-close-button-5 {
   background-color: var(--text-color);
   color: red;
   padding: 8px 22px;
@@ -1249,6 +1251,13 @@ input[type=event] {
   cursor: pointer;
   border: 2px solid black;
   border-width: 1px;
+}
+.bx-minus:before {
+  padding: 0px;
+  border: 2px solid red;
+  border-radius: 20px;
+  font-size: 10px;
+  color: red;
 }
 
 /*#DEGREEPARTICIPANTS_CSS*/
@@ -1655,28 +1664,30 @@ input[type=event] {
 }
 #dr-userprofile-submitbutton {
   width: 100%;
-  background-color: #17376e;
-  color: #ffffff;
+  background-color: var(--sidebar-color);
+  color: var(--text-color);
   padding: 8px 22px;
-  margin: 8px 27px;
+  margin: 8px -14px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   width: 100px;
 }
 #dr-userprofile-submitbutton:hover {
-  background-color: #ccc;
+  background-color: var(--text-color);
+  color: var(--sidebar-color);
+  border: 2px solid var(--sidebar-color);
 }
 .dr-userprofile-close-button {
   /* width: 100%; */
   background-color: var(--text-color);
   color: var(--sidebar-color);
   padding: 8px 22px;
-  margin: 8px 0;
+  margin: 8px 40px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  border: 2px solid red;
+  border: 2px solid var(--sidebar-color);
   border-width: 1px;
 }
 .dr-userprofile-close-button-2 {
@@ -1702,7 +1713,9 @@ input[type=event] {
   border-width: 1px;
 }
 .dr-userprofile-close-button:hover {
-  background-color: #e2e2e2;
+  background-color: var(--text-color);
+  color: var(--sidebar-color);
+  border: 2px solid var(--sidebar-color);
 }
 .dr-userprofile-popupForm1 {
   border-radius: 5px;
@@ -1817,6 +1830,7 @@ input[type=event] {
   opacity: 1;
   background: #fff;
   width: 500px;
+  height: 60%;
   padding: 20px 30px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
@@ -1851,7 +1865,8 @@ input[type=event] {
   font-size: 14px;
   color: #222;
 }
-.dr-userprofile-popup .dr-userprofile-form .dr-userprofile-form-element input[type="text"] {
+.dr-userprofile-popup .dr-userprofile-form .dr-userprofile-form-element input[type="text"],
+dr-userprofile-popup .dr-userprofile-form .dr-userprofile-form-element input[type="date"] {
   margin-top: 5px;
   display: block;
   width: 100%;

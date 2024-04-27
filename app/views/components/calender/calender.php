@@ -292,7 +292,7 @@
         //go to second view of the calendar
         function loadNextView() {
             console.log("click");
-            window.location.href = 'http://localhost/NILIS-MIS/public/calendar';
+            window.location.href = 'calendar';
         }
     </script>
 </body>

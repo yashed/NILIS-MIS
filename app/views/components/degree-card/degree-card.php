@@ -49,7 +49,7 @@
 
         .degree-card-sub-name {
             color: #9AD6FF;
-            font-size: 18px;
+            font-size: 12px;
             font-weight: 700;
             text-align: right;
             /* float: right; */

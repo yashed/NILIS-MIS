@@ -60,7 +60,7 @@ $data['role'] = $role;
             padding: 10px 10px 30px 35px;
             border-radius: 6px;
             margin: 7px 4px 7px 4px;
-            /* min-height: 72vh; */
+
         }
 
         .temp3-sub-title {
@@ -75,7 +75,7 @@ $data['role'] = $role;
     </style>
 </head>
 <body>
-    <div class="temp3-home">
+    <div class="temp3-home">  
         <div class="temp3-title">Notifications</div>
         <div class="temp3-subsection-1">
         <?php if (!empty($notifications)) : ?>
@@ -100,7 +100,7 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert') : ?>
+                    <?php if ($notification->type == 'Vacation' && $notification->msg_type == 'Vacation-start-alert' && $data['usernames'] == $notification->usernames) : ?>
                         <?php 
                              $data['role'] = "DR";
                              $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
@@ -141,15 +141,9 @@ $data['role'] = $role;
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Examination' && $notification->msg_type == 'payment_check_alert') : ?>
-                        <?php
-                        $data['role'] = "DR";
-
-                        $link = "dr"; 
-                        $this->view('components/notification-bar/notification-box', [
-                            "notification" => $notification,
-                            "role" => $data['role'],
-                            "link" =>$link  // Pass the notify_id here
-                        ]) ?>
+                        <?php 
+                             $data['role'] = "DR";
+                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -157,19 +151,12 @@ $data['role'] = $role;
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
                     <?php if ($notification->type == 'Examination' && $notification->msg_type == 'degree-changed-check') : ?>
-                        <?php
-                        $data['role'] = "DR";
-
-                        $link = "dr"; 
-                        $this->view('components/notification-bar/notification-box', [
-                            "notification" => $notification,
-                            "role" => $data['role'],
-                            "link" =>$link  // Pass the notify_id here
-                        ]) ?>
+                        <?php 
+                             $data['role'] = "DR";
+                             $this->view('components/notification-bar/notification-box', ["notification" => $notification, "role" => $data['role']]) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
-            
         </div>
     </div>
     <div class="temp3-footer">
