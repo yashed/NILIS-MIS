@@ -19,7 +19,7 @@
                 <li class="nav-link">
                     <a href="<?= ROOT ?>dr/degreeprograms">
                         <i class="bx bx-layer-plus icon"></i>
-                        <span class="text nav-text">Degree Programs</span>
+                        <span class="text nav-text">Diploma Programs</span>
                     </a>
                 </li>
                 <hr class="horizontal-line">
@@ -86,7 +86,7 @@
                 <li class="nav-link">
                     <a href="<?= ROOT ?>sar/degreeprograms">
                         <i class="bx bx-layer-plus icon"></i>
-                        <span class="text nav-text">Degree Programs</span>
+                        <span class="text nav-text">Diploma Programs</span>
                     </a>
                 </li>
                 <hr class="horizontal-line">
@@ -151,7 +151,7 @@
                 <li class="nav-link">
                     <a href="<?= ROOT ?>assistant-sar/degreeprograms">
                         <i class="bx bx-layer-plus icon"></i>
-                        <span class="text nav-text">Degree Programs</span>
+                        <span class="text nav-text">Diploma Programs</span>
                     </a>
                 </li>
                 <hr class="horizontal-line">
@@ -213,7 +213,7 @@
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>admin/userlogs">
+                    <a href="<?= ROOT ?>admin/activity">
                         <i class='bx bxs-user-account icon'></i>
                         <span class="text nav-text">User Logs</span>
                     </a>
@@ -227,7 +227,7 @@
                 <li class="nav-link">
                     <a href="<?= ROOT ?>admin/degreeprograms">
                         <i class="bx bx-home icon"></i>
-                        <span class="text nav-text">Degree Programs</span>
+                        <span class="text nav-text">Diploma Programs</span>
                     </a>
                 </li>
                 <hr class="horizontal-line">
@@ -292,7 +292,7 @@
                 <li class="nav-link">
                     <a href="<?= ROOT ?>director/degreeprograms">
                         <i class="bx bx-layer-plus icon"></i>
-                        <span class="text nav-text">Degree Programs</span>
+                        <span class="text nav-text">Diploma Programs</span>
                     </a>
                 </li>
                 <hr class="horizontal-line">
@@ -357,7 +357,7 @@
                 <li class="nav-link">
                     <a href="<?= ROOT ?>clerk/degreeprograms">
                         <i class="bx bx-layer-plus icon"></i>
-                        <span class="text nav-text">Degree Programs</span>
+                        <span class="text nav-text">Diploma Programs</span>
                     </a>
                 </li>
                 <hr class="horizontal-line">

@@ -615,23 +615,23 @@ function validateRowData($rowData) {
         return false; // Country cannot be empty
     }
     // Validate NIC-No
-    // if (!preg_match('/^\d{12}$|^\d{9}[VX]$/', $rowData[3])) {
-    //     return false; // NIC No must match the specific pattern (e.g., 123456789V)
-    // }
+    if (!preg_match('/^\d{12}$|^\d{9}[VX]$/', $rowData[3])) {
+        return false; // NIC No must match the specific pattern (e.g., 123456789V)
+    }
     // Validate Date-Of-Birth
-    // $dob = DateTime::createFromFormat('Y-m-d', $rowData[4]);
-    // $now = new DateTime();
-    // if ($dob === false) {
-    //     return false; // Date must be a valid date
-    // }
+    $dob = DateTime::createFromFormat('Y-m-d', $rowData[4]);
+    $now = new DateTime();
+    if ($dob === false) {
+        return false; // Date must be a valid date
+    }
     // Validate whatsappNo
     if (!preg_match('/^\+?[\d\s]{9,15}$/', $rowData[5])) {
         return false; // Whatsapp number    must be in a valid phone number format
     }
     // Validate Address
-    // if (empty($rowData[6])) {
-    //     return false; // Address cannot be empty
-    // }
+    if (empty($rowData[6]) && !preg_match("/^[A-Za-z0-9\s/,-]+(?:[A-Za-z0-9\s/,-]+)*$/",$rowData[6])) {
+        return false; // Address cannot be empty
+    }
     // Validate Phone-No
     if (!preg_match('/^\+?[\d\s]{9,15}$/', $rowData[7])) {
         return false; // Phone number must be in a valid phone number format
