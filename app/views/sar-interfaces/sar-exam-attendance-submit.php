@@ -255,6 +255,7 @@
 
 
             </div>
+            <?php ?>
             <?php if (!empty($ExamSetStudents)): ?>
                 <div class="table-body-container">
                     <table class="table">
@@ -302,6 +303,7 @@
             <?php else: ?>
                 <div class="select-sub-msg">Please Select a Subject to Mark Examination Attendance</div>
             <?php endif; ?>
+
         </form>
     </div>
 </body>

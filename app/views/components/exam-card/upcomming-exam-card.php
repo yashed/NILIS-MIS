@@ -132,7 +132,7 @@
 <body>
     <div class="updomming-exam-card-body">
 
-        <div class="updomming-container" onclick="redirectToURL()">
+        <div class="updomming-container">
             <div class="updomming-card">
                 <div class="updomming-content">
                     <div class="updomming-degree-name">

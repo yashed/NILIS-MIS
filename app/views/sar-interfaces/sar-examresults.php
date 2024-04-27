@@ -13,7 +13,7 @@ $data['role'] = $role;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>temp2 Dashboard</title>
+    <title>Exam Results</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -432,18 +432,31 @@ $data['role'] = $role;
                 <div class="column1">
                     <div class="data1">Course Name<br>
                         <!-- <div class="email"><?= $student->Email ?></div> -->
-                        <div class="course" id="course">Diploma in School Librarianship</div>
+                        <div class="course" id="course">
+                            <?php if (!empty($_SESSION['degreeData'])): ?>
+                                <?= $_SESSION['degreeData'][0]->DegreeName ?>
+                            <?php endif; ?>
+                        </div>
                     </div>
                     <br>
                     <div class="data2">Examination:<br>
                         <!-- <div class="regNum"> <?= $student->regNo ?></div> -->
-                        <div class="exam" id="exam">2nd Semester Examination</div>
+                        <div class="exam" id="exam">
+                            <?php if (!empty($_SESSION['examDetails'])): ?>
+                                <?= $_SESSION['examDetails'][0]->semester ?> Semester Examination
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
 
                 <div class="column2">
                     <div class="data3">Participation<br>
-                        <div class="count" id="count"> 216</div>
+                        <div class="count" id="count">
+                            <?php if (!empty($examCount)) {
+                                echo $examCount[0]->ExamParticipants;
+                            }
+                            ?>
+                        </div>
                     </div>
                     <br>
                     <div class="data4">Academic Year:<br>
@@ -519,7 +532,7 @@ $data['role'] = $role;
                                     </button>
                                     <div class="exam-create-dropdown-content">
                                         <a onclick="downloadMarkSheet('<?= $subjectCode ?>','<?= $examId ?>')">.CSV</a>
-                                        <a href="#">.PDF</a>
+                                        <!-- <a href="#">.PDF</a> -->
                                     </div>
                                 </div>
 

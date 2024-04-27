@@ -534,6 +534,7 @@ function updateMarksheet($csvFileName, $dataArray, $newFileName)
     }
 
     fclose($newFile);
+    // chmod($newFilePath, 0777);
 }
 
 function getNotificationCount()
@@ -544,7 +545,7 @@ function getNotificationCount()
     $notification_count_arr = $notification->countNotifications($username);
     $data['notification_count_obj'] = $notification_count_arr[0];
     return $notification_count_arr[0];
-    
+
 }
 
 function getNotificationCountDirector()
@@ -601,7 +602,8 @@ function getNotificationCountAdmin()
 
     return $notification_count_arr[0];
 }
-function validateRowData($rowData) {
+function validateRowData($rowData)
+{
     // Validate Full-Name
     if (empty($rowData[0]) && !preg_match('/^[a-zA-Z\s]+$/', $rowData[0])) {
         return false;

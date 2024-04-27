@@ -120,17 +120,6 @@ class User extends Model
                $this->errors['phoneNo'] = 'Phone number must be exactly 10 digits';
           }
 
-          //check confirm password
-          if (empty($data['cpassword']) && !empty($data['newpassword'])) {
-               $this->errors['cpassword'] = 'Confirm Password is required';
-
-          } else {
-               if ($data['cpassword'] != $data['newpassword']) {
-                    $this->errors['password'] = 'Password do not match';
-
-               }
-
-          }
 
           if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
                $this->errors['email'] = 'Email is not valid';

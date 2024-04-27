@@ -924,15 +924,21 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
                                                     <?= $student->indexNo ?>
                                                 </td>
 
-                                            <td>
-                                                <?= $student->studentType ?>
-                                            </td>
-                                            <td> <a href="<? ROOT ?>admission/login?degreeID=<?= $degreeID ?>&examID=<?= $examID ?>&indexNo=<?= $student->indexNo ?>"
-                                                    target="_blank">tap
-                                                    to see Admission card </a></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php endforeach; ?>
+                                                <td>
+                                                    <?= $student->studentType ?>
+                                                </td>
+                                                <td> <a href="http://localhost/NILIS-MIS/public/admission/login?degreeID=<?= $degreeID ?>&examID=<?= $examID ?>&indexNo=<?= $student->indexNo ?>"
+                                                        target="_blank">tap
+                                                        to see Admission card </a></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <div class='empty-msg'>
+                                            No Students Found
+                                        </div>
+                                    <?php endif; ?>
+
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </section>

@@ -17,8 +17,6 @@ class Auth
 
         if (!empty($_SESSION['USER_DATA'])) {
             unset($_SESSION['USER_DATA']);
-            // session_unset();
-            // session_regenerate_id();
         }
     }
     public static function logged_in()

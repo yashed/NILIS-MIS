@@ -60,3 +60,7 @@ bitnami@ip-172-26-14-159:~/htdocs/NILIS-MIS/app/models$ mv examParticipants.mode
 bitnami@ip-172-26-14-159:~/htdocs/NILIS-MIS/app/models$ mv medicalStudents.model.php medicalstudents.model.php  
 bitnami@ip-172-26-14-159:~/htdocs/NILIS-MIS/app/models$ mv StudentModel.model.php studentmodel.model.php
 bitnami@ip-172-26-14-159:~/htdocs/NILIS-MIS/app/models$ mv notificationModel.model.php notificationmodel.model.php
+
+# give permission to all files
+
+sudo chmod -R a+rwx csv
