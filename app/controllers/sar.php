@@ -24,6 +24,7 @@ class SAR extends Controller
         $degreetimetable = new DegreeTimeTable();
         $finalMarks = new FinalMarks();
         $db = new Database();
+        $finalMarks = new FinalMarks();
 
 
         //remove degree data from session
@@ -65,12 +66,13 @@ class SAR extends Controller
 
         $degree = new Degree();
 
+        $data['marks'] = $finalMarks->query("SELECT finalMarks FROM final_marks");
         $data['degrees'] = $degree->findAll();
         $data['checkUser'] = $checkUser;
 
         $this->view('sar-interfaces/sar-dashboard', $data);
     }
-    public function notification()
+    public function notifications()
     {
         $notification = new NotificationModel();
 
@@ -1350,7 +1352,7 @@ class SAR extends Controller
                                 }
                             }
                             fclose($f);
-                            chmod($markSheet, 0777);
+                            // chmod($markSheet, 0777);
                         }
                     }
                 }
@@ -1706,36 +1708,36 @@ class SAR extends Controller
     {
 
         $user = new User();
-
+        $data = [];
+        $data['notification_count_obj'] = getNotificationCount();
 
         if (isset($_POST['update_user_data'])) {
+            // Validate input fields
+            $fname = isset($_POST['fname']) ? trim($_POST['fname']) : '';
+            $lname = isset($_POST['lname']) ? trim($_POST['lname']) : '';
+            $phoneNo = isset($_POST['phoneNo']) ? trim($_POST['phoneNo']) : '';
+
+            // Update user data
             $id = $_SESSION['USER_DATA']->id;
             $dataToUpdate = [
-                'fname' => $_POST['fname'],
-                'lname' => $_POST['lname'],
-                'email' => $_POST['email'],
-                'phoneNo' => $_POST['phoneNo']
+                'fname' => $fname,
+                'lname' => $lname,
+                'phoneNo' => $phoneNo
             ];
 
             $user->update($id, $dataToUpdate);
-
-            $updatedUserData = $user->first(['id' => $id]);
-
-            if ($updatedUserData === null) {
-                echo 'No user data found after update.';
-                exit();
-            }
-
-            $data['user'] = $updatedUserData;
-        } else {
-            $id = $_SESSION['USER_DATA']->id;
-            $data['user'] = $user->first(['id' => $id]);
-
-            if ($data['user'] === null) {
-                echo 'No user data found.';
-                exit();
-            }
+            header('Location:settings');
+            exit;
         }
+
+        // Fetch user data for display
+        $id = $_SESSION['USER_DATA']->id;
+        $data['user'] = $user->first(['id' => $id]);
+
+        if ($data['user'] === null) {
+            $data['error'] = 'No user data found.';
+        }
+
 
 
         $this->view('sar-interfaces/sar-settings', $data);

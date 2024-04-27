@@ -18,10 +18,10 @@ class Admin extends Controller
   {
     //uncoment this to add autherization
 
-    // if (!Auth::is_admin()) {
-    //   message('You are not authorized to view this page',s 'error');
-    //   header('Location: login');
-    // }
+    if (!Auth::is_admin()) {
+
+      redirect('_403_');
+    }
 
     $degree = new Degree();
     $student = new StudentModel();
@@ -137,8 +137,16 @@ class Admin extends Controller
           }
         } else if ($_POST['submit'] == "delete") {
 
+
           $user->delete2($_POST);
           message("User profile was successfully Deleted", 'success', true);
+
+          //if user delete admin account then user automatically got logout
+          if ($_POST['id'] == $_SESSION['USER_DATA']->id) {
+            Auth::logout();
+            //redirect to login
+            redirect('login');
+          }
         }
       }
     }

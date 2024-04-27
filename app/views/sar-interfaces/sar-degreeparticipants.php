@@ -11,7 +11,7 @@ $data['popupStatus'] = isset($RMpopupStatus) ? $RMpopupStatus : '';
 <html lang="en">
 
 <head>
-    <title>DR Student Participants</title>
+    <title>Students</title>
     <style>
         * {
             margin: 0;
@@ -458,8 +458,6 @@ $data['popupStatus'] = isset($RMpopupStatus) ? $RMpopupStatus : '';
             user-select: none;
             background: rgba(0, 0, 0, 0.30);
             overflow: hidden;
-
-
         }
     </style>
 </head>

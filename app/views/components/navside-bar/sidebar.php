@@ -1,5 +1,4 @@
-
-<?php if ($role == "DR") : ?>
+<?php if ($role == "DR"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">
@@ -38,12 +37,14 @@
 
     <div class="hero">
         <nav>
-        <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notifications"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj)): ?>
-                        <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
-                    <?php endif; ?></a></i></li>
-              
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+            <ul class="hero-ul">
+                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notifications"> <i class="bx bxs-bell icon">
+                            <?php if (isset($notification_count_obj)): ?>
+                                <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                            <?php endif; ?></a></i></li>
+
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic">
+                </li>
             </ul>
 
 
@@ -51,7 +52,7 @@
                 <div class="sub-menu">
                     <div class="user-info">
                         <img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                        <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
                     </div>
                     <hr>
                     <a href="<?= ROOT ?>logout" class="sub-menu-link">
@@ -67,7 +68,7 @@
 <?php endif ?>
 
 
-<?php if ($role == "SAR") : ?>
+<?php if ($role == "SAR"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">
@@ -106,12 +107,14 @@
 
     <div class="hero">
         <nav>
-        <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>sar/notifications"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj)): ?>
-                        <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
-                    <?php endif; ?></a></i></li>
-              
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+            <ul class="hero-ul">
+                <li class="hero-ul-li"><a href="<?= ROOT ?>sar/notifications"> <i class="bx bxs-bell icon">
+                            <?php if (isset($notification_count_obj)): ?>
+                                <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                            <?php endif; ?></a></i></li>
+
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic">
+                </li>
             </ul>
 
 
@@ -119,7 +122,7 @@
                 <div class="sub-menu">
                     <div class="user-info">
                         <img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                        <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
                     </div>
                     <hr>
                     <a href="http://localhost/NILIS-MIS/public/login" class="sub-menu-link">
@@ -133,7 +136,7 @@
     </div>
 <?php endif ?>
 
-<?php if ($role == "Assistant-SAR") : ?>
+<?php if ($role == "Assistant-SAR"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">
@@ -173,15 +176,17 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>assistant-sar/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+                <li class="hero-ul-li"><a href="<?= ROOT ?>assistant-sar/notification"><i class="bx bxs-bell icon"></i></a>
+                </li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic">
+                </li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
                     <div class="user-info">
                         <img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                        <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
                     </div>
                     <hr>
                     <a href="http://localhost/NILIS-MIS/public/login" class="sub-menu-link">
@@ -195,7 +200,7 @@
     </div>
 <?php endif ?>
 
-<?php if ($role == "Admin") : ?>
+<?php if ($role == "Admin"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">
@@ -214,7 +219,7 @@
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>admin/userlogs">
+                    <a href="<?= ROOT ?>admin/activity">
                         <i class='bx bxs-user-account icon'></i>
                         <span class="text nav-text">User Logs</span>
                     </a>
@@ -247,8 +252,9 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>admin/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+                <li class="hero-ul-li"><a href="<?= ROOT ?>admin/notification"><i class="bx bxs-bell icon"></i></a></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic">
+                </li>
             </ul>
 
 
@@ -256,7 +262,7 @@
                 <div class="sub-menu">
                     <div class="user-info">
                         <img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                        <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
                     </div>
                     <hr>
                     <a href="http://localhost/NILIS-MIS/public/login" class="sub-menu-link">
@@ -270,7 +276,7 @@
     </div>
 <?php endif ?>
 
-<?php if ($role == "director") : ?>
+<?php if ($role == "director"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">
@@ -310,15 +316,16 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>director/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+                <li class="hero-ul-li"><a href="<?= ROOT ?>director/notification"><i class="bx bxs-bell icon"></i></a></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic">
+                </li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
                     <div class="user-info">
                         <img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                        <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
                     </div>
                     <hr>
                     <a href="<?= ROOT ?>logout" class="sub-menu-link">
@@ -333,7 +340,7 @@
 
 <?php endif ?>
 
-<?php if ($role == "Clerk") : ?>
+<?php if ($role == "Clerk"): ?>
     <div class="menu-bar">
         <hr>
         <div class="menu">
@@ -373,15 +380,16 @@
     <div class="hero">
         <nav>
             <ul class="hero-ul">
-            <li class="hero-ul-li"><a href="<?= ROOT ?>clerk/notification"><i class="bx bxs-bell icon"></i></a></li>
-                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic"></li>
+                <li class="hero-ul-li"><a href="<?= ROOT ?>clerk/notification"><i class="bx bxs-bell icon"></i></a></li>
+                <li class="hero-ul-li"><img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg" class="user-pic">
+                </li>
             </ul>
 
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
                     <div class="user-info">
                         <img src="http://localhost/NILIS-MIS/public/assets/user_img.jpg">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                        <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
                     </div>
                     <hr>
                     <a href="<?= ROOT ?>logout" class="sub-menu-link">

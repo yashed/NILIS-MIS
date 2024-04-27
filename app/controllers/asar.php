@@ -15,11 +15,8 @@ class ASAR extends Controller
     {
         $degree = new Degree();
 
-        // $degree->insert($_POST);
-        // show($_POST);
-
         $data['degrees'] = $degree->findAll();
-        //show($data['degrees']);
+
 
         $this->view('director-interfaces/director-dashboard', $data);
     }

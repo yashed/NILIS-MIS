@@ -3,7 +3,7 @@
 $role = "SAR";
 $data['role'] = $role;
 $data['recentResults'] = $RecentResultExam;
-
+$data['examResults'] = $marks;
 ?>
 
 
@@ -11,9 +11,11 @@ $data['recentResults'] = $RecentResultExam;
 <html lang="en">
 
 <head>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sar-dash Dashboard</title>
+    <title>SAR Dashboard</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -720,7 +722,7 @@ $data['recentResults'] = $RecentResultExam;
                                 Student Performance
                             </div>
                             <div class="graph04-sub-title">
-                                Degree Name
+                                Overall
                             </div>
                             <div class="graph04">
                                 <?php $this->view('components/graphs/piechart-student-results', $data) ?>

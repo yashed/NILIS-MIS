@@ -534,7 +534,7 @@ function updateMarksheet($csvFileName, $dataArray, $newFileName)
     }
 
     fclose($newFile);
-    chmod($newFilePath, 0777);
+    // chmod($newFilePath, 0777);
 }
 
 function getNotificationCountDR()
@@ -555,5 +555,14 @@ function getNotificationCountAdmin()
     $notification_count_arr = $notification->countNotificationsAdmin();
     return $notification_count_arr[0];
 }
+function getNotificationCount()
+{
+    $notification = new NotificationModel();
+    $username = $_SESSION['USER_DATA']->username;
+    $data['usernames'] = $username;
+    $notification_count_arr = $notification->countNotifications($username);
+    $data['notification_count_obj'] = $notification_count_arr[0];
+    return $notification_count_arr[0];
 
+}
 ?>

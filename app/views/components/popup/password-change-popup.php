@@ -123,49 +123,78 @@
         text-align: center;
 
     }
+
+    .show-passwords {
+        margin-top: 10px;
+        display: flex;
+        font-family: "Poppins";
+        flex-direction: row;
+        font-size: 1vw;
+    }
+
+    .show-passwords input {
+        border-radius: 10px;
+    }
 </style>
 
-<body>
-    <div class="password-change-popup">
-        <div class="pw-popup-header">
-            <div class="pw-popup-title">
-                Set New Password
-            </div>
-            <div class='pw-description'>
-                For security purposes, please set a new password for your account.
-            </div>
+
+<div class="password-change-popup">
+    <div class="pw-popup-header">
+        <div class="pw-popup-title">
+            Set New Password
         </div>
-        <div class="pw-popup-body">
-
-            <form method="post">
-                <div class="pw-change-form">
-                    <div class="pw-form-inputs">
-                        <div class="pw-form-input-fields">
-                            <input value="" class="input-passwords" type="password" placeholder="New Password"
-                                name="newPassword" required />
-
-                            <input value="" class="input-passwords" type="password" placeholder="Confirm Password"
-                                name="Cpassword" required />
-                            <input type='text' name='id' value='<?= $_SESSION['USER_DATA']->id ?>' hidden />
-                        </div>
-                        <div class="password-error">
-                            <?php if (!empty($errors['newPassword'])): ?>
-                                <div>
-                                    <?= $errors['newPassword'] ?>
-                                </div>
-                            <?php endif; ?>
-                            <?php if (!empty($errors['cpassword'])): ?>
-                                <div>
-                                    <?= $errors['cpassword'] ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                    <button type="submit">
-                        <div class="bt-name">Change Password</div>
-                    </button>
-                </div>
-            </form>
+        <div class='pw-description'>
+            For security purposes, please set a new password for your account.
         </div>
     </div>
-</body>
+    <div class="pw-popup-body">
+
+        <form method="post">
+            <div class="pw-change-form">
+                <div class="pw-form-inputs">
+                    <div class="pw-form-input-fields">
+                        <input value="" class="input-passwords" type="password" placeholder="New Password" id="pass"
+                            name="newPassword" required />
+
+                        <input value="" class="input-passwords" type="password" placeholder="Confirm Password"
+                            id="cpass" name="Cpassword" required />
+                        <input type='text' name='id' value='<?= $_SESSION['USER_DATA']->id ?>' hidden />
+                    </div>
+                    <div class="password-error">
+                        <?php if (!empty($errors['newPassword'])): ?>
+                            <div>
+                                <?= $errors['newPassword'] ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (!empty($errors['cpassword'])): ?>
+                            <div>
+                                <?= $errors['cpassword'] ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="show-passwords">
+                        <input type="checkbox" onclick="showResetPasswords()">
+                        <div classs='pass-text'>Show Password</div>
+                    </div>
+                </div>
+                <button type="submit">
+                    <div class="bt-name">Change Password</div>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function showResetPasswords() {
+        console.log('show password');
+        var x = document.getElementById("pass");
+        var y = document.getElementById("cpass");
+        if (x.type === "password" && y.type === "password") {
+            x.type = "text";
+            y.type = "text";
+        } else {
+            x.type = "password";
+            y.type = "password";
+        }
+    }
+</script>
