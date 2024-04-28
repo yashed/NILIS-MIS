@@ -361,8 +361,8 @@ $data['role'] = $role;
                     alert("Subject Code can only have letters and numbers.\n" + "Check Semester " + j + " Subject " + k);
                     return false;
                 }
-                if (!/^[0-9]+$/.test(credits)) {
-                    alert("Credits can only have numbers.\nCheck Semester " + j + " Subject " + k);
+                if (!/^[0-9]+$/.test(credits) || (credits < 0 || credits > 6)) {
+                    alert("Credits can only have numbers.\n(Range : 0-5)\nCheck Semester " + j + " Subject " + k);
                     return false;
                 }
             }

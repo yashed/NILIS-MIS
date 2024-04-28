@@ -226,7 +226,7 @@
                 </li>
                 <li class="nav-link">
                     <a href="<?= ROOT ?>admin/degreeprograms">
-                        <i class="bx bx-home icon"></i>
+                        <i class="bx bx-layer-plus icon"></i>
                         <span class="text nav-text">Diploma Programs</span>
                     </a>
                 </li>
