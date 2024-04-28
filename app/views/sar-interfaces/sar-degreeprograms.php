@@ -238,7 +238,7 @@ $data['role'] = $role;
         <div class="dr-title">Degree Program</div>
         <div class="dr-subsection-1">
 
-            <div class="dr-sub-title">Ongoing Degree Programs</div>
+            <div class="dr-sub-title">Ongoing Diploma Programs</div>
             <div class="dr-degree-bar">
 
                 <div class="dr-card1">
@@ -254,7 +254,7 @@ $data['role'] = $role;
             </div>
         </div>
         <div class="dr-subsection-1">
-            <div class="dr-sub-title">Completed Degree Programs</div>
+            <div class="dr-sub-title">Completed Diploma Programs</div>
             <div class="dr-degree-bar">
                 <div class="dr-card1">
                     <?php $degreeStatus = False; ?>
@@ -270,7 +270,7 @@ $data['role'] = $role;
                     <?php endforeach; ?>
                 </div>
                 <?php if ($degreeStatus == False): ?>
-                    <div class="degree-msg">No completed degree programs</div>
+                    <div class="degree-msg">No completed Diploma programs</div>
                 <?php endif; ?>
             </div>
         </div>

@@ -293,7 +293,7 @@
 
 
 <head>
-    <title>Admission Card</title>
+    <title>Record Of Examination</title>
 </head>
 
 

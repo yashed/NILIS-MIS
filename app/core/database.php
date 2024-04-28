@@ -1508,6 +1508,6 @@ END;
 
         // Execute the event creation query
         $this->query($query);
-    
+
     }
 }

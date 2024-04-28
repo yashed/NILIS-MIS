@@ -82,6 +82,16 @@ class Auth
         }
     }
 
+    public static function is_asar()
+    {
+        if (!empty($_SESSION['USER_DATA'])) {
+            if ($_SESSION['USER_DATA']->role == 'asar') {
+                return true;
+            }
+            return false;
+        }
+    }
+
     public static function __callStatics($funcname, $args)
     {
         $key = str_replace("get", "", strtolower($funcname));

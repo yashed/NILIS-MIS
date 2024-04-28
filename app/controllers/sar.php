@@ -10,7 +10,7 @@ class SAR extends Controller
 
     }
 
-    public function index($checkUser = false)
+    public function index()
     {
         //uncoment this to add autherization to sar
         // if (!Auth::is_sar()) {
@@ -68,7 +68,10 @@ class SAR extends Controller
 
         $data['marks'] = $finalMarks->query("SELECT finalMarks FROM final_marks");
         $data['degrees'] = $degree->findAll();
-        $data['checkUser'] = $checkUser;
+
+
+        //send notification count to the view
+        $data['notification_count_obj_sar'] = getNotificationCountSAR();
 
         $this->view('sar-interfaces/sar-dashboard', $data);
     }
@@ -80,6 +83,8 @@ class SAR extends Controller
         $username = $_SESSION['USER_DATA']->username;
         $data['usernames'] = $username;
 
+        //send notification count to the view
+        $data['notification_count_obj_sar'] = getNotificationCountSAR();
 
         $this->view('sar-interfaces/sar-notification', $data);
     }
@@ -91,12 +96,15 @@ class SAR extends Controller
 
         $data['degrees'] = $degree->findAll();
 
+        //send notification count to the view
+        $data['notification_count_obj_sar'] = getNotificationCountSAR();
 
         $this->view('sar-interfaces/sar-degreeprograms', $data);
     }
     public function degreeprofile($action = null, $id = null)
     {
         $degree = new Degree();
+
 
         $data = [];
         $data['action'] = $action;
@@ -161,6 +169,8 @@ class SAR extends Controller
                 $degree->delete(['id' => $degreeID]);
                 redirect("sar/degreeprograms");
             }
+            //send notification count to the view
+            $data['notification_count_obj_sar'] = getNotificationCountSAR();
             // Load the view with the data
             $this->view('sar-interfaces/sar-degreeprofile', $data);
         } else {
@@ -171,28 +181,6 @@ class SAR extends Controller
 
     public function examination($method = null, $id = null)
     {
-
-        //get the degree id from the url
-        $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
-
-        //set semester usign session data
-        if (!empty($_SESSION['exam-creation-details'])) {
-            $selectedSemester = $_SESSION['exam-creation-details']['semester'];
-        }
-
-        //need to get these values form the session
-        if (!empty($_SESSION['degreeData'])) {
-            $degreeID = $_SESSION['degreeData'][0]->DegreeID;
-
-        } else {
-            $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
-        }
-
-        //unset session message data
-        if (!empty($_SESSION['message'])) {
-            unset($_SESSION['message']);
-        }
-
         $model = new Model();
         $degree = new Degree();
         $student = new StudentModel();
@@ -207,14 +195,46 @@ class SAR extends Controller
         $examiner3Eligibility = new Examiner3Subject();
         $finalMarks = new FinalMarks();
 
+
+        //get the degree id from the url
+        $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
+        $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
+
+        //add degree data to session 
+        if (!empty($degreeID)) {
+            $_SESSION['degreeData'] = $degree->where(['DegreeID' => $degreeID]);
+        }
+
+        //add exam data to session
+        if (!empty($examID)) {
+            $_SESSION['examDetails'] = $exam->where(['examID' => $examID]);
+        }
+
+        //define degree id and exam id globally for the examination part
+        if (!empty($_SESSION['degreeData'])) {
+
+            $degreeID = $_SESSION['degreeData'][0]->DegreeID;
+        }
+        if (!empty($_SESSION['examDetails'])) {
+            $examID = $_SESSION['examDetails'][0]->examID;
+        }
+
+
+        //set semester usign session data
+        if (!empty($_SESSION['exam-creation-details'])) {
+            $selectedSemester = $_SESSION['exam-creation-details']['semester'];
+        }
+
+        //unset session message data
+        if (!empty($_SESSION['message'])) {
+            unset($_SESSION['message']);
+        }
+
         //get the count of exam participants
         $data['errors'] = [];
         $data['degrees'] = $degree->findAll();
         $data['students'] = $student->where(['degreeID' => $degreeID]);
 
-        // if (empty($degreeID)) {
-        //     redirect('login');
-        // }
 
         //get exam details with degree details
         $dataTables = ['degree'];
@@ -223,11 +243,7 @@ class SAR extends Controller
         $data['examDetails'] = $exam->join($dataTables, $columns, $examConditions);
 
 
-        //need complete filtering part of repeat and medical students data
-        // $data['medicalStudents'] = $medicalStudents->where(['degreeID' => 1, 'semester' => 1, 'status' => 1]);
         $repeatStudents->setid(1000);
-        // $data['repeatStudents'] = $repeatStudents->where(['degreeID' => 1, 'semester' => 1, 'paymentStatus' => 1]);
-        // show($data['repeatStudents']);
 
 
         $selectedNormalStudents = [];
@@ -272,6 +288,11 @@ class SAR extends Controller
         $rconditions = ['final_marks.studentIndexNo = exam_participants.indexNo', 'exam_participants.degreeID = degree.DegreeID', 'final_marks.examID = exam_participants.examID'];
         $rwhereConditions = ['final_marks.finalMarks <' . 49.5];
         $repeateStudentsData = $finalMarks->joinWhere($rtables, $rcolumns, $rconditions, $rwhereConditions);
+
+
+
+        //send notification count to the view
+        $data['notification_count_obj_sar'] = getNotificationCountSAR();
 
 
         //add repete students to repete student table
@@ -864,8 +885,7 @@ class SAR extends Controller
 
                                 unset($student->id);
                             }
-                            show($student);
-                            show($examID);
+
                             $student->examID = $examID;
                             $examParticipants->insert($student);
                         }
@@ -1690,6 +1710,8 @@ class SAR extends Controller
                 //pass exam results to the view
                 $data['examResults'] = $examResults;
 
+                //send notification count to the view
+                $data['notification_count_obj_sar'] = getNotificationCountSAR();
 
                 $this->view('sar-interfaces/sar-examresults', $data);
 
@@ -1739,7 +1761,8 @@ class SAR extends Controller
             $data['error'] = 'No user data found.';
         }
 
-
+        //send notification count to the view
+        $data['notification_count_obj_sar'] = getNotificationCountSAR();
 
         $this->view('sar-interfaces/sar-settings', $data);
     }
@@ -1763,6 +1786,9 @@ class SAR extends Controller
         $st = new StudentModel();
         $RepeatStudents = new RepeatStudents();
         $MedicalStudents = new MedicalStudents();
+
+        //send notification count to the view
+        $data['notification_count_obj_sar'] = getNotificationCountSAR();
 
         if (!empty($_SESSION['degreeData'])) {
             $degreeID = $_SESSION['degreeData'][0]->DegreeID;
@@ -1877,7 +1903,8 @@ class SAR extends Controller
         // Fetch the specific student data using the ID from the URL
         $studentId = isset($_GET['id']) ? $_GET['id'] : null;
 
-
+        //send notification count to the view
+        $data['notification_count_obj_sar'] = getNotificationCountSAR();
         $data['student'] = $studentModel->where(['id' => $studentId]);
 
         if (empty($data['student'])) {
@@ -1926,6 +1953,10 @@ class SAR extends Controller
 
     public function reports($method = null)
     {
+
+        //send notification count to the view
+        $data['notification_count_obj_sar'] = getNotificationCountSAR();
+
         $subjects = new Subjects();
         $gradings = new Grades();
         $finalMarks = new FinalMarks();
@@ -1987,6 +2018,9 @@ class SAR extends Controller
         } else if ($method == 'roe') {
 
             redirect('roe/login');
+        } else if ($method == 'transcript') {
+
+            redirect('transcript/login');
         } else {
 
             $this->view('sar-interfaces/sar-reports', $data);

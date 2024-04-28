@@ -426,9 +426,6 @@ $data['role'] = $role;
             </div>
 
             <div class="row">
-
-
-
                 <div class="column1">
                     <div class="data1">Course Name<br>
                         <!-- <div class="email"><?= $student->Email ?></div> -->
@@ -505,99 +502,103 @@ $data['role'] = $role;
 
                 <div class="result-table">
 
-                    <?php if (!empty($examResults)): ?>
-                        <?php
-                        $examId = $_SESSION['examDetails'][0]->examID;
-                        $subjectCode = $subjectDetails[0]->SubjectCode;
-
-                        ?>
-                        <div class='sub-details-wrapper'>
-                            <div class="subject-details">
-                                <div class="subject-heading">Subject : <span class='sub-details'> <?php if (!empty($subjectDetails)) {
-                                    echo $subjectDetails[0]->SubjectName;
-                                } ?>
-                                    </span>
-                                </div>
-                                <div class="subject-heading">Credits : <span class='sub-details'>
-                                        <?php if (!empty($subjectDetails)) {
-                                            echo $subjectDetails[0]->NoCredits;
-                                        } ?>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class='mark-sheet-btn'>
-                                <div class="exam-create-dropdown">
-                                    <button class="btn-marksheet">
-                                        <div class="btn-marksheet-name"> Download Mark Sheet</div>
-                                    </button>
-                                    <div class="exam-create-dropdown-content">
-                                        <a onclick="downloadMarkSheet('<?= $subjectCode ?>','<?= $examId ?>')">.CSV</a>
-                                        <!-- <a href="#">.PDF</a> -->
+                    <?php if (!empty($_POST['submit'])): ?>
+                        <?php if (!empty($examResults)): ?>
+                            <?php
+                            $examId = $_SESSION['examDetails'][0]->examID;
+                            $subjectCode = $subjectDetails[0]->SubjectCode;
+                            ?>
+                            <div class='sub-details-wrapper'>
+                                <div class="subject-details">
+                                    <div class="subject-heading">Subject : <span class='sub-details'> <?php if (!empty($subjectDetails)) {
+                                        echo $subjectDetails[0]->SubjectName;
+                                    } ?>
+                                        </span>
+                                    </div>
+                                    <div class="subject-heading">Credits : <span class='sub-details'>
+                                            <?php if (!empty($subjectDetails)) {
+                                                echo $subjectDetails[0]->NoCredits;
+                                            } ?>
+                                        </span>
                                     </div>
                                 </div>
+                                <div class='mark-sheet-btn'>
+                                    <div class="exam-create-dropdown">
+                                        <button class="btn-marksheet">
+                                            <div class="btn-marksheet-name"> Download Mark Sheet</div>
+                                        </button>
+                                        <div class="exam-create-dropdown-content">
+                                            <a onclick="downloadMarkSheet('<?= $subjectCode ?>','<?= $examId ?>')">.CSV</a>
+                                            <!-- <a href="#">.PDF</a> -->
+                                        </div>
+                                    </div>
 
-                                <!-- <button class="btn-marksheet" name="submit" value="selectSubject"
+                                    <!-- <button class="btn-marksheet" name="submit" value="selectSubject"
                                     onclick="downloadMarkSheet('<?= $subjectCode ?>','<?= $examId ?>')">
                                     <div class="btn-marksheet-name">
                                         Download Mark Sheet
                                     </div>
                                 </button> -->
+                                </div>
                             </div>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Index No</th>
-                                    <th>Sutudent Type</th>
-                                    <th>Subject Code</th>
-                                    <th>Examiner 01 Marks</th>
-                                    <th>Examiner 02 Marks</th>
-                                    <th>Examiner 03 Marks</th>
-                                    <th>Assestment Marks</th>
-                                    <th>Final Mark</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($examResults as $result): ?>
+                            <table>
+                                <thead>
                                     <tr>
-                                        <td>
-                                            <?= $result->studentIndexNo ?>
-                                        </td>
-                                        <td>
-                                            <?= $result->studentType ?>
-                                        <td>
-                                            <?= $result->subjectCode ?>
-                                        </td>
-                                        <td>
-                                            <?= $result->examiner1Marks ?>
-                                        </td>
-                                        <td>
-                                            <?= $result->examiner2Marks ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if ($result->examiner3Marks == -1) {
-                                                echo "N/A";
-                                            } else {
-                                                echo $result->examiner3Marks;
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <?= $result->assessmentMarks ?>
-                                        </td>
-                                        <td>
-                                            <?= $result->finalMarks ?>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
+                                        <th>Index No</th>
+                                        <th>Sutudent Type</th>
+                                        <th>Subject Code</th>
+                                        <th>Examiner 01 Marks</th>
+                                        <th>Examiner 02 Marks</th>
+                                        <th>Examiner 03 Marks</th>
+                                        <th>Assestment Marks</th>
+                                        <th>Final Mark</th>
 
-                            </tbody>
-                        </table>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($examResults as $result): ?>
+                                        <tr>
+                                            <td>
+                                                <?= $result->studentIndexNo ?>
+                                            </td>
+                                            <td>
+                                                <?= $result->studentType ?>
+                                            <td>
+                                                <?= $result->subjectCode ?>
+                                            </td>
+                                            <td>
+                                                <?= $result->examiner1Marks ?>
+                                            </td>
+                                            <td>
+                                                <?= $result->examiner2Marks ?>
+                                            </td>
+                                            <td>
+                                                <?php
+                                                if ($result->examiner3Marks == -1) {
+                                                    echo "N/A";
+                                                } else {
+                                                    echo $result->examiner3Marks;
+                                                }
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?= $result->assessmentMarks ?>
+                                            </td>
+                                            <td>
+                                                <?= $result->finalMarks ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+
+                                </tbody>
+                            </table>
+                        <?php else: ?>
+                            <div class="result-message">Results not uploaded yet.</div>
+                        <?php endif; ?>
                     <?php else: ?>
-                        <div class="result-message">Results not uploaded yet.</div>
+                        <div class="result-message">Please select a subject</div>
                     <?php endif; ?>
+
 
                 </div>
             </div>
