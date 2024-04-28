@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admission-Login</title>
+    <title>Login</title>
 </head>
 
 <style>
@@ -243,7 +243,7 @@ $degree = $degreeDetails[0]->DegreeShortName ?? null;
 
                 </div>
                 <div class="admission-login-title">
-                    NILIS Examinations - Record Of Examination
+                    NILIS Examinations - Transcript Letter
                 </div>
                 <div class="admission-login-subtitle">
                     <span>

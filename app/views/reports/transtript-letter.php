@@ -1,5 +1,5 @@
 <head>
-    <title>Record Of Examination</title>
+    <title>Transcript Letter</title>
     <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
 </head>
 
@@ -68,7 +68,7 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
-        gap: 100px;
+        gap: 90px;
         align-items: center;
     }
 
@@ -125,7 +125,8 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 30px
+        gap: 30px;
+
     }
 
     .admission-name-index {
@@ -188,6 +189,8 @@
     }
 
     .admission-data-tb {
+        margin-top: 40px;
+        font-size: 14px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -294,13 +297,15 @@
         max-width: 90%;
         margin: 0 auto;
         padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+
         background-color: #fff;
+        display: flex;
+        flex-direction: column;
+
     }
 
     .header {
-        text-align: center;
+        margin-top: 50px;
         margin-bottom: 20px;
     }
 
@@ -354,7 +359,19 @@
         font-weight: 600;
         margin-top: 20px;
         margin-bottom: 20px;
+    }
 
+    .student-regno {
+        font-weight: 600;
+    }
+
+    .transcript-title {
+        text-align: left;
+        text-decoration: underline;
+    }
+
+    .admission-details-signature {
+        text-align: left;
     }
 </style>
 
@@ -386,30 +403,44 @@
                         <?php if (!empty($studentData)): ?>
                             <div class="transcript-letter">
                                 <div class="header">
-                                    <h1>Transcript of Records</h1>
+                                    <span class='transcript-title'>WITH WHOM IT MAY CONCERN</span>
                                 </div>
                                 <div class="content">
                                     <div class="student-info">
-                                        <p>This is to certify that <?php if ($studentData->gender == 'M'):
+                                        <p>This is to certify that <?php if ($studentData[0]->gender == 'M'):
                                             echo 'Mr.';
                                         else:
                                             echo 'Ms.';
-                                        endif; ?> <span
-                                                class="student-name"><?= $studentData->name ?></span> with
-                                            ?>Mr. student <span class="student-name"><?= $studentData[0]->name ?></span>
-                                            with
-                                            index number <span class="student-index"><?= $studentData[0]->indexNo ?></span>
-                                            has
-                                            successfully
-                                            completed the requirements for the
-                                            diploma in <span
-                                                class="diploma-name"><?= $degreeDetails[0]->DegreeName ?></span>
-                                            at the National
-                                            Institute of Library
-                                            and Information Sciences (NILIS).</p>
+                                        endif; ?>
+                                            <span class="student-name"><?= $studentData[0]->name ?></span> with
+                                            bearing registration no. <span
+                                                class="student-regno"><?= $studentData[0]->regNo ?></span> and index no.
+                                            <span class="student-index"><?= $studentData[0]->indexNo ?></span>
+                                            is a registered internal student of the National
+                                            Institute of Library and Information Sciences. He is currently studying
+                                            <span class="diploma-name"><?= $degreeDetails[0]->DegreeName ?></span> .
+                                            The duration of the programme is <span
+                                                class="diploma-name"><?= $degreeDetails[0]->Duration ?></span> years. The
+                                            medium of instruction and evaluation of the degree programme is in English.
+
+                                            The academic year of the student is from <span
+                                                class="diploma-name"><?= $degreeDetails[0]->AcademicYear ?></span> to <span
+                                                class="diploma-name"><?php $result = $degreeDetails[0]->AcademicYear + $degreeDetails[0]->Duration;
+                                                echo $result; ?></span>.
+                                        </p>
                                     </div>
-                                    <p class="results-sum">The student's academic performance is summarized below:</p>
                                     <div class="admission-data-tb">
+                                        <div class='admission-detail'>
+                                            <div class="admission-details-name">
+                                                Mr Janaka Wipularatna
+                                            </div>
+                                            <div class="admission-details-possision">
+                                                Senior Assistant Registrar
+                                            </div>
+                                            <div class="admission-details-date">
+                                                <?= date("Y-m-d") ?>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -417,20 +448,7 @@
                     </div>
                 </div>
 
-                <div class='admission-detail'>
-                    <div class="admission-details-signature">.........................................
-                    </div>
-                    <div class="admission-details-name">
-                        Mr Janaka Wipularatna
-                    </div>
-                    <div class="admission-details-possision">
-                        Senior Assistant Registrar
-                    </div>
-                    <div class="admission-details-date">
-                        <?= date("Y-m-d") ?>
-                    </div>
 
-                </div>
             </div>
 
         </page>
