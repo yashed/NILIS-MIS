@@ -151,6 +151,7 @@ $data['recentResults'] = $RecentResultExam;
                 border-radius: 6px;
                 margin: 3px 4px 7px 4px;
                 width: 50%;
+                
             }
 
             .clerk-subsection-22 {

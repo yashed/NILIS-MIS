@@ -71,7 +71,7 @@ class Clerk extends Controller
     public function updatedattendance()
     {
         $degree = new Degree();
-
+        $data['notification_count_obj'] = getNotificationCount();
         if (!empty($_SESSION['DegreeID'])) {
             $degreeId = $_SESSION['DegreeID'];
             $data['degreedata'] = $degree->find($degreeId);
