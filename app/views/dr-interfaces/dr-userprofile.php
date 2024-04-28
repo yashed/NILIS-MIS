@@ -73,7 +73,6 @@ $data['role'] = $role;
                                 <img src="<?= ROOT ?>assets/dr/imgano.png" alt="Your Image">
                             </div>
                             <p style="color: red;"><?= $student[0]->name ?></p>
-                            <p style="color: red;"><?= $student[0]->name ?></p>
                             <p style="color: red;">Suspended and Degree Changed.</p>
                         <?php endif; ?>
                     </div>
@@ -96,6 +95,15 @@ $data['role'] = $role;
                 </div>
             </div><br>
             <div class="dr-userprofile-button-container">
+                <?php
+                if (message()) {
+                    echo '<div class="profile-message">';
+                    if ($_SESSION['message_type'] == 'error') {
+                        echo "<div class='dr-userprofile-message' style='color:red; font-size: 14px; margin-bottom: 5px;'>" . message('', '', true) . "</div>";
+                    }
+                    echo '</div>';
+                }
+                ?>
                 <div class="dr-userprofile-buttony">
                     <?php if ((time() - strtotime($degrees[0]->createdDate)) < (3 * 30 * 24 * 60 * 60) && $student[0]->status == "continue" && $degrees[0]->Status == "ongoing"): ?>
                         <input type="button" id="dr-userprofile-changedegreebutton" class="dr-userprofile-button"
@@ -118,19 +126,24 @@ $data['role'] = $role;
                         <input name="degree type" id="dr-userprofile-degree_type"
                             style="width: 430px; height: 34px; border-radius: 5px; margin: 9px; padding-left: 10px"
                             placeholder="<?= $degrees[0]->DegreeName ?>" disabled><br><br><br>
-                        <label for="select degree id" class="dr-userprofile-drop-down">Select Degree
+                        <label for="select degree id" class="dr-userprofile-drop-down">Select Diploma
                             Program:</label><br>
                         <select name="select_degree_id" id="dr-userprofile-select_degree_type"
                             style="width: 430px; height: 34px; border-radius: 5px; margin: 9px;">
-                            <option value="" default hidden>Select</option>
                             <?php if (!empty($Degree)): ?>
+                                <?php $flag = 0; ?>
                                 <?php foreach ($Degree as $Degrees): ?>
                                     <?php if ($Degrees->Status != "completed" && (time() - strtotime($Degrees->createdDate)) < (5 * 30 * 24 * 60 * 60) && $Degrees->DegreeID != $degrees[0]->DegreeID): ?>
+                                        <option value="" default hidden>Select</option>
                                         <option value="<?= $Degrees->DegreeID ?>"
                                             <?= (set_value('select_degree_id') === $Degrees->DegreeID) ? 'selected' : '' ?>>
                                             <?= $Degrees->DegreeName ?></option>
+                                            <?php $flag = 1; ?>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
+                                <?php if($flag == 0): ?>
+                                    <option value="" default hidden>No more diplomas</option>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </select><br><br>
                         <h3 style="font-size: 14px; font-weight: 200">Note - After submit all the information of this
@@ -149,20 +162,26 @@ $data['role'] = $role;
                 </form>
             </div>
         </div>
-        <div class="dr-userprofile-pop-up1-1">
-            <div class="dr-userprofile-popupForm1-1">
-                <svg onclick="crossForDiplomaChange()" id="dr-userprofile-crossForDiplomaChange"
-                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path
-                        d="M3.05288 17.1929C2.09778 16.2704 1.33596 15.167 0.811868 13.9469C0.287778 12.7269 0.0119157 11.4147 0.000377568 10.0869C-0.0111606 8.7591 0.241856 7.44231 0.744665 6.21334C1.24747 4.98438 1.99001 3.86786 2.92893 2.92893C3.86786 1.99001 4.98438 1.24747 6.21334 0.744665C7.44231 0.241856 8.7591 -0.0111606 10.0869 0.000377568C11.4147 0.0119157 12.7269 0.287778 13.9469 0.811868C15.167 1.33596 16.2704 2.09778 17.1929 3.05288C19.0145 4.9389 20.0224 7.46493 19.9996 10.0869C19.9768 12.7089 18.9251 15.217 17.0711 17.0711C15.217 18.9251 12.7089 19.9768 10.0869 19.9996C7.46493 20.0224 4.9389 19.0145 3.05288 17.1929ZM11.5229 10.1229L14.3529 7.29288L12.9429 5.88288L10.1229 8.71288L7.29288 5.88288L5.88288 7.29288L8.71288 10.1229L5.88288 12.9529L7.29288 14.3629L10.1229 11.5329L12.9529 14.3629L14.3629 12.9529L11.5329 10.1229H11.5229Z"
-                        fill="#17376E" />
-                </svg>
-                <h2>Diploma Program Changed.</h2>
-                <p>
-                    <center>Student Reg. No. - <?= $student[0]->regNo ?></center>
-                </p>
+        <?php if (message()): ?>
+            <div class="profile-message">
+            <?php if ($_SESSION['message_type'] == 'success'): ?>
+                <div class="dr-userprofile-pop-up1-1">
+                    <div class="dr-userprofile-popupForm1-1">
+                        <svg onclick="crossForDiplomaChange()" id="dr-userprofile-crossForDiplomaChange"
+                            xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path
+                                d="M3.05288 17.1929C2.09778 16.2704 1.33596 15.167 0.811868 13.9469C0.287778 12.7269 0.0119157 11.4147 0.000377568 10.0869C-0.0111606 8.7591 0.241856 7.44231 0.744665 6.21334C1.24747 4.98438 1.99001 3.86786 2.92893 2.92893C3.86786 1.99001 4.98438 1.24747 6.21334 0.744665C7.44231 0.241856 8.7591 -0.0111606 10.0869 0.000377568C11.4147 0.0119157 12.7269 0.287778 13.9469 0.811868C15.167 1.33596 16.2704 2.09778 17.1929 3.05288C19.0145 4.9389 20.0224 7.46493 19.9996 10.0869C19.9768 12.7089 18.9251 15.217 17.0711 17.0711C15.217 18.9251 12.7089 19.9768 10.0869 19.9996C7.46493 20.0224 4.9389 19.0145 3.05288 17.1929ZM11.5229 10.1229L14.3529 7.29288L12.9429 5.88288L10.1229 8.71288L7.29288 5.88288L5.88288 7.29288L8.71288 10.1229L5.88288 12.9529L7.29288 14.3629L10.1229 11.5329L12.9529 14.3629L14.3629 12.9529L11.5329 10.1229H11.5229Z"
+                                fill="#17376E" />
+                        </svg>
+                        <h2>Diploma Program Changed.</h2>
+                        <p>
+                            <center>Student Reg. No. - <?= $student[0]->regNo ?></center>
+                        </p>
+                    </div>
+                </div>
+            <?php endif; ?>
             </div>
-        </div>
+        <?php endif; ?>
         <form class="dr-userprofile-pop-up2" id="dr-userprofile-deleteForm" method="post"
             action="<?= ROOT ?>dr/userprofile/delete">
             <div class="dr-userprofile-popupForm">
@@ -300,7 +319,18 @@ $data['role'] = $role;
                                     </div>
                                 </div>
                             </div>
-                            <span class="invalidInput" style="color: red; font-size: 10px;"></span>
+                            <span id="invalid1" style="color:red;"></span>
+                            <span class="invalidInput" style="color: red; font-size: 10px;">
+                                <?php
+                                if (message()) {
+                                    echo '<div class="profile-message">';
+                                    if ($_SESSION['message_type'] == 'error') {
+                                        echo "<div class='error-message-profile' style='color: red; font-size: 14px; margin-bottom: 5px;'>" . message('', '', true) . "</div>";
+                                    }
+                                    echo '</div>';
+                                }
+                                ?>
+                            </span>
                             <div class="dr-userprofile-student-create-update">
                                 <button name='submit' value='update' id="dr-userprofile-submitbutton" type="submit">Update</button>
                                 <button class="dr-userprofile-close-button" type="button">Close</button>
@@ -338,7 +368,6 @@ $data['role'] = $role;
             $('.dr-userprofile-popup').css('display', 'block');
             document.body.classList.add('no-scroll');
             $('.dr-userprofile-close-button').click(function (e) {
-                // Hide the pop-up and overlay when the close button is clicked
                 $('.dr-userprofile-popup').css('display', 'none');
                 $('#dr-userprofile-overlay').css('display', 'none');
                 document.body.classList.remove('no-scroll');
@@ -377,22 +406,18 @@ $data['role'] = $role;
             $('.dr-userprofile-pop-up1-1').css('display', 'none');
             $('#dr-userprofile-overlay').css('display', 'none');
         }
+        const submitButton = document.getElementById('dr-userprofile-submitbutton');
         // Get references to the form and submit button
         const form = document.getElementById('dr-userprofile-update-popup-form');
-        const submitButton = document.getElementById('dr-userprofile-submitbutton');
-
         // Regular expression for NIC validation
         const nicRegex = /^\d{12}$|^\d{9}[VX]$/;
-
         // Add click event listener to the submit button
         submitButton.onclick = function(event) {
             // Initialize a flag to track form validity
             let isValid = true;
-            
             // Clear previous error messages and reset field borders
             document.querySelectorAll('.invalidInput').forEach(el => el.textContent = '');
             document.querySelectorAll('input').forEach(input => input.style.border = '');
-            
             // Validate each field according to your requirements
             const nameField = form.elements['name'];
             const genderField = form.elements['gender'];
@@ -402,63 +427,54 @@ $data['role'] = $role;
             const phoneNoField = form.elements['phoneNo'];
             const addressField = form.elements['address'];
             const birthdateField = form.elements['birthdate'];
-            
             // Validate name
             if (nameField.value.trim() === '' || !/^[a-zA-Z]+$/.test(nameField.value.trim())) {
                 document.querySelector(".invalidInput").textContent += "Name is not valid.\n";
                 nameField.style.border = '1px solid red';
                 isValid = false;
             }
-            
             // Validate gender
             if (genderField.value.trim() !== 'M' && genderField.value.trim() !== 'F') {
                 document.querySelector(".invalidInput").textContent += "Gender is not valid.\n";
                 genderField.style.border = '1px solid red';
                 isValid = false;
             }
-            
             // Validate NIC number
             if (!nicRegex.test(nicNoField.value.trim())) {
                 document.querySelector(".invalidInput").textContent += "Invalid NIC number. It must be a 12-digit number or a 9-digit number followed by V or X.\n";
                 nicNoField.style.border = '1px solid red';
                 isValid = false;
             }
-            
             // Validate Whatsapp number
             if (!/^\d{9,15}$/.test(whatsappNoField.value.trim())) {
                 document.querySelector(".invalidInput").textContent += "Whatsapp Number is not valid.\n";
                 whatsappNoField.style.border = '1px solid red';
                 isValid = false;
             }
-            
             // Validate country
             if (!/^[a-zA-Z]+$/.test(countryField.value.trim())) {
                 document.querySelector(".invalidInput").textContent += "Country is not valid.\n";
                 countryField.style.border = '1px solid red';
                 isValid = false;
             }
-            
             // Validate phone number
             if (!/^\d{9,15}$/.test(phoneNoField.value.trim())) {
                 document.querySelector(".invalidInput").textContent += "Phone Number is not valid.\n";
                 phoneNoField.style.border = '1px solid red';
                 isValid = false;
             }
-            
             // Validate address
-            if (addressField.value.trim() === '' || !/^[A-Za-z'-]+(?:\s[A-Za-z'-]+)+$/.test(addressField.value.trim())) {
+            if (addressField.value.trim() === '' || !/^[A-Za-z0-9\s/,-]+(?:[A-Za-z0-9\s/,-]+)*$/.test(addressField.value.trim())) {
                 document.querySelector(".invalidInput").textContent += "Address is not valid.\n";
                 addressField.style.border = '1px solid red';
                 isValid = false;
             }
-
             // Validate birthdate
             if (birthdateField.value.trim() === '' || !/^\d{4}-\d{2}-\d{2}$/.test(birthdateField.value.trim())) {
                 document.querySelector(".invalidInput").textContent += "Birthdate is not valid.\n";
                 birthdateField.style.border = '1px solid red';
                 isValid = false;
             }
-            
             // Prevent form submission if the form is not valid
             if (!isValid) {
                 event.preventDefault();

@@ -284,7 +284,7 @@
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>director/notifications">
+                    <a href="<?= ROOT ?>director/notification">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>

@@ -155,7 +155,7 @@ $data['role'] = $role;
             </div>
             <form class="degreeprofile-box_4" id="degreeprofile-form1" method="post"
                 action="<?= ROOT ?>dr/degreeprofile/update">
-                <p>Define Degree Time Table</p>
+                <p>Define Diploma Time Table</p>
                 <div class="degreeprofile-box_4_1">
                     <table class="degreeprofile-Time_table" id="degreeprofile-Time_table">
                         <?php $lastEventID = 0; ?>

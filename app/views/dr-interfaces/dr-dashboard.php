@@ -60,7 +60,7 @@ $data['recentResults'] = $RecentResultExam;
                         <img src="<?= ROOT ?>assets/dashboard-icons/degree.png" alt="exam.icon" />
                     </div>
                     <div class="dr-dash-card-subcard-data">
-                        <div class="dr-dash-card-subcard-data-title">Ongoing</br>Degrees</div>
+                        <div class="dr-dash-card-subcard-data-title">Ongoing</br>Diplomas</div>
                         <div class="dr-dash-card-subcard-data-value">
                             <?php if (!empty($degrees)): ?>
                                 <?php $count = 0; ?>
@@ -160,7 +160,7 @@ $data['recentResults'] = $RecentResultExam;
                 <div class="dr-dash-subsection-1-1-1">
                     <div class="dr-dash-subsection-1-1-1-4">
                         <div class="dr-dash-graph04-title">
-                            Ongoing Degree Programs
+                            Ongoing Diploma Programs
                         </div>
                         <div class="dr-dash-degree-cards">
                             <?php if (!empty($degrees)): ?>
