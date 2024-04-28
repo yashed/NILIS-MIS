@@ -95,15 +95,6 @@ $data['role'] = $role;
                 </div>
             </div><br>
             <div class="dr-userprofile-button-container">
-                <?php
-                if (message()) {
-                    echo '<div class="profile-message">';
-                    if ($_SESSION['message_type'] == 'error') {
-                        echo "<div class='dr-userprofile-message' style='color:red; font-size: 14px; margin-bottom: 5px;'>" . message('', '', true) . "</div>";
-                    }
-                    echo '</div>';
-                }
-                ?>
                 <div class="dr-userprofile-buttony">
                     <?php if ((time() - strtotime($degrees[0]->createdDate)) < (3 * 30 * 24 * 60 * 60) && $student[0]->status == "continue" && $degrees[0]->Status == "ongoing"): ?>
                         <input type="button" id="dr-userprofile-changedegreebutton" class="dr-userprofile-button"
@@ -137,6 +128,7 @@ $data['role'] = $role;
                                         <option value="" default hidden>Select</option>
                                         <option value="<?= $Degrees->DegreeID ?>"
                                             <?= (set_value('select_degree_id') === $Degrees->DegreeID) ? 'selected' : '' ?>>
+                                            <?php $select_degree_id = $Degrees->DegreeID; ?>
                                             <?= $Degrees->DegreeName ?></option>
                                             <?php $flag = 1; ?>
                                     <?php endif; ?>
@@ -146,6 +138,11 @@ $data['role'] = $role;
                                 <?php endif; ?>
                             <?php endif; ?>
                         </select><br><br>
+                        <?php if (!empty($error)): ?>
+                            <div class="error-message-profile" style="color: red; font-size: 14px; margin-bottom: 5px;">
+                                <?= $error ?>
+                            </div>
+                        <?php endif; ?>
                         <h3 style="font-size: 14px; font-weight: 200">Note - After submit all the information of this
                             student may transfer to new diploma program and student data will suspend from the current
                             diploma program</h3>
@@ -273,7 +270,7 @@ $data['role'] = $role;
             <form id="dr-userprofile-update-popup-form" method="post" action="<?= ROOT ?>dr/userprofile/update">
                 <div class="dr-userprofile-popup-card">
                     <div class="dr-userprofile-form">
-                        <h2>Update User Details</h2>
+                        <h2>Update Student Details</h2>
                         <div class="dr-userprofile-form-input-fields">
                             <div class="dr-userprofile-user-data">
                                 <input type="text" name="id" hidden>
@@ -319,8 +316,7 @@ $data['role'] = $role;
                                     </div>
                                 </div>
                             </div>
-                            <span id="invalid1" style="color:red;"></span>
-                            <span class="invalidInput" style="color: red; font-size: 10px;">
+                            <div class="dr-userprofile-student-create-update">
                                 <?php
                                 if (message()) {
                                     echo '<div class="profile-message">';
@@ -330,13 +326,10 @@ $data['role'] = $role;
                                     echo '</div>';
                                 }
                                 ?>
-                            </span>
-                            <div class="dr-userprofile-student-create-update">
                                 <button name='submit' value='update' id="dr-userprofile-submitbutton" type="submit">Update</button>
                                 <button class="dr-userprofile-close-button" type="button">Close</button>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </form>
@@ -401,11 +394,15 @@ $data['role'] = $role;
                 e.stopPropagation();
             });
         }
-
+        
         function crossForDiplomaChange() {
             $('.dr-userprofile-pop-up1-1').css('display', 'none');
             $('#dr-userprofile-overlay').css('display', 'none');
         }
+        const closeButton = document.querySelector('.dr-userprofile-close-button');
+        closeButton.addEventListener('click', function () {
+            window.location.reload();
+        });
         const submitButton = document.getElementById('dr-userprofile-submitbutton');
         // Get references to the form and submit button
         const form = document.getElementById('dr-userprofile-update-popup-form');

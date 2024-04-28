@@ -201,6 +201,17 @@ $data['role'] = $role;
                 </div>
                 <div class="degreeprofile-box_4_2">
                     <?php if ($degrees[0]->Status == "ongoing"): ?>
+                        <?php
+                        if (message()) {
+                            echo '<div class="profile-message">';
+                            if ($_SESSION['message_type'] == 'successes') {
+                                echo "<div class='error-message-profile' style='color: green; font-size: 14px; margin-bottom: 5px; text-align: center;'>" . message('', '', true) . "</div>";
+                            } else if ($_SESSION['message_type'] == 'error') {
+                                echo "<div class='error-message-profile' style='color:red; font-size: 14px; margin-bottom: 5px; text-align: center;'>" . message('', '', true) . "</div>";
+                            }
+                            echo '</div>';
+                        }
+                        ?>
                         <table class="degreeprofile-create_time_table_raw">
                             <tr>
                                 <th colspan="3"><button class="degreeprofile-add-new-event" type="button"
