@@ -5,7 +5,7 @@ class DR extends Controller
     function __construct()
     {
         if (!Auth::is_dr()) {
-            message('You are not authorized to view this page');
+            // message('You are not authorized to view this page');
             redirect('_403_');
         }
     }
@@ -45,6 +45,7 @@ class DR extends Controller
     {
         $notification = new NotificationModel();
         $data['notifications'] = $notification->findAll();
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
 
         $username = $_SESSION['USER_DATA']->username;
         $data['usernames'] = $username;
@@ -65,6 +66,7 @@ class DR extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
 
         if ($action == 'add') {
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -144,6 +146,7 @@ class DR extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
         if (isset($_GET['id'])) {
             $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
             $_SESSION['DegreeID'] = $degreeID;
@@ -261,6 +264,7 @@ class DR extends Controller
         $student = new StudentModel();
         $timeTable = new DegreeTimeTable();
         $data = [];
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
         $data['action'] = $action;
         $data['id'] = $id;
         if (!isset($_SESSION['DegreeID']) || $_SESSION['DegreeID'] == null) {
@@ -394,6 +398,7 @@ class DR extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
         if (isset($_GET['id'])) {
             $studentId = isset($_GET['id']) ? $_GET['id'] : null;
             $_SESSION['studentId'] = $studentId;
@@ -418,10 +423,29 @@ class DR extends Controller
             // echo $studentIndex;
             $data['finalMarks'] = $finalMarks->findwhere("studentIndexNo", $studentIndex);
             $data['exams'] = $exam->find($degreeId);
+            // if ($action == "update") {
+            //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            //         if (isset($_POST['submit']) && $_POST['submit'] === 'update') {
+            //             // echo " update";
+            //             $updatedData = [
+            //                 'name' => $_POST['name'],
+            //                 'Email' => $studentEmail,
+            //                 'nicNo' => $_POST['nicNo'],
+            //                 'whatsappNo' => $_POST['whatsappNo'],
+            //                 'country' => $_POST['country'],
+            //                 'phoneNo' => $_POST['phoneNo'],
+            //                 'address' => $_POST['address'],
+            //                 'birthdate' => $_POST['birthdate'],
+            //                 'gender' => $_POST['gender'],
+            //             ];
+            //             $studentModel->update($studentId, $updatedData);
+            //             redirect("dr/userprofile");
+            //         }
+            //     }
             if ($action == "update") {
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (isset($_POST['submit']) && $_POST['submit'] === 'update') {
-                        // echo " update";
+                        // Create the updated data array
                         $updatedData = [
                             'name' => $_POST['name'],
                             'Email' => $studentEmail,
@@ -433,8 +457,20 @@ class DR extends Controller
                             'birthdate' => $_POST['birthdate'],
                             'gender' => $_POST['gender'],
                         ];
-                        $studentModel->update($studentId, $updatedData);
-                        redirect("dr/userprofile");
+                        // Perform backend validation using the studentModel's validate method
+                        $studentModel->validate($updatedData);
+                        // Check if there were any validation errors
+                        if (empty($studentModel->errors)) {
+                            // If there are no validation errors, proceed with updating the student information
+                            message('Student data updated successfully.', 'success');
+                            $studentModel->update($studentId, $updatedData);
+                            redirect("dr/userprofile");
+                        } else {
+                            // If there are validation errors, handle them (e.g., provide feedback to the user)
+                            foreach ($studentModel->errors as $error) {
+                                message($error, 'error');
+                            }
+                        }
                     }
                 }
             } else if ($action == 'delete') {
@@ -444,43 +480,49 @@ class DR extends Controller
             } else if ($action == 'add') {
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     $newDegreeID = $_POST['select_degree_id'];
-                    // $oldDegreeID = $data['degrees'][0]->DegreeID;
+                    $oldDegreeDate = $data['degrees'][0]->createdDate;
+                    $oldDegreeID = $data['degrees'][0]->DegreeID;
+                    $data['newDegree'] = $degree->find($newDegreeID);
                     // echo $newDegreeID;
                     // echo $oldDegreeID;
-                    $newDegreeType = $degree->find($newDegreeID)[0]->DegreeShortName;
-                    $newDegreeYear = $degree->find($newDegreeID)[0]->AcademicYear;
-                    $newDegreeYear = $newDegreeYear % 100;
-                    $status = "continue";
-                    // echo $newDegreeType;
-                    // echo $newDegreeYear;
-                    $suspendSTU = [   // Update student to suspend
-                        'status' => "suspended",
-                    ];
-                    $studentModel->update($studentId, $suspendSTU);
-                    // Generate new index and registration numbers
-                    $IndexNo = $studentModel->generateIndexRegNumber($newDegreeType, $newDegreeYear);
-                    if ($IndexNo !== false && $IndexNo['IndexNo'] != null && $IndexNo['RegistationNo'] != null) {
-                        $data = [
-                            'Email' => $data['student'][0]->Email,
-                            'regNo' => $IndexNo['RegistationNo'],
-                            'country' => $data['student'][0]->country,
-                            'indexNo' => $IndexNo['IndexNo'],
-                            'name' => $data['student'][0]->name,
-                            'nicNo' => $data['student'][0]->nicNo,
-                            'birthdate' => $data['student'][0]->birthdate,
-                            'whatsappNo' => $data['student'][0]->whatsappNo,
-                            'address' => $data['student'][0]->address,
-                            'phoneNo' => $data['student'][0]->phoneNo,
-                            'degreeID' => $newDegreeID,
-                            'status' => $status,
-                            'gender' => $data['student'][0]->gender,
-                        ];
-                        $studentModel->insert($data);
+                    if ((time() - strtotime($oldDegreeDate)) < (3 * 30 * 24 * 60 * 60) && $data['student'][0]->status == "continue" && $data['student'][0]->Status == "ongoing") {
+                        if ($data['newDegree'][0]->Status != "completed" && (time() - strtotime($data['newDegree'][0]->createdDate)) < (5 * 30 * 24 * 60 * 60) && $data['newDegree'][0]->DegreeID != $oldDegreeID) {
+                            $newDegreeType = $degree->find($newDegreeID)[0]->DegreeShortName;
+                            $newDegreeYear = $degree->find($newDegreeID)[0]->AcademicYear;
+                            $newDegreeYear = $newDegreeYear % 100;
+                            $status = "continue";
+                            // echo $newDegreeType;
+                            // echo $newDegreeYear;
+                            $suspendSTU = [   // Update student to suspend
+                                'status' => "suspended",
+                            ];
+                            $studentModel->update($studentId, $suspendSTU);
+                            // Generate new index and registration numbers
+                            $IndexNo = $studentModel->generateIndexRegNumber($newDegreeType, $newDegreeYear);
+                            if ($IndexNo !== false && $IndexNo['IndexNo'] != null && $IndexNo['RegistationNo'] != null) {
+                                $data = [
+                                    'Email' => $data['student'][0]->Email,
+                                    'regNo' => $IndexNo['RegistationNo'],
+                                    'country' => $data['student'][0]->country,
+                                    'indexNo' => $IndexNo['IndexNo'],
+                                    'name' => $data['student'][0]->name,
+                                    'nicNo' => $data['student'][0]->nicNo,
+                                    'birthdate' => $data['student'][0]->birthdate,
+                                    'whatsappNo' => $data['student'][0]->whatsappNo,
+                                    'address' => $data['student'][0]->address,
+                                    'phoneNo' => $data['student'][0]->phoneNo,
+                                    'degreeID' => $newDegreeID,
+                                    'status' => $status,
+                                    'gender' => $data['student'][0]->gender,
+                                ];
+                                $studentModel->insert($data);
 
-                        sleep(4);
-                        redirect("dr/participants");
-                    } else {
-                        echo "Error: Failed to generate index and registration numbers.";
+                                sleep(4);
+                                redirect("dr/participants");
+                            } else {
+                                echo "Error: Failed to generate index and registration numbers.";
+                            }
+                        }
                     }
                 }
             }
@@ -496,6 +538,7 @@ class DR extends Controller
         $st = new StudentModel();
         $degree = new Degree();
         $data = [];
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
         $data['action'] = $action;
         $data['id'] = $id;
         unset($_SESSION['studentId']);
@@ -517,6 +560,28 @@ class DR extends Controller
     public function settings()
     {
         $user = new User();
+        $data = [];
+        $data['notification_count_obj'] = getNotificationCount();
+
+        if (isset($_POST['update_user_data'])) {
+            // Validate input fields
+            $fname = isset($_POST['fname']) ? trim($_POST['fname']) : '';
+            $lname = isset($_POST['lname']) ? trim($_POST['lname']) : '';
+            $phoneNo = isset($_POST['phoneNo']) ? trim($_POST['phoneNo']) : '';
+
+            // Update user data
+            $id = $_SESSION['USER_DATA']->id;
+            $dataToUpdate = [
+                'fname' => $fname,
+                'lname' => $lname,
+                'phoneNo' => $phoneNo
+            ];
+
+            $user->update($id, $dataToUpdate);
+            header('Location:settings');
+            exit;
+        }
+
         // Fetch user data for display
         $id = $_SESSION['USER_DATA']->id;
         $data['user'] = $user->first(['id' => $id]);
@@ -524,6 +589,7 @@ class DR extends Controller
         if ($data['user'] === null) {
             $data['error'] = 'No user data found.';
         }
+
         $this->view('dr-interfaces/dr-settings', $data);
     }
     public function reports($action = null, $id = null)
@@ -532,12 +598,14 @@ class DR extends Controller
         $data['action'] = $action;
         $data['id'] = $id;
         $degree = new Degree();
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
         $degreeID = $_SESSION['DegreeID'];
         $data['degrees'] = $degree->find($degreeID);
         $this->view('dr-interfaces/dr-reports', $data);
     }
     public function attendance()
     {
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
         $this->view('dr-interfaces/dr-attendance');
     }
     public function examination($method = null)
@@ -554,6 +622,7 @@ class DR extends Controller
         $examAttendance = new Attendance();
         $examiner3Eligibility = new Examiner3Subject();
         $finalMarks = new FinalMarks();
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
 
         //need to add degree details to session 
         if (!empty($_SESSION['DegreeID'])) {
