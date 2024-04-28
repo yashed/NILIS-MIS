@@ -474,7 +474,7 @@ class Model extends Database
 
         $query = trim($query, "&& ");
 
-        show($query);
+        // show($query);
         $this->query($query, $data);
 
         return true;
