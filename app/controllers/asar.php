@@ -188,11 +188,6 @@ class ASAR extends Controller
         }
 
 
-        //set semester usign session data
-        if (!empty($_SESSION['exam-creation-details'])) {
-            $selectedSemester = $_SESSION['exam-creation-details']['semester'];
-        }
-
         //unset session message data
         if (!empty($_SESSION['message'])) {
             unset($_SESSION['message']);
@@ -291,7 +286,7 @@ class ASAR extends Controller
 
 
             if (!empty($_GET['examID']) && !empty($_GET['degreeID'])) {
-                redirect('sar/examination/participants');
+                redirect('asar/examination/participants');
             }
 
             //get the count of exam participants

@@ -609,7 +609,6 @@ $data['examResults'] = $marks;
                         </div>
                     </div>
                 </div>
-
                 <div class="sar-dash-card-subsection-01">
                     <div class="sar-dash-sucard-out">
                         <div class="sar-dash-card-subcard-img1">

@@ -104,9 +104,6 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
         flex-direction: row;
         justify-content: space-between;
         margin-top: 10px;
-        /* padding: 10px 10px 30px 35px; */
-        /* border-radius: 6px; */
-        /* margin: 7px 4px 7px 4px; */
     }
 
 
