@@ -2,6 +2,7 @@
 $role = "Clerk";
 $data['role'] = $role;
 $data['recentResults'] = $RecentResultExam;
+
 ?>
 
 <!DOCTYPE html>
@@ -111,16 +112,6 @@ $data['recentResults'] = $RecentResultExam;
                 margin: 7px 4px 7px 4px;
             }
 
-            .clerk-sub-title {
-
-                color: #17376E;
-                font-family: Poppins;
-                font-size: 22px;
-                font-style: normal;
-                font-weight: 600;
-                margin: 40px;
-
-            }
 
             .clerk-sub-title {
 
@@ -206,8 +197,11 @@ $data['recentResults'] = $RecentResultExam;
                 justify-content: center;
                 align-items: center;
                 flex-wrap: nowrap;
-                gap: 30px;
-                width:60%;
+                margin-top: 3vw;
+                /* gap: 30px; */
+                width:70%;
+                height: 40%;
+                margin-left: 4vw;
             }
 
             .clerk-exam-card1 {

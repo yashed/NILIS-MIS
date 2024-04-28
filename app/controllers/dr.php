@@ -562,8 +562,31 @@ class DR extends Controller
     }
     public function attendance()
     {
-        $this->view('dr-interfaces/dr-attendance');
+        $degree = new Degree();
+        $data['notification_count_obj'] = getNotificationCount();
+        if (!empty($_SESSION['DegreeID'])) {
+            $degreeId = $_SESSION['DegreeID'];
+            $data['degreedata'] = $degree->find($degreeId);
+
+            $attendances = [];
+
+            $att = new studentAttendance();
+            $allAttendances = $att->findAll();
+            if (!empty($allAttendances)) {
+                foreach ($allAttendances as $attendance) {
+                    if (is_object($attendance) && $attendance->degree_id == $degreeId) {
+                        $attendances[] = $attendance;
+                    }
+                }
+            }
+            $data['attendances'] = $attendances;
+        } else {
+            $data['attendances'] = [];
+            // If DegreeID is not set in the session, set $data['attendances'] as an empty array
+        }
+        $this->view('dr-interfaces/dr-attendance', $data);
     }
+
     public function examination($method = null)
     {
         $degree = new Degree();

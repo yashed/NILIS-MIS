@@ -64,6 +64,7 @@ $data['role'] = $role;
             border-radius: 10px;
             margin: 7px 4px 2px 4px;
             padding: 10px 32px 10px 32px;
+            min-height: 80vh;
         }
 
         .sidebar.close~.dr-degree-programs-home {

@@ -144,10 +144,6 @@ class Clerk extends Controller
     {
         $degree = new Degree();
         $attendance = new studentAttendance();
-        // $data['attendances'] = $attendance->findAll();
-        // show($attendance);
-        // show($data['attendances']);
-
         if (!empty($_SESSION['DegreeID'])) {
             $degreeId = $_SESSION['DegreeID'];
         }
@@ -155,11 +151,10 @@ class Clerk extends Controller
         $degree_info = (object) $degree->findByID($degreeId);
         $data['degrees'] = $degree->find($degreeId);
         $degreeShortName = $degree_info->DegreeShortName;
-        // show($degreeShortName);
         $data['degreedata'] = $degree->find($degreeId);
-        // show($_SESSION['DegreeID']);
-        // show($data['degreedata']);
+
         $data['notification_count_obj'] = getNotificationCount();
+
         $st = new StudentModel();
         foreach ($st->findAll() as $student) {
             if (is_object($student) && $student->degreeID == $degreeId && $student->status == "continue") {
@@ -195,16 +190,12 @@ class Clerk extends Controller
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['importSubmit'])) {
-            // Check if the uploaded file is present and no errors occurred during upload
+           
             if ($_FILES['csvFile']['error'] == 0 && !empty($_FILES['csvFile']['tmp_name'])) {
-                // Load StudentModel
                 $studentAttendance = new studentAttendance();
                 $degree_name = $_POST['selectDegree'];
                 $degree_id = $_POST['selectID'];
-                // Process the CSV file
                 $csvFile = fopen($_FILES['csvFile']['tmp_name'], 'r');
-
-                // Skip the first four rows
                 for ($i = 0; $i < 3; $i++) {
                     fgetcsv($csvFile);
                 }
@@ -214,13 +205,16 @@ class Clerk extends Controller
                     $reg_no = $line[1];
                     $attendance = $line[2];
 
+                    // if (empty($index_no) || empty($reg_no) || empty($attendance)) {
+                    //     echo "<script>alert('One or more fields in the CSV file are empty. Please make sure all fields are filled.'); window.location.href = 'attendance';</script>";
+                    //     fclose($csvFile);
+                    //     exit();
+                    // }
+                    
 
-                    // Check if the record already exists
                     $existingData = $studentAttendance->where(['index_no' => $index_no]);
                     if ($existingData) {
-                        // Check if the attendance value is not empty
-                        if (!empty($attendance)) {
-                            // If record exists and attendance value is not empty, update it
+                        if (!empty($attendance) && !empty($reg_no) && !empty($index_no)) {
                             $updateData = [
                                 'attendance' => $attendance,
                                 'degree_name' => $degree_name,
@@ -231,9 +225,7 @@ class Clerk extends Controller
                             ];
                             $studentAttendance->updateRows($updateData, $whereConditions);
                         }
-                    } else {
-                        // show($_POST);
-                        //only If record not existing, insert it
+                    } else if(!empty($attendance) && !empty($reg_no) && !empty($index_no) ) {
                         $insertData = [
                             'index_no' => $index_no,
                             'degree_name' => $degree_name,
@@ -251,10 +243,7 @@ class Clerk extends Controller
                 echo "Error uploading the file.";
             }
         }
-        // echo "$_SESSION[getid]";
-        // $data['degrees'] = $degree->findAll();
 
-        // Load the view with the data
         $this->view('clerk-interfaces/clerk-attendance', $data);
     }
 
@@ -366,8 +355,9 @@ class Clerk extends Controller
         $this->view('clerk-interfaces/clerk-reports', $data);
     }
 
-    public function examination($method = null)
+    public function examination($method = null, $id = null)
     {
+        $model = new Model();
         $degree = new Degree();
         $student = new StudentModel();
         $examParticipants = new ExamParticipants();
@@ -381,35 +371,41 @@ class Clerk extends Controller
         $examiner3Eligibility = new Examiner3Subject();
         $finalMarks = new FinalMarks();
 
-        //need to add degree details to session 
-        if (!empty($_SESSION['DegreeID'])) {
-            $degreeID = $_SESSION['DegreeID']->DegreeID;
-        }
-        $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
 
+        //get the degree id from the url
+        $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
+        $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
+
+        //add degree data to session 
+        if (!empty($degreeID)) {
+            $_SESSION['degreeData'] = $degree->where(['DegreeID' => $degreeID]);
+        }
+
+        //add exam data to session
         if (!empty($examID)) {
             $_SESSION['examDetails'] = $exam->where(['examID' => $examID]);
         }
+
+        //define degree id and exam id globally for the examination part
+        if (!empty($_SESSION['degreeData'])) {
+
+            $degreeID = $_SESSION['degreeData'][0]->DegreeID;
+        }
+        if (!empty($_SESSION['examDetails'])) {
+            $examID = $_SESSION['examDetails'][0]->examID;
+        }
+
+
         //unset session message data
         if (!empty($_SESSION['message'])) {
             unset($_SESSION['message']);
         }
-        //set examination id
-        if (!empty($_SESSION['examDetails'])) {
-            $examID = $_SESSION['examDetails'][0]->examID;
-            $semester = $_SESSION['examDetails'][0]->semester;
-        } else {
-            $examID = null;
-            $semester = null;
-        }
-        //give 403 error
-        if ($examID == null) {
-            redirect('_403_');
-        }
 
+        //get the count of exam participants
         $data['errors'] = [];
         $data['degrees'] = $degree->findAll();
         $data['students'] = $student->where(['degreeID' => $degreeID]);
+
 
         //get exam details with degree details
         $dataTables = ['degree'];
@@ -417,55 +413,104 @@ class Clerk extends Controller
         $examConditions = ['exam.degreeID = degree.DegreeID', 'exam.degreeID= ' . $degreeID];
         $data['examDetails'] = $exam->join($dataTables, $columns, $examConditions);
 
-        $repeatStudents->setid(1000);
+
+        //add again examDetaios to session
+        if (!empty($examID)) {
+            $_SESSION['examDetails'] = $exam->where(['examID' => $examID]);
+
+        }
+
+        //get the grades of the students join with exam participants table
+        $tablesJoin = ['exam_participants'];
+        $columnsJoin = ['final_marks.id', 'final_marks.studentIndexNo', 'final_marks.examID', 'final_marks.degreeID', 'final_marks.finalMarks', 'final_marks.grade', 'final_marks.subjectCode', 'exam_participants.studentType', 'exam_participants.semester'];
+        $conditionsJoin = ['final_marks.studentIndexNo = exam_participants.indexNo', 'final_marks.examID = exam_participants.examID'];
+        $whereConditionsJoin = ['final_marks.grade IS NULL'];
+        $marksToGrade = $finalMarks->joinWhere($tablesJoin, $columnsJoin, $conditionsJoin, $whereConditionsJoin);
+
+
+        //update grades of marks
+        if (!empty($marksToGrade)) {
+            $finalMarks->updateGrades($marksToGrade);
+        }
+
+        //send notification count to the view
+        $data['notification_count_obj_sar'] = getNotificationCountAssistSAR();
+
         if ($method == 'results') {
 
             $examMarks = new Marks();
             $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
+
             //get examID from session
             if (!empty($_SESSION['examDetails'])) {
                 $examID = $_SESSION['examDetails'][0]->examID;
                 $semester = $_SESSION['examDetails'][0]->semester;
             }
+
             //get subjects in the exam
             $examSubjects = $examtimetable->where(['examID' => $examID]);
+
             //get subject code from post data
             if (isset($_POST['submit'])) {
                 $resultSubCode = isset($_POST['subCode']) ? $_POST['subCode'] : '';
                 // show($resultSubCode);
+
+
             } else {
                 $resultSubCode = '';
             }
+
             // remove any leading or trailing spaces from the string
             $resultSubCode = trim($resultSubCode);
 
             //get subject details
             $subjectDetails = $subjects->where(['SubjectCode' => $resultSubCode, 'DegreeID' => $degreeID]);
+
+
             //get examination results using marks and final marks
             $tables = ['final_marks', 'exam_participants'];
             $columns = ['*'];
             $conditions = ['marks.examID = final_marks.examID', 'marks.studentIndexNo = exam_participants.indexNo', 'marks.studentIndexNo = final_marks.studentIndexNo', 'marks.subjectCode = final_marks.subjectCode'];
             $whereConditions = ['marks.examID = ' . $examID, 'marks.subjectCode =  "' . $resultSubCode . '"', 'exam_participants.examID = ' . $examID];
             $examResults = $examMarks->joinWhere($tables, $columns, $conditions, $whereConditions);
+
             //generate csv file name
             $fileName = $examID . '_' . $resultSubCode . '.csv';
             $newFileName = $examID . '_' . $resultSubCode . '_new.csv';
+
             //generate updated marksheet as csv file
             if (!empty($resultSubCode)) {
                 updateMarksheet($fileName, $examResults, $newFileName);
             }
+
             $data['subjectDetails'] = $subjectDetails;
             $data['subNames'] = $examSubjects;
             $data['examResults'] = $examResults;
+
+
             $this->view('clerk-interfaces/clerk-examresults', $data);
+
         } else if ($method == 'participants') {
+
+
+            if (!empty($_GET['examID']) && !empty($_GET['degreeID'])) {
+                redirect('clerk/examination/participants');
+            }
+
             //get the count of exam participants
             $data['examCount'] = $examParticipants->count(['examID' => $examID]);
+
             $participants[] = $examParticipants->where(['examID' => $examID]);
+
             $data['examParticipants'] = $participants;
+
             $this->view('clerk-interfaces/clerk-examparticipants', $data);
         } else {
+
+
             $this->view('clerk-interfaces/clerk-examination', $data);
         }
+
     }
+
 }
