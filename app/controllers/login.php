@@ -45,7 +45,7 @@ class Login extends Controller
                     } else if ($_SESSION['USER_DATA']->role == 'sar') {
 
                         if ($_SESSION['USER_DATA']->status == 'initial') {
-                            // $checkUser = true;
+
                             header('Location:pwdchange');
                         } else {
                             header('Location: sar');
@@ -72,7 +72,7 @@ class Login extends Controller
                             header('Location: clerk');
                         }
                     } else {
-                        header('Location: login');
+                        // header('Location: login');
                     }
 
 

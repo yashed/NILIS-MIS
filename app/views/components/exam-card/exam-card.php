@@ -130,6 +130,7 @@
     function redirectToURL(examID, degreeID, role) {
 
         var desiredUrl = rootUrl + role.toLowerCase() + "/examination/" + method + "?degreeID=" + degreeID + "&examID=" + examID;
+        console.log(desiredUrl);
         window.location.href = desiredUrl;
     }
 </script>

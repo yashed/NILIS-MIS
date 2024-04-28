@@ -5,7 +5,8 @@ class ASAR extends Controller
 
     function __construct()
     {
-        if (!Auth::is_director()) {
+        if (!Auth::is_asar()) {
+            show("Error");
             redirect('_403_');
         }
     }
@@ -13,9 +14,57 @@ class ASAR extends Controller
     public function index()
     {
         $degree = new Degree();
+        $student = new StudentModel();
+        $exam = new Exam();
+        $degreetimetable = new DegreeTimeTable();
+        $finalMarks = new FinalMarks();
+        $db = new Database();
+        $finalMarks = new FinalMarks();
 
+
+        //remove degree data from session
+        if (!empty($_SESSION['degreeData'])) {
+            unset($_SESSION['degreeData']);
+        }
+        //remove exam details from session
+        if (!empty($_SESSION['examDetails'])) {
+            unset($_SESSION['examDetails']);
+        }
+
+        //get data to show as upcoming examination in sar dashboard
+        $upTable = ['degree'];
+        $upColumns = ['*'];
+        $upConditions = ['degree_timetable.DegreeID = degree.DegreeID', 'StartingDate >= CURDATE()'];
+        $data['upcomingExams'] = $degreetimetable->join($upTable, $upColumns, $upConditions, 'StartingDate', 2);
+
+
+        //pass data to graphs and chalender
+        $data['degrees'] = $degree->findAll();
+        $data['students'] = $student->findAll();
+        $data['exam'] = $exam->findAll();
+        $data['degreetimetables'] = $degreetimetable->findAll();
+
+
+
+        //get last results submitted examination id
+        $recentExamId = $finalMarks->lastID('examID');
+
+        //join exam and degree tables
+        if (!empty($recentExamId)) {
+            $dataTables = ['degree'];
+            $columns = ['*'];
+            $examConditions = ['exam.degreeID = degree.DegreeID', 'exam.examID = ' . $recentExamId];
+            $data['RecentResultExam'] = $exam->join($dataTables, $columns, $examConditions);
+        } else {
+            $data['RecentResultExam'] = null;
+        }
+
+        $degree = new Degree();
+
+        $data['marks'] = $finalMarks->query("SELECT finalMarks FROM final_marks");
         $data['degrees'] = $degree->findAll();
 
+        //send notification count to the view
 
         $this->view('director-interfaces/director-dashboard', $data);
     }
@@ -29,7 +78,7 @@ class ASAR extends Controller
         $data['degrees'] = $degree->findAll();
 
 
-        $this->view('asar-interfaces/asar-degreeprograms', $data);
+        $this->view('assist-sar-interfaces/asar-degreeprograms', $data);
     }
     public function degreeprofile($action = null, $id = null)
     {
@@ -90,17 +139,16 @@ class ASAR extends Controller
                 }
             } else if ($action == 'delete') {
                 $degree->delete(['id' => $degreeID]);
-                redirect("sar/degreeprograms");
+                redirect("assist-sar-interfaces/degreeprograms");
             }
             // Load the view with the data
-            $this->view('asar-interfaces/asar-degreeprofile', $data);
+            $this->view('assist-sar-interfaces/asar-degreeprofile', $data);
         } else {
             echo "Error: Degree ID not provided in the URL.";
         }
     }
     public function examination($method = null, $id = null)
     {
-
         $model = new Model();
         $degree = new Degree();
         $student = new StudentModel();
@@ -115,22 +163,29 @@ class ASAR extends Controller
         $examiner3Eligibility = new Examiner3Subject();
         $finalMarks = new FinalMarks();
 
-        //need to add degree details to session 
-        $degreeID = 4;
-        if (!empty($_SESSION['degreeData'])) {
-            $degreeID = $_SESSION['degreeData'][0]->DegreeID;
 
-        } else {
-            // $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
+        //get the degree id from the url
+        $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
+        $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
+
+        //add degree data to session 
+        if (!empty($degreeID)) {
+            $_SESSION['degreeData'] = $degree->where(['DegreeID' => $degreeID]);
         }
 
-
-        $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
-
+        //add exam data to session
         if (!empty($examID)) {
             $_SESSION['examDetails'] = $exam->where(['examID' => $examID]);
         }
 
+        //define degree id and exam id globally for the examination part
+        if (!empty($_SESSION['degreeData'])) {
+
+            $degreeID = $_SESSION['degreeData'][0]->DegreeID;
+        }
+        if (!empty($_SESSION['examDetails'])) {
+            $examID = $_SESSION['examDetails'][0]->examID;
+        }
 
 
         //unset session message data
@@ -138,21 +193,7 @@ class ASAR extends Controller
             unset($_SESSION['message']);
         }
 
-        //set examination id
-        if (!empty($_SESSION['examDetails'])) {
-            $examID = $_SESSION['examDetails'][0]->examID;
-            $semester = $_SESSION['examDetails'][0]->semester;
-        } else {
-            $examID = null;
-            $semester = null;
-        }
-
-        //give 403 error
-        if ($examID == null) {
-            redirect('_403_');
-        }
-
-
+        //get the count of exam participants
         $data['errors'] = [];
         $data['degrees'] = $degree->findAll();
         $data['students'] = $student->where(['degreeID' => $degreeID]);
@@ -165,9 +206,27 @@ class ASAR extends Controller
         $data['examDetails'] = $exam->join($dataTables, $columns, $examConditions);
 
 
+        //add again examDetaios to session
+        if (!empty($examID)) {
+            $_SESSION['examDetails'] = $exam->where(['examID' => $examID]);
 
-        $repeatStudents->setid(1000);
+        }
 
+        //get the grades of the students join with exam participants table
+        $tablesJoin = ['exam_participants'];
+        $columnsJoin = ['final_marks.id', 'final_marks.studentIndexNo', 'final_marks.examID', 'final_marks.degreeID', 'final_marks.finalMarks', 'final_marks.grade', 'final_marks.subjectCode', 'exam_participants.studentType', 'exam_participants.semester'];
+        $conditionsJoin = ['final_marks.studentIndexNo = exam_participants.indexNo', 'final_marks.examID = exam_participants.examID'];
+        $whereConditionsJoin = ['final_marks.grade IS NULL'];
+        $marksToGrade = $finalMarks->joinWhere($tablesJoin, $columnsJoin, $conditionsJoin, $whereConditionsJoin);
+
+
+        //update grades of marks
+        if (!empty($marksToGrade)) {
+            $finalMarks->updateGrades($marksToGrade);
+        }
+
+        //send notification count to the view
+        $data['notification_count_obj_sar'] = getNotificationCountAssistSAR();
 
         if ($method == 'results') {
 
@@ -225,6 +284,11 @@ class ASAR extends Controller
 
         } else if ($method == 'participants') {
 
+
+            if (!empty($_GET['examID']) && !empty($_GET['degreeID'])) {
+                redirect('asar/examination/participants');
+            }
+
             //get the count of exam participants
             $data['examCount'] = $examParticipants->count(['examID' => $examID]);
 
@@ -238,7 +302,6 @@ class ASAR extends Controller
 
             $this->view('assist-sar-interfaces/assist-examination', $data);
         }
-
 
     }
 

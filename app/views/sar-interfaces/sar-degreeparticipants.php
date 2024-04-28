@@ -62,6 +62,7 @@ $data['popupStatus'] = isset($RMpopupStatus) ? $RMpopupStatus : '';
             background-color: white;
             align-items: center;
             justify-content: center;
+            min-height: 90vh;
             border-radius: 10px;
             margin: 7px 4px 2px 4px;
             padding: 10px 32px 10px 32px;

@@ -8,7 +8,7 @@ class pwdchange extends Controller
         if ($_SESSION['USER_DATA']->status == 'active') {
             // Redirect the user to the appropriate page
             redirect($_SESSION['USER_DATA']->role);
-        } 
+        }
     }
     
     public function index()
