@@ -1,5 +1,5 @@
 <?php
-$role = "SAR";
+$role = "Admin";
 $data['role'] = $role;
 
 ?>
@@ -163,10 +163,9 @@ $data['role'] = $role;
     .exam-degree-bar {
         display: flex;
         flex-direction: row;
-        justify-content: center;
-        margin-bottom: 20px;
-        gap: 20px;
+        justify-content: space-around;
         flex-wrap: wrap;
+        margin-bottom: 20px;
     }
 
     .exam-card1 {
@@ -312,46 +311,21 @@ $data['role'] = $role;
                     Upcoming Examination
                 </div>
                 <div class="exam-create-dropdown">
-                    <a href="<?= ROOT ?>sar/examination/create/0">
-                        <button class="dropbtn">
-                            <div class="bt-name">Create Examination</div>
-                        </button>
-                    </a>
-                    <!-- <div class="exam-create-dropdown-content">
-                        <a href="<?= ROOT ?>sar/examination/create/1">Normal Examination</a>
-
-                        <a href="#">Special Examination</a>
-                    </div> -->
                 </div>
             </div>
             <div class="exam-degree-bar">
+                <div class="exam-card1">
+                    <!--Need to change this login upcomming examinations -->
+                    <div class="exam-msg">No upcomming Examination</div>
 
-
-                <?php $upcmoning = false ?>
-                <?php if (!empty($examDetails)): ?>
-                    <?php foreach ($examDetails as $exam): ?>
-                        <?php if ($exam->status == 'upcoming'): ?>
-                            <?php
-                            $data['exam'] = $exam;
-                            $upcmoning = true;
-                            ?>
-                            <div class="exam-card1">
-                                <?php $this->view('components/exam-card/upcomming-exam-card', $data) ?>
-                            </div>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-                <?php if (!$upcmoning): ?>
-                    <div class='exam-msg'>No Upcoming Examination</div>
-                <?php endif; ?>
-
-
+                </div>
             </div>
         </div>
         <div class="exam-subsection-2">
             <div class="exam-subsection-21">
                 <div class="exam-sub-title">
                     Ongoing Examination
+
                 </div>
                 <div class="exam-card-content">
                     <div class="exam-card2">
@@ -368,7 +342,7 @@ $data['role'] = $role;
                             <?php endforeach; ?>
                         <?php endif; ?>
                         <?php if (!$ongoingExam): ?>
-                            <div class='exam-msg'>No Ongoing Examination</div>
+                            <div class='exam-msg'>No Ongoing examination</div>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -393,7 +367,7 @@ $data['role'] = $role;
                             <?php endforeach; ?>
                         <?php endif; ?>
                         <?php if (!$completeExam): ?>
-                            <div class='exam-msg'>No Completed Examination</div>
+                            <div class='exam-msg'>No Completed examination</div>
                         <?php endif; ?>
                     </div>
                 </div>

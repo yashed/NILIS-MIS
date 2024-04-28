@@ -235,7 +235,7 @@ $data['recentResults'] = $RecentResultExam;
                     <img src="<?= ROOT ?>assets/dashboard-icons/degree.png" alt="degree.icon" />
                 </div>
                 <div class="admin-subcard-data">
-                    <div class="admin-subcard-data-title">Ongoing Degree</div>
+                    <div class="admin-subcard-data-title">Ongoing Diploma</div>
                     <div class="admin-subcard-data-value"> <?php if (!empty($ongoing_degrees)): ?>
                             <?php echo count($ongoing_degrees) ?>
                         <?php else: ?>
@@ -288,7 +288,7 @@ $data['recentResults'] = $RecentResultExam;
         </div>
         <div class="admin-subsection-1">
             <div class="admin-sub-title">
-                Ongoing Degree Programs
+                Ongoing Diploma Programs
             </div>
             <div class="admin-degree-bar">
                 <div class="admin-card1">
@@ -301,7 +301,7 @@ $data['recentResults'] = $RecentResultExam;
 
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <div class="admin-sub-title">No On Going Degree Program Created Yet</div>
+                        <div class="admin-sub-title">No On Going Diploma Program Created Yet</div>
                     <?php endif; ?>
 
                     </a>

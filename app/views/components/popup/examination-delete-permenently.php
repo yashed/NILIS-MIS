@@ -81,7 +81,7 @@
                 </svg>
             </div>
             <div class="delete-text">
-                <h2>Are you sure?</h2>
+                <h2>Are You Sure?</h2>
                 <p>It will delete all the details about this examination permanently and you can't create this
                     examination again</p>
             </div>

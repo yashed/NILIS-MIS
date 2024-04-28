@@ -129,7 +129,8 @@
         display: flex;
         font-family: "Poppins";
         flex-direction: row;
-        font-size: 1vw;
+        font-size: 0.8vw;
+        align-items: center;
     }
 
     .show-passwords input {

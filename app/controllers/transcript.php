@@ -13,12 +13,12 @@ function __construct()
     // }
 }
 
-class ROE extends Controller
+class Transcript extends Controller
 {
     public function index()
     {
 
-        redirect('roe/login');
+        redirect('transcript/login');
     }
 
 
@@ -38,11 +38,9 @@ class ROE extends Controller
                 $indexNo = $_POST['index'];
             }
 
-
-
             //check whether the index number is valid
             if ($student->indexNoValidation($_POST)) {
-                redirect('roe/card?indexNo=' . $indexNo);
+                redirect_blank('transcript/letter?indexNo=' . $indexNo);
             } else {
                 $data['errors'] = $student->errors;
 
@@ -50,10 +48,10 @@ class ROE extends Controller
 
 
         }
-        $this->view('reports/report-roe-login', $data);
+        $this->view('reports/transcript-login', $data);
     }
 
-    public function card()
+    public function letter()
     {
         $degree = new Degree();
         $studentModel = new StudentModel();
@@ -78,13 +76,14 @@ class ROE extends Controller
         ];
         $studnetRes = $finalMarks->joinWhere($tables, $columns, $conditions, $whereConditions);
 
+
         $data['studentData'] = $studentModel->where(['IndexNo' => $indexNo]);
         $data['studentResults'] = groupByColumn($studnetRes, 'semester');
         $data['repeateSubjects'] = getRepeatedSubjects($indexNo);
         $data['medicalSubjects'] = getMedicalSubjects($indexNo);
         $data['degreeDetails'] = $degree->where(['DegreeID' => $data['studentData'][0]->degreeID]);
 
-        $this->view('reports/report-roe-card', $data);
+        $this->view('reports/transtript-letter', $data);
 
 
     }

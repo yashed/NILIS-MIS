@@ -54,30 +54,32 @@ class FinalMarks extends Model
         $subjectCode = $record->subjectCode;
 
         // show($gradingRules);
-        foreach ($gradingRules as $rule) {
+        if (!empty($gradingRules)) {
+            foreach ($gradingRules as $rule) {
 
-            if ($finalMarks >= $rule->MinMarks && $finalMarks <= $rule->MaxMarks) {
-                //get main grade (remove + and - from the grade)
+                if ($finalMarks >= $rule->MinMarks && $finalMarks <= $rule->MaxMarks) {
+                    //get main grade (remove + and - from the grade)
 
-                $mainGrade = substr($rule->Grade, 0, 1);
-                if ($studentType == 'repeate' && $mainGrade < 'C') {
+                    $mainGrade = substr($rule->Grade, 0, 1);
+                    if ($studentType == 'repeate' && $mainGrade < 'C') {
 
-                    return 'C';
-                }
-                if ($studentType == 'medical/repeat' && $mainGrade < 'C') {
+                        return 'C';
+                    }
+                    if ($studentType == 'medical/repeat' && $mainGrade < 'C') {
 
-                    //get repete subjects
-                    $repeateSubjects = getRepeatedSubjects($indexNo, $semester);
+                        //get repete subjects
+                        $repeateSubjects = getRepeatedSubjects($indexNo, $semester);
 
-                    //check wheter the subject is a repete subject
-                    foreach ($repeateSubjects as $subject) {
-                        if ($subject->subjectCode == $subjectCode) {
-                            return 'C';
+                        //check wheter the subject is a repete subject
+                        foreach ($repeateSubjects as $subject) {
+                            if ($subject->subjectCode == $subjectCode) {
+                                return 'C';
+                            }
                         }
                     }
-                }
 
-                return $rule->Grade;
+                    return $rule->Grade;
+                }
             }
         }
         return NULL;

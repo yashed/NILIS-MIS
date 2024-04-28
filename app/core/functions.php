@@ -37,6 +37,11 @@ function redirect($link)
     die();
 }
 
+function redirect_blank($link)
+{
+    echo "<script>window.open('" . ROOT . $link . "', '_blank')</script>";
+    die();
+}
 
 //using this function we can pass msg to frontend using SESSION
 function message($msg = '', $type = 'success', $erase = false)
@@ -472,6 +477,7 @@ function updateMarksheet($csvFileName, $dataArray, $newFileName)
 {
     $csvFilePath = 'assets/csv/examsheets/final-marksheets/' . $csvFileName;
     $newFilePath = 'assets/csv/examsheets/output/final-marksheets/' . $newFileName;
+
 
     // Ensure the output directory exists
     $newFileDir = dirname($newFilePath);
