@@ -9,7 +9,7 @@ $data['role'] = $role;
 <html>
 
 <head>
-    <title>Degree Profile</title>
+    <title>Diploma Profile</title>
 </head>
 <style>
     * {
@@ -354,7 +354,7 @@ $data['role'] = $role;
             </div>
             <form class="box_4" id="form1" method="post"
                 action="<?= ROOT ?>dr/degreeprofile/update?id=<?= $degrees[0]->$degreeID ?>">
-                <p>Degree Time Table</p>
+                <p>Diploma Time Table</p>
                 <div class="box_4_1">
                     <table class="Time_table" id="Time_table">
                         <?php $lastEventID = 0; ?>
@@ -386,7 +386,7 @@ $data['role'] = $role;
                                 } ?>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <p>No data found for this degree programme.</p>
+                            <p>No data found for this Diploma programme.</p>
                         <?php endif; ?>
                     </table>
                 </div>

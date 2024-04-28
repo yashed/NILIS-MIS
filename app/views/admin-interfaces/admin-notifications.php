@@ -5,6 +5,10 @@ $data['role'] = $role;
 
 ?>
 
+<?php $this->view('components/navside-bar/header', $data) ?>
+<?php $this->view('components/navside-bar/sidebar', $data) ?>
+<?php $this->view('components/navside-bar/footer', $data) ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -109,6 +113,7 @@ $data['role'] = $role;
             padding: 10px 10px 30px 35px;
             border-radius: 6px;
             margin: 7px 4px 7px 4px;
+            min-height: 90vh;
 
         }
 

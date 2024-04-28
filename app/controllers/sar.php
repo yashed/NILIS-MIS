@@ -26,15 +26,15 @@ class SAR extends Controller
         $db = new Database();
         $finalMarks = new FinalMarks();
 
-
-        //remove degree data from session
-        if (!empty($_SESSION['degreeData'])) {
-            unset($_SESSION['degreeData']);
-        }
-        //remove exam details from session
-        if (!empty($_SESSION['examDetails'])) {
-            unset($_SESSION['examDetails']);
-        }
+        /*uncoment this because we cant go back to pages when remove the session data*/
+        // //remove degree data from session
+        // if (!empty($_SESSION['degreeData'])) {
+        //     unset($_SESSION['degreeData']);
+        // }
+        // //remove exam details from session
+        // if (!empty($_SESSION['examDetails'])) {
+        //     unset($_SESSION['examDetails']);
+        // }
 
         //get data to show as upcoming examination in sar dashboard
         $upTable = ['degree'];

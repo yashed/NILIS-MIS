@@ -235,7 +235,7 @@ $data['role'] = $role;
 
 <body>
     <div class="dr-home">
-        <div class="dr-title">Degree Program</div>
+        <div class="dr-title">Diploma Program</div>
         <div class="dr-subsection-1">
 
             <div class="dr-sub-title">Ongoing Diploma Programs</div>

@@ -18,38 +18,50 @@
                             <div class="form-element">
                                 <label for="fname">First Name</label>
                                 <input type="text" placeholder="Enter" id="up-fname" name="fname"
-                                    value="<?= set_value('fname') ?>">
+                                    value="<?= set_value('fname') ?>"
+                                    style="border: <?= !empty($errors['u-fname']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                <?php if (!empty($errors['u-fname'])): ?>
+                                    <div class="user-error" for="fname">
+                                        <?= $errors['u-fname'] ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                             <div class="form-element">
                                 <label for="email">Email</label>
                                 <input type="text" placeholder="Enter" id="up-email" name="email"
-                                    value="<?= set_value('email') ?>">
+                                    value="<?= set_value('email') ?>"
+                                    style="border: <?= !empty($errors['u-email']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                <?php if (!empty($errors['u-email'])): ?>
+                                    <div class="user-error" for="email">
+                                        <?= $errors['u-email'] ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
-                            <!-- <div class="form-element">
-                                <label for="newpassword">New Password</label>
-                                <input type="password" placeholder="Enter" id="up-newpassword" name="newpassword">
-                            </div> -->
                         </div>
 
                         <div class="coloum-02">
                             <div class="form-element">
                                 <label for="lname">Last Name</label>
                                 <input type="text" placeholder="Enter" id="up-lname" name="lname"
-                                    value="<?= set_value('lname') ?>">
+                                    value="<?= set_value('lname') ?>"
+                                    style="border: <?= !empty($errors['u-lname']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                <?php if (!empty($errors['u-lname'])): ?>
+                                    <div class="user-error" for="lname">
+                                        <?= $errors['u-lname'] ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                             <div class="form-element">
                                 <label for="phoneNo">Phone Number</label>
                                 <input type="text" placeholder="Enter" id="up-phoneNo" name="phoneNo"
-                                    value="<?= set_value('phoneNo') ?>">
-                            </div>
-                            <!-- <div class="form-element">
-                                <label for="cpassword">Confirm Password</label>
-                                <input type="password" placeholder="Enter" id="up-cpassword" name="cpassword"
-                                    style="border: <?= !empty($errors['cpassword']) ? '1px solid red' : '1px solid #ccc' ?>;">
-                                <?php if (!empty($errors['cpassword'])): ?>
-                                    <div class="user-error" for="cpassword"><?= $errors['cpassword'] ?></div>
+                                    value="<?= set_value('phoneNo') ?>"
+                                    style="border: <?= !empty($errors['u-phoneNo']) ? '1px solid red' : '1px solid #ccc' ?>;">
+                                <?php if (!empty($errors['u-phoneNo'])): ?>
+                                    <div class="user-error" for="phoneNo">
+                                        <?= $errors['u-phoneNo'] ?>
+                                    </div>
                                 <?php endif; ?>
-                            </div> -->
+                            </div>
                         </div>
 
                     </div>
