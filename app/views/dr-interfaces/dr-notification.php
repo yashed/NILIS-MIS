@@ -60,7 +60,7 @@ $data['role'] = $role;
             padding: 10px 10px 30px 35px;
             border-radius: 6px;
             margin: 7px 4px 7px 4px;
-
+            min-height: 72vh;
         }
 
         .temp3-sub-title {
