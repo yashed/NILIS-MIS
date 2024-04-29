@@ -134,10 +134,12 @@ $data['role'] = $role;
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                                 <?php if($flag == 0): ?>
-                                    <option value="" default hidden>No more diplomas</option>
+                                    <option value="No more diplomas" default hidden>No more diplomas</option>
                                 <?php endif; ?>
                             <?php endif; ?>
-                        </select><br><br>
+                        </select>
+                        <center><span class="invalidDiploma" style="color: red; font-size: 10px; text-align: center;"></span></center>
+                        <br>
                         <?php if (!empty($error)): ?>
                             <div class="error-message-profile" style="color: red; font-size: 14px; margin-bottom: 5px;">
                                 <?= $error ?>
@@ -222,7 +224,7 @@ $data['role'] = $role;
                                             </tr>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
-                                <?php else: ?>
+                                <?php else: ?>  
                                     <p class="dr-userprofile-left-top-text4">No Examination Results for this semester</p>
                                 <?php endif; ?>
                             </table>
@@ -325,7 +327,7 @@ $data['role'] = $role;
                                 <?php
                                 if (message()) {
                                     echo '<div class="profile-message">';
-                                    if ($_SESSION['message_type'] == 'errors') {
+                                    if ($_SESSION['message_type'] == 'error-userprofile') {
                                         echo "<div class='error-message-profile' style='color: red; font-size: 14px; margin-bottom: 5px;'>" . message('', '', true) . "</div>";
                                     }
                                     echo '</div>';
@@ -386,26 +388,46 @@ $data['role'] = $role;
                 e.stopPropagation();
             });
         }
-
-        function myFunction() {
-            $('.dr-userprofile-pop-up1').css('display', 'none');
-            $('#dr-userprofile-overlay').css('display', 'block');
-            $('.dr-userprofile-pop-up1-1').css('display', 'block');
-            document.body.classList.add('no-scroll');
-            $('#dr-userprofile-overlay').click(function (e) {
-                $('.dr-userprofile-pop-up1-1').css('display', 'none');
-                $('#dr-userprofile-overlay').css('display', 'none');
-                document.body.classList.remove('no-scroll');
-                e.stopPropagation();
-            });
+        // function myFunction() {
+        //     $('.dr-userprofile-pop-up1').css('display', 'none');
+        //     $('#dr-userprofile-overlay').css('display', 'block');
+        //     $('.dr-userprofile-pop-up1-1').css('display', 'block');
+        //     document.body.classList.add('no-scroll');
+        //     $('#dr-userprofile-overlay').click(function (e) {
+        //         $('.dr-userprofile-pop-up1-1').css('display', 'none');
+        //         $('#dr-userprofile-overlay').css('display', 'none');
+        //         document.body.classList.remove('no-scroll');
+        //         e.stopPropagation();
+        //     });
+        // }
+        const updateButton = document.getElementById('dr-userprofile-Next1');
+        updateButton.onclick = function (event) {
+            let isValid = true;
+            document.querySelectorAll('.invalidDiploma').forEach(el => el.textContent = '');
+            document.querySelectorAll('select').forEach(input => input.style.border = '');
+            const selectDegreeType = document.getElementById('dr-userprofile-select_degree_type');
+            if (selectDegreeType.value === '' || selectDegreeType.value === 'No more diplomas') {
+                document.querySelector('.invalidDiploma').textContent += 'Please select a diploma program.\n';
+                selectDegreeType.style.border = '1px solid red';
+                isValid = false;
+            }
+            if (!isValid) {
+                event.preventDefault();
+            } else {
+                form.submit();
+            }
         }
-        
+
         function crossForDiplomaChange() {
             $('.dr-userprofile-pop-up1-1').css('display', 'none');
             $('#dr-userprofile-overlay').css('display', 'none');
         }
-        const closeButton = document.querySelector('.dr-userprofile-close-button');
-        closeButton.addEventListener('click', function () {
+        const closeButton1 = document.querySelector('.dr-userprofile-close-button');
+        closeButton1.addEventListener('click', function () {
+            window.location.reload();
+        });
+        const closeButton2 = document.querySelector('#dr-userprofile-close-button');
+        closeButton2.addEventListener('click', function () {
             window.location.reload();
         });
         const submitButton = document.getElementById('dr-userprofile-submitbutton');

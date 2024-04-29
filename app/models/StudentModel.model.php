@@ -75,4 +75,18 @@ class StudentModel extends Model
         }
         return ($this->errors);
     }
+    //indexNO validation
+    public function indexNoValidation($data)
+    {
+        if ($this->where2(['indexNo' => $data['index']])) {
+
+            return true;
+        } else {
+
+            $this->errors['Index-Error'] = 'Incorrect Index Number';
+            return false;
+        }
+
+
+    }
 }

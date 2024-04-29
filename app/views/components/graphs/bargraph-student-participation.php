@@ -17,25 +17,27 @@
     <div class="bar-chart-students">
         <canvas id="student-participants"></canvas>
         <?php
-            $dlim = 0;
-            $dsl = 0;
-            $dpl = 0;
-            $hdlim = 0;
-            foreach ($students as $student) {
-                if (isset($student->indexNo)) {
-                    if (isset($student->status)) {
-                        if ($student->status == "continue") {
-                            // Split the index number at the '/' mark
-                            $parts = explode('/', $student->indexNo);
-                            $degreeShortName = $parts[0];
-                            if ($degreeShortName == "DLIM") {
-                                $dlim++;
-                            } else if ($degreeShortName == "DSL") {
-                                $dsl++;
-                            } else if ($degreeShortName == "DPL") {
-                                $dpl++;
-                            } else if ($degreeShortName == "HDLIM") {
-                                $hdlim++;
+            if (!empty($students)) {
+                $dlim = 0;
+                $dsl = 0;
+                $dpl = 0;
+                $hdlim = 0;
+                foreach ($students as $student) {
+                    if (isset($student->indexNo)) {
+                        if (isset($student->status)) {
+                            if ($student->status == "continue") {
+                                // Split the index number at the '/' mark
+                                $parts = explode('/', $student->indexNo);
+                                $degreeShortName = $parts[0];
+                                if ($degreeShortName == "DLIM") {
+                                    $dlim++;
+                                } else if ($degreeShortName == "DSL") {
+                                    $dsl++;
+                                } else if ($degreeShortName == "DPL") {
+                                    $dpl++;
+                                } else if ($degreeShortName == "HDLIM") {
+                                    $hdlim++;
+                                }
                             }
                         }
                     }

@@ -634,7 +634,7 @@ function validateRowData($rowData)
     }
     // Validate whatsappNo
     if (!preg_match('/^\+?[\d\s]{9,15}$/', $rowData[5])) {
-        return false; // Whatsapp number    must be in a valid phone number format
+        return false; // Whatsapp number must be in a valid phone number format
     }
     // Validate Address
     if (empty($rowData[6]) && !preg_match("/^[A-Za-z0-9\s/,-]+(?:[A-Za-z0-9\s/,-]+)*$/",$rowData[6])) {

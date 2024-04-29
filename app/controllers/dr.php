@@ -193,7 +193,7 @@ class DR extends Controller
                         if (!empty($timetableData)) {
                             foreach ($timetableData as $timetableDataItem) {
                                 // Construct the data array for insertion
-                                // show($timetableDataItem);
+                                show($timetableDataItem);
                                 $dataSet1 = [
                                     'EventName' => $timetableDataItem['eventName'],
                                     'EventType' => $timetableDataItem['eventType'],
@@ -209,7 +209,7 @@ class DR extends Controller
                                 $degreeTimeTable->validate($dataSet1);
                                 if (!empty($degreeTimeTable->errors)) {
                                     foreach ($degreeTimeTable->errors as $error) {
-                                        message($error, 'error');
+                                        message($error, 'error-degreeprofile');
                                     }
                                     $dam = 1;
                                 } 
@@ -233,14 +233,14 @@ class DR extends Controller
                                     $degreeTimeTable->delete($dataGet1);
                                     $degreeTimeTable->insert($dataSet1);
                                 }
-                                message('Degree timetable updated successfully.', 'success');
+                                message('Diploma timetable updated successfully.', 'success-degreeprofile');
                                 redirect("dr/degreeprofile");
                             } else {
-                                message('Degree timetable not updated due to validation errors.', 'error');
-                                redirect("dr/degreeprofile");
+                                message('Diploma timetable not updated due to validation errors.', 'error-degreeprofile');
+                                // redirect("dr/degreeprofile");
                             }
                         } else {
-                            message('Degree timetable not updated. NULL array.', 'error');
+                            message('Diploma timetable not updated. NULL array.', 'error-degreeprofile');
                             redirect("dr/degreeprofile");
                         }
                     }
@@ -291,7 +291,7 @@ class DR extends Controller
             }
             $this->view('dr-interfaces/dr-degreeprofile', $data);
         } else {
-            echo "Error: Degree ID not provided in the URL.";
+            echo "Error: Diploma ID not provided in the URL.";
         }
     }
 
@@ -357,7 +357,7 @@ class DR extends Controller
                                 ];
                                 $timeTable->insert($data);
                             }
-                            // message('Degree timetable added successfully.', 'success');
+                            // message('Diploma timetable added successfully.', 'success');
                             redirect("dr/degreeprofile");
                         }
                     }
@@ -438,6 +438,7 @@ class DR extends Controller
                                     }
                                     message('All rows in CSV file imported successfully.','successes');
                                     fclose($csvFile);
+                                    sleep(3);
                                     redirect("dr/newdegree");
                                 }
                             } else {
@@ -511,14 +512,14 @@ class DR extends Controller
                         // Check if there were any validation errors
                         if (empty($studentModel->errors)) {
                             // If there are no validation errors, proceed with updating the student information
-                            // message('Student data updated successfully.', 'success');
+                            // message('Student data updated successfully.', 'success-userprofile');
                             $studentModel->update($studentId, $updatedData);
                             redirect("dr/userprofile");
                         } 
                         // else {
                         //     // If there are validation errors, handle them (e.g., provide feedback to the user)
                         //     foreach ($studentModel->errors as $error) {
-                        //         message($error, 'errors');
+                        //         message($error, 'error-userprofile');
                         //     }
                         // }
                     }
@@ -568,21 +569,21 @@ class DR extends Controller
                                 $studentModel->insert($data);
                                 sleep(4);
                                 $data['error'] = 'Student has been successfully transferred to the new degree program.';
-                                message('Student has been successfully transferred to the new degree program.','success');
+                                message('Student has been successfully transferred to the new degree program.','success-userprofile');
                                 redirect("dr/participants");
                             } else {
                                 $data['error'] = 'Failed to generate index and registration numbers.';
-                                message('Error: Failed to generate index and registration numbers.','error');
+                                message('Error: Failed to generate index and registration numbers.','error-userprofile');
                                 redirect("dr/userprofile");
                             }
                         } else {
                             $data['error'] = 'Can`t change diploma.';
-                            message('Can`t change diploma.', 'error');
+                            message('Can`t change diploma.', 'error-userprofile');
                             redirect("dr/userprofile");
                         }
                     } else {
                         $data['error'] = 'The student has already been studying for three months,So cannot change their diploma program.';
-                        message('The student has already been studying for three months,So cannot change their diploma program.','error');
+                        message('The student has already been studying for three months,So cannot change their diploma program.','error-userprofile');
                         redirect("dr/userprofile");
                     }
                 }
@@ -637,7 +638,8 @@ class DR extends Controller
                 'lname' => $lname,
                 'phoneNo' => $phoneNo
             ];
-
+            $_SESSION['USER_DATA']->fname = $fname;
+            $_SESSION['USER_DATA']->lname = $lname;
             $user->update($id, $dataToUpdate);
             header('Location:settings');
             exit;

@@ -40,8 +40,8 @@ $data['recentResults'] = $RecentResultExam;
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Students</div>
                         <div class="dr-dash-card-subcard-data-value">
+                            <?php $count = 0; ?>
                             <?php if (!empty($students)): ?>
-                                <?php $count = 0; ?>
                                 <?php foreach ($students as $student): ?>
                                     <?php if ($student->status == "continue"): ?>
                                         <?php $count++; ?>
@@ -62,8 +62,8 @@ $data['recentResults'] = $RecentResultExam;
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Ongoing</br>Diplomas</div>
                         <div class="dr-dash-card-subcard-data-value">
+                            <?php $count = 0; ?>
                             <?php if (!empty($degrees)): ?>
-                                <?php $count = 0; ?>
                                 <?php foreach ($degrees as $degree): ?>
                                     <?php if ($degree->Status == "ongoing"): ?>
                                         <?php $count++; ?>
@@ -83,8 +83,8 @@ $data['recentResults'] = $RecentResultExam;
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Ongoing</br>Examination</div>
                         <div class="dr-dash-card-subcard-data-value">
+                            <?php $count = 0; ?>
                             <?php if (!empty($exams)): ?>
-                                <?php $count = 0; ?>
                                 <?php foreach ($exams as $exam): ?>
                                     <?php if ($exam->status == "ongoing"): ?>
                                         <?php $count++; ?>
@@ -104,8 +104,8 @@ $data['recentResults'] = $RecentResultExam;
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Results Published </br>Exminations</div>
                         <div class="dr-dash-card-subcard-data-value">
+                            <?php $count = 0; ?>
                             <?php if (!empty($exams)): ?>
-                                <?php $count = 0; ?>
                                 <?php foreach ($exams as $exam): ?>
                                     <?php if ($exam->status == "completed"): ?>
                                         <?php $count++; ?>

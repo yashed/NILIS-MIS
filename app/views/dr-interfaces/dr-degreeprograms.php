@@ -549,9 +549,9 @@ $data['role'] = $role;
             var getMinValue = MinVal[getGradeKey(i)];
             gradeRow.innerHTML = `
             <td><center><input style="width: 60px;" type="text" name="grade" class="dr-degreeprograms-grade" value="${getGradeKey(i)}" id="dr-degreeprograms-grade${i}" readonly></center></td>
-            <td><center><input style="width: 50px;" type="text" name="maxvalue" class="dr-degreeprograms-maxvalue" placeholder="${getMaxValue}" id="dr-degreeprograms-maxvalue${i}"></center></td>
-            <td><center><input style="width: 50px;" type="text" name="minvalue" class="dr-degreeprograms-minvalue" placeholder="${getMinValue}" id="dr-degreeprograms-minvalue${i}"></center></td>
-            <td><center><input style="width: 60px;" type="text" name="gpa" class="dr-degreeprograms-gpa" placeholder="${currentGrade}" id="dr-degreeprograms-gpa${i}"></center></td>
+            <td><center><input style="width: 50px;" type="text" name="maxvalue" class="dr-degreeprograms-maxvalue" value="${getMaxValue}" id="dr-degreeprograms-maxvalue${i}"></center></td>
+            <td><center><input style="width: 50px;" type="text" name="minvalue" class="dr-degreeprograms-minvalue" value="${getMinValue}" id="dr-degreeprograms-minvalue${i}"></center></td>
+            <td><center><input style="width: 60px;" type="text" name="gpa" class="dr-degreeprograms-gpa" value="${currentGrade}" id="dr-degreeprograms-gpa${i}"></center></td>
         `;
             gradecontainer.appendChild(gradeRow);
         }

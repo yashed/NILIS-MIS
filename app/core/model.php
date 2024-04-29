@@ -471,10 +471,11 @@ class Model extends Database
         foreach ($keys as $key) {
             $query .= $key . "=:" . $key . " && ";
         }
+        show($query);
 
         $query = trim($query, "&& ");
 
-        // show($query);
+        show($query);
         $this->query($query, $data);
 
         return true;
