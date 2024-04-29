@@ -1,6 +1,7 @@
 <?php
 $role = "director";
 $data['role'] = $role;
+
 ?>
 <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
 <?php $this->view('components/navside-bar/footer', $data) ?>
@@ -9,7 +10,7 @@ $data['role'] = $role;
 <html lang="en">
 
 <head>
-    <title> Attendance</title>
+    <title>Participants</title>
     <style>
         * {
             margin: 0;
@@ -63,6 +64,7 @@ $data['role'] = $role;
             border-radius: 10px;
             margin: 7px 4px 2px 4px;
             padding: 10px 32px 10px 32px;
+            min-height: 80vh;
         }
 
         .sidebar.close~.dr-degree-programs-home {
@@ -112,28 +114,17 @@ $data['role'] = $role;
             transition: .2s;
         }
 
-        .table__header .input-group-filter {
-            width: 15%;
-            height: 100%;
-            background-color: var(--text-color);
-            margin: 10px 15px 10px 10px;
-            padding: 8px 7px 8px 7px;
-            border-style: groove;
-            border-radius: 7px;
-            border-color: var(--body-color);
-            border-width: 2px;
-            display: flex;
-            justify-content: center;
-        }
 
         .table__header .dr-degree-programs-button {
             height: 100%;
-            margin: 13px 5px 10px 10px;
+            margin: 13px 29px 20px;
+            margin-left: 10vw;
             padding: 8px 7px 8px 7px;
             border-radius: 7px;
             float: right;
             background-color: var(--sidebar-color);
             color: var(--text-color);
+            width: 12vw;
         }
 
         .table__header .dr-degree-programs-button:hover {
@@ -222,7 +213,7 @@ $data['role'] = $role;
             font-size: 0.9vw;
         }
 
-        
+
         tbody tr {
             --delay: .1s;
             transition: .5s ease-in-out var(--delay), background-color 0s;
@@ -263,7 +254,6 @@ $data['role'] = $role;
                 min-width: 12.1rem;
             }
         }
-
     </style>
 </head>
 
@@ -271,7 +261,7 @@ $data['role'] = $role;
 
     <div class="dr-degree-programs-home">
         <div class="dr-degree-programs-title">
-            <div class="dr-degree-programs-title1">Degree Name : <?= $degreedata[0]->DegreeShortName ?></div>
+            <div class="dr-degree-programs-title1">Diploma Name : <?= $degreedata[0]->DegreeName ?></div>
             <div class="dr-degree-programs-title1-core">Attendance</div>
         </div>
         <div class="dr-degree-programs-home-1">
@@ -283,10 +273,9 @@ $data['role'] = $role;
                             <i class='bx bx-search icon'></i>
                             <input type="search" placeholder="Search Data...">
                         </div>
-                        <div class="input-group-filter">Filters</div>
                         <button class="dr-degree-programs-button">Search</button>
                     </div>
-                   
+
                 </section>
                 <section class="table__body">
                     <table id="table_p">
@@ -294,20 +283,25 @@ $data['role'] = $role;
                             <tr>
                                 <th> Student Index </th>
                                 <th> Student Attendance </th>
-                              
+
                             </tr>
                         </thead>
-                        <tbody>
-                        <?php foreach ($attendances as $attendance) : ?>
-                            <?php if($attendance->degree_name == $degreedata[0]->DegreeShortName ) :?>
-                    <tr>
-                        <td><?= $attendance->index_no ?></td>
-                        <td><?= $attendance->attendance ?></td>
-                    </tr>
-                 
-                    <?php endif;?>
-                <?php endforeach; ?>
 
+                        <tbody>
+                            <?php if (!empty($attendances)) : ?>
+                                <?php foreach ($attendances as $attendance) : ?>
+
+                                    <tr>
+                                        <td><?= $attendance->index_no ?></td>
+                                        <td><?= $attendance->attendance ?></td>
+                                    </tr>
+
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <tr>
+                                    <td colspan="2">No Attendance Records Found</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </section>

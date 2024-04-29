@@ -72,9 +72,9 @@ $data['role'] = $role;
                                     </tr>
                                     <?php foreach ($semesterSubjects as $subject) : ?>
                                         <tr>
-                                            <td><input style="width: 300px; margin-right: 20px;" value="<?= $subject->SubjectName ?>" type="text" name="SubjectName" class="degreeprofile-SubjectName" placeholder="Subject" id="degreeprofile-SubjectName<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
-                                            <td><input style="width: 110px; margin-right: 20px;" value="<?= $subject->SubjectCode ?>" type="text" name="SubjectCode" class="degreeprofile-SubjectCode" placeholder="Subject Code" id="degreeprofile-SubjectCode<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
-                                            <td><input style="width: 60px;" value="<?= $subject->NoCredits ?>" type="number" name="NoCredits" class="degreeprofile-NoCredits" placeholder="Credits" id="degreeprofile-NoCredits<?= $semesterNumber ?>_<?= $subject->SubjectID ?>" style="border: 1px solid #ccc;" readonly></td>
+                                            <td><input style="width: 300px; margin-right: 20px;" value="<?= $subject->SubjectName ?>" type="text" name="SubjectName" class="degreeprofile-SubjectName" placeholder="Subject" readonly></td>
+                                            <td><input style="width: 110px; margin-right: 20px;" value="<?= $subject->SubjectCode ?>" type="text" name="SubjectCode" class="degreeprofile-SubjectCode" placeholder="Subject Code" readonly></td>
+                                            <td><input style="width: 60px;" value="<?= $subject->NoCredits ?>" type="number" name="NoCredits" class="degreeprofile-NoCredits" placeholder="Credits" readonly></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </table>
@@ -97,7 +97,7 @@ $data['role'] = $role;
                             </tr>
                             <?php foreach ($degreeTimeTable as $event) : ?>
                                 <tr>
-                                    <td width="76%"><input type="text" value="<?= $event->EventName ?>" class="degreeprofile-event" id="degreeprofile-event_<?= $event->EventID ?>" readonly></td>
+                                    <td width="76%"><input type="text" value="<?= $event->EventName ?>" class="degreeprofile-event" readonly></td>
                                     <td width="14%"><select class="degreeprofile-duration" id="degreeprofile-type_<?= $event->EventID ?>">
                                             <option value="" default hidden>Event Type</option>
                                             <option value="Examination" <?= ($event->EventType === 'Examination') ? 'selected' : '' ?> disabled>Examination</option>
@@ -105,8 +105,8 @@ $data['role'] = $role;
                                             <option value="Vacation" <?= ($event->EventType === 'Vacation') ? 'selected' : '' ?> disabled>Vacation</option>
                                             <option value="Other" <?= ($event->EventType === 'Other') ? 'selected' : '' ?> disabled>Other</option>
                                         </select></td>
-                                    <td width="12%"><input type="date" value="<?= $event->StartingDate ?>" class="degreeprofile-duration" id="degreeprofile-start_<?= $event->EventID ?>" readonly></td>
-                                    <td width="12%"><input type="date" value="<?= $event->EndingDate ?>" class="degreeprofile-duration" id="degreeprofile-end_<?= $event->EventID ?>" readonly></td>
+                                    <td width="12%"><input type="date" value="<?= $event->StartingDate ?>" class="degreeprofile-duration" readonly></td>
+                                    <td width="12%"><input type="date" value="<?= $event->EndingDate ?>" class="degreeprofile-duration"  readonly></td>
                                 </tr>
                                 <?php if ($event->EventID > $lastEventID) {
                                     $lastEventID = $event->EventID;

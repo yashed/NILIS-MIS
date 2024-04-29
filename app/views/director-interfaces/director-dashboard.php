@@ -2,7 +2,7 @@
 $role = "director";
 $data['role'] = $role;
 $data['recentResults'] = $RecentResultExam;
-
+$data['examResults'] = $marks;
 ?>
 
 <!DOCTYPE html>
@@ -393,6 +393,15 @@ $data['recentResults'] = $RecentResultExam;
         margin: 10px 0px 10px 20px;
     }
 
+    .graph04-sub-title2 {
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        color: var(--Gray, #4F4F4F);
+        margin: 10px 0px 10px 20px;
+        margin-bottom: 3vw;
+    }
+
     .graph05-title {
         color: #17376E;
         font-family: Poppins;
@@ -482,6 +491,12 @@ $data['recentResults'] = $RecentResultExam;
         align-items: center;
         justify-content: center;
         height: 80%;
+
+    }
+
+    .director-exam-bar{
+        margin-top: 5vw;
+        height: 30vw;
 
     }
 </style>
@@ -621,11 +636,12 @@ $data['recentResults'] = $RecentResultExam;
                 </div>
                 <div class="director-dash-subsection-1-1-1">
                     <div class="director-dash-subsection-1-1-1-4">
-                        <div class="graph04-Exam-title">
-                            Exam Name
-                        </div>
                         <div class="graph04-title">
-                            Student Performance
+                        Student Performance
+                        </div>
+                        <div class="graph04-Exam-title">
+                          
+                            Exam Name
                         </div>
                         <div class="graph04-sub-title">
                             Diploma Name
@@ -638,7 +654,7 @@ $data['recentResults'] = $RecentResultExam;
                     <div class="graph04-title">
                             Student Attendance
                         </div>
-                        <div class="graph04-sub-title">
+                        <div class="graph04-sub-title2">
                         Average Student Attendance by Diploma Program
                         </div>
                         <div class="graph05">
@@ -662,7 +678,7 @@ $data['recentResults'] = $RecentResultExam;
                         <div class="director-dash-sub-title">
                             Recently Published Examination Results
                         </div>
-                        <div class="clerk-exam-bar">
+                        <div class="director-exam-bar">
                     <?php if (!empty($RecentResultExam)) : ?>
                         <?php foreach ($RecentResultExam as $exam) : ?>
                             <?php

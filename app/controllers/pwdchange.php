@@ -10,6 +10,7 @@ class pwdchange extends Controller
             redirect($_SESSION['USER_DATA']->role);
         }
     }
+    
     public function index()
     {
         //prevent loding this page to password changed users
