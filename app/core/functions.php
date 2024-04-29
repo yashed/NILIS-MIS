@@ -32,9 +32,9 @@ function set_value($key)
 
 function redirect($link)
 {
-    header("Location: " . ROOT . "" . $link);
-    show($_POST);
+    header("Location:" . ROOT . "" . $link);
     die();
+
 }
 
 function redirect_blank($link)

@@ -255,7 +255,10 @@ $degree = $degreeDetails[0]->DegreeShortName ?? null;
                         <lable class="login-input-title">Enter your Index number</lable>
                         <input type="text" name="index" class="input-index" placeholder="Index Number"
                             value="<?php echo !empty($indexNo) ? $indexNo : ''; ?>">
-                        <span class="error" hidden>Invalid Index Number</span>
+
+                        <?php if (!empty($errors['indexNo'])): ?>
+                            <span class="error"><?= $errors['indexNo'] ?></span>
+                        <?php endif; ?>
                     </div>
 
                     <div class="login-btn">

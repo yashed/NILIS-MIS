@@ -283,75 +283,89 @@
                         Colombo</div>
                 </div>
                 <div class="admission-header">
-                    <div class="admission-course-name">Diploma in Library and Information Management - DLIM 2021/2022
-                    </div>
-                    <div class="admission-exam">Second Semester Examination - 2022 December</div>
-                    <div class="admission-card">Admission Card</div>
-                    <div class="admission-name-index">
-                        <div class="admission-name">Name of the Candidate: <b>
-                                <?php if (!empty($studentData)): ?>
-                                    <?= $studentData[0]->name ?>
-                                <?php endif; ?>
-                            </b></div>
-                        <div class="admission-index">Index Number: <b>
-                                <?php if (!empty($studentData)): ?>
-                                    <?= $studentData[0]->indexNo;
-                                    ?>
-                                <?php endif; ?>
-                            </b></div>
-                    </div>
-
-                </div>
-                <div class="admission-data-tb">
-                    <table class="admission-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Subject</th>
-                                <th>Signature of the </br>Candidate</th>
-                                <th>Signature of the </br>Invigilator</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (!empty($timeTableData)): ?>
-                                <?php foreach ($timeTableData as $ttdata): ?>
-                                    <?php $json = json_encode($ttdata);
-                                    // show($ttdata); ?>
-                                    <tr>
-
-                                        <td>
-                                            <?= $ttdata[0]->date ?>
-                                            </br>9.00a.m-12.00noon
-                                        </td>
-                                        <td>
-                                            <?= $ttdata[0]->subjectName ?>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-
-
-                                <?php endforeach; ?>
+                    <?php if (!empty($degreeData)): ?>
+                        <div class="admission-course-name"><?= $degreeData[0]->DegreeName ?> -
+                            <?= $degreeData[0]->DegreeShortName ?>     <?= $degreeData[0]->AcademicYear ?>
+                            <?php if (!empty($examDetails)): ?>
+                                <div class="admission-exam"><?= $examDetails[0]->semester ?> Semester Examination -
+                                    <?= $degreeData[0]->AcademicYear ?>
+                                </div>
                             <?php endif ?>
-                        </tbody>
-                    </table>
+                        <?php endif; ?>
+                        <div class="admission-card">Admission Card</div>
+                        <div class="admission-name-index">
+                            <div class="admission-name">Name of the Candidate: <b>
 
-                </div>
-                <div class='admission-detail'>
-                    <div class="admission-details-signature">.........................................
-                    </div>
-                    <div class="admission-details-name">
-                        Mr Janaka Wipularatna
-                    </div>
-                    <div class="admission-details-possision">
-                        Senior Assistant Registrar
-                    </div>
-                    <div class="admission-details-date">
-                        <?= date("Y-m-d") ?>
-                    </div>
+                                    <?php if (!empty($studentData)): ?>
+                                        <?= $studentData[0]->name ?>
+                                    <?php endif; ?>
+                                </b></div>
+                            <div class="admission-index">Index Number: <b>
+                                    <?php if (!empty($studentData)): ?>
+                                        <?= $studentData[0]->indexNo;
+                                        ?>
+                                    <?php endif; ?>
+                                </b></div>
+                        </div>
 
+                    </div>
+                    <div class="admission-data-tb">
+                        <table class="admission-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Subject</th>
+                                    <th>Signature of the </br>Candidate</th>
+                                    <th>Signature of the </br>Invigilator</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if (!empty($timeTableData)): ?>
+                                    <?php foreach ($timeTableData as $ttdata): ?>
+                                        <?php $json = json_encode($ttdata);
+                                        // show($ttdata); ?>
+                                        <tr>
+
+                                            <td>
+                                                <?= $ttdata[0]->date ?>
+                                                </br>
+                                                <?php
+                                                $time = new DateTime($ttdata[0]->time);
+                                                $timeHHMM = $time->format('H:i');
+                                                $newtime = $time->add(new DateInterval('PT2H'));
+                                                $newtimeHHMM = $newtime->format('H:i');
+                                                echo $timeHHMM . ' - ' . $newtimeHHMM;
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?= $ttdata[0]->subjectName ?>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+
+
+                                    <?php endforeach; ?>
+                                <?php endif ?>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class='admission-detail'>
+                        <div class="admission-details-signature">.........................................
+                        </div>
+                        <div class="admission-details-name">
+                            Mr Janaka Wipularatna
+                        </div>
+                        <div class="admission-details-possision">
+                            Senior Assistant Registrar
+                        </div>
+                        <div class="admission-details-date">
+                            <?= date("Y-m-d") ?>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
 
         </page>
     </div>

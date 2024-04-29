@@ -64,11 +64,13 @@ class Admission extends Controller
 
             //insert token to database
             if ($admissionToken->Validate($tokenData)) {
-
                 $admissionToken->insert($tokenData);
+                redirect('admission/card?token=' . $token);
+            } else {
+                $data['errors'] = $admissionToken->errors;
+
             }
 
-            redirect('admission/card?token=' . $token);
 
         }
         $this->view('sar-interfaces/admission-card-login', $data);
@@ -90,10 +92,11 @@ class Admission extends Controller
         //get student data
         $student = new StudentModel();
         $examParticipants = new ExamParticipants();
-        $examTimeTable = new ExamTimeTable;
-        $repeateStudent = new RepeatStudents;
-        $medicalStudent = new MedicalStudents;
-
+        $examTimeTable = new ExamTimeTable();
+        $repeateStudent = new RepeatStudents();
+        $medicalStudent = new MedicalStudents();
+        $degree = new Degree();
+        $exam = new Exam();
 
         //get exam participant data
         $studentExamData = $examParticipants->where(['indexNo' => $indexNo, 'examID' => $examID]);
@@ -101,8 +104,18 @@ class Admission extends Controller
 
         //get exam data
         $examData = $examTimeTable->where(['examID' => $examID]);
-        // show($examData);
 
+        //get degreeid
+        $examDetails = $exam->where(['examID' => $examID]);
+        $data['examDetails'] = $examDetails;
+
+        if (!empty($examDetails)) {
+            $degreeID = $examDetails[0]->degreeID;
+        }
+
+        if (!empty($degreeID)) {
+            $data['degreeData'] = $degree->where(['degreeID' => $degreeID]);
+        }
 
 
         //check the type of the participant
@@ -173,9 +186,6 @@ class Admission extends Controller
                 $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'semester' => $semester, 'subjectCode' => $subjectCode]);
 
             }
-
-
-
 
         }
 

@@ -311,6 +311,19 @@ $data['role'] = $role;
                 <div class="exam-sub-title">
                     Upcoming Examination
                 </div>
+                <div class="display-message">
+                    <?php
+                    if (message()) {
+                        echo '<div class="profile-message">';
+                        if ($_SESSION['message_type'] == 'success') {
+                            echo "<div class='error-message-profile' >" . message('', '', true) . "</div>";
+                        } else {
+                            echo "<div class='error-message-profile' style='color:red;'>" . message('', '', true) . "</div>";
+                        }
+                        echo '</div>';
+                    }
+                    ?>
+                </div>
                 <div class="exam-create-dropdown">
                     <a href="<?= ROOT ?>sar/examination/create/0">
                         <button class="dropbtn">

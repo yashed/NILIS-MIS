@@ -7,16 +7,16 @@
     <title>Navsidebar</title>
     <style>
         .notification-badge {
-        position: absolute;
-        top: 0;
-        right: 0;
-        background-color: red;
-        color: white;
-        border-radius: 50%;
-        padding: 3px 6px;
-        font-size: 12px;
-        font-weight: bold;
-    }
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 3px 6px;
+            font-size: 12px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -59,6 +59,7 @@
                                 <i class="bx bx-book icon"></i>
                                 <span class="text nav-text">Examination</span>
                             </a>
+
                         </li>
                         <li class="nav-link">
                             <a href="<?= ROOT ?>dr/attendance">
@@ -107,31 +108,33 @@
             </div>
         </nav>
 
-    <div class="hero">
-        <nav>
-            <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notifications"><i class="bx bxs-bell icon"><?php if(isset($notification_count_obj_dr) && $notification_count_obj_dr->notification_count_dr > 0): ?>
-                    <span class="notification-badge"><?= $notification_count_obj_dr->notification_count_dr ?></span>
-                <?php endif; ?></i></a></li>
-                <li class="hero-ul-li"><img src="<?= ROOT ?>assets/user_img.jpg" class="user-pic"></li>
-            </ul>
+        <div class="hero">
+            <nav>
+                <ul class="hero-ul">
+                    <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notifications"><i
+                                class="bx bxs-bell icon"><?php if (isset($notification_count_obj_dr) && $notification_count_obj_dr->notification_count_dr > 0): ?>
+                                    <span
+                                        class="notification-badge"><?= $notification_count_obj_dr->notification_count_dr ?></span>
+                                <?php endif; ?></i></a></li>
+                    <li class="hero-ul-li"><img src="<?= ROOT ?>assets/user_img.jpg" class="user-pic"></li>
+                </ul>
 
-            <div class="sub-menu-wrap" id="subMenu">
-                <div class="sub-menu">
-                    <div class="user-info">
-                        <img src="<?= ROOT ?>assets/user_img.jpg"  alt="User Image">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                <div class="sub-menu-wrap" id="subMenu">
+                    <div class="sub-menu">
+                        <div class="user-info">
+                            <img src="<?= ROOT ?>assets/user_img.jpg" alt="User Image">
+                            <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
+                        </div>
+                        <hr>
+                        <a href="<?= ROOT ?>logout" class="sub-menu-link">
+                            <i class="bx bx-log-out icon"></i>
+                            <p>Logout</p>
+                            <span>></span>
+                        </a>
                     </div>
-                    <hr>
-                    <a href="<?= ROOT ?>logout" class="sub-menu-link">
-                        <i class="bx bx-log-out icon"></i>
-                        <p>Logout</p>
-                        <span>></span>
-                    </a>
                 </div>
-            </div>
-        </nav>
-    </div>
+            </nav>
+        </div>
 
     <?php endif ?>
     <?php if ($role == "SAR"): ?>
@@ -220,31 +223,33 @@
         </div>
         </nav>
 
-    <div class="hero">
-        <nav>
-        <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notifications"><i class="bx bxs-bell icon"><?php if(isset($notification_count_obj_sar) && $notification_count_obj_sar->notification_count_sar > 0): ?>
-                    <span class="notification-badge"><?= $notification_count_obj_sar->notification_count_sar ?></span>
-                <?php endif; ?></i></a></li>
-                <li class="hero-ul-li"><img src="<?= ROOT ?>assets/user_img.jpg" class="user-pic"></li>
-            </ul>
+        <div class="hero">
+            <nav>
+                <ul class="hero-ul">
+                    <li class="hero-ul-li"><a href="<?= ROOT ?>dr/notifications"><i
+                                class="bx bxs-bell icon"><?php if (isset($notification_count_obj_sar) && $notification_count_obj_sar->notification_count_sar > 0): ?>
+                                    <span
+                                        class="notification-badge"><?= $notification_count_obj_sar->notification_count_sar ?></span>
+                                <?php endif; ?></i></a></li>
+                    <li class="hero-ul-li"><img src="<?= ROOT ?>assets/user_img.jpg" class="user-pic"></li>
+                </ul>
 
-            <div class="sub-menu-wrap" id="subMenu">
-                <div class="sub-menu">
-                    <div class="user-info">
-                        <img src="<?= ROOT ?>assets/user_img.jpg"  alt="User Image">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                <div class="sub-menu-wrap" id="subMenu">
+                    <div class="sub-menu">
+                        <div class="user-info">
+                            <img src="<?= ROOT ?>assets/user_img.jpg" alt="User Image">
+                            <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
+                        </div>
+                        <hr>
+                        <a href="<?= ROOT ?>logout" class="sub-menu-link">
+                            <i class="bx bx-log-out icon"></i>
+                            <p>Logout</p>
+                            <span>></span>
+                        </a>
                     </div>
-                    <hr>
-                    <a href="<?= ROOT ?>logout" class="sub-menu-link">
-                        <i class="bx bx-log-out icon"></i>
-                        <p>Logout</p>
-                        <span>></span>
-                    </a>
                 </div>
-            </div>
-        </nav>
-    </div>
+            </nav>
+        </div>
 
     <?php endif ?>
     <?php if ($role == "Assistant-SAR"): ?>
@@ -318,31 +323,33 @@
         </div>
         </nav>
 
-    <div class="hero">
-        <nav>
-        <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>assistant-sar/notification"><i class="bx bxs-bell icon"><?php if(isset($notification_count_obj_ASAR) && $notification_count_obj_Asar->notification_count_Asar > 0): ?>
-                    <span class="notification-badge"><?= $notification_count_obj_ASAR->notification_count_Asar ?></span>
-                <?php endif; ?></i></a></li>
-                <li class="hero-ul-li"><img src="<?= ROOT ?>assets/user_img.jpg" class="user-pic"></li>
-            </ul>
+        <div class="hero">
+            <nav>
+                <ul class="hero-ul">
+                    <li class="hero-ul-li"><a href="<?= ROOT ?>assistant-sar/notification"><i
+                                class="bx bxs-bell icon"><?php if (isset($notification_count_obj_ASAR) && $notification_count_obj_Asar->notification_count_Asar > 0): ?>
+                                    <span
+                                        class="notification-badge"><?= $notification_count_obj_ASAR->notification_count_Asar ?></span>
+                                <?php endif; ?></i></a></li>
+                    <li class="hero-ul-li"><img src="<?= ROOT ?>assets/user_img.jpg" class="user-pic"></li>
+                </ul>
 
-            <div class="sub-menu-wrap" id="subMenu">
-                <div class="sub-menu">
-                    <div class="user-info">
-                        <img src="<?= ROOT ?>assets/user_img.jpg">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                <div class="sub-menu-wrap" id="subMenu">
+                    <div class="sub-menu">
+                        <div class="user-info">
+                            <img src="<?= ROOT ?>assets/user_img.jpg">
+                            <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
+                        </div>
+                        <hr>
+                        <a href="<?= ROOT ?>logout" class="sub-menu-link">
+                            <i class="bx bx-log-out icon"></i>
+                            <p>Logout</p>
+                            <span>></span>
+                        </a>
                     </div>
-                    <hr>
-                    <a href="<?= ROOT ?>logout" class="sub-menu-link">
-                        <i class="bx bx-log-out icon"></i>
-                        <p>Logout</p>
-                        <span>></span>
-                    </a>
                 </div>
-            </div>
-        </nav>
-    </div>
+            </nav>
+        </div>
 
     <?php endif ?>
     <?php if ($role == "Admin"): ?>
@@ -416,31 +423,33 @@
         </div>
         </nav>
 
-    <div class="hero">
-        <nav>
-        <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>admin/notification"><i class="bx bxs-bell icon"><?php if(isset($notification_count_obj_admin) && $notification_count_obj_admin->notification_count_admin > 0): ?>
-                    <span class="notification-badge"><?= $notification_count_obj_admin->notification_count_admin ?></span>
-                <?php endif; ?></i></a></li>
-                <li class="hero-ul-li"><img src="<?= ROOT ?>assets/user_img.jpg" class="user-pic"></li>
-            </ul>
+        <div class="hero">
+            <nav>
+                <ul class="hero-ul">
+                    <li class="hero-ul-li"><a href="<?= ROOT ?>admin/notification"><i
+                                class="bx bxs-bell icon"><?php if (isset($notification_count_obj_admin) && $notification_count_obj_admin->notification_count_admin > 0): ?>
+                                    <span
+                                        class="notification-badge"><?= $notification_count_obj_admin->notification_count_admin ?></span>
+                                <?php endif; ?></i></a></li>
+                    <li class="hero-ul-li"><img src="<?= ROOT ?>assets/user_img.jpg" class="user-pic"></li>
+                </ul>
 
-            <div class="sub-menu-wrap" id="subMenu">
-                <div class="sub-menu">
-                    <div class="user-info">
-                        <img src="<?= ROOT ?>assets/user_img.jpg">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                <div class="sub-menu-wrap" id="subMenu">
+                    <div class="sub-menu">
+                        <div class="user-info">
+                            <img src="<?= ROOT ?>assets/user_img.jpg">
+                            <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
+                        </div>
+                        <hr>
+                        <a href="<?= ROOT ?>logout" class="sub-menu-link">
+                            <i class="bx bx-log-out icon"></i>
+                            <p>Logout</p>
+                            <span>></span>
+                        </a>
                     </div>
-                    <hr>
-                    <a href="<?= ROOT ?>logout" class="sub-menu-link">
-                        <i class="bx bx-log-out icon"></i>
-                        <p>Logout</p>
-                        <span>></span>
-                    </a>
                 </div>
-            </div>
-        </nav>
-    </div>
+            </nav>
+        </div>
 
     <?php endif ?>
     <?php if ($role == "director"): ?>
@@ -514,71 +523,73 @@
         </div>
         </nav>
 
-    <div class="hero">
-        <nav>
-        <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>director/notification"><i class="bx bxs-bell icon"><?php if(isset($notification_count_obj_director) && $notification_count_obj_director->notification_count_director > 0): ?>
-                    <span class="notification-badge"><?= $notification_count_obj_director->notification_count_director ?></span>
-                <?php endif; ?></i></a></li>
-                <li class="hero-ul-li"><img src="<?= ROOT ?>assets/user_img.jpg" class="user-pic"></li>
-            </ul>
+        <div class="hero">
+            <nav>
+                <ul class="hero-ul">
+                    <li class="hero-ul-li"><a href="<?= ROOT ?>director/notification"><i
+                                class="bx bxs-bell icon"><?php if (isset($notification_count_obj_director) && $notification_count_obj_director->notification_count_director > 0): ?>
+                                    <span
+                                        class="notification-badge"><?= $notification_count_obj_director->notification_count_director ?></span>
+                                <?php endif; ?></i></a></li>
+                    <li class="hero-ul-li"><img src="<?= ROOT ?>assets/user_img.jpg" class="user-pic"></li>
+                </ul>
 
-            <div class="sub-menu-wrap" id="subMenu">
-                <div class="sub-menu">
-                    <div class="user-info">
-                        <img src="<?= ROOT ?>assets/user_img.jpg">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                <div class="sub-menu-wrap" id="subMenu">
+                    <div class="sub-menu">
+                        <div class="user-info">
+                            <img src="<?= ROOT ?>assets/user_img.jpg">
+                            <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
+                        </div>
+                        <hr>
+                        <a href="<?= ROOT ?>logout" class="sub-menu-link">
+                            <i class="bx bx-log-out icon"></i>
+                            <p>Logout</p>
+                            <span>></span>
+                        </a>
                     </div>
-                    <hr>
-                    <a href="<?= ROOT ?>logout" class="sub-menu-link">
-                        <i class="bx bx-log-out icon"></i>
-                        <p>Logout</p>
-                        <span>></span>
-                    </a>
                 </div>
-            </div>
-        </nav>
-    </div>
+            </nav>
+        </div>
 
     <?php endif ?>
 
     <?php if ($role == "Clerk"): ?>
 
-    <div class="menu-bar">
-        <hr>
-        <div class="menu">
-            <ul class="menu-links">
-                <h6 class="topic3">PROGRAMS</h6>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/degreeprofile">
-                        <i class="bx bx-layer-plus icon"></i>
-                        <span class="text nav-text">Degree Name</span></a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/participants">
-                        <i class="bx bx-group icon"></i>
-                        <span class="text nav-text">Participants</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/examination">
-                        <i class="bx bx-book icon"></i>
-                        <span class="text nav-text">Examination</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/attendance">
-                    
-                        <i class="bx bx-check-square icon"></i>
-                        <span class="text nav-text">Attendance</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/reports">
-                        <i class="bx bx-file icon"></i>
-                        <span class="text nav-text">Reports</span>
-                    </a>
-                </li>
+        <div class="menu-bar">
+            <hr>
+            <div class="menu">
+                <ul class="menu-links">
+                    <h6 class="topic3">PROGRAMS</h6>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>clerk/degreeprofile">
+                            <i class="bx bx-layer-plus icon"></i>
+                            <span class="text nav-text">Degree Name</span></a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>clerk/participants">
+                            <i class="bx bx-group icon"></i>
+                            <span class="text nav-text">Participants</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>clerk/examination">
+                            <i class="bx bx-book icon"></i>
+                            <span class="text nav-text">Examination</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>clerk/attendance">
+
+                            <i class="bx bx-check-square icon"></i>
+                            <span class="text nav-text">Attendance</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="<?= ROOT ?>clerk/reports">
+                            <i class="bx bx-file icon"></i>
+                            <span class="text nav-text">Reports</span>
+                        </a>
+                    </li>
 
 
                     <hr class="horizontal-line"><br>
@@ -614,31 +625,32 @@
         </div>
         </nav>
 
-    <div class="hero">
-        <nav>
-        <ul class="hero-ul">
-                <li class="hero-ul-li"><a href="<?= ROOT ?>clerk/notification"> <i class="bx bxs-bell icon"> <?php if(isset($notification_count_obj) && $notification_count_obj->notification_count > 0): ?>
-                    <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
-                <?php endif; ?></a></i></li>
-              
-                <li class="hero-ul-li"><img src="<?= ROOT ?>assets/user_img.jpg" class="user-pic"></li>
-            </ul>
+        <div class="hero">
+            <nav>
+                <ul class="hero-ul">
+                    <li class="hero-ul-li"><a href="<?= ROOT ?>clerk/notification"> <i class="bx bxs-bell icon">
+                                <?php if (isset($notification_count_obj) && $notification_count_obj->notification_count > 0): ?>
+                                    <span class="notification-badge"><?= $notification_count_obj->notification_count ?></span>
+                                <?php endif; ?></a></i></li>
 
-            <div class="sub-menu-wrap" id="subMenu">
-                <div class="sub-menu">
-                    <div class="user-info">
-                        <img src="<?= ROOT ?>assets/user_img.jpg">
-                        <h3><?=$_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname?></h3>
+                    <li class="hero-ul-li"><img src="<?= ROOT ?>assets/user_img.jpg" class="user-pic"></li>
+                </ul>
+
+                <div class="sub-menu-wrap" id="subMenu">
+                    <div class="sub-menu">
+                        <div class="user-info">
+                            <img src="<?= ROOT ?>assets/user_img.jpg">
+                            <h3><?= $_SESSION['USER_DATA']->fname . " " . $_SESSION['USER_DATA']->lname ?></h3>
+                        </div>
+                        <hr>
+                        <a href="<?= ROOT ?>logout" class="sub-menu-link">
+                            <i class="bx bx-log-out icon"></i>
+                            <p>Logout</p>
+                            <span>></span>
+                        </a>
                     </div>
-                    <hr>
-                    <a href="<?= ROOT ?>logout" class="sub-menu-link">
-                        <i class="bx bx-log-out icon"></i>
-                        <p>Logout</p>
-                        <span>></span>
-                    </a>
                 </div>
-            </div>
-        </nav>
-    </div>
+            </nav>
+        </div>
 
     <?php endif ?>

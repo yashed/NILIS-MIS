@@ -22,7 +22,7 @@ $data['examResults'] = $marks;
     <div class="assist-sar-home">
         <div class="assist-sar-title">Assistant SAR Dashboard</div>
         <div class="assist-sar-subsection-1">
-            <p>Online Degree Programs</p>
+            <p>Online Diploma Programs</p>
             <?php
             include "../../components/degree-card/degree-card.php";
             include "../../components/degree-card/degree-card.php";

@@ -8,7 +8,7 @@
 
 <style>
     .bar-chart-students {
-        width: 100%; 
+        width: 100%;
         /* height: 500px; */
     }
 </style>
@@ -17,10 +17,11 @@
     <div class="bar-chart-students">
         <canvas id="student-participants"></canvas>
         <?php
-            $dlim = 0;
-            $dsl = 0;
-            $dpl = 0;
-            $hdlim = 0;
+        $dlim = 0;
+        $dsl = 0;
+        $dpl = 0;
+        $hdlim = 0;
+        if (!empty($students)) {
             foreach ($students as $student) {
                 if (isset($student->indexNo)) {
                     if (isset($student->status)) {
@@ -41,13 +42,14 @@
                     }
                 }
             }
+        }
         ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        (function() {
+        (function () {
             const ctx2 = document.getElementById('student-participants');
             const DATA_COUNT = 4;
             const NUMBER_CFG = {
@@ -64,7 +66,7 @@
                     data: [<?= $dlim ?>, <?= $dsl ?>, <?= $dpl ?>, <?= $hdlim ?>],
                     borderColor: 'rgb(154, 214, 255)',
                     backgroundColor: 'rgb(154, 214, 255)',
-                }, ]
+                },]
             };
             new Chart(ctx2, {
                 type: 'bar',

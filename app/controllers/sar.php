@@ -24,7 +24,7 @@ class SAR extends Controller
         $degreetimetable = new DegreeTimeTable();
         $finalMarks = new FinalMarks();
         $db = new Database();
-        $finalMarks = new FinalMarks();
+        $repeateStudents = new RepeatStudents();
 
         /*uncoment this because we cant go back to pages when remove the session data*/
         // //remove degree data from session
@@ -66,6 +66,7 @@ class SAR extends Controller
 
         $degree = new Degree();
 
+        $data['repeateStudents'] = $repeateStudents->findAll();
         $data['marks'] = $finalMarks->query("SELECT finalMarks FROM final_marks");
         $data['degrees'] = $degree->findAll();
 
@@ -547,7 +548,7 @@ class SAR extends Controller
                         $timeTableRow['subjectName'] = $_POST['subName'][$x];
                         $timeTableRow['date'] = $_POST['examDate'][$x];
                         $timeTableRow['time'] = $_POST['examTime'][$x];
-                        $timeTableRow['degreeID'] = '01';
+                        $timeTableRow['degreeID'] = $degreeID;
                         $timeTableRow['semester'] = 01;
                         $timeTableRow['examID'] = $examID;
 
@@ -863,7 +864,7 @@ class SAR extends Controller
                         $timeTableRow['subjectName'] = $_POST['subName'][$x];
                         $timeTableRow['date'] = $_POST['examDate'][$x];
                         $timeTableRow['time'] = $_POST['examTime'][$x];
-                        $timeTableRow['degreeID'] = '01';
+                        $timeTableRow['degreeID'] = $degreeID;
                         $timeTableRow['semester'] = $selectedSemester;
                         $timeTableRow['examID'] = $examID;
 
@@ -891,11 +892,12 @@ class SAR extends Controller
                         }
 
                         //need to add actucal data to add data to tables
-                        $createExam = true;
+                        $createExam = false;
                         foreach ($timeTableData as $timeTableRow) {
                             //validate the exam timetable data
                             if ($examtimetable->examTimetableValidate($timeTableRow)) {
                                 $examtimetable->insert($timeTableRow);
+                                $createExam = true;
                             } else {
                                 $createExam = false;
                                 $data['errors'] = $examtimetable->errors;
@@ -908,13 +910,13 @@ class SAR extends Controller
                             ['status' => 'ongoing'],
                             ['examID' => $examID]
                         );
-
-
-                        if ($createExam) {
-                            message("Exam Was Created Successfully", "success", true);
-                            redirect('sar/examination');
-                        }
-
+                    }
+                    if ($createExam) {
+                        message("Exam Was Created Successfully", "success", true);
+                        sleep(2);
+                        redirect('sar/examination');
+                    } else {
+                        message("Exam Creation Failed", "error", true);
                     }
                 }
             }
@@ -1200,13 +1202,10 @@ class SAR extends Controller
                     if ($_POST['delete-exam'] == 'delete-forever') {
 
                         //delete examination
-                        $exam->delete(['examID' => $examID]);
-
-                        //as co supervisor remark change omly delete the exam in exam table
-
-                        // $examParticipants->delete(['examID' => $examID]);
-                        // $examAttendance->delete(['examID' => $examID]);
-                        // $examtimetable->delete(['examID' => $examID]);
+                        $exam->updateRows(
+                            ['status' => '0'],
+                            ['examID' => $examID]
+                        );
 
                         message("Examination Deleted Successfully", "success", true);
                         $msg = "Delete Examination Data Successfully , ExamId =  " . $examID;
@@ -2026,6 +2025,32 @@ class SAR extends Controller
             $this->view('sar-interfaces/sar-reports', $data);
         }
 
+    }
+
+    public function attendance()
+    {
+        $degree = new Degree();
+        $data['notification_count_obj'] = getNotificationCount();
+        if (!empty($_SESSION['degreeData'])) {
+            $degreeId = $_SESSION['degreeData'][0]->DegreeID;
+            $data['degreedata'] = $_SESSION['degreeData'];
+            $attendances = [];
+
+            $att = new studentAttendance();
+            $allAttendances = $att->findAll();
+            if (!empty($allAttendances)) {
+                foreach ($allAttendances as $attendance) {
+                    if (is_object($attendance) && $attendance->degree_id == $degreeId) {
+                        $attendances[] = $attendance;
+                    }
+                }
+            }
+            $data['attendances'] = $attendances;
+        } else {
+            $data['attendances'] = [];
+            // If DegreeID is not set in the session, set $data['attendances'] as an empty array
+        }
+        $this->view('sar-interfaces/sar-student-attendance', $data);
     }
 
 
