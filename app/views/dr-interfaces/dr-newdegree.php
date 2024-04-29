@@ -48,10 +48,10 @@ $data['role'] = $role;
                         <?php
                         if (message()) {
                             echo '<div class="profile-message">';
-                            if ($_SESSION['message_type'] == 'success') {
-                                echo "<div class='error-message-profile' style='color: green; font-size: 14px; margin-bottom: 5px;'>" . message('', '', true) . "</div>";
-                            } else {
-                                echo "<div class='error-message-profile' style='color:red; font-size: 14px; margin-bottom: 5px;'>" . message('', '', true) . "</div>";
+                            if ($_SESSION['message_type'] == 'successes') {
+                                echo "<div class='error-message-profile' style='color: green; font-size: 14px; margin-bottom: 5px; text-align: center;'>" . message('', '', true) . "</div>";
+                            } else if ($_SESSION['message_type'] == 'error') {
+                                echo "<div class='error-message-profile' style='color:red; font-size: 14px; margin-bottom: 5px; text-align: center;'>" . message('', '', true) . "</div>";
                             }
                             echo '</div>';
                         }
@@ -116,6 +116,18 @@ $data['role'] = $role;
                     </table>
                 </div>
                 <div class="dr-newdegree-box_4_2">
+                    <?php
+                    if (message()) {
+                        echo '<div class="profile-message">';
+                        // if ($_SESSION['message_type'] == 'success') {
+                        //     echo "<div class='error-message-profile' style='color: green; font-size: 12px; margin-bottom: 5px;'>" . message('', '', true) . "</div>";
+                        // } else 
+                        if ($_SESSION['message_type'] == 'errors') {
+                            echo "<div class='error-message-profile' style='color:red; font-size: 12px; margin-bottom: 5px; text-align: center;'>" . message('', '', true) . "</div>";
+                        }
+                        echo '</div>';
+                    }
+                    ?>
                     <table class="dr-newdegree-create_time_table_raw">
                         <tr>
                             <th colspan="3"><button type="button" class="dr-newdegree-add-new-event"

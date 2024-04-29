@@ -36,7 +36,7 @@ class pwdchange extends Controller
                 //authentication
                 Auth::authenticate($userData);
 
-                message("Password was successfully updated", 'success', true);
+                // message("Password was successfully updated", 'success', true);
 
                 if ($_SESSION['USER_DATA']->role == 'admin') {
                     header('Location: admin');

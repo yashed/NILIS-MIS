@@ -40,8 +40,8 @@ $data['recentResults'] = $RecentResultExam;
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Students</div>
                         <div class="dr-dash-card-subcard-data-value">
+                            <?php $count = 0; ?>
                             <?php if (!empty($students)): ?>
-                                <?php $count = 0; ?>
                                 <?php foreach ($students as $student): ?>
                                     <?php if ($student->status == "continue"): ?>
                                         <?php $count++; ?>
@@ -60,10 +60,10 @@ $data['recentResults'] = $RecentResultExam;
                         <img src="<?= ROOT ?>assets/dashboard-icons/degree.png" alt="exam.icon" />
                     </div>
                     <div class="dr-dash-card-subcard-data">
-                        <div class="dr-dash-card-subcard-data-title">Ongoing</br>Degrees</div>
+                        <div class="dr-dash-card-subcard-data-title">Ongoing</br>Diplomas</div>
                         <div class="dr-dash-card-subcard-data-value">
+                            <?php $count = 0; ?>
                             <?php if (!empty($degrees)): ?>
-                                <?php $count = 0; ?>
                                 <?php foreach ($degrees as $degree): ?>
                                     <?php if ($degree->Status == "ongoing"): ?>
                                         <?php $count++; ?>
@@ -83,8 +83,8 @@ $data['recentResults'] = $RecentResultExam;
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Ongoing</br>Examination</div>
                         <div class="dr-dash-card-subcard-data-value">
+                            <?php $count = 0; ?>
                             <?php if (!empty($exams)): ?>
-                                <?php $count = 0; ?>
                                 <?php foreach ($exams as $exam): ?>
                                     <?php if ($exam->status == "ongoing"): ?>
                                         <?php $count++; ?>
@@ -104,8 +104,8 @@ $data['recentResults'] = $RecentResultExam;
                     <div class="dr-dash-card-subcard-data">
                         <div class="dr-dash-card-subcard-data-title">Results Published </br>Exminations</div>
                         <div class="dr-dash-card-subcard-data-value">
+                            <?php $count = 0; ?>
                             <?php if (!empty($exams)): ?>
-                                <?php $count = 0; ?>
                                 <?php foreach ($exams as $exam): ?>
                                     <?php if ($exam->status == "completed"): ?>
                                         <?php $count++; ?>
@@ -160,7 +160,7 @@ $data['recentResults'] = $RecentResultExam;
                 <div class="dr-dash-subsection-1-1-1">
                     <div class="dr-dash-subsection-1-1-1-4">
                         <div class="dr-dash-graph04-title">
-                            Ongoing Degree Programs
+                            Ongoing Diploma Programs
                         </div>
                         <div class="dr-dash-degree-cards">
                             <?php if (!empty($degrees)): ?>

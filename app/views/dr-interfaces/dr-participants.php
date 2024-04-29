@@ -214,7 +214,28 @@ $data['role'] = $role;
             visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
         });
     }
+    // function searchTable() {
+    //     let foundStudents = false; // Flag to check if any students are found
+    //     table_rows.forEach((row, i) => {
+    //         let table_data = row.textContent.toLowerCase(),
+    //             search_data = search.value.toLowerCase();
 
+    //         row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
+    //         row.style.setProperty('--delay', i / 25 + 's');
+
+    //         if (!row.classList.contains('hide')) {
+    //             foundStudents = true; // Set flag to true if a student is found
+    //         }
+    //     });
+
+    //     document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
+    //         visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
+    //     });
+
+    //     if (!foundStudents) {
+    //         document.querySelector('tbody').innerHTML = '<p style="margin: 20px 57%; width: 100%;">No students found for the diploma program.</p>';
+    //     }
+    // }
     // 2. Sorting | Ordering data of HTML table
 
     table_headings.forEach((head, i) => {

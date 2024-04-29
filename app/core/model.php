@@ -152,7 +152,7 @@ class Model extends Database
 
         $query = trim($query, ",");
         $query .= " where id = :id ";
-
+        // show($query);
         $data['id'] = $id;
         $this->query($query, $data);
     }
@@ -471,6 +471,7 @@ class Model extends Database
         foreach ($keys as $key) {
             $query .= $key . "=:" . $key . " && ";
         }
+        show($query);
 
         $query = trim($query, "&& ");
 

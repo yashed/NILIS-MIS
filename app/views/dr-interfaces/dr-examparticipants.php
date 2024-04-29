@@ -705,17 +705,7 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
 
                     <div class="participants-form-header">
                         <div class="temp2-sub-title2">Participants</div>
-                        <div class="participant-form-btns">
-                            <button class="admission-button1" id="openModal" onClick='showAttendancePopup()'>Exam
-                                Attendance Submit</button>
-                            <form method="post">
 
-                                <!-- <button class="admission-button0">Download Attendance Sheet</button> -->
-                                <button class="admission-button2" type="submit" name="admission" value="clicked"
-                                    onClick="showMailPopup(event)">Send Admission Card</button>
-
-                            </form>
-                        </div>
                     </div>
                     <div class="display-message">
                         <?php
@@ -737,13 +727,25 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                                     <th> Name </th>
                                     <th> Attempt </th>
                                     <th> Index Number </th>
-                                    <th> Registration Number </th>
+
                                     <th> Student Type </th>
                                     <th> Admission Card </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($currentRecords as $students): ?>
+                                <?php foreach ($currentRecords as $students):
+                                    if (!empty($_SESSION['examDetails'])) {
+
+                                        $examID = $_SESSION['examDetails'][0]->examID;
+                                    }
+
+                                    $degreeID = 4;
+                                    if (!empty($_SESSION['degreeDetails'])) {
+
+                                        $degreeID = $_SESSION['degreeDetails'][0]->degreeID;
+                                    }
+
+                                    ?>
                                     <?php foreach ($students as $student): ?>
                                         <?php $json = json_encode($student); ?>
                                         <tr>
@@ -755,11 +757,12 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                                             <td>
                                                 <?= $student->indexNo ?>
                                             </td>
-                                            <td> DLIM/01/01</td>
+
                                             <td>
                                                 <?= $student->studentType ?>
                                             </td>
-                                            <td> <a href="<? ROOT ?>admission/login?degreeID=10&examID=43&indexNo=<?= $student->indexNo ?>" target="_blank">tap
+                                            <td> <a href="http://localhost/NILIS-MIS/public/admission/login?degreeID=<?= $degreeID ?>&examID=<?= $examID ?>&indexNo=<?= $student->indexNo ?>"
+                                                    target="_blank">tap
                                                     to see Admission card </a></td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -807,59 +810,11 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
 </body>
 
 <script>
-    // document.addEventListener("DOMContentLoaded", function () {
-    //     var modal = document.getElementById('myModal');
-    //     var btn = document.getElementById('openModal');
-    //     var span = document.getElementById('closeModal');
-    //     var body = document.body;
 
-    //     btn.onclick = function () {
-    //         modal.style.display = "block";
-    //         body.classList.add('modal-open');
-    //     }
-
-    //     span.onclick = function () {
-    //         modal.style.display = "none";
-    //         body.classList.remove('modal-open');
-    //     }
-
-    //     window.onclick = function (event) {
-    //         if (event.target == modal) {
-    //             modal.style.display = "none";
-    //             body.classList.remove('modal-open');
-    //         }
-    //     }
-    // });
-</script>
-<script>
     $(window).on("load", function () {
         $(".loader-wraper").fadeOut("slow");
     });
-
-    function showMailPopup() {
-
-        console.log('run');
-        document.querySelector("#mail-popup").classList.add("active");
-        document.querySelector("#body").classList.add("active");
-        console.log('run again');
-    }
-
-    function showAttendancePopup() {
-        console.log("Click attendance");
-        document.querySelector("#exam-attendance").classList.add("active");
-        document.querySelector("#body").classList.add("active");
-    }
-
-
-    //handel pop active according to clicked button
-    var popupStatus = <?php echo $attendacePopupStatus ? 'true' : 'false'; ?>;
-    if (popupStatus) {
-
-        // Adding 'active' class to the popup and body elements
-        document.querySelector("#exam-attendance").classList.add("active");
-        document.querySelector("#body").classList.add("active");
-        $(".loader-wraper").fadeOut("slow");
-    }
+    $(".loader-wraper").fadeOut("slow");
 </script>
 
 

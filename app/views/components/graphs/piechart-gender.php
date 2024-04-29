@@ -8,14 +8,16 @@
 <div class="pie-chart-gender">
     <canvas id="gender-pie-chart"></canvas>
     <?php
-        $male = 0;
-        $female = 0;
-        foreach ($students as $student) {
-            if (isset($student->gender)) {
-                if ($student->gender == "M") {
-                    $male++;
-                } else if ($student->gender == "F") {
-                    $female++;
+        if (!empty($students)) {
+            $male = 0;
+            $female = 0;
+            foreach ($students as $student) {
+                if (isset($student->gender)) {
+                    if ($student->gender == "M") {
+                        $male++;
+                    } else if ($student->gender == "F") {
+                        $female++;
+                    }
                 }
             }
         }

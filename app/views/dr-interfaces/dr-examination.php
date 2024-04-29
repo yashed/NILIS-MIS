@@ -13,7 +13,7 @@ $data['role'] = $role;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>exam Dashboard</title>
+    <title>Examination</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -37,7 +37,7 @@ $data['role'] = $role;
     }
 
     .exam-home {
-        height: 100vh;
+
         left: 250px;
         position: relative;
         width: calc(100% - 250px);
@@ -189,6 +189,7 @@ $data['role'] = $role;
         align-items: center;
         flex-direction: column;
         width: 70%;
+        gap: 10px;
     }
 
     .exam-card3 {
@@ -277,6 +278,28 @@ $data['role'] = $role;
         justify-content: space-between;
         align-items: center;
     }
+
+    .exam-msg {
+        font-size: 1.5vw;
+        font-weight: 600;
+        color: #17376E;
+        text-align: center;
+        padding: 60px;
+
+
+    }
+
+    .btn-marksheet-name {
+        font-size: 1vw;
+        font-weight: 500px;
+        height: 80px;
+    }
+
+    .exam-footer {
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
 </style>
 
 <body>
@@ -287,10 +310,13 @@ $data['role'] = $role;
                 <div class="exam-sub-title">
                     Upcoming Examination
                 </div>
+                <div class="exam-create-dropdown">
+                </div>
             </div>
             <div class="exam-degree-bar">
                 <div class="exam-card1">
-                    <?php $this->view('components/exam-card/exam-card', $data) ?>
+                    <!--Need to change this login upcomming examinations -->
+                    <div class="exam-msg">No upcomming Examination</div>
 
                 </div>
             </div>
@@ -303,19 +329,50 @@ $data['role'] = $role;
                 </div>
                 <div class="exam-card-content">
                     <div class="exam-card2">
-                        <?php $this->view('components/exam-card/exam-card', $data) ?>
+                        <?php $ongoingExam = false ?>
+                        <?php if (!empty($examDetails)): ?>
+                            <?php foreach ($examDetails as $exam): ?>
+                                <?php if ($exam->status == 'ongoing'): ?>
+                                    <?php
+                                    $data['exam'] = $exam;
+                                    $ongoingExam = true;
+                                    ?>
+                                    <?php $this->view('components/exam-card/exam-card', $data) ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                        <?php if (!$ongoingExam): ?>
+                            <div class='exam-msg'>No Ongoing examination</div>
+                        <?php endif; ?>
                     </div>
                 </div>
+
             </div>
             <div class="exam-subsection-22">
                 <div class="exam-sub-title">
-                    Complited Examination
+                    Completed Examination
                 </div>
                 <div class="exam-card-content">
                     <div class="exam-card3">
-                        <?php $this->view('components/exam-card/exam-card', $data) ?>
+                        <?php $completeExam = false; ?>
+                        <?php if (!empty($examDetails)): ?>
+                            <?php foreach ($examDetails as $exam): ?>
+                                <?php if ($exam->status == 'completed'): ?>
+                                    <?php
+                                    $data['exam'] = $exam;
+                                    $completeExam = true;
+                                    ?>
+                                    <?php $this->view('components/exam-card/exam-card', $data) ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                        <?php if (!$completeExam): ?>
+                            <div class='exam-msg'>No Completed examination</div>
+                        <?php endif; ?>
                     </div>
                 </div>
+
+
             </div>
         </div>
         <div class="exam-footer">

@@ -178,7 +178,7 @@ $data['role'] = $role;
                             </div>
                         </div>
                         <div id="dr-degreeprograms-Form3">
-                            <p id="dr-degreeprograms-form2_p">Define Scheme of Assignment</p>
+                            <p id="dr-degreeprograms-form2_p">Define Scheme of Assessment</p>
                             <div class="dr-degreeprograms-step-row">
                                 <div id="dr-degreeprograms-progress3"></div>
                             </div>
@@ -214,6 +214,7 @@ $data['role'] = $role;
         lb.style.display = "none";
         document.getElementById('dr-degreeprograms-overlay').style.display = 'none';
         document.body.classList.remove('no-scroll');
+        window.location.reload();
     }
     var Form1 = document.getElementById("dr-degreeprograms-Form1");
     var Form2 = document.getElementById("dr-degreeprograms-Form2");
@@ -303,7 +304,7 @@ $data['role'] = $role;
             var gradesData = [];
             var gradeTable = document.getElementById(`dr-degreeprograms-Grade_table`);
             var keys = Object.keys(grades);
-            for (var k = 1; k <= 2; k++) { // loop through all rows except the header
+            for (var k = 1; k <= 12; k++) { // loop through all rows except the header
                 var maxmark = document.querySelector(`#dr-degreeprograms-maxvalue${k}`).value.trim();
                 var minmark = document.querySelector(`#dr-degreeprograms-minvalue${k}`).value.trim();
                 var gpa = document.querySelector(`#dr-degreeprograms-gpa${k}`).value.trim();
@@ -360,8 +361,8 @@ $data['role'] = $role;
                     alert("Subject Code can only have letters and numbers.\n" + "Check Semester " + j + " Subject " + k);
                     return false;
                 }
-                if (!/^[0-9]+$/.test(credits)) {
-                    alert("Credits can only have numbers.\nCheck Semester " + j + " Subject " + k);
+                if (!/^[0-9]+$/.test(credits) || (credits < 0 || credits > 6)) {
+                    alert("Credits can only have numbers.\n(Range : 0-5)\nCheck Semester " + j + " Subject " + k);
                     return false;
                 }
             }
@@ -371,7 +372,7 @@ $data['role'] = $role;
 
     function validateForm3(event) {
         var gradeTable = document.getElementById(`dr-degreeprograms-Grade_table`);
-        for (var k = 1; k <= 2; k++) { // loop through all rows except the header
+        for (var k = 1; k <= 12; k++) { // loop through all rows except the header
             var maxmark = document.querySelector(`#dr-degreeprograms-maxvalue${k}`).value.trim();
             var minmark = document.querySelector(`#dr-degreeprograms-minvalue${k}`).value.trim();
             var gpa = document.querySelector(`#dr-degreeprograms-gpa${k}`).value.trim();
@@ -499,7 +500,34 @@ $data['role'] = $role;
         "D": "1.00",
         "E": "0.00"
     };
-
+    var MaxVal = {
+        "A+": "100",
+        "A": "89",
+        "A-": "79",
+        "B+": "74",
+        "B": "69",
+        "B-": "64",
+        "C+": "59",
+        "C": "54",
+        "C-": "49",
+        "D+": "39",
+        "D": "34",
+        "E": "29"
+    };
+    var MinVal = {
+        "A+": "90",
+        "A": "80",
+        "A-": "75",
+        "B+": "70",
+        "B": "65",
+        "B-": "60",
+        "C+": "55",
+        "C": "50",
+        "C-": "45",
+        "D+": "40",
+        "D": "30",
+        "E": "00"
+    };
     function generateGrades() {
         var gradecontainer = document.getElementById("dr-degreeprograms-Grade_table");
 
@@ -517,11 +545,13 @@ $data['role'] = $role;
         for (var i = 1; i <= 12; i++) {
             var gradeRow = document.createElement("tr");
             var currentGrade = grades[getGradeKey(i)];
+            var getMaxValue = MaxVal[getGradeKey(i)];
+            var getMinValue = MinVal[getGradeKey(i)];
             gradeRow.innerHTML = `
             <td><center><input style="width: 60px;" type="text" name="grade" class="dr-degreeprograms-grade" value="${getGradeKey(i)}" id="dr-degreeprograms-grade${i}" readonly></center></td>
-            <td><center><input style="width: 50px;" type="text" name="maxvalue" class="dr-degreeprograms-maxvalue" placeholder="100" id="dr-degreeprograms-maxvalue${i}"></center></td>
-            <td><center><input style="width: 50px;" type="text" name="minvalue" class="dr-degreeprograms-minvalue" placeholder="90" id="dr-degreeprograms-minvalue${i}"></center></td>
-            <td><center><input style="width: 60px;" type="text" name="gpa" class="dr-degreeprograms-gpa" placeholder="${currentGrade}" id="dr-degreeprograms-gpa${i}"></center></td>
+            <td><center><input style="width: 50px;" type="text" name="maxvalue" class="dr-degreeprograms-maxvalue" value="${getMaxValue}" id="dr-degreeprograms-maxvalue${i}"></center></td>
+            <td><center><input style="width: 50px;" type="text" name="minvalue" class="dr-degreeprograms-minvalue" value="${getMinValue}" id="dr-degreeprograms-minvalue${i}"></center></td>
+            <td><center><input style="width: 60px;" type="text" name="gpa" class="dr-degreeprograms-gpa" value="${currentGrade}" id="dr-degreeprograms-gpa${i}"></center></td>
         `;
             gradecontainer.appendChild(gradeRow);
         }

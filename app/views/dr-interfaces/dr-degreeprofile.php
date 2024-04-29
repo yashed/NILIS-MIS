@@ -155,7 +155,7 @@ $data['role'] = $role;
             </div>
             <form class="degreeprofile-box_4" id="degreeprofile-form1" method="post"
                 action="<?= ROOT ?>dr/degreeprofile/update">
-                <p>Define Degree Time Table</p>
+                <p>Define Diploma Time Table</p>
                 <div class="degreeprofile-box_4_1">
                     <table class="degreeprofile-Time_table" id="degreeprofile-Time_table">
                         <?php $lastEventID = 0; ?>
@@ -201,6 +201,17 @@ $data['role'] = $role;
                 </div>
                 <div class="degreeprofile-box_4_2">
                     <?php if ($degrees[0]->Status == "ongoing"): ?>
+                        <?php
+                        if (message()) {
+                            echo '<div class="profile-message">';
+                            if ($_SESSION['message_type'] == 'success-degreeprofile') {
+                                echo "<div class='error-message-profile' style='color: green; font-size: 14px; margin-bottom: 5px; text-align: center;'>" . message('', '', true) . "</div>";
+                            } else if ($_SESSION['message_type'] == 'error-degreeprofile') {
+                                echo "<div class='error-message-profile' style='color:red; font-size: 14px; margin-bottom: 5px; text-align: center;'>" . message('', '', true) . "</div>";
+                            }
+                            echo '</div>';
+                        }
+                        ?>
                         <table class="degreeprofile-create_time_table_raw">
                             <tr>
                                 <th colspan="3"><button class="degreeprofile-add-new-event" type="button"
@@ -312,6 +323,34 @@ $data['role'] = $role;
         }); 
     }
     let eventID = 0;
+    // $(document).ready(function() {
+    //     $(".bx-minus").on("click", function(e) {
+    //         e.preventDefault();
+    //         var clickedElement = $(this);
+    //         eventID = clickedElement.attr('data-event-id');
+    //         console.log(eventID);
+    //         document.getElementById('degreeprofile-eventDelete').style.display = "block";
+    //         document.getElementById('degreeprofile-overlay').style.display = 'block';
+    //         document.body.classList.add('no-scroll');
+    //         $('.degreeprofile-close-button-3').click(function(e) {
+    //             document.getElementById('degreeprofile-eventDelete').style.display = "none";
+    //             document.getElementById('degreeprofile-overlay').style.display = 'none';
+    //             document.body.classList.remove('no-scroll');
+    //             e.stopPropagation();
+    //         });
+    //     });
+    // });
+    function updateEventIDs() {
+        // Iterate over each row in the event table and update the IDs and all associated attributes
+        $(".degreeprofile-event").each(function(index) {
+            let newId = index + 1;
+            $(this).attr('id', 'degreeprofile-event_' + newId);
+            $(this).closest('tr').find('.degreeprofile-duration').each(function() {
+                $(this).attr('id', $(this).attr('id').replace(/\d+$/, newId));
+            });
+        });
+    }
+
     $(document).ready(function() {
         $(".bx-minus").on("click", function(e) {
             e.preventDefault();
@@ -326,6 +365,15 @@ $data['role'] = $role;
                 document.getElementById('degreeprofile-overlay').style.display = 'none';
                 document.body.classList.remove('no-scroll');
                 e.stopPropagation();
+            });
+            $('.degreeprofile-close-button-5').on("click", function(e) {
+                e.preventDefault();
+                document.getElementById('degreeprofile-eventDelete').style.display = "none";
+                document.getElementById('degreeprofile-overlay').style.display = 'none';
+                document.body.classList.remove('no-scroll');
+                // Remove the row and update IDs
+                $('#degreeprofile-event_' + eventID).closest('tr').remove();
+                updateEventIDs();
             });
         });
     });
@@ -417,7 +465,7 @@ $data['role'] = $role;
         add.addEventListener("click", () => {
             let template = `
                 <tr>
-                    <td><input type="text" value="" class="degreeprofile-event" id="degreeprofile-event_${i}" placeholder="New Event"></td>
+                    <td width="76%"><input type="text" value="" class="degreeprofile-event" id="degreeprofile-event_${i}" placeholder="New Event"></td>
                     <td width="12%" padding-right="3px"><select  class="degreeprofile-duration" id="degreeprofile-type_${i}">
                                 <option value="" default hidden>Event Type</option>
                                 <option value="Study Leave" <?= (set_value('type_${i}') === 'Study Leave') ? 'selected' : '' ?>>Study Leave</option>
@@ -470,23 +518,46 @@ $data['role'] = $role;
                 $('#degreeprofile-event_' + k + ', #degreeprofile-type_' + k + ', #degreeprofile-start_' + k + ', #degreeprofile-end_' + k).on("change", handleChange(k));
             }
         });
+        // function validateEvents() {
+        //     for (var k = 1; k < i; k++) {
+        //         var eventValue = $('#degreeprofile-event_' + k).val();
+        //         var typeValue = $('#degreeprofile-type_' + k).val();
+        //         var startValue = $('#degreeprofile-start_' + k).val();
+        //         var endValue = $('#degreeprofile-end_' + k).val();
+        //         // Check if events and dates are filled for each evnt
+        //         if (eventValue === "" || typeValue === "" || startValue === "" || endValue === "") {
+        //             return;
+        //         }
+        //         if (!/^[a-zA-Z0-9\s]+$/.test(eventValue)) {
+        //             alert("Event Name for row " + k + " must be a sentence and number.");
+        //             return;
+        //         }
+        //     }
+        //     save.removeAttribute("disabled");
+        //     add.removeAttribute("disabled");
+        // }
         function validateEvents() {
+            let valid = true;
             for (var k = 1; k < i; k++) {
                 var eventValue = $('#degreeprofile-event_' + k).val();
                 var typeValue = $('#degreeprofile-type_' + k).val();
                 var startValue = $('#degreeprofile-start_' + k).val();
                 var endValue = $('#degreeprofile-end_' + k).val();
-                // Check if events and dates are filled for each evnt
+                // Check if events and dates are filled for each event
                 if (eventValue === "" || typeValue === "" || startValue === "" || endValue === "") {
-                    return;
+                    valid = false;
+                    break;
                 }
                 if (!/^[a-zA-Z0-9\s]+$/.test(eventValue)) {
-                    alert("Event Name for row " + k + " must be a sentence and number.");
-                    return;
+                    alert("Event Name for row " + k + " must be alphanumeric and spaces only.");
+                    valid = false;
+                    break;
                 }
             }
-            save.removeAttribute("disabled");
-            add.removeAttribute("disabled");
+            if (valid) {
+                save.removeAttribute("disabled");
+                add.removeAttribute("disabled");
+            }
         }
         for (k=1; k < i; k++) {
             if ($deletedEvents.includes(k.toString()) < i - 1) {
@@ -530,6 +601,10 @@ $data['role'] = $role;
                 timetableDataInput.setAttribute('name', `timetableData`);
                 timetableDataInput.setAttribute('value', JSON.stringify(timetableData));
                 document.getElementById('degreeprofile-form1').appendChild(timetableDataInput);
+            }
+            // Reset $deletedEvents only if the highest deleted event ID is less than the total events
+            if ($deletedEvents.length && Math.max(...$deletedEvents.map(Number)) < (i - 1)) {
+                $deletedEvents = [];
             }
             console.log(timetableDataInput);
             document.getElementById("degreeprofile-form1").submit();

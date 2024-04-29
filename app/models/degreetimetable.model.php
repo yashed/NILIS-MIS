@@ -20,26 +20,26 @@ class DegreeTimeTable extends Model
         //event id
         if (empty($data['EventID'])) {
             $this->errors['EventID'] = "An id is required";
-        } else if (!preg_match("/^[a-zA-Z0-9 \-\_\&]+$/", trim($data['EventID']))) {
-            $this->errors['EventID'] = "EventID can only have letters, numbers, spaces, and [-_&]";
+        } else if (!preg_match("/^[0-9]+$/", trim($data['EventID']))) {
+            $this->errors['EventID'] = "EventID can only have numbers,";
         }
         //Degree id
-        if (empty($data['DegreeID'])) {
-            $this->errors['DegreeID'] = 'A degreeID is required';
-        } else if (!preg_match("/^[0-9]+$/", trim($data['DegreeID']))) {
-            $this->errors['DegreeID'] = "DegreeID can only have numbers]";
-        }
+        // if (empty($data['DegreeID'])) {
+        //     $this->errors['DegreeID'] = 'A degreeID is required';
+        // } else if (!preg_match("/^[0-9]+$/", trim($data['DegreeID']))) {
+        //     $this->errors['DegreeID'] = "DegreeID can only have numbers]";
+        // }
         //Event Name
         if (empty($data['EventName'])) {
             $this->errors['EventName'] = 'A Event Name is required';
-        } else if (!preg_match("/^[a-zA-Z]+$/", trim($data["EventName"]))) {
-            $this->errors['EventName'] = "Event Name can only have letters.";
+        } else if (!preg_match("/^[a-zA-Z0-9\s \-\_]+$/", trim($data["EventName"]))) {
+            $this->errors['EventName'] = "Event Name can only have letters, numbers, spaces.";
         }
         //Event Type
         if (empty($data['EventType'])) {
             $this->errors['EventType'] = 'A Event Type is required';
-        } else if (!preg_match("/^[a-zA-Z]+$/", trim($data["EventType"]))) {
-            $this->errors['EventType'] = "Event Type can only have letters.";
+        } else if (!preg_match("/^[a-zA-Z\s]+$/", trim($data["EventType"]))) {
+            $this->errors['EventType'] = "Event Type can only have letters and spaces.";
         }
         //Starting Date
         if (empty($data['StartingDate'])) {
