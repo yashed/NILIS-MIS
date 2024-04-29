@@ -378,7 +378,7 @@ function insertMarks($file, $examID, $degreeID, $subCode)
 
 
     //iterate through data in file
-    for ($i = 4; $i < count($lines) - 1; $i++) {
+    for ($i = 4; $i < count($lines); $i++) {
 
         //get line
         $values = str_getcsv($lines[$i]);
