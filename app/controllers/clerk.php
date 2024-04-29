@@ -22,11 +22,14 @@ class Clerk extends Controller
         $recentExamId = $finalMarks->lastID('examID');
 
         //join exam and degree tables
-        $dataTables = ['degree'];
-        $columns = ['*'];
-        $examConditions = ['exam.degreeID = degree.DegreeID', 'exam.examID = ' . $recentExamId];
-        $data['RecentResultExam'] = $exam->join($dataTables, $columns, $examConditions);
-
+        if (!empty($recentExamId)) {
+            $dataTables = ['degree'];
+            $columns = ['*'];
+            $examConditions = ['exam.degreeID = degree.DegreeID', 'exam.examID = ' . $recentExamId];
+            $data['RecentResultExam'] = $exam->join($dataTables, $columns, $examConditions);
+        } else {
+            $data['RecentResultExam'] = null;
+        }
         // show($data['RecentResultExam']);
         // $_SESSION['getid'] = null;
         // unset($_SESSION['getid']);

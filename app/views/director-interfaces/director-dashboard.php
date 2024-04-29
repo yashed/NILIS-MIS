@@ -3,6 +3,7 @@ $role = "director";
 $data['role'] = $role;
 $data['recentResults'] = $RecentResultExam;
 $data['examResults'] = $marks;
+$data['repeateStudent'] = $repeateStudents;
 ?>
 
 <!DOCTYPE html>
@@ -494,7 +495,7 @@ $data['examResults'] = $marks;
 
     }
 
-    .director-exam-bar{
+    .director-exam-bar {
         margin-top: 5vw;
         height: 30vw;
 
@@ -502,10 +503,10 @@ $data['examResults'] = $marks;
 </style>
 
 <body>
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
-<div class="director-dash-home">
+    <!-- <?php $this->view('components/navside-bar/header', $data) ?>
+    <?php $this->view('components/navside-bar/sidebar', $data) ?>
+    <?php $this->view('components/navside-bar/footer', $data) ?> -->
+    <div class="director-dash-home">
         <div class="director-dash-title">Dashboard</div>
         <div class="director-dash-card-subsection-0">
 
@@ -601,10 +602,10 @@ $data['examResults'] = $marks;
 
                     <div class="director-dash-subsection-1-1-1-1">
                         <div class="graph01-title">
-                        Course Participants
+                            Course Participants
                         </div>
                         <div class="graph01-sub-title">
-                        Statistics
+                            Statistics
                         </div>
 
                         <div class="graph01">
@@ -637,10 +638,10 @@ $data['examResults'] = $marks;
                 <div class="director-dash-subsection-1-1-1">
                     <div class="director-dash-subsection-1-1-1-4">
                         <div class="graph04-title">
-                        Student Performance
+                            Student Performance
                         </div>
                         <div class="graph04-Exam-title">
-                          
+
                             Exam Name
                         </div>
                         <div class="graph04-sub-title">
@@ -651,11 +652,11 @@ $data['examResults'] = $marks;
                         </div>
                     </div>
                     <div class="director-dash-subsection-1-1-1-5">
-                    <div class="graph04-title">
+                        <div class="graph04-title">
                             Student Attendance
                         </div>
                         <div class="graph04-sub-title2">
-                        Average Student Attendance by Diploma Program
+                            Average Student Attendance by Diploma Program
                         </div>
                         <div class="graph05">
                             <?php $this->view('components/graphs/bargraph-student-attendance', $data) ?>
@@ -679,21 +680,22 @@ $data['examResults'] = $marks;
                             Recently Published Examination Results
                         </div>
                         <div class="director-exam-bar">
-                    <?php if (!empty($RecentResultExam)) : ?>
-                        <?php foreach ($RecentResultExam as $exam) : ?>
-                            <?php
+                            <?php if (!empty($RecentResultExam)): ?>
+                                <?php foreach ($RecentResultExam as $exam): ?>
+                                    <?php
 
-                            $data['exam'] = $exam;
-                            $this->view('components/exam-card/exam-card', $data);
+                                    $data['exam'] = $exam;
+                                    $this->view('components/exam-card/exam-card', $data);
 
-                            ?>
-                        <?php endforeach; ?>
-                    <?php else : ?>
+                                    ?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
 
-                        <div class="result-msg">
-                            No Results Published
+                                <div class="result-msg">
+                                    No Results Published
+                                </div>
+                                < <?php endif; ?>
                         </div>
-                        < <?php endif; ?> </div>
                     </div>
                 </div>
             </div>

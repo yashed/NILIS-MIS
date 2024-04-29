@@ -358,7 +358,7 @@
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="<?= ROOT ?>clerk/notifications">
+                    <a href="<?= ROOT ?>clerk/notification">
                         <i class="bx bx-bell icon"></i>
                         <span class="text nav-text">Notification</span>
                     </a>

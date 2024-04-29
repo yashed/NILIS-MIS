@@ -19,22 +19,32 @@ class DIRECTOR extends Controller
         $exam = new Exam();
         $degreetimetable = new DegreeTimeTable();
         $attendance = new studentAttendance();
+
+        $repeateStudents = new RepeatStudents();
         $data['attendances'] = $attendance->findAll();
+
+        // show($data['attendances']);
       
         $finalMarks = new FinalMarks();
 
         $recentExamId = $finalMarks->lastID('examID');
 
-        $dataTables = ['degree'];
-        $columns = ['*'];
-        $examConditions = ['exam.degreeID = degree.DegreeID', 'exam.examID = ' . $recentExamId];
-        $data['RecentResultExam'] = $exam->join($dataTables, $columns, $examConditions);
+        if (!empty($recentExamId)) {
+            $dataTables = ['degree'];
+            $columns = ['*'];
+            $examConditions = ['exam.degreeID = degree.DegreeID', 'exam.examID = ' . $recentExamId];
+            $data['RecentResultExam'] = $exam->join($dataTables, $columns, $examConditions);
+        } else {
+            $data['RecentResultExam'] = null;
+        }
+
         $data['notification_count_obj_director'] = getNotificationCountDirector();
 
 
         $data['degrees'] = $degree->findAll();
         $data['students'] = $student->findAll();
         $data['exams'] = $exam->findAll();
+        $data['repeateStudents'] = $repeateStudents->findAll();
         $data['degreetimetables'] = $degreetimetable->findAll();
         $data['marks'] = $finalMarks->query("SELECT finalMarks FROM final_marks");
         // show($data['marks']);
