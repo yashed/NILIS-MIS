@@ -3,6 +3,7 @@ $role = "DR";
 $data['role'] = $role;
 $data['recentResults'] = $RecentResultExam;
 $data['recentResults'] = $RecentResultExam;
+$data['repeateStudent'] = $repeateStudents;
 ?>
 
 <?php $this->view('components/navside-bar/header', $data) ?>
@@ -207,8 +208,8 @@ $data['recentResults'] = $RecentResultExam;
                             <?php if (!empty($RecentResultExam)): ?>
                                 <?php foreach ($RecentResultExam as $exam): ?>
                                     <?php
-                                        $data['exam'] = $exam;
-                                        $this->view('components/exam-card/exam-card', $data);
+                                    $data['exam'] = $exam;
+                                    $this->view('components/exam-card/exam-card', $data);
                                     ?>
                                 <?php endforeach; ?>
                             <?php else: ?>

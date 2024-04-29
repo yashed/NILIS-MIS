@@ -113,6 +113,7 @@ $data['role'] = $role;
         background-color: var(--text-color);
         padding: 10px 10px 30px 35px;
         border-radius: 6px;
+        min-height: 40vh;
         margin: 7px 4px 7px 4px;
     }
 

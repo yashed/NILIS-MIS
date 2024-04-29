@@ -15,6 +15,7 @@ class DR extends Controller
         $degree = new Degree();
         $student = new StudentModel();
         $exam = new Exam();
+        $repeateStudents = new RepeatStudents();
         $finalMarks = new FinalMarks();
         $degreetimetable = new DegreeTimeTable();
         $recentExamId = $finalMarks->lastID('examID');
@@ -35,7 +36,8 @@ class DR extends Controller
 
         $data['degrees'] = $degree->findAll();
         $data['students'] = $student->findAll();
-        $data['exam'] = $exam->findAll();
+        $data['exams'] = $exam->findAll();
+        $data['repeateStudents'] = $repeateStudents->findAll();
         $data['degreetimetables'] = $degreetimetable->findAll();
         $data['notification_count_obj_dr'] = getNotificationCountDR();
         $this->view('dr-interfaces/dr-dashboard', $data);
@@ -193,7 +195,7 @@ class DR extends Controller
                         if (!empty($timetableData)) {
                             foreach ($timetableData as $timetableDataItem) {
                                 // Construct the data array for insertion
-                                show($timetableDataItem);
+                                // show($timetableDataItem);
                                 $dataSet1 = [
                                     'EventName' => $timetableDataItem['eventName'],
                                     'EventType' => $timetableDataItem['eventType'],
@@ -212,7 +214,7 @@ class DR extends Controller
                                         message($error, 'error-degreeprofile');
                                     }
                                     $dam = 1;
-                                } 
+                                }
                             }
                             if ($dam == 0) {
                                 foreach ($timetableData as $timetableDataItem) {
@@ -311,9 +313,9 @@ class DR extends Controller
             $degree_id = $_SESSION['DegreeID'];
         }
         // echo $degree_id;
-        $degree_info = (object)$degree->findByID($degree_id);
+        $degree_info = (object) $degree->findByID($degree_id);
         $data['degrees'] = $degree->find($degree_id);
-        $degreeShortName =  $degree_info->DegreeShortName;
+        $degreeShortName = $degree_info->DegreeShortName;
         $currentYear = $degree_info->AcademicYear;
         $currentYear = $currentYear % 100;
         if ($action == 'add') {
@@ -375,7 +377,7 @@ class DR extends Controller
                         $targetPath = $uploadDirectory . basename($fileName);
                         $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
                         if (strtolower($fileExtension) !== 'csv') {
-                            message('Invalid file type. Please upload a CSV file.','error');
+                            message('Invalid file type. Please upload a CSV file.', 'error');
                             redirect("dr/newdegree");
                         }
                         if (move_uploaded_file($fileTmpName, $targetPath)) {
@@ -383,7 +385,7 @@ class DR extends Controller
                             if ($csvFile !== false) {
                                 $headerRow = fgetcsv($csvFile);
                                 if ($headerRow !== $expectedColumns) {
-                                    message('Invalid CSV file. Header row does not match the expected columns.','error');
+                                    message('Invalid CSV file. Header row does not match the expected columns.', 'error');
                                     redirect("dr/newdegree");
                                     fclose($csvFile);
                                     exit();
@@ -395,7 +397,7 @@ class DR extends Controller
                                     if (!validateRowData($rowData)) {
                                         $invalidRows[] = $rowData;
                                         continue;
-                                    } 
+                                    }
                                     $validRows[] = $rowData;
                                 }
                                 if (!empty($invalidRows)) {
@@ -405,7 +407,7 @@ class DR extends Controller
                                         // Join each row's data with commas or any other delimiter as per your preference
                                         $invalidRowsString .= implode(', ', $invalidRow) . "\n";
                                     }
-                                
+
                                     // Handle invalid rows, e.g., log them or send back to the user
                                     message("Some rows have invalid data:\n" . $invalidRowsString, 'error');
                                     redirect("dr/newdegree");
@@ -432,29 +434,29 @@ class DR extends Controller
                                             ];
                                             $student->insert($data1);
                                         } else {
-                                            message('Error: Failed to generate index and registration numbers for students.','error');
+                                            message('Error: Failed to generate index and registration numbers for students.', 'error');
                                             redirect("dr/newdegree");
                                         }
                                     }
-                                    message('All rows in CSV file imported successfully.','successes');
+                                    message('All rows in CSV file imported successfully.', 'successes');
                                     fclose($csvFile);
                                     sleep(3);
                                     redirect("dr/newdegree");
                                 }
                             } else {
-                                message('Failed to open CSV file.','error');
+                                message('Failed to open CSV file.', 'error');
                                 redirect("dr/newdegree");
                             }
                         } else {
-                            message('Failed to upload file.','error');
+                            message('Failed to upload file.', 'error');
                             redirect("dr/newdegree");
                         }
                     } else {
-                        message('No file uploaded.','error');
+                        message('No file uploaded.', 'error');
                         redirect("dr/newdegree");
                     }
                 } else {
-                    message('Submittted file is not valided.','error');
+                    message('Submittted file is not valided.', 'error');
                     redirect("dr/newdegree");
                 }
             }
@@ -515,7 +517,7 @@ class DR extends Controller
                             // message('Student data updated successfully.', 'success-userprofile');
                             $studentModel->update($studentId, $updatedData);
                             redirect("dr/userprofile");
-                        } 
+                        }
                         // else {
                         //     // If there are validation errors, handle them (e.g., provide feedback to the user)
                         //     foreach ($studentModel->errors as $error) {
@@ -569,11 +571,11 @@ class DR extends Controller
                                 $studentModel->insert($data);
                                 sleep(4);
                                 $data['error'] = 'Student has been successfully transferred to the new degree program.';
-                                message('Student has been successfully transferred to the new degree program.','success-userprofile');
+                                message('Student has been successfully transferred to the new degree program.', 'success-userprofile');
                                 redirect("dr/participants");
                             } else {
                                 $data['error'] = 'Failed to generate index and registration numbers.';
-                                message('Error: Failed to generate index and registration numbers.','error-userprofile');
+                                message('Error: Failed to generate index and registration numbers.', 'error-userprofile');
                                 redirect("dr/userprofile");
                             }
                         } else {
@@ -583,7 +585,7 @@ class DR extends Controller
                         }
                     } else {
                         $data['error'] = 'The student has already been studying for three months,So cannot change their diploma program.';
-                        message('The student has already been studying for three months,So cannot change their diploma program.','error-userprofile');
+                        message('The student has already been studying for three months,So cannot change their diploma program.', 'error-userprofile');
                         redirect("dr/userprofile");
                     }
                 }
@@ -757,7 +759,7 @@ class DR extends Controller
         } else {
             $data['attendances'] = [];
         }
-        $this->view('dr-interfaces/dr-attendance',$data);
+        $this->view('dr-interfaces/dr-attendance', $data);
     }
     public function examination($method = null, $id = null)
     {
@@ -850,6 +852,7 @@ class DR extends Controller
             if (!empty($_SESSION['examDetails'])) {
                 $examID = $_SESSION['examDetails'][0]->examID;
                 $semester = $_SESSION['examDetails'][0]->semester;
+                $degreeID = $_SESSION['examDetails'][0]->degreeID;
             }
 
             //get subjects in the exam
@@ -899,6 +902,8 @@ class DR extends Controller
 
 
             if (!empty($_GET['examID']) && !empty($_GET['degreeID'])) {
+                $degreeID = $_GET['degreeID'];
+                $_SESSION['DegreeID'] = $degreeID;
                 redirect('dr/examination/participants');
             }
 

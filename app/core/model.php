@@ -15,7 +15,7 @@ class Model extends Database
         if (is_object($data)) {
             $data = (array) $data;
         }
-        // show($data);
+
         // Check if $data is empty
         if (empty($data)) {
             return false;
@@ -30,18 +30,16 @@ class Model extends Database
                 }
             }
         }
-
         // Get array keys from data
         $keys = array_keys($data);
 
         //define query to add user data
         $query = "insert into " . $this->table;
-
         //add column names and values to the query (impolad function devide data by given character in array)
         $query .= "(" . implode(",", $keys) . ") values (:" . implode(",:", $keys) . ")";
+        //call query function to execute the query
         // show($query);
         // show($data);
-        //call query function to execute the query
         $this->query($query, $data);
 
         return true;
@@ -89,7 +87,7 @@ class Model extends Database
 
         // Since LIMIT values are now directly in the query, there's no need to pass them as parameters
         $result = $this->query($query, [], 'object');
-        // show($result);
+
         // Check if result is valid and return
         if ($result !== false && count($result) > 0) {
             return $result;
@@ -127,10 +125,10 @@ class Model extends Database
 
     public function setid($id)
     {
-
         $query = 'set @id =' . $id . ';' . 'UPDATE ' . $this->table . ' SET id = (@id := @id + 1);';
         $this->query($query);
     }
+
     public function update($id, $data)
     {
 
@@ -182,7 +180,7 @@ class Model extends Database
         }
 
         $query = trim($query, "&& ");
-        // show($query);
+
         $res = $this->query($query, $data);
 
         if (is_array($res)) {
@@ -259,7 +257,6 @@ class Model extends Database
         }
 
         // Execute the query
-        // show($query);
         return $this->query($query);
     }
 
@@ -337,8 +334,6 @@ class Model extends Database
         $query = trim($query, '&& ');
         //define query to add user data
         $res = $this->query($query, $data);
-        // show($query);
-        // show($data);
 
         if (is_array($res)) {
             return $res;
@@ -394,9 +389,7 @@ class Model extends Database
             $conditionsString = rtrim($conditionsString, " AND ");
             $query .= $conditionsString;
         }
-
         $query .= " GROUP BY " . $column;
-
         // Execute the query
         $res = $this->query($query, $conditions);
 
@@ -417,7 +410,6 @@ class Model extends Database
         foreach ($keys as $key) {
             $query .= $key . "=:" . $key . " && ";
         }
-
         // Trim last AND and space if there exist
         $query = trim($query, '&& ');
 

@@ -373,6 +373,7 @@
                         Colombo</div>
                 </div>
                 <div class="admission-header">
+
                     <?php if (!empty($degreeDetails)): ?>
                         <div class="admission-course-name">Final Examination Results Report -
                             <?= $degreeDetails[0]->DegreeName ?>
@@ -393,7 +394,7 @@
                                 <thead>
                                     <tr class='table-row'>
                                         <th>Reg No</th>
-                                        <th>IndexN0</th>
+                                        <th>IndexNo</th>
                                         <?php if (!empty($subjects)): ?>
                                             <?php foreach ($subjects as $subject): ?>
                                                 <th><?= $subject->SubjectCode ?> - <?= $subject->NoCredits ?></th>
