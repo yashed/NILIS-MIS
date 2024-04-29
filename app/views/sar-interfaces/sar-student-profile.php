@@ -134,7 +134,7 @@ $data['role'] = $role;
                                 <th>Subject</th>
                                 <th>Result</th>
                             </tr>
-                            <?php foreach ($studentResults[1] as $results): ?>
+                            <?php foreach ($studentResults[2] as $results): ?>
                                 <tr>
                                     <td><?= $results->subjectCode ?></td>
                                     <td><?= $results->grade ?></td>

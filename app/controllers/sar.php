@@ -369,18 +369,19 @@ class SAR extends Controller
             //Get join data from medical students and degree tables
             $tables = ['degree'];
             $columns = ['*'];
-            $conditions1 = ['medical_students.degreeID = degree.degreeID', 'medical_students.status=1', 'medical_students.semester= ' . $selectedSemester];
-            $whereConditions1 = ['medical_students.degreeShortName =' . "'" . $degreeShortName[0] . "'", 'medical_students.written = 0'];
+            $conditions1 = ['medical_students.degreeID = degree.degreeID', 'medical_students.status=1',];
+            $whereConditions1 = ['medical_students.degreeShortName =' . "'" . $degreeShortName[0] . "'", 'medical_students.written = 0', 'medical_students.semester= ' . $selectedSemester];
             $joinStudnetData1 = $medicalStudents->joinWhere($tables, $columns, $conditions1, $whereConditions1);
 
             // show($degreeShortName);
             // show($joinStudnetData1);
 
             //Get join data from repeat students and degree tables 
-            $conditions2 = ['repeat_students.degreeID = degree.degreeID', 'repeat_students.paymentStatus=1', 'repeat_students.semester= ' . $selectedSemester];
-            $whereConditions2 = ['repeat_students.degreeShortName=' . "'" . $degreeShortName[0] . "'", 'repeat_students.written = 0', 'repeat_students.attempt < 5'];
+            $conditions2 = ['repeat_students.degreeID = degree.degreeID', 'repeat_students.paymentStatus=1'];
+            $whereConditions2 = ['repeat_students.degreeShortName=' . "'" . $degreeShortName[0] . "'", 'repeat_students.written = 0', 'repeat_students.attempt < 5', 'repeat_students.semester= ' . $selectedSemester];
             $joinStudnetData2 = $repeatStudents->joinWhere($tables, $columns, $conditions2, $whereConditions2);
 
+            show($joinStudnetData2);
             if (!empty($joinStudnetData1)) {
                 foreach ($joinStudnetData1 as $medicalStudent) {
                     if (in_array($medicalStudent->DegreeShortName, $degreeShortName)) {
@@ -869,7 +870,6 @@ class SAR extends Controller
                         $timeTableRow['examID'] = $examID;
 
                         $timeTableData[] = $timeTableRow;
-
                     }
 
                     if (empty($data['errors'])) {

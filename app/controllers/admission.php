@@ -143,18 +143,16 @@ class Admission extends Controller
             // $subjects = $repeateStudent->where(['indexNo' => $indexNo, 'semester' => $semester, 'attempt' => $attempt[0]->attempt]);
             $subjects = getRepeatedSubjects($indexNo, $semester);
 
-
             //get time table data
             $examTimeTableData = [];
             //get subject data from timetable for each subject
             foreach ($subjects as $subject) {
-
                 $subjectCode = $subject->subjectCode;
                 $examTimeTableData[] = $examTimeTable->where(['examID' => $examID, 'semester' => $semester, 'subjectCode' => $subjectCode]);
 
             }
 
-            // show($examTimeTableData);
+
 
         } else if (($studentExamData[0]->studentType == 'medical')) {
 

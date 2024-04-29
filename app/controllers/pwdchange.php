@@ -10,6 +10,7 @@ class pwdchange extends Controller
             redirect($_SESSION['USER_DATA']->role);
         }
     }
+    
     public function index()
     {
         //prevent loding this page to password changed users
@@ -35,7 +36,7 @@ class pwdchange extends Controller
                 //authentication
                 Auth::authenticate($userData);
 
-                message("Password was successfully updated", 'success', true);
+                // message("Password was successfully updated", 'success', true);
 
                 if ($_SESSION['USER_DATA']->role == 'admin') {
                     header('Location: admin');

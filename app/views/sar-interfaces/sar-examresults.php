@@ -87,7 +87,6 @@ $data['role'] = $role;
         font-size: 22px;
         font-style: normal;
         font-weight: 600;
-        font-size: 1.2vw;
 
     }
 
@@ -98,7 +97,8 @@ $data['role'] = $role;
         font-size: 22px;
         font-style: normal;
         font-weight: 600;
-        font-size: 1.2vw;
+
+
     }
 
     .temp2-subsection-2 {
@@ -315,7 +315,7 @@ $data['role'] = $role;
 
     .result-message {
         text-align: center;
-        font-size: 2vw;
+        font-size: 25px;
         font-weight: 500px;
         color: #17376E;
         display: flex;
@@ -347,7 +347,6 @@ $data['role'] = $role;
         display: flex;
         justify-content: space-between;
         flex-direction: row;
-
     }
 
     .btn-marksheet {
@@ -593,10 +592,10 @@ $data['role'] = $role;
                                 </tbody>
                             </table>
                         <?php else: ?>
-                            <div class="result-message">Results not uploaded yet.</div>
+                            <div class="result-message">Results Not Uploaded Yet.</div>
                         <?php endif; ?>
                     <?php else: ?>
-                        <div class="result-message">Please select a subject</div>
+                        <div class="result-message">Please Select a Subject</div>
                     <?php endif; ?>
 
 

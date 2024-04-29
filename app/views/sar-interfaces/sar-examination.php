@@ -165,7 +165,7 @@ $data['role'] = $role;
         flex-direction: row;
         justify-content: center;
         margin-bottom: 20px;
-        gap: 20px;
+        gap: 80px;
         flex-wrap: wrap;
     }
 

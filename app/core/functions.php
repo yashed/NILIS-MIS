@@ -378,7 +378,7 @@ function insertMarks($file, $examID, $degreeID, $subCode)
 
 
     //iterate through data in file
-    for ($i = 4; $i < count($lines) - 1; $i++) {
+    for ($i = 4; $i < count($lines); $i++) {
 
         //get line
         $values = str_getcsv($lines[$i]);
@@ -389,7 +389,6 @@ function insertMarks($file, $examID, $degreeID, $subCode)
         $data['examiner2Marks'] = $values[3];
         $data['assessmentMarks'] = $values[4];
         $data['examiner3Marks'] = !empty($values[5]) ? $values[5] : -1;
-        // show($data);
 
         //insert or update data into table
         if (!empty($mark->markValidate($data))) {
@@ -623,23 +622,23 @@ function validateRowData($rowData)
         return false; // Country cannot be empty
     }
     // Validate NIC-No
-    // if (!preg_match('/^\d{12}$|^\d{9}[VX]$/', $rowData[3])) {
-    //     return false; // NIC No must match the specific pattern (e.g., 123456789V)
-    // }
+    if (!preg_match('/^\d{12}$|^\d{9}[VX]$/', $rowData[3])) {
+        return false; // NIC No must match the specific pattern (e.g., 123456789V)
+    }
     // Validate Date-Of-Birth
-    // $dob = DateTime::createFromFormat('Y-m-d', $rowData[4]);
-    // $now = new DateTime();
-    // if ($dob === false) {
-    //     return false; // Date must be a valid date
-    // }
+    $dob = DateTime::createFromFormat('Y-m-d', $rowData[4]);
+    $now = new DateTime();
+    if ($dob === false) {
+        return false; // Date must be a valid date
+    }
     // Validate whatsappNo
     if (!preg_match('/^\+?[\d\s]{9,15}$/', $rowData[5])) {
-        return false; // Whatsapp number    must be in a valid phone number format
+        return false; // Whatsapp number must be in a valid phone number format
     }
     // Validate Address
-    // if (empty($rowData[6])) {
-    //     return false; // Address cannot be empty
-    // }
+    if (empty($rowData[6]) && !preg_match("/^[A-Za-z0-9\s/,-]+(?:[A-Za-z0-9\s/,-]+)*$/", $rowData[6])) {
+        return false; // Address cannot be empty
+    }
     // Validate Phone-No
     if (!preg_match('/^\+?[\d\s]{9,15}$/', $rowData[7])) {
         return false; // Phone number must be in a valid phone number format

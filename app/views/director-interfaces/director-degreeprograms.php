@@ -62,6 +62,7 @@ $data['role'] = $role;
         padding: 10px 10px 30px 35px;
         border-radius: 6px;
         margin: 7px 4px 7px 4px;
+        min-height: 40vh;
     }
 
     .dr-sub-title {
@@ -110,9 +111,9 @@ $data['role'] = $role;
 
                 <div class="dr-sub-title">Ongoing Degree Programs</div>
                 <div class="dr-degree-bar">
-                    <?php if ($degrees) : ?>
+                    <?php if ($degrees): ?>
                         <?php $count = 0; ?>
-                        <?php foreach ($degrees as $degree) : ?>
+                        <?php foreach ($degrees as $degree): ?>
                             <div class="dr-card1">
                                 <a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
                                     <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
@@ -120,7 +121,7 @@ $data['role'] = $role;
                             </div>
                             <?php $count++; ?>
                         <?php endforeach; ?>
-                    <?php else : ?>
+                    <?php else: ?>
                         <p>No data found for the diploma program.</p>
                     <?php endif; ?>
                 </div>
@@ -128,9 +129,9 @@ $data['role'] = $role;
             <div class="dr-subsection-1">
                 <div class="dr-sub-title">Completed Degree Programs</div>
                 <div class="dr-degree-bar">
-                    <?php if ($degrees) : ?>
+                    <?php if ($degrees): ?>
                         <?php $count = 0; ?>
-                        <?php foreach ($degrees as $degree) : ?>
+                        <?php foreach ($degrees as $degree): ?>
                             <div class="dr-card1">
                                 <a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
                                     <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
@@ -138,7 +139,7 @@ $data['role'] = $role;
                             </div>
                             <?php $count++; ?>
                         <?php endforeach; ?>
-                    <?php else : ?>
+                    <?php else: ?>
                         <p>No data found under the completed diploma program.</p>
                     <?php endif; ?>
                 </div>

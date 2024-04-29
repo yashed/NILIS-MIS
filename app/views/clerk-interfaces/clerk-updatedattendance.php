@@ -64,6 +64,7 @@ $data['role'] = $role;
             border-radius: 10px;
             margin: 7px 4px 2px 4px;
             padding: 10px 32px 10px 32px;
+            min-height: 80vh;
         }
 
         .sidebar.close~.dr-degree-programs-home {
@@ -83,6 +84,7 @@ $data['role'] = $role;
             border-radius: 6px;
             overflow: hidden;
             margin: 10px 8px 10px 8px;
+            min-height: 80vh;
         }
 
         .table__header p {

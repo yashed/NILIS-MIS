@@ -641,6 +641,7 @@ $data['repeateStudent'] = $repeateStudents;
                         <div class="sar-dash-card-subcard-data">
                             <div class="sar-dash-card-subcard-data-title">Ongoing</br>Examination</div>
                             <div class="sar-dash-card-subcard-data-value">
+
                                 <?php if (!empty($exams)): ?>
                                     <?php $count = 0; ?>
                                     <?php foreach ($exams as $exam): ?>

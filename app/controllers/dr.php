@@ -5,7 +5,7 @@ class DR extends Controller
     function __construct()
     {
         if (!Auth::is_dr()) {
-            message('You are not authorized to view this page');
+            // message('You are not authorized to view this page');
             redirect('_403_');
         }
     }
@@ -15,6 +15,7 @@ class DR extends Controller
         $degree = new Degree();
         $student = new StudentModel();
         $exam = new Exam();
+        $repeateStudents = new RepeatStudents();
         $finalMarks = new FinalMarks();
         $degreetimetable = new DegreeTimeTable();
         $recentExamId = $finalMarks->lastID('examID');
@@ -35,7 +36,8 @@ class DR extends Controller
 
         $data['degrees'] = $degree->findAll();
         $data['students'] = $student->findAll();
-        $data['exam'] = $exam->findAll();
+        $data['exams'] = $exam->findAll();
+        $data['repeateStudents'] = $repeateStudents->findAll();
         $data['degreetimetables'] = $degreetimetable->findAll();
         $data['notification_count_obj_dr'] = getNotificationCountDR();
         $this->view('dr-interfaces/dr-dashboard', $data);
@@ -45,6 +47,7 @@ class DR extends Controller
     {
         $notification = new NotificationModel();
         $data['notifications'] = $notification->findAll();
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
 
         $username = $_SESSION['USER_DATA']->username;
         $data['usernames'] = $username;
@@ -65,6 +68,7 @@ class DR extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
 
         if ($action == 'add') {
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -144,6 +148,8 @@ class DR extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
+        $degree = new Degree();
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
         if (isset($_GET['id'])) {
             $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
             $_SESSION['DegreeID'] = $degreeID;
@@ -151,10 +157,12 @@ class DR extends Controller
         }
         $degreeID = $_SESSION['DegreeID'];
         $_SESSION['DegreeID'] = $degreeID;
+        if (!empty($degreeID)) {
+            $_SESSION['degreeData'] = $degree->where(['DegreeID' => $degreeID]);
+        }
         // echo $degreeID;
         // Check if degree ID is provided
         if ($degreeID !== null) {
-            $degree = new Degree();
             $subject = new Subjects();
             $degreeTimeTable = new DegreeTimeTable();
             $student = new StudentModel();
@@ -179,29 +187,64 @@ class DR extends Controller
             $data['students'] = $student->find($degreeID);
             if ($action == "update") {
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-                    show($_POST);
+                    // show($_POST);
                     if (isset($_POST['timetableData'])) {
                         $timetableData = json_decode($_POST['timetableData'], true);
+                        $dam = 0;
                         // Iterate over each subject's data and insert it into the database
-                        foreach ($timetableData as $timetableDataItem) {
-                            // Construct the data array for insertion
-                            show($timetableDataItem);
-                            $dataSet1 = [
-                                'EventName' => $timetableDataItem['eventName'],
-                                'EventType' => $timetableDataItem['eventType'],
-                                'StartingDate' => $timetableDataItem['eventStart'],
-                                'EndingDate' => $timetableDataItem['eventEnd'],
-                                'EventID' => $timetableDataItem['eventID'],
-                                'DegreeID' => $degreeID
-                            ];
-                            $dataGet1 = [
-                                'EventID' => $timetableDataItem['eventID'],
-                                'DegreeID' => $degreeID
-                            ];
-                            $degreeTimeTable->delete($dataGet1);
-                            $degreeTimeTable->insert($dataSet1);
+                        if (!empty($timetableData)) {
+                            foreach ($timetableData as $timetableDataItem) {
+                                // Construct the data array for insertion
+                                // show($timetableDataItem);
+                                $dataSet1 = [
+                                    'EventName' => $timetableDataItem['eventName'],
+                                    'EventType' => $timetableDataItem['eventType'],
+                                    'StartingDate' => $timetableDataItem['eventStart'],
+                                    'EndingDate' => $timetableDataItem['eventEnd'],
+                                    'EventID' => $timetableDataItem['eventID'],
+                                    'DegreeID' => $degreeID
+                                ];
+                                $dataGet1 = [
+                                    'EventID' => $timetableDataItem['eventID'],
+                                    'DegreeID' => $degreeID
+                                ];
+                                $degreeTimeTable->validate($dataSet1);
+                                if (!empty($degreeTimeTable->errors)) {
+                                    foreach ($degreeTimeTable->errors as $error) {
+                                        message($error, 'error-degreeprofile');
+                                    }
+                                    $dam = 1;
+                                }
+                            }
+                            if ($dam == 0) {
+                                foreach ($timetableData as $timetableDataItem) {
+                                    // Construct the data array for insertion
+                                    // show($timetableDataItem);
+                                    $dataSet1 = [
+                                        'EventName' => $timetableDataItem['eventName'],
+                                        'EventType' => $timetableDataItem['eventType'],
+                                        'StartingDate' => $timetableDataItem['eventStart'],
+                                        'EndingDate' => $timetableDataItem['eventEnd'],
+                                        'EventID' => $timetableDataItem['eventID'],
+                                        'DegreeID' => $degreeID
+                                    ];
+                                    $dataGet1 = [
+                                        'EventID' => $timetableDataItem['eventID'],
+                                        'DegreeID' => $degreeID
+                                    ];
+                                    $degreeTimeTable->delete($dataGet1);
+                                    $degreeTimeTable->insert($dataSet1);
+                                }
+                                message('Diploma timetable updated successfully.', 'success-degreeprofile');
+                                redirect("dr/degreeprofile");
+                            } else {
+                                message('Diploma timetable not updated due to validation errors.', 'error-degreeprofile');
+                                // redirect("dr/degreeprofile");
+                            }
+                        } else {
+                            message('Diploma timetable not updated. NULL array.', 'error-degreeprofile');
+                            redirect("dr/degreeprofile");
                         }
-                        redirect("dr/degreeprofile");
                     }
                 }
             } else if ($action == "delete") {
@@ -248,10 +291,9 @@ class DR extends Controller
                     }
                 }
             }
-            // Load the view with the data
             $this->view('dr-interfaces/dr-degreeprofile', $data);
         } else {
-            echo "Error: Degree ID not provided in the URL.";
+            echo "Error: Diploma ID not provided in the URL.";
         }
     }
 
@@ -261,6 +303,7 @@ class DR extends Controller
         $student = new StudentModel();
         $timeTable = new DegreeTimeTable();
         $data = [];
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
         $data['action'] = $action;
         $data['id'] = $id;
         if (!isset($_SESSION['DegreeID']) || $_SESSION['DegreeID'] == null) {
@@ -276,25 +319,52 @@ class DR extends Controller
         $currentYear = $degree_info->AcademicYear;
         $currentYear = $currentYear % 100;
         if ($action == 'add') {
+            $dam = 0;
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 if (isset($_POST['timetableData'])) {
                     $timetableData = json_decode($_POST['timetableData'], true);
                     // Iterate over each subject's data and insert it into the database
-                    foreach ($timetableData as $timetablesData) {
-                        // Construct the data array for insertion
-                        $data1 = [
-                            'EventID' => $timetablesData['eventID'],
-                            'DegreeID' => $degree_id,
-                            'EventName' => $timetablesData['eventName'],
-                            'EventType' => $timetablesData['eventType'],
-                            'StartingDate' => $timetablesData['eventStart'],
-                            'EndingDate' => $timetablesData['eventEnd'],
-                        ];
-                        $timeTable->insert($data1);
-                        // echo json_encode($data1);
+                    if (!empty($timetableData)) {
+                        foreach ($timetableData as $timetablesData) {
+                            // Construct the data array for insertion
+                            $data = [
+                                'EventID' => $timetablesData['eventID'],
+                                'DegreeID' => $degree_id,
+                                'EventName' => $timetablesData['eventName'],
+                                'EventType' => $timetablesData['eventType'],
+                                'StartingDate' => $timetablesData['eventStart'],
+                                'EndingDate' => $timetablesData['eventEnd'],
+                            ];
+                            $timeTable->validate($data);
+                            if (!empty($timeTable->errors)) {
+                                foreach ($timeTable->errors as $error) {
+                                    message($error, 'errors');
+                                }
+                                $dam = 1;
+                            }
+                            // echo json_encode($data1);
+                        }
+                    }
+                    if ($dam == 0) {
+                        if (!empty($timetableData)) {
+                            foreach ($timetableData as $timetablesData) {
+                                // Construct the data array for insertion
+                                $data = [
+                                    'EventID' => $timetablesData['eventID'],
+                                    'DegreeID' => $degree_id,
+                                    'EventName' => $timetablesData['eventName'],
+                                    'EventType' => $timetablesData['eventType'],
+                                    'StartingDate' => $timetablesData['eventStart'],
+                                    'EndingDate' => $timetablesData['eventEnd'],
+                                ];
+                                $timeTable->insert($data);
+                            }
+                            // message('Diploma timetable added successfully.', 'success');
+                            redirect("dr/degreeprofile");
+                        }
                     }
                 }
-                redirect("dr/degreeprofile");
+                redirect("dr/newdegree");
             }
         } else if ($action == 'file') {
             $expectedColumns = ['Name', 'Email', 'Country', 'NIC-No', 'Date-Of-Birth', 'whatsappNo', 'Address', 'Phone-No', 'Gender(M/F)'];
@@ -368,8 +438,9 @@ class DR extends Controller
                                             redirect("dr/newdegree");
                                         }
                                     }
-                                    message('All rows in CSV file imported successfully.', 'success');
+                                    message('All rows in CSV file imported successfully.', 'successes');
                                     fclose($csvFile);
+                                    sleep(3);
                                     redirect("dr/newdegree");
                                 }
                             } else {
@@ -384,6 +455,9 @@ class DR extends Controller
                         message('No file uploaded.', 'error');
                         redirect("dr/newdegree");
                     }
+                } else {
+                    message('Submittted file is not valided.', 'error');
+                    redirect("dr/newdegree");
                 }
             }
         }
@@ -394,6 +468,7 @@ class DR extends Controller
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
         if (isset($_GET['id'])) {
             $studentId = isset($_GET['id']) ? $_GET['id'] : null;
             $_SESSION['studentId'] = $studentId;
@@ -421,7 +496,7 @@ class DR extends Controller
             if ($action == "update") {
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (isset($_POST['submit']) && $_POST['submit'] === 'update') {
-                        // echo " update";
+                        // Create the updated data array
                         $updatedData = [
                             'name' => $_POST['name'],
                             'Email' => $studentEmail,
@@ -433,8 +508,22 @@ class DR extends Controller
                             'birthdate' => $_POST['birthdate'],
                             'gender' => $_POST['gender'],
                         ];
-                        $studentModel->update($studentId, $updatedData);
-                        redirect("dr/userprofile");
+                        // Perform backend validation using the studentModel's validate method
+                        $studentModel->validate($updatedData);
+                        echo implode(", ", $studentModel->errors);
+                        // Check if there were any validation errors
+                        if (empty($studentModel->errors)) {
+                            // If there are no validation errors, proceed with updating the student information
+                            // message('Student data updated successfully.', 'success-userprofile');
+                            $studentModel->update($studentId, $updatedData);
+                            redirect("dr/userprofile");
+                        }
+                        // else {
+                        //     // If there are validation errors, handle them (e.g., provide feedback to the user)
+                        //     foreach ($studentModel->errors as $error) {
+                        //         message($error, 'error-userprofile');
+                        //     }
+                        // }
                     }
                 }
             } else if ($action == 'delete') {
@@ -444,43 +533,60 @@ class DR extends Controller
             } else if ($action == 'add') {
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     $newDegreeID = $_POST['select_degree_id'];
-                    // $oldDegreeID = $data['degrees'][0]->DegreeID;
+                    $oldDegreeDate = $data['degrees'][0]->createdDate;
+                    $oldDegreeID = $data['degrees'][0]->DegreeID;
+                    $data['newDegree'] = $degree->find($newDegreeID);
                     // echo $newDegreeID;
                     // echo $oldDegreeID;
-                    $newDegreeType = $degree->find($newDegreeID)[0]->DegreeShortName;
-                    $newDegreeYear = $degree->find($newDegreeID)[0]->AcademicYear;
-                    $newDegreeYear = $newDegreeYear % 100;
-                    $status = "continue";
-                    // echo $newDegreeType;
-                    // echo $newDegreeYear;
-                    $suspendSTU = [   // Update student to suspend
-                        'status' => "suspended",
-                    ];
-                    $studentModel->update($studentId, $suspendSTU);
-                    // Generate new index and registration numbers
-                    $IndexNo = $studentModel->generateIndexRegNumber($newDegreeType, $newDegreeYear);
-                    if ($IndexNo !== false && $IndexNo['IndexNo'] != null && $IndexNo['RegistationNo'] != null) {
-                        $data = [
-                            'Email' => $data['student'][0]->Email,
-                            'regNo' => $IndexNo['RegistationNo'],
-                            'country' => $data['student'][0]->country,
-                            'indexNo' => $IndexNo['IndexNo'],
-                            'name' => $data['student'][0]->name,
-                            'nicNo' => $data['student'][0]->nicNo,
-                            'birthdate' => $data['student'][0]->birthdate,
-                            'whatsappNo' => $data['student'][0]->whatsappNo,
-                            'address' => $data['student'][0]->address,
-                            'phoneNo' => $data['student'][0]->phoneNo,
-                            'degreeID' => $newDegreeID,
-                            'status' => $status,
-                            'gender' => $data['student'][0]->gender,
-                        ];
-                        $studentModel->insert($data);
-
-                        sleep(4);
-                        redirect("dr/participants");
+                    if ((time() - strtotime($oldDegreeDate)) < (3 * 30 * 24 * 60 * 60) && $data['student'][0]->status == "continue") {
+                        if ($data['newDegree'][0]->Status != "completed" && (time() - strtotime($data['newDegree'][0]->createdDate)) < (5 * 30 * 24 * 60 * 60) && $data['newDegree'][0]->DegreeID != $oldDegreeID) {
+                            $newDegreeType = $degree->find($newDegreeID)[0]->DegreeShortName;
+                            $newDegreeYear = $degree->find($newDegreeID)[0]->AcademicYear;
+                            $newDegreeYear = $newDegreeYear % 100;
+                            $status = "continue";
+                            // echo $newDegreeType;
+                            // echo $newDegreeYear;
+                            $suspendSTU = [   // Update student to suspend
+                                'status' => "suspended",
+                            ];
+                            $studentModel->update($studentId, $suspendSTU);
+                            // Generate new index and registration numbers
+                            $IndexNo = $studentModel->generateIndexRegNumber($newDegreeType, $newDegreeYear);
+                            if ($IndexNo !== false && $IndexNo['IndexNo'] != null && $IndexNo['RegistationNo'] != null) {
+                                $data = [
+                                    'Email' => $data['student'][0]->Email,
+                                    'regNo' => $IndexNo['RegistationNo'],
+                                    'country' => $data['student'][0]->country,
+                                    'indexNo' => $IndexNo['IndexNo'],
+                                    'name' => $data['student'][0]->name,
+                                    'nicNo' => $data['student'][0]->nicNo,
+                                    'birthdate' => $data['student'][0]->birthdate,
+                                    'whatsappNo' => $data['student'][0]->whatsappNo,
+                                    'address' => $data['student'][0]->address,
+                                    'phoneNo' => $data['student'][0]->phoneNo,
+                                    'degreeID' => $newDegreeID,
+                                    'status' => $status,
+                                    'gender' => $data['student'][0]->gender,
+                                ];
+                                $studentModel->insert($data);
+                                sleep(4);
+                                $data['error'] = 'Student has been successfully transferred to the new degree program.';
+                                message('Student has been successfully transferred to the new degree program.', 'success-userprofile');
+                                redirect("dr/participants");
+                            } else {
+                                $data['error'] = 'Failed to generate index and registration numbers.';
+                                message('Error: Failed to generate index and registration numbers.', 'error-userprofile');
+                                redirect("dr/userprofile");
+                            }
+                        } else {
+                            $data['error'] = 'Can`t change diploma.';
+                            message('Can`t change diploma.', 'error-userprofile');
+                            redirect("dr/userprofile");
+                        }
                     } else {
-                        echo "Error: Failed to generate index and registration numbers.";
+                        $data['error'] = 'The student has already been studying for three months,So cannot change their diploma program.';
+                        message('The student has already been studying for three months,So cannot change their diploma program.', 'error-userprofile');
+                        redirect("dr/userprofile");
                     }
                 }
             }
@@ -496,6 +602,7 @@ class DR extends Controller
         $st = new StudentModel();
         $degree = new Degree();
         $data = [];
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
         $data['action'] = $action;
         $data['id'] = $id;
         unset($_SESSION['studentId']);
@@ -517,6 +624,29 @@ class DR extends Controller
     public function settings()
     {
         $user = new User();
+        $data = [];
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
+
+        if (isset($_POST['update_user_data'])) {
+            // Validate input fields
+            $fname = isset($_POST['fname']) ? trim($_POST['fname']) : '';
+            $lname = isset($_POST['lname']) ? trim($_POST['lname']) : '';
+            $phoneNo = isset($_POST['phoneNo']) ? trim($_POST['phoneNo']) : '';
+
+            // Update user data
+            $id = $_SESSION['USER_DATA']->id;
+            $dataToUpdate = [
+                'fname' => $fname,
+                'lname' => $lname,
+                'phoneNo' => $phoneNo
+            ];
+            $_SESSION['USER_DATA']->fname = $fname;
+            $_SESSION['USER_DATA']->lname = $lname;
+            $user->update($id, $dataToUpdate);
+            header('Location:settings');
+            exit;
+        }
+
         // Fetch user data for display
         $id = $_SESSION['USER_DATA']->id;
         $data['user'] = $user->first(['id' => $id]);
@@ -524,24 +654,116 @@ class DR extends Controller
         if ($data['user'] === null) {
             $data['error'] = 'No user data found.';
         }
+
+
         $this->view('dr-interfaces/dr-settings', $data);
     }
-    public function reports($action = null, $id = null)
+    public function reports($method = null)
     {
+
+        //send notification count to the view
+        $data['notification_count_obj_dr'] = getNotificationCountSAR();
+
+        $subjects = new Subjects();
+        $gradings = new Grades();
+        $finalMarks = new FinalMarks();
+        $student = new StudentModel();
+        $exam = new Exam();
+
         $data = [];
-        $data['action'] = $action;
-        $data['id'] = $id;
-        $degree = new Degree();
-        $degreeID = $_SESSION['DegreeID'];
-        $data['degrees'] = $degree->find($degreeID);
-        $this->view('dr-interfaces/dr-reports', $data);
+        $data['degreeDetails'] = $_SESSION['degreeData'];
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
+        //get semester from get data
+        $data['semester'] = isset($_GET['semester']) ? $_GET['semester'] : null;
+        $data['subjects'] = $subjects->where(['DegreeID' => $data['degreeDetails'][0]->DegreeID, 'semester' => $data['semester']]);
+        $data['subjectsCodes'] = $subjects->whereSpecificColumn(['DegreeID' => $data['degreeDetails'][0]->DegreeID, 'semester' => $data['semester']], 'SubjectCode');
+
+        $data['grades'] = $gradings->where(['DegreeID' => $data['degreeDetails'][0]->DegreeID]);
+        $students = $student->where(['DegreeID' => $data['degreeDetails'][0]->DegreeID, 'status' => 'continue']);
+        $data['students'] = $students;
+        $data['studentRes'] = [];
+        if (!empty($students)) {
+            foreach ($students as $student) {
+                $indexNo = $student->indexNo;
+
+                $tables = ['subject', 'exam_attendance'];
+                $columns = ['*'];
+                $conditions = [
+                    'subject.SubjectCode = final_marks.subjectCode',
+                    'subject.DegreeID = final_marks.degreeID',
+                    'exam_attendance.examID = final_marks.examID',
+                    'exam_attendance.IndexNo = final_marks.studentIndexNo',
+                    'final_marks.subjectCode = exam_attendance.subjectCode',
+                ];
+                $whereConditions = [
+                    "final_marks.studentIndexNo = " . "'$indexNo'",
+                    "exam_attendance.IndexNo = " . "'$indexNo'",
+
+                ];
+
+                $studnetRes = $finalMarks->joinWhere($tables, $columns, $conditions, $whereConditions);
+                $groupedData = groupByColumn($studnetRes, 'subjectCode');
+
+                //get best marks
+                $bestData = getBestMarks($groupedData, 'finalMarks');
+                $data['studentRes'][$indexNo] = $bestData;
+                // show($bestData);
+
+            }
+        }
+        //validate data, check wheter examination is completed
+        $data['examtype'] = $exam->whereSpecificColumn(['DegreeID' => $data['degreeDetails'][0]->DegreeID, 'semester' => $data['semester']], 'status');
+        $data['degreetype'] = $_SESSION['degreeData'][0]->DegreeType;
+
+
+        if ($method == '1') {
+
+            $this->view('reports/reports-1', $data);
+
+        } else if ($method == '2') {
+
+            $this->view('reports/reports-2', $data);
+        } else if ($method == 'roe') {
+
+            redirect('roe/login');
+        } else if ($method == 'transcript') {
+
+            redirect('transcript/login');
+        } else {
+
+            $this->view('dr-interfaces/dr-reports', $data);
+        }
+
     }
+
     public function attendance()
     {
-        $this->view('dr-interfaces/dr-attendance');
+        $degree = new Degree();
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
+        if (!empty($_SESSION['DegreeID'])) {
+            $degreeId = $_SESSION['DegreeID'];
+            $data['degreedata'] = $degree->find($degreeId);
+
+            $attendances = [];
+
+            $att = new studentAttendance();
+            $allAttendances = $att->findAll();
+            if (!empty($allAttendances)) {
+                foreach ($allAttendances as $attendance) {
+                    if (is_object($attendance) && $attendance->degree_id == $degreeId) {
+                        $attendances[] = $attendance;
+                    }
+                }
+            }
+            $data['attendances'] = $attendances;
+        } else {
+            $data['attendances'] = [];
+        }
+        $this->view('dr-interfaces/dr-attendance', $data);
     }
-    public function examination($method = null)
+    public function examination($method = null, $id = null)
     {
+        $model = new Model();
         $degree = new Degree();
         $student = new StudentModel();
         $examParticipants = new ExamParticipants();
@@ -555,92 +777,150 @@ class DR extends Controller
         $examiner3Eligibility = new Examiner3Subject();
         $finalMarks = new FinalMarks();
 
-        //need to add degree details to session 
-        if (!empty($_SESSION['DegreeID'])) {
-            $degreeID = $_SESSION['DegreeID']->DegreeID;
-        }
-        $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
 
+        //get the degree id from the url
+        $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
+        $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
+
+        //add degree data to session 
+        if (!empty($degreeID)) {
+            $_SESSION['degreeData'] = $degree->where(['DegreeID' => $degreeID]);
+        }
+
+        //add exam data to session
         if (!empty($examID)) {
             $_SESSION['examDetails'] = $exam->where(['examID' => $examID]);
         }
+
+        //define degree id and exam id globally for the examination part
+        if (!empty($_SESSION['degreeData'])) {
+
+            $degreeID = $_SESSION['degreeData'][0]->DegreeID;
+        }
+        if (!empty($_SESSION['examDetails'])) {
+            $examID = $_SESSION['examDetails'][0]->examID;
+        }
+
+
         //unset session message data
         if (!empty($_SESSION['message'])) {
             unset($_SESSION['message']);
         }
-        //set examination id
-        if (!empty($_SESSION['examDetails'])) {
-            $examID = $_SESSION['examDetails'][0]->examID;
-            $semester = $_SESSION['examDetails'][0]->semester;
-        } else {
-            $examID = null;
-            $semester = null;
-        }
-        //give 403 error
-        if ($examID == null) {
-            redirect('_403_');
-        }
 
+        //get the count of exam participants
         $data['errors'] = [];
         $data['degrees'] = $degree->findAll();
         $data['students'] = $student->where(['degreeID' => $degreeID]);
 
+        // show($degreeID);
+        // show($examID);
         //get exam details with degree details
         $dataTables = ['degree'];
         $columns = ['*'];
         $examConditions = ['exam.degreeID = degree.DegreeID', 'exam.degreeID= ' . $degreeID];
         $data['examDetails'] = $exam->join($dataTables, $columns, $examConditions);
 
-        $repeatStudents->setid(1000);
+
+        //add again examDetaios to session
+        if (!empty($examID)) {
+            $_SESSION['examDetails'] = $exam->where(['examID' => $examID]);
+
+        }
+
+        //get the grades of the students join with exam participants table
+        $tablesJoin = ['exam_participants'];
+        $columnsJoin = ['final_marks.id', 'final_marks.studentIndexNo', 'final_marks.examID', 'final_marks.degreeID', 'final_marks.finalMarks', 'final_marks.grade', 'final_marks.subjectCode', 'exam_participants.studentType', 'exam_participants.semester'];
+        $conditionsJoin = ['final_marks.studentIndexNo = exam_participants.indexNo', 'final_marks.examID = exam_participants.examID'];
+        $whereConditionsJoin = ['final_marks.grade IS NULL'];
+        $marksToGrade = $finalMarks->joinWhere($tablesJoin, $columnsJoin, $conditionsJoin, $whereConditionsJoin);
+
+
+        //update grades of marks
+        if (!empty($marksToGrade)) {
+            $finalMarks->updateGrades($marksToGrade);
+        }
+
+        //send notification count to the view
+        $data['notification_count_obj_dr'] = getNotificationCountDR();
+
         if ($method == 'results') {
 
             $examMarks = new Marks();
             $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;
+
             //get examID from session
             if (!empty($_SESSION['examDetails'])) {
                 $examID = $_SESSION['examDetails'][0]->examID;
                 $semester = $_SESSION['examDetails'][0]->semester;
+                $degreeID = $_SESSION['examDetails'][0]->degreeID;
             }
+
             //get subjects in the exam
             $examSubjects = $examtimetable->where(['examID' => $examID]);
+
             //get subject code from post data
             if (isset($_POST['submit'])) {
                 $resultSubCode = isset($_POST['subCode']) ? $_POST['subCode'] : '';
                 // show($resultSubCode);
+
+
             } else {
                 $resultSubCode = '';
             }
+
             // remove any leading or trailing spaces from the string
             $resultSubCode = trim($resultSubCode);
 
             //get subject details
             $subjectDetails = $subjects->where(['SubjectCode' => $resultSubCode, 'DegreeID' => $degreeID]);
+
+
             //get examination results using marks and final marks
             $tables = ['final_marks', 'exam_participants'];
             $columns = ['*'];
             $conditions = ['marks.examID = final_marks.examID', 'marks.studentIndexNo = exam_participants.indexNo', 'marks.studentIndexNo = final_marks.studentIndexNo', 'marks.subjectCode = final_marks.subjectCode'];
             $whereConditions = ['marks.examID = ' . $examID, 'marks.subjectCode =  "' . $resultSubCode . '"', 'exam_participants.examID = ' . $examID];
             $examResults = $examMarks->joinWhere($tables, $columns, $conditions, $whereConditions);
+
             //generate csv file name
             $fileName = $examID . '_' . $resultSubCode . '.csv';
             $newFileName = $examID . '_' . $resultSubCode . '_new.csv';
+
             //generate updated marksheet as csv file
             if (!empty($resultSubCode)) {
                 updateMarksheet($fileName, $examResults, $newFileName);
             }
+
             $data['subjectDetails'] = $subjectDetails;
             $data['subNames'] = $examSubjects;
             $data['examResults'] = $examResults;
+
+
             $this->view('dr-interfaces/dr-examresults', $data);
+
         } else if ($method == 'participants') {
+
+
+            if (!empty($_GET['examID']) && !empty($_GET['degreeID'])) {
+                $degreeID = $_GET['degreeID'];
+                $_SESSION['DegreeID'] = $degreeID;
+                redirect('dr/examination/participants');
+            }
+
             //get the count of exam participants
             $data['examCount'] = $examParticipants->count(['examID' => $examID]);
+
             $participants[] = $examParticipants->where(['examID' => $examID]);
+
             $data['examParticipants'] = $participants;
+
             $this->view('dr-interfaces/dr-examparticipants', $data);
         } else {
+
+
             $this->view('dr-interfaces/dr-examination', $data);
         }
+
     }
     public function login()
     {

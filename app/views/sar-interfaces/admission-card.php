@@ -119,6 +119,8 @@
         font-style: normal;
         font-weight: 700;
         line-height: normal;
+        margin-top: 20px;
+        margin-down: 20px;
     }
 
     .admission-header {

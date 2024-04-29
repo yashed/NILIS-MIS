@@ -2,7 +2,8 @@
 $role = "director";
 $data['role'] = $role;
 $data['recentResults'] = $RecentResultExam;
-
+$data['examResults'] = $marks;
+$data['repeateStudent'] = $repeateStudents;
 ?>
 
 <!DOCTYPE html>
@@ -393,6 +394,15 @@ $data['recentResults'] = $RecentResultExam;
         margin: 10px 0px 10px 20px;
     }
 
+    .graph04-sub-title2 {
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        color: var(--Gray, #4F4F4F);
+        margin: 10px 0px 10px 20px;
+        margin-bottom: 3vw;
+    }
+
     .graph05-title {
         color: #17376E;
         font-family: Poppins;
@@ -484,13 +494,19 @@ $data['recentResults'] = $RecentResultExam;
         height: 80%;
 
     }
+
+    .director-exam-bar {
+        margin-top: 5vw;
+        height: 30vw;
+
+    }
 </style>
 
 <body>
-<?php $this->view('components/navside-bar/header', $data) ?>
-<?php $this->view('components/navside-bar/sidebar', $data) ?>
-<?php $this->view('components/navside-bar/footer', $data) ?>
-<div class="director-dash-home">
+    <?php $this->view('components/navside-bar/header', $data) ?>
+    <?php $this->view('components/navside-bar/sidebar', $data) ?>
+    <?php $this->view('components/navside-bar/footer', $data) ?>
+    <div class="director-dash-home">
         <div class="director-dash-title">Dashboard</div>
         <div class="director-dash-card-subsection-0">
 
@@ -586,10 +602,10 @@ $data['recentResults'] = $RecentResultExam;
 
                     <div class="director-dash-subsection-1-1-1-1">
                         <div class="graph01-title">
-                        Course Participants
+                            Course Participants
                         </div>
                         <div class="graph01-sub-title">
-                        Statistics
+                            Statistics
                         </div>
 
                         <div class="graph01">
@@ -621,11 +637,12 @@ $data['recentResults'] = $RecentResultExam;
                 </div>
                 <div class="director-dash-subsection-1-1-1">
                     <div class="director-dash-subsection-1-1-1-4">
-                        <div class="graph04-Exam-title">
-                            Exam Name
-                        </div>
                         <div class="graph04-title">
                             Student Performance
+                        </div>
+                        <div class="graph04-Exam-title">
+
+                            Exam Name
                         </div>
                         <div class="graph04-sub-title">
                             Diploma Name
@@ -635,11 +652,11 @@ $data['recentResults'] = $RecentResultExam;
                         </div>
                     </div>
                     <div class="director-dash-subsection-1-1-1-5">
-                    <div class="graph04-title">
+                        <div class="graph04-title">
                             Student Attendance
                         </div>
-                        <div class="graph04-sub-title">
-                        Average Student Attendance by Diploma Program
+                        <div class="graph04-sub-title2">
+                            Average Student Attendance by Diploma Program
                         </div>
                         <div class="graph05">
                             <?php $this->view('components/graphs/bargraph-student-attendance', $data) ?>
@@ -662,22 +679,23 @@ $data['recentResults'] = $RecentResultExam;
                         <div class="director-dash-sub-title">
                             Recently Published Examination Results
                         </div>
-                        <div class="clerk-exam-bar">
-                    <?php if (!empty($RecentResultExam)) : ?>
-                        <?php foreach ($RecentResultExam as $exam) : ?>
-                            <?php
+                        <div class="director-exam-bar">
+                            <?php if (!empty($RecentResultExam)): ?>
+                                <?php foreach ($RecentResultExam as $exam): ?>
+                                    <?php
 
-                            $data['exam'] = $exam;
-                            $this->view('components/exam-card/exam-card', $data);
+                                    $data['exam'] = $exam;
+                                    $this->view('components/exam-card/exam-card', $data);
 
-                            ?>
-                        <?php endforeach; ?>
-                    <?php else : ?>
+                                    ?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
 
-                        <div class="result-msg">
-                            No Results Published
+                                <div class="result-msg">
+                                    No Results Published
+                                </div>
+                                < <?php endif; ?>
                         </div>
-                        < <?php endif; ?> </div>
                     </div>
                 </div>
             </div>

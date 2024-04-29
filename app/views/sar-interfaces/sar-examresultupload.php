@@ -102,7 +102,7 @@ $degreeId = $_SESSION['examDetails'][0]->degreeID;
         font-size: 22px;
         font-style: normal;
         font-weight: 600;
-        font-size: 1.8vw;
+
 
     }
 
@@ -112,7 +112,7 @@ $degreeId = $_SESSION['examDetails'][0]->degreeID;
         font-family: Poppins;
         font-style: normal;
         font-weight: 600;
-        font-size: 1.8vw;
+        font-size: 22px;
     }
 
     .temp2-subsection-2 {
@@ -861,7 +861,7 @@ $degreeId = $_SESSION['examDetails'][0]->degreeID;
                             <div class="course" id="course">
                                 <div class="exam" id="exam">
                                     <?php if (!empty($_SESSION['degreeData'])): ?>
-                                        <?= $_SESSION['degreeData'][0]->DegreeName ?> Semester Examination
+                                        <?= $_SESSION['degreeData'][0]->DegreeName ?>
                                     <?php endif; ?>
                                 </div>
                             </div>

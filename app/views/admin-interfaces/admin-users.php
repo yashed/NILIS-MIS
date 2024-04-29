@@ -543,8 +543,8 @@ if (!empty($errors)) {
                                     <option value="sar" <?= (set_value('role') === 'sar') ? 'selected' : '' ?>>
                                         SAR
                                     </option>
-                                    <option value="asar" <?= (set_value('role') === 'asar') ? 'selected' : '' ?>>
-                                        Asst SAR</option>
+                                    <!-- <option value="asar" <?= (set_value('role') === 'asar') ? 'selected' : '' ?>>
+                                        Asst SAR</option> -->
                                 </select>
 
                             </div>
