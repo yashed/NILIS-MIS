@@ -216,7 +216,7 @@ class DIRECTOR extends Controller
     {
 
         //send notification count to the view
-        $data['notification_count_obj_sar'] = getNotificationCountSAR();
+        $data['notification_count_obj_director'] = getNotificationCountDirector();
 
         $subjects = new Subjects();
         $gradings = new Grades();
@@ -292,6 +292,7 @@ class DIRECTOR extends Controller
     public function attendance()
     {
         $degree = new Degree();
+        $data['notification_count_obj_director'] = getNotificationCountDirector();
 
         if (!empty($_SESSION['DegreeID'])) {
             $degreeId = $_SESSION['DegreeID'];
@@ -333,7 +334,7 @@ class DIRECTOR extends Controller
         $examiner3Eligibility = new Examiner3Subject();
         $finalMarks = new FinalMarks();
 
-
+        $data['notification_count_obj_director'] = getNotificationCountDirector();
         //get the degree id from the url
         $examID = isset($_GET['examID']) ? $_GET['examID'] : null;
         $degreeID = isset($_GET['degreeID']) ? $_GET['degreeID'] : null;

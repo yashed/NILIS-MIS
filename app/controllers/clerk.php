@@ -354,7 +354,7 @@ class Clerk extends Controller
     {
 
         //send notification count to the view
-        $data['notification_count_obj_sar'] = getNotificationCountSAR();
+        $data['notification_count_obj'] = getNotificationCount();
 
         $subjects = new Subjects();
         $gradings = new Grades();
@@ -506,7 +506,7 @@ class Clerk extends Controller
         }
 
         //send notification count to the view
-        $data['notification_count_obj_sar'] = getNotificationCountAssistSAR();
+        $data['notification_count_obj'] = getNotificationCount();
 
         if ($method == 'results') {
 
