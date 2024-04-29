@@ -316,11 +316,12 @@ $data['role'] = $role;
                                     </div>
                                 </div>
                             </div>
+                            <span class="invalidInput" style="color: red; font-size: 10px; text-align: center;"></span>
                             <div class="dr-userprofile-student-create-update">
                                 <?php
                                 if (message()) {
                                     echo '<div class="profile-message">';
-                                    if ($_SESSION['message_type'] == 'error') {
+                                    if ($_SESSION['message_type'] == 'errors') {
                                         echo "<div class='error-message-profile' style='color: red; font-size: 14px; margin-bottom: 5px;'>" . message('', '', true) . "</div>";
                                     }
                                     echo '</div>';

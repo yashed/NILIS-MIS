@@ -64,7 +64,7 @@ class StudentModel extends Model
         //gender
         if (empty($data['gender'])) {
             $this->errors['gender'] = 'A gender is required';
-        } else if (trim($data['gender']) != 'M' && trim($data['gender']) != 'M') {
+        } else if (trim($data['gender']) != 'M' && trim($data['gender']) != 'F') {
             $this->errors['gender'] = 'A gender can only be M or F';
         }
         //country
@@ -73,6 +73,6 @@ class StudentModel extends Model
         } else if (!preg_match("/^[a-zA-Z]+$/", trim($data['country']))) {
             $this->errors['country'] = 'A country can only be only letters.';
         }
-        return empty($this->errors);
+        return ($this->errors);
     }
 }

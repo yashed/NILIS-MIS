@@ -19,7 +19,6 @@
     }
     </style>
 </head>
-
 <body>
     <nav class="sidebar close">
         <header>
@@ -283,6 +282,19 @@
                             <i class="bx bx-book icon"></i>
                             <span class="text nav-text">Examination</span>
                         </a>
+                        <?php
+                            // Check if the URL contains any of the specified patterns
+                            $url = $_SERVER['REQUEST_URI'];
+                            if (
+                                strpos($url, "examination/participants") !== false ||
+                                strpos($url, "examination/results") !== false
+                            ) {
+                                echo '<div class="dropdown">' .
+                                    '<a href="' . ROOT . 'dr/examination/participants"><center>Examination Participants</center></a>' .
+                                    '<a href="' . ROOT . 'dr/examination/results"><center>Examination Results</center></a>' .
+                                    '</div>';
+                            }
+                        ?>
                     </li>
                     <li class="nav-link">
                         <a href="<?= ROOT ?>assistant-sar/attendance">
@@ -381,6 +393,19 @@
                             <i class="bx bx-book icon"></i>
                             <span class="text nav-text">Examination</span>
                         </a>
+                        <?php
+                            // Check if the URL contains any of the specified patterns
+                            $url = $_SERVER['REQUEST_URI'];
+                            if (
+                                strpos($url, "examination/participants") !== false ||
+                                strpos($url, "examination/results") !== false
+                            ) {
+                                echo '<div class="dropdown">' .
+                                    '<a href="' . ROOT . 'dr/examination/participants"><center>Examination Participants</center></a>' .
+                                    '<a href="' . ROOT . 'dr/examination/results"><center>Examination Results</center></a>' .
+                                    '</div>';
+                            }
+                        ?>
                     </li>
                     <li class="nav-link">
                         <a href="<?= ROOT ?>admin/attendance">
@@ -479,6 +504,19 @@
                             <i class="bx bx-book icon"></i>
                             <span class="text nav-text">Examination</span>
                         </a>
+                        <?php
+                            // Check if the URL contains any of the specified patterns
+                            $url = $_SERVER['REQUEST_URI'];
+                            if (
+                                strpos($url, "examination/participants") !== false ||
+                                strpos($url, "examination/results") !== false
+                            ) {
+                                echo '<div class="dropdown">' .
+                                    '<a href="' . ROOT . 'dr/examination/participants"><center>Examination Participants</center></a>' .
+                                    '<a href="' . ROOT . 'dr/examination/results"><center>Examination Results</center></a>' .
+                                    '</div>';
+                            }
+                        ?>
                     </li>
                     <li class="nav-link">
                         <a href="<?= ROOT ?>director/attendance">
@@ -578,6 +616,19 @@
                         <i class="bx bx-book icon"></i>
                         <span class="text nav-text">Examination</span>
                     </a>
+                    <?php
+                        // Check if the URL contains any of the specified patterns
+                        $url = $_SERVER['REQUEST_URI'];
+                        if (
+                            strpos($url, "examination/participants") !== false ||
+                            strpos($url, "examination/results") !== false
+                        ) {
+                            echo '<div class="dropdown">' .
+                                '<a href="' . ROOT . 'dr/examination/participants"><center>Examination Participants</center></a>' .
+                                '<a href="' . ROOT . 'dr/examination/results"><center>Examination Results</center></a>' .
+                                '</div>';
+                        }
+                    ?>
                 </li>
                 <li class="nav-link">
                     <a href="<?= ROOT ?>clerk/attendance">
