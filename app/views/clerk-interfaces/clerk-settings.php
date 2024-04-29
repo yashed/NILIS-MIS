@@ -89,7 +89,7 @@ $data['role'] = $role;
         display: flex;
         flex-direction: row;
         padding-top: 1vw;
-        padding-right: 11vw;
+        padding-right: 5vw;
         gap: 5vw;
     }
 
