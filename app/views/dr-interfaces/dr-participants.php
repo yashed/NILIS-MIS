@@ -162,28 +162,30 @@ $data['role'] = $role;
                 </section>
                 <section class="dr-participants-table__body">
                     <table id="dr-participants-table_p">
-                        <?php if (!empty($students)): ?>
-                            <thead>
-                                <tr>
-                                    <th> Name </th>
-                                    <th> Index Number </th>
-                                    <th> Registration Number </th>
-                                    <th> Mail </th>
-                                </tr>
-                            </thead>
+                        <thead>
+                            <tr>
+                                <th> Name </th>
+                                <th> Index Number </th>
+                                <th> Registration Number </th>
+                                <th> Mail </th>
+                            </tr>
+                        </thead>
                             <tbody>
-                                <?php foreach ($students as $student): ?>
-                                    <tr data-id="<?= $student->id ?>" class="dr-participants-clickable-row">
-                                        <td class="dr-participants-table__body-td-name"><?= $student->name ?> </td>
-                                        <td> <?= $student->indexNo ?> </td>
-                                        <td> <?= $student->regNo ?> </td>
-                                        <td> <?= $student->Email ?> </td>
+                                <?php if (!empty($students)): ?>
+                                    <?php foreach ($students as $student): ?>
+                                        <tr data-id="<?= $student->id ?>" class="dr-participants-clickable-row">
+                                            <td class="dr-participants-table__body-td-name"><?= $student->name ?> </td>
+                                            <td> <?= $student->indexNo ?> </td>
+                                            <td> <?= $student->regNo ?> </td>
+                                            <td> <?= $student->Email ?> </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                    <td style="margin: 20px 30%;">No students found for the diploma program.</td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php endif; ?>
                             </tbody>
-                        <?php else: ?>
-                            <p style="margin: 20px 30%;">No students found for the diploma program.</p>
-                        <?php endif; ?>
                     </table>
                 </section>
             </div>

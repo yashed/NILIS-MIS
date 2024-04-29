@@ -290,8 +290,8 @@
                                 strpos($url, "examination/results") !== false
                             ) {
                                 echo '<div class="dropdown">' .
-                                    '<a href="' . ROOT . 'dr/examination/participants"><center>Examination Participants</center></a>' .
-                                    '<a href="' . ROOT . 'dr/examination/results"><center>Examination Results</center></a>' .
+                                    '<a href="' . ROOT . 'assistant-sar/examination/participants"><center>Examination Participants</center></a>' .
+                                    '<a href="' . ROOT . 'assistant-sar/examination/results"><center>Examination Results</center></a>' .
                                     '</div>';
                             }
                         ?>
@@ -401,8 +401,8 @@
                                 strpos($url, "examination/results") !== false
                             ) {
                                 echo '<div class="dropdown">' .
-                                    '<a href="' . ROOT . 'dr/examination/participants"><center>Examination Participants</center></a>' .
-                                    '<a href="' . ROOT . 'dr/examination/results"><center>Examination Results</center></a>' .
+                                    '<a href="' . ROOT . 'admin/examination/participants"><center>Examination Participants</center></a>' .
+                                    '<a href="' . ROOT . 'admin/examination/results"><center>Examination Results</center></a>' .
                                     '</div>';
                             }
                         ?>
@@ -512,8 +512,8 @@
                                 strpos($url, "examination/results") !== false
                             ) {
                                 echo '<div class="dropdown">' .
-                                    '<a href="' . ROOT . 'dr/examination/participants"><center>Examination Participants</center></a>' .
-                                    '<a href="' . ROOT . 'dr/examination/results"><center>Examination Results</center></a>' .
+                                    '<a href="' . ROOT . 'director/examination/participants"><center>Examination Participants</center></a>' .
+                                    '<a href="' . ROOT . 'director/examination/results"><center>Examination Results</center></a>' .
                                     '</div>';
                             }
                         ?>
@@ -624,8 +624,8 @@
                             strpos($url, "examination/results") !== false
                         ) {
                             echo '<div class="dropdown">' .
-                                '<a href="' . ROOT . 'dr/examination/participants"><center>Examination Participants</center></a>' .
-                                '<a href="' . ROOT . 'dr/examination/results"><center>Examination Results</center></a>' .
+                                '<a href="' . ROOT . 'clerk/examination/participants"><center>Examination Participants</center></a>' .
+                                '<a href="' . ROOT . 'clerk/examination/results"><center>Examination Results</center></a>' .
                                 '</div>';
                         }
                     ?>

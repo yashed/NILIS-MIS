@@ -193,7 +193,7 @@ class DR extends Controller
                         if (!empty($timetableData)) {
                             foreach ($timetableData as $timetableDataItem) {
                                 // Construct the data array for insertion
-                                show($timetableDataItem);
+                                // show($timetableDataItem);
                                 $dataSet1 = [
                                     'EventName' => $timetableDataItem['eventName'],
                                     'EventType' => $timetableDataItem['eventType'],
