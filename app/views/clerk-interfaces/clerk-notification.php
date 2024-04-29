@@ -108,6 +108,7 @@ $data['role'] = $role;
             padding: 10px 10px 30px 35px;
             border-radius: 6px;
             margin: 7px 4px 7px 4px;
+            min-height:80vh;
 
         }
 
@@ -214,15 +215,13 @@ $data['role'] = $role;
 
             <?php if (!empty($notifications)) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'student_attendance_alert') : ?>
+                    <?php if ($notification->type == 'Study Leave' && $notification->msg_type == 'Student_attendance_alert') : ?>
                         <?php
                         $data['role'] = "Clerk";
 
-                        $link = "clerk"; 
                         $this->view('components/notification-bar/notification-box', [
                             "notification" => $notification,
-                            "role" => $data['role'],
-                            "link" =>$link  // Pass the notify_id here
+                            "role" => $data['role']
                         ]) ?>
                         <?php endif; ?>
                 <?php endforeach; ?>

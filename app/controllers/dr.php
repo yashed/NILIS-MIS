@@ -508,7 +508,7 @@ class DR extends Controller
                         ];
                         // Perform backend validation using the studentModel's validate method
                         $studentModel->validate($updatedData);
-                        // echo implode(", ", $studentModel->errors);
+                        echo implode(", ", $studentModel->errors);
                         // Check if there were any validation errors
                         if (empty($studentModel->errors)) {
                             // If there are no validation errors, proceed with updating the student information
@@ -652,6 +652,7 @@ class DR extends Controller
         if ($data['user'] === null) {
             $data['error'] = 'No user data found.';
         }
+
 
         $this->view('dr-interfaces/dr-settings', $data);
     }

@@ -655,11 +655,7 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
 ?>
 
 <body>
-    <div class="loader-wraper">
-        <div class="loader-css">
-            <?php $this->view('components/loader/index') ?>
-        </div>
-    </div>
+
     <div class="participants-body" id="body">
         <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
         <?php $this->view('components/navside-bar/footer', $data) ?>
@@ -669,52 +665,68 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
             <div class="temp2-title">Examination</div>
             <div class="temp2-subsection-1">
                 <div class="temp2-sub-title1">
-                    Overview
-                </div>
-
-                <div class="row">
-
-
-
-                    <div class="column1">
-                        <div class="data1">Course Name<br>
-                            <!-- <div class="email"><?= $student->Email ?></div> -->
-                            <div class="course" id="course">Diploma in School Librarianship</div>
+                    <div class='sub-title-01'>Overview</div>
+                    <div class="row">
+                        <div class="column1">
+                            <div class="data1">Course Name<br>
+                                <!-- <div class="email"><?= $student->Email ?></div> -->
+                                <div class="course" id="course">
+                                    <?php if (!empty($_SESSION['degreeData'])): ?>
+                                        <?= $_SESSION['degreeData'][0]->DegreeName ?>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="data2">Examination:<br>
+                                <!-- <div class="regNum"> <?= $student->regNo ?></div> -->
+                                <div class="exam" id="exam">
+                                    <?php if (!empty($_SESSION['examDetails'])): ?>
+                                        <?= $_SESSION['examDetails'][0]->semester ?> Semester Examination
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
-                        <br>
-                        <div class="data2">Examination:<br>
-                            <!-- <div class="regNum"> <?= $student->regNo ?></div> -->
-                            <div class="exam" id="exam">2nd Semester Examination</div>
+
+                        <div class="column2">
+                            <div class="data3">Participation<br>
+                                <div class="count" id="count">
+                                    <?php if (!empty($examCount)) {
+                                        echo $examCount[0]->ExamParticipants;
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="data4">Academic Year:<br>
+                                <div class="year" id="year"> 2023/2024</div>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="column2">
-                        <div class="data3">Participation:<br>
-                            <div class="count" id="count"> 216</div>
+                <div class="column2">
+                    <div class="data3">Participation<br>
+                        <div class="count" id="count">
+                            <?php if (!empty($examCount)) {
+                                echo $examCount[0]->ExamParticipants;
+                            }
+                            ?>
                         </div>
-                        <br>
-                        <div class="data4">Academic Year:<br>
-                            <div class="year" id="year"> 2023/2024</div>
-                        </div>
+                    </div>
+                    <br>
+                    <div class="data4">Academic Year:<br>
+                        <div class="year" id="year"> 2023/2024</div>
                     </div>
                 </div>
             </div>
+
 
             <div class="temp2-subsection-2">
                 <div class="temp2-subsection-21">
 
                     <div class="participants-form-header">
                         <div class="temp2-sub-title2">Participants</div>
-                        <div class="participant-form-btns">
-                            <button class="admission-button1" id="openModal" onClick='showAttendancePopup()'>Exam
-                                Attendance Submit</button>
-                            <form method="post">
 
-                                <!-- <button class="admission-button0">Download Attendance Sheet</button> -->
-                                <button class="admission-button2" type="submit" name="admission" value="clicked" onClick="showMailPopup(event)">Send Admission Card</button>
-
-                            </form>
-                        </div>
                     </div>
                     <div class="display-message">
                         <?php
@@ -736,14 +748,26 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                                     <th> Name </th>
                                     <th> Attempt </th>
                                     <th> Index Number </th>
-                                    <th> Registration Number </th>
+
                                     <th> Student Type </th>
                                     <th> Admission Card </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($currentRecords as $students) : ?>
-                                    <?php foreach ($students as $student) : ?>
+                                <?php foreach ($currentRecords as $students):
+                                    if (!empty($_SESSION['examDetails'])) {
+
+                                        $examID = $_SESSION['examDetails'][0]->examID;
+                                    }
+
+                                    $degreeID = 4;
+                                    if (!empty($_SESSION['degreeDetails'])) {
+
+                                        $degreeID = $_SESSION['degreeDetails'][0]->degreeID;
+                                    }
+
+                                    ?>
+                                    <?php foreach ($students as $student): ?>
                                         <?php $json = json_encode($student); ?>
                                         <tr>
                                             <td class="table__body-td-name"><img src="<?= ROOT ?>assets/student.png" alt="">
@@ -754,11 +778,12 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                                             <td>
                                                 <?= $student->indexNo ?>
                                             </td>
-                                            <td> DLIM/01/01</td>
+
                                             <td>
                                                 <?= $student->studentType ?>
                                             </td>
-                                            <td> <a href="http://localhost/NILIS-MIS/public/admission/login?degreeID=10&examID=43&indexNo=<?= $student->indexNo ?>" target="_blank">tap
+                                            <td> <a href="http://localhost/NILIS-MIS/public/admission/login?degreeID=<?= $degreeID ?>&examID=<?= $examID ?>&indexNo=<?= $student->indexNo ?>"
+                                                    target="_blank">tap
                                                     to see Admission card </a></td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -766,27 +791,7 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                             </tbody>
                         </table>
                     </section>
-
-
-                    <br>
-                    <div class="pagination">
-                        <?php if ($page > 1) : ?>
-                            <a href="?page=<?= $page - 1 ?>">Previous</a>
-                        <?php endif; ?>
-                        <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
-                            <a href="?page=<?= $i ?>" <?= $page === $i ? 'class="active"' : '' ?>>
-                                <?= $i ?>
-                            </a>
-                        <?php endfor; ?>
-                        <?php if ($page < $totalPages) : ?>
-                            <a href="?page=<?= $page + 1 ?>">Next</a>
-                        <?php endif; ?>
-                    </div>
-
-
                 </div>
-
-
             </div>
 
 
@@ -805,61 +810,7 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
     </div>
 </body>
 
-<script>
-    // document.addEventListener("DOMContentLoaded", function () {
-    //     var modal = document.getElementById('myModal');
-    //     var btn = document.getElementById('openModal');
-    //     var span = document.getElementById('closeModal');
-    //     var body = document.body;
 
-    //     btn.onclick = function () {
-    //         modal.style.display = "block";
-    //         body.classList.add('modal-open');
-    //     }
-
-    //     span.onclick = function () {
-    //         modal.style.display = "none";
-    //         body.classList.remove('modal-open');
-    //     }
-
-    //     window.onclick = function (event) {
-    //         if (event.target == modal) {
-    //             modal.style.display = "none";
-    //             body.classList.remove('modal-open');
-    //         }
-    //     }
-    // });
-</script>
-<script>
-    $(window).on("load", function() {
-        $(".loader-wraper").fadeOut("slow");
-    });
-
-    function showMailPopup() {
-
-        console.log('run');
-        document.querySelector("#mail-popup").classList.add("active");
-        document.querySelector("#body").classList.add("active");
-        console.log('run again');
-    }
-
-    function showAttendancePopup() {
-        console.log("Click attendance");
-        document.querySelector("#exam-attendance").classList.add("active");
-        document.querySelector("#body").classList.add("active");
-    }
-
-
-    //handel pop active according to clicked button
-    var popupStatus = <?php echo $attendacePopupStatus ? 'true' : 'false'; ?>;
-    if (popupStatus) {
-
-        // Adding 'active' class to the popup and body elements
-        document.querySelector("#exam-attendance").classList.add("active");
-        document.querySelector("#body").classList.add("active");
-        $(".loader-wraper").fadeOut("slow");
-    }
-</script>
 
 
 

@@ -452,7 +452,7 @@ $data['role'] = $role;
             const addressField = form.elements['address'];
             const birthdateField = form.elements['birthdate'];
             // Validate name
-            if (nameField.value.trim() === '' || !/^[a-zA-Z]+$/.test(nameField.value.trim())) {
+            if (nameField.value.trim() === '' || !/^[a-zA-Z.\s]+$/.test(nameField.value.trim())) {
                 document.querySelector(".invalidInput").textContent += "Name is not valid.\n";
                 nameField.style.border = '1px solid red';
                 isValid = false;
@@ -476,7 +476,7 @@ $data['role'] = $role;
                 isValid = false;
             }
             // Validate country
-            if (!/^[a-zA-Z]+$/.test(countryField.value.trim())) {
+            if (!/^[a-zA-Z\s]+$/.test(countryField.value.trim())) {
                 document.querySelector(".invalidInput").textContent += "Country is not valid.\n";
                 countryField.style.border = '1px solid red';
                 isValid = false;

@@ -28,7 +28,7 @@ class StudentModel extends Model
     {
         $this->errors = [];
         //Name
-        if (empty($data['name']) || !preg_match("/^[a-zA-Z]+$/", trim($data['name']))) {
+        if (empty($data['name']) || !preg_match("/^[a-zA-Z.\s]+$/", trim($data['name']))) {
             $this->errors['name'] = 'A name is required';
         }
         //nicNo
@@ -70,7 +70,7 @@ class StudentModel extends Model
         //country
         if (empty($data['country'])) {
             $this->errors['country'] = 'A country is required';
-        } else if (!preg_match("/^[a-zA-Z]+$/", trim($data['country']))) {
+        } else if (!preg_match("/^[a-zA-Z\s]+$/", trim($data['country']))) {
             $this->errors['country'] = 'A country can only be only letters.';
         }
         return ($this->errors);
