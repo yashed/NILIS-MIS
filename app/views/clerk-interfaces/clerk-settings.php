@@ -14,7 +14,7 @@ $data['role'] = $role;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings</title>
+    <title>temp3 Dashboard</title>
 
 </head>
 <style>
@@ -70,7 +70,7 @@ $data['role'] = $role;
         padding-top: 3vw;
         border-radius: 6px;
         margin: 7px 4px 7px 4px;
-        height: auto;
+        min-height: 74vh;
     }
 
     .temp3-sub-title {

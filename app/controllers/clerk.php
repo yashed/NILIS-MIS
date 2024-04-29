@@ -132,6 +132,7 @@ class Clerk extends Controller
         // Fetch user data for display
         $id = $_SESSION['USER_DATA']->id;
         $data['user'] = $user->first(['id' => $id]);
+        // show($data['user']);
 
         if ($data['user'] === null) {
             $data['error'] = 'No user data found.';

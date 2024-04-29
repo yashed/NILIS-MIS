@@ -37,6 +37,7 @@ class DIRECTOR extends Controller
         $data['exams'] = $exam->findAll();
         $data['degreetimetables'] = $degreetimetable->findAll();
         $data['marks'] = $finalMarks->query("SELECT finalMarks FROM final_marks");
+        // show($data['marks']);
         $this->view('director-interfaces/director-dashboard', $data);
     }
 

@@ -57,7 +57,7 @@
 
                 {
                     label: 'Pass Students',
-                    data: [45, 39, 50],
+                    data: [10, 10, 10, 10],
                     backgroundColor: 'rgb(154, 214, 255)',
                     stack: 'Stack 1',
                     maxBarThickness: 50
@@ -92,7 +92,7 @@
                 },
                 layout: {
                     padding: {
-                        left: 10,
+                        left: 70,
                         right: 10,
                         top: 10,
                         bottom: 10
