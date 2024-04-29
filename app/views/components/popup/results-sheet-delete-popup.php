@@ -81,7 +81,7 @@
                 </svg>
             </div>
             <div class="delete-text">
-                <h2>Are you sure?</h2>
+                <h2>Are You Sure?</h2>
                 <p>Do you really want to delete this Results Sheet?</br> Make sure to upload another result sheet to
                     calculate the final marks.</p>
             </div>

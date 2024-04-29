@@ -17,7 +17,7 @@ class ROE extends Controller
 {
     public function index()
     {
-        show('reports');
+
         redirect('roe/login');
     }
 

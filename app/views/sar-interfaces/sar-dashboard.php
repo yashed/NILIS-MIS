@@ -3,9 +3,8 @@
 $role = "SAR";
 $data['role'] = $role;
 $data['recentResults'] = $RecentResultExam;
-
+$data['examResults'] = $marks;
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +12,7 @@ $data['recentResults'] = $RecentResultExam;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sar-dash Dashboard</title>
+    <title>SAR Dashboard</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -593,11 +592,20 @@ $data['recentResults'] = $RecentResultExam;
                         </div>
                         <div class="sar-dash-card-subcard-data">
                             <div class="sar-dash-card-subcard-data-title">Students</div>
-                            <div class="sar-dash-card-subcard-data-value">200</div>
+                            <div class="sar-dash-card-subcard-data-value">
+                                <?php if (!empty($students)): ?>
+                                    <?php $count = 0; ?>
+                                    <?php foreach ($students as $student): ?>
+                                        <?php if ($student->status == "continue"): ?>
+                                            <?php $count++; ?>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                                <?= $count ?>
+                            </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="sar-dash-card-subsection-01">
                     <div class="sar-dash-sucard-out">
                         <div class="sar-dash-card-subcard-img1">
@@ -605,7 +613,17 @@ $data['recentResults'] = $RecentResultExam;
                         </div>
                         <div class="sar-dash-card-subcard-data">
                             <div class="sar-dash-card-subcard-data-title">Ongoing</br>Degrees</div>
-                            <div class="sar-dash-card-subcard-data-value">04</div>
+                            <div class="sar-dash-card-subcard-data-value">
+                                <?php if (!empty($degrees)): ?>
+                                    <?php $count = 0; ?>
+                                    <?php foreach ($degrees as $degree): ?>
+                                        <?php if ($degree->Status == "ongoing"): ?>
+                                            <?php $count++; ?>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                                <?= $count ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -616,7 +634,17 @@ $data['recentResults'] = $RecentResultExam;
                         </div>
                         <div class="sar-dash-card-subcard-data">
                             <div class="sar-dash-card-subcard-data-title">Ongoing</br>Examination</div>
-                            <div class="sar-dash-card-subcard-data-value">04</div>
+                            <div class="sar-dash-card-subcard-data-value">
+                                <?php if (!empty($exams)): ?>
+                                    <?php $count = 0; ?>
+                                    <?php foreach ($exams as $exam): ?>
+                                        <?php if ($exam->status == "ongoing"): ?>
+                                            <?php $count++; ?>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                                <?= $count ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -627,7 +655,17 @@ $data['recentResults'] = $RecentResultExam;
                         </div>
                         <div class="sar-dash-card-subcard-data">
                             <div class="sar-dash-card-subcard-data-title">Results Published </br>Exminations</div>
-                            <div class="sar-dash-card-subcard-data-value">04</div>
+                            <div class="sar-dash-card-subcard-data-value">
+                                <?php if (!empty($exams)): ?>
+                                    <?php $count = 0; ?>
+                                    <?php foreach ($exams as $exam): ?>
+                                        <?php if ($exam->status == "completed"): ?>
+                                            <?php $count++; ?>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                                <?= $count ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -680,7 +718,7 @@ $data['recentResults'] = $RecentResultExam;
                                 Student Performance
                             </div>
                             <div class="graph04-sub-title">
-                                Degree Name
+                                Overall
                             </div>
                             <div class="graph04">
                                 <?php $this->view('components/graphs/piechart-student-results', $data) ?>
@@ -764,7 +802,7 @@ $data['recentResults'] = $RecentResultExam;
                                     <div class="result-msg">
                                         No Results Published
                                     </div>
-                                    < <?php endif; ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

@@ -17,8 +17,6 @@ class Auth
 
         if (!empty($_SESSION['USER_DATA'])) {
             unset($_SESSION['USER_DATA']);
-            // session_unset();
-            // session_regenerate_id();
         }
     }
     public static function logged_in()
@@ -78,6 +76,16 @@ class Auth
     {
         if (!empty($_SESSION['USER_DATA'])) {
             if ($_SESSION['USER_DATA']->role == 'clerk') {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public static function is_asar()
+    {
+        if (!empty($_SESSION['USER_DATA'])) {
+            if ($_SESSION['USER_DATA']->role == 'asar') {
                 return true;
             }
             return false;

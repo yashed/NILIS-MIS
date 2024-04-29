@@ -8,12 +8,12 @@ class Home extends Controller
     {
 
         $db = new Database();
+        redirect('login');
         $db->create_tables();
         $db->create_procedure();
         $db->create_event();
 
 
-        redirect('login');
         $this->view('common/login/login');
     }
     public function edit($id = null, $name = null)

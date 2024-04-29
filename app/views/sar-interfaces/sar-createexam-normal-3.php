@@ -13,6 +13,7 @@ $data['role'] = $role;
 <html lang="en">
 
 <head>
+    <title>Exam Creation</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>exam-create Dashboard</title>
@@ -605,6 +606,7 @@ $data['role'] = $role;
             var date = dates[i].value.trim();
             var time = times[i].value.trim();
 
+            //validate all the fields
             if (subject === '' || date === '' || time === '') {
                 alert("All fields are required. Please fill in all fields.");
                 return false;
@@ -613,6 +615,7 @@ $data['role'] = $role;
             var currentDate = new Date();
             var inputDate = new Date(date + ' ' + time);
 
+            //validate date
             if (inputDate <= currentDate) {
                 alert("Please enter a future date and time.");
                 return false;

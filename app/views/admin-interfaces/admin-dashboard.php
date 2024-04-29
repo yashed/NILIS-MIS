@@ -235,8 +235,13 @@ $data['recentResults'] = $RecentResultExam;
                     <img src="<?= ROOT ?>assets/dashboard-icons/degree.png" alt="degree.icon" />
                 </div>
                 <div class="admin-subcard-data">
-                    <div class="admin-subcard-data-title">Ongoing Degree</div>
-                    <div class="admin-subcard-data-value">04</div>
+                    <div class="admin-subcard-data-title">Ongoing Diploma</div>
+                    <div class="admin-subcard-data-value"> <?php if (!empty($ongoing_degrees)): ?>
+                            <?php echo count($ongoing_degrees) ?>
+                        <?php else: ?>
+                            0
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
 
@@ -246,7 +251,13 @@ $data['recentResults'] = $RecentResultExam;
                 </div>
                 <div class="admin-subcard-data">
                     <div class="admin-subcard-data-title">Ongoing Examination</div>
-                    <div class="admin-subcard-data-value">04</div>
+                    <div class="admin-subcard-data-value"><?php if (!empty($ongoing_exam)): ?>
+
+                            <?php echo count($ongoing_degrees) ?>
+                        <?php else: ?>
+                            0
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
             <div class="admin-subsection-01">
@@ -266,13 +277,18 @@ $data['recentResults'] = $RecentResultExam;
                 </div>
                 <div class="admin-subcard-data">
                     <div class="admin-subcard-data-title">Users</div>
-                    <div class="admin-subcard-data-value">04</div>
+                    <div class="admin-subcard-data-value"><?php if (!empty($users)): ?>
+                            <?php echo count($users) ?>
+                        <?php else: ?>
+                            0
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="admin-subsection-1">
             <div class="admin-sub-title">
-                Ongoing Degree Programs
+                Ongoing Diploma Programs
             </div>
             <div class="admin-degree-bar">
                 <div class="admin-card1">
@@ -285,7 +301,7 @@ $data['recentResults'] = $RecentResultExam;
 
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <div class="admin-sub-title">No On Going Degree Program Created Yet</div>
+                        <div class="admin-sub-title">No On Going Diploma Program Created Yet</div>
                     <?php endif; ?>
 
                     </a>

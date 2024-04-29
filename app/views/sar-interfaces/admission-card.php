@@ -154,7 +154,7 @@
         margin: 50px 0px 20px 0px;
         font-family: Inter;
         border-collapse: collapse;
-        width: 100%;
+        width: 90%;
         /* min-height: px; */
     }
 
@@ -289,11 +289,15 @@
                     <div class="admission-card">Admission Card</div>
                     <div class="admission-name-index">
                         <div class="admission-name">Name of the Candidate: <b>
-                                <?= $studentData[0]->name ?>
+                                <?php if (!empty($studentData)): ?>
+                                    <?= $studentData[0]->name ?>
+                                <?php endif; ?>
                             </b></div>
                         <div class="admission-index">Index Number: <b>
-                                <?= $studentData[0]->indexNo;
-                                ?>
+                                <?php if (!empty($studentData)): ?>
+                                    <?= $studentData[0]->indexNo;
+                                    ?>
+                                <?php endif; ?>
                             </b></div>
                     </div>
 
@@ -309,24 +313,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($timeTableData as $ttdata): ?>
-                                <?php $json = json_encode($ttdata);
-                                // show($ttdata); ?>
-                                <tr>
+                            <?php if (!empty($timeTableData)): ?>
+                                <?php foreach ($timeTableData as $ttdata): ?>
+                                    <?php $json = json_encode($ttdata);
+                                    // show($ttdata); ?>
+                                    <tr>
 
-                                    <td>
-                                        <?= $ttdata[0]->date ?>
-                                        </br>9.00a.m-12.00noon
-                                    </td>
-                                    <td>
-                                        <?= $ttdata[0]->subjectName ?>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                        <td>
+                                            <?= $ttdata[0]->date ?>
+                                            </br>9.00a.m-12.00noon
+                                        </td>
+                                        <td>
+                                            <?= $ttdata[0]->subjectName ?>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
 
 
-                            <?php endforeach; ?>
+                                <?php endforeach; ?>
+                            <?php endif ?>
                         </tbody>
                     </table>
 
@@ -335,7 +341,7 @@
                     <div class="admission-details-signature">.........................................
                     </div>
                     <div class="admission-details-name">
-                        Yashed Thisara
+                        Mr Janaka Wipularatna
                     </div>
                     <div class="admission-details-possision">
                         Senior Assistant Registrar

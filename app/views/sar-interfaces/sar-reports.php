@@ -135,6 +135,10 @@ $data['role'] = $role;
                     <img src="<?= ROOT ?>assets/dr/Group.png">
                     <p>Record of Examination</p>
                 </div>
+                <div class="dr-reports-card-1" onclick="transcript()">
+                    <img src="<?= ROOT ?>assets/dr/Group.png">
+                    <p>Transcript Letter</p>
+                </div>
 
 
             <?php endif; ?>
@@ -154,6 +158,9 @@ $data['role'] = $role;
     }
     function roe() {
         window.location.href = '<?= ROOT ?>/roe';
+    }
+    function transcript() {
+        window.location.href = '<?= ROOT ?>/transcript';
     }
 
 </script>

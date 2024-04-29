@@ -37,6 +37,11 @@ function redirect($link)
     die();
 }
 
+function redirect_blank($link)
+{
+    echo "<script>window.open('" . ROOT . $link . "', '_blank')</script>";
+    die();
+}
 
 //using this function we can pass msg to frontend using SESSION
 function message($msg = '', $type = 'success', $erase = false)
@@ -473,6 +478,7 @@ function updateMarksheet($csvFileName, $dataArray, $newFileName)
     $csvFilePath = 'assets/csv/examsheets/final-marksheets/' . $csvFileName;
     $newFilePath = 'assets/csv/examsheets/output/final-marksheets/' . $newFileName;
 
+
     // Ensure the output directory exists
     $newFileDir = dirname($newFilePath);
     if (!is_dir($newFileDir)) {
@@ -534,6 +540,7 @@ function updateMarksheet($csvFileName, $dataArray, $newFileName)
     }
 
     fclose($newFile);
+    // chmod($newFilePath, 0777);
 }
 
 function getNotificationCount()
@@ -544,7 +551,7 @@ function getNotificationCount()
     $notification_count_arr = $notification->countNotifications($username);
     $data['notification_count_obj'] = $notification_count_arr[0];
     return $notification_count_arr[0];
-    
+
 }
 
 function getNotificationCountDirector()
@@ -601,7 +608,8 @@ function getNotificationCountAdmin()
 
     return $notification_count_arr[0];
 }
-function validateRowData($rowData) {
+function validateRowData($rowData)
+{
     // Validate Full-Name
     if (empty($rowData[0]) && !preg_match('/^[a-zA-Z\s]+$/', $rowData[0])) {
         return false;

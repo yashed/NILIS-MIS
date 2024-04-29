@@ -15,7 +15,7 @@ $data['role'] = $role;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= ROOT ?>css/button.css">
     <link rel="stylesheet" href="<?= ROOT ?>css/create-degree.css">
-    <title>DR Dashboard</title>
+    <title>Programes</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -235,10 +235,10 @@ $data['role'] = $role;
 
 <body>
     <div class="dr-home">
-        <div class="dr-title">Degree Program</div>
+        <div class="dr-title">Diploma Program</div>
         <div class="dr-subsection-1">
 
-            <div class="dr-sub-title">Ongoing Degree Programs</div>
+            <div class="dr-sub-title">Ongoing Diploma Programs</div>
             <div class="dr-degree-bar">
 
                 <div class="dr-card1">
@@ -254,7 +254,7 @@ $data['role'] = $role;
             </div>
         </div>
         <div class="dr-subsection-1">
-            <div class="dr-sub-title">Completed Degree Programs</div>
+            <div class="dr-sub-title">Completed Diploma Programs</div>
             <div class="dr-degree-bar">
                 <div class="dr-card1">
                     <?php $degreeStatus = False; ?>
@@ -270,7 +270,7 @@ $data['role'] = $role;
                     <?php endforeach; ?>
                 </div>
                 <?php if ($degreeStatus == False): ?>
-                    <div class="degree-msg">No completed degree programs</div>
+                    <div class="degree-msg">No completed Diploma programs</div>
                 <?php endif; ?>
             </div>
         </div>

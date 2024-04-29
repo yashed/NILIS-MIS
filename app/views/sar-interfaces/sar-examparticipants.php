@@ -44,7 +44,7 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
     }
 
     .temp2-home {
-        height: 100vh;
+
         left: 250px;
         position: relative;
         width: calc(100% - 250px);
@@ -85,12 +85,14 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
 
     .temp2-sub-title1 {
 
+        display: flex;
         color: #17376E;
         font-family: Poppins;
         font-size: 22px;
         font-style: normal;
         font-weight: 600;
         font-size: 1.2vw;
+        justify-content: space-between;
 
     }
 
@@ -102,9 +104,6 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
         flex-direction: row;
         justify-content: space-between;
         margin-top: 10px;
-        /* padding: 10px 10px 30px 35px; */
-        /* border-radius: 6px; */
-        /* margin: 7px 4px 7px 4px; */
     }
 
 
@@ -119,6 +118,7 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
         height: auto;
         padding: 1vw 2vw 1vw 2vw;
         align-items: center;
+        min-height: 50vh;
     }
 
     .flex-container-top {
@@ -351,6 +351,7 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
     .table__body-td-name {
         display: flex;
         align-items: center;
+        justify-content: center;
     }
 
     td img {
@@ -601,6 +602,57 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
         transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
     }
 
+    .delete-exam-popup {
+
+        position: fixed;
+        top: -150%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.25);
+        border: 1.5px solid rgba(00, 00, 00, 0.30);
+        opacity: 0;
+        background: #fff;
+        width: 40%;
+        /* height: 60vh; */
+        padding: 40px;
+        box-shadow: 9px 11px 60.9px 0px rgba(0, 0, 0, 0.60);
+        border-radius: 10px;
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+        z-index: 2000;
+    }
+
+    .delete-exam-popup.active {
+        top: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+    }
+
+
+    .delete-perm-popup {
+
+        position: fixed;
+        top: -150%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.25);
+        border: 1.5px solid rgba(00, 00, 00, 0.30);
+        opacity: 0;
+        background: #fff;
+        width: 40%;
+        /* height: 60vh; */
+        padding: 40px;
+        box-shadow: 9px 11px 60.9px 0px rgba(0, 0, 0, 0.60);
+        border-radius: 10px;
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+        z-index: 2000;
+    }
+
+    .delete-perm-popup.active {
+        top: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+    }
+
     .close-btn {
         position: absolute;
         right: 10px;
@@ -634,28 +686,98 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
         align-items: flex-end;
 
     }
+
+    /* Dropdown Button */
+    .dropbtn {
+        background-color: #f1f1f1;
+        color: #17376E;
+        padding: 14px;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        border-radius: 20px
+    }
+
+    .dropbtn:hover,
+    .dropbtn:focus {}
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+
+    .dot-content-dropdown {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        right: 2vw
+    }
+
+
+    .dot-content-dropdown span {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        border-radius: 5px;
+
+    }
+
+
+    .dot-content-dropdown span:hover {
+        background-color: #ddd;
+        border-radius: 5px;
+    }
+
+    .dot-content-dropdown input {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        border-radius: 5px;
+
+    }
+
+
+    .dot-content-dropdown input:hover {
+        background-color: #ddd;
+        border-radius: 5px;
+    }
+
+    .show {
+        display: block;
+        border-radius: 5px;
+    }
+
+    .delete-exam :hover {
+        background-color: #f44336;
+        color: white;
+
+    }
+
+    .empty-msg {
+        font-size: 1.5vw;
+        color: #17376E;
+        font-weight: 500;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+
+    }
 </style>
-<?php
-// Assuming $examParticipants is an array containing all participants
-$perPage = 5; // Number of records per page
-$totalRecords = count($examParticipants); // Total number of records
-$totalPages = ceil($totalRecords / $perPage); // Total number of pages
-
-// Get current page from URL parameter, default to page 1
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-
-// Calculate starting index and ending index for pagination
-$start = ($page - 1) * $perPage;
-$end = $start + $perPage;
-
-// Slice the array to get records for the current page
-$currentRecords = array_slice($examParticipants, $start, $perPage);
-
-
-?>
 
 <body>
-
+    <div class="loader-wraper">
+        <div class="loader-css">
+            <?php $this->view('components/loader/index') ?>
+        </div>
+    </div>
     <div class="participants-body" id="body">
         <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
         <?php $this->view('components/navside-bar/footer', $data) ?>
@@ -666,67 +788,87 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
             <div class="temp2-subsection-1">
                 <div class="temp2-sub-title1">
                     <div class='sub-title-01'>Overview</div>
-                    <div class="row">
-                        <div class="column1">
-                            <div class="data1">Course Name<br>
-                                <!-- <div class="email"><?= $student->Email ?></div> -->
-                                <div class="course" id="course">
-                                    <?php if (!empty($_SESSION['degreeData'])): ?>
-                                        <?= $_SESSION['degreeData'][0]->DegreeName ?>
-                                    <?php endif; ?>
-                                </div>
+                    <div class="exam-detail-btn">
+                        <button onclick="toggleButton()" class="dropbtn">
+                            <div class="dot-3-btn" onclick="toggleButton()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                    <path
+                                        d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                                </svg>
                             </div>
-                            <br>
-                            <div class="data2">Examination:<br>
-                                <!-- <div class="regNum"> <?= $student->regNo ?></div> -->
-                                <div class="exam" id="exam">
-                                    <?php if (!empty($_SESSION['examDetails'])): ?>
-                                        <?= $_SESSION['examDetails'][0]->semester ?> Semester Examination
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
+                            <form method="post" id='exam-manage'>
 
-                        <div class="column2">
-                            <div class="data3">Participation<br>
-                                <div class="count" id="count">
-                                    <?php if (!empty($examCount)) {
-                                        echo $examCount[0]->ExamParticipants;
-                                    }
-                                    ?>
+                                <input type='text' name='exam-type' value='<?= $_SESSION['examDetails'][0]->status ?>'
+                                    hidden>
+                                <div id="Dot3Dropdown" class="dot-content-dropdown">
+                                    <?php if (!empty($_SESSION['examDetails'])): ?>
+                                        <?php if ($_SESSION['examDetails'][0]->examType == "Normal"): ?>
+                                            <?php if ($_SESSION['examDetails'][0]->status == 'ongoing'): ?>
+                                                <input type="submit" name="mark" value='Mark as Complete'>
+                                            <?php elseif ($_SESSION['examDetails'][0]->status == 'completed'): ?>
+                                                <input type="submit" name="mark" value="Mark as Ongoing">
+                                            <?php endif ?>
+                                        <?php endif ?>
+                                    <?php endif ?>
+                                    </input>
+                                    <?php if ($_SESSION['examDetails'][0]->examType == "Normal"): ?>
+                                        <?php if ($_SESSION['examDetails'][0]->status == 'ongoing'): ?>
+                                            <span type="submit" class='delete-exam' name="delete"
+                                                onclick="showExamDeletePopup()" style='color:red;'>Reset Data</span>
+                                        <?php endif ?>
+                                    <?php endif ?>
+                                    <span type="submit" class='delete-exam' name="delete"
+                                        onclick="showExamDeletePermPopup()" style='color:red;'>Delete</span>
                                 </div>
-                            </div>
-                            <br>
-                            <div class="data4">Academic Year:<br>
-                                <div class="year" id="year"> 2023/2024</div>
-                            </div>
-                        </div>
+                            </form>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="column1">
+                        <div class="data1">Course Name<br>
 
-                <div class="column2">
-                    <div class="data3">Participation<br>
-                        <div class="count" id="count">
-                            <?php if (!empty($examCount)) {
-                                echo $examCount[0]->ExamParticipants;
-                            }
-                            ?>
+                            <div class="course" id="course">Diploma in School Librarianship</div>
+                        </div>
+                        <br>
+                        <div class="data2">Examination:<br>
+
+                            <div class="exam" id="exam">1st Semester Examination</div>
                         </div>
                     </div>
-                    <br>
-                    <div class="data4">Academic Year:<br>
-                        <div class="year" id="year"> 2023/2024</div>
+
+                    <div class="column2">
+                        <div class="data3">Participation:<br>
+                            <div class="count" id="count"> <?php
+                            if (!empty($examCount)) {
+                                echo $examCount[0]->ExamParticipants;
+                            }
+                            ?></div>
+                        </div>
+                        <br>
+                        <div class="data4">Academic Year:<br>
+                            <div class="year" id="year"> 2023/2024</div>
+                        </div>
                     </div>
                 </div>
             </div>
-
 
             <div class="temp2-subsection-2">
                 <div class="temp2-subsection-21">
 
                     <div class="participants-form-header">
                         <div class="temp2-sub-title2">Participants</div>
+                        <div class="participant-form-btns">
+                            <button class="admission-button1" id="openModal" onClick='showAttendancePopup()'>Exam
+                                Attendance Submit</button>
+                            <form method="post">
 
+                                <!-- <button class="admission-button0">Download Attendance Sheet</button> -->
+                                <button class="admission-button2" type="submit" name="admission" value="clicked"
+                                    onClick="showMailPopup(event)">Send Admission Card</button>
+
+                            </form>
+                        </div>
                     </div>
                     <div class="display-message">
                         <?php
@@ -754,44 +896,60 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($currentRecords as $students):
+                                <?php if (!empty($examParticipants)): ?>
+                                    <?php
                                     if (!empty($_SESSION['examDetails'])) {
 
                                         $examID = $_SESSION['examDetails'][0]->examID;
                                     }
 
-                                    $degreeID = 4;
-                                    if (!empty($_SESSION['degreeDetails'])) {
-
-                                        $degreeID = $_SESSION['degreeDetails'][0]->degreeID;
+                                    if (!empty($_SESSION['degreeData'])) {
+                                        $degreeID = $_SESSION['degreeData'][0]->DegreeID;
                                     }
 
                                     ?>
-                                    <?php foreach ($students as $student): ?>
-                                        <?php $json = json_encode($student); ?>
-                                        <tr>
-                                            <td class="table__body-td-name"><img src="<?= ROOT ?>assets/student.png" alt="">
-                                                Bimsara Anjana</td>
-                                            <td>
-                                                <?= $student->attempt ?>
-                                            </td>
-                                            <td>
-                                                <?= $student->indexNo ?>
-                                            </td>
+                                    <?php if (!empty($examParticipants)): ?>
+                                        <?php foreach ($examParticipants as $student): ?>
 
-                                            <td>
-                                                <?= $student->studentType ?>
-                                            </td>
-                                            <td> <a href="http://localhost/NILIS-MIS/public/admission/login?degreeID=<?= $degreeID ?>&examID=<?= $examID ?>&indexNo=<?= $student->indexNo ?>"
-                                                    target="_blank">tap
-                                                    to see Admission card </a></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php endforeach; ?>
+                                            <tr>
+                                                <td class="table__body-td-name"> <?= $student->name ?>
+                                                </td>
+                                                <td>
+                                                    <?= $student->attempt ?>
+                                                </td>
+                                                <td>
+                                                    <?= $student->indexNo ?>
+                                                </td>
+
+                                                <td>
+                                                    <?= $student->studentType ?>
+                                                </td>
+                                                <td> <a href="http://localhost/NILIS-MIS/public/admission/login?degreeID=<?= $degreeID ?>&examID=<?= $examID ?>&indexNo=<?= $student->indexNo ?>"
+                                                        target="_blank">tap
+                                                        to see Admission card </a></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <div class='empty-msg'>
+                                            No Students Found
+                                        </div>
+                                    <?php endif; ?>
+
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </section>
+
+
+                    <br>
+                    <div class="pagination">
+
+                    </div>
+
+
                 </div>
+
+
             </div>
 
 
@@ -808,9 +966,75 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
     <div id="exam-attendance" class="exam-popup">
         <?php $this->view('sar-interfaces/sar-exam-attendance-submit', $data) ?>
     </div>
+    <div id="delete-exam" class="delete-exam-popup">
+        <?php $this->view('components/popup/examination-delete-popup', $data) ?>
+    </div>
+    <div id="delete-exam-p" class="delete-perm-popup">
+        <?php $this->view('components/popup/examination-delete-permenently', $data) ?>
+    </div>
 </body>
 
+<script>
+    function toggleButton() {
+        document.getElementById("Dot3Dropdown").classList.toggle("show");
+    }
 
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dot-content-dropdown");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
+<script>
+    $(window).on("load", function () {
+        $(".loader-wraper").fadeOut("slow");
+    });
+
+    function showMailPopup() {
+
+
+        document.querySelector("#mail-popup").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+
+    }
+
+    function showAttendancePopup() {
+
+        document.querySelector("#exam-attendance").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+    }
+
+    function showExamDeletePopup() {
+
+        document.querySelector("#delete-exam").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+    }
+
+    function showExamDeletePermPopup() {
+
+        document.querySelector("#delete-exam-p").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+    }
+
+
+    //handel pop active according to clicked button
+    var popupStatus = <?php echo $attendacePopupStatus ? 'true' : 'false'; ?>;
+    if (popupStatus) {
+
+        // Adding 'active' class to the popup and body elements
+        document.querySelector("#exam-attendance").classList.add("active");
+        document.querySelector("#body").classList.add("active");
+        $(".loader-wraper").fadeOut("slow");
+    }
+</script>
 
 
 

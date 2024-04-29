@@ -282,7 +282,8 @@ $data['role'] = $role;
                                     </div>
                                     <div class="dr-userprofile-form-element">
                                         <label for="email">Gender</label>
-                                        <input type="text" placeholder="Enter" id="dr-userprofile-up-gender" name="gender" value="<?= $student[0]->gender ?>">
+                                        <input type="text" placeholder="Enter" id="dr-userprofile-up-gender"
+                                            name="gender" value="<?= $student[0]->gender ?>">
                                     </div>
                                     <div class="dr-userprofile-form-element">
                                         <label for="nicNo">NIC</label>
@@ -298,7 +299,8 @@ $data['role'] = $role;
                                 <div class="dr-userprofile-column-02">
                                     <div class="dr-userprofile-form-element">
                                         <label for="country">Country</label>
-                                        <input type="text" placeholder="Enter" id="dr-userprofile-up-country" name="country" value="<?= $student[0]->country ?>">
+                                        <input type="text" placeholder="Enter" id="dr-userprofile-up-country"
+                                            name="country" value="<?= $student[0]->country ?>">
                                     </div>
                                     <div class="dr-userprofile-form-element">
                                         <label for="phoneNo">Phone Number</label>
@@ -312,7 +314,9 @@ $data['role'] = $role;
                                     </div>
                                     <div class="dr-userprofile-form-element">
                                         <label for="birthdate">Birthdate</label><br>
-                                        <input style="width: 204px;" type="text" placeholder="Enter" id="dr-userprofile-up-birthdate" name="birthdate" value="<?= $student[0]->birthdate ?>">
+                                        <input style="width: 204px;" type="text" placeholder="Enter"
+                                            id="dr-userprofile-up-birthdate" name="birthdate"
+                                            value="<?= $student[0]->birthdate ?>">
                                     </div>
                                 </div>
                             </div>
@@ -410,7 +414,7 @@ $data['role'] = $role;
         // Regular expression for NIC validation
         const nicRegex = /^\d{12}$|^\d{9}[VX]$/;
         // Add click event listener to the submit button
-        submitButton.onclick = function(event) {
+        submitButton.onclick = function (event) {
             // Initialize a flag to track form validity
             let isValid = true;
             // Clear previous error messages and reset field borders

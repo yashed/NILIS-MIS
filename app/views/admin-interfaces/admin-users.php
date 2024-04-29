@@ -1,7 +1,9 @@
 <?php
 $role = "Admin";
 $data['role'] = $role;
-
+if (!empty($errors)) {
+    $data['errors'] = $errors;
+}
 // include_once '../../components/navside-bar/header.php';
 // include_once '../../components/navside-bar/sidebar.php';
 // include_once '../../components/navside-bar/footer.php';
@@ -690,8 +692,6 @@ $data['role'] = $role;
                 </div>
             </div>
 
-
-
             <script>
                 function onUpdateUserClick(userId, fname, lname, email, phoneNo, role) {
                     // Your existing code for onUpdateUserClick
@@ -738,51 +738,6 @@ $data['role'] = $role;
                         }
                     }
 
-                    // const openDeletePopup = (id) => {
-                    //     document.querySelector(`#delete-popup`).classList.add("active");
-                    // }
-
-                    // const handleFormSubmission = async (event) => {
-                    //     event.preventDefault();
-
-                    //     let formData = new FormData(userForm);
-
-                    //     try {
-                    //         const response = await fetch('<?= ROOT ?>admin/users', {
-                    //             method: 'POST',
-                    //             body: formData,
-                    //         });
-                    //         const responseText = await response.text();
-                    //         console.log("Response Text:", responseText);
-                    //         if (!response.ok) {
-                    //             throw new Error('Network response was not ok');
-                    //         }
-
-                    //         const responseData = await response.json();
-                    //         console.log("Res data = ", responseData);
-
-
-                    //         document.querySelector(".popup").classList.remove("active");
-                    //     } catch (error) {
-                    //         console.error('Error:', error);
-                    //         // Handle the error, e.g., display an error message
-                    //     }
-                    // };
-
-                    // userForm.addEventListener("submit", handleFormSubmission);
-
-                    // document.querySelector(".user-delete").addEventListener("click", function () {
-
-                    // });
-
-                    // document.querySelector("#show-login").addEventListener("click", function () {
-                    //     document.querySelector("#create-popup").classList.add("active");
-                    //     document.querySelector("#body").classList.add("active");
-                    // });
-
-
-
-
                     //close popup
                     document.querySelector(".close-btn").addEventListener("click", function () {
                         document.querySelector(".popup").classList.remove("active");
@@ -798,8 +753,9 @@ $data['role'] = $role;
 
         </div>
     </div>
+
     <!--Update User-->
-    <?php $this->view('admin-interfaces/admin-user-update') ?>
+    <?php $this->view('admin-interfaces/admin-user-update', $data) ?>
 
 
     <!--Delete User-->

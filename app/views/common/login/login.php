@@ -304,7 +304,6 @@
     }
 
     function showMailPopup() {
-
         console.log('run');
         document.querySelector("#forgot-pwd").classList.add("active");
         document.querySelector("#body").classList.add("active");

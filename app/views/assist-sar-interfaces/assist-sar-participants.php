@@ -1,5 +1,5 @@
 <?php
-$role = "SAR";
+$role = "Assistant-SAR";
 $data['role'] = $role;
 $data['ExamSubjects'] = isset($ExamSubjects) ? $ExamSubjects : '';
 $data['PopupStatus'] = isset($attendacePopupStatus) ? $attendacePopupStatus : '';
@@ -655,11 +655,7 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
 ?>
 
 <body>
-    <div class="loader-wraper">
-        <div class="loader-css">
-            <?php $this->view('components/loader/index') ?>
-        </div>
-    </div>
+
     <div class="participants-body" id="body">
         <?php $this->view('components/navside-bar/degreeprogramsidebar', $data) ?>
         <?php $this->view('components/navside-bar/footer', $data) ?>
@@ -669,36 +665,61 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
             <div class="temp2-title">Examination</div>
             <div class="temp2-subsection-1">
                 <div class="temp2-sub-title1">
-                    Overview
-                </div>
-
-                <div class="row">
-
-
-
-                    <div class="column1">
-                        <div class="data1">Course Name<br>
-                            <!-- <div class="email"><?= $student->Email ?></div> -->
-                            <div class="course" id="course">Diploma in School Librarianship</div>
+                    <div class='sub-title-01'>Overview</div>
+                    <div class="row">
+                        <div class="column1">
+                            <div class="data1">Course Name<br>
+                                <!-- <div class="email"><?= $student->Email ?></div> -->
+                                <div class="course" id="course">
+                                    <?php if (!empty($_SESSION['degreeData'])): ?>
+                                        <?= $_SESSION['degreeData'][0]->DegreeName ?>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="data2">Examination:<br>
+                                <!-- <div class="regNum"> <?= $student->regNo ?></div> -->
+                                <div class="exam" id="exam">
+                                    <?php if (!empty($_SESSION['examDetails'])): ?>
+                                        <?= $_SESSION['examDetails'][0]->semester ?> Semester Examination
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
-                        <br>
-                        <div class="data2">Examination:<br>
-                            <!-- <div class="regNum"> <?= $student->regNo ?></div> -->
-                            <div class="exam" id="exam">2nd Semester Examination</div>
+
+                        <div class="column2">
+                            <div class="data3">Participation<br>
+                                <div class="count" id="count">
+                                    <?php if (!empty($examCount)) {
+                                        echo $examCount[0]->ExamParticipants;
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="data4">Academic Year:<br>
+                                <div class="year" id="year"> 2023/2024</div>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="column2">
-                        <div class="data3">Participation:<br>
-                            <div class="count" id="count"> 216</div>
+                <div class="column2">
+                    <div class="data3">Participation<br>
+                        <div class="count" id="count">
+                            <?php if (!empty($examCount)) {
+                                echo $examCount[0]->ExamParticipants;
+                            }
+                            ?>
                         </div>
-                        <br>
-                        <div class="data4">Academic Year:<br>
-                            <div class="year" id="year"> 2023/2024</div>
-                        </div>
+                    </div>
+                    <br>
+                    <div class="data4">Academic Year:<br>
+                        <div class="year" id="year"> 2023/2024</div>
                     </div>
                 </div>
             </div>
+
 
             <div class="temp2-subsection-2">
                 <div class="temp2-subsection-21">
@@ -770,27 +791,7 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
                             </tbody>
                         </table>
                     </section>
-
-
-                    <br>
-                    <div class="pagination">
-                        <?php if ($page > 1): ?>
-                            <a href="?page=<?= $page - 1 ?>">Previous</a>
-                        <?php endif; ?>
-                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                            <a href="?page=<?= $i ?>" <?= $page === $i ? 'class="active"' : '' ?>>
-                                <?= $i ?>
-                            </a>
-                        <?php endfor; ?>
-                        <?php if ($page < $totalPages): ?>
-                            <a href="?page=<?= $page + 1 ?>">Next</a>
-                        <?php endif; ?>
-                    </div>
-
-
                 </div>
-
-
             </div>
 
 
@@ -809,13 +810,7 @@ $currentRecords = array_slice($examParticipants, $start, $perPage);
     </div>
 </body>
 
-<script>
 
-    $(window).on("load", function () {
-        $(".loader-wraper").fadeOut("slow");
-    });
-    $(".loader-wraper").fadeOut("slow");
-</script>
 
 
 
