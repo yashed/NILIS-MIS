@@ -95,11 +95,22 @@ class DR extends Controller
                     'AcademicYear' => $currentYear,
                     'createdDate' => $currentDate,
                 ];
+                // echo json_encode($data);
+                if ($degree->validate($data)) {
+                    $degree->insert($data);
+                } 
+                // else {
+                    // foreach ($degree->errors as $error) {
+                    //     message($error, 'error-degreeprograms');
+                    // }
+                    // echo json_encode($data);
+                // }
                 $degree->insert($data);
                 $degree_id = $degree->lastID('DegreeID');
-                if (isset($_POST['subjectsData'])) {
+                if (isset($_POST['subjectsData']) && !empty($_POST['subjectsData'])) {
                     // Decode the JSON string sent with key 'subjectsData'
                     $subjectsData = json_decode($_POST['subjectsData'], true);
+                    $bool = 0;
                     // Iterate over each subject's data and insert it into the database
                     foreach ($subjectsData as $subjectData) {
                         // Construct the data array for insertion
@@ -110,13 +121,33 @@ class DR extends Controller
                             'DegreeID' => $degree_id,
                             'semester' => $subjectData['semester'],
                         ];
-                        // Insert the subject's data into the database
-                        $subject->insert($data1);
+                        // if (!($subject->validate($data1)))
+                        // {
+                        //     // foreach ($subject->errors as $error) {
+                        //     //     message($error, 'error-degreeprograms');
+                        //     // }
+                        //     $bool = 1;
+                        // }
+                    }
+                    if ($bool == 0) {
+                        foreach ($subjectsData as $subjectData) {
+                            // Construct the data array for insertion
+                            $data1 = [
+                                'SubjectCode' => $subjectData['subjectCode'],
+                                'SubjectName' => $subjectData['subjectName'],
+                                'NoCredits' => $subjectData['credits'],
+                                'DegreeID' => $degree_id,
+                                'semester' => $subjectData['semester'],
+                            ];
+                            // Insert the subject's data into the database
+                            $subject->insert($data1);
+                        }
                     }
                 }
-                if (isset($_POST['gradesData'])) {
+                if (isset($_POST['gradesData']) && !empty($_POST['gradesData'])) {
                     // Decode the JSON string sent with key 'gradesData'
                     $gradesData = json_decode($_POST['gradesData'], true);
+                    $flags = 0;
                     // Iterate over each grade's data and insert it into the database
                     foreach ($gradesData as $gradeData) {
                         // Construct the data array for insertion
@@ -127,8 +158,27 @@ class DR extends Controller
                             'GPV' => $gradeData['gpv'],
                             'DegreeID' => $degree_id,
                         ];
-                        // Insert the grade's data into the database
-                        $grade->insert($data2);
+                        // if (!($grade->validate($data1)))
+                        // {
+                        //     // foreach ($subject->errors as $error) {
+                        //     //     message($error, 'error-degreeprograms');
+                        //     // }
+                        //     $flags = 1;
+                        // }
+                    }
+                    if ($flags == 0) {
+                        foreach ($gradesData as $gradeData) {
+                            // Construct the data array for insertion
+                            $data2 = [
+                                'Grade' => $gradeData['grade'],
+                                'MaxMarks' => $gradeData['maxMarks'],
+                                'MinMarks' => $gradeData['minMarks'],
+                                'GPV' => $gradeData['gpv'],
+                                'DegreeID' => $degree_id,
+                            ];
+                            // Insert the grade's data into the database
+                            $grade->insert($data2);
+                        }
                     }
                 }
                 redirect("dr/newdegree");

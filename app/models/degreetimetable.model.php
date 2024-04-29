@@ -47,7 +47,6 @@ class DegreeTimeTable extends Model
         } else if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", trim($data['StartingDate']))) {
             $this->errors['StartingDate'] = 'Starting Date should be in YYYY-MM-DD format';
         }
-        
         // EndingDate
         if (empty($data['EndingDate'])) {
             $this->errors['EndingDate'] = 'An Ending Date is required';
