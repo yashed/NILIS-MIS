@@ -3,6 +3,7 @@ $role = "DR";
 $data['role'] = $role;
 $data['recentResults'] = $RecentResultExam;
 $data['recentResults'] = $RecentResultExam;
+$data['repeateStudent'] = $repeateStudents;
 ?>
 
 <?php $this->view('components/navside-bar/header', $data) ?>

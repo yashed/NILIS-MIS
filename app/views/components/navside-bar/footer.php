@@ -64,7 +64,7 @@
                             text.style.color = 'var(--sidebar-color)';
                         }
                     }
-                    else if (currentUrl == '<?= ROOT ?>dr/examination/participants' || currentUrl == '<? ROOT ?>dr/examination/results') {
+                    else if (currentUrl == '<?= ROOT ?>dr/examination/participants' || currentUrl == '<?= ROOT ?>dr/examination/results') {
                         link1 = document.querySelector('.menu-links .nav-link a[href="<?= ROOT ?>dr/examination"]');
                         link1.parentNode.classList.add('selected');
                         var icon = link1.querySelector('.icon');

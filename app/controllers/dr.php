@@ -16,6 +16,7 @@ class DR extends Controller
         $student = new StudentModel();
         $exam = new Exam();
         $finalMarks = new FinalMarks();
+        $repeateStudents = new RepeatStudents();
         $degreetimetable = new DegreeTimeTable();
         $recentExamId = $finalMarks->lastID('examID');
 
@@ -28,7 +29,7 @@ class DR extends Controller
         } else {
             $data['RecentResultExam'] = null;
         }
-
+        $data['repeateStudents'] = $repeateStudents->findAll();
         // show( $_POST );
         $_SESSION['DegreeID'] = null;
         unset($_SESSION['DegreeID']);
