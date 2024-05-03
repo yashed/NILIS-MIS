@@ -14,7 +14,7 @@
     <div class="bar-chart-pass-students">
         <canvas id="pass-students-chart"></canvas>
         <?php
-        $students = $repeateStudent;
+        $rstudents = $repeateStudent;
 
         // Array to store the count of students per diploma degree
         $counts = array();
@@ -28,7 +28,7 @@
         }
 
         // Count the occurrences for each diploma degree
-        foreach ($students as $student) {
+        foreach ($rstudents as $student) {
             $degree = $student->degreeShortName;
             $indexNo = $student->indexNo;
 
@@ -54,7 +54,8 @@
         $dsl = 0;
         $dpl = 0;
         $hdlim = 0;
-        if (!empty($students)) {
+
+        if (!empty($rstudents)) {
             foreach ($students as $student) {
                 if (isset($student->indexNo)) {
                     // Split the index number at the '/' mark

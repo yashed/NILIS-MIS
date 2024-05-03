@@ -649,8 +649,8 @@ $data['repeateStudent'] = $repeateStudents;
                                             <?php $count++; ?>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
-                                    <?= $count ?>
                                 <?php endif; ?>
+                                <?= $count ?>
                             </div>
                         </div>
                     </div>
@@ -670,8 +670,8 @@ $data['repeateStudent'] = $repeateStudents;
                                             <?php $count++; ?>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
-                                    <?= $count ?>
                                 <?php endif; ?>
+                                <?= $count ?>
                             </div>
                         </div>
                     </div>

@@ -4,7 +4,7 @@ $data['role'] = $role;
 $data['rmStudents'] = isset($rmstudents) ? $rmstudents : '';
 $data['option'] = isset($selectedOption) ? $selectedOption : '';
 $data['popupStatus'] = isset($RMpopupStatus) ? $RMpopupStatus : '';
-
+$students = $students;
 ?>
 
 <!DOCTYPE html>

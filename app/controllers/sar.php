@@ -972,12 +972,15 @@ class SAR extends Controller
                 $conditions0 = ['student.degreeID = exam_participants.DegreeID', 'student.indexNo = exam_participants.indexNo', 'exam_participants.examID= ' . $examID];
                 $participantsMailName = $examParticipants->join($table, $columns, $conditions0);
 
-
-
-
                 $participants[] = $examParticipants->where(['examID' => $examID]);
 
+                // show($_POST);
 
+                if (isset($_POST['absent-btn']) == 'absent') {
+                    //get absent student details
+                    $data['absent'] = $examAttendance->where(['examID' => $examID, 'attendance' => 0]);
+                    // show($data['absent']);
+                }
 
                 //run the mail sending function after click the button
                 if (isset($_POST['admission']) == 'clicked') {
