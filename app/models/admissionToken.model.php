@@ -20,7 +20,19 @@ class AdmissionToken extends Model
 
     public function Validate($data)
     {
-        return true;
+
+        $student = new StudentModel();
+
+        if ($student->where2(['indexNo' => $data['indexNo']])) {
+
+            return true;
+        } else {
+
+            $this->errors['indexNo'] = 'Invalid Index Number';
+            return false;
+        }
+
+
     }
 }
 

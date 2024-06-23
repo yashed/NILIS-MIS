@@ -194,7 +194,7 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
         font-size: 22px;
         font-style: normal;
         font-weight: 600;
-        font-size: 1.2vw;
+
         flex: 10%;
     }
 
@@ -394,7 +394,7 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
     tbody tr {
         --delay: .1s;
         transition: .5s ease-in-out var(--delay), background-color 0s;
-        font-size: 0.8vw;
+        font-size: 0.9vw;
     }
 
 
@@ -770,6 +770,10 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
         justify-content: center;
 
     }
+
+    .sub-title-01 {
+        font-size: 22px;
+    }
 </style>
 
 <body>
@@ -828,12 +832,18 @@ $data['SelectedSubCode'] = isset($selectedSubject) ? $selectedSubject : '';
                     <div class="column1">
                         <div class="data1">Course Name<br>
 
-                            <div class="course" id="course">Diploma in School Librarianship</div>
+                            <div class="course" id="course"><?php if (!empty($_SESSION['degreeData'])): ?>
+                                    <?= $_SESSION['degreeData'][0]->DegreeName ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
                         <br>
                         <div class="data2">Examination:<br>
 
-                            <div class="exam" id="exam">1st Semester Examination</div>
+                            <div class="exam" id="exam"> <?php if (!empty($_SESSION['examDetails'])): ?>
+                                    <?= $_SESSION['examDetails'][0]->semester ?> Semester Examination
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
 

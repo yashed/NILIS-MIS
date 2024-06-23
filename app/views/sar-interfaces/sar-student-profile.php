@@ -58,7 +58,7 @@ $data['role'] = $role;
                                 <img src="<?= ROOT ?>assets/dr/imgano.png" alt="Your Image">
                             </div>
                             <p style="color: red;"><?= $student[0]->name ?></p>
-                            <p style="color: red;">Suspended and Degree Changed.</p>
+                            <p style="color: red;">Suspended and Diploma Changed.</p>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -134,7 +134,7 @@ $data['role'] = $role;
                                 <th>Subject</th>
                                 <th>Result</th>
                             </tr>
-                            <?php foreach ($studentResults[1] as $results): ?>
+                            <?php foreach ($studentResults[2] as $results): ?>
                                 <tr>
                                     <td><?= $results->subjectCode ?></td>
                                     <td><?= $results->grade ?></td>

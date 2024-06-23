@@ -1,9 +1,9 @@
 <style>
-.bar-chart-student-attendance {
-    width: 90%;
-    /* height: 900px; */
-    height: 100%;
-}
+    .bar-chart-student-attendance {
+        width: 90%;
+        /* height: 900px; */
+        height: 100%;
+    }
 </style>
 
 
@@ -44,7 +44,7 @@
             $averageDLIM = ($dlimStudentCount > 0) ? round($dlimAttendance / $dlimStudentCount, 2) : 0;
             $averageDSL = ($dslStudentCount > 0) ? round($dslAttendance / $dslStudentCount, 2) : 0;
             $averageHDLIM = ($hdlimStudentCount > 0) ? round($hdlimAttendance / $hdlimStudentCount, 2) : 0;
-        ?>
+            ?>
             <!-- Chart rendering code -->
         <?php } else { ?>
             <p>No attendance data available.</p>
@@ -55,47 +55,47 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-    const ctx = document.getElementById('student-attendance-chart');
-    const labels = ['DPL', 'DLIM','DSL','HDLIM'];
-    const data = {
-        labels: labels,
-        datasets: [{
-            label: 'Average Student Attendance',
-            data: [<?= $averageDPL ?>, <?= $averageDLIM ?>,<?= $averageDSL ?>,<?= $averageHDLIM ?>],
-            backgroundColor: [
-                'rgb(23, 55, 110)',
-                'rgb(23, 55, 110)',
-                'rgb(23, 55, 110)',
-                'rgb(23, 55, 110)'
-            ],
-            borderColor: [
-                'rgb(169, 169, 169)',
-                'rgb(169, 169, 169)',
-                'rgb(169, 169, 169)',
-                'rgb(169, 169, 169)'
-                
-            ],
-            borderWidth: 1,
-            maxBarThickness: 50
-        }]
-    };
-    new Chart(ctx, {
-        type: 'bar',
-        data: data,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false
+        const ctx = document.getElementById('student-attendance-chart');
+        const labels = ['DPL', 'DLIM', 'DSL', 'HDLIM'];
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Average Student Attendance',
+                data: [<?= $averageDPL ?>, <?= $averageDLIM ?>, <?= $averageDSL ?>, <?= $averageHDLIM ?>],
+                backgroundColor: [
+                    'rgb(23, 55, 110)',
+                    'rgb(23, 55, 110)',
+                    'rgb(23, 55, 110)',
+                    'rgb(23, 55, 110)'
+                ],
+                borderColor: [
+                    'rgb(169, 169, 169)',
+                    'rgb(169, 169, 169)',
+                    'rgb(169, 169, 169)',
+                    'rgb(169, 169, 169)'
+
+                ],
+                borderWidth: 1,
+                maxBarThickness: 50
+            }]
+        };
+        new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
                 }
             }
-        }
-    });
-</script>
+        });
+    </script>
 
 </body>

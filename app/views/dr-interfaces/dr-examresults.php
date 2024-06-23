@@ -494,6 +494,7 @@ $data['role'] = $role;
 
                     <?php if (!empty($examResults)): ?>
                         <?php
+
                         $examId = $_SESSION['examDetails'][0]->examID;
                         $subjectCode = $subjectDetails[0]->SubjectCode;
 

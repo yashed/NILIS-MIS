@@ -32,9 +32,9 @@ function set_value($key)
 
 function redirect($link)
 {
-    header("Location: " . ROOT . "" . $link);
-    show($_POST);
+    header("Location:" . ROOT . "" . $link);
     die();
+
 }
 
 function redirect_blank($link)
@@ -378,7 +378,7 @@ function insertMarks($file, $examID, $degreeID, $subCode)
 
 
     //iterate through data in file
-    for ($i = 4; $i < count($lines) - 1; $i++) {
+    for ($i = 4; $i < count($lines); $i++) {
 
         //get line
         $values = str_getcsv($lines[$i]);
@@ -389,7 +389,6 @@ function insertMarks($file, $examID, $degreeID, $subCode)
         $data['examiner2Marks'] = $values[3];
         $data['assessmentMarks'] = $values[4];
         $data['examiner3Marks'] = !empty($values[5]) ? $values[5] : -1;
-        // show($data);
 
         //insert or update data into table
         if (!empty($mark->markValidate($data))) {
@@ -637,7 +636,7 @@ function validateRowData($rowData)
         return false; // Whatsapp number must be in a valid phone number format
     }
     // Validate Address
-    if (empty($rowData[6]) && !preg_match("/^[A-Za-z0-9\s/,-]+(?:[A-Za-z0-9\s/,-]+)*$/",$rowData[6])) {
+    if (empty($rowData[6]) && !preg_match("/^[A-Za-z0-9\s/,-]+(?:[A-Za-z0-9\s/,-]+)*$/", $rowData[6])) {
         return false; // Address cannot be empty
     }
     // Validate Phone-No

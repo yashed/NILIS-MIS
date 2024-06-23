@@ -174,7 +174,7 @@ $data['recentResults'] = $RecentResultExam;
     .admin-card1 {
         display: flex;
         flex-direction: row;
-        gap: 20px;
+        gap: 90px;
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;

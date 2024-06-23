@@ -208,8 +208,8 @@ $data['repeateStudent'] = $repeateStudents;
                             <?php if (!empty($RecentResultExam)): ?>
                                 <?php foreach ($RecentResultExam as $exam): ?>
                                     <?php
-                                        $data['exam'] = $exam;
-                                        $this->view('components/exam-card/exam-card', $data);
+                                    $data['exam'] = $exam;
+                                    $this->view('components/exam-card/exam-card', $data);
                                     ?>
                                 <?php endforeach; ?>
                             <?php else: ?>

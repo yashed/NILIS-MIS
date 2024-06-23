@@ -62,6 +62,7 @@ $data['role'] = $role;
         padding: 10px 10px 30px 35px;
         border-radius: 6px;
         margin: 7px 4px 7px 4px;
+        min-height: 40vh;
     }
 
     .dr-sub-title {
@@ -83,6 +84,11 @@ $data['role'] = $role;
 
     .dr-card1 {
         margin-bottom: 4px;
+        display: flex;
+        margin-bottom: 4px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
     }
 
     .dr-exam-bar {
@@ -97,6 +103,11 @@ $data['role'] = $role;
     .dr-exam-card1 {
         margin-bottom: 5px;
     }
+
+    .degree-msg {
+        font-size: 20px;
+        text-align: center;
+    }
 </style>
 
 <body>
@@ -105,48 +116,54 @@ $data['role'] = $role;
         <?php $this->view('components/navside-bar/sidebar', $data) ?>
         <?php $this->view('components/navside-bar/footer', $data) ?>
         <div class="dr-home">
-            <div class="dr-title">Degree Program</div>
+            <div class="dr-title">Diploma Program</div>
             <div class="dr-subsection-1">
 
-                <div class="dr-sub-title">Ongoing Degree Programs</div>
+                <div class="dr-sub-title">Ongoing Diploma Programs</div>
                 <div class="dr-degree-bar">
-                    <?php if ($degrees) : ?>
-                        <?php $count = 0; ?>
-                        <?php foreach ($degrees as $degree) : ?>
-                            <div class="dr-card1">
-                                <a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
-                                    <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
-                                </a>
-                            </div>
-                            <?php $count++; ?>
-                        <?php endforeach; ?>
-                    <?php else : ?>
-                        <p>No data found for the diploma program.</p>
-                    <?php endif; ?>
+
+                    <div class="dr-card1">
+                        <?php if (!empty($degrees)): ?>
+                            <?php foreach ($degrees as $degree): ?>
+                                <?php if (!empty($degree->Status == "ongoing")): ?>
+
+                                    <div>
+                                        <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                                    </div>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="degree-msg"> No ongoing Diploma programs</div>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
             <div class="dr-subsection-1">
-                <div class="dr-sub-title">Completed Degree Programs</div>
+                <div class="dr-sub-title">Completed Diploma Programs</div>
                 <div class="dr-degree-bar">
-                    <?php if ($degrees) : ?>
-                        <?php $count = 0; ?>
-                        <?php foreach ($degrees as $degree) : ?>
-                            <div class="dr-card1">
-                                <a href="<?= ROOT ?>dr/degreeprofile" style="text-decoration: none;">
-                                    <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
-                                </a>
-                            </div>
-                            <?php $count++; ?>
-                        <?php endforeach; ?>
-                    <?php else : ?>
-                        <p>No data found under the completed diploma program.</p>
-                    <?php endif; ?>
+                    <div class="dr-card1">
+                        <?php $degreeStatus = False; ?>
+                        <?php if (!empty($degrees)): ?>
+                            <?php foreach ($degrees as $degree): ?>
+                                <div>
+                                    <?php if ((!empty($degree->Status == "completed"))): ?>
+                                        <?php
+                                        $this->view('components/degree-card/degree-card', ["degree" => $degree]);
+                                        $degreeStatus = True;
+                                        ?>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
+                <?php if ($degreeStatus == False): ?>
+                    <div class="degree-msg">No completed Diploma programs</div>
+                <?php endif; ?>
             </div>
             <div class="dr-footer">
                 <?php $this->view('components/footer/index', $data) ?>
             </div>
-
         </div>
 </body>
 

@@ -100,7 +100,7 @@ class Clerk extends Controller
         $degree = new Degree();
         $data['notification_count_obj'] = getNotificationCount();
         $data['degrees'] = $degree->findAll();
-        $this->view('clerk-interfaces\clerk-degreeprograms', $data);
+        $this->view('clerk-interfaces/clerk-degreeprograms', $data);
     }
 
 
@@ -191,7 +191,7 @@ class Clerk extends Controller
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['importSubmit'])) {
-           
+
             if ($_FILES['csvFile']['error'] == 0 && !empty($_FILES['csvFile']['tmp_name'])) {
                 $studentAttendance = new studentAttendance();
                 $degree_name = $_POST['selectDegree'];
@@ -211,7 +211,7 @@ class Clerk extends Controller
                     //     fclose($csvFile);
                     //     exit();
                     // }
-                    
+
 
                     $existingData = $studentAttendance->where(['index_no' => $index_no]);
                     if ($existingData) {
@@ -226,7 +226,7 @@ class Clerk extends Controller
                             ];
                             $studentAttendance->updateRows($updateData, $whereConditions);
                         }
-                    } else if(!empty($attendance) && !empty($reg_no) && !empty($index_no) ) {
+                    } else if (!empty($attendance) && !empty($reg_no) && !empty($index_no)) {
                         $insertData = [
                             'index_no' => $index_no,
                             'degree_name' => $degree_name,
@@ -250,12 +250,14 @@ class Clerk extends Controller
 
     public function degreeprofile($action = null, $id = null)
     {
+        $degree = new Degree();
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
         $data['notification_count_obj'] = getNotificationCount();
         if (isset($_GET['id'])) {
             $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
+            $_SESSION['degreeData'] = $degree->where(['DegreeID' => $degreeID]);
             $_SESSION['DegreeID'] = $degreeID;
             redirect("clerk/degreeprofile");
         }
@@ -263,7 +265,7 @@ class Clerk extends Controller
         $_SESSION['DegreeID'] = $degreeID;
         // Check if degree ID is provided
         if ($degreeID !== null) {
-            $degree = new Degree();
+
             $subject = new Subjects();
             $degreeTimeTable = new DegreeTimeTable();
             // Fetch the data based on the ID
@@ -354,7 +356,7 @@ class Clerk extends Controller
     {
 
         //send notification count to the view
-        $data['notification_count_obj_sar'] = getNotificationCountSAR();
+        $data['notification_count_obj'] = getNotificationCount();
 
         $subjects = new Subjects();
         $gradings = new Grades();
@@ -506,7 +508,7 @@ class Clerk extends Controller
         }
 
         //send notification count to the view
-        $data['notification_count_obj_sar'] = getNotificationCountAssistSAR();
+        $data['notification_count_obj'] = getNotificationCount();
 
         if ($method == 'results') {
 
@@ -517,6 +519,7 @@ class Clerk extends Controller
             if (!empty($_SESSION['examDetails'])) {
                 $examID = $_SESSION['examDetails'][0]->examID;
                 $semester = $_SESSION['examDetails'][0]->semester;
+                $degreeID = $_SESSION['examDetails'][0]->degreeID;
             }
 
             //get subjects in the exam

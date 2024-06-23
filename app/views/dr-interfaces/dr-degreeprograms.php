@@ -20,6 +20,7 @@ $data['role'] = $role;
         user-select: none;
         overflow: hidden;
     }
+
     h3 {
         margin: 30px 30px;
         color: #000000;
@@ -50,17 +51,22 @@ $data['role'] = $role;
         color: var(--text-color);
         cursor: pointer;
     }
+
     .dr-degreeprograms-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    backdrop-filter: blur(5px); /* Add blur effect */
-    z-index: 998; /* Layer it above other content */
-    display: none; /* Initially hidden */
-}
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        /* Semi-transparent background */
+        backdrop-filter: blur(5px);
+        /* Add blur effect */
+        z-index: 998;
+        /* Layer it above other content */
+        display: none;
+        /* Initially hidden */
+    }
 </style>
 
 <body>
@@ -74,27 +80,29 @@ $data['role'] = $role;
             <div class="dr-degreeprograms-subsection-1">
 
                 <div class="dr-degreeprograms-button-btn">
-                    <button onclick="myFunction()" type="button" class="dr-degreeprograms-bt-name" style="float: right; margin-right: 40px;">Create Diploma Program</button>
+                    <button onclick="myFunction()" type="button" class="dr-degreeprograms-bt-name"
+                        style="float: right; margin-right: 40px;">Create Diploma Program</button>
                 </div>
                 <div class="dr-degreeprograms-sub-title">Ongoing Diploma Programs</div>
                 <div class="dr-degreeprograms-degree-bar">
                     <?php if (!empty($degrees)): ?>
-                            <?php $ongoing_degrees_exist = false; ?>
-                            <?php foreach ($degrees as $degree): ?>
-                                    <?php if ($degree->Status == "ongoing"): ?>
-                                            <?php $ongoing_degrees_exist = true; ?>
-                                            <div class="dr-degreeprograms-card1">
-                                                <a href="<?= ROOT ?>dr/degreeprofile?id=<?= $degree->DegreeID ?>" style="text-decoration: none;">
-                                                    <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
-                                                </a>
-                                            </div>
-                                    <?php endif; ?>
-                            <?php endforeach; ?>
-                            <?php if (!$ongoing_degrees_exist): ?>
-                                    <p>No data found under the ongoing diploma program.</p>
+                        <?php $ongoing_degrees_exist = false; ?>
+                        <?php foreach ($degrees as $degree): ?>
+                            <?php if ($degree->Status == "ongoing"): ?>
+                                <?php $ongoing_degrees_exist = true; ?>
+                                <div class="dr-degreeprograms-card1">
+                                    <a href="<?= ROOT ?>dr/degreeprofile?id=<?= $degree->DegreeID ?>"
+                                        style="text-decoration: none;">
+                                        <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                                    </a>
+                                </div>
                             <?php endif; ?>
+                        <?php endforeach; ?>
+                        <?php if (!$ongoing_degrees_exist): ?>
+                            <p>No Data Found Under The Ongoing Diploma Program.</p>
+                        <?php endif; ?>
                     <?php else: ?>
-                            <p>No data found for the diploma program.</p>
+                        <p>No Data Found For The Diploma Program.</p>
                     <?php endif; ?>
                 </div>
             </div>
@@ -102,22 +110,23 @@ $data['role'] = $role;
                 <div class="dr-degreeprograms-sub-title">Completed Diploma Programs</div>
                 <div class="dr-degreeprograms-degree-bar">
                     <?php if (!empty($degrees)): ?>
-                            <?php $completed_degrees_exist = false; ?>
-                            <?php foreach ($degrees as $degree): ?>
-                                    <?php if ($degree->Status == "completed"): ?>
-                                            <?php $completed_degrees_exist = true; ?>
-                                            <div class="dr-degreeprograms-card1">
-                                                <a href="<?= ROOT ?>dr/degreeprofile?id=<?= $degree->DegreeID ?>" style="text-decoration: none;">
-                                                    <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
-                                                </a>
-                                            </div>
-                                    <?php endif; ?>
-                            <?php endforeach; ?>
-                            <?php if (!$completed_degrees_exist): ?>
-                                    <p>No data found under the completed diploma program.</p>
+                        <?php $completed_degrees_exist = false; ?>
+                        <?php foreach ($degrees as $degree): ?>
+                            <?php if ($degree->Status == "completed"): ?>
+                                <?php $completed_degrees_exist = true; ?>
+                                <div class="dr-degreeprograms-card1">
+                                    <a href="<?= ROOT ?>dr/degreeprofile?id=<?= $degree->DegreeID ?>"
+                                        style="text-decoration: none;">
+                                        <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                                    </a>
+                                </div>
                             <?php endif; ?>
+                        <?php endforeach; ?>
+                        <?php if (!$completed_degrees_exist): ?>
+                            <p>No Data Found Under The Completed Diploma Program.</p>
+                        <?php endif; ?>
                     <?php else: ?>
-                            <p>No data found for the diploma program.</p>
+                        <p>No Data Found For The Diploma Program.</p>
                     <?php endif; ?>
                 </div>
             </div>
@@ -137,13 +146,17 @@ $data['role'] = $role;
                                     <div id="dr-degreeprograms-progress1"></div>
                                 </div>
                                 <label for="degree type" class="dr-degreeprograms-drop-down">Diploma Type:</label><br>
-                                <select name="degree type" id="dr-degreeprograms-degree_type" style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;" onchange="handleDegreeTypeChange()">
+                                <select name="degree type" id="dr-degreeprograms-degree_type"
+                                    style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;"
+                                    onchange="handleDegreeTypeChange()">
                                     <option value="" default hidden>Select</option>
                                     <option value="1 Year" <?= (set_value('degree_type') === '1 Year') ? 'selected' : '' ?>>1 Year Diploma</option>
                                     <option value="2 Year" <?= (set_value('degree_type') === '2 Year') ? 'selected' : '' ?>>2 Year Diploma</option>
                                 </select><br><br><br>
-                                <label for="select degree type" class="dr-degreeprograms-drop-down">Select Diploma Program:</label><br>
-                                <select name="select degree type" id="dr-degreeprograms-select_degree_type" style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;">
+                                <label for="select degree type" class="dr-degreeprograms-drop-down">Select Diploma
+                                    Program:</label><br>
+                                <select name="select degree type" id="dr-degreeprograms-select_degree_type"
+                                    style="width: 400px; height: 30px; border-radius: 5px; margin-top: 9px;">
                                     <option value="" default hidden>Select</option>
                                     <option value="DLIM" <?= (set_value('select_degree_type') === 'DLIM') ? 'selected' : '' ?>>DLIM</option>
                                     <option value="DPL" <?= (set_value('select_degree_type') === 'DPL') ? 'selected' : '' ?>>DPL</option>
@@ -154,8 +167,12 @@ $data['role'] = $role;
 
                             <div class="dr-degreeprograms-btn-box">
                                 <div class="dr-degreeprograms-button-btn">
-                                    <button onclick="myFunction2()" type="button" class="dr-degreeprograms-bt-name-white" id="dr-degreeprograms-Cancel1">Cancel</button>
-                                    <button type="button" class="dr-degreeprograms-bt-name" style="text-decoration: none; margin-right: -53px;" id="dr-degreeprograms-Next1">Continue</button>
+                                    <button onclick="myFunction2()" type="button"
+                                        class="dr-degreeprograms-bt-name-white"
+                                        id="dr-degreeprograms-Cancel1">Cancel</button>
+                                    <button type="button" class="dr-degreeprograms-bt-name"
+                                        style="text-decoration: none; margin-right: -53px;"
+                                        id="dr-degreeprograms-Next1">Continue</button>
                                 </div>
                             </div>
                         </div>
@@ -172,8 +189,11 @@ $data['role'] = $role;
                             </div>
                             <div class="dr-degreeprograms-btn-box">
                                 <div class="dr-degreeprograms-button-btn1">
-                                    <button type="button" class="dr-degreeprograms-bt-name-white" id="dr-degreeprograms-Back1" style="left: 0px;">Back</button>
-                                    <button type="button" class="dr-degreeprograms-bt-name" style="text-decoration: none; margin-right: 80px;" id="dr-degreeprograms-Next2">Continue</button>
+                                    <button type="button" class="dr-degreeprograms-bt-name-white"
+                                        id="dr-degreeprograms-Back1" style="left: 0px;">Back</button>
+                                    <button type="button" class="dr-degreeprograms-bt-name"
+                                        style="text-decoration: none; margin-right: 80px;"
+                                        id="dr-degreeprograms-Next2">Continue</button>
                                 </div>
                             </div>
                         </div>
@@ -189,8 +209,11 @@ $data['role'] = $role;
                             </div>
                             <div class="dr-degreeprograms-btn-box1">
                                 <div class="dr-degreeprograms-button-btn">
-                                    <button type="button" class="dr-degreeprograms-bt-name-white" id="dr-degreeprograms-Back2">Back</button>
-                                    <button type="submit" class="dr-degreeprograms-bt-name" style="text-decoration: none; margin-right: -53px;" id="dr-degreeprograms-Next3">Create</button>
+                                    <button type="button" class="dr-degreeprograms-bt-name-white"
+                                        id="dr-degreeprograms-Back2">Back</button>
+                                    <button type="submit" class="dr-degreeprograms-bt-name"
+                                        style="text-decoration: none; margin-right: -53px;"
+                                        id="dr-degreeprograms-Next3">Create</button>
                                 </div>
                             </div>
                         </div>
@@ -231,12 +254,12 @@ $data['role'] = $role;
     var progress3 = document.getElementById("dr-degreeprograms-progress3");
 
     // Validate Form1 before proceeding
-    Next1.onclick = function() {
+    Next1.onclick = function () {
         if (validateForm1()) {
             Form1.style.display = "none";
             Form2.style.display = "block";
             progress2.style.width = "15px";
-            setTimeout(function() {
+            setTimeout(function () {
                 progress2.style.width = "150px";
             }, 10);
             myFunction();
@@ -244,36 +267,36 @@ $data['role'] = $role;
             alert(" Please fill out all the fields.");
         }
     }
-    Back1.onclick = function() {
+    Back1.onclick = function () {
         Form1.style.display = "block";
         Form2.style.display = "none";
         progress1.style.width = "150px";
-        setTimeout(function() {
+        setTimeout(function () {
             progress1.style.width = "15px";
         }, 10);
     }
     // Validate Form2 before proceeding
-    Next2.onclick = function() {
+    Next2.onclick = function () {
         if (validateForm2(numSemesters)) {
             Form2.style.display = "none";
             Form3.style.display = "block";
             progress3.style.width = "150px";
-            setTimeout(function() {
+            setTimeout(function () {
                 progress3.style.width = "300px";
             }, 10);
             myFunction();
             generateGrades();
         }
     }
-    Back2.onclick = function() {
+    Back2.onclick = function () {
         Form2.style.display = "block";
         Form3.style.display = "none";
         progress2.style.width = "300px";
-        setTimeout(function() {
+        setTimeout(function () {
             progress2.style.width = "150px";
         }, 10);
     }
-    Next3.onclick = function(event) {
+    Next3.onclick = function (event) {
         event.preventDefault();
         if (validateForm3(event)) {
             var subjectsData = [];
@@ -412,7 +435,7 @@ $data['role'] = $role;
             numSemesters = 4;
             showSemesters(4);
         }
-         // Get the second select element
+        // Get the second select element
         var selectDegreeType = document.getElementById('dr-degreeprograms-select_degree_type');
         // Remove all options from the second select element
         selectDegreeType.innerHTML = '<option value="" default hidden>Select</option>';
@@ -436,7 +459,7 @@ $data['role'] = $role;
             ];
         }
         // Add the options to the second select element
-        options.forEach(function(optionData) {
+        options.forEach(function (optionData) {
             var option = document.createElement('option');
             option.value = optionData.value;
             option.text = optionData.text;

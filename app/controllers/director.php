@@ -19,8 +19,9 @@ class DIRECTOR extends Controller
         $exam = new Exam();
         $degreetimetable = new DegreeTimeTable();
         $attendance = new studentAttendance();
+        $repeateStudents = new RepeatStudents();
         $data['attendances'] = $attendance->findAll();
-      
+
         $finalMarks = new FinalMarks();
 
         $recentExamId = $finalMarks->lastID('examID');
@@ -35,6 +36,7 @@ class DIRECTOR extends Controller
         $data['degrees'] = $degree->findAll();
         $data['students'] = $student->findAll();
         $data['exams'] = $exam->findAll();
+        $data['repeateStudents'] = $repeateStudents->findAll();
         $data['degreetimetables'] = $degreetimetable->findAll();
         $data['marks'] = $finalMarks->query("SELECT finalMarks FROM final_marks");
         // show($data['marks']);
@@ -61,12 +63,14 @@ class DIRECTOR extends Controller
 
     public function degreeprofile($action = null, $id = null)
     {
+        $degree = new Degree();
         $data = [];
         $data['action'] = $action;
         $data['id'] = $id;
         $data['notification_count_obj_director'] = getNotificationCountDirector();
         if (isset($_GET['id'])) {
             $degreeID = isset($_GET['id']) ? $_GET['id'] : null;
+            $_SESSION['degreeData'] = $degree->where(['DegreeID' => $degreeID]);
             $_SESSION['DegreeID'] = $degreeID;
             redirect("director/degreeprofile");
         }
@@ -74,7 +78,6 @@ class DIRECTOR extends Controller
 
         // Check if degree ID is provided
         if ($degreeID !== null) {
-            $degree = new Degree();
             $subject = new Subjects();
             $degreeTimeTable = new DegreeTimeTable();
             // Fetch the data based on the ID
@@ -115,7 +118,7 @@ class DIRECTOR extends Controller
         if (isset($_SESSION['DegreeID'])) {
             $degreeID = $_SESSION['DegreeID'];
             // Iterate through students to find those with the given DegreeID
-           
+
 
             foreach ($st->findAll() as $student) {
                 if (is_object($student) && $student->degreeID == $degreeID) {
@@ -151,8 +154,8 @@ class DIRECTOR extends Controller
             $exam = new Exam();
             $studentId = $_SESSION['studentId']; // Get student ID from session
             $degreeId = $_SESSION['DegreeID'];
-                       
- // Get degree ID from session
+
+            // Get degree ID from session
             $data['student'] = $studentModel->findwhere("id", $studentId);
             // show($data['student']);
             $data['degrees'] = $degree->find($degreeId);
@@ -296,9 +299,9 @@ class DIRECTOR extends Controller
         if (!empty($_SESSION['DegreeID'])) {
             $degreeId = $_SESSION['DegreeID'];
             $data['degreedata'] = $degree->find($degreeId);
-            
+
             $attendances = [];
-            
+
             $att = new studentAttendance();
             $allAttendances = $att->findAll();
             if (!empty($allAttendances)) {
@@ -311,7 +314,7 @@ class DIRECTOR extends Controller
             $data['attendances'] = $attendances;
         } else {
             $data['attendances'] = [];
-                // If DegreeID is not set in the session, set $data['attendances'] as an empty array
+            // If DegreeID is not set in the session, set $data['attendances'] as an empty array
         }
         // show($degreeId);
         $this->view('director-interfaces\director-attendance', $data);
@@ -375,7 +378,6 @@ class DIRECTOR extends Controller
         $examConditions = ['exam.degreeID = degree.DegreeID', 'exam.degreeID= ' . $degreeID];
         $data['examDetails'] = $exam->join($dataTables, $columns, $examConditions);
 
-
         //add again examDetaios to session
         if (!empty($examID)) {
             $_SESSION['examDetails'] = $exam->where(['examID' => $examID]);
@@ -407,6 +409,7 @@ class DIRECTOR extends Controller
             if (!empty($_SESSION['examDetails'])) {
                 $examID = $_SESSION['examDetails'][0]->examID;
                 $semester = $_SESSION['examDetails'][0]->semester;
+                $degreeID = $_SESSION['examDetails'][0]->degreeID;
             }
 
             //get subjects in the exam

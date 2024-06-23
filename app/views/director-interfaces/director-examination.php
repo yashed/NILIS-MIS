@@ -313,13 +313,28 @@ $data['role'] = $role;
                 <div class="exam-create-dropdown">
                 </div>
             </div>
-            <div class="exam-degree-bar">
-                <div class="exam-card1">
-                    <!--Need to change this login upcomming examinations -->
-                    <div class="exam-msg">No upcomming Examination</div>
 
-                </div>
+            <div class="exam-degree-bar">
+
+                <?php $upcmoning = false ?>
+                <?php if (!empty($examDetails)): ?>
+                    <?php foreach ($examDetails as $exam): ?>
+                        <?php if ($exam->status == 'upcoming'): ?>
+                            <?php
+                            $data['exam'] = $exam;
+                            $upcmoning = true;
+                            ?>
+                            <div class="exam-card1">
+                                <?php $this->view('components/exam-card/upcomming-exam-card', $data) ?>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                <?php if (!$upcmoning): ?>
+                    <div class='exam-msg'>No Upcoming Examination</div>
+                <?php endif; ?>
             </div>
+
         </div>
         <div class="exam-subsection-2">
             <div class="exam-subsection-21">

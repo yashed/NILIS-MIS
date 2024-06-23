@@ -20,6 +20,7 @@ class ASAR extends Controller
         $finalMarks = new FinalMarks();
         $db = new Database();
         $finalMarks = new FinalMarks();
+        $repeateStudents = new RepeatStudents();
 
 
         //remove degree data from session
@@ -41,9 +42,9 @@ class ASAR extends Controller
         //pass data to graphs and chalender
         $data['degrees'] = $degree->findAll();
         $data['students'] = $student->findAll();
-        $data['exam'] = $exam->findAll();
+        $data['exams'] = $exam->findAll();
         $data['degreetimetables'] = $degreetimetable->findAll();
-
+        $data['repeateStudents'] = $repeateStudents->findAll();
 
 
         //get last results submitted examination id
@@ -66,7 +67,7 @@ class ASAR extends Controller
 
         //send notification count to the view
 
-        $this->view('director-interfaces/director-dashboard', $data);
+        $this->view('assist-sar-interfaces/assist-sar-dashboard', $data);
     }
 
     public function degreeprograms()

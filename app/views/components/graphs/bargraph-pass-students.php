@@ -3,7 +3,12 @@
         width: 60%;
         /* height: 900px; */
     }
+    .bar-chart-pass-students {
+        width: 60%;
+        /* height: 900px; */
+    }
 
+    /* #pass-students-chart {
     /* #pass-students-chart {
     width: 50%;
     height: 30%;
@@ -21,23 +26,24 @@
 
         // Array of diploma degree names
         $diplomaDegrees = ['DLIM', 'DSL', 'DPL', 'HDLIM'];
+
         // Initialize counts for each diploma degree
         foreach ($diplomaDegrees as $degree) {
             $counts[$degree] = array();
         }
-        if (!empty($rstudents)) {
-            // Count the occurrences for each diploma degree
-            foreach ($rstudents as $student) {
-                $degree = $student->degreeShortName;
-                $indexNo = $student->indexNo;
 
-                if (!isset($counts[$degree][$indexNo])) {
-                    $counts[$degree][$indexNo] = 1;
-                } else {
-                    $counts[$degree][$indexNo]++;
-                }
+        // Count the occurrences for each diploma degree
+        foreach ($rstudents as $student) {
+            $degree = $student->degreeShortName;
+            $indexNo = $student->indexNo;
+
+            if (!isset($counts[$degree][$indexNo])) {
+                $counts[$degree][$indexNo] = 1;
+            } else {
+                $counts[$degree][$indexNo]++;
             }
         }
+
         // Calculate the total count of repeated students for each diploma degree
         $repeatedCounts = array();
         foreach ($diplomaDegrees as $degree) {
@@ -53,7 +59,8 @@
         $dsl = 0;
         $dpl = 0;
         $hdlim = 0;
-        if (!empty($students)) {
+
+        if (!empty($rstudents)) {
             foreach ($students as $student) {
                 if (isset($student->indexNo)) {
                     // Split the index number at the '/' mark

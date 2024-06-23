@@ -114,7 +114,7 @@ $data['role'] = $role;
         padding: 10px 10px 30px 35px;
         border-radius: 6px;
         margin: 7px 4px 7px 4px;
-        min-height: 35vh;
+        min-height: 40vh;
     }
 
     .dr-sub-title {
@@ -242,14 +242,18 @@ $data['role'] = $role;
             <div class="dr-degree-bar">
 
                 <div class="dr-card1">
-                    <?php foreach ($degrees as $degree): ?>
-                        <?php if (!empty($degree->Status == "ongoing")): ?>
+                    <?php if (!empty($degrees)): ?>
+                        <?php foreach ($degrees as $degree): ?>
+                            <?php if (!empty($degree->Status == "ongoing")): ?>
 
-                            <div>
-                                <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
-                            </div>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
+                                <div>
+                                    <?php $this->view('components/degree-card/degree-card', ["degree" => $degree]) ?>
+                                </div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="degree-msg"> No ongoing Diploma programs</div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -258,16 +262,18 @@ $data['role'] = $role;
             <div class="dr-degree-bar">
                 <div class="dr-card1">
                     <?php $degreeStatus = False; ?>
-                    <?php foreach ($degrees as $degree): ?>
-                        <div>
-                            <?php if ((!empty($degree->Status == "completed"))): ?>
-                                <?php
-                                $this->view('components/degree-card/degree-card', ["degree" => $degree]);
-                                $degreeStatus = True;
-                                ?>
-                            <?php endif; ?>
-                        </div>
-                    <?php endforeach; ?>
+                    <?php if (!empty($degrees)): ?>
+                        <?php foreach ($degrees as $degree): ?>
+                            <div>
+                                <?php if ((!empty($degree->Status == "completed"))): ?>
+                                    <?php
+                                    $this->view('components/degree-card/degree-card', ["degree" => $degree]);
+                                    $degreeStatus = True;
+                                    ?>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
                 <?php if ($degreeStatus == False): ?>
                     <div class="degree-msg">No completed Diploma programs</div>

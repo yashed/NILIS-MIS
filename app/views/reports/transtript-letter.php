@@ -373,6 +373,13 @@
     .admission-details-signature {
         text-align: left;
     }
+
+    .admission-address {
+        font-size: 14px;
+        font-weight: 500;
+        margin-top: 20px;
+        text-align: center;
+    }
 </style>
 
 
@@ -393,9 +400,17 @@
             <div class="admission-content">
                 <div class="admission-title">
                     <img src="<?= ROOT ?>assets/NILIS-logo-2.png" alt="NILIS-logo">
-                    <div class="admission-nilis"> National Institute of Library and Information Sciences </br>University
-                        of
-                        Colombo</div>
+                    <div class='title-header'>
+                        <div class="admission-nilis"> National Institute of Library and Information Sciences
+                            </br>University
+                            of
+                            Colombo</div>
+                        <div class="admission-address">Colombo 03 ,
+                            00300 ,
+                            Sri Lanka
+                            Telephone +94 11 250 71 50
+                        </div>
+                    </div>
                 </div>
                 <div class="admission-header">
 

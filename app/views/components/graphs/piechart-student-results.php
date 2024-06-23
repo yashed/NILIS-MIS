@@ -11,20 +11,22 @@ $ranges = array(
 );
 
 //count values
-foreach ($examResults as $mark) {
-    $finalMarks = $mark->finalMarks;
-    if ($finalMarks >= 75) {
-        $ranges['100-75']++;
-    } elseif ($finalMarks >= 65) {
-        $ranges['75-65']++;
-    } elseif ($finalMarks >= 55) {
-        $ranges['65-55']++;
-    } elseif ($finalMarks >= 45) {
-        $ranges['55-45']++;
-    } elseif ($finalMarks >= 35) {
-        $ranges['45-35']++;
-    } else {
-        $ranges['35-0']++;
+if (!empty($examResults)) {
+    foreach ($examResults as $mark) {
+        $finalMarks = $mark->finalMarks;
+        if ($finalMarks >= 75) {
+            $ranges['100-75']++;
+        } elseif ($finalMarks >= 65) {
+            $ranges['75-65']++;
+        } elseif ($finalMarks >= 55) {
+            $ranges['65-55']++;
+        } elseif ($finalMarks >= 45) {
+            $ranges['55-45']++;
+        } elseif ($finalMarks >= 35) {
+            $ranges['45-35']++;
+        } else {
+            $ranges['35-0']++;
+        }
     }
 }
 
