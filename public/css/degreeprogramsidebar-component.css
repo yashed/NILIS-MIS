@@ -213,7 +213,7 @@ header .image-text .headder-text {
   background-color: var(--text-color);
   border-radius: 6px;
   margin: -2px 0.5px 2px 2px;
-  min-height: 6vh;
+  min-height: 4vh;
   color: #e2e2e2;
   z-index: 100;
 }
@@ -225,7 +225,7 @@ header .image-text .headder-text {
 
 .hero-ul-li .icon {
   float: right;
-  font-size: 25px;
+  font-size: 22px;
   margin-top: 10px;
   color: var(--sidebar-color);
 }
