@@ -3,7 +3,12 @@
         width: 60%;
         /* height: 900px; */
     }
+    .bar-chart-pass-students {
+        width: 60%;
+        /* height: 900px; */
+    }
 
+    /* #pass-students-chart {
     /* #pass-students-chart {
     width: 50%;
     height: 30%;

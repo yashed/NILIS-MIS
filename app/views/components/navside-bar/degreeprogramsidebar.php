@@ -288,17 +288,17 @@
                             <span class="text nav-text">Examination</span>
                         </a>
                         <?php
-                        // Check if the URL contains any of the specified patterns
-                        $url = $_SERVER['REQUEST_URI'];
-                        if (
-                            strpos($url, "examination/participants") !== false ||
-                            strpos($url, "examination/results") !== false
-                        ) {
-                            echo '<div class="dropdown">' .
-                                '<a href="' . ROOT . 'assistant-sar/examination/participants"><center>Examination Participants</center></a>' .
-                                '<a href="' . ROOT . 'assistant-sar/examination/results"><center>Examination Results</center></a>' .
-                                '</div>';
-                        }
+                            // Check if the URL contains any of the specified patterns
+                            $url = $_SERVER['REQUEST_URI'];
+                            if (
+                                strpos($url, "examination/participants") !== false ||
+                                strpos($url, "examination/results") !== false
+                            ) {
+                                echo '<div class="dropdown">' .
+                                    '<a href="' . ROOT . 'assistant-sar/examination/participants"><center>Examination Participants</center></a>' .
+                                    '<a href="' . ROOT . 'assistant-sar/examination/results"><center>Examination Results</center></a>' .
+                                    '</div>';
+                            }
                         ?>
                     </li>
                     <li class="nav-link">
@@ -401,17 +401,17 @@
                             <span class="text nav-text">Examination</span>
                         </a>
                         <?php
-                        // Check if the URL contains any of the specified patterns
-                        $url = $_SERVER['REQUEST_URI'];
-                        if (
-                            strpos($url, "examination/participants") !== false ||
-                            strpos($url, "examination/results") !== false
-                        ) {
-                            echo '<div class="dropdown">' .
-                                '<a href="' . ROOT . 'admin/examination/participants"><center>Examination Participants</center></a>' .
-                                '<a href="' . ROOT . 'admin/examination/results"><center>Examination Results</center></a>' .
-                                '</div>';
-                        }
+                            // Check if the URL contains any of the specified patterns
+                            $url = $_SERVER['REQUEST_URI'];
+                            if (
+                                strpos($url, "examination/participants") !== false ||
+                                strpos($url, "examination/results") !== false
+                            ) {
+                                echo '<div class="dropdown">' .
+                                    '<a href="' . ROOT . 'admin/examination/participants"><center>Examination Participants</center></a>' .
+                                    '<a href="' . ROOT . 'admin/examination/results"><center>Examination Results</center></a>' .
+                                    '</div>';
+                            }
                         ?>
                     </li>
                     <li class="nav-link">
@@ -514,17 +514,17 @@
                             <span class="text nav-text">Examination</span>
                         </a>
                         <?php
-                        // Check if the URL contains any of the specified patterns
-                        $url = $_SERVER['REQUEST_URI'];
-                        if (
-                            strpos($url, "examination/participants") !== false ||
-                            strpos($url, "examination/results") !== false
-                        ) {
-                            echo '<div class="dropdown">' .
-                                '<a href="' . ROOT . 'director/examination/participants"><center>Examination Participants</center></a>' .
-                                '<a href="' . ROOT . 'director/examination/results"><center>Examination Results</center></a>' .
-                                '</div>';
-                        }
+                            // Check if the URL contains any of the specified patterns
+                            $url = $_SERVER['REQUEST_URI'];
+                            if (
+                                strpos($url, "examination/participants") !== false ||
+                                strpos($url, "examination/results") !== false
+                            ) {
+                                echo '<div class="dropdown">' .
+                                    '<a href="' . ROOT . 'director/examination/participants"><center>Examination Participants</center></a>' .
+                                    '<a href="' . ROOT . 'director/examination/results"><center>Examination Results</center></a>' .
+                                    '</div>';
+                            }
                         ?>
                     </li>
                     <li class="nav-link">
@@ -635,6 +635,8 @@
                             strpos($url, "examination/results") !== false
                         ) {
                             echo '<div class="dropdown">' .
+                                '<a href="' . ROOT . 'clerk/examination/participants"><center>Examination Participants</center></a>' .
+                                '<a href="' . ROOT . 'clerk/examination/results"><center>Examination Results</center></a>' .
                                 '<a href="' . ROOT . 'clerk/examination/participants"><center>Examination Participants</center></a>' .
                                 '<a href="' . ROOT . 'clerk/examination/results"><center>Examination Results</center></a>' .
                                 '</div>';

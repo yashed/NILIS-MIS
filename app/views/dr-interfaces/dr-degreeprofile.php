@@ -185,8 +185,10 @@ $data['role'] = $role;
                                     <td width="12%"><input type="date" value="<?= $event->EndingDate ?>"
                                             class="degreeprofile-duration" id="degreeprofile-end_<?= $event->EventID ?>"
                                             readonly></td>
-                                    <?php if ($event->EventType != "Examination"): ?>
-                                        <td><i class='bx bx-minus' data-event-id="<?= $event->EventID ?>"></i></td>
+                                    <?php if ($degrees[0]->Status == "ongoing"): ?>
+                                        <?php if ($event->EventType != "Examination"): ?>
+                                            <td><i class='bx bx-minus' data-event-id="<?= $event->EventID ?>"></i></td>
+                                        <?php endif; ?>
                                     <?php endif; ?>
                                 </tr>
                                 <?php if ($event->EventID > $lastEventID) {
